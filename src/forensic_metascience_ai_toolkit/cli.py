@@ -1891,6 +1891,10 @@ def batch_cmd(
              "experiment)"),
     skip_existing: bool = typer.Option(True, "--skip-existing/--redo", help="Skip papers already analysed by the same pipeline, backend and model (resumable)"),
     archive: bool = typer.Option(False, "--move-to-done/--no-move-to-done", help="Move finished papers into done/"),
+    bundle: bool = typer.Option(
+        True, "--bundle/--no-bundle",
+        help="Build each paper's offline HTML viewer when its review "
+             "finishes, as `analyze` does (default on)"),
     dry_run: bool = typer.Option(False, "--dry-run", help="List what WOULD run, with a cost estimate, then exit"),
     ok_if_supplementary_missing: bool = typer.Option(
         False, "--ok-if-supplementary-missing",
@@ -2367,6 +2371,7 @@ def batch_cmd(
     args = Namespace(
         corpus=corpus, limit=limit, seed=None, subdir_name=subdir_name,
         skip_existing=skip_existing, no_move_to_done=not archive,
+        bundle=bundle,
         concurrency=concurrency, timeout=timeout, budget_usd=budget_usd,
         mode="parallel", model=model, effort=effort, verbose=verbose,
         backend=be.name,

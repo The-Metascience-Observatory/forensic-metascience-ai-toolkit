@@ -9,6 +9,18 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.99.1] — 2026-10-19 — `batch` builds the offline viewer, as `analyze` does
+
+PATCH: no change to any finding, severity or prompt. `metascience analyze`
+(and so `metascience run`) has built each review's offline viewer
+(`<review>_bundle/viewer.html`) by default since `--bundle` became the default;
+`metascience batch` never did, so a corpus run handed back only the machine's
+notes unless someone ran `metascience bundle` per paper. Each paper that
+finishes (`ok` or `partial`) now gets its viewer, built off the event loop and
+before the move to `done/`. `--no-bundle` skips it on both `metascience batch`
+and the standalone runner. A viewer that cannot be built prints a warning with
+the retry command; the paper is not filed as failed.
+
 ## [1.99.0] — 2026-10-19 — the adjudicator is told about all five producer streams
 
 MINOR: a prompt edit. The adjudicator's mission said it referees "four

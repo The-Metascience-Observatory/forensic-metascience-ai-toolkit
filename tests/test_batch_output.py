@@ -212,3 +212,63 @@ class TestVerdictLabel:
         line = next(l for l in r.output.splitlines() if "(verdict:" in l)
         assert "verdict: -" not in line, line
         assert "no adjudicator" in line and "$0.76" in line, line
+
+
+class TestBatchBuildsTheViewer:
+    """`analyze` (and so `run`) builds the offline viewer by default; a paper
+    reviewed by `batch` used to get only the machine's notes."""
+
+    def _record_bundles(self, monkeypatch, fail=False):
+        calls = []
+
+        def fake_build(out_dir, paper):
+            calls.append((Path(out_dir), Path(paper)))
+            return "OSError: disk full" if fail else None
+
+        monkeypatch.setattr(batch_mod, "_build_viewer", fake_build)
+        return calls
+
+    def test_each_finished_paper_gets_a_viewer(self, tmp_path, monkeypatch):
+        root = _corpus(tmp_path, 2)
+        _patch_live(monkeypatch, {"10.1234--paper000": 0.1,
+                                  "10.1234--paper001": 0.1})
+        calls = self._record_bundles(monkeypatch)
+        r = runner.invoke(app, ["batch", str(root), "--workers", "1",
+                                "--backend", "claude", "--no-move-to-done"])
+        assert r.exit_code == 0, r.output
+        assert sorted(p.name for _, p in calls) == [
+            "10.1234--paper000", "10.1234--paper001"]
+        # Built from the review folder that paper's run just wrote.
+        assert all(out.parent == paper for out, paper in calls)
+
+    def test_no_bundle_skips_it(self, tmp_path, monkeypatch):
+        root = _corpus(tmp_path, 1)
+        _patch_live(monkeypatch, {"10.1234--paper000": 0.1})
+        calls = self._record_bundles(monkeypatch)
+        r = runner.invoke(app, ["batch", str(root), "--workers", "1",
+                                "--backend", "claude", "--no-move-to-done",
+                                "--no-bundle"])
+        assert r.exit_code == 0, r.output
+        assert calls == []
+
+    def test_a_failed_viewer_does_not_fail_the_paper(self, tmp_path,
+                                                     monkeypatch):
+        root = _corpus(tmp_path, 1)
+        _patch_live(monkeypatch, {"10.1234--paper000": 0.1})
+        self._record_bundles(monkeypatch, fail=True)
+        r = runner.invoke(app, ["batch", str(root), "--workers", "1",
+                                "--backend", "claude", "--no-move-to-done"])
+        assert r.exit_code == 0, r.output
+        assert "viewer bundle failed" in r.output
+        assert "metascience bundle" in r.output
+        assert "OK ->" in r.output
+        assert not (root / "failed.jsonl").exists()
+
+    def test_the_real_builder_reports_rather_than_raises(self, tmp_path):
+        err = batch_mod._build_viewer(tmp_path / "missing", tmp_path)
+        assert err and "missing" in err
+
+    def test_the_standalone_parser_defaults_on(self):
+        p = batch_mod.build_parser()
+        assert p.parse_args(["c"]).bundle is True
+        assert p.parse_args(["c", "--no-bundle"]).bundle is False

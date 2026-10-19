@@ -124,6 +124,23 @@ def _write_outputs(result: dict, out_dir: Path, paper: Path | None = None) -> No
     write_parallel_outputs(result, out_dir)
 
 
+def _build_viewer(out_dir: Path, paper: Path) -> str | None:
+    """Build the offline viewer beside one paper's review; the error, or None.
+
+    The same call `metascience analyze` makes when a review finishes
+    (`--bundle`, default on), so a paper reviewed by `batch` ends up with the
+    same deliverable as one reviewed alone. Never raises: the analysis is
+    already paid for and written, and a viewer that could not be built is
+    reported with the command that retries it, not filed as a failed paper.
+    """
+    try:
+        from .bundle import build_bundle
+        build_bundle(out_dir, None, paper)
+    except Exception as exc:  # noqa: BLE001 -- the review itself is safe
+        return f"{type(exc).__name__}: {exc}"
+    return None
+
+
 def pick_papers(corpus: Path, limit: int, seed: int | None) -> list[Path]:
     """Pick paper subdirectories from corpus, excluding scaffolding dirs.
 
@@ -567,6 +584,17 @@ async def process_paper(
     # Omitting it does not degrade the register, it SKIPS it -- see the guard
     # in the review writer.
     _write_outputs(result, out_dir, paper)
+    # THE VIEWER IS THE DELIVERABLE in a batch too: `analyze` (and so `run`)
+    # builds it by default, and a corpus run used to hand back only the
+    # machine's notes unless someone ran `metascience bundle` per paper. Built
+    # BEFORE the move to `done/`, so it moves with the paper. Off the event
+    # loop, because it renders every PDF page and other papers are in flight.
+    if args.bundle:
+        bundle_error = await asyncio.to_thread(_build_viewer, out_dir, paper)
+        if bundle_error:
+            print(f"  WARN: viewer bundle failed for {stem}: {bundle_error}\n"
+                  f"        the review is complete; retry the viewer with: "
+                  f"metascience bundle {out_dir}")
     meta = result.get("run_meta", {})
     stages = meta.get("stages", {}) or {}
     # Which model actually carried the bill, not merely which alias was asked
@@ -793,6 +821,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--skip-existing", action="store_true",
                         help="Skip papers already analysed by the same pipeline, "
                              "backend and model")
+    parser.add_argument("--bundle", action=argparse.BooleanOptionalAction,
+                        default=True,
+                        help="Build each paper's offline HTML viewer when its "
+                             "review finishes, as `metascience analyze` does "
+                             "(default on)")
     parser.add_argument("--no-move-to-done", action="store_true",
                         help="Don't move processed paper directories into <corpus>/done/ after analysis")
     # `--workers` is an alias for the same value: one worker holds `sem` for one

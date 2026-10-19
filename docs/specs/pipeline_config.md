@@ -20,7 +20,7 @@ metascience pipeline list                      # shipped pipelines
 metascience pipeline validate my.yaml          # resolved plan; calls no model
 metascience pipeline show tools_grim           # what a run records (JSON)
 metascience pipeline tools                     # tools-agent tools and named toolsets
-metascience run tools_grim <paper>             # = analyze <paper> --pipeline tools_grim
+metascience run tools_grim <paper> --backend claude   # = analyze <paper> --pipeline tools_grim
 metascience analyze <paper> --pipeline tools_grim --backend claude
 metascience batch <corpus> --pipeline no_adjudication --backend claude
 ```
@@ -48,7 +48,10 @@ and reviews would stop carrying across runs.
 - `image_analysis`: `ai_screening` (default true), `segment_montages`, `reassemble_tiles`.
 
 **Backend precedence:** a CLI flag or API keyword, then the pipeline file's
-`backend`, then `METASCIENCE_LLM_CLI`, then the default. The file's `model`
+`backend`. On the CLI that is the end of it: `analyze`, `run` and `batch`
+refuse to start without one when the pipeline calls a model
+(`cli._require_backend`, `PipelineConfig.uses_llm`). An API caller falls
+through to `METASCIENCE_LLM_CLI`, then the default. The file's `model`
 applies only to the file's own backend. One function,
 `resolve_backend_settings`, used by the API, `analyze` and both batch entry
 points. Options are booleans; anything else is refused.
@@ -92,8 +95,9 @@ A restricted toolset is enforced in four places:
 
 1. **The allowlist:** `Read` plus the toolset (`parallel.tool_agent_tools`).
 2. **The MCP server.** `METASCIENCE_MCP_TOOLS` is set on the server's
-   environment by every backend (Claude `--mcp-config`, Codex `-c mcp_servers`,
-   Grok `.grok/config.toml`). The server intersects it with the role's surface
+   environment by every backend (Claude and OpenRouter `--mcp-config`, Codex
+   `-c mcp_servers`, Grok `.grok/config.toml`, Antigravity its per-run sandbox
+   config). The server intersects it with the role's surface
    and **fails closed**: if the stage is missing or unknown, a tool is unknown,
    or nothing is left to serve, it refuses to start. Without a manifest, the
    role-only behaviour is unchanged.

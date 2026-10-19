@@ -247,8 +247,8 @@ def _no_secondary_model_wrote_content(run_meta: dict | None) -> Trip:
     Investigated and, on the evidence, not happening: `claude-haiku-4-5` is
     invoked and billed on every run, but nothing it produces reaches the
     pipeline. It appears in 0 of 156 assistant messages, only in the final
-    billing rollup, and its output never exceeded 32 tokens across 40 runs.
-    See docs/HAIKU_IN_THE_LOOP.md.
+    billing rollup, and its output never exceeded 32 tokens across 40 runs
+    (investigated 2026-08-18).
 
     THE CHECK EXISTS FOR THE CASE THAT EVIDENCE COULD NOT RULE OUT. What the CLI
     sends a secondary model, and what it does with the answer, happen inside the

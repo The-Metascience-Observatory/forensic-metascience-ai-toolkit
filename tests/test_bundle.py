@@ -1594,7 +1594,7 @@ class TestWhatThisReviewCouldNotDo:
 
         REFRAMED 2026-08-16. This asserted the literal string "at or below 1%".
         That number was written 2026-07-27, before most of the current pipeline
-        existed, and was never sourced -- `docs/FORENSIC_INTEGRITY_HARDENING.md`
+        existed, and was never sourced -- the 2026-08 integrity-hardening notes
         had already flagged that it "needs a cited method or a reframing". It
         sat outside `prompts/`, so `test_prompt_claims_are_dated.py` never
         caught it, and this assertion pinned it in place.

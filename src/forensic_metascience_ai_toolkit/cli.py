@@ -541,6 +541,18 @@ def analyze(
                               f"{h['examples'][0][:70]}")
         console.print("  [dim]Findings from this paper need checking against the "
                       "PDF by eye.[/dim]")
+    try:
+        from .extraction.glyph_repair import paper_record as _glyph_record
+        _grec = _glyph_record(paper_dir) or {}
+    except Exception:  # noqa: BLE001 -- a console notice only
+        _grec = {}
+    if _grec.get("repaired_glyphs") or _grec.get("refused_glyphs"):
+        console.print(f"\n[yellow]Broken symbol fonts.[/yellow] "
+                      f"{_grec.get('n_repaired', 0)} characters restored by glyph shape; "
+                      f"{len(_grec.get('refused_glyphs') or [])} glyph(s) left as extracted.")
+        for r in _grec.get("repaired_glyphs") or []:
+            console.print(f"  {r['font']}: {escape(repr(r['extracted']))} -> "
+                          f"{escape(r['intended'])} x{r['n']}")
 
     console.print(Panel(f"Analyzing: [bold]{paper_path}[/bold]", title="Forensic Metascience Analysis"))
 
@@ -2849,7 +2861,7 @@ def _require_backend(backend: Optional[str], config) -> None:
     if backend or (config is not None and not config.uses_llm):
         return
     console.print(
-        "[red]--backend is required: claude, codex, grok or openrouter "
+        "[red]--backend is required: claude, codex, grok, antigravity or openrouter "
         "(e.g. --backend claude).[/red]")
     raise typer.Exit(2)
 

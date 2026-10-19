@@ -22,6 +22,13 @@ compute confidently.
 The right response is to refuse to make forensic claims from such text, not to
 try to repair it. A repair is a guess about what the paper said, and a guess
 about a digit is exactly what we must never do.
+
+ONE EXCEPTION, AND IT IS NOT A GUESS (1.98.0). When the damaged character is
+drawn by a SYMBOL font, the PDF still holds the outline the reader sees.
+`extraction.glyph_repair` identifies each such glyph by its shape against a
+closed set of reference characters, refuses an ambiguous match, and logs every
+edit; this scan then runs on the repaired text. Characters it refuses stay
+damaged and are still reported here.
 """
 
 from __future__ import annotations

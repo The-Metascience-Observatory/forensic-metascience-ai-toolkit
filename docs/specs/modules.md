@@ -178,7 +178,8 @@ in a child process (`python -m forensic_metascience_ai_toolkit.raw_track`, kille
 
 An agent module's system prompt is `modules/<name>/prompt.md` (MODULE.md
 `prompt: prompt.md`); the text every role shares is `core/prompts/`
-(`rulebook.md`, `rulebook_roles.md`, `reproduction.md`, `grok_mcp_route.md`).
+(`rulebook.md`, `rulebook_roles.md`, `reproduction.md`, `grok_mcp_route.md`,
+`antigravity_route.md`, `antigravity_resume.md`).
 `core/prompts/__init__.py` assembles them (the `metascience_agent/prompts/`
 package was retired 2026-10-18; schemas are `forensic_metascience_ai_toolkit/schema/`).
 `prompts.PROMPT_FILES` maps the old names to them, so `_read("tool_expert.md")`

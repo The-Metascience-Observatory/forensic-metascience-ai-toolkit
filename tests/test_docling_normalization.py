@@ -209,8 +209,8 @@ class TestTheFoldRunsAtCacheWriteTime:
         assert data[1][0] == "Significance"
         assert data[2][1] == "A & B"
         # THE SAME FOLD ONLY: the cell is otherwise byte-faithful -- the `±`
-        # the authors printed survives (the pdf4llm normalizer's `+-` rewrite
-        # is recorded in docs/archive/ingestion_learnings.md as what NOT to do).
+        # the authors printed survives (the retired pdf4llm normalizer's `+-`
+        # rewrite is what NOT to do).
         assert data[1][1] == "0.03 ± 0.01"
 
         # And the fold is in the WRITTEN entry, not only the return value:

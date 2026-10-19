@@ -132,8 +132,8 @@ A clean initial synchronization is required before assessing warm-cache targets.
 
 ## Queues and production review
 
-This contract dates from September 11, 2026; the measurements taken then are in
-[archive/workbench_storage_log_2026-09.md](archive/workbench_storage_log_2026-09.md).
+This contract dates from September 11, 2026. The measurements taken then were
+in a dated log, removed on 2026-10-19 and kept in git history.
 
 Use Node 22 on this machine (`nvm use 22`). Everyday review uses an optimized
 Next.js build:
@@ -251,5 +251,5 @@ documentation moved with the code on 2026-10-16: see
 
 Verification samples, Database capacity and backfill audits, the September 10
 superseded-image cleanup, the Masliah image reset and the September 11 queue
-measurements are archived in
-[archive/workbench_storage_log_2026-09.md](archive/workbench_storage_log_2026-09.md).
+measurements were in a dated log, removed from the repository on 2026-10-19
+and kept in git history.

@@ -229,49 +229,6 @@ class TestGrimContextDependencyDoc:
         return (Path(__file__).resolve().parents[1] / "docs"
                 / "GRIM_CONTEXT_DEPENDENCY.md").read_text(encoding="utf-8")
 
-    def test_every_quoted_line_number_resolves_in_the_in_tree_book(self):
-        """The locators must be checkable, or the doc is hearsay about a source
-        that sits in the same repository."""
-        import re
-        from pathlib import Path
-        book = (Path(__file__).resolve().parents[1] / "docs" / "reference"
-                / "intro_to_forensic_metascience.md").read_text(
-                    encoding="utf-8").splitlines()
-        cited = {int(n) for m in re.finditer(
-            r"intro_to_forensic_metascience\.md:(\d+)(?:-(\d+))?", self._doc())
-            for n in m.groups() if n}
-        assert cited, "the doc cites the book by line and must keep doing so"
-        for n in sorted(cited):
-            assert 0 < n <= len(book), f"line {n} is past the end of the book"
-
-    @staticmethod
-    def _flat(text):
-        """Collapse whitespace and fold smart punctuation.
-
-        A quote wrapped across markdown lines is still verbatim, and the book
-        uses typographic apostrophes where the doc types ASCII. Comparing raw
-        would fail on formatting rather than on fidelity; this compares words.
-        """
-        import re as _re
-        for a, b in (("\u2019", "'"), ("\u2018", "'"), ("\u201c", '"'),
-                     ("\u201d", '"'), ("\u2014", "--")):
-            text = text.replace(a, b)
-        return _re.sub(r"[\s>*]+", " ", text)
-
-    def test_the_load_bearing_quotes_are_verbatim(self):
-        from pathlib import Path
-        book = self._flat((Path(__file__).resolve().parents[1] / "docs" / "reference"
-                           / "intro_to_forensic_metascience.md").read_text(encoding="utf-8"))
-        doc = self._flat(self._doc())
-        for fragment in (
-            "maybe someone left the question blank, and the denominator isn't actually 30",
-            "GRIM doesn't work at all as any eventual mean is possible",
-            "analysts get annoyed by papers that do not clearly specify their methods",
-            "R does not round values in the traditional manner",
-        ):
-            assert fragment in book, f"not in the book as quoted: {fragment}"
-            assert fragment in doc, f"in the book but not quoted in the doc: {fragment}"
-
     def test_it_separates_his_claims_from_ours(self):
         """Heathers never catalogues innocent GRIM failures, so most of the list
         is derived. Presenting it as his would misattribute it."""

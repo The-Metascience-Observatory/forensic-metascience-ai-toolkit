@@ -176,8 +176,8 @@ rebuild the exact defect that module was written to prevent.
 ## First corpus measurement (2026-08-19)
 
 The first measurement of the built register on a heterogeneous corpus, with
-both the prose and table rails working (details in
-[archive/VALUE_REGISTER_MEASUREMENTS.md](archive/VALUE_REGISTER_MEASUREMENTS.md)):
+both the prose and table rails working (the full measurement notes were
+removed from the repository on 2026-10-19 and remain in git history):
 58 Zotero papers gave 5,049 groups and 5,899 values, 61% from tables and 39%
 from prose. By class: 48.8% descriptive, 32.8% unknown, 17.4% inferential, 1.1%
 design. Of 34,916 numerals, about half were judged (`share_judged` 0.507). That

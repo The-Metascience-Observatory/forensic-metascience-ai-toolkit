@@ -9,6 +9,51 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.98.0] — 2026-10-19 — broken symbol fonts repaired by glyph shape; analysts told about font damage
+
+MINOR: the text every reader of a PDF's docling cache sees changes on papers
+whose symbol fonts carry wrong Unicode maps, and both analysts receive a new
+per-paper note. Two reviews of such a paper across this boundary are not
+comparable. Clean papers are unaffected.
+
+- **`extraction/glyph_repair.py`.** Each distinct (font, glyph) a SYMBOL font
+  draws is rasterised once from the embedded font program and template-matched
+  against reference characters drawn from MuPDF's built-in fonts (no OCR, no
+  page pixels, no system fonts). The extracted character is overturned only
+  at score >= 0.6 and margin >= 0.2 over every other character; otherwise it is
+  left as-is and reported. Characters drawn by text fonts are never touched.
+  A docling occurrence is repaired only where its context places it, in the
+  PDF text layer, exclusively at that glyph -- a genuine `5` survives.
+- **Calibration (2026-10-19, 89 PDFs):** of 1,378 glyphs with a printable
+  reference label, including whole text fonts as a negative control, 1,310
+  matched their label, 56 were refused, and all 12 overturned were in fonts
+  with broken maps (`AdvMPi-One 5->=`, `AdvP4C4E51 :->.`, `AdvPi1 Z->η`,
+  `6->×`, `MathTechnicalP* !-><, 1->>, p->=, #->×, h->η, b->β, x->χ`): zero
+  changes to a correct character.
+- **Measured:** schnall2008 (Psych Science) -- 148 edits, every `=`, `η`
+  and decimal point on pages 2-3 checked against the rendered page,
+  glyph-scan quarantine lifted (it reports `p_rep`, so statcheck reads 0
+  either way). 10.1111/j.0956-7976.2004.00757.x: statcheck 0 -> 24
+  statistics, quarantine lifted. 10.1086/661890 (JCR): statcheck 0 -> 41.
+  Sampled statistics in both checked by eye against the page.
+- **Applied at read time, never written to the cache.**
+  `docling_tables.extract_pdf_tables` and `cached_text` serve the repaired
+  text, pages, references and table cells (so `extract_pdf`, `paper_text`,
+  `_read_body` and the prepass tables all agree); the cache file stays
+  docling's output, the original the log refers to. Quote verification's PDF
+  text layer is repaired with the same map.
+- **Every edit is a `repairs.Repair`** (rule `glyph_repair.shape_match`), in
+  the extraction's `glyph_repair` record and, on an analysis run,
+  `markdown/repairs.json` (its other entries and `declares_body_md` untouched).
+  `coverage_summary.text_integrity.glyph_repair` lists repaired and refused
+  glyphs.
+- **The analysts are told.** The glyph scan's verdict used to reach only the
+  console and coverage_summary. A note beside the survey/p-adjustment notes
+  now names the damaged fonts, each repaired substitution, each glyph that
+  could not be identified, and any corruption the scan still sees, and tells
+  the models not to decode a damaged character themselves.
+- `scaffold.fontaudit._is_symbol_font("AdvMPi-One")` is now True.
+
 ## [1.97.0] — 2026-10-19 — statcheck respects a declared correction
 
 MINOR: a tool definition changed and statcheck's counts change for a paper

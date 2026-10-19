@@ -241,8 +241,8 @@ class TestASecondaryModelWritingContent:
 
     Investigated and not happening: haiku is billed on every run but appears in
     0 of 156 assistant messages, only in the final billing rollup, and its
-    output never exceeded 32 tokens across 40 archived transcripts. See
-    docs/HAIKU_IN_THE_LOOP.md.
+    output never exceeded 32 tokens across 40 archived transcripts
+    (investigated 2026-08-18).
 
     This check exists for the case the evidence could NOT rule out. What the CLI
     sends a secondary model happens inside the CLI. If one were used to

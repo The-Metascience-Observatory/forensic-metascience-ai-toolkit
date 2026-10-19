@@ -139,8 +139,8 @@ hand-recomputed χ² matches), and a case in
   required, Table 1 refused, severity cap; a `<!-- guidance:NN -->` block for
   the tools agent saying when to call it (raw supplement columns).
 - Add to `deterministic.reproducible_tools()` so findings replay as
-  `metascience tool run check_digit_preference --json ...`. A hand-written
-  CLI verb is optional.
+  `metascience tool run check_digit_preference --json ...`. No hand-written
+  CLI verb (per-tool verbs were removed in 1.95.0).
 - Regenerate `tests/data/registry_snapshot.json`; add `CASES` in
   `tests/test_registry_equivalence.py` (one evaluated, one refused).
 

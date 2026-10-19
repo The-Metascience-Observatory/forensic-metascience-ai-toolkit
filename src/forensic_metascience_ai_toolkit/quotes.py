@@ -492,6 +492,14 @@ def build_haystack(paper_dir: str | Path) -> dict[str, str]:
         pdf = find_pdf(paper_dir)
         if pdf is None:
             return ""
+        # The layer with this PDF's broken symbol-font characters restored
+        # (`glyph_repair`), so it agrees with the repaired docling text the
+        # analysts quote from: a quoted `F(1, 38) = 3.63` is in it, the
+        # layer's own `F(1, 38) 5 3.63` is not.
+        from .extraction.glyph_repair import repaired_text_layer
+        repaired = repaired_text_layer(pdf)
+        if repaired is not None:
+            return repaired
         # PyMuPDF rather than pdfplumber here: over this corpus it located 423
         # quote-hits against pdfplumber's 247 on the same documents.
         with fitz.open(str(pdf)) as doc:

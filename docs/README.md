@@ -25,7 +25,7 @@ lives in that repository, not here.
 | [specs/webapp_db.md](specs/webapp_db.md) | The local findings database (Postgres): schema, `db-push`, proof queries |
 | [workbench_storage.md](workbench_storage.md) | The review workbench: local SQLite cache, sync journal, review outbox, media |
 | [analysis_history.md](analysis_history.md) | Versioned run history (`.analysis_runs/`), the `history-*` commands |
-| [tool_reference.md](tool_reference.md) | Every forensic tool for humans: when it applies, what it refuses, its CLI verb. Sent to no model; `metascience tool list` / `describe` is the live source |
+| [tool_reference.md](tool_reference.md) | Every forensic tool for humans: when it applies, what it refuses, how to run it (`metascience tool run <tool>`). Sent to no model; `metascience tool list` / `describe` is the live source |
 
 ## Doctrine and decisions
 
@@ -34,18 +34,7 @@ lives in that repository, not here.
 | [errorlevels.md](errorlevels.md) | The 1-9 severity ladder explained for humans, with worked cases. [severity_ladder.json](severity_ladder.json) is the generated machine copy (do not edit by hand) |
 | [GRIM_CONTEXT_DEPENDENCY.md](GRIM_CONTEXT_DEPENDENCY.md) | Nineteen innocent reasons a GRIM "impossible" can appear. Read before acting on one |
 | [VALIDATION.md](VALIDATION.md) | How the tools are checked against R reference implementations and how the full review is scored on papers with known problems, in plain terms |
-| [FORENSIC_INTEGRITY_HARDENING.md](FORENSIC_INTEGRITY_HARDENING.md) | The cardinal rule (no false accusations), recurring failure patterns, a contributor checklist |
 | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md) | Open and decided design questions, dated |
 | [WHITEPAPER_checks_we_declined.md](WHITEPAPER_checks_we_declined.md) | Why some published checks (STALT "hidden tiny p") are not accusation-grade |
-| [HAIKU_IN_THE_LOOP.md](HAIKU_IN_THE_LOOP.md) | Whether a secondary model writes into a review (it does not), and the tripwire for it |
 | [VALUE_REGISTER_DESIGN.md](VALUE_REGISTER_DESIGN.md) | The value register (`value_register.json`): every reported number, typed and linked |
 | [DIGITS_PLAN.md](DIGITS_PLAN.md) | Proposed, not started: a last-digit-preference check on individual observations (Carlisle 2021), and why it is IPD-only |
-| [SPOT_ANALYSIS.md](SPOT_ANALYSIS.md) | What the SPOT benchmark (Son et al. 2025) measures, and what to adopt from it |
-
-## Elsewhere in this folder
-
-- [reference/](reference/README.md): Heathers, *An Introduction to Forensic
-  Metascience* (CC-BY 4.0), which the doctrine cites by line.
-- [reviews/](reviews/): dated engineering audits, unedited.
-- [archive/](archive/README.md): finished or abandoned design notes,
-  measurements and handoffs. Historical; each opens with what is still true.

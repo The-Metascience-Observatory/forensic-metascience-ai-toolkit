@@ -110,7 +110,7 @@ through migration):
 The adjudicator imports, never redeclares: `FIVE_TO_NINE`
 ({suspicious: 3, highly_suspicious: 4, impossible: 5}), `QUARANTINE_CAP = 3`,
 `ACCUSATORY_MIN = 3`, and `rubric_markdown()` (embedded into
-`adjudication.md` at assembly time — no separate ladder file to drift).
+`modules/adjudicator/prompt.md` at assembly time — no separate ladder file to drift).
 
 **There is no ceiling (v1.14.0).** `PIPELINE_MAX`, `ADJUDICATOR_MAX_*`, the
 manipulation 8-gate and the analysts' evidence-class `PROVISIONAL_CAP` were
@@ -264,7 +264,7 @@ Rulebook stays the one shared file with the "who each rule binds" preamble
 
 ## 8. Cost, budget, and the `cross_check: "not_run"` stamp
 
-- Budget split (Claude backend only; Grok has no spend cap): tool agent
+- Budget split (Claude backend only; the other backends have no spend cap): tool agent
   0.40·B, science agent 0.25·B, **adjudicator gets the remainder**, with
   `MIN_ADJUDICATOR_BUDGET_USD = 0.20` as a floor. Below the floor:
   **skip adjudication** and ship a findings-only result (merged, all

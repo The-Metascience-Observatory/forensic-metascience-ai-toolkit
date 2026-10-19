@@ -796,6 +796,16 @@ async def _coordinate_analysis(
     # A stated one-tailed test: the only case in which the p tools may read a
     # mismatch as one-tailed (1.93.0, statcheck's OneTailedTxt rule).
     survey_note += one_tailed_note(text)
+    # FONT-ENCODING DAMAGE (1.98.0). The glyph scan's verdict reached only the
+    # console and coverage_summary, so the analysts trusted `5` as a digit or
+    # decoded it to `=` on their own. They are now told which fonts are broken,
+    # which characters were restored by shape, and which could not be.
+    try:
+        from .extraction.glyph_repair import analyst_note, paper_record
+        _glyph_rec = paper_record(paper_dir, write=True)
+        survey_note += analyst_note(paper_dir, text, _glyph_rec)
+    except Exception:  # noqa: BLE001 -- a note, never a reason to stop a run
+        pass
 
     # THE MODULES. Each configured producer runs as its own task, started as
     # soon as the modules it `needs` have finished (core/scheduler.py); their
@@ -1567,6 +1577,13 @@ def _build_coverage_summary(result: dict, ledgers: dict, doc: dict) -> dict:
                           ("pattern", "count", "corrupts_digits", "examples")}
                          for pat in (g.get("patterns") or [])],
         }
+        from .extraction.glyph_repair import paper_record as _glyph_record
+        _gr = _glyph_record(paper_dir)
+        if _gr is not None:
+            out["text_integrity"]["glyph_repair"] = {
+                k: _gr.get(k) for k in ("status", "error", "symbol_fonts",
+                                        "repaired_glyphs", "refused_glyphs",
+                                        "n_repaired", "n_unresolved", "pdf")}
     except Exception as exc:  # noqa: BLE001
         out["text_integrity"] = {
             "error": f"glyph scan failed: {type(exc).__name__}: {exc}"}

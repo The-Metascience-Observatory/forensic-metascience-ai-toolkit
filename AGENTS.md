@@ -18,7 +18,7 @@ The CLI is still `metascience`.
 
 Guidance for working in this repo. See [README.md](README.md) for user-facing usage
 and [docs/README.md](docs/README.md) for an index of the specs and design notes
-(current contracts in `docs/specs/`, finished work in `docs/archive/`).
+(current contracts in `docs/specs/`; finished design notes are in git history).
 **This file is the one copy of the project guidance.** `CLAUDE.md` is a
 one-line `@AGENTS.md` import so Claude Code loads it too; edit here, never
 there. Backend behavior comes from the code, not the assistant reading this

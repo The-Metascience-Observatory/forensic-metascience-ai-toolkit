@@ -14,9 +14,10 @@ conventions rather than arithmetic error. Every one would have been caught by
 working through the list below before publishing.
 
 **Sourcing.** Quotations are from James Heathers, *An Introduction to Forensic
-Metascience* (2025), doi:10.5281/zenodo.14871843, in-tree at
-`docs/reference/intro_to_forensic_metascience.md` (CC-BY 4.0); locators are
-line numbers in that file and every quote here was checked against it.
+Metascience* (2025), doi:[10.5281/zenodo.14871843](https://doi.org/10.5281/zenodo.14871843)
+(CC-BY 4.0). Locators are line numbers in the Curvenote/MyST source export of
+that Zenodo record (v1, 2025-02-14); every quote here was checked against it
+while a copy was kept in this repository (removed 2026-10-19).
 
 **What Heathers does and does not cover, stated plainly.** He never catalogues
 reasons a GRIM failure might be innocent, and the word "composite" does not

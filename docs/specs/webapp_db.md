@@ -10,8 +10,9 @@
   media stay files; no Auth.js) is
   [docs/workbench_storage.md](../workbench_storage.md). This file remains the
   DDL / phase intent. The unbuilt plans (Phase 8 hosting, `db-pull`, the
-  `webapp/lib/data/` seam, the fast-screen runner) are in
-  [docs/archive/webapp_db_unbuilt_plans.md](../archive/webapp_db_unbuilt_plans.md);
+  `webapp/lib/data/` seam, the fast-screen runner) were written up in a
+  separate archived note ("the archive" below), removed on 2026-10-19 and
+  kept in git history;
   their sections here are one-line pointers so section numbers stay stable. The
   `--sev1…--sev9` CSS variables of §8 do not exist either (`globals.css` keeps the
   five-enum `--sev-*` colours).
@@ -62,7 +63,7 @@ shrink the two biggest 9P offenders before any DB exists.
 |---|---|---|
 | Full pipeline runs | files written as the run archive; `db-push` fires automatically at run completion when `METASCIENCE_DB_URL` is set (best-effort → `db_push_pending.jsonl` on failure) | same (runs happen on machines with the corpus) |
 | Fast screen agent (runner not built, §6) | DB-native insert (+ optional local JSONL journal for offline replay); **no per-paper files** | same |
-| Webapp reviews / submissions / status | `review.json` 2.0 (run-scoped) | The planned DB-first path and `db-pull` export were not built (archive §1). The live workbench commits decisions to a local SQLite outbox and syncs them to Neon (docs/workbench_storage.md). |
+| Webapp reviews / submissions / status | `review.json` 2.0 (run-scoped) | The planned DB-first path and `db-pull` export were not built (archive §1). The live workbench commits decisions to a local SQLite outbox and syncs them to the local Postgres findings database (docs/workbench_storage.md). |
 | Paper views (who OPENED a results page) | `views.json` beside the paper (`views_io`) | `views.json` — **not mirrored**, deliberately: §2 has no table that wants it, and a view is not a review row |
 | Triage decisions (queue/dismiss) | n/a | `triage_events` table exists; no writer was built (archive §1, §6) |
 | Drafts | `paper_dir/drafts/*.md` | `drafts` table exists; `drafts.py` does not write it |
@@ -381,14 +382,14 @@ create table sync_state (            -- the db-pull refusal rule's data:
 
 Vocabulary validation split (normative): `producer` and `technique` are validated by
 db-push at insert time **at the app layer, deliberately not CHECK constraints** — both
-vocabularies evolve. One canonical producer list (owned by the findings-v2 schema module
-in `prompts/`) and one technique namespace (registry-derived, per Part A §A1).
+vocabularies evolve. One canonical producer list (owned by the findings-v2 schema in
+`src/forensic_metascience_ai_toolkit/schema/`) and one technique namespace (registry-derived, per Part A §A1).
 
 ## 3. db-push replay semantics
 
 Insert-only upserts are not enough. Normative rules:
 
-1. **One transaction PER RUN** (Neon pooling dislikes long transactions): upsert the
+1. **One transaction PER RUN** (short transactions; a rule kept from the Neon era): upsert the
    paper (resolution order §2) and the run, then the findings.
 2. **Preserve completed reports** (updated 2026-09-09): resolve the document digest
    before writing. Changed report content receives a linked revision ID; a sealed
@@ -420,7 +421,7 @@ Insert-only upserts are not enough. Normative rules:
 ## 4. db-pull
 
 Not built: there is no `metascience db-pull` command. The planned export and its
-refusal rule are in the archive (§4).
+refusal rule were in an archived note, removed 2026-10-19 and kept in git history.
 
 **Workbench read fallback (2026-09-01).** `review_issues.collect_issues` reads the
 analyst findings from disk first; when a paper has NO `forensic_review*/` directory
@@ -430,8 +431,10 @@ response carries `source.kind ∈ {disk, database, none}` and the database TRI-S
 (`hit` / `miss` / `unavailable`, with detail), and the empty-pane message renders
 that state in words: an unreachable database must never read as a clean paper. This is
 a READ path only — nothing is written back to disk, and the `db-pull` refusal rule
-above is untouched. Motivating case: `10.1002--jfa2.70171`, run on another machine
-and auto-pushed, 24 findings in the database and none on this disk.
+above is untouched. Motivating case (2026-09-01, when the database was the shared
+Neon instance): `10.1002--jfa2.70171`, run on another machine and auto-pushed, 24
+findings in the database and none on this disk. Since 2026-10-16 the database is
+local only, so the fallback now covers runs whose files were moved or deleted.
 
 ## 5. Proof queries (normative — each rule below was a caught bug in the first draft)
 

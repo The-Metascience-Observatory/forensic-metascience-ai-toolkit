@@ -60,10 +60,10 @@ mean.
 |---|---|---|---|
 | 1 | `trivial` | Trivial error | no formal correction |
 | 2 | `minor` | Minor error | erratum if needed |
-| 3 | `notable` | Notable error | localized correction |
-| 4 | `local_flaw` | Localized methodological flaw | corrigendum |
+| 3 | `notable` | Notable error | localized correction/clarification |
+| 4 | `local_flaw` | Localized methodological flaw or omission | public correction (corrigendum) |
 | 5 | `conclusions_affected` | Major error affecting conclusions | corrigendum or partial retraction |
-| 6 | `unreliable` | Severe error -- results unreliable | expression of concern |
+| 6 | `unreliable` | Severe error -- results unreliable | expression of concern; retraction candidate |
 | 7 | `fatal_error` | Fatal error invalidating main findings | retraction (honest error) |
 | 8 | `misconduct` | Serious misconduct | retraction (misconduct) |
 | 9 | `extreme_misconduct` | Malicious or extreme misconduct | retraction, sanctions |

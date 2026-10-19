@@ -54,7 +54,7 @@ line. So the finding join, reproductions, receipts and audits work unchanged.
 `describe`/`list` calls (and `describe_tool`) are `harness`. Any other `Bash`
 line is what it always was.
 
-On every non-Claude backend (Grok, Codex, OpenRouter), `skill` raises by
+On every non-Claude backend (Grok, Codex, Antigravity, OpenRouter), `skill` raises by
 name (`llm_backend.py`): their shells have no equivalent hook here.
 
 ## Not here

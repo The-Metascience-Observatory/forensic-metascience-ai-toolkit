@@ -265,20 +265,6 @@ How the tools are checked against independent R implementations, and how the
 full review is scored on papers with known problems: see
 [docs/VALIDATION.md](docs/VALIDATION.md).
 
-## Limitations
-
-- **Extraction is the binding constraint.** The arithmetic is exact, but table
-  cells lose their row and column addresses: on one JAMA table, 26% of
-  `estimate (95% CI)` pairs were broken while no number was missing.
-- **Font corruption.** About a third of PDFs have broken character maps (`±`
-  read as `6`, `=` as `5`, a minus sign lost). The run detects and warns; it
-  does not repair.
-- **Figures are mostly invisible** to the statistical review.
-- **Preconditions are usually unstated.** A wrong scale bound inverts a check
-  rather than weakening it.
-- **An impossible number is not proof of fabrication.** That step needs
-  evidence this toolkit does not have.
-
 ## Python API
 
 ```python
@@ -288,18 +274,6 @@ from forensic_metascience_ai_toolkit.tools import grim_test
 result = analyze_paper_sync("paper_dir/", mode="parallel", budget_usd=8.0)
 print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # False
 ```
-
-
-## Related packages
-
-- [`copy_paste_detector/`](copy_paste_detector/README.md) (in this
-  repository): the raw-data copy-paste detector, also standalone; evaluation
-  protocol in [benchmarks/copy_paste/README.md](benchmarks/copy_paste/README.md).
-- **Image analysis** (`metascience_observatory_image_analysis`) is a separate,
-  privately distributed package that builds on this toolkit. Installed after
-  it (`pip install -e ../metascience-observatory-image-analysis`), it adds the
-  image track, the `metascience image-*` commands and the workbench image
-  queue. The toolkit runs without it.
 
 ## License
 

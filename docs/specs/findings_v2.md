@@ -333,7 +333,7 @@ reachable from any producer schema.
   "tool_verdict": {"severity": "indeterminate", "tool": "detect_tortured_phrases",
                    "validated": true, "quarantined_raw": "suspicious"},
   "anchors": [{"kind": "quote", "quote": "…counterfeit consciousness…"}],
-  "reproduction": "metascience tortured-phrases …",
+  "reproduction": "metascience tool run detect_tortured_phrases --json …",
   "adjudication": {"action": "kept"} }  // silence rule: kept-with-provisional (adjudicator.md §5.7)
 ```
 

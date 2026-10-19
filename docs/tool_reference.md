@@ -1106,7 +1106,8 @@ which IS what the model is sent.
     {"label": "assessed", "n": 240, "excluded": [{"reason": "declined", "n": 40}]},
     {"label": "randomized", "n": 200, "arms": [{"label": "treatment", "n": 100}, {"label": "control", "n": 100}]}]}'
   ```
-- **`run_python_script`** (no CLI verb; scientific proofreading agent only) -- runs a
+- **`run_python_script`** (agent-only infrastructure, not a forensic check;
+  scientific proofreading agent only) -- runs a
   short script in a network-off sandbox and returns captured stdout/stderr;
   every script is persisted under the run's `analysis_code/`.
 - **`analyze_paper_images`** (CLI-only: `metascience tool run analyze_paper_images

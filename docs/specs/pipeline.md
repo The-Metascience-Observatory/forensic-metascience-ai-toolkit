@@ -116,7 +116,7 @@ Any other mode string raises.
 During migration `parallel` landed BESIDE the old body so A/B eval could
 compare the two on the same papers.
 
-## 3. Budget split (Claude backend only; Grok has no spend cap — see §11)
+## 3. Budget split (Claude backend only; the other backends have no spend cap — see §11)
 
 For per-paper budget B:
 
@@ -142,7 +142,7 @@ For per-paper budget B:
 | One agent fails, other survives | Proceed with survivor; loud limitation naming the dead agent; `is_error` true | `partial.jsonl` (cost row recorded) |
 | Both agents fail | `StageError` | `failed.jsonl`, spend recorded |
 | Adjudicator fails or is skipped (floor/timeout) | **Fail OPEN**: findings ship with provisional severity + `severity_is_provisional: true` + doc-level failure record; `cross_check: "not_run"` stamp per §3. Findings are never lost. | `partial.jsonl` |
-| Empty-dump / tools-never-ran (either agent, either backend) | `_run_agent_requiring_output` retries up to `GROK_EMPTY_DUMP_RETRIES`, per agent; both attempts billed | — |
+| Empty-dump / tools-never-ran (either agent, either backend) | `agent._run_stage_requiring_forensic_tools` / `_analyst.retry_if_empty` retries up to `GROK_EMPTY_DUMP_RETRIES`, per agent; both attempts billed | — |
 | Image/text track subprocess fails | As today: named channel state, never a silent absence | — |
 | Preflight failure | Fails CLOSED before any spend, re-raised without a `failed.jsonl` row (environment fault) — unchanged | — |
 | Usage-guard probe failure | Fails OPEN — unchanged; one guard call covers each agent stage | — |
@@ -179,8 +179,8 @@ adjudicator), the code is current.
 (`STAGE1_TOOLS`/`STAGE2_TOOLS`) are kept through migration and deleted at
 Phase 7. The rename + snapshot regen is ONE commit.
 
-Counts below are the 2026-08 design. At 1.77.0, `registry.stage_tools` gives
-TOOL_AGENT 56, SCIENCE_AGENT 17 (the 15 below plus `check_effect_plausibility`
+Counts below are the 2026-08 design. At 1.98.0, `registry.stage_tools` gives
+TOOL_AGENT 58, SCIENCE_AGENT 17 (the 15 below plus `check_effect_plausibility`
 and `paired_d_interval`) and ADJUDICATOR 42; the registry is the record.
 
 - **TOOL_AGENT** — the 54-tool stage-1 set of 2026-08, byte-for-byte unchanged.
@@ -249,7 +249,10 @@ in the failing identity was supplied as printed by the paper; any assumed or
 absent operand → guard path → `indeterminate` (a tool pointed at the wrong
 data must refuse, not accuse).
 
-**Wiring checklist (per CLAUDE.md, all steps mandatory):**
+**Wiring checklist (as built in 2026-08; today's checklist is AGENTS.md's, where
+the `ToolSpec` lives in `tool_specs/flow/spec.py` and the tool runs as
+`metascience tool run check_flow_arithmetic`; `flow-check` survives only as
+its `legacy_verb`):**
 1. `tools/flow.py` + export in `tools/__init__.py`.
 2. `ToolSpec` in `registry.py` with `stages = {SCIENCE_AGENT, ADJUDICATOR}`
    (MCP wrapper and allowlists derive; nothing to edit elsewhere).
@@ -451,7 +454,7 @@ is an MCP tool, not a backend shell**:
   never merely a second `sandbox_limitation` sentence.
 
 **Wiring (per the CLAUDE.md checklist, decided):** `run_python_script` gets a
-`ToolSpec` in `registry.py` with `stages = frozenset({SCIENCE_AGENT})` so the
+`ToolSpec` (now in `tool_specs/`) with `stages = frozenset({SCIENCE_AGENT})` so the
 MCP server and deny-complements derive it like any tool — but it is
 INFRASTRUCTURE, not a forensic technique: **no CLI verb** (`cli=None`; a
 code-backed finding's reproduction is `reproduction_kind: "script"` pointing
@@ -482,7 +485,7 @@ Every item must hold before Grok is offered on the parallel mode:
       recorded — Grok is not exempt.
 - [ ] `normalize_event` maps the four new tool names; ledgers byte-comparable
       with Claude runs (existing test pattern extended).
-- [ ] `GROK_EMPTY_DUMP_RETRIES` wired through `_run_agent_requiring_output`
+- [ ] `GROK_EMPTY_DUMP_RETRIES` wired through `agent._run_stage_requiring_forensic_tools` / `_analyst.retry_if_empty`
       for BOTH agents (two empty-dump exposures per paper, both billed —
       accepted risk).
 - [ ] No spend cap on Grok (`supports_budget=False`): the §3 budget split
@@ -652,7 +655,8 @@ Measured against agy 1.4.2, 2026-10-18 (`--backend antigravity`, alias `agy`;
   disposition" via the explicit dismissed/merged lists — discarded findings
   are RETAINED with `adjudication.action: "discarded"`, never deleted
   ("ran and discarded" must stay distinguishable from "did not run").
-- **Dual emission in Phase 1 (normative, corrected rule):** the image/text
+- **Dual emission in Phase 1 (historical: Phases 1-6 are finished and v1 is
+  gone since v1.27.0):** the image/text
   track row builders construct v2 records internally but a down-map converts
   to v1 at the injection point until Phase 4's parallel mode consumes v2
   natively. The live `two_stage` path validates the merged document against

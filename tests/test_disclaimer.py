@@ -55,8 +55,8 @@ class TestWording:
 
         The "1%" end-to-end precision figure is GONE and must stay gone.
         Written 2026-07-27, before most of the current pipeline existed, never
-        sourced, and already flagged in
-        `docs/FORENSIC_INTEGRITY_HARDENING.md` as needing "a cited method or a
+        sourced, and already flagged in the 2026-08 integrity-hardening
+        notes as needing "a cited method or a
         reframing". It sat outside `prompts/`, so the dated-claims test never
         reached it, and this assertion held it in place. The qualitative claim
         that replaced it carries the same guard and is defensible.

@@ -1,12 +1,11 @@
 # Design decisions and open considerations
 
-> Written 2026-07-28, last revised 2026-10-16. A dated record: where it disagrees with CLAUDE.md or the code, they win.
+> Written 2026-07-28, last revised 2026-10-19. A dated record: where it disagrees with CLAUDE.md or the code, they win.
 
-> For the cardinal rule (no false accusations), the severity ladder, the "house
-> failure pattern", and the reusable guard patterns every check must follow, see
-> **[FORENSIC_INTEGRITY_HARDENING.md](FORENSIC_INTEGRITY_HARDENING.md)** -- the
-> principle-first companion to this file, written for both humans and LLM
-> contributors.
+> For the cardinal rule (no false accusations) and the recurring failure
+> patterns every check must guard against, see [AGENTS.md](../AGENTS.md) and
+> [LESSONS.md](../LESSONS.md); the severity ladder is
+> [errorlevels.md](errorlevels.md).
 
 A log of choices that were made deliberately, choices that were deliberately
 NOT made, and questions still open. Rationale for individual mechanisms lives in
@@ -100,7 +99,8 @@ separator.
 ### `check_regression` batching
 
 **Status:** done. `check_regression_batch` (`tools/regression.py`, registered in
-`tool_specs/regression/`, CLI verb `regression-batch`) checks every coefficient
+`tool_specs/regression/`; run it with `metascience tool run
+check_regression_batch --json ...`) checks every coefficient
 in one call, reports the worst row, and re-runs across probe dfs when the df is
 not reported. The motivating measurement: 79 of 111 stage-1 calls on one paper
 (serial pipeline, deleted in v1.27.0) were `check_regression`, one per

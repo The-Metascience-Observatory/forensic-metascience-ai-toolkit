@@ -73,7 +73,9 @@ def _is_symbol_font(name: str) -> bool:
     `Els-ent4` / `Els-Ent1` shape.
     """
     low = re.sub(r"^adv", "", (name or "").lower())
-    if re.match(r"^pi\d*(?:-|$)", low):
+    # `AdvMPi-One` is the Advent MATH pi font: it draws every `=` in
+    # schnall2008.pdf, and was missed until 2026-10-19.
+    if re.match(r"^m?pi\d*(?:-|$)", low):
         return True
     for m in ("symbol", "p4c4e", "ta42", "dingbat", "wingding", "universal",
               "mathematical"):

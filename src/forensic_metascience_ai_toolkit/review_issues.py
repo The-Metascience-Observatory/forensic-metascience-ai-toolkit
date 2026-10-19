@@ -212,8 +212,9 @@ def _db_numeric_issues(paper_dir: Path, run: str | None) -> dict:
     """Analyst issues from the findings database, for a paper with no run
     directory on this disk.
 
-    The run happened on another machine and the auto-push carried it to
-    Neon; the files never came here. Without this branch the pane said "No
+    The run's files are not on this disk (in 2026-09 that meant a run from
+    another machine, auto-pushed to the then-shared Neon database; the
+    database is local only since 2026-10-16). Without this branch the pane said "No
     reviewable issues on disk", which a reader took as "nothing recorded"
     (`10.1002--jfa2.70171`, 2026-09-01: 24 findings in the database).
 
@@ -604,7 +605,7 @@ def collect_issues(paper_dir: Path, run: str | None = None) -> dict:
     # Where the analyst findings came from. `disk` is the archive of record
     # on this machine; `database` is the fallback for a run pushed from
     # another one; `none` means both were asked and neither had anything --
-    # and the `database` sub-record says whether Neon was even reachable.
+    # and the `database` sub-record says whether the database was even reachable.
     source: dict = {"kind": "disk" if served else "none", "database": None}
     if served is None:
         db = _db_numeric_issues(paper_dir, requested)

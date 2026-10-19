@@ -279,6 +279,23 @@ def _converter(execution=None):
 
 def extract_pdf_tables(path: str | Path, use_cache: bool = True,
                        allow_extract: bool = True) -> dict:
+    """See `_extract_unrepaired`; the result has this PDF's broken-symbol-font
+    characters restored (`glyph_repair.apply_to_extraction`).
+
+    APPLIED ON EVERY READ, NEVER WRITTEN TO THE CACHE. The cache stays the
+    faithful docling output -- the original the repair log's offsets refer to
+    -- and a change to the repair rules reaches every cached paper without a
+    re-extraction. A PDF with no symbol font costs one font listing.
+    """
+    res = _extract_unrepaired(path, use_cache=use_cache, allow_extract=allow_extract)
+    if not res.get("error") and (res.get("text") or res.get("tables")):
+        from .glyph_repair import apply_to_extraction
+        res = apply_to_extraction(res, Path(path))
+    return res
+
+
+def _extract_unrepaired(path: str | Path, use_cache: bool = True,
+                       allow_extract: bool = True) -> dict:
     """`{"tables": [...], "error": str|None, "cached": bool, "notes": [...]}`.
 
     Tables come back in the SAME SHAPE `jats.py` and `supplements_read.py`
@@ -466,8 +483,8 @@ def extract_pdf_tables(path: str | Path, use_cache: bool = True,
         if not grid:
             continue
         # Cells get the SAME fold as the text and nothing more: byte-faithful
-        # otherwise (no unit stripping, no unicode folding -- see the pdf4llm
-        # lesson recorded in docs/archive/ingestion_learnings.md).
+        # otherwise (no unit stripping, no unicode folding -- the retired
+        # pdf4llm normalizer rewrote the authors' `±` as `+-`).
         grid = [[_normalize_extracted(c) for c in row] for row in grid]
         if header_rows > 1:
             stacked += 1
@@ -787,7 +804,10 @@ def cached_text(path: str | Path) -> tuple[str, str]:
     if not text:
         return "", ("cached by an earlier version that stored tables only; "
                     "re-run `metascience extract-tables --force`")
-    return text, ""
+    # The same repair `extract_pdf_tables` applies, so the two readers of one
+    # cache never disagree about a character.
+    from .glyph_repair import apply_to_extraction
+    return apply_to_extraction({"text": text}, p).get("text") or text, ""
 
 
 def _current_version() -> str:

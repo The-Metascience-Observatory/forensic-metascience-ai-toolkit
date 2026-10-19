@@ -49,6 +49,7 @@ P191 = ROOT / "tests" / "data" / "parity_1_91.json"
 P192 = ROOT / "tests" / "data" / "parity_1_92.json"
 P193 = ROOT / "tests" / "data" / "parity_1_93.json"
 P1961 = ROOT / "tests" / "data" / "parity_1_96_1.json"
+P197 = ROOT / "tests" / "data" / "parity_1_97.json"
 
 #: The pre-1.86 title bound, restored in the capture process for the scope
 #: tests: every producer subset's `title` is the stored schema's again, and
@@ -115,7 +116,7 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
 
 def test_default_run_matches_the_newest_oracle(tmp_path):
     got = _capture(tmp_path)
-    want = json.loads(P1961.read_text())
+    want = json.loads(P197.read_text())
     assert set(got) == set(want) == {"claude", "codex", "grok"}
     for backend in want:
         for i, (g, w) in enumerate(zip(got[backend]["invocations"],
@@ -546,9 +547,36 @@ def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
     old = json.loads(P193.read_text())
     new = json.loads(P1961.read_text())
     assert old != new
-    assert _capture(tmp_path, old_package_name=True) == old
+    got = _capture(tmp_path, old_package_name=True)
+    # 1.97.0 has since moved the registry (`test_1_97_...`); with that hash
+    # restored, the old module name captures the 1.93 oracle byte for byte.
+    p197 = json.loads(P197.read_text())
+    for backend in got:
+        assert got[backend]["registry_sha256"] == p197[backend]["registry_sha256"]
+        got[backend]["registry_sha256"] = old[backend]["registry_sha256"]
+    assert got == old
     assert "forensic_metascience_ai_toolkit.mcp_server" in json.dumps(new)
     for backend in old:
         for k in old[backend]:
             if k != "invocations":
                 assert old[backend][k] == new[backend][k], f"{backend} {k}"
+
+
+def test_1_97_changed_only_the_statcheck_definition():
+    """1.97.0 (2026-10-19): `statcheck` takes `p_adjustment`, so a declared
+    correction explains a reported p above the recomputed one, as it has for
+    the recalc tools since 1.90.0. One MCP tool definition changes, which
+    moves `registry_sha256` and NOTHING ELSE against the 1.96.1 oracle. (The
+    declared-correction prompt block, which now names statcheck too, appears
+    only for a paper that declares one; the capture fixture does not.)"""
+    old = json.loads(P1961.read_text())
+    new = json.loads(P197.read_text())
+    for backend in old:
+        assert old[backend]["registry_sha256"] != new[backend]["registry_sha256"], backend
+        a, b = json.loads(json.dumps(old[backend])), json.loads(json.dumps(new[backend]))
+        a["registry_sha256"] = b["registry_sha256"] = "<REGISTRY>"
+        assert a == b, backend
+    from forensic_metascience_ai_toolkit import registry
+    spec = registry.BY_NAME["statcheck"]
+    assert "p_adjustment" in spec.schema()
+    assert "p_adjustment" in spec.description

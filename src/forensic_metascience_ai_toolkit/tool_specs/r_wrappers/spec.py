@@ -16,6 +16,7 @@ from ...registry import (
     _statcheck_adapter,
 )
 from ...tools.r_wrappers import python_statcheck_text, r_grim, r_sprite
+from ...tools.ttest import P_ADJUSTMENT_HELP
 from .. import descriptions
 
 DESCRIPTIONS = descriptions(__file__)
@@ -63,6 +64,7 @@ SPECS = (
         params=(
             Param("pdf_path", str, REQUIRED),
             Param("text", str, REQUIRED),
+            Param("p_adjustment", str, None, guard=True, help=P_ADJUSTMENT_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
         legacy_verb="statcheck",

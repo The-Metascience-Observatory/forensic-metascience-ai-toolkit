@@ -141,18 +141,18 @@ flowchart TD
 
     parse --> img["<b>Image detection</b><br/>deterministic"]
     parse --> txt["<b>Text forensics</b><br/>tortured phrases"]
-    parse --> tools["<b>Forensic metascience tools agent</b> 🤖<br/>points the forensic tools at the paper's numbers; no web access"]
-    parse --> sci["<b>Scientific proofreading agent</b> 🤖<br/>contradictions, scientific mistakes, methodological flaws"]
-    img --> imgrev["<b>Image AI review</b> 🤖<br/>screens out false positives and innocuous duplications"]
+    parse --> tools["<b>Forensic metascience tools agent</b> <br/>points the forensic tools at the paper's numbers; no web access"]
+    parse --> sci["<b>Scientific proofreading agent</b> <br/>contradictions, scientific mistakes, methodological flaws"]
+    img --> imgrev["<b>Image AI review</b> <br/>screens out false positives and innocuous duplications"]
 
     imgrev --> join["<b>Join and verify findings</b>"]
     txt --> join
     tools --> join
     sci --> join
 
-    join --> adj["<b>Adjudicator agent (optional)</b> 🤖<br/>dedupes, triages false positives, sets final severity, writes the paper-level verdict"]
+    join --> adj["<b>Adjudicator agent (optional)</b> <br/>dedupes, triages false positives, sets final severity, writes the paper-level verdict"]
     adj --> db[("Save findings to database")]
-    db -.-> human["<b>Human review</b> 👤<br/>workbench; humans decide what goes to PubPeer, authors or editors"]
+    db -.-> human["<b>Human review</b> <br/>workbench; humans decide what goes to PubPeer, authors or editors"]
 
     classDef agent fill:#e0f2f1,stroke:#00695c,color:#000
     classDef ink fill:#263238,stroke:#263238,color:#fff
@@ -183,23 +183,6 @@ Here are the main modules:
 - **Adjudicator**: dedupes, verifies quotes, may re-run tools, and assigns the
   final [severity levels](docs/errorlevels.md) and the paper verdict.
 
-**The tool sandbox.** An early run had the model write its own scipy t-tests
-in `/tmp`, bypassing every guard; the report looked identical. So the Claude
-analysts get only:
-
-```python
-BUILTIN_TOOLS = ["Read"]
-DENIED_TOOLS = [
-    "Bash", "Edit", "Write", "NotebookEdit", "WebFetch", "WebSearch", "Task", "ToolSearch",
-]
-```
-
-`--allowedTools` does not restrict anything under `bypassPermissions`; only
-`--tools` plus `--disallowedTools` does. Grok and Codex sandboxes are weaker,
-and `run_meta.json` says so. Antigravity runs under a per-run `HOME`
-whose custom agent lists its built-in tools explicitly (`view_file`,
-`finish`, plus the web pair for the science agent); a shell, writes and
-subagents are not on it, and permission rules deny them as well.
 
 ## Pipelines
 
@@ -275,30 +258,12 @@ and synced to the shared database. Nothing is published from it. See
 [webapp/README.md](webapp/README.md) and
 [docs/workbench_storage.md](docs/workbench_storage.md).
 
+
 ## Validation
 
-| Check | Reference | Result |
-|---|---|---|
-| Power analysis | R `pwr` | 7/7 exact |
-| Estimate/CI recovery | R | agreement to 1e-12 |
-| SPRITE | `rsprite2` | 100% at 2 dp; 92.1% overall |
-| DEBIT | `scrutiny` | 0 false accusations over 28,720 cells |
-
-```bash
-metascience eval --backend claude --model sonnet   # 4 fixtures with gold findings; costs money
-metascience eval --skip-analysis                   # rescore saved runs; still calls the judge
-```
-
-The fixtures, papers and saved runs are in
-[benchmarks/paper_reviews/](benchmarks/paper_reviews/README.md); every benchmark
-is listed in [benchmarks/README.md](benchmarks/README.md).
-
-`eval/ground_truth/` holds 78 papers (30 adjudicated fraud, 48 controls) with
-how each was established.
-
-`--skip-analysis` is not free: it reuses an existing analysis but still calls
-the LLM judge, and on a fixture with no saved run it refuses rather than
-silently running the paid pipeline.
+How the tools are checked against independent R implementations, and how the
+full review is scored on papers with known problems: see
+[docs/VALIDATION.md](docs/VALIDATION.md).
 
 ## Limitations
 

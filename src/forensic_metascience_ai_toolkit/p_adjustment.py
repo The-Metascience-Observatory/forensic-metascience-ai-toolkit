@@ -10,7 +10,8 @@ MEASURED 2026-10-18 on the deterministic p-tool benchmark
 Wicherts, Bakker & Molenaar (2011) coded as correct were Huynh-Feldt p's, and
 95 of the 96 statcheck flags Nuijten et al. (2017) found explained by a
 declared correction were flagged. With the correction passed, both fall to
-0 and 2.
+0 and 2. `statcheck` takes it too since 1.97.0: it flagged all 96 of those
+statistics, and 3 with the correction passed (MEASURED 2026-10-19).
 
 Same shape as `survey_design.declares_complex_survey`: the paper's OWN clause
 is returned, so the claim "this paper corrects its p's" is auditable against
@@ -76,7 +77,10 @@ def p_adjustment_note(text: str | None) -> str:
         "correction covers (and only those -- read which tests it applies to), pass "
         "`p_adjustment=\"sphericity\"` or `\"multiplicity\"` to `recalc_stat_to_p`, "
         "`recalc_f_to_p`, `recalc_anova`, `recalc_independent_t`, `recalc_chi_squared` "
-        "and `check_regression`. They then report that direction as indeterminate. A "
+        "and `check_regression`. They then report that direction as indeterminate. "
+        "Pass it to `statcheck` too when the correction covers the tests it scans: an "
+        "error with a reported p above the recomputed one is then explained, not "
+        "counted. A "
         "printed p SMALLER than the statistic allows is never explained by a "
         "correction and is still a finding.")
     return "\n".join(lines)

@@ -627,7 +627,7 @@ def normalise_for_statcheck(text: str) -> str:
     return text
 
 
-def python_statcheck(pdf_path: str) -> dict:
+def python_statcheck(pdf_path: str, p_adjustment: str | None = None) -> dict:
     """Run statcheck on a PDF.
 
     ONE TOOL, ONE ANSWER. This used to be a second implementation wearing the
@@ -660,6 +660,7 @@ def python_statcheck(pdf_path: str) -> dict:
 
     Args:
         pdf_path: Path to PDF file
+        p_adjustment: A correction the paper DECLARES, as `python_statcheck_text`.
 
     Returns:
         Dictionary with statcheck results, plus `pdf_reader` naming which
@@ -680,21 +681,24 @@ def python_statcheck(pdf_path: str) -> dict:
         text = ""
 
     if text.strip():
-        out = python_statcheck_text(text)
+        out = python_statcheck_text(text, p_adjustment=p_adjustment)
         if isinstance(out, dict):
             out["pdf_reader"] = "docling"
             out["pdf_chars"] = len(text)
         return out
 
-    return _statcheck_pdf_via_vendored_reader(pdf_path)
+    return _statcheck_pdf_via_vendored_reader(pdf_path, p_adjustment=p_adjustment)
 
 
-def _statcheck_pdf_via_vendored_reader(pdf_path) -> dict:
+def _statcheck_pdf_via_vendored_reader(pdf_path, p_adjustment: str | None = None) -> dict:
     """statcheck's own `checkPDFdir`, for a PDF our extractor cannot read.
 
     Results go through the SAME rounding-interval filter as the text path, so
     the two readers still answer the same question about the same paper.
     """
+    adj = _statcheck_adjustment(p_adjustment)
+    if "error" in adj:
+        return {"success": False, "error": adj["error"]}
     _patch_statcheck()
     try:
         from statcheck.checkdir import checkPDFdir
@@ -725,7 +729,7 @@ def _statcheck_pdf_via_vendored_reader(pdf_path) -> dict:
             "message": "No statistics found in PDF",
         }
 
-    out = _statcheck_rows(results_df)
+    out = _statcheck_rows(results_df, p_adjustment=adj["adjustment"])
     out["pdf_reader"] = "statcheck_pdfminer"
     return out
 
@@ -1042,7 +1046,7 @@ def _patch_statcheck() -> bool:
     return _patch_statcheck_sign_bug() and _patch_statcheck_p_dec_bug()
 
 
-def python_statcheck_text(text: str) -> dict:
+def python_statcheck_text(text: str, p_adjustment: str | None = None) -> dict:
     """
     Run statcheck on raw text using the Python implementation.
 
@@ -1051,10 +1055,19 @@ def python_statcheck_text(text: str) -> dict:
 
     Args:
         text: Raw text containing statistical results in APA format
+        p_adjustment: A correction the paper DECLARES for its p's
+            ('sphericity', 'multiplicity', 'none', 'unknown'; the recalc
+            tools' `p_adjustment`). With 'sphericity' or 'multiplicity', an
+            upstream error whose reported p is LARGER than the recomputed one
+            is explained, not counted (`explained_by_adjustment`); a reported
+            p SMALLER than the recomputed one is still an error.
 
     Returns:
         Dictionary with statcheck results
     """
+    adj = _statcheck_adjustment(p_adjustment)
+    if "error" in adj:
+        return {"success": False, "error": adj["error"]}
     text = normalise_for_statcheck(text)
 
     _patch_statcheck()
@@ -1081,10 +1094,32 @@ def python_statcheck_text(text: str) -> dict:
             "message": "No statistics found in text",
         }
 
-    return _statcheck_rows(results_df)
+    return _statcheck_rows(results_df, p_adjustment=adj["adjustment"])
 
 
-def _statcheck_rows(results_df) -> dict:
+#: The corrections that print a p LARGER than its raw statistic implies.
+_ADJUSTING = ("sphericity", "multiplicity")
+
+
+def _statcheck_adjustment(value) -> dict:
+    """`check_p_adjustment` (the recalc tools' validator), imported late:
+    `ttest` is a sibling module and this one is imported by `tools/__init__`."""
+    from .ttest import check_p_adjustment
+    return check_p_adjustment(value)
+
+
+def _under_claimed(comparison: str, reported_p, computed_p) -> bool:
+    """Is the reported p LARGER than the recomputed one -- the only direction a
+    declared correction explains? An exact or "p > x" report can be; a
+    "p < x" error is always an over-claim (the true p is not below x)."""
+    try:
+        rp, cp = float(reported_p), float(computed_p)
+    except (TypeError, ValueError):
+        return False
+    return comparison.strip() in ("=", ">", ">=", "\u2265") and rp > cp
+
+
+def _statcheck_rows(results_df, p_adjustment: str | None = None) -> dict:
     """Turn a statcheck results frame into the tool's result dict.
 
     SHARED BY BOTH ENTRY POINTS ON PURPOSE. The PDF path used to carry its own
@@ -1094,6 +1129,18 @@ def _statcheck_rows(results_df) -> dict:
     stats = []
     n_errors = 0
     n_decision_errors = 0
+    # A DECLARED correction (1.97.0). statcheck recomputes every p as a raw,
+    # unadjusted test, so a Huynh-Feldt p printed beside the uncorrected df, or
+    # a Bonferroni p beside its raw statistic, is always "inconsistent" -- in
+    # the under-claim direction only. MEASURED 2026-10-19 on benchmarks/
+    # pvalue_tools: all 96 of Nuijten et al.'s (2017) correction-explained
+    # statistics were flagged here, against 2 by recalc_stat_to_p, which has
+    # taken `p_adjustment` since 1.90.0. The rows stay in `statistics`, marked,
+    # because statcheck scans the whole text and the correction may not cover
+    # every test in it.
+    adjusting = p_adjustment in _ADJUSTING
+    n_explained_adj = 0
+    n_decision_explained_adj = 0
 
     for _, row in results_df.iterrows():
         # Handle both R-style and Python-style column names
@@ -1125,15 +1172,33 @@ def _statcheck_rows(results_df) -> dict:
         stat["correct_at_printed_precision"] = _within_printed_precision(
             stat["raw"], reported_p, computed_p
         )
-        if stat["error"] and not stat["correct_at_printed_precision"]:
+        explained = False
+        if adjusting:
+            comparison = str(row.get("Reported_P_Comparison",
+                                     row.get("Reported.Comparison", "=")) or "=")
+            explained = (stat["error"] and not stat["correct_at_printed_precision"]
+                         and _under_claimed(comparison, reported_p, computed_p))
+            stat["explained_by_adjustment"] = explained
+        if explained:
+            n_explained_adj += 1
+            n_decision_explained_adj += int(stat["decision_error"])
+        elif stat["error"] and not stat["correct_at_printed_precision"]:
             n_errors += 1
-        if stat["decision_error"]:
+        if stat["decision_error"] and not explained:
             n_decision_errors += 1
 
     n_raw_flags = sum(1 for s in stats if s["error"])
     n_rounding = sum(1 for s in stats if s["error"] and s["correct_at_printed_precision"])
 
-    return {
+    adj_note = ""
+    if adjusting:
+        adj_note = (
+            f"The paper declares a {p_adjustment} correction, which prints a p LARGER than "
+            f"the raw statistic implies: {n_explained_adj} more reported a p above the "
+            "recomputed one and are NOT counted (`explained_by_adjustment`; check the "
+            "correction covers those tests). A reported p BELOW the recomputed one is "
+            "never explained by a correction and is still counted. ")
+    out = {
         "success": True,
         "stats_found": len(stats),
         "errors_found": n_errors,
@@ -1144,13 +1209,19 @@ def _statcheck_rows(results_df) -> dict:
         "methodology": (
             f"Python statcheck: extracted {len(stats)} NHST results. Upstream flagged "
             f"{n_raw_flags}; {n_rounding} of those are correct at the precision the p-value was "
-            f"printed to and are NOT counted as errors, leaving {n_errors}. "
+            f"printed to and are NOT counted as errors"
+            + (f". {adj_note}That leaves {n_errors}. " if adjusting else f", leaving {n_errors}. ") +
             f"{n_decision_errors} decision errors (a p-value on the wrong side of its own "
             "significance threshold). Only decision errors change a conclusion; inconsistencies "
             "are near-universal in honest work -- roughly half of clean control papers contain at "
             "least one -- and must never support a misconduct verdict on their own."
         ),
     }
+    if adjusting:
+        out["p_adjustment"] = p_adjustment
+        out["errors_explained_by_adjustment"] = n_explained_adj
+        out["decision_errors_explained_by_adjustment"] = n_decision_explained_adj
+    return out
 
 
 def _within_printed_precision(raw: str, reported_p, computed_p) -> bool:

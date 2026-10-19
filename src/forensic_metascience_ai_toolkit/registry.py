@@ -1052,10 +1052,11 @@ def _multiplicity_adapter(fn, args: dict):
 def _statcheck_adapter(fn, args: dict):
     """Two input routes. `fn` is the text route (the spec's declared primary);
     the PDF route is a fallback that extracts text first."""
+    adj = args.get("p_adjustment")
     if args.get("text"):
-        return fn(args["text"])
+        return fn(args["text"], p_adjustment=adj)
     if args.get("pdf_path"):
-        return python_statcheck(args["pdf_path"])
+        return python_statcheck(args["pdf_path"], p_adjustment=adj)
     return {"success": False, "error": "Provide either pdf_path or text parameter"}
 
 

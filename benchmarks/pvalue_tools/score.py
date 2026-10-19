@@ -6,8 +6,10 @@ Two instruments, each run on every case in cases.jsonl:
                      printed decimals and tails (and `p_adjustment` when the
                      installed tool takes it). Flagged = an accusing severity.
   statcheck          the toolkit's wrapper (`python_statcheck_text`) on the
-                     case rendered as an APA string. Flagged = an `error` that
-                     is not cancelled as correct at printed precision.
+                     case rendered as an APA string (with `p_adjustment` when
+                     the case and the installed wrapper have it). Flagged = an
+                     `error` that is not cancelled as correct at printed
+                     precision or explained by the declared correction.
 
 For each tool the scorecard lists, per source and per stratum, which labelled
 errors were caught and which labelled-correct statistics were flagged (by case
@@ -106,6 +108,7 @@ def run_statcheck(cases: list[dict]) -> dict[str, bool | None]:
     """Each case is its own text: statcheck's per-text heuristics (one-tailed
     wording, corrections) must not leak from one case to the next."""
     from forensic_metascience_ai_toolkit.tools.r_wrappers import python_statcheck_text
+    takes_adj = "p_adjustment" in inspect.signature(python_statcheck_text).parameters
     out = {}
     for c in cases:
         s = apa(c)
@@ -115,13 +118,15 @@ def run_statcheck(cases: list[dict]) -> dict[str, bool | None]:
         with warnings.catch_warnings(), contextlib.redirect_stdout(io.StringIO()), \
                 contextlib.redirect_stderr(io.StringIO()):
             warnings.simplefilter("ignore")
-            r = python_statcheck_text(f"The result was {s}.")
+            kw = {"p_adjustment": c["p_adjustment"]} if c.get("p_adjustment") and takes_adj else {}
+            r = python_statcheck_text(f"The result was {s}.", **kw)
         rows = r.get("statistics") or []
         if not rows:
             out[c["id"]] = None  # not parsed
             continue
         row = rows[0]
-        out[c["id"]] = bool(row.get("error")) and not bool(row.get("correct_at_printed_precision"))
+        out[c["id"]] = (bool(row.get("error")) and not bool(row.get("correct_at_printed_precision"))
+                        and not bool(row.get("explained_by_adjustment")))
     return out
 
 

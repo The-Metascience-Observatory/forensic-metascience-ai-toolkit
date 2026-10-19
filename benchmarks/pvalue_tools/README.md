@@ -37,8 +37,9 @@ cases.
 `score.py` runs two tools on every case:
 - `recalc_stat_to_p` is flagged when it returns an accusing severity.
 - The statcheck wrapper (`python_statcheck_text`) runs on the case rendered as
-  APA. It is flagged when statcheck reports an `error` that the wrapper does
-  not cancel as correct at printed precision.
+  APA, with the case's `p_adjustment` when it has one. It is flagged when
+  statcheck reports an `error` that the wrapper does not cancel as correct at
+  printed precision or as explained by the declared correction.
 
 The scorecard lists caught errors and false flags **by case id** for every
 group: all, each source, and each stratum.
@@ -84,3 +85,19 @@ nothing about corrections. Release 1.90.0 addresses both.
 corrections. 1.93.0 stopped assuming an unstated one-tailed test (statcheck's
 `OneTailedTxt` rule). The unstated rescue had decided 23 cases, all of them
 labelled errors. `scorecard.json` holds the current per-case record.
+
+## After 1.97.0 (2026-10-19), statcheck
+
+| | 1.93.0 | 1.97.0 |
+|---|---|---|
+| False flags, all labelled-correct | 120 of 1,370 | 15 of 1,370 |
+| Correction-explained statistics flagged (Nuijten) | 96 of 96 | 3 of 96 |
+| `adjust_sphericity` / `adjust_multiplicity` | 80 of 80 / 16 of 16 | 3 of 80 / 0 of 16 |
+| Wicherts Huynh-Feldt rows flagged | 12 of 13 | 0 of 13 |
+| Labelled errors caught | 85 of 86 | 85 of 86 |
+
+The wrapper takes `p_adjustment` as the recalc tools do. With a declared
+correction, an error whose reported p is LARGER than the recomputed one is
+explained; a smaller one still counts. The three Nuijten rows still flagged
+are all of that second kind (`F(2, 38) = 1.05, p = .35`, computed .360), so
+the rule, not a gap in it, keeps them. No catch was lost in any group.

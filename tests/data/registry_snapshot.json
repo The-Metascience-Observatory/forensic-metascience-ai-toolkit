@@ -1355,9 +1355,12 @@
     "withheld": []
   },
   "statcheck": {
-    "desc_sha": "7e86020d2a54e367",
-    "guards": [],
+    "desc_sha": "adcf4ab85912dfee",
+    "guards": [
+      "p_adjustment"
+    ],
     "schema": {
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
       "pdf_path": "str",
       "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
       "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",

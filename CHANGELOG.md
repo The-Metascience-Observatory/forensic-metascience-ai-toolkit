@@ -9,6 +9,43 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.97.0] — 2026-10-19 — statcheck respects a declared correction
+
+MINOR: a tool definition changed and statcheck's counts change for a paper
+that declares a sphericity or multiplicity correction, so reviews across this
+boundary are not comparable on that tool. Only `registry_sha256` moves
+(`80515031f2a04ec0` -> `815475ba5a4bbf8a`); every system and user prompt,
+schema, argv, environment and allowlist is the 1.96.1 oracle's.
+
+- **`statcheck` takes `p_adjustment`** (`sphericity`, `multiplicity`, `none`,
+  `unknown`), the recalc tools' parameter since 1.90.0. statcheck recomputes
+  every p as a raw, unadjusted test, so a Huynh-Feldt p printed beside the
+  uncorrected df, or a Bonferroni p beside its raw statistic, always read as
+  an error. With a correction declared, an error whose reported p is LARGER
+  than the recomputed one is marked `explained_by_adjustment` and left out of
+  `errors_found` and `decision_errors` (new counts
+  `errors_explained_by_adjustment`, `decision_errors_explained_by_adjustment`).
+  A reported p SMALLER than the recomputed one -- including every failed
+  "p < x" -- still counts. The rows stay in `statistics`, because statcheck
+  scans the whole text and the correction may not cover every test in it.
+  statcheck's engine is untouched; the rule is in the wrapper. Without the
+  parameter the output is byte-identical to 1.96.1.
+- **Measured on `benchmarks/pvalue_tools`:** statcheck's false flags on
+  labelled-correct statistics fall from 120 of 1,370 to 15. The
+  correction-explained Nuijten et al. (2017) rows go from 96 of 96 to 3
+  (`adjust_sphericity` 80 -> 3, `adjust_multiplicity` 16 -> 0), and the
+  Wicherts Huynh-Feldt rows from 12 of 13 to 0. The three left are reported
+  p's below the recomputed one, which the rule keeps by design. No labelled
+  error is lost in any group (85 of 86 caught, as before). `score.py` passes
+  the case's `p_adjustment` to statcheck as it does to `recalc_stat_to_p`;
+  `scorecard.json` is re-pinned.
+- The declared-correction prompt block (`p_adjustment_note`, sent only for a
+  paper that declares one) now names `statcheck`; the description says what
+  the parameter excuses and what it never does.
+- New parity oracle `parity_1_97.json`, scope test
+  `test_1_97_changed_only_the_statcheck_definition`; tests in
+  `tests/test_statcheck_p_adjustment.py`.
+
 ## [1.96.1] — 2026-10-19 — the import package is `forensic_metascience_ai_toolkit`
 
 PATCH: a rename, no change to any output. The prompt and registry hashes are

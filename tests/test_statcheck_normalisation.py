@@ -143,7 +143,7 @@ class TestOneToolOneAnswer:
         pdf = self._patched(monkeypatch, tmp_path, "")
         monkeypatch.setattr(
             "forensic_metascience_ai_toolkit.tools.r_wrappers._statcheck_pdf_via_vendored_reader",
-            lambda p: {"success": True, "stats_found": 7,
+            lambda p, **kw: {"success": True, "stats_found": 7,
                        "pdf_reader": "statcheck_pdfminer"})
         out = python_statcheck(str(pdf))
         assert out["pdf_reader"] == "statcheck_pdfminer"

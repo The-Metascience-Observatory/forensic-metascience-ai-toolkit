@@ -298,7 +298,8 @@ def optional_checks() -> list[CheckRow]:
         _module_check(
             "fetchpdf (HTML landing-page check)", "fetchpdf.retrieval.validate",
             "present; full validation",
-            "absent; HTML falls back to the built-in decoy check, which catches "
+            "absent (it is a base dependency: reinstall with `pip install -e .`); "
+            "HTML falls back to the built-in decoy check, which catches "
             "blatant stubs only -- prefer PDF or JATS XML for HTML-only papers"),
         # Integrity metadata must be READ BACK, not only written: a real corpus
         # held 30 git-lfs pointer stubs where its supplements should have been,
@@ -310,7 +311,8 @@ def optional_checks() -> list[CheckRow]:
             "fetchpdf-verify (supplement integrity)", "fetchpdf.retrieval.verify",
             "present; `metascience batch` audits supplements against their "
             "manifests in the batch plan",
-            "absent; supplement integrity manifests cannot be read back here -- "
+            "absent (it is a base dependency: reinstall with `pip install -e .`); "
+            "supplement integrity manifests cannot be read back here -- "
             "a git-lfs stub or truncated file reads as the paper's data. Run "
             "the standalone auditor from the fetchpdf repo: "
             "fetchpdf-verify <corpus-root>"),

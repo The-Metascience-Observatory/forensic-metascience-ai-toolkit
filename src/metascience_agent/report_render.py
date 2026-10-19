@@ -203,9 +203,10 @@ def _render_weasyprint(html: str, out_path: Path) -> bool:
     document besides: `markdown_to_html` already applies this project's styling,
     while `--pdf-engine` hands pandoc's own default stylesheet the job.
 
-    Imported lazily. WeasyPrint is an optional extra, and a missing import must
-    degrade to the next renderer rather than break `analyze` for everyone who
-    never asked for a PDF.
+    Imported lazily. WeasyPrint is a base dependency, but it loads Pango from
+    the operating system, and where that is missing or clashes the import
+    raises OSError; it must degrade to the next renderer rather than break
+    `analyze` for everyone who never asked for a PDF.
     """
     global _LAST_PDF_ERROR
     try:

@@ -16,10 +16,18 @@ automatically before any paid run.
 
 The plain install covers a full statistical review: reading PDFs, XML, HTML
 and supplements, all the forensic tools, statcheck, both AI analysts plus
-the adjudicator, and the test runner (`metascience-test`, with pytest).
-Everything else is an **extra**: either it is large, or it
-serves only one part of the toolkit that many users never touch. Add the extras
-you need, e.g. `pip install -e '.[pdf,html]'`.
+the adjudicator, `report.pdf` rendering, and the test runner
+(`metascience-test`, with pytest). The one extra is `dev`, for working on the
+toolkit itself (below).
+
+`report.pdf` is rendered by `wkhtmltopdf` if it is installed, otherwise by
+WeasyPrint, otherwise by `pandoc` with a PDF engine. WeasyPrint comes with
+the install but needs the Pango library from your operating system, which pip
+cannot install: `brew install pango` on macOS, `apt install
+libpango-1.0-0 libpangoft2-1.0-0` on Debian/Ubuntu, or `conda install -c
+conda-forge pango` in a conda environment (whose own GLib otherwise clashes
+with the system Pango). If no renderer works, the run still finishes and
+`run_meta.pdf_error` says why; every other output is unaffected.
 
 **The findings database is optional.** Each finished run can be copied into
 a local PostgreSQL database, which `db-push` and the review workbench read.
@@ -39,8 +47,6 @@ that the figures were not examined.
 
 | Extra | Packages | What it adds |
 |---|---|---|
-| `pdf` | **WeasyPrint** (pure-Python HTML→PDF renderer) | `report.pdf` with no system PDF engine. Without it, rendering tries `wkhtmltopdf`, then `pandoc`; if both fail, the run still finishes and the failure is recorded in `run_meta.pdf_error`. |
-| `html` | **[fetchpdf](https://github.com/The-Metascience-Observatory/fetchpdf)** (our paper fetcher, from PyPI) | Two checks the fetcher already owns. (1) Its full landing-page test for papers whose only full text is a fetched HTML page, so a cookie wall or abstract-only page isn't read as the article. Without it, a built-in check runs that catches only obvious stubs. (2) The supplement integrity audit in `metascience batch`, which catches git-lfs pointer stubs and truncated downloads. Without it, `preflight` says the audit is unavailable. Not needed for papers you supply as PDF or XML. |
 | `dev` | **pytest-xdist** (parallel workers behind `metascience-test`), **ruff** (linter) | Developing the toolkit. pytest and pytest-asyncio are base dependencies, so `metascience-test` runs on a plain install; without `dev` it installs pytest-xdist itself, or runs serially, and the ruff check skips. |
 
 

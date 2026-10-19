@@ -87,6 +87,14 @@ class TestInstall:
         assert any(d.lower().replace(" ", "").startswith("pymupdf")
                    for d in project["dependencies"])
 
+    def test_fetchpdf_is_a_base_dependency(self):
+        """Without fetchpdf the landing-page check and the supplement audit
+        degrade silently. It sat in the `html` extra until 1.94.1. The floor is
+        0.1.2, the first release that does not require playwright."""
+        tomllib = pytest.importorskip("tomllib")
+        project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
+        assert "fetchpdf>=0.1.2" in [d.replace(" ", "") for d in project["dependencies"]]
+
     def test_no_image_extras(self):
         """The image package declares its own dependencies; an extra here
         would be a second pin that can drift from it."""

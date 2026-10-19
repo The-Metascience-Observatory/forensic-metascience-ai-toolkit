@@ -113,33 +113,35 @@ dependencies = [
     # the runner installs it itself when it is missing.
     "pytest>=7.0.0",
     "pytest-asyncio>=0.21.0",
-    # NOTE: `fetchpdf` was a BASE dependency here, pinned to
-    # file:///home/dan/Dropbox/... -- a path that exists on one machine on
-    # earth. Its own comment acknowledged the trade ("fragile off this machine
-    # by construction... this repo already assumes a specific single-machine
-    # dev environment"), and that was defensible while the repo had one
-    # machine. It is now an EXTRA, because the assumption stopped holding:
-    # `uv pip install -e .` failed on a second box on 2026-08-16 with
-    # "Distribution not found at: file:///home/dan/...", which blocks the GPU
-    # extraction machine, the Zotero generalisation corpus, and anyone Dan
-    # hands the branch to.
-    #
-    # Nothing is lost by moving it. The ONE call site --
-    # `extraction/html.py::_decoy_reason` -- already wraps the import in
-    # try/ImportError and falls back to `_looks_like_boilerplate`, so a machine
-    # without it degrades to the weaker landing-page check rather than
-    # crashing. Install with `.[html]` to get the stronger one (from PyPI since
-    # 1.85.4; the `file://` pin is gone).
+    # `report.pdf` rendering, the second of three renderers (after
+    # wkhtmltopdf, before pandoc; report_render.render_markdown_to_pdf). Base
+    # since 1.94.2, about 19 MB beyond what docling already brings. It is NOT
+    # pure Python: it loads Pango, HarfBuzz and fontconfig from the operating
+    # system, which pip cannot install. Where they are missing (macOS without
+    # Homebrew's pango, Windows without GTK) or clash (Anaconda's GLib 2.78
+    # shadows the system's, and the system Pango needs newer), the pip install
+    # still succeeds, the import raises OSError, and rendering falls through to
+    # pandoc with the reason in run_meta.pdf_error. Driven through the LIBRARY,
+    # not the console script: pandoc could not resolve the script even with it
+    # on PATH (2026-08-16), which is what made that defect survive diagnosis.
+    "weasyprint>=60",
+    # Our paper fetcher, for two checks it owns: the landing-page / decoy-HTML
+    # test (`fetchpdf.retrieval.validate.validate_t2`, reused rather than
+    # copied) and the supplement integrity audit `metascience batch` reads back
+    # (`fetchpdf.retrieval.verify.audit_tree`). Base again since 1.94.1. It
+    # was an `html` extra from 2026-08-16, when the pin was a file:// path on
+    # one machine; that is gone, and without it both checks degrade silently:
+    # a cookie wall that clears the built-in stub check is read as the
+    # article, and a git-lfs stub supplement as the paper's data. >=0.1.2
+    # because 0.1.0 REQUIRED playwright (~180 MB) although neither function
+    # uses it; 0.1.2 moved it to `fetchpdf[browser]`, which only fetching needs.
+    "fetchpdf>=0.1.2",
 ]
 
 [project.optional-dependencies]
-html = [
-    # The single source of truth for landing-page / decoy-HTML detection
-    # (`fetchpdf.retrieval.validate.validate_t2`), reused rather than copied,
-    # and the supplement integrity auditor `metascience batch` reads back
-    # (`fetchpdf.retrieval.verify.audit_tree`). Both exist in 0.1.0 on PyPI.
-    "fetchpdf>=0.1.0",
-]
+# Kept, empty, so `pip install -e '.[html]'` in old notes still resolves;
+# fetchpdf is a base dependency now.
+html = []
 dev = [
     # pytest and pytest-asyncio are base dependencies (see above).
     "pytest-xdist>=3.5.0",
@@ -154,16 +156,8 @@ db = []
 # distributed image analysis package declares OpenCV, docling, PyMuPDF and
 # EasyOCR itself, so installing it is the whole step. PyMuPDF, which this
 # toolkit also uses outside image analysis, is a base dependency above.
-pdf = [
-    # `report.pdf` rendering. Pure-Python, so it needs no separate system PDF
-    # engine -- which is the point. Before this, PDF output required pandoc PLUS
-    # an engine, and on a machine with pandoc and no engine every run printed
-    # "install wkhtmltopdf or pandoc" (advice to install what was already there)
-    # and produced no PDF. `report_render._render_weasyprint` drives it through
-    # the LIBRARY, not the console script: pandoc could not resolve the script
-    # even with it on PATH, which is what made the defect survive diagnosis.
-    "weasyprint>=60"
-]
+# Same for `.[pdf]`: WeasyPrint is a base dependency since 1.94.2.
+pdf = []
 
 [project.scripts]
 metascience = "metascience_agent.cli:app"

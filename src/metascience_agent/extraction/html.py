@@ -304,10 +304,10 @@ def _validate_not_a_landing_page(html_path: Path, content: bytes,
                                  require_article: bool = True) -> str | None:
     """The failure reason if this page is a landing/decoy page, else None.
 
-    TWO LAYERS, because the first one is not always installed. `fetchpdf` is
-    declared in pyproject as a local file:// path inside one developer's home
-    directory, so it cannot install anywhere else; on every other machine the
-    import fails. Returning None there -- the original behaviour -- left the
+    TWO LAYERS, because the first one is not always installed. `fetchpdf` is a
+    base dependency, but it was once a file:// path on one machine and then an
+    extra, and a broken environment can still lack it. Returning None when
+    the import fails -- the original behaviour -- left the
     "landing-page defense" silently INERT for everyone who is not its author,
     which is worse than not having it, because the feature is documented as
     present.

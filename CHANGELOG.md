@@ -9,6 +9,43 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.94.2] — 2026-10-19 — WeasyPrint and pytest are in the plain install
+
+PATCH: packaging and documentation only; no prompt, tool, severity or finding
+changes.
+
+- **WeasyPrint is a base dependency (`weasyprint>=60`).** It renders
+  `report.pdf` when `wkhtmltopdf` is absent, and wkhtmltopdf has been
+  unmaintained since 2023. About 19 MB beyond what docling already installs.
+  It needs Pango from the operating system, which pip cannot supply; without
+  it (or under Anaconda, whose GLib clashes with the system Pango) the import
+  fails, rendering falls through to pandoc, and the reason is recorded in
+  `run_meta.pdf_error` as before. `.[pdf]` still resolves, empty.
+- **pytest and pytest-asyncio are base dependencies.** `metascience-test` is
+  a console script every install gets and died on `import pytest` without the
+  `dev` extra. `dev` now holds only pytest-xdist (which the runner installs
+  itself when missing) and ruff.
+- **ruff selects only `E9` and `F`**, the rules `tests/test_ruff_errors.py`
+  enforces. The style families were selected but never enforced, and their
+  1,655 findings in `src/` buried the real ones in a plain `ruff check`.
+
+## [1.94.1] — 2026-10-19 — fetchpdf is in the plain install
+
+PATCH: packaging and documentation only; no prompt, tool, severity or finding
+changes.
+
+- **fetchpdf is a base dependency again (`fetchpdf>=0.1.2`).** It supplies
+  two checks: the landing-page test for papers whose only full text is a
+  fetched HTML page, and the supplement integrity audit in `metascience
+  batch`. As the `html` extra, a plain install lost both without an error: a
+  cookie wall that clears the built-in stub check was read as the article,
+  and a git-lfs pointer stub as the paper's supplement. It was an extra only
+  because its pin had been a `file://` path on one machine. The floor is
+  0.1.2 because 0.1.0 required playwright (about 180 MB installed), which
+  neither check uses; fetchpdf 0.1.2 moves it to `fetchpdf[browser]`.
+  `.[html]` still resolves, empty. Preflight's two fetchpdf rows say it is a
+  base dependency when it is missing.
+
 ## [1.94.0] — 2026-10-19 — the findings database is set up, or declined
 
 MINOR: a new command, and a new way runs can be told not to push. No prompt,

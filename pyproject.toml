@@ -89,6 +89,14 @@ dependencies = [
     # measurement here used; the original `>=1.4.0` pin named a version that
     # never existed.
     "statcheck>=0.0.7",
+    # PDF page access OUTSIDE image analysis: which page a quote is on
+    # (locators.py, quotes.py, anchors.py), the viewer's page images
+    # (bundle.py), and rendering scanned PDF pages for OCR
+    # (extraction/supplements_read.py, ocr.py, image_tables.py). Nearly every
+    # call site returns an empty result when it is missing, so it was a silent
+    # gap while it sat only in the `images` extra. A base dependency since
+    # 1.93.1. AGPL-3.0, accepted (Dan, 2026-10-19).
+    "pymupdf>=1.24",
     # NOTE: `fetchpdf` was a BASE dependency here, pinned to
     # file:///home/dan/Dropbox/... -- a path that exists on one machine on
     # earth. Its own comment acknowledged the trade ("fragile off this machine
@@ -131,23 +139,10 @@ dev = [
 # Kept, empty, so `pip install -e '.[statcheck]'` in old notes still resolves;
 # statcheck is a base dependency now.
 statcheck = []
-# Image-duplication track (image_forensics/panels.py, image_forensics/image_analysis.py).
-# PyMuPDF was imported lazily in 8 modules but never declared -- the statcheck
-# lesson (see preflight.py) is that an undeclared dependency whose absence
-# degrades silently must at least be DECLARED where installs can see it.
-# docling is pinned exactly, to the SAME version as the base dependency
-# (2.119.0, the version the on-disk extraction caches were built with -- see
-# the base pin's comment): 29 releases since June 2026 with deprecations
-# mid-flight, and here it is used only for the conditional figure-REGION tier
-# (never for pixels), so an unpinned or divergent version changes behavior
-# for no gain.
-images = [
-    "pymupdf>=1.24",
-    "opencv-python-headless==4.12.0.88",
-    "opencv-python==4.12.0.88",
-    "docling==2.119.0",
-]
-text-localization = ["easyocr==1.7.2"]
+# No `images` or `text-localization` extra (removed 1.93.1): the separately
+# distributed image analysis package declares OpenCV, docling, PyMuPDF and
+# EasyOCR itself, so installing it is the whole step. PyMuPDF, which this
+# toolkit also uses outside image analysis, is a base dependency above.
 pdf = [
     # `report.pdf` rendering. Pure-Python, so it needs no separate system PDF
     # engine -- which is the point. Before this, PDF output required pandoc PLUS

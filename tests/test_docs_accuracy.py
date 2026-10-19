@@ -77,6 +77,24 @@ class TestInstall:
             "statcheck left [project].dependencies; `pip install -e .` now "
             "produces a run whose statcheck tool silently finds nothing")
 
+    def test_pymupdf_is_a_base_dependency(self):
+        """The toolkit reads PDF pages with PyMuPDF outside image analysis
+        (quote page numbers, viewer pages, OCR of scanned PDFs), and most of
+        those call sites return empty when it is missing. It sat only in the
+        `images` extra until 1.93.1."""
+        tomllib = pytest.importorskip("tomllib")
+        project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
+        assert any(d.lower().replace(" ", "").startswith("pymupdf")
+                   for d in project["dependencies"])
+
+    def test_no_image_extras(self):
+        """The image package declares its own dependencies; an extra here
+        would be a second pin that can drift from it."""
+        tomllib = pytest.importorskip("tomllib")
+        extras = tomllib.loads(
+            (ROOT / "pyproject.toml").read_text())["project"]["optional-dependencies"]
+        assert not {"images", "text-localization"} & set(extras)
+
     def test_html_extra_is_not_a_local_path(self):
         """The fetchpdf pin used to be a file:// path that existed on one machine."""
         tomllib = pytest.importorskip("tomllib")

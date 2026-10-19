@@ -20,10 +20,14 @@ the adjudicator. Everything else is an **extra**: either it is large, or it
 serves only one part of the toolkit that many users never touch. Add the extras
 you need, e.g. `pip install -e '.[pdf,db]'`.
 
+Image analysis is not an extra. It is a separate package,
+`metascience-observatory-image-analysis`. Install it after the toolkit and it
+brings its own dependencies (OpenCV, docling, PyMuPDF, and EasyOCR through its
+own `text-localization` extra). Without it, a review still runs and reports
+that the figures were not examined.
+
 | Extra | Packages | What it adds |
 |---|---|---|
-| `images` | **PyMuPDF** (reads PDF pages and their embedded images), **OpenCV** (computer vision; matches duplicated figure panels), **docling** (same pinned version as the base install, used here only to find figure regions) | The image-duplication checks. Useful only with the separately distributed, private image analysis package; without it the figures are reported as not examined. |
-| `text-localization` | **EasyOCR** (its CRAFT text detector; no text is recognized) | Finds where the text (labels, lettering) sits inside figure panels, so the image package can mask it out of the duplication search. Image package only. |
 | `pdf` | **WeasyPrint** (pure-Python HTML→PDF renderer) | `report.pdf` with no system PDF engine. Without it, rendering tries `wkhtmltopdf`, then `pandoc`; if both fail, the run still finishes and the failure is recorded in `run_meta.pdf_error`. |
 | `db` | **psycopg** (PostgreSQL driver), **watchfiles** (file-change watcher) | `db-push` and the review workbench, which keep findings in a local PostgreSQL database and watch the paper folders for changes. Without psycopg, `db-push` refuses and says why; it never skips silently. |
 | `html` | **fetchpdf** (our paper fetcher, from PyPI) | Two checks the fetcher already owns. (1) Its full landing-page test for papers whose only full text is a fetched HTML page, so a cookie wall or abstract-only page isn't read as the article. Without it, a built-in check runs that catches only obvious stubs. (2) The supplement integrity audit in `metascience batch`, which catches git-lfs pointer stubs and truncated downloads. Without it, `preflight` says the audit is unavailable. Not needed for papers you supply as PDF or XML. |
@@ -51,7 +55,7 @@ examples use Claude Code.
 tracks, adjudicator; paid):
 
 ```bash
-metascience analyze paper.pdf --backend claude --budget-usd 8   # or a paper directory
+metascience analyze paper.pdf --backend claude --budget-usd 30 # or a paper directory
 ```
 
 **Run only the forensic metascience tools agent** (the statistical
@@ -104,7 +108,7 @@ metascience run tools_only paper.pdf --backend grok --model grok-4.6
 
 ```bash
 metascience batch corpus/ --backend claude --dry-run                   # free: plan and cost estimate
-metascience batch corpus/ --backend claude --budget-usd 8              # resumable; finished papers are skipped
+metascience batch corpus/ --backend claude --budget-usd 30 --workers 10 # resumable; finished papers are skipped
 ```
 
 **Free, offline checks** (no AI):
@@ -367,11 +371,10 @@ this toolkit for noncommercial purposes. Two limits apply:
 - **No commercial use.** You may not sell it, offer paid services built on
   it, or use it inside a for-profit company. For a commercial license,
   email dan@metascienceobservatory.org.
-- **Over 500 papers? Ask first.** Before analyzing more than 500 papers in
+- **Less than 500 papers.** Before analyzing more than 500 papers in
   total across your organization, email dan@metascienceobservatory.org for
-  written permission. This applies to noncommercial users too.
+ permission. If you are using it for bulk analysis, the Metascience Observatory would like to be involved.  
 
 The full terms are the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
 plus the additional terms in [LICENSE](LICENSE); the LICENSE file is what
-governs. Code up to commit `0c066bea` (version 1.84.2, 2026-10-18) was
-released under the MIT License; everything after it is under these terms.
+governs.

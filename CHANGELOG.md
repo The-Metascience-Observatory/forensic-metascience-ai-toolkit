@@ -9,6 +9,22 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.93.1] — 2026-10-19 — PyMuPDF is in the plain install; no image extras
+
+PATCH: packaging and documentation only; no prompt, tool, severity or finding
+changes.
+
+- **PyMuPDF is a base dependency.** The toolkit uses it outside image
+  analysis: the PDF page a quote is on (`locators`, `quotes`, `anchors`), the
+  viewer's page images (`bundle`), and rendering scanned PDF pages for OCR
+  (`extraction/supplements_read`, `ocr`, `image_tables`). Most of those return
+  an empty result when it is missing, so a plain install quietly lost page
+  numbers and page images. Preflight's row is now "PyMuPDF (PDF pages)".
+- **The `images` and `text-localization` extras are gone.** The image
+  analysis package declares OpenCV, docling, PyMuPDF and EasyOCR itself, so
+  installing it is the whole step; the extras were a second set of pins that
+  could drift from it. The README says so.
+
 ## [1.93.0] — 2026-10-18 — a one-tailed test explains a p only when the paper says so
 
 MINOR: severities change and four MCP tool definitions change (parity oracle

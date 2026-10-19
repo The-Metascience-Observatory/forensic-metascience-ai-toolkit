@@ -280,8 +280,10 @@ def optional_checks() -> list[CheckRow]:
                                  f'{exc}; affected work remains incomplete; use compute-status'))
 
     return [
-        _module_check("PyMuPDF (figures)", "fitz", "present",
-                      "absent; figure pass unavailable"),
+        _module_check("PyMuPDF (PDF pages)", "fitz", "present",
+                      "absent (it is a base dependency: reinstall with "
+                      "`pip install -e .`); quotes get no page number, the "
+                      "viewer has no page images, scanned PDFs cannot be OCR'd"),
         ("Panel duplication (image forensics)", pst["available"], panel_detail),
         ("R (cross-checks)", r_ok, r_detail),
         ("PDF renderer", renderer is not None,

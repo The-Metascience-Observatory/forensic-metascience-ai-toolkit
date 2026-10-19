@@ -50,6 +50,7 @@ P192 = ROOT / "tests" / "data" / "parity_1_92.json"
 P193 = ROOT / "tests" / "data" / "parity_1_93.json"
 P1961 = ROOT / "tests" / "data" / "parity_1_96_1.json"
 P197 = ROOT / "tests" / "data" / "parity_1_97.json"
+P199 = ROOT / "tests" / "data" / "parity_1_99.json"
 
 #: The pre-1.86 title bound, restored in the capture process for the scope
 #: tests: every producer subset's `title` is the stored schema's again, and
@@ -117,7 +118,7 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
 
 def test_default_run_matches_the_newest_oracle(tmp_path):
     got = _capture(tmp_path)
-    want = json.loads(P197.read_text())
+    want = json.loads(P199.read_text())
     assert set(got) == set(want) == {"claude", "codex", "grok"}
     for backend in want:
         for i, (g, w) in enumerate(zip(got[backend]["invocations"],
@@ -554,6 +555,9 @@ def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
     for backend in got:
         assert got[backend]["registry_sha256"] == p197[backend]["registry_sha256"]
         got[backend]["registry_sha256"] = old[backend]["registry_sha256"]
+    # 1.99.0 has since changed the adjudicator's system prompt
+    # (`test_1_99_...`); with 1.97's restored, the same holds.
+    _restore_adjudicator_prompt(got, p197)
     assert got == old
     assert "forensic_metascience_ai_toolkit.mcp_server" in json.dumps(new)
     for backend in old:
@@ -580,3 +584,46 @@ def test_1_97_changed_only_the_statcheck_definition():
     spec = registry.BY_NAME["statcheck"]
     assert "p_adjustment" in spec.schema()
     assert "p_adjustment" in spec.description
+
+
+def _restore_adjudicator_prompt(capture: dict, source: dict) -> None:
+    """Put `source`'s adjudicator system prompt and `prompt_sha256` back into
+    `capture`, in place. Only the prompt text moves; everything else in the
+    invocation stays as captured."""
+    for backend, rec in capture.items():
+        rec["prompt_sha256"] = source[backend]["prompt_sha256"]
+        src = next(i for i in source[backend]["invocations"]
+                   if i["stage"] == "adjudicator")
+        inv = next(i for i in rec["invocations"] if i["stage"] == "adjudicator")
+        argv, sargv = inv["argv"], src["argv"]
+        if "--append-system-prompt" in argv:
+            k = argv.index("--append-system-prompt") + 1
+            argv[k] = sargv[sargv.index("--append-system-prompt") + 1]
+        if "AGENTS.md" in inv["files"]:
+            inv["files"]["AGENTS.md"] = src["files"]["AGENTS.md"]
+
+
+def test_1_99_changed_only_the_adjudicator_system_prompt():
+    """1.99.0 (2026-10-19): the adjudicator's mission names all five producer
+    streams (it said "four" and left out the raw-data copy-paste screen,
+    which arrived in 1.76). Against the 1.97 oracle only the adjudicator's
+    system prompt moves, on every backend, and with it `prompt_sha256`; both
+    analysts' invocations, the registry, every schema, user prompt, argv flag
+    and environment are identical."""
+    old = json.loads(P197.read_text())
+    new = json.loads(P199.read_text())
+    for backend in old:
+        assert old[backend]["prompt_sha256"] != new[backend]["prompt_sha256"], backend
+        assert old[backend]["registry_sha256"] == new[backend]["registry_sha256"], backend
+        for o, n in zip(old[backend]["invocations"], new[backend]["invocations"]):
+            if o["stage"] == "adjudicator":
+                assert o != n, backend
+            else:
+                assert o == n, f"{backend} {o['stage']}"
+    restored = json.loads(json.dumps(new))
+    _restore_adjudicator_prompt(restored, old)
+    assert restored == old
+    from forensic_metascience_ai_toolkit.core.prompts import adjudication_system_prompt
+    text = adjudication_system_prompt()
+    assert "up to five independent producer streams" in text
+    assert "raw-data copy-paste screen" in text

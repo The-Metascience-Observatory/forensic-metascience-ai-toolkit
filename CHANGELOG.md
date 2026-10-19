@@ -9,6 +9,26 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.99.0] — 2026-10-19 — the adjudicator is told about all five producer streams
+
+MINOR: a prompt edit. The adjudicator's mission said it referees "four
+independent producer streams" and listed the tools agent, the proofreading
+agent, the image detector and the tortured-phrases screen. The raw-data
+copy-paste screen (`raw_data_track`, since 1.76) was missing, so on a
+`full_raw_data` or `raw_data_only` run the adjudicator received rows from a
+stream its instructions did not name. It now reads "up to five", naming the
+raw-data screen "when the pipeline includes it". Two reviews across this
+boundary are not strictly comparable; on runs without the raw-data module the
+only change is that sentence.
+
+- **Parity oracle `tests/data/parity_1_99.json`.** Against 1.97's, only the
+  adjudicator's system prompt and `prompt_sha256` move, on all three backends
+  (`57106eb92359f95f` -> `66d8132c19c50518` on Claude); both analysts, the registry, every
+  schema, user prompt, argv flag and environment are identical.
+  `test_1_99_changed_only_the_adjudicator_system_prompt` proves it, and
+  `test_1_96_1_...` restores 1.97's adjudicator prompt before comparing.
+- `docs/specs/adjudicator.md` no longer notes the drift.
+
 ## [1.98.1] — 2026-10-19 — the `metascience_agent` alias is removed
 
 PATCH: no change to any output. The `metascience_agent` compatibility alias

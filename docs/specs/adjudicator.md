@@ -235,7 +235,7 @@ Eight sections, in this order (Part A contract; the embedded example JSON is
 validated against the live schema by a test so it cannot rot):
 
 1. **Mission** — single referee over the five producer streams of §1 (the
-   prompt's own wording still says four; `raw_data_track` arrived in 1.76);
+   prompt named four until 1.99.0; `raw_data_track` arrived in 1.76);
    absorbs the editorial role; produces no new findings.
 2. **Inputs** — docket format, pass-count semantics, the named remainder,
    paper-text budget, `Read` discipline, `second_look`, `checks_tally`.

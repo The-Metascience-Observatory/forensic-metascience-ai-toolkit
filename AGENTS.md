@@ -865,14 +865,8 @@ otherwise tests import the other tree's code.
 **Push after every change, BEFORE running the full suite.** Then push again
 only if the suite finds something that needed fixing.
 
-**Push with `git push-both`** (`scripts/push_both.sh`). There are two repos:
-- `full-history` (`The-Metascience-Observatory/forensic-metascience-ai-toolkit-full-history`)
-  gets every commit. `main` tracks it, so a plain `git push` goes there.
-- `origin` (`The-Metascience-Observatory/forensic-metascience-ai-toolkit`) is the
-  public repo, and its history is not ours. The script adds ONE commit there
-  per push, holding main's exact tree and named after the newest `Release`
-  commit. Never `git push origin main`, which is always refused, and never
-  force it, which would replace the public history with the full one.
+**Push with a plain `git push`** to the branch `main` tracks. Never force-push
+`main`.
 
 Dan asked for this and he is right. Full-suite duration depends on the machine
 and concurrent work; holding every finished change for it leaves work unpushed

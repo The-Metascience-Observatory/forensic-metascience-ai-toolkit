@@ -130,9 +130,9 @@ With Claude Code and Claude Code only, you can pass a `--max-budget-usd` argumen
 A usage guard pauses runs with Claude or Antigravity runs
 when the 5-hour window reaches 90%. The guard stops runs using Claude, Codex, or Antigravity when the weekly gauge goes over 97%. To ignore the weekly usage guard, pass `--ignore-weekly-limit`. To disable both usage guards, use `--no-usage-guard`.
 
-## Modules and workflows
+## Modules and pipelines
 
-The codebase has a modular design. Users can add/remove modules and define their own custom workflows. The full workflow looks like this: 
+The codebase has a modular design. Users can add/remove modules and define their own custom pipelines. The "full" pipeline looks like this: 
 
 ```mermaid
 flowchart TD
@@ -213,23 +213,14 @@ review; any other run gets its own output folder and is labelled partial. See
 Outputs go to `forensic_review/` inside a paper directory, or to
 `<paper>_forensic_review_<model>_v<version>/` beside a PDF (`-o` overrides).
 
-- `report.md` (and `report.pdf`): rendered from the findings document, headline
-  first, with what could NOT be checked and a provenance stamp.
-- `findings.v2.json`: every finding with its id, producer, technique, final 1-9
-  severity, tool verdict, quotes and a reproduction command. Discarded findings
-  are kept with their disposition.
+- `report.md` (and `report.pdf`): rendered from the findings document, headline first, with what could NOT be checked and a provenance stamp.
+- `findings.v2.json`: every finding with its id, producer, technique, final 1-9 severity, tool verdict, quotes and a reproduction command. Discarded findings are kept with their disposition.
 - `adjudication.json`: the adjudicator's raw output.
 - `run_meta.json`: cost, tokens, timing, versions and prompt hashes.
-- `analysis_code/`: every script the proofreading agent ran.
-- `prompt.*.md`, `toolcalls.*.json`, `messages.*.json`: per agent, what it was
-  sent and every tool call it made.
-- `sandbox_audit.json`: **read this one.** It says whether anything ran outside
-  the validated tool surface.
-- A `_bundle/viewer.html` that opens offline (`metascience bundle`).
-
-Runs from the old serial pipeline (removed in v1.27.0) use `report.json`,
-`findings.json`, `toolcalls.stage{1,2}.json` and `messages.stage{1,2}.json`;
-every reader still opens them.
+- `analysis_code/`: every script the proofreading agent ran. 
+- `prompt.*.md`, `toolcalls.*.json`, `messages.*.json`: per agent, what it was sent and every tool call it made.
+- `sandbox_audit.json`: this says says whether anything ran outside the validated tool surface.
+- A `_bundle/viewer.html` an older-format detailed report that opens offline (produced with the `metascience bundle` command).
 
 ## Finding severity levels
 
@@ -258,13 +249,6 @@ and synced to the shared database. Nothing is published from it. See
 [webapp/README.md](webapp/README.md) and
 [docs/workbench_storage.md](docs/workbench_storage.md).
 
-
-## Validation
-
-How the tools are checked against independent R implementations, and how the
-full review is scored on papers with known problems: see
-[docs/VALIDATION.md](docs/VALIDATION.md).
-
 ## Python API
 
 ```python
@@ -277,17 +261,9 @@ print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # Fal
 
 ## License
 
-**Free for noncommercial use.** Researchers, universities, nonprofits,
-journalists, government bodies and individuals may use, modify and share
-this toolkit for noncommercial purposes. Two limits apply:
+**Free for noncommercial use.** Two limits apply:
 
-- **No commercial use.** You may not sell it, offer paid services built on
-  it, or use it inside a for-profit company. For a commercial license,
-  email dan@metascienceobservatory.org.
-- **Less than 500 papers.** Before analyzing more than 500 papers in
-  total across your organization, email dan@metascienceobservatory.org for
- permission. If you are using it for bulk analysis, the Metascience Observatory would like to be involved.  
+- **No commercial use.** You may not sell it, offer paid services built on it, or use it inside a for-profit company. For a commercial license, email dan@metascienceobservatory.org. 
+- **Less than 500 papers.** Before analyzing more than 500 papers in total across your organization, email dan@metascienceobservatory.org for permission. (If you are using it for bulk analysis, the Metascience Observatory would like to be involved.)  
 
-The full terms are the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
-plus the additional terms in [LICENSE](LICENSE); the LICENSE file is what
-governs.
+The full terms are the in [LICENSE](LICENSE), a non-commercial license based off [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0).

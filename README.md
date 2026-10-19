@@ -15,8 +15,9 @@ result that reads as "no statistics in this paper". The fatal checks also run
 automatically before any paid run.
 
 The plain install covers a full statistical review: reading PDFs, XML, HTML
-and supplements, all the forensic tools, statcheck, and both AI analysts plus
-the adjudicator. Everything else is an **extra**: either it is large, or it
+and supplements, all the forensic tools, statcheck, both AI analysts plus
+the adjudicator, and the test runner (`metascience-test`, with pytest).
+Everything else is an **extra**: either it is large, or it
 serves only one part of the toolkit that many users never touch. Add the extras
 you need, e.g. `pip install -e '.[pdf,html]'`.
 
@@ -355,11 +356,19 @@ print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # Fal
 ## Development
 
 ```bash
+pip install -e '.[dev]'        # pytest-xdist and ruff
 metascience-test -q            # Python suite, parallel
 metascience-test --stack -q    # everything local: Python, TypeScript, web, lint
 ```
 
-The suite is free and offline. See [CLAUDE.md](CLAUDE.md) for the environment,
+The suite is free and offline. pytest comes with the plain install, so
+`metascience-test` runs without the `dev` extra: it installs pytest-xdist
+itself (or runs serially if it cannot), and the ruff check skips with a
+message. The stack's lint step is the toolkit's own `metascience lint-inert`,
+not ruff. Ruff is configured to check only syntax errors and pyflakes rules
+(unused imports and variables, undefined names); `tests/test_ruff_errors.py`
+keeps `src/` at zero. Run `ruff check src/` to see them, and do not run
+`ruff --fix`: it has deleted imports here that other modules re-export. See [CLAUDE.md](CLAUDE.md) for the environment,
 conventions and invariants, and [CHANGELOG.md](CHANGELOG.md) for what each
 version changed.
 

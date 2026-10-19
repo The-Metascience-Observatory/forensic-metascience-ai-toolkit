@@ -209,10 +209,6 @@ target-version = "py310"
 # Never run `ruff --fix` here: on 2026-09-02 it deleted re-exported imports
 # from cli.py and broke the module that imports them.
 select = ["E9", "F"]
-# N818 wants every exception class to end in "Error". Eight public names
-# here do not (BudgetExhausted, WeeklyLimitReached, MCPUnavailable, ...);
-# renaming them is an API break for nothing, so the rule is off.
-ignore = ["N818"]
 
 [tool.ruff.lint.per-file-ignores]
 # A pytest fixture named `review` shadows the module-level `review` import

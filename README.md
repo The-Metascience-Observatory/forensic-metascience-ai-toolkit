@@ -1,81 +1,47 @@
 # Forensic Metascience AI Toolkit
 
-## Install
+## Installation
+
+This package requires Python 3.10+. To install, clone/download the repo and run these commands: 
 
 ```bash
 pip install -e .
-metascience preflight        # must print READY
 git lfs install && git lfs pull   # evaluation corpora are LFS-tracked
 ```
 
-Python 3.10+. Run `preflight` after installing. It names every dependency and
-prints `READY` only when a run can do what it claims. Some missing packages
-cause no error at all: a missing `statcheck`, for example, returns an empty
-result that reads as "no statistics in this paper". The fatal checks also run
-automatically before any paid run.
+**A database for storing findings is optional but necessary to use the webapp interface.**  
+Without a database, every result is still saved as files in the paper's `forensic_review/` folder. The following command walks through database setup: 
 
-The plain install covers a full statistical review: reading PDFs, XML, HTML
-and supplements, all the forensic tools, statcheck, both AI analysts plus
-the adjudicator, `report.pdf` rendering, and the test and lint tools
-(`metascience-test` with pytest and pytest-xdist, and ruff). There are no
-extras; old commands such as `pip install -e '.[pdf,dev]'` still work and
-install nothing more.
+```bash
+metascience db-setup  
+```
 
-`report.pdf` is rendered by `wkhtmltopdf` if it is installed, otherwise by
-WeasyPrint, otherwise by `pandoc` with a PDF engine. WeasyPrint comes with
-the install but needs the Pango library from your operating system, which pip
-cannot install: `brew install pango` on macOS, `apt install
-libpango-1.0-0 libpangoft2-1.0-0` on Debian/Ubuntu, or `conda install -c
-conda-forge pango` in a conda environment (whose own GLib otherwise clashes
-with the system Pango). If no renderer works, the run still finishes and
-`run_meta.pdf_error` says why; every other output is unaffected.
+If for some reason you don't want a database, running `metascience db-setup --no-database` records that and preflight will stop asking for it. 
 
-**The findings database is optional.** Each finished run can be copied into
-a local PostgreSQL database, which `db-push` and the review workbench read.
-Without one, every result is still saved as files in the paper's
-`forensic_review/` folder. `preflight` reports which applies and offers to set
-one up. `metascience db-setup` walks through it: it checks that PostgreSQL is
-installed and running and prints the commands for your system if not, creates
-the database, applies the schema, and saves the URL to the repo `.env`. If you
-don't want a database, `metascience db-setup --no-database` records that and
-preflight stops asking.
+**The image analysis module is not included here**. 
+The image analysis code is in a private repository called `metascience-observatory-image-analysis` and we are only sharing it with trusted parties. For access, email dan@metascienceobservatory.org with a note describing what you would like to do with it.
 
-Image analysis is not an extra. It is a separate package,
-`metascience-observatory-image-analysis`. Install it after the toolkit and it
-brings its own dependencies (OpenCV, docling, PyMuPDF, and EasyOCR through its
-own `text-localization` extra). Without it, a review still runs and reports
-that the figures were not examined.
+**Modules that use AI need an AI agent CLI installed, or OpenRouter API key**
 
-
-The AI review needs an agent CLI on PATH: [Claude Code](https://claude.ai/code)
-(`--backend claude`), the Grok CLI (`--backend grok`), Codex (`--backend
-codex`) or Google Antigravity's `agy` (`--backend antigravity`). Run
-`metascience backends` to see which of these are installed on your machine
-and which models each one offers.
+The system supports Claude Code (`--backend claude`), Codex (`--backend
+codex`), Grok Build (`--backend grok`), or Google Antigravity (`--backend antigravity`). Run `metascience backends` to see which of these are properly installed on your machine and which models each one offers. The system can also be run via an API subscription using OpenRouter, however this has not been tested much and costs about 15-25 times more compared to a $200/month Claude Code or Codex plan. To use OpenRouter, make sure OPENROUTER_API_KEY is set in your environment or is set in a .env file placed in the root of this repository.
+ 
 
 ## Quick start
 
-Any run that includes a module requiring AI (either analyst, the
-adjudicator, or the image module's AI screening) needs `--backend`: `claude`,
-`codex`, `grok`, `antigravity` or `openrouter`. There is no default. You can
-instead set `backend:` in a pipeline file. The `image_detect` and
-`raw_data_only` pipelines call no model and need no backend. `metascience
-models` shows which `--model` values each backend accepts. For
-`antigravity` it asks `agy` for the live list your sign-in can use. The
-examples use Claude Code.
 
-**Review a paper with the full pipeline** (both analysts, image and text
-tracks, adjudicator; paid):
+**Review a paper with the full pipeline** (both analysts,
+tracks, adjudicator; image pipeline if installed):
 
 ```bash
-metascience analyze paper.pdf --backend claude --max-budget-usd 30 # or a paper directory
+metascience analyze paper.pdf --backend claude --model sonnet --max-budget-usd 100 # or a paper directory
 ```
 
 **Run only the forensic metascience tools agent** (the statistical
 consistency checks on the paper's numbers):
 
 ```bash
-metascience run tools_only paper.pdf --backend claude   # = analyze paper.pdf --pipeline tools_only
+metascience run tools_only paper.pdf --backend claude   
 ```
 
 **Run only the scientific proofreading agent** (contradictions,
@@ -94,7 +60,7 @@ output folder; it never stands as the paper's review.
 CLI installed and signed in. To see what this machine has, run:
 
 ```bash
-metascience backends                    # every backend: installed?, version, default model, models
+metascience backends                    # lists every backend available on your system: installed?, version, default model, models
 metascience backends --backend codex    # one backend
 metascience backends --no-models        # only check what is installed
 ```
@@ -124,24 +90,26 @@ metascience batch corpus/ --backend claude --dry-run                   # free: p
 metascience batch corpus/ --backend claude --max-budget-usd 30 --workers 10 # resumable; finished papers are skipped
 ```
 
-**Free, offline checks** (no AI):
+**You can also run individual tools the tools agent has access to through the command line** (no AI used):
 
 ```bash
-metascience benchmark                      # synthetic papers; fails if a clean paper is accused
-metascience debit 0.35 0.48 100
-metascience check-ci 1.42 1.08 1.87 --measure HR
-metascience required-n two_sample_t 0.5    # -> 64/group
-metascience tool list                      # every registered tool
 metascience tool run grim_check --json '{"mean": 5.51, "n": 30, "decimals": 2, "data_type": "likert"}'
+metascience tool run statcheck --json '{"text": "F(2, 57) = 3.10, p = .01"}'
+metascience tool run statcheck --json '{"pdf_path": "paper.pdf"}'   # every APA-style statistic in a paper
+metascience tool run debit_check --json '{"mean": 0.35, "sd": 0.48, "n": 100, "decimals_mean": 2, "decimals_sd": 2, "data_type": "binary"}'
+metascience tool run check_estimate_ci --json '{"estimate": 1.42, "ci_low": 1.08, "ci_high": 1.87, "measure": "HR", "decimals": 2}'
+metascience tool list                      # list every registered tool
+metascience tool describe grim_check       # a tool's parameters
+
 ```
 
-`metascience tool run` goes through the same guards the AI sees, so it is
-stricter than the bare `grim` command: without `data_type` and `decimals` it
-refuses, and the call above says `suspicious`, not `impossible`, because the
+`metascience tool run` goes through the same guards the AI sees: without
+`data_type` and `decimals` GRIM refuses, and the call above says
+`suspicious`, not `impossible`, because the
 scale bounds and integer data are assumed rather than stated by a paper.
 Ambiguous input is refused, not guessed: `48.90 (14.46)` could be a mean and
-SD, a count and percentage, or an estimate and CI, and `metascience
-parse-cells` says so.
+SD, a count and percentage, or an estimate and CI, and `metascience tool run
+parse_cells_typed` says so.
 
 `batch` skips papers with *no full text* (nothing readable), with no flag to override it.
 A paper whose cited supplementary material is not present is *analysed anyway*, with a
@@ -154,17 +122,17 @@ supplements. The analysts read XML first, then the PDF, then `body.md`: the XML
 is the only source that keeps table structure (on one clinical Table 1, 86
 usable cells from the XML against 7 from the PDF).
 
-Recent measured cost: about $2-3 per paper on Claude Sonnet. Only the Claude
-backend honours `--budget-usd`. The usage guard pauses a Claude, Codex or Antigravity run
-when the 5-hour window reaches 90% and stops it when the weekly gauge is
-at/over 97%; pass `--ignore-weekly-limit` when extra credits will cover it,
-or `--no-usage-guard` to turn it off.
+## Cost and usage considerations
+If you plan to run a lot of papers, we recommend the $200 a month Claude Code subscription or $200 a month Codex subscription. The cost is roughly $0.5-$2 per pape in usage with using Opus or GPT-6. Note that we have observed this changing over time as Anthropic and OpenAI change the amount of usage you get. 
 
-## How it works
+With Claude Code and Claude Code only, you can pass a `--max-budget-usd` argument to specify the maximum budget, in API equivalent cost. 
 
-Modules run concurrently; the adjudicator finalises. The models never do the
-arithmetic: validated tools do (or, for the proofreading agent, captured
-script output).
+A usage guard pauses runs with Claude or Antigravity runs
+when the 5-hour window reaches 90%. The guard stops runs using Claude, Codex, or Antigravity when the weekly gauge goes over 97%. To ignore the weekly usage guard, pass `--ignore-weekly-limit`. To disable both usage guards, use `--no-usage-guard`.
+
+## Modules and workflows
+
+The codebase has a modular design. Users can add/remove modules and define their own custom workflows. The full workflow looks like this: 
 
 ```mermaid
 flowchart TD
@@ -193,7 +161,13 @@ flowchart TD
     click fetch href "https://github.com/The-Metascience-Observatory/fetchpdf" _blank
 ```
 
-Papers are fetched by [fetchpdf](https://github.com/The-Metascience-Observatory/fetchpdf).
+Each module is a folder in `src/forensic_metascience_ai_toolkit/modules/` (definition,
+code and, for agents, its prompt); each tool family is a folder in
+`tool_specs/`. The two tools no agent can call, `analyze_paper_images` and
+`detect_tortured_phrases`, are run by the deterministic tracks instead. See
+[docs/specs/modules.md](docs/specs/modules.md).
+
+Here are the main modules: 
 
 - **Tools agent** (58 tools are callable by the tool expert; no internet, no
   code): reads the paper, types every table cell, and checks each statistic
@@ -207,13 +181,7 @@ Papers are fetched by [fetchpdf](https://github.com/The-Metascience-Observatory/
 - **Text forensics** (tortured phrases) and the opt-in **raw-data** module:
   deterministic, quarantined signals that never become the headline.
 - **Adjudicator**: dedupes, verifies quotes, may re-run tools, and assigns the
-  final severities and the paper verdict.
-
-Each module is a folder in `src/metascience_agent/modules/` (definition,
-code and, for agents, its prompt); each tool family is a folder in
-`tool_specs/`. The two tools no agent can call, `analyze_paper_images` and
-`detect_tortured_phrases`, are run by the deterministic tracks instead. See
-[docs/specs/modules.md](docs/specs/modules.md).
+  final [severity levels](docs/errorlevels.md) and the paper verdict.
 
 **The tool sandbox.** An early run had the model write its own scipy t-tests
 in `/tmp`, bypassing every guard; the report looked identical. So the Claude
@@ -280,7 +248,7 @@ Runs from the old serial pipeline (removed in v1.27.0) use `report.json`,
 `findings.json`, `toolcalls.stage{1,2}.json` and `messages.stage{1,2}.json`;
 every reader still opens them.
 
-## Severity
+## Finding severity levels
 
 Every tool returns `impossible`, `highly_suspicious`, `suspicious`,
 `indeterminate` or `consistent`. **`indeterminate` is the default under
@@ -290,14 +258,14 @@ numbers cannot all be true, which says nothing about which is wrong or why.
 Before reading anything into one, see
 [docs/GRIM_CONTEXT_DEPENDENCY.md](docs/GRIM_CONTEXT_DEPENDENCY.md) (nineteen
 innocent mechanisms). The adjudicator then gives each finding a final severity
-on a 1-9 ladder, under clamps enforced in code.
+on a 1-9 ladder. The severity ladder levels are documented in [docs/errorlevels.md](docs/errorlevels.md)
 
 ## Reviewing results: the workbench
 
 A local web app for reviewing many papers and image matches:
 
 ```bash
-python -m metascience_agent.workbench.service --migrate
+python -m forensic_metascience_ai_toolkit.workbench.service --migrate
 cd webapp && npm install && npm run dev      # http://localhost:3100
 ```
 
@@ -349,28 +317,13 @@ silently running the paid pipeline.
 ## Python API
 
 ```python
-from metascience_agent.agent import analyze_paper_sync
-from metascience_agent.tools import grim_test
+from forensic_metascience_ai_toolkit.agent import analyze_paper_sync
+from forensic_metascience_ai_toolkit.tools import grim_test
 
 result = analyze_paper_sync("paper_dir/", mode="parallel", budget_usd=8.0)
 print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # False
 ```
 
-## Development
-
-```bash
-metascience-test -q            # Python suite, parallel
-metascience-test --stack -q    # everything local: Python, TypeScript, web, lint
-```
-
-The suite is free and offline, and everything it needs comes with the plain
-install. The stack's lint step is the toolkit's own `metascience lint-inert`,
-not ruff. Ruff is configured to check only syntax errors and pyflakes rules
-(unused imports and variables, undefined names); `tests/test_ruff_errors.py`
-keeps `src/` at zero. Run `ruff check src/` to see them, and do not run
-`ruff --fix`: it has deleted imports here that other modules re-export. See [CLAUDE.md](CLAUDE.md) for the environment,
-conventions and invariants, and [CHANGELOG.md](CHANGELOG.md) for what each
-version changed.
 
 ## Related packages
 

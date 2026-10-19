@@ -1,8 +1,9 @@
-"""Tests for the cross-platform self-installing parallel test runner.
+"""Tests for the cross-platform parallel test runner.
 
 The contract this module exists to guarantee: `metascience-test` never
-hard-fails just because pytest-xdist is missing (it self-installs, or falls
-back to serial), uses machine-local measured worker counts on
+hard-fails just because pytest-xdist is missing (it is a base dependency
+since 1.94.3; an older install runs serially and says why, and the runner
+never runs pip), uses machine-local measured worker counts on
 Mac/Linux/Windows alike, and never double-specifies `-n`/`--dist` when the
 caller already chose their own.
 """
@@ -55,52 +56,30 @@ class TestUserAlreadyChoseWorkers:
         assert test_runner._user_already_chose_workers([]) is False
 
 
-class TestEnsureXdistInstalled:
-    def test_already_available_skips_install(self, monkeypatch):
-        monkeypatch.setattr(test_runner, "_xdist_available", lambda: True)
+class TestMissingXdist:
+    def test_runs_serially_and_never_calls_pip(self, monkeypatch, capsys):
+        monkeypatch.setattr(test_runner, "_xdist_available", lambda: False)
         called = []
         monkeypatch.setattr(subprocess, "run", lambda *a, **k: called.append((a, k)))
-        assert test_runner._ensure_xdist_installed() is True
+        captured = {}
+        _install_fake_pytest(monkeypatch, captured)
+
+        assert test_runner.main(["-k", "grim"]) == 0
         assert called == []
+        assert captured["args"] == ["-k", "grim"]
+        assert "base dependency" in capsys.readouterr().err
 
-    def test_installs_when_missing_then_reports_true_if_it_worked(self, monkeypatch):
-        calls = {"n": 0}
-
-        def fake_available():
-            calls["n"] += 1
-            return calls["n"] > 1  # missing on first check, present after "install"
-
-        monkeypatch.setattr(test_runner, "_xdist_available", fake_available)
-        monkeypatch.setattr(
-            test_runner.subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0)
-        )
-        assert test_runner._ensure_xdist_installed() is True
-
-    def test_offline_install_failure_degrades_to_false_not_raise(self, monkeypatch):
+    def test_tune_refuses_and_names_the_fix(self, monkeypatch, capsys):
         monkeypatch.setattr(test_runner, "_xdist_available", lambda: False)
-
-        def raise_network_error(*a, **k):
-            raise subprocess.CalledProcessError(1, a)
-
-        monkeypatch.setattr(test_runner.subprocess, "run", raise_network_error)
-        # Must not raise -- a failed install is a "run serially" signal, never fatal.
-        assert test_runner._ensure_xdist_installed() is False
-
-    def test_install_timeout_also_degrades_gracefully(self, monkeypatch):
-        monkeypatch.setattr(test_runner, "_xdist_available", lambda: False)
-
-        def raise_timeout(*a, **k):
-            raise subprocess.TimeoutExpired(cmd="pip", timeout=120)
-
-        monkeypatch.setattr(test_runner.subprocess, "run", raise_timeout)
-        assert test_runner._ensure_xdist_installed() is False
+        assert test_runner.main(["--tune"]) == 2
+        assert "pip install -e ." in capsys.readouterr().err
 
 
 class TestMainBuildsCorrectPytestArgs:
     def test_injects_n_and_dist_when_xdist_available_and_user_did_not_choose(
         self, monkeypatch
     ):
-        monkeypatch.setattr(test_runner, "_ensure_xdist_installed", lambda: True)
+        monkeypatch.setattr(test_runner, "_xdist_available", lambda: True)
         monkeypatch.setattr(test_runner, "_default_worker_count", lambda: 7)
         captured = {}
         _install_fake_pytest(monkeypatch, captured)
@@ -111,7 +90,7 @@ class TestMainBuildsCorrectPytestArgs:
         assert captured["args"][4:] == ["-k", "grim"]
 
     def test_does_not_override_an_explicit_n(self, monkeypatch):
-        monkeypatch.setattr(test_runner, "_ensure_xdist_installed", lambda: True)
+        monkeypatch.setattr(test_runner, "_xdist_available", lambda: True)
         captured = {}
         _install_fake_pytest(monkeypatch, captured)
 
@@ -119,7 +98,7 @@ class TestMainBuildsCorrectPytestArgs:
         assert captured["args"] == ["-n", "3"]
 
     def test_falls_back_to_plain_args_when_xdist_unavailable(self, monkeypatch):
-        monkeypatch.setattr(test_runner, "_ensure_xdist_installed", lambda: False)
+        monkeypatch.setattr(test_runner, "_xdist_available", lambda: False)
         captured = {}
         _install_fake_pytest(monkeypatch, captured)
 
@@ -196,7 +175,7 @@ def test_explicit_serial_is_preserved():
 def test_stack_dispatches_without_nesting_pytest(monkeypatch):
     from metascience_agent import test_stack
     calls = []
-    monkeypatch.setattr(test_runner, "_ensure_xdist_installed", lambda: True)
+    monkeypatch.setattr(test_runner, "_xdist_available", lambda: True)
     monkeypatch.setattr(test_stack, "main", lambda args: calls.append(args) or 3)
     assert test_runner.main(["--stack", "-n", "12", "-q"]) == 3
     assert calls == [["-n", "12", "-q"]]

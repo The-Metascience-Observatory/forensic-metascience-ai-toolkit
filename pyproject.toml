@@ -109,10 +109,18 @@ dependencies = [
     # needs to start is base, not `dev`: before this, a plain install shipped
     # a command that died on `import pytest`. pytest-asyncio comes with it
     # because pyproject sets `asyncio_mode = "auto"` and the suite's async
-    # tests fail without it. About 3 MB together. pytest-xdist stays in `dev`;
-    # the runner installs it itself when it is missing.
+    # tests fail without it. About 3 MB together.
     "pytest>=7.0.0",
     "pytest-asyncio>=0.21.0",
+    # The former `dev` extra, base since 1.94.3 (about 29 MB, nearly all of it
+    # ruff's binary, beside several GB of docling/PyTorch). As an extra it
+    # cost more than it saved: `metascience-test` ran `pip install` on the
+    # user's interpreter to fetch pytest-xdist, and tests/test_ruff_errors.py
+    # -- the guard that keeps unused variables (dropped results) out of src/ --
+    # SKIPPED on every machine without it. The ruff floor is the version that
+    # guard was last measured clean under; an unpinned ruff can add F rules.
+    "pytest-xdist>=3.5.0",
+    "ruff>=0.15",
     # `report.pdf` rendering, the second of three renderers (after
     # wkhtmltopdf, before pandoc; report_render.render_markdown_to_pdf). Base
     # since 1.94.2, about 19 MB beyond what docling already brings. It is NOT
@@ -142,11 +150,9 @@ dependencies = [
 # Kept, empty, so `pip install -e '.[html]'` in old notes still resolves;
 # fetchpdf is a base dependency now.
 html = []
-dev = [
-    # pytest and pytest-asyncio are base dependencies (see above).
-    "pytest-xdist>=3.5.0",
-    "ruff>=0.1.0",
-]
+# Kept, empty, so `pip install -e '.[dev]'` in old notes still resolves;
+# its packages are base dependencies since 1.94.3.
+dev = []
 # Kept, empty, so `pip install -e '.[statcheck]'` in old notes still resolves;
 # statcheck is a base dependency now.
 statcheck = []
@@ -223,8 +229,7 @@ testpaths = ["tests", "copy_paste_detector/tests"]
 # declared it, so every invocation failed before collecting a single test.
 # Parallelism is applied later: `tests/conftest.py` turns xdist on (same
 # calibrated workers / loadfile default as `metascience-test`) once loaded,
-# and no-ops if it is not. `metascience-test` still auto-installs xdist
-# when it is missing.
+# and no-ops if it is not. xdist is a base dependency since 1.94.3.
 #
 # Dan asked on 2026-08-11 whether ~4,400 tests was excessive. Measured: 39,320
 # test lines against 54,216 of source is 0.73:1, which is lean for code that

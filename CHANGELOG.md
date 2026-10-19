@@ -9,6 +9,20 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.94.3] — 2026-10-19 — no dev extra: pytest-xdist and ruff are base
+
+PATCH: packaging only; no prompt, tool, severity or finding changes.
+
+- **pytest-xdist and ruff are base dependencies; `dev` is empty** (kept so
+  `.[dev]` still resolves). About 29 MB, nearly all ruff, beside several GB
+  of docling and PyTorch. As an extra, `tests/test_ruff_errors.py` -- which
+  keeps unused variables and imports out of `src/` -- skipped on every
+  machine without it. The ruff floor rises to 0.15, the version that check
+  was last run clean under.
+- **`metascience-test` no longer runs `pip install`.** It used to install
+  pytest-xdist into the running interpreter when it was missing. An older
+  install without xdist now runs serially and says to reinstall the toolkit.
+
 ## [1.94.2] — 2026-10-19 — WeasyPrint and pytest are in the plain install
 
 PATCH: packaging and documentation only; no prompt, tool, severity or finding

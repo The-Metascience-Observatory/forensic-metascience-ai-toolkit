@@ -6,13 +6,13 @@ full configured suite and saves the fastest measured worker count locally;
 lint concurrently. Combine them to tune the complete local stack.
 
 Explicit pytest worker/distribution choices and native thread settings win.
-Missing xdist is installed when possible, otherwise execution stays serial.
+pytest-xdist is a base dependency; if an older install lacks it, execution
+stays serial and says so. The runner never installs packages itself.
 """
 
 from __future__ import annotations
 
 import importlib.util
-import subprocess
 import sys
 
 _XDIST_FLAGS = ("-n", "--numprocesses", "--dist", "-p")
@@ -22,33 +22,10 @@ def _xdist_available() -> bool:
     return importlib.util.find_spec("xdist") is not None
 
 
-def _ensure_xdist_installed() -> bool:
-    """Best-effort install of pytest-xdist into the running interpreter.
-
-    Returns True if pytest-xdist is importable afterward (whether it was
-    already there or installation succeeded), False if it still isn't --
-    callers must treat False as "run serially", never as fatal.
-    """
-    if _xdist_available():
-        return True
-    print(
-        f"metascience-test: pytest-xdist not found, installing it into {sys.executable} ...",
-        file=sys.stderr,
-    )
-    try:
-        subprocess.run(
-            [sys.executable, "-m", "pip", "install", "-q", "pytest-xdist>=3.5.0"],
-            check=True,
-            timeout=120,
-        )
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError) as exc:
-        print(
-            f"metascience-test: could not install pytest-xdist ({exc}); "
-            "falling back to a serial run.",
-            file=sys.stderr,
-        )
-        return False
-    return _xdist_available()
+_XDIST_MISSING = (
+    "pytest-xdist is missing; it is a base dependency, so reinstall the "
+    "toolkit (`pip install -e .`)"
+)
 
 
 def _default_worker_count() -> int:
@@ -107,25 +84,24 @@ def main(argv: list[str] | None = None) -> int:
         args.remove("--stack")
     if "--tune" in args:
         args.remove("--tune")
-        if not _ensure_xdist_installed():
-            print("Worker tuning requires pytest-xdist.", file=sys.stderr)
+        if not _xdist_available():
+            print(f"Worker tuning requires pytest-xdist: {_XDIST_MISSING}.", file=sys.stderr)
             return 2
         from .test_performance import tune
 
         return tune(args, stack=stack)
     if stack:
-        _ensure_xdist_installed()
         from .test_stack import main as run_stack
 
         return run_stack(args)
 
-    parallel_ok = _ensure_xdist_installed()
+    parallel_ok = _xdist_available()
 
     pytest_args: list[str] = []
     if parallel_ok and not _user_already_chose_workers(args):
         pytest_args += ["-n", str(_default_worker_count()), "--dist", "loadfile"]
     elif not parallel_ok:
-        print("metascience-test: running serially (pytest-xdist unavailable).", file=sys.stderr)
+        print(f"metascience-test: running serially ({_XDIST_MISSING}).", file=sys.stderr)
 
     pytest_args += args
 

@@ -86,11 +86,11 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   Python uses pytest-xdist with a machine-local calibrated worker count (all
   available CPUs before calibration), `--dist loadfile` (a
   whole file stays on one worker, which is what this suite's module-scoped
-  fixtures need) — and self-installs pytest-xdist into whatever interpreter
-  is running it if it isn't already present, so it works the same on a fresh
-  Mac/Linux/Windows checkout without a separate setup step. If the install
-  can't complete (offline, read-only env), it degrades to a serial run rather
-  than failing — parallelism is a speed optimization, not a requirement.
+  fixtures need). pytest-xdist and ruff are base dependencies (since
+  1.94.3; there is no `dev` extra to forget), so a fresh Mac/Linux/Windows
+  install runs in parallel with no separate setup step. An older install
+  without xdist runs serially and names the fix; the runner never runs pip
+  itself — parallelism is a speed optimization, not a requirement.
   Run `metascience-test --stack --tune --worker-counts 6,12,16,20` to
   compare full-stack elapsed times (choose counts within the machine's available
   CPUs). Two alternating rounds select the fastest median; a failed run leaves

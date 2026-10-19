@@ -16,9 +16,10 @@ automatically before any paid run.
 
 The plain install covers a full statistical review: reading PDFs, XML, HTML
 and supplements, all the forensic tools, statcheck, both AI analysts plus
-the adjudicator, `report.pdf` rendering, and the test runner
-(`metascience-test`, with pytest). The one extra is `dev`, for working on the
-toolkit itself (below).
+the adjudicator, `report.pdf` rendering, and the test and lint tools
+(`metascience-test` with pytest and pytest-xdist, and ruff). There are no
+extras; old commands such as `pip install -e '.[pdf,dev]'` still work and
+install nothing more.
 
 `report.pdf` is rendered by `wkhtmltopdf` if it is installed, otherwise by
 WeasyPrint, otherwise by `pandoc` with a PDF engine. WeasyPrint comes with
@@ -44,10 +45,6 @@ Image analysis is not an extra. It is a separate package,
 brings its own dependencies (OpenCV, docling, PyMuPDF, and EasyOCR through its
 own `text-localization` extra). Without it, a review still runs and reports
 that the figures were not examined.
-
-| Extra | Packages | What it adds |
-|---|---|---|
-| `dev` | **pytest-xdist** (parallel workers behind `metascience-test`), **ruff** (linter) | Developing the toolkit. pytest and pytest-asyncio are base dependencies, so `metascience-test` runs on a plain install; without `dev` it installs pytest-xdist itself, or runs serially, and the ruff check skips. |
 
 
 The AI review needs an agent CLI on PATH: [Claude Code](https://claude.ai/code)
@@ -362,15 +359,12 @@ print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # Fal
 ## Development
 
 ```bash
-pip install -e '.[dev]'        # pytest-xdist and ruff
 metascience-test -q            # Python suite, parallel
 metascience-test --stack -q    # everything local: Python, TypeScript, web, lint
 ```
 
-The suite is free and offline. pytest comes with the plain install, so
-`metascience-test` runs without the `dev` extra: it installs pytest-xdist
-itself (or runs serially if it cannot), and the ruff check skips with a
-message. The stack's lint step is the toolkit's own `metascience lint-inert`,
+The suite is free and offline, and everything it needs comes with the plain
+install. The stack's lint step is the toolkit's own `metascience lint-inert`,
 not ruff. Ruff is configured to check only syntax errors and pyflakes rules
 (unused imports and variables, undefined names); `tests/test_ruff_errors.py`
 keeps `src/` at zero. Run `ruff check src/` to see them, and do not run

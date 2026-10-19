@@ -6,8 +6,8 @@ plugins load, and a missing xdist turns every ``pytest`` into
 ``pytest_cmdline_main``, which is where xdist decides whether to spawn
 workers, so the same flags are applied only when they will be understood.
 
-``metascience-test`` still exists to install xdist if it is missing. This
-is the path for bare ``pytest`` / ``python -m pytest``.
+``metascience-test`` applies the same defaults itself. This is the path for
+bare ``pytest`` / ``python -m pytest``.
 """
 from __future__ import annotations
 

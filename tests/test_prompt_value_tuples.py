@@ -62,24 +62,8 @@ class TestTheSwapChangedNothing:
 
 class TestTheLiveEvalPathStillWorks:
     """The reason this prerequisite exists at all: `deterministic.py` reads
-    both tuples, and `harness.py` calls it on PARALLEL runs, not only legacy
-    ones. A tuple that silently emptied would reject every severity a run
-    produced and read as a malformed report."""
-
-    def test_a_valid_severity_is_accepted(self):
-        from forensic_metascience_ai_toolkit.evaluation import deterministic
-        out = deterministic.check_findings_json({"findings": [{
-            "id": "f1", "location": "Table 1", "technique": "grim",
-            "reproduction": "metascience grim 3.5 30", "severity": "suspicious"}]})
-        assert not any("invalid severity" in p for p in out["problems"]), out
-
-    def test_an_invented_severity_is_still_rejected(self):
-        from forensic_metascience_ai_toolkit.evaluation import deterministic
-        out = deterministic.check_findings_json({"findings": [{
-            "id": "f1", "location": "Table 1", "technique": "grim",
-            "reproduction": "x", "severity": "extremely_bad"}]})
-        assert any("invalid severity" in p for p in out["problems"]), (
-            "the severity vocabulary stopped being enforced")
+    the verdict tuple, and `harness.py` calls it on every run. A tuple that
+    silently emptied would reject every verdict a run produced."""
 
     def test_the_verdict_check_still_reads_the_tuple(self):
         from forensic_metascience_ai_toolkit.evaluation import deterministic

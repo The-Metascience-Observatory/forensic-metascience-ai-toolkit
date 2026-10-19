@@ -40,7 +40,7 @@ V1_ONLY = ("report_obj", "stage1_finding_ids")
 #: `agent.py` IS the legacy path and these are CORRECT there; `review_issues`
 #: and `migrate_v2` exist to read v1 documents. Reads in those files are not
 #: residue and are excluded rather than counted and waived.
-LEGACY_BY_DESIGN = {"agent.py", "review_issues.py", "migrate_v2.py"}
+LEGACY_BY_DESIGN = {"agent.py", "review_issues.py"}
 
 #: THE MIGRATION MAP, measured 2026-09-03 by call-site analysis, so the next
 #: person does not have to derive it again. Import reachability is the WRONG
@@ -84,7 +84,9 @@ LEGACY_BY_DESIGN = {"agent.py", "review_issues.py", "migrate_v2.py"}
 #: after that port. LOWER IS THE ONLY ACCEPTABLE DIRECTION.
 #: Do not raise this to make a change pass -- a new read is a fifth symptom
 #: waiting to happen, and the fix is to read the v2 record instead.
-MAX_LIVE_READS = 20
+#: 16 since 2026-10-19, when the readers of the serial pipeline's output layout
+#: started being removed.
+MAX_LIVE_READS = 16
 
 
 def _live_reads() -> collections.Counter:
@@ -299,7 +301,8 @@ def _live_field_reads() -> collections.Counter:
 #: 46 since 2026-10-16: `history_db._sync_report_findings` reads `id` on
 #: legacy report rows. Not a new read -- the general modules moved back from
 #: the image package into this tree, which brought it inside the scan.
-MAX_LIVE_FIELD_READS = 46
+#: 41 since 2026-10-19 (the old-layout readers removed so far).
+MAX_LIVE_FIELD_READS = 41
 
 
 class TestTheFieldLevelResidueDoesNotGrow:

@@ -133,13 +133,9 @@ async def eval_one(
         print(f"[{name}] reusing existing analysis in {review_dir}")
         report_md = (review_dir / "report.md").read_text()
         findings: Any = None
-        # v2 first (the parallel pipeline / migrated runs); v1 fallback.
         v2_path = review_dir / "findings.v2.json"
-        findings_path = review_dir / "findings.json"
         if v2_path.exists():
             findings = json.loads(v2_path.read_text())
-        elif findings_path.exists():
-            findings = json.loads(findings_path.read_text())
         run_meta_path = review_dir / "run_meta.json"
         verdict = None
         run_meta: dict = {}
@@ -148,8 +144,6 @@ async def eval_one(
             verdict = (findings.get("adjudication") or {}).get("verdict")
         if run_meta_path.exists():
             run_meta = json.loads(run_meta_path.read_text())
-            verdict = verdict or run_meta.get("stages", {}).get(
-                "editorial", {}).get("verdict")
             analysis_cost = float(run_meta.get("total_cost_usd") or 0)
     else:
         from ..llm_backend import resolve_backend

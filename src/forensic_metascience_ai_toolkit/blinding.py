@@ -448,50 +448,6 @@ _COMMON_WORDS = frozenset({
     "cognitive", "medical", "health", "human", "social", "clinical",
 })
 
-#: Fields the MODEL wrote, as opposed to text OUR templates wrote.
-#:
-#: `recognition_hits` must be run over these and NOT over `report.md`. Measured
-#: on the blinded demo runs, scanning the rendered report flagged 'retract',
-#: 'misconduct' and 'fabricat' -- every one of them from our OWN boilerplate
-#: ("no publication-level cross-checks -- registration, retraction status ...",
-#: "not a finding of misconduct"). Scanning our disclaimer for the vocabulary
-#: our disclaimer is required to use makes the check fire on every run and mean
-#: nothing.
-_MODEL_AUTHORED_FIELDS = ("title", "plain", "notes", "quote", "location",
-                          "statement", "claim", "explanation", "reported",
-                          "computed", "assumptions", "consequence")
-
-
-def model_authored_text(review_dir: Path) -> str:
-    """Concatenate only what the MODEL wrote in a review, for `recognition_hits`.
-
-    Walks `findings.json` and `report.json` and keeps the free-text fields the
-    model authored, so the recognition check is not reading our own templates
-    back to itself.
-    """
-    out: list[str] = []
-
-    def walk(node) -> None:
-        if isinstance(node, dict):
-            for k, v in node.items():
-                if k in _MODEL_AUTHORED_FIELDS and isinstance(v, (str, int, float)):
-                    out.append(str(v))
-                else:
-                    walk(v)
-        elif isinstance(node, list):
-            for v in node:
-                walk(v)
-
-    for name in ("findings.json", "report.json"):
-        p = Path(review_dir) / name
-        if p.exists():
-            try:
-                walk(json.loads(p.read_text(encoding="utf-8", errors="replace")))
-            except ValueError:
-                continue
-    return "\n".join(out)
-
-
 #: Identifier labels whose words are the paper's SUBSTANCE, never scrubbed as
 #: tokens. Blinding must not destroy the evidence being examined.
 #:

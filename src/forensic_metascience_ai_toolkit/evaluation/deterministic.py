@@ -31,38 +31,16 @@ _PREAMBLE_PATTERNS = [
 def check_findings_json(findings: Any) -> dict:
     """Validate parsed findings against structural expectations.
 
-    Dispatches on schema_version: 2.0 documents (the parallel pipeline /
-    migrated corpora) validate the v2 invariants; anything else takes the
-    v1 path unchanged.
+    Only a findings-v2 document (schema_version 2.0) is checked. The v1 path
+    went with the serial pipeline's output layout, so anything else is
+    refused by name rather than validated against rules nobody writes to.
     """
     if isinstance(findings, dict) and \
             str(findings.get("schema_version")) == "2.0":
         return check_findings_v2(findings)
-    problems: list[str] = []
-    if not isinstance(findings, dict):
-        return {"passed": False, "problems": ["findings is not a JSON object"]}
-
-    items = findings.get("findings")
-    if not isinstance(items, list):
-        problems.append("missing/invalid 'findings' array")
-        items = []
-
-    valid_severities = set(prompts.SEVERITY_VALUES)
-    for i, f in enumerate(items):
-        if not isinstance(f, dict):
-            problems.append(f"finding[{i}] is not an object")
-            continue
-        sev = f.get("severity")
-        if sev not in valid_severities:
-            problems.append(f"finding[{i}] ({f.get('id')}) has invalid severity: {sev!r}")
-        for key in ("id", "location", "technique", "reproduction"):
-            if not f.get(key):
-                problems.append(f"finding[{i}] ({f.get('id')}) missing {key}")
-
-    if "coverage" not in findings:
-        problems.append("missing 'coverage'")
-
-    return {"passed": not problems, "problems": problems, "num_findings": len(items)}
+    return {"passed": False, "num_findings": 0,
+            "problems": ["not a findings-v2 document (schema_version 2.0); "
+                         "the v1 layout is no longer read"]}
 
 
 def check_findings_v2(doc: dict) -> dict:

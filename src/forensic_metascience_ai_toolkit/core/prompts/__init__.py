@@ -698,7 +698,7 @@ def producer_findings_schema(producer: str, figures: bool = False) -> dict:
     if producer in _CONVERTER_PRODUCERS:
         raise ValueError(
             f"{producer!r} rows are converter-written full records "
-            "(migrate_v2.py); no producer-facing subset schema exists for them"
+            "(the retired migrate-v2 converter); no producer-facing subset schema exists for them"
         )
 
     schema = copy.deepcopy(findings_schema_v2())

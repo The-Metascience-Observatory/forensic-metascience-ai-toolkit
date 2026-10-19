@@ -79,7 +79,6 @@ from __future__ import annotations
 import json
 import math
 import re
-import pathlib
 from pathlib import Path
 
 #: Severity collapsed to two bands. A finding that moves `suspicious` <->
@@ -211,7 +210,7 @@ def _note(n: int, all_s: dict, acc_s: dict, all_l: dict, acc_l: dict) -> str:
 
 def _paper_id_of(run_dir: Path) -> str | None:
     """Which paper a review directory is about, from whichever file says so."""
-    for name in ("run_meta.json", "report.json", "findings.json"):
+    for name in ("run_meta.json", "findings.v2.json"):
         f = run_dir / name
         if not f.is_file():
             continue
@@ -228,7 +227,7 @@ def _paper_id_of(run_dir: Path) -> str | None:
 
 
 def from_review_dirs(dirs: list[str | Path]) -> dict:
-    """Read `findings.json` from each directory and compare them.
+    """Read `findings.v2.json` from each directory and compare them.
 
     REFUSES A MIXED SET, and it did not until 2026-08-18.
 
@@ -246,60 +245,19 @@ def from_review_dirs(dirs: list[str | Path]) -> dict:
     mine; the silence was the module's.
     """
     runs, used, ids = [], [], {}
-    schemas: dict[str, str] = {}
     for d in dirs:
-        # BOTH FILENAMES, AND WHICH ONE IS RECORDED.
-        #
-        # This read only `findings.json`. The current pipeline writes
-        # `findings.v2.json`, so on a paper with runs of both kinds this verb
-        # selected EXCLUSIVELY the retired-schema ones and published a
-        # reproducibility percentage about a pipeline that no longer exists --
-        # CLAUDE.md section 0b implemented as a command. Measured on
-        # 10.1002--ajcp.70049: three runs used, all three schema 1.0, while
-        # `metascience runs` reports 3 current and 3 stale and the two sets are
-        # disjoint.
-        found = None
-        for name, schema in (("findings.v2.json", "v2"), ("findings.json", "v1")):
-            candidate = Path(d) / name
-            if candidate.is_file():
-                found = (candidate, schema)
-                break
-        if found is None:
+        p = Path(d) / "findings.v2.json"
+        if not p.is_file():
             continue
-        p, schema = found
         try:
             data = json.loads(p.read_text(encoding="utf-8"))
         except Exception:  # noqa: BLE001
             continue
-        fl = data.get("findings") if isinstance(data, dict) else data
+        fl = data.get("findings") if isinstance(data, dict) else None
         if isinstance(fl, list):
             runs.append(fl)
             used.append(Path(d).name)
             ids[Path(d).name] = _paper_id_of(Path(d))
-            schemas[Path(d).name] = schema
-
-    # SCHEMAS ARE NOT COMPARABLE, and mixing them silently would be worse than
-    # the bug above. A v1 finding and a v2 finding of the same defect differ in
-    # id derivation, severity type and technique vocabulary, so "the same
-    # finding in both runs" cannot be decided across the boundary. Refuse, and
-    # say which runs are which, rather than reporting an agreement figure that
-    # measures the schema change.
-    if len({s for s in schemas.values()}) > 1:
-        by = {}
-        for name, s in schemas.items():
-            by.setdefault(s, []).append(name)
-        return {"error": "mixed_schemas", "runs_used": [], "schemas": schemas,
-                "note": ("These runs do not use one findings schema, so they "
-                         "cannot be compared: a v1 and a v2 row differ in id "
-                         "derivation, severity type and technique vocabulary, "
-                         "and any agreement figure across them would be "
-                         "measuring the schema change rather than the "
-                         "pipeline. "
-                         + "; ".join(f"{s}: {', '.join(sorted(v))}"
-                                     for s, v in sorted(by.items()))
-                         + ". Re-run `metascience agreement` on runs of one "
-                           "schema -- `metascience runs <paper>` says which "
-                           "are current.")}
 
     distinct = {v for v in ids.values() if v}
     if len(distinct) > 1:
@@ -329,7 +287,7 @@ def from_review_dirs(dirs: list[str | Path]) -> dict:
                        + str(out.get("note") or ""))
     if len(used) < len(list(dirs)):
         out["note"] = (f"{len(list(dirs)) - len(used)} of the directories given "
-                       "carried no readable findings.json and were skipped. "
+                       "carried no readable findings.v2.json and were skipped. "
                        + str(out.get("note") or ""))
     return out
 
@@ -339,27 +297,5 @@ def find_runs(paper_dir: str | Path) -> list[Path]:
     base = Path(paper_dir)
     if not base.is_dir():
         return []
-    # BOTH FILENAMES. This looked only for `findings.json`, which the current
-    # pipeline does not write -- so on a paper carrying runs of both kinds it
-    # returned exclusively the retired-schema ones, and `metascience agreement`
-    # published a reproducibility percentage about a pipeline that no longer
-    # exists.
-    #
-    # CURRENT FIRST. When a paper has runs of both schemas the two cannot be
-    # compared (see `from_review_dirs`), and the useful answer is about the
-    # pipeline in use, so v2 runs are preferred outright rather than mixed.
-    def _carries(d: pathlib.Path) -> str | None:
-        if (d / "findings.v2.json").is_file():
-            return "v2"
-        if (d / "findings.json").is_file():
-            return "v1"
-        return None
-
-    by_schema: dict[str, list] = {}
-    for d in sorted(base.iterdir()):
-        if not d.is_dir():
-            continue
-        schema = _carries(d)
-        if schema:
-            by_schema.setdefault(schema, []).append(d)
-    return by_schema.get("v2") or by_schema.get("v1") or []
+    return [d for d in sorted(base.iterdir())
+            if d.is_dir() and (d / "findings.v2.json").is_file()]

@@ -1,12 +1,10 @@
 """Portable finding-file paths: never absolute, never outside the paper dir."""
-import json
 from pathlib import Path
 
 from forensic_metascience_ai_toolkit.finding_files import (
-    artefacts_for_editorial, artefacts_from_sweep_finding, relativize,
+    artefacts_from_sweep_finding, relativize,
     resolve, read_sheet,
 )
-from forensic_metascience_ai_toolkit.review_issues import collect_issues
 
 
 def test_relativize_unix_absolute_becomes_basename(tmp_path):
@@ -100,58 +98,6 @@ def test_resolve_finds_file_after_root_moves(tmp_path):
     assert found == new / "QALY.xlsx"
 
 
-def test_join_editorial_to_sweep_path(tmp_path):
-    paper = tmp_path / "p"
-    paper.mkdir()
-    xlsx = paper / "cars.xlsx"
-    xlsx.write_bytes(b"x")
-    sweep = {
-        "id": "supplement_qaly_raw_duplication",
-        "inputs": {"path": "cars.xlsx", "sheet": "QALY"},
-        "computed": {},
-    }
-    editorial = {
-        "title": "duplicated rows",
-        "stage1_finding_ids": ["supplement_qaly_raw_duplication"],
-        "location": "Supplementary data file, 'QALY' sheet",
-    }
-    arts = artefacts_for_editorial(editorial, {sweep["id"]: sweep}, paper)
-    assert len(arts) == 1
-    assert arts[0]["found"] is True
-    assert arts[0]["kind"] == "xlsx"
-    assert arts[0]["relpath"] == "cars.xlsx"
-    assert arts[0]["sheet"] == "QALY"
-    assert arts[0]["confidence"] == "file"
-
-
-def test_quoted_sheet_in_location_fills_missing_inputs_sheet(tmp_path):
-    """Sweep recorded the file but not the worksheet; location named it in quotes."""
-    paper = tmp_path / "p"
-    paper.mkdir()
-    (paper / "cars.xlsx").write_bytes(b"x")
-    sweep = {
-        "id": "supplement_qaly_raw_duplication",
-        "inputs": {"path": "cars.xlsx"},
-        "computed": {},
-    }
-    editorial = {
-        "stage1_finding_ids": ["supplement_qaly_raw_duplication"],
-        "location": "Supplementary data file, 'QALY' sheet (193 rows)",
-    }
-    arts = artefacts_for_editorial(editorial, {sweep["id"]: sweep}, paper)
-    assert arts[0]["sheet"] == "QALY"
-
-
-def test_no_path_is_empty_not_a_guess(tmp_path):
-    paper = tmp_path / "p"
-    paper.mkdir()
-    editorial = {
-        "stage1_finding_ids": ["something"],
-        "location": "Supplementary data file, 'QALY' sheet",
-    }
-    assert artefacts_for_editorial(editorial, {}, paper) == []
-
-
 def test_cells_from_duplicate_groups_raise_confidence(tmp_path):
     paper = tmp_path / "p"
     paper.mkdir()
@@ -172,33 +118,6 @@ def test_cells_from_duplicate_groups_raise_confidence(tmp_path):
     arts = artefacts_from_sweep_finding(sweep, paper)
     assert arts[0]["confidence"] == "cells"
     assert len(arts[0]["cells"]) == 2
-
-
-def test_collect_issues_attaches_artefacts(tmp_path):
-    paper = tmp_path / "p"
-    review = paper / "forensic_review"
-    review.mkdir(parents=True)
-    (paper / "cars.xlsx").write_bytes(b"x")
-    (review / "report.json").write_text(json.dumps({
-        "findings": [{
-            "title": "dup rows", "severity": "highly_suspicious",
-            "plain": "rows match", "location": "QALY sheet",
-            "stage1_finding_ids": ["supplement_qaly_raw_duplication"],
-            "rank": 1, "warrant": "logical",
-        }],
-    }))
-    (review / "findings.json").write_text(json.dumps({
-        "findings": [{
-            "id": "supplement_qaly_raw_duplication",
-            "inputs": {"path": "/old/host/cars.xlsx"},
-            "technique": "raw_duplication",
-        }],
-    }))
-    issues = collect_issues(paper)["issues"]
-    assert issues
-    arts = issues[0].get("artefacts") or []
-    assert arts and arts[0]["found"] is True
-    assert arts[0]["basename"] == "cars.xlsx"
 
 
 def test_read_sheet_highlights_1based_rows(tmp_path):

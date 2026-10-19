@@ -85,8 +85,9 @@ class TestOtherChannels:
         from forensic_metascience_ai_toolkit.evaluation import deterministic
 
         obj = {
+            "schema_version": "2.0",
             "disclaimer": DISCLAIMER_SHORT,
             "findings": [],
-            "coverage": {},
+            "adjudication": {"ran": True, "n_discarded": 0},
         }
         assert deterministic.check_findings_json(obj)["passed"]

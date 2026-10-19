@@ -35,8 +35,7 @@ from pathlib import Path
 from typing import Any
 
 from . import consequence as _consequence
-from .finding_files import artefacts_for_editorial, index_sweep
-from .report_render import SEVERITY_RANK, sort_findings
+from .report_render import SEVERITY_RANK
 from .review_io import load_review
 from .webapp_index import review_dirs
 
@@ -270,41 +269,6 @@ def _numeric_issues(
         v2 = _v2_numeric_issues(paper_dir, d)
         if v2 is not None:
             return v2
-        report = _read_json(d / "report.json")
-        if not isinstance(report, dict):
-            continue
-        findings = report.get("findings")
-        if not isinstance(findings, list):
-            continue
-        headline = report.get("headline") if isinstance(report.get("headline"), dict) else {}
-        sweep = index_sweep(_read_json(d / "findings.json"))
-        out = []
-        for i, f in enumerate(sort_findings(findings)):
-            if not isinstance(f, dict):
-                continue
-            fid = str(f.get("id") or i + 1)
-            out.append({
-                "id": f"numeric:{fid}",
-                "kind": "numeric",
-                "source_id": fid,
-                "run": d.name,
-                "title": f.get("title") or "(untitled)",
-                "plain": f.get("plain") or "",
-                "severity": str(f.get("severity") or "").lower() or None,
-                "confidence": f.get("confidence"),
-                "location": f.get("location"),
-                "quote": f.get("quote") or f.get("reported") or "",
-                "reported": f.get("reported"),
-                "computed": f.get("computed"),
-                "consequence": f.get("consequence"),
-                "warrant": f.get("warrant"),
-                "rank": f.get("rank"),
-                "stage1_finding_ids": f.get("stage1_finding_ids") or [],
-                "passages": f.get("passages") or [],
-                "artefacts": artefacts_for_editorial(f, sweep, paper_dir),
-                "extras": {},
-            })
-        return out, headline, d.name
     return [], {}, None
 
 

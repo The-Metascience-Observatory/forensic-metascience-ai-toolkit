@@ -21,13 +21,11 @@ on disk a finding was *computed from*.
 from __future__ import annotations
 
 import csv
-import re
 from pathlib import Path
 from typing import Any, Optional
 
 # A quoted token immediately before the word "sheet" — not a free-text parse.
 # Used only when the sweep recorded a file but no worksheet name.
-_SHEET_IN_LOCATION = re.compile(r"['\"]([^'\"]{1,80})['\"]\s+sheet", re.I)
 
 KIND_BY_SUFFIX = {
     ".pdf": "pdf",
@@ -251,51 +249,6 @@ def artefacts_from_sweep_finding(finding: dict, paper_dir: Path) -> list[dict]:
     else:
         spec["confidence"] = "file"
     return [_enrich(spec, paper_dir)]
-
-
-def artefacts_for_editorial(finding: dict, sweep_by_id: dict[str, dict],
-                            paper_dir: Path) -> list[dict]:
-    """Join an editorial finding to sweep ancestors' files.
-
-    No ancestor, or an ancestor with no path, yields []. We do not parse
-    English `location` strings.
-    """
-    if isinstance(finding.get("artefacts"), list) and finding["artefacts"]:
-        return [_enrich(a, paper_dir) for a in finding["artefacts"]
-                if isinstance(a, dict)]
-    hinted_sheet = None
-    loc = finding.get("location")
-    if isinstance(loc, str):
-        m = _SHEET_IN_LOCATION.search(loc)
-        if m:
-            hinted_sheet = m.group(1).strip()
-    ids = finding.get("stage1_finding_ids") or []
-    out: list[dict] = []
-    seen: set[str] = set()
-    for fid in ids:
-        anc = sweep_by_id.get(str(fid))
-        if not isinstance(anc, dict):
-            continue
-        for art in artefacts_from_sweep_finding(anc, paper_dir):
-            if hinted_sheet and not art.get("sheet"):
-                art["sheet"] = hinted_sheet
-            key = art.get("relpath") or art.get("basename") or ""
-            if key in seen:
-                continue
-            seen.add(key)
-            out.append(art)
-    return out
-
-
-def index_sweep(findings_obj: Any) -> dict[str, dict]:
-    findings = findings_obj
-    if isinstance(findings_obj, dict):
-        findings = findings_obj.get("findings")
-    out: dict[str, dict] = {}
-    for f in findings or []:
-        if isinstance(f, dict) and f.get("id"):
-            out[str(f["id"])] = f
-    return out
 
 
 def annotate_sweep_findings(findings_obj: Any, paper_dir: Path) -> Any:

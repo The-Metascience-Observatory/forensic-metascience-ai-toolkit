@@ -307,7 +307,7 @@ def _dump_forensic_tools_never_ran(
     # The sandbox is already gone; persist the stream so the empty dump
     # does not live only under ~/.grok/sessions/.
     try:
-        (out_dir / "messages.stage1.json").write_text(
+        (out_dir / "messages.tool_agent.json").write_text(
             json.dumps(messages, default=str) + "\n")
     except OSError:
         pass

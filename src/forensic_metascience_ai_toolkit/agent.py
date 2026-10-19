@@ -2609,6 +2609,11 @@ def _counts_as_done(review_dir: Path, pipeline) -> bool:
             and recorded.get("outcome") != "error")
 
 
+#: The parallel run's stage records, in the keys `parallel.analyze_paper_parallel`
+#: returns them under. The value register reads all three.
+_AGENT_STAGES = ("tool_agent", "science_agent", "adjudicator")
+
+
 def _values_calls(result: dict, ledger: list[dict] | None = None) -> list[dict]:
     """Every tool call this run made, with its arguments and result.
 
@@ -2637,7 +2642,7 @@ def _values_calls(result: dict, ledger: list[dict] | None = None) -> list[dict]:
         return msg.get("content") or []
 
     out: list[dict] = []
-    for stage in ("stage1", "stage2"):
+    for stage in _AGENT_STAGES:
         for msg in ((result.get(stage) or {}).get("messages") or []):
             for block in _blocks(msg):
                 if not isinstance(block, dict):
@@ -2649,7 +2654,7 @@ def _values_calls(result: dict, ledger: list[dict] | None = None) -> list[dict]:
                                 "cells": (block.get("input") or {}).get("cells")})
     # Pair each call with its result block, which arrives in a later message.
     by_id = {c["id"]: c for c in out if c.get("id")}
-    for stage in ("stage1", "stage2"):
+    for stage in _AGENT_STAGES:
         for msg in ((result.get(stage) or {}).get("messages") or []):
             for block in _blocks(msg):
                 if not isinstance(block, dict) or block.get("type") != "tool_result":
@@ -2751,16 +2756,14 @@ def build_value_register(result: dict, paper_path, out_dir: Path) -> dict:
             # each is matched back by its printed cell texts. NO MATCH MEANS NO
             # ATTACHMENT: a verdict placed on a guessed table is a guessed
             # accusation, and the count of unmatched calls is published instead.
-            # THE LEDGER, WHEN THE REVIEW HAS ONE. `build_value_register` is
-            # called both live and by `repair-register`; the live path can
-            # rebuild it from the messages, and the repair path reads the
-            # `toolcalls.*.json` the run already wrote. Either way the verdicts
-            # come from the reading that handles truncation.
+            # THE LEDGER. A caller may pass `_toolcall_ledger`; otherwise it
+            # is rebuilt from each agent's messages, the reading that handles
+            # truncation.
             _ledger_problems: list[str] = []
             _ledger = result.get("_toolcall_ledger")
             if _ledger is None:
                 _ledger = []
-                for _k in ("stage1", "stage2"):
+                for _k in _AGENT_STAGES:
                     _st = result.get(_k) or {}
                     if not _st.get("messages"):
                         continue

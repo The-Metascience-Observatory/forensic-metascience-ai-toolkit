@@ -341,14 +341,13 @@ def _finish(out: dict, review_dir: str | Path | None) -> dict:
         "no review directory given, so whether the model's fetches ARRIVED is "
         "not measured. Pass -r <run> to check it.")}
     if review_dir:
-        # BOTH LAYOUTS. `toolcalls.stage1.json` is the legacy sweep's ledger;
-        # the parallel pipeline writes `toolcalls.tool_agent.json` and never
-        # the other. Until 2026-09-03 only the legacy name was tried, so on
-        # every current run this kept the pre-flight sentence above -- "no
-        # review directory given ... Pass -r <run>" -- when one HAD been
-        # passed, and `ready` stayed True on an unmeasured leg. A wrong reason
-        # printed with confidence is worse than the missing measurement.
-        names = ("toolcalls.tool_agent.json", "toolcalls.stage1.json")
+        # The tools agent's ledger. Until 2026-09-03 only the serial sweep's
+        # `toolcalls.stage1.json` was tried, so on every parallel run this kept
+        # the pre-flight sentence above -- "no review directory given ... Pass
+        # -r <run>" -- when one HAD been passed, and `ready` stayed True on an
+        # unmeasured leg. A wrong reason printed with confidence is worse than
+        # the missing measurement.
+        names = ("toolcalls.tool_agent.json",)
         found = [n for n in names if (Path(review_dir) / n).exists()]
         for name in names:
             led = _load(Path(review_dir) / name)

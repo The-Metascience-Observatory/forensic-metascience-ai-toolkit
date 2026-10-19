@@ -31,7 +31,7 @@ from forensic_metascience_ai_toolkit.evaluation.agreement import from_review_dir
 def _run(tmp, name, paper_id, findings):
     d = tmp / name
     d.mkdir(parents=True)
-    (d / "findings.json").write_text(json.dumps({"findings": findings}),
+    (d / "findings.v2.json").write_text(json.dumps({"findings": findings}),
                                      encoding="utf-8")
     if paper_id is not None:
         (d / "run_meta.json").write_text(json.dumps({"paper_id": paper_id}),

@@ -154,7 +154,7 @@ def generate(paper_dir: str | Path, kind: str = "pubpeer",
     payload = _findings_payload(paper_dir, finding_ids)
     if payload is None:
         return _refuse("no findings.v2.json under this paper -- run the "
-                       "pipeline or migrate-v2 first")
+                       "pipeline first")
     if payload.get("partial_only"):
         return _refuse("this paper has only partial-pipeline runs; name the "
                        "findings to draft from (finding_ids) to use one")

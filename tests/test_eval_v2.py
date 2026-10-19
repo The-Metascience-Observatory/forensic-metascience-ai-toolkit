@@ -25,9 +25,10 @@ class TestV2Dispatch:
         out = check_findings_json(v2doc([row()]))
         assert out["passed"] and out.get("schema") == "2.0"
 
-    def test_v1_documents_keep_the_v1_path(self):
+    def test_a_v1_document_is_refused_by_name(self):
         out = check_findings_json({"findings": [], "coverage": {}})
-        assert "schema" not in out
+        assert out["passed"] is False and "schema" not in out
+        assert "findings-v2" in out["problems"][0]
 
 
 class TestV2Invariants:

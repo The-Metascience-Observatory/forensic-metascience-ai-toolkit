@@ -77,27 +77,6 @@ def test_text_cannot_outrank_impossible_arithmetic():
     assert issues[0]["title"] == "imp"
 
 
-def test_collect_issues_reads_a_report(tmp_path):
-    paper = tmp_path / "10.1--x"
-    (paper / "forensic_review").mkdir(parents=True)
-    (paper / "forensic_review" / "report.json").write_text(
-        '{"verdict":"unresolved","findings":['
-        '{"id":"F1","title":"typo","severity":"suspicious","rank":1,'
-        '"plain":"A p-value is off by a digit.",'
-        '"consequence":{"flips_significance":false,"basis":"computed"},'
-        '"warrant":"logical","stage1_finding_ids":["s1"]},'
-        '{"id":"F2","title":"flip","severity":"suspicious","rank":2,'
-        '"plain":"The headline result moves.",'
-        '"consequence":{"flips_significance":true,"basis":"computed"},'
-        '"warrant":"logical","stage1_finding_ids":["s2"]}'
-        ']}'
-    )
-    got = collect_issues(paper)
-    assert [i["title"] for i in got["issues"]] == ["flip", "typo"]
-    assert got["issues"][0]["id"] == "numeric:F2"
-    assert got["latest_run"] == "forensic_review"
-
-
 def test_sort_key_is_total_on_garbage():
     # Must never raise: a TypeError here blanks the review pane.
     issue_sort_key({})

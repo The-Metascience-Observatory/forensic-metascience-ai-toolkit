@@ -69,33 +69,6 @@ class TestFixtures:
 
 
 class TestDeterministicChecks:
-    def test_findings_json_valid(self):
-        findings = {
-            "schema_version": "1.0",
-            "paper_id": "x",
-            "findings": [{
-                "id": "a", "location": "Table 1", "technique": "grim",
-                "consistent": False, "severity": "impossible",
-                "reproduction": "metascience grim 3.51 30",
-            }],
-            "coverage": {"stats_found": 1, "tools_run": ["grim"]},
-        }
-        result = deterministic.check_findings_json(findings)
-        assert result["passed"], result["problems"]
-
-    def test_findings_json_bad_severity(self):
-        findings = {
-            "findings": [{
-                "id": "a", "location": "x", "technique": "grim",
-                "severity": "IMPOSSIBLE",  # wrong case
-                "reproduction": "cmd",
-            }],
-            "coverage": {},
-        }
-        result = deterministic.check_findings_json(findings)
-        assert not result["passed"]
-        assert any("invalid severity" in p for p in result["problems"])
-
     def test_preamble_detected(self):
         for bad in (
             "Now I have all the data needed for the full report. Here it is:",

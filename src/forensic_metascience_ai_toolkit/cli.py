@@ -1459,39 +1459,6 @@ def db_push_cmd(
         raise typer.Exit(2)
 
 
-@app.command("migrate-v2")
-def migrate_v2_cmd(
-    target: Path = typer.Argument(..., help="A paper directory or a corpus root"),
-    force: bool = typer.Option(False, "--force", help="Re-convert even when the source is unchanged"),
-    dry_run: bool = typer.Option(False, "--dry-run", help="Report what would convert; write nothing"),
-):
-    """One-way legacy conversion: v1 findings -> findings.v2.json beside them.
-
-    Never overwrites a v1 file and never rewrites review.json. Runs with no
-    version number get pipeline_version 0.0.1; mtime-backdated dates carry
-    analysed_at_source "file_mtime". Unconvertible runs get a named
-    findings.v2.skipped.json, and the corpus report counts review-verdict
-    orphans (a human decision that no longer joins to any converted row).
-    """
-    from forensic_metascience_ai_toolkit import migrate_v2 as _m
-    if not target.exists():
-        console.print(f"[red]Not found: {target}[/red]")
-        raise typer.Exit(1)
-    if (target / "review.json").exists() or list(target.glob("forensic_review*")) \
-            or (target / "image_duplication_findings.json").exists():
-        report = _m.convert_paper(target, force=force, dry_run=dry_run)
-        console.print_json(json.dumps(report, default=str))
-        return
-    report = _m.convert_tree(target, force=force, dry_run=dry_run)
-    console.print(
-        f"converted {report['n_converted']}, skipped {report['n_skipped']}, "
-        f"review orphans {report['n_review_orphans']}"
-        + (" (dry run -- nothing written)" if dry_run else
-           f" -> {target / 'migration_report.json'}"))
-    for reason, n in sorted(report["by_reason"].items()):
-        console.print(f"  skipped {n}: {reason}")
-
-
 @app.command("corpus-stats")
 def corpus_stats_cmd(
     root: Path = typer.Argument(..., help="Corpus root (papers as subdirectories)"),
@@ -2614,87 +2581,6 @@ def figures_verify_cmd(
             "into apparent human confirmation."
         )
     console.print(f"\n[dim]{out['methodology']}[/dim]")
-
-
-@app.command("repair-register")
-def repair_register_cmd(
-    review_dir: Path = typer.Argument(..., help="A forensic_review* directory"),
-    paper_dir: Optional[Path] = typer.Option(
-        None, help="Paper directory (default: the review's parent)"),
-) -> None:
-    """Build the value register for a review that was written without one.
-
-    WHY THIS EXISTS. `write_review_outputs` builds the register only when it is
-    told which paper the review is of, and `metascience batch` never told it --
-    so every paper the batch analysed was written with no register at all, and
-    no note saying so. The viewer then reported that the values were not
-    registered, which reads as a fact about the paper rather than a gap in ours.
-
-    NOTHING IS RE-ANALYSED AND NOTHING IS PAID FOR. The register is built from
-    the tool calls and anatomy the run already saved beside the review, through
-    the SAME `build_value_register` a live run uses -- a second implementation
-    would make repaired reviews incomparable with fresh ones.
-    """
-    from .agent import build_value_register
-
-    review_dir = review_dir.resolve()
-    if not review_dir.is_dir():
-        console.print(f"[red]Not a directory: {review_dir}[/red]")
-        raise typer.Exit(1)
-    paper = (paper_dir or review_dir.parent).resolve()
-
-    def _load(name: str):
-        f = review_dir / name
-        if not f.is_file():
-            return None
-        try:
-            return json.loads(f.read_text(encoding="utf-8"))
-        except Exception as exc:  # noqa: BLE001
-            console.print(f"[red]{name} is unreadable: {exc}[/red]")
-            raise typer.Exit(1)
-
-    findings = _load("findings.json")
-    if findings is None:
-        # REFUSED, not built empty. Without the anatomy there are no variables
-        # to bind to, and a register built anyway would report every value as
-        # unbound -- our missing file rendered as the paper's missing structure.
-        console.print(f"[red]No findings.json in {review_dir}; nothing to "
-                      "build a register from.[/red]")
-        raise typer.Exit(1)
-
-    # THE LEDGER THE RUN ALREADY WROTE. `toolcalls.*.json` records each call's
-    # `input`, its `result` and whether that result was truncated -- 90.7% of
-    # them parse, against 45% read back off the message stream, where a long
-    # result arrives cut mid-JSON. Without it every verdict is dropped at a
-    # silent parse and the register reports zero checks attached.
-    ledger = (_load("toolcalls.stage1.json") or []) + (_load("toolcalls.stage2.json") or [])
-    result = {"findings": findings,
-              "_toolcall_ledger": ledger,
-              "stage1": {"messages": _load("messages.stage1.json") or []},
-              "stage2": {"messages": _load("messages.stage2.json") or []}}
-    written = build_value_register(result, str(paper), review_dir)
-    if not written:
-        console.print("[red]Nothing was written -- see the code path.[/red]")
-        raise typer.Exit(1)
-    for name, path in written.items():
-        console.print(f"  {name}: {path}")
-    reg = written.get("value_register")
-    if reg:
-        d = json.loads(reg.read_text(encoding="utf-8"))
-        cov = d.get("coverage") or {}
-        console.print(
-            f"  values {d.get('n_values')}  groups {d.get('n_groups')}  "
-            f"design {d.get('n_design_values')}  "
-            f"bound {d.get('n_values_bound_to_a_variable')}  "
-            f"checked {cov.get('n_checked')}/{cov.get('n_table_groups')}")
-        if cov.get("n_silent"):
-            # The register's own note: any number above zero here is a bug in
-            # this bookkeeping, not a finding about the paper. Printed rather
-            # than left in the JSON, because a summary that shows only the
-            # flattering counts is how a gap goes unnoticed.
-            console.print(f"  [yellow]{cov['n_silent']} group(s) silent -- "
-                          "a tool applied, no verdict, no recorded refusal. "
-                          "That is our gap, not the paper's.[/yellow]")
 
 
 @app.command("bundle")

@@ -963,7 +963,7 @@ class TestForensicToolsNeverRanDump:
         assert data["num_turns"] == 1
         assert data["init_tools"] == ["read_file", "search_tool", "use_tool"]
         assert "findings" in (data.get("assistant_text") or "")
-        msgs = paper / "forensic_review" / "messages.stage1.json"
+        msgs = paper / "forensic_review" / "messages.tool_agent.json"
         assert msgs.is_file()
         assert json.loads(msgs.read_text())[0]["type"] == "system"
 

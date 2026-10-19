@@ -2042,17 +2042,13 @@ def _write_parallel_outputs_impl(result: dict, out_dir: str | Path,
                     scripts_root.rmdir()
                 except OSError:
                     pass   # another run's subdirectory is still in there
-    # THE VALUE REGISTER runs on parallel output too (stacked-headers merge
-    # follow-through): Greg's `build_value_register` reads anatomy plus the
-    # stage messages, and the parallel analysts' stage dicts carry the same
-    # message shape the legacy stages did -- so a two-key shim is the whole
-    # adapter. The adjudicator's few spot re-checks are not joined (the shim
-    # has two slots); that loss is noted here rather than silently absorbed.
+    # THE VALUE REGISTER: Greg's `build_value_register` reads the anatomy plus
+    # every agent's stage messages (tools agent, proofreading agent and the
+    # adjudicator's spot re-checks).
     try:
         shim = {
             "findings": {"anatomy": doc.get("anatomy") or {}},
-            "stage1": result.get("tool_agent") or {},
-            "stage2": result.get("science_agent") or {},
+            **{k: result.get(k) or {} for k in _agent._AGENT_STAGES},
         }
         written.update(_agent.build_value_register(
             shim, str(result.get("paper_path") or paper_dir), out))

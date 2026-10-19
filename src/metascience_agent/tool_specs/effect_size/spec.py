@@ -44,8 +44,7 @@ SPECS = (
         # sweep's habit loop; the guard-bearing tool goes where the norms
         # knowledge lives.
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="effect-size",
-        cli_required_flags=frozenset({"field", "provenance"}),
+        legacy_verb="effect-size",
     ),
     ToolSpec(
         name="paired_d_interval",
@@ -59,6 +58,6 @@ SPECS = (
         ),
         evidence=EVIDENCE_DESCRIPTIVE,
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="paired-d-interval",
+        legacy_verb="paired-d-interval",
     ),
 )

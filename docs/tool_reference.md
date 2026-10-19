@@ -25,27 +25,33 @@ metascience tool describe grim_check
 
 Every registered tool runs from the command line as
 `metascience tool run <tool> --json '<args>'`, through the same gates the agents
-use, and that is the form reproductions take. Many tools also have a
-hand-written verb (shown in each section) that formats its result for a person;
-"MCP-only" below means only that no such verb exists.
+use, and that is the form reproductions take. The hand-written per-tool verbs
+were retired in 1.95.0, so every section below shows the `tool run` form. The
+JSON keys are the tool's MCP parameters (`metascience tool describe <tool>`
+lists them); a long argument object can go in a file with
+`--args-file args.json`. File names in the examples (`paper.pdf`, `si.xlsx`)
+are paths relative to the current directory.
 
 ## GRIM (means from integer data)
 MCP: `grim_check` · CLI:
 ```bash
-metascience grim <mean> <n> --scale-min <min> --scale-max <max> [--decimals 2]
+metascience tool run grim_check --json '{"mean": 5.18, "n": 28, "decimals": 2, "data_type": "likert", "scale_min": 1, "scale_max": 7, "bound_source": "stated"}'
 ```
 Checks whether any integer sum S gives round(S/n) == reported mean. Only for
 integer/Likert/count data. Impossible means are high-priority anomalies.
 
 ## GRIM on percentages
-MCP: `grim_percentage` (MCP-only; reproduce via `metascience grim-sweep` with
-one value). More powerful than GRIM on means because percentages carry more
+MCP: `grim_percentage` · CLI:
+```bash
+metascience tool run grim_percentage --json '{"percentage": 69.4, "n": 49, "decimals": 1, "data_type": "proportion"}'
+```
+More powerful than GRIM on means because percentages carry more
 precision.
 
 ## A value outside its logical range — this indicts US first
 MCP: `check_statistic_bounds` · CLI:
 ```bash
-metascience check-bounds 11.3 correlation
+metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'
 ```
 Call it the moment you hold a statistic that is impossible on its face: a
 correlation above 1, a p-value above 1, a percentage above 100, an alpha above 1.
@@ -70,7 +76,7 @@ the accusation.
 ## Count against percentage — use this whenever the count is printed
 MCP: `check_count_percent` · CLI:
 ```bash
-metascience check-count-percent 142 73.0 200 --decimals 1
+metascience tool run check_count_percent --json '{"count": 142, "percentage": 73.0, "n": 200, "decimals": 1}'
 ```
 **Strictly stronger than GRIM on an `n (%)` cell.** GRIM asks whether the
 percentage is attainable for SOME integer numerator; this asks whether it
@@ -96,7 +102,7 @@ not the base, which is a fact about the pairing, not about the paper.
 ## GRIM sweep (shared denominator)
 MCP: `grim_sweep` · CLI:
 ```bash
-metascience grim-sweep --values "49.1,16.2,17.4" --n-max 161 [--decimals 1]
+metascience tool run grim_sweep --json '{"values": [49.1, 16.2, 17.4], "n_max": 161, "decimals": 1, "n_max_source": "stated"}'
 ```
 Finds every n for which ALL values pass GRIM. Empty intersection ⇒ the
 percentages cannot share a denominator.
@@ -118,7 +124,7 @@ column n that a few missing answers would explain is reported as
 ## 2×2 reconstruction
 MCP: `reconstruct_2x2` · CLI:
 ```bash
-metascience reconstruct-2x2 <pct_col1> <pct_col2> <n_total> [--chi2 <x>] [--chi2-tol 0.05]
+metascience tool run reconstruct_2x2 --json '{"pct_col1": 63.7, "pct_col2": 44.9, "n_total": 191, "decimals": 1}'
 ```
 Recovers hidden 2×2 cell counts from column-conditional percentages, total N,
 and optionally a reported χ².
@@ -126,59 +132,64 @@ and optionally a reported χ².
 ## GRIMMER (SDs from integer data)
 MCP: `grimmer_check` · CLI:
 ```bash
-metascience grimmer <mean> <sd> <n> [--scale-min <min>] [--scale-max <max>] [--decimals 2]
+metascience tool run grimmer_check --json '{"mean": 5.18, "sd": 1.34, "n": 28, "scale_min": 1, "scale_max": 7, "decimals": 2, "decimals_sd": 2, "data_type": "likert"}'
 ```
 Enumerates GRIM-consistent sums S, then integer sums-of-squares Q (with
 parity constraint Q ≡ S mod 2) whose implied SD rounds to the reported SD.
 
 ## DEBIT (binary mean/SD consistency)
-MCP: `debit_check`, `debit_check_batch` (batch is MCP-only) · CLI:
+MCP: `debit_check`, `debit_check_batch` (`rows` of the same fields) · CLI:
 ```bash
-metascience debit <mean> <sd> <n> [--decimals-mean 2] [--decimals-sd 2]
+metascience tool run debit_check --json '{"mean": 0.31, "sd": 0.46, "n": 100, "decimals_mean": 2, "decimals_sd": 2, "data_type": "binary"}'
 ```
 For 0/1 variables, SD is fully determined by mean and n. Catches SDs > 0.5.
 
 ## T-test recalculation
 MCP: `recalc_independent_t` · CLI:
 ```bash
-metascience ttest <mean1> <sd1> <n1> <mean2> <sd2> <n2> --reported-p <p>
+metascience tool run recalc_independent_t --json '{"mean1": 24.3, "sd1": 5.1, "n1": 30, "mean2": 21.2, "sd2": 4.8, "n2": 30, "reported_p": 0.018, "decimals_p": 3, "p_relation": "="}'
 ```
 
 ## Within-subjects (paired) t-test correlation recovery
-MCP: `recalc_within_subjects_t` (MCP-only). Recovers the implied pre/post
+MCP: `recalc_within_subjects_t` · CLI:
+```bash
+metascience tool run recalc_within_subjects_t --json '{"mean_pre": 12.4, "sd_pre": 3.1, "mean_post": 14.0, "sd_post": 3.3, "n": 25, "reported_p": "0.004", "decimals_mean": 1, "decimals_sd": 1, "decimals_p": 3}'
+```
+Recovers the implied pre/post
 correlation from summary stats + reported p; |r| > 1 is impossible (Jané et
 al. 2024).
 
 ## ANOVA recalculation
 MCP: `recalc_anova` · CLI:
 ```bash
-metascience anova --means <m1,m2,...> --sds <s1,s2,...> --ns <n1,n2,...> [--reported-f <f>] [--reported-p <p>]
+metascience tool run recalc_anova --json '{"means": [4.2, 5.1, 6.0], "sds": [1.1, 1.3, 1.2], "ns": [20, 20, 20], "reported_f": 10.7, "reported_p": 0.001, "decimals_p": 3, "p_relation": "<"}'
 ```
 
 ## F→p (any ANOVA shape)
 MCP: `recalc_f_to_p` · CLI:
 ```bash
-metascience f-to-p <F> <df1> <df2> [--reported-p <p>]
+metascience tool run recalc_f_to_p --json '{"f_value": 4.52, "df1": 2, "df2": 57, "reported_p": 0.015, "decimals_p": 3, "p_relation": "="}'
 ```
 
 ## Chi-squared recalculation
 MCP: `recalc_chi_squared` · CLI:
 ```bash
-metascience chi2 --observed "10,20;15,25" [--reported-chi2 <x>] [--reported-p <p>] [--yates]
+metascience tool run recalc_chi_squared --json '{"observed": [[10, 20], [15, 25]], "reported_p": 0.72, "decimals_p": 2, "p_relation": "="}'
 ```
-Rows separated by `;`, cells by `,`. 2×2 tables also get Fisher's exact.
+`observed` is a list of rows of cell counts; `use_yates` applies the continuity
+correction. 2×2 tables also get Fisher's exact.
 
 ## SD range check
 MCP: `check_sd_range` · CLI:
 ```bash
-metascience sd-range <sd> <min_val> <max_val> [--n <n>]
+metascience tool run check_sd_range --json '{"sd": 2.6, "min_val": 1, "max_val": 7, "n": 20, "decimals_sd": 1, "bound_source": "stated"}'
 ```
 Max sample SD ≈ (range/2)·√(n/(n−1)); larger is impossible.
 
 ## SD/SE confusion
 MCP: `check_sd_or_se` · CLI:
 ```bash
-metascience sd-or-se <value> <n> --as <SD|SE|unknown> [--max-sd <x>] [--range-min <a> --range-max <b>] [--decimals <d>]
+metascience tool run check_sd_or_se --json '{"reported_value": 1.2, "n": 100, "reported_as": "SD", "variable_range_min": 0, "variable_range_max": 10, "decimals": 1}'
 ```
 
 **Pass `decimals`** -- the printed precision of the value. Under the SE reading
@@ -191,9 +202,11 @@ directions.
 MCP: `check_regression_batch` (use this for a TABLE) · `check_regression` (one
 coefficient) · CLI:
 ```bash
-metascience regression-batch coefficients.json
+metascience tool run check_regression_batch --json '{"rows": [
+  {"b": 2.0, "se": 0.5, "reported_t": 4.0, "df": 40, "decimals_b": 1, "decimals_se": 1, "decimals_t": 1, "label": "Communication"},
+  {"b": 0.55, "se": 0.13, "reported_p": 0.31, "df": 200, "decimals_b": 2, "decimals_se": 2, "decimals_p": 2, "label": "Age"}]}'
 ```
-`coefficients.json` is a list of `{"b": B, "se": SE, "reported_t": t,
+Each entry of `rows` is `{"b": B, "se": SE, "reported_t": t,
 "reported_p": p, "df": N, "decimals_b": d, "decimals_se": d, "decimals_t": d,
 "decimals_p": d, "label": "..."}`. Checks t = B/SE against what was printed.
 
@@ -229,14 +242,16 @@ name the coefficient it is about.
 ## Summation check
 MCP: `check_summation` · CLI:
 ```bash
-metascience summation --values <v1,v2,...> --expected <sum> [--tolerance <t>]
+metascience tool run check_summation --json '{"values": [45, 30, 25], "expected_sum": 100, "decimals": [0, 0, 0], "decimals_total": 0}'
 ```
 
 **For more than one sum, use the batch form.** MCP: `check_summation_batch` · CLI:
 ```bash
-metascience summation-batch sums.json [--tolerance <t>]
+metascience tool run check_summation_batch --json '{"rows": [
+  {"values": [48.2, 31.7, 20.1], "expected_sum": 100, "decimals": [1, 1, 1], "decimals_total": 0, "description": "Table 1 education %"},
+  {"values": [122, 118], "expected_sum": 240, "decimals": [0, 0], "decimals_total": 0, "description": "randomized arms"}]}'
 ```
-`sums.json` is a list of `{"values": [...], "expected_sum": N, "description": "...",
+Each entry of `rows` is `{"values": [...], "expected_sum": N, "description": "...",
 "tolerance": 0.5}`. A per-row `tolerance` overrides the default — a percentage
 column rounding to 100 needs a wider window than a count column that must be
 exact. The aggregate severity is the worst row, and a batch in which nothing
@@ -259,8 +274,7 @@ be evaluated; neither happens when the rows arrive separately.
 ## Ratio check (ICERs, rates, "X per Y")
 MCP: `check_ratio` · CLI:
 ```bash
-metascience check-ratio --numerator <n> --denominator <d> --reported-ratio <r> \
-  --decimals-numerator <dn> --decimals-denominator <dd> --decimals-ratio <dr>
+metascience tool run check_ratio --json '{"numerator": 408, "denominator": 0.014, "reported_ratio": 18788, "decimals_numerator": 0, "decimals_denominator": 3, "decimals_ratio": 0, "description": "ICER, cost per QALY"}'
 ```
 
 Nothing else here verifies a division, and a health-economics paper's entire
@@ -284,14 +298,14 @@ intermediates a paper never shows.
 ## STALT (hidden p-values)
 MCP: `stalt_check` · CLI:
 ```bash
-metascience stalt <calculated_p> --reported-threshold "<0.05"
+metascience tool run stalt_check --json '{"calculated_p": 1e-18, "reported_threshold": "<0.05"}'
 ```
 Flags exact p-values many orders of magnitude below their reported threshold.
 
 ## SPRITE (distribution reconstruction)
 MCP: `sprite_reconstruct` · CLI:
 ```bash
-metascience sprite <mean> <sd> <n> --scale-min <min> --scale-max <max>
+metascience tool run sprite_reconstruct --json '{"mean": 3.5, "sd": 1.2, "n": 20, "scale_min": 1, "scale_max": 5, "decimals_mean": 1, "decimals_sd": 1, "data_type": "likert"}'
 ```
 Reconstructs possible integer datasets; note bimodal or boundary-stacked
 shapes (often a sign the summary stats were invented).
@@ -299,7 +313,7 @@ shapes (often a sign the summary stats were invented).
 ## CSF (baseline similarity, RCTs)
 MCP: `csf_test` · CLI:
 ```bash
-metascience csf -p "0.92,0.88,0.95,0.91,0.87" -m stouffer
+metascience tool run csf_test --json '{"p_values": [0.92, 0.88, 0.95, 0.91, 0.87], "method": "stouffer", "design": "parallel_rct"}'
 ```
 One-sided test of excess baseline similarity. Small `similarity_p` ⇒ groups
 TOO similar ⇒ red flag (see rulebook rule 1).
@@ -321,13 +335,16 @@ stays auditable. Pass `correlation` only if it is genuinely estimable.
 ## Bayesian Table 1 dispersion (complementary to CSF, not preferred over it)
 MCP: `bayesian_table1_dispersion` · CLI:
 ```bash
-metascience table1-dispersion table1.json --design parallel_rct
+metascience tool run bayesian_table1_dispersion --json '{"design": "parallel_rct", "rows": [
+  {"label": "Age", "means": [54.2, 54.3], "sds": [8.1, 8.0], "ns": [60, 60]},
+  {"label": "BMI", "means": [27.1, 27.1], "sds": [3.2, 3.3], "ns": [60, 60]},
+  {"label": "Female", "counts": [[31, 29], [30, 30]]}]}'
 ```
-`table1.json` is a list of rows: `{"label","means","sds","ns"}` (continuous)
+`rows` is a list of rows: `{"label","means","sds","ns"}` (continuous)
 or `{"label","counts": [[...],[...]]}` (categorical). τ̂ > 2 with lower CI > 2
 ⇒ under-dispersion; τ̂ < 0.5 ⇒ over-dispersion.
 
-**ALWAYS pass `--design` if the paper states one.** Cluster, stepped-wedge,
+**ALWAYS pass `design` if the paper states one.** Cluster, stepped-wedge,
 crossover, matched-pairs, stratified and minimised allocation force baseline
 balance BY CONSTRUCTION and are refused outright. Without a stated design the
 verdict is CAPPED below `highly_suspicious`, because a design that would
@@ -336,13 +353,12 @@ explain the uniformity innocently cannot be ruled out.
 Baseline rows within a trial are correlated, and correlation is what generates
 false positives here (~33.5% at ρ = 0.6, ~71% on cluster trials). The CI is
 correlation-aware and a sensitivity profile across ρ is always returned; pass
-`--correlation` only when it is genuinely known.
+`correlation` only when it is genuinely known.
 
 ## Variance dispersion (are the SDs too similar?)
 MCP: `check_variance_dispersion` · CLI:
 ```bash
-metascience variance-dispersion --sds 25.09,24.58,25.65 --ns 15,15,15 \
-    --homogeneous --design parallel_rct
+metascience tool run check_variance_dispersion --json '{"sds": [25.09, 24.58, 25.65], "ns": [15, 15, 15], "sd_texts": ["25.09", "24.58", "25.65"], "homogeneous_variances": true, "design": "parallel_rct"}'
 ```
 Sample variances are themselves random. Fabricators add noise to the means and
 forget the dispersions need their own, leaving SDs closer together than sampling
@@ -355,13 +371,13 @@ terminal digits and 0.02–0.16 for Benford — which is why this toolkit has no
 digit-preference check and `evaluation/corpus_run.py` records that absence as a
 decision.
 
-**Pass the SDs as PRINTED** (the CLI keeps the literals you type). Coarse
+**Pass the SDs as PRINTED** (`sd_texts` carries the literals). Coarse
 rounding collapses honest SDs onto identical values — at SD ≈ 2.0 printed to 0dp,
 60% of honest samples give six identical SDs — so without the printed precision
 a rounding artifact is indistinguishable from the signature. Refused above a
 rounding step of 0.25 × SD.
 
-**`--homogeneous/--heterogeneous` is required, and it gates the reassuring
+**`homogeneous_variances` is required, and it gates the reassuring
 verdict too.** The source paper's own preregistered analysis scored AUROC 0.264
 — inverted — from getting this wrong. A violated assumption makes this test
 BLIND (measured 0.0% detection), not accusatory, so an unstated assumption
@@ -376,14 +392,14 @@ known-genuine data separated them. This ranks candidates; it never convicts.
 ## Continuous → categorical plausibility
 MCP: `check_proportion_from_normal` · CLI:
 ```bash
-metascience prop-from-normal <proportion> <mean> <sd> <n> --threshold <X> --direction <below|above>
+metascience tool run check_proportion_from_normal --json '{"reported_proportion": 0.40, "mean": 120, "sd": 15, "n": 200, "threshold": 110, "direction": "below"}'
 ```
 
 ## RIVETS (hand-calculation detector)
 MCP: `rivets_independent_t`, `rivets_anova` · CLI:
 ```bash
-metascience rivets-t <m1> <sd1> <n1> <m2> <sd2> <n2> -t <reported_t> -p <reported_p>
-metascience rivets-anova --means ... --sds ... --ns ... -f <reported_f> -p <reported_p>
+metascience tool run rivets_independent_t --json '{"mean1": 24.3, "sd1": 5.1, "n1": 30, "mean2": 21.2, "sd2": 4.8, "n2": 30, "reported_t": 2.42, "reported_p": 0.019, "decimals_mean": 1, "decimals_sd": 1, "decimals_t": 2, "decimals_p": 3}'
+metascience tool run rivets_anova --json '{"means": [4.2, 5.1, 6.0], "sds": [1.1, 1.3, 1.2], "ns": [20, 20, 20], "reported_f": 10.71, "reported_p": 0.001, "decimals_mean": 1, "decimals_sd": 1, "decimals_f": 2, "decimals_p": 3, "p_is_threshold": true}'
 ```
 A reported t/F that exactly equals the value computed from the truncated
 (printed) inputs, while almost no true underlying data reproduces it, is the
@@ -393,8 +409,8 @@ interval are impossible at the stated precision.
 ## GRIM-U (rank-sum p-value granularity)
 MCP: `grimu_check`, `grimu_coexistence` · CLI:
 ```bash
-metascience grimu <n1> <n2> <reported_p> [--decimals 3] [--cc both|none|cc] [--method normal|exact|both]
-metascience grimu-coexist <n1> <n2> --p 0.171 --p 0.172
+metascience tool run grimu_check --json '{"n1": 6, "n2": 6, "reported_p": "0.001", "decimals": 3, "test_type": "mann_whitney"}'
+metascience tool run grimu_coexistence --json '{"n1": 12, "n2": 14, "p_values": ["0.171", "0.172"], "decimals": 3, "test_type": "mann_whitney"}'
 ```
 Mann-Whitney U / Wilcoxon **only** (never t/F/χ²/regression p-values). Because
 U is (half-)integer in [0, n1·n2], only a finite p-set is achievable.
@@ -407,14 +423,15 @@ rule 12.
 ## Heuristic flags
 MCP: `flag_round_n`, `flag_uninformative_stat` · CLI:
 ```bash
-metascience flag-round-n --ns "100,200,300"
-metascience flag-uninformative --means ... --sds ... --ns ... -p <p>
+metascience tool run flag_round_n --json '{"ns": [100, 200, 300]}'
+metascience tool run flag_uninformative_stat --json '{"means": [4.2, 4.3], "sds": [1.1, 1.2], "ns": [40, 40], "reported_p": 0.03, "decimals_mean": 1, "decimals_sd": 1, "decimals_p": 2}'
 ```
 
 ## Statcheck (automated NHST verification)
 MCP: `statcheck` · CLI:
 ```bash
-metascience statcheck paper.pdf            # or paper.md, or --text "..."
+metascience tool run statcheck --json '{"pdf_path": "paper.pdf"}'
+metascience tool run statcheck --json '{"text": "The groups differed, t(28) = 2.10, p = .02."}'
 ```
 Extracts APA-style statistics and recomputes p-values; reports errors and
 decision errors.
@@ -428,8 +445,8 @@ yourself with the tool below.
 ## Effect size ← the F beside it
 MCP: `effect_size_from_f` · CLI:
 ```bash
-metascience effect-size-from-f 51.81 2 54 --reported 0.83
-metascience effect-size-from-f 14.231 1 30 --reported 0.322
+metascience tool run effect_size_from_f --json '{"f_value": 51.81, "df1": 2, "df2": 54, "reported_effect_size": 0.83, "measure": "partial_eta_squared", "decimals_f": 2, "decimals_effect_size": 2}'
+metascience tool run effect_size_from_f --json '{"f_value": 14.231, "df1": 1, "df2": 30, "reported_effect_size": 0.322, "measure": "partial_eta_squared", "decimals_f": 3, "decimals_effect_size": 3}'
 ```
 Partial eta-squared is `(F*df1)/(F*df1 + df2)`; Cohen's f follows from it.
 
@@ -458,9 +475,9 @@ is an arithmetic violation.
 ## One statistic → its p-value (any format)
 MCP: `recalc_stat_to_p` · CLI:
 ```bash
-metascience stat-to-p 4.10 chi2 --df 1 --reported-p 0.04 --decimals-stat 2
-metascience stat-to-p 2.10 t --df 28 --reported-p 0.045
-metascience stat-to-p 0.35 r --n 40
+metascience tool run recalc_stat_to_p --json '{"statistic": 4.10, "kind": "chi2", "df": 1, "reported_p": 0.04, "decimals_stat": 2, "decimals_p": 2}'
+metascience tool run recalc_stat_to_p --json '{"statistic": 2.10, "kind": "t", "df": 28, "reported_p": 0.045, "decimals_stat": 2, "decimals_p": 3}'
+metascience tool run recalc_stat_to_p --json '{"statistic": 0.35, "kind": "r", "n": 40, "decimals_stat": 2}'
 ```
 Converts **t, chi2, z, r, F** — the same five distributions statcheck verifies —
 from VALUES rather than from prose. Use it on every table cell that prints a
@@ -478,13 +495,13 @@ the publication, NOT as a limitation of this toolkit.
 Capped at `suspicious` and **directional**: only an OVER-claim is flagged (a
 reported p below what the printed statistic can support). An under-claimed p is
 conservative reporting or a threshold. The statistic's own rounding widens the
-target — `chi2 = 4.1` asserts [4.05, 4.15) and therefore a p RANGE. `--tails` is
+target — `chi2 = 4.1` asserts [4.05, 4.15) and therefore a p RANGE. `tails` is
 ignored for chi2 and F, whose p is an upper tail by construction.
 
 ## Table ingestion
 MCP: `parse_table` · CLI:
 ```bash
-metascience parse-table table.md [--format markdown] [--cross-check pdf_table.txt]
+metascience tool run parse_table --json '{"source": "| Measure | Treatment | Control |\n|---|---|---|\n| Age | 54.2 (8.1) | 54.3 (8.0) |\n", "source_format": "markdown"}'
 ```
 Turns a markdown pipe table, a pdfplumber `data` grid, or raw text into
 normalized cells `[{row_label, col_label, value, sd, extras, raw}]`. Use it so
@@ -502,7 +519,9 @@ here.
 ## Duplication / copy-paste detection
 MCP: `detect_duplication` · CLI:
 ```bash
-metascience duplication-detect blocks.json
+metascience tool run detect_duplication --json '{"decimals_mean": 2, "decimals_sd": 2, "blocks": [
+  {"label": "Study 1", "sample_id": "s1", "independent": true, "cells": [{"label": "Anxiety", "value": 2.37, "sd": 0.92}]},
+  {"label": "Study 2", "sample_id": "s2", "independent": true, "cells": [{"label": "Anxiety", "value": 2.37, "sd": 0.92}]}]}'
 ```
 Compares (mean, SD) cells within and across tables/studies. Each block:
 `{label, sample_id, independent, cells: [{label, value, sd}]}`. Identical pairs
@@ -513,8 +532,7 @@ identical rows/columns repeated within a table. See rulebook rule 11.
 ## Raw-data duplication (participant-level supplements)
 MCP: `detect_raw_duplication` · CLI:
 ```bash
-metascience raw-duplication-detect supplement.xlsx \
-    --exclude-column site_id --highlight-out highlighted.xlsx
+metascience tool run detect_raw_duplication --json '{"path": "supplement.xlsx", "exclude_columns": ["site_id"], "data_context": "raw_participant_level"}'
 ```
 Takes a FILE PATH (.xlsx/.xlsm/.csv/.tsv/.docx) and loads the grid itself —
 never retype cells. Finds duplicated participant rows (within AND across
@@ -525,12 +543,19 @@ sqrt / log), sorted/ID runs, shared covariates (values many rows carry), and
 a Poisson chance gate on repeat counts. Severity caps at `highly_suspicious`.
 `exclude_columns` removes shared-by-design columns (IDs, coordinates,
 site-level covariates); `data_context="pooled_or_meta_analysis"` caps at
-`indeterminate` (pooled rows duplicate by construction). `--highlight-out`
-writes a color-marked copy for human verification. See rulebook rule 11.
+`indeterminate` (pooled rows duplicate by construction). The standalone
+detector's verb, `metascience copy-paste ... --highlight-out`, writes a
+color-marked copy for human verification. See rulebook rule 11.
 
 ## PDF extraction
 MCP: `extract_pdf` (args: `pdf_path`, optional `max_chars`, `first_page`,
-`last_page`) · CLI: `metascience extract paper.pdf -o out.json`.
+`last_page`) · CLI:
+```bash
+metascience tool run extract_pdf --json '{"pdf_path": "paper.pdf", "first_page": 1, "last_page": 3}'
+```
+Through `tool run` the PDF is read from the extraction cache; a PDF not yet
+extracted is refused with a message naming `metascience extract-tables`, which
+fills it.
 Output is capped; when TRUNCATED, request specific pages.
 
 **An empty `tables` does not mean the paper has no tables.** A PDF table is only
@@ -550,7 +575,10 @@ separates a table from a reference list, which is also dense with numbers.
 
 ## XML extraction (JATS / PMC / Elsevier)
 MCP: `extract_xml` (args: `xml_path`, optional `max_chars`, `first_section`,
-`last_section`) · CLI: `metascience extract-xml paper.xml -o out.json`.
+`last_section`) · CLI:
+```bash
+metascience tool run extract_xml --json '{"xml_path": "paper.xml"}'
+```
 
 **Prefer this over `extract_pdf` whenever an `.xml` exists.** A PDF extraction
 collapses a table row into one blob
@@ -566,7 +594,9 @@ labels (`"Weighted % (95% CI) | Veteran"`). Measured 2026-07-31 on a real clinic
 
 ## One table, in full
 MCP: `get_table` (args: `xml_path`, `table_num`) · CLI:
-`metascience get-table paper.xml 2`.
+```bash
+metascience tool run get_table --json '{"xml_path": "paper.xml", "table_num": 2}'
+```
 
 Returns `cells` (ready for `parse_cells_typed`), `data` (the grid, row 0 =
 header), `headers`, `label`, `caption`, `section`, `footnotes`, `spans`,
@@ -601,7 +631,10 @@ is; on most papers only one or two are worth sweeping cell by cell.
 
 ## HTML extraction (fetched publisher full text, XML-not-available fallback)
 MCP: `extract_html` (args: `html_path`, optional `max_chars`, `first_section`,
-`last_section`) · CLI: `metascience extract-html paper.fulltext.html -o out.json`.
+`last_section`) · CLI:
+```bash
+metascience tool run extract_html --json '{"html_path": "paper.fulltext.html"}'
+```
 
 **Only reached when there is no `.xml`.** Same `cells`/`spans`/
 `alignment_uncertain`/`image_only` contract as `extract_xml` — treat the output
@@ -642,7 +675,9 @@ nav/metrics table). Measured 2026-08-08 on a real corpus: at least 7 of 30 fetch
 
 ## Supplementary data files
 MCP: `extract_supplement` (arg: `path`) · CLI:
-`metascience extract-supplement si.docx -o out.json`.
+```bash
+metascience tool run extract_supplement --json '{"path": "si.docx"}'
+```
 
 Reads `.docx`, `.xlsx`, `.xls`, `.csv`, `.tsv` and returns the SAME shape as
 `extract_xml` — a `data` grid plus ready-made `cells`. Sweep supplements exactly
@@ -651,7 +686,10 @@ as you would a main table; they are where a paper's unchecked numbers hide. Use
 
 **A large supplement comes back as an INDEX, not as its contents.** MCP:
 `get_supplement_table` (args: `path`, `table`, optional `first_row`/`last_row`)
-· CLI: `metascience get-supplement-table si.xlsx 2 --first-row 1 --last-row 50`.
+· CLI:
+```bash
+metascience tool run get_supplement_table --json '{"path": "si.xlsx", "table": "2", "first_row": 1, "last_row": 50}'
+```
 
 When `extract_supplement` returns `oversized: true` you have every sheet's name,
 shape, column headers and first rows — **nothing has been dropped, and it is not
@@ -684,7 +722,9 @@ as a window rather than as the sheet.
 ## Typed table-cell parsing (run this FIRST)
 MCP: `parse_cells_typed` · CLI:
 ```bash
-metascience parse-cells cells.json
+metascience tool run parse_cells_typed --json '{"cells": [
+  {"raw": "142 (71.0)", "row_label": "Male, n (%)", "col_label": "Treatment"},
+  {"raw": "54.2 (8.1)", "row_label": "Age, mean (SD)", "col_label": "Treatment"}]}'
 ```
 Input: `[{raw, row_label, col_label}, ...]`. Returns a `kind` per cell
 (`mean_sd`, `n_percent`, `median_iqr`, `median_range`, `estimate_ci`, `mean_se`,
@@ -711,8 +751,7 @@ both of this module's worst historical bugs took.
 ## Declaring a cell format the parser does not know
 MCP: `parse_cells_as_declared` · CLI:
 ```bash
-metascience parse-cells-as cells.json --declared mean_sd:brace
-metascience parse-cells-as cells.json --declared list     # print the vocabulary
+metascience tool run parse_cells_as_declared --json '{"declared": "mean_sd:brace", "cells": [{"raw": "5.38 {1.17}"}, {"raw": "4.20 {0.98}"}]}'
 ```
 For a table typeset in a convention `parse_cells_typed` does not recognise --
 `5.38 {1.17}`, `5.38 <1.17>`, `5.38 / 1.17`. A format name is
@@ -748,7 +787,7 @@ cell. Report it as a coverage limit and check nothing from it.
 ## Estimate vs its own confidence interval
 MCP: `check_estimate_ci` · CLI:
 ```bash
-metascience check-ci 1.42 1.08 1.87 --measure HR --reported-p 0.012
+metascience tool run check_estimate_ci --json '{"estimate": 1.42, "ci_low": 1.08, "ci_high": 1.87, "measure": "HR", "reported_p": 0.012, "decimals": 2}'
 ```
 Checks that the interval is ordered and contains the estimate, that the estimate
 sits at the CI-implied midpoint **on the correct scale**, and that the p
@@ -778,7 +817,7 @@ Integral values now infer 0 decimals, which is what they assert.
 ## Absence of evidence
 MCP: `absence_of_evidence` · CLI:
 ```bash
-metascience absence-of-evidence 0.72 1.95 --measure OR --sesoi 1.25
+metascience tool run absence_of_evidence --json '{"ci_low": 0.72, "ci_high": 1.95, "measure": "OR", "sesoi": 1.25}'
 ```
 Tests whether a stated "no effect" conclusion survives its own interval.
 "Not significant" is not "no effect": this reports the largest effect the data
@@ -791,8 +830,9 @@ unstated threshold. That refusal is the correct output, not a gap.
 ## Multiple comparisons (family-wise arithmetic)
 MCP: `multiplicity_report` · CLI:
 ```bash
-metascience multiplicity -p "0.01,0.03,0.07,0.03,0.01,0.03,0.38,0.96,0.89" \
-  --family-label "nine outcomes, 3x3 design"
+metascience tool run multiplicity_report --json '{"family_label": "nine outcomes, 3x3 design", "tests": [
+  {"p_value": 0.01}, {"p_value": 0.03}, {"p_value": 0.07}, {"p_value": 0.03}, {"p_value": 0.01},
+  {"p_value": 0.03}, {"p_value": 0.38}, {"p_value": 0.96}, {"p_value": 0.89}]}'
 ```
 Family-wise error rate, four correction thresholds, and the number that actually
 matters: `n_claims_lost_to_correction` -- how many results significant
@@ -842,8 +882,8 @@ multiplicity problem.
 ## Power analysis verification
 MCP: `verify_power_analysis`, `required_n` · CLI:
 ```bash
-metascience power-check two_sample_t -e 0.5 -a 0.05 --power 0.80 -n 128
-metascience required-n two_sample_t 0.5            # -> 64/group, 128 total
+metascience tool run verify_power_analysis --json '{"test_type": "two_sample_t", "effect_size": 0.5, "alpha": 0.05, "target_power": 0.80, "n_reported": 128, "tails": 2}'
+metascience tool run required_n --json '{"test_type": "two_sample_t", "effect_size": 0.5}'   # -> 64/group, 128 total
 ```
 Exact noncentral distributions (noncentral t/F/chi-square, Fisher z), verified
 to exact agreement with R `pwr`. `test_type` is one of `two_sample_t`,
@@ -858,12 +898,12 @@ uncheckable power statement is a REPORTING finding, not a tool failure -- say so
 rather than guessing the missing inputs.
 
 ## R ground truth (cross-check before you report)
-MCP: `r_grim_ground_truth`, `r_sprite_ground_truth` (MCP-only; require R with
-`scrutiny` and `rsprite2` installed).
+MCP: `r_grim_ground_truth`, `r_sprite_ground_truth` (require R with
+`scrutiny` and `rsprite2` installed) · CLI:
 
-```
-r_grim_ground_truth(mean, n, items=1, decimals=2)
-r_sprite_ground_truth(mean, sd, n, scale_min, scale_max, ...)
+```bash
+metascience tool run r_grim_ground_truth --json '{"mean": 5.18, "n": 28, "items": 1, "decimals": 2}'
+metascience tool run r_sprite_ground_truth --json '{"mean": 3.5, "sd": 1.2, "n": 20, "scale_min": 1, "scale_max": 5, "decimals": 1}'
 ```
 
 Run the canonical R implementation of a check whose Python result you are about
@@ -888,9 +928,9 @@ Two caveats worth knowing:
 ## Paired-design d, when the correlation is unreported
 MCP: `paired_d_interval` · CLI:
 ```bash
-metascience paired-d-interval --dz 0.89
-metascience paired-d-interval --t 6.3 --n 50
-metascience paired-d-interval --dz 0.89 --r 0.6
+metascience tool run paired_d_interval --json '{"dz": 0.89}'
+metascience tool run paired_d_interval --json '{"t": 6.3, "n": 50}'
+metascience tool run paired_d_interval --json '{"dz": 0.89, "r": 0.6}'
 ```
 A paired design reports `d_z` -- the difference over the SD OF THE DIFFERENCES
 -- and a reader comparing it against a between-subjects literature wants a
@@ -926,8 +966,8 @@ wide interval is a fact about the reporting, not about the work.
 ## Effect-size plausibility
 MCP: `check_effect_plausibility` · CLI:
 ```bash
-metascience effect-size --d 3.5 --field psychotherapy
-metascience effect-size --mean1 12 --sd1 2 --n1 20 --mean2 5 --sd2 2 --n2 20 --field psychotherapy
+metascience tool run check_effect_plausibility --json '{"d": 3.5, "field": "psychotherapy"}'
+metascience tool run check_effect_plausibility --json '{"mean1": 12, "sd1": 2, "n1": 20, "mean2": 5, "sd2": 2, "n2": 20, "field": "psychotherapy"}'
 ```
 Computes Cohen's d / Hedges' g and places it against EMPIRICAL, CITED benchmarks
 for a named field. **Pass `field`** -- without it the tool reports the value and
@@ -949,7 +989,7 @@ GRIM, GRIMMER, SPRITE and DEBIT refuse those values outright.
 ## Figure extraction
 MCP: `extract_figures` · CLI:
 ```bash
-metascience extract-figures paper.pdf --dpi 150
+metascience tool run extract_figures --json '{"pdf_path": "paper.pdf", "dpi": 150}'
 ```
 Locates every figure, crops it, and pairs it with its caption. Runs LOCALLY via
 PyMuPDF -- no network, no API, no token cost.
@@ -990,7 +1030,10 @@ text-vs-figure; it is as-printed vs measured.
 ## Whole-table dispatch (use this for any table)
 MCP: `check_table` · CLI:
 ```bash
-metascience check-table table.json
+metascience tool run check_table --json '{
+  "cells": [{"raw": "5.50 (1.20)", "row_label": "Satisfaction", "col_label": "Treatment", "n": 30}],
+  "variables": [{"id": "sat", "name": "Satisfaction", "family": "likert_item", "lower_bound": 1, "upper_bound": 7, "confidence": "high"}],
+  "bindings": {"Satisfaction": "sat"}}'
 ```
 One call runs every applicable check on a whole table. A real run made 58 tool
 calls on one paper, 51 of them the same check repeated per cell -- each call is
@@ -1054,16 +1097,23 @@ Added 2026-09-02, when four registered tools had no entry. Their full
 definitions are the `description` blocks in their `tool_specs/<family>/TOOL.md`,
 which IS what the model is sent.
 
-- **`check_flow_arithmetic`** (`metascience flow-check`; scientific proofreading
-  agent and adjudicator) -- reconciles a CONSORT / participant-flow cascade by exact
+- **`check_flow_arithmetic`** (scientific proofreading agent and adjudicator) --
+  reconciles a CONSORT / participant-flow cascade by exact
   integer arithmetic: each stage minus its stated exclusions must equal the
   next, arms must sum to their stage total.
+  ```bash
+  metascience tool run check_flow_arithmetic --json '{"stages": [
+    {"label": "assessed", "n": 240, "excluded": [{"reason": "declined", "n": 40}]},
+    {"label": "randomized", "n": 200, "arms": [{"label": "treatment", "n": 100}, {"label": "control", "n": 100}]}]}'
+  ```
 - **`run_python_script`** (no CLI verb; scientific proofreading agent only) -- runs a
   short script in a network-off sandbox and returns captured stdout/stderr;
   every script is persisted under the run's `analysis_code/`.
-- **`analyze_paper_images`** (`metascience image-analysis`; CLI-only) -- the
+- **`analyze_paper_images`** (CLI-only: `metascience tool run analyze_paper_images
+  --json '{"pdf_path": "paper.pdf"}'`) -- the
   deterministic panel-duplication detector. Not callable by any agent: it runs
   as a child subprocess concurrent with the analysts and its findings reach
   the adjudicator by injection, quarantined.
-- **`detect_tortured_phrases`** (`metascience tortured-phrases`; CLI-only) --
+- **`detect_tortured_phrases`** (CLI-only: `metascience tool run
+  detect_tortured_phrases --json '{"paper_dir": "."}'`) --
   the fingerprint-dictionary text screen, same arrangement as the image track.

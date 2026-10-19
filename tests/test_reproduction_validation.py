@@ -16,10 +16,9 @@ from metascience_agent.evaluation.deterministic import (
 
 class TestStaticValidation:
     @pytest.mark.parametrize("cmd", [
-        "metascience grim 5.51 30",
-        "metascience grim 21.7 58 --scale-min 0 --scale-max 100",
-        "metascience grimmer 4.0 1.0 10",
-        "metascience ttest 10.0 2.0 30 12.0 2.0 30 --reported-p 0.05",
+        """metascience tool run grim_check --json '{"mean": 5.51, "n": 30, "decimals": 2, "data_type": "likert"}'""",
+        """metascience tool run grimmer_check --json '{"mean": 4.0, "sd": 1.0, "n": 10, "decimals": 1, "data_type": "likert"}'""",
+        """metascience tool run recalc_independent_t --json '{"mean1": 10.0, "sd1": 2.0, "n1": 30, "mean2": 12.0, "sd2": 2.0, "n2": 30, "reported_p": 0.05}'""",
     ])
     def test_runnable_commands_pass(self, cmd):
         assert validate_reproduction(cmd)["valid"] is True
@@ -32,35 +31,50 @@ class TestStaticValidation:
         ("N/A -- excluded as a misapplied check", "not metascience"),
         ("", "empty"),
         ("metascience grim <mean> <n>", "placeholder"),
+        ("metascience grim 5.51 30", "retired per-tool verb"),
     ])
     def test_unrunnable_commands_are_rejected(self, cmd, reason):
         assert validate_reproduction(cmd)["valid"] is False, f"should reject ({reason}): {cmd!r}"
 
     def test_known_commands_is_populated(self):
         cmds = known_commands()
-        assert {"grim", "grimmer", "ttest", "sprite", "debit"} <= cmds
+        assert {"tool", "analyze", "batch"} <= cmds
+        assert not {"grim", "grimmer", "ttest"} & cmds, "per-tool verbs are retired"
+
+    def test_an_archived_verb_reads_as_retired_not_as_unknown(self):
+        """Runs before 1.95.0 wrote `metascience grim 5.51 30`. That command
+        was right when written; it must not read as a defect in the old run."""
+        problems = validate_reproduction("metascience grim 5.51 30")["problems"]
+        assert len(problems) == 1
+        assert "retired" in problems[0] and "tool run grim_check" in problems[0]
+        assert "unknown subcommand" not in problems[0]
 
 
 class TestExecution:
     """The strong check: actually run it."""
 
     @pytest.mark.parametrize("cmd", [
-        "metascience grim 5.51 30",
-        "metascience grimmer 4.0 1.0 10",
-        "metascience grim 3.53 30",
+        """metascience tool run grim_check --json '{"mean": 5.51, "n": 30, "decimals": 2, "data_type": "likert"}'""",
+        """metascience tool run grimmer_check --json '{"mean": 4.0, "sd": 1.0, "n": 10, "decimals": 1, "data_type": "likert"}'""",
+        """metascience tool run grim_check --json '{"mean": 3.53, "n": 30, "decimals": 2, "data_type": "likert"}'""",
     ])
     def test_real_commands_execute_cleanly(self, cmd):
         r = run_reproduction(cmd)
         assert r["ran"] is True and r["ok"] is True, r.get("problems")
 
     @pytest.mark.parametrize("cmd", [
-        "metascience grim --percentage 36.6 --n 120",      # invented flags
-        "metascience csf --input table1_baseline.json",     # invented flag
+        # invented parameter names
+        """metascience tool run grim_check --json '{"percentage": 36.6, "n": 120}'""",
+        """metascience tool run csf_test --json '{"input": "table1_baseline.json"}'""",
     ])
-    def test_invented_flags_fail_only_on_execution(self, cmd):
+    def test_invented_arguments_fail_only_on_execution(self, cmd):
         """These pass static checks -- execution is what catches them."""
         assert validate_reproduction(cmd)["valid"] is True
         assert run_reproduction(cmd)["ok"] is False
+
+    def test_a_retired_verb_is_never_executed(self):
+        r = run_reproduction("metascience grim 5.51 30")
+        assert r["ran"] is False and r["ok"] is False
 
 
 class TestTheAggregatorWasDeletedRatherThanFixed:
@@ -93,7 +107,7 @@ class TestTheAggregatorWasDeletedRatherThanFixed:
         from metascience_agent.agent import _annotate_reproductions
         r = {"findings": {"findings": [
             {"id": "f1", "severity": "consistent",
-             "reproduction": "metascience grim 5.51 30"},
+             "reproduction": """metascience tool run grim_check --json '{"mean": 5.51, "n": 30, "decimals": 2, "data_type": "likert"}'"""},
             {"id": "f2", "severity": "consistent",
              "reproduction": "metascience grim ... 30"},
         ]}, "run_meta": {}}
@@ -138,7 +152,7 @@ class TestAgreementNotJustExecutability:
         `indeterminate`. A finding claiming `impossible` from it is not
         reproduced by it."""
         from metascience_agent.evaluation.deterministic import run_reproduction
-        r = run_reproduction("metascience check-bounds 11.3 correlation",
+        r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""",
                              claimed_severity="impossible")
         if not r.get("ran"):
             pytest.skip(f"CLI unavailable: {r.get('problems')}")
@@ -150,7 +164,7 @@ class TestAgreementNotJustExecutability:
 
     def test_a_command_that_agrees_is_valid(self):
         from metascience_agent.evaluation.deterministic import run_reproduction
-        r = run_reproduction("metascience check-bounds 11.3 correlation",
+        r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""",
                              claimed_severity="indeterminate")
         if not r.get("ran"):
             pytest.skip("CLI unavailable")
@@ -160,7 +174,7 @@ class TestAgreementNotJustExecutability:
         """The fail-safe direction. Nothing was claimed, so nothing can
         disagree, and the old meaning is the honest one."""
         from metascience_agent.evaluation.deterministic import run_reproduction
-        r = run_reproduction("metascience check-bounds 11.3 correlation")
+        r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""")
         if not r.get("ran"):
             pytest.skip("CLI unavailable")
         assert r["agrees"] is None and r["valid"] is True

@@ -56,8 +56,8 @@ SPECS = (
         # child subprocess, not the model — its findings reach stage 2 by
         # injection, already quarantined.
         stages=frozenset(),
-        cli="image-analysis",
-        cli_required_flags=frozenset(),
+        # No `legacy_verb`: `metascience image-analysis` is the image
+        # package's own command and was not retired with the toolkit's verbs.
     ),
     ToolSpec(
         name="detect_tortured_phrases",
@@ -76,7 +76,6 @@ SPECS = (
         # child subprocess concurrent with the sweep, not the model — its
         # findings reach stage 2 by injection, already quarantined.
         stages=frozenset(),
-        cli="tortured-phrases",
-        cli_required_flags=frozenset(),
+        legacy_verb="tortured-phrases",
     ),
 )

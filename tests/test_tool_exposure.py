@@ -392,10 +392,12 @@ class TestRegistryIntegrity:
         dupes = sorted({n for n in names if names.count(n) > 1})
         assert not dupes, f"duplicate tool names shadow each other: {dupes}"
 
-    def test_cli_names_are_unique(self):
-        clis = [s.cli for s in R.SPECS if s.cli]
-        dupes = sorted({c for c in clis if clis.count(c) > 1})
-        assert not dupes, f"two tools claim the same CLI command: {dupes}"
+    def test_legacy_verbs_are_unique(self):
+        """Archived reproductions are read back to a tool by their retired
+        verb; two tools claiming one verb would misattribute them."""
+        verbs = [s.legacy_verb for s in R.SPECS if s.legacy_verb]
+        dupes = sorted({c for c in verbs if verbs.count(c) > 1})
+        assert not dupes, f"two tools claim the same retired verb: {dupes}"
 
     @pytest.mark.parametrize("spec", R.SPECS, ids=lambda s: s.name)
     def test_every_spec_is_callable(self, spec):
@@ -593,36 +595,41 @@ class TestCoverage:
 
 
 class TestCliSurface:
-    """The CLI is verified against the registry, not generated from it."""
+    """`metascience tool run` is the ONE command-line route to a tool.
+
+    The hand-written per-tool verbs called `tools/*.py` directly and skipped
+    `ToolSpec.call`'s gates (`grim` defaulted `decimals=2` where the MCP
+    surface refuses a missing precision). They were retired in 1.95.0. These
+    pin both halves: none comes back, and nothing became unreachable.
+    """
 
     @pytest.mark.usefixtures("image_package")
-    def test_declared_cli_commands_exist(self):
+    def test_no_tool_has_a_hand_written_verb(self):
         commands = _cli_commands()
-        missing = sorted(s.cli for s in R.SPECS if s.cli and s.cli not in commands)
-        assert not missing, f"registry declares CLI commands that cli.py lacks: {missing}"
+        back = sorted(s.legacy_verb for s in R.SPECS
+                      if s.legacy_verb and s.legacy_verb in commands)
+        assert not back, (
+            f"per-tool verb(s) are back in the CLI: {back}. They skip the "
+            "registry's gates; use `metascience tool run <tool> --json ...`.")
 
-    def test_cli_required_flags_are_exposed(self):
-        commands = _cli_commands()
-        problems = []
-        for spec in R.SPECS:
-            if not spec.cli or spec.cli not in commands:
-                continue
-            missing = sorted(spec.cli_required_flags - commands[spec.cli])
-            if missing:
-                problems.append(f"{spec.cli}: missing {missing}")
-        assert not problems, (
-            "CLI commands that cannot be told what their data IS, so they run on "
-            "defaults and accuse ordinary numbers:\n  " + "\n  ".join(problems)
-        )
+    def test_every_tool_runs_from_the_command_line(self, monkeypatch):
+        """An operator (no role, no manifest in the environment) can run every
+        registered tool -- the two CLI-only ones included, since `tool run`
+        is now their only command-line route."""
+        from metascience_agent import tool_cli
+        monkeypatch.delenv("METASCIENCE_MCP_STAGE", raising=False)
+        monkeypatch.delenv("METASCIENCE_MCP_TOOLS", raising=False)
+        served = set(tool_cli._served())
+        unreachable = sorted(s.name for s in R.SPECS
+                             if s.name not in served
+                             and not tool_cli._operator_may_run(s.name))
+        assert not unreachable, f"tools with no command-line route: {unreachable}"
 
-    def test_cli_required_flags_are_real_params(self):
-        """A required flag that is not a parameter of the tool is a typo."""
-        for spec in R.SPECS:
-            names = {p.name for p in spec.params}
-            # the CLI splits variable_range into two scalars; allow that alias
-            names |= {"correlation", "decimals_sd", "bound_source"}
-            unknown = sorted(spec.cli_required_flags - names)
-            assert not unknown, f"{spec.name}: cli_required_flags names unknown {unknown}"
+    def test_a_fenced_agent_still_cannot_run_the_cli_only_tools(self, monkeypatch):
+        from metascience_agent import tool_cli
+        monkeypatch.setenv("METASCIENCE_MCP_STAGE", R.TOOL_AGENT)
+        for name in R.CLI_ONLY:
+            assert not tool_cli._operator_may_run(name), name
 
 
 class TestPromptCoverage:
@@ -702,7 +709,9 @@ class TestPromptCoverage:
 
     def test_every_command_the_human_tool_reference_shows_still_exists(self):
         """The reference's CLI examples are the part a reader copies and runs,
-        and the part that rots silently when a verb or flag is renamed."""
+        and the part that rots silently when a verb or flag is renamed. Since
+        1.95.0 they are `metascience tool run <tool>`, so the tool named must
+        be registered too."""
         import re
         from typer.main import get_command
         from metascience_agent.cli import app
@@ -719,11 +728,22 @@ class TestPromptCoverage:
             cmd = commands.get(m.group(1))
             if cmd is None:
                 continue
+            rest = m.group(2)
+            sub = re.match(r"\s+([a-z][a-z0-9-]*)", rest)
+            if hasattr(cmd, "commands") and sub and sub.group(1) in cmd.commands:
+                # A group (`metascience tool run ...`): the flags are the
+                # subcommand's.
+                cmd, rest = cmd.commands[sub.group(1)], rest[sub.end():]
+            # Text inside quotes is an argument (a JSON payload), not a flag.
+            rest = re.sub(r"'[^']*'|\"[^\"]*\"", "", rest)
             opts = {o for p in cmd.params for o in p.opts}
-            bad_flags += [f"{m.group(1)} {f}" for f in re.findall(r"(--[a-z0-9-]+)", m.group(2))
+            bad_flags += [f"{m.group(1)} {f}" for f in re.findall(r"(--[a-z0-9-]+)", rest)
                           if f not in opts]
         assert not bad_flags, f"docs/tool_reference.md shows flags that do not exist: {bad_flags}"
-        assert len(verbs) > 20, "the verb pattern stopped matching the reference"
+        tools = set(re.findall(r"metascience tool (?:run|describe) ([a-z0-9_]+)", reference))
+        unknown = sorted(t for t in tools if t not in R.BY_NAME)
+        assert not unknown, f"docs/tool_reference.md runs tools that do not exist: {unknown}"
+        assert len(tools) > 20, "the tool-run pattern stopped matching the reference"
 
     def test_typed_parsing_precedes_every_checking_step(self):
         """`parse_table` alone reads `142 (71.0)` as mean=142, sd=71.0.
@@ -821,37 +841,3 @@ class TestTheHelpStringsActuallyReachTheModel:
         from metascience_agent.mcp_server import _to_json_schema
         given = {"type": "object", "properties": {"y": {"type": "string"}}}
         assert _to_json_schema(given) is given
-
-
-class TestTheCliVerbsTheRegistryTeachesTheModelAllExist:
-    """`cli_syntax_reference()` ships the registry's CLI-name map to the model
-    on every turn as the authority for writing runnable `reproduction` commands.
-    Nothing checked that the verbs in it exist.
-
-    THE FAILURE IT PREVENTS IS ALREADY IN THE RECORD: the model wrote
-    `metascience recalc_independent_t`, a verb the CLI does not have, and
-    `cli_syntax_reference` exists precisely to stop that. A drifted `spec.cli`
-    would be TAUGHT to the model as correct, and the resulting command reaches
-    a reader as a `Reproduce:` line that cannot run.
-
-    MEASURED 2026-08-11: 47 specs declare a CLI verb; all 47 are in
-    `known_commands()`; zero missing. So this is a guard, not a bug report --
-    it is here because `cli_specs()` was itself unconsumed, which is how the
-    gap stayed open.
-    """
-
-    @pytest.mark.usefixtures("image_package")
-    def test_every_declared_verb_is_a_real_command(self):
-        from metascience_agent.evaluation.deterministic import known_commands
-        from metascience_agent.registry import cli_specs
-        declared = set(cli_specs())
-        missing = sorted(declared - known_commands())
-        assert not missing, (
-            f"the registry declares CLI verb(s) the CLI does not have: {missing}. "
-            "These are shipped to the model as the way to write a reproduction "
-            "command, so each one becomes an unrunnable `Reproduce:` line.")
-
-    def test_the_map_is_not_empty(self):
-        """A guard over an empty set passes forever."""
-        from metascience_agent.registry import cli_specs
-        assert len(cli_specs()) > 40

@@ -9,17 +9,55 @@ parameter names as long flags with values inline.
 After the shim: 215 of 341 parse (63%), 147 newly, and NOTHING that parsed
 before stopped parsing.
 """
+from pathlib import Path
+
 import click
 import pytest
 import typer
 
 from metascience_agent.cli import app
-from metascience_agent.cli_compat import _is_argument, rewrite_args
+from metascience_agent.cli_compat import McpFriendlyGroup, _is_argument, rewrite_args
+
+# The toolkit's own per-tool verbs were retired in 1.95.0 (`metascience tool
+# run` is the one command), but the shim still fronts the image package's CLI.
+# These stand-ins keep the SHAPES the archive measured -- positionals,
+# a renamed option, a path that inline JSON must reach -- so the rules stay
+# pinned without depending on commands that no longer exist.
+_demo = typer.Typer(cls=McpFriendlyGroup)
+
+
+@_demo.command("grimmer")
+def _grimmer(mean: float, sd: float, n: int):
+    """stand-in"""
+
+
+@_demo.command("grim")
+def _grim(mean: float, n: int,
+          scale_min: int = typer.Option(1, "--scale-min"),
+          scale_max: int = typer.Option(7, "--scale-max")):
+    """stand-in"""
+
+
+@_demo.command("check-ci")
+def _check_ci(estimate: float, ci_low: float, ci_high: float,
+              measure: str = typer.Option("OR", "--measure")):
+    """stand-in"""
+
+
+@_demo.command("summation")
+def _summation(values: str = typer.Option(..., "--values"),
+               expected: float = typer.Option(..., "--expected")):
+    """stand-in"""
+
+
+@_demo.command("summation-batch")
+def _summation_batch(json_path: Path):
+    """stand-in"""
 
 
 @pytest.fixture(scope="module")
 def group():
-    return typer.main.get_command(app)
+    return typer.main.get_command(_demo)
 
 
 def _cmd(group, name):
@@ -131,7 +169,6 @@ class TestInlineJsonBecomesAFileTheCommandCanRead:
 
     def test_json_for_a_path_positional_is_spilled_to_a_file(self, group, tmp_path):
         import json as _json
-        from pathlib import Path
         out = rewrite_args(_cmd(group, "summation-batch"),
                            ["--rows", '[{"values":[1,2],"expected_sum":3}]'])
         assert len(out) == 1

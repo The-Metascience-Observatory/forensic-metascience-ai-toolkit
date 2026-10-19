@@ -39,7 +39,6 @@ SPECS = (
                   help="The passage the value was confirmed against."),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="check-bounds",
-        cli_required_flags=frozenset(),
+        legacy_verb="check-bounds",
     ),
 )

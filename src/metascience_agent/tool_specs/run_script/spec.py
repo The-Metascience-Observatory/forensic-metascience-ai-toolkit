@@ -34,7 +34,5 @@ SPECS = (
             Param("timeout_seconds", int, 60),
         ),
         stages=frozenset({SCIENCE_AGENT}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
 )

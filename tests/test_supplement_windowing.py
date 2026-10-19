@@ -147,8 +147,4 @@ class TestItIsReachableFromTheModel:
     def test_it_is_offered_to_both_stages(self):
         from metascience_agent import registry
         spec = registry.BY_NAME["get_supplement_table"]
-        assert spec.stages and spec.cli == "get-supplement-table"
-
-    def test_the_cli_verb_exists(self):
-        from metascience_agent.evaluation.deterministic import known_commands
-        assert "get-supplement-table" in known_commands()
+        assert spec.stages

@@ -179,7 +179,9 @@ TEXT_GOLDEN_V1 = [
         "technique": "tortured_phrases",
         "consistent": False,
         "severity": "indeterminate",
-        "reproduction": "metascience tortured-phrases /paper/10.1--x",
+        # 1.95.0: the per-tool verb became `tool run` (deliberate change).
+        "reproduction": ("metascience tool run detect_tortured_phrases --json "
+                         """'{"paper_dir": "/paper/10.1--x"}'"""),
         "inputs": {
             "family": "tortured_phrase",
             "n_distinct_fingerprints": 2,
@@ -208,7 +210,9 @@ TEXT_GOLDEN_V1 = [
         "technique": "tortured_phrases",
         "consistent": False,
         "severity": "indeterminate",
-        "reproduction": "metascience tortured-phrases /paper/10.1--x",
+        # 1.95.0: the per-tool verb became `tool run` (deliberate change).
+        "reproduction": ("metascience tool run detect_tortured_phrases --json "
+                         """'{"paper_dir": "/paper/10.1--x"}'"""),
         "inputs": {
             "family": "llm_boilerplate",
             "n_distinct_fingerprints": 1,

@@ -33,8 +33,7 @@ SPECS = (
         # to be useful, I want them." Was `frozenset()` -- reachable from the
         # CLI and never by the agent.
         stages=frozenset({STAGE1}),
-        cli="flag-round-n",
-        cli_required_flags=frozenset(),
+        legacy_verb="flag-round-n",
     ),
     ToolSpec(
         name="flag_uninformative_stat",
@@ -68,7 +67,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1}),
-        cli="flag-uninformative",
-        cli_required_flags=frozenset(),
+        legacy_verb="flag-uninformative",
     ),
 )

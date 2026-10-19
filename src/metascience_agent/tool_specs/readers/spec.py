@@ -45,8 +45,7 @@ SPECS = (
             Param("render_pages", bool, True),
         ),
         stages=frozenset({STAGE1}),
-        cli="extract-figures",
-        cli_required_flags=frozenset(),
+        legacy_verb="extract-figures",
     ),
     ToolSpec(
         name="extract_pdf",
@@ -59,8 +58,7 @@ SPECS = (
             Param("last_page", int, None),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="extract",
-        cli_required_flags=frozenset(),
+        legacy_verb="extract",
     ),
     ToolSpec(
         name="extract_xml",
@@ -73,8 +71,7 @@ SPECS = (
             Param("last_section", int, None),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="extract-xml",
-        cli_required_flags=frozenset(),
+        legacy_verb="extract-xml",
     ),
     ToolSpec(
         name="get_table",
@@ -87,8 +84,7 @@ SPECS = (
             Param("last_row", int, None),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="get-table",
-        cli_required_flags=frozenset(),
+        legacy_verb="get-table",
     ),
     ToolSpec(
         name="extract_html",
@@ -101,8 +97,7 @@ SPECS = (
             Param("last_section", int, None),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="extract-html",
-        cli_required_flags=frozenset(),
+        legacy_verb="extract-html",
     ),
     ToolSpec(
         name="extract_supplement",
@@ -112,8 +107,7 @@ SPECS = (
             Param("path", str, REQUIRED),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="extract-supplement",
-        cli_required_flags=frozenset(),
+        legacy_verb="extract-supplement",
     ),
     ToolSpec(
         name="get_supplement_table",
@@ -126,7 +120,6 @@ SPECS = (
             Param("last_row", int, None),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="get-supplement-table",
-        cli_required_flags=frozenset(),
+        legacy_verb="get-supplement-table",
     ),
 )

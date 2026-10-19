@@ -36,7 +36,6 @@ SPECS = (
             Param("seed", int, 0),
         ),
         stages=frozenset({STAGE2}),
-        cli="prop-from-normal",
-        cli_required_flags=frozenset(),
+        legacy_verb="prop-from-normal",
     ),
 )

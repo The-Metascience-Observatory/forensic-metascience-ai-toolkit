@@ -46,7 +46,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="duplication-detect",
-        cli_required_flags=frozenset(),
+        legacy_verb="duplication-detect",
     ),
 )

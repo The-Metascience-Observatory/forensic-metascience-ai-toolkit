@@ -43,7 +43,6 @@ SPECS = (
             Param("rho_grid", tuple, DEFAULT_RHO_GRID, withheld=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="table1-dispersion",
-        cli_required_flags=frozenset({"design"}),
+        legacy_verb="table1-dispersion",
     ),
 )

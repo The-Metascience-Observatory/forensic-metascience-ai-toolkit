@@ -65,8 +65,7 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="grimu",
-        cli_required_flags=frozenset(),
+        legacy_verb="grimu",
     ),
     ToolSpec(
         name="grimu_coexistence",
@@ -106,7 +105,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="grimu-coexist",
-        cli_required_flags=frozenset(),
+        legacy_verb="grimu-coexist",
     ),
 )

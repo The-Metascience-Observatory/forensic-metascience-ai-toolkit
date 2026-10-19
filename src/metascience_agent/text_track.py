@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import sys
 import time
 from pathlib import Path
@@ -67,7 +68,8 @@ _FAMILY_LABEL = {
 def _family_rows(result: dict, paper_dir: Path) -> list[dict]:
     """Shape the tool result as findings.schema.json rows, one per family
     with at least one GUARDED (unsuppressed) body match."""
-    reproduction = f"metascience tortured-phrases {paper_dir}"
+    reproduction = ("metascience tool run detect_tortured_phrases --json "
+                    + shlex.quote(json.dumps({"paper_dir": str(paper_dir)})))
     quarantine_reason = result.get("quarantine_reason", "")
     raw_by_family = result.get("severity_raw_by_family", {})
     rows: list[dict] = []

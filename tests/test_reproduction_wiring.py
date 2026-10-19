@@ -20,7 +20,9 @@ import json
 
 from metascience_agent.agent import _annotate_reproductions
 BAD = "metascience recalc_independent_t --mean1 21.7 --sd1 4.899 --n1 24"
-GOOD = "metascience ttest 21.7 4.899 24 24.4 5.367 20 --reported-p 0.0396"
+GOOD = ("metascience tool run recalc_independent_t --json "
+        """'{"mean1": 21.7, "sd1": 4.899, "n1": 24, "mean2": 24.4, "sd2": 5.367, """
+        """"n2": 20, "reported_p": 0.0396}'""")
 
 
 def _result(cmd):

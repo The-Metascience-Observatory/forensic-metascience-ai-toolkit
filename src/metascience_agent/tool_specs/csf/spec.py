@@ -33,7 +33,6 @@ SPECS = (
             Param("rho_grid", tuple, DEFAULT_RHO_GRID, withheld=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="csf",
-        cli_required_flags=frozenset({"correlation", "design"}),
+        legacy_verb="csf",
     ),
 )

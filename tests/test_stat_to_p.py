@@ -162,14 +162,14 @@ class TestTailsAreNotAMatterOfTaste:
 
 
 class TestItIsReachable:
-    def test_registered_for_both_stages_with_a_cli_verb(self):
+    def test_registered_for_both_stages(self):
         from metascience_agent import registry as R
         spec = R.BY_NAME["recalc_stat_to_p"]
-        assert spec.cli == "stat-to-p" and len(spec.stages) == 2
+        assert len(spec.stages) == 2
 
-    def test_the_cli_verb_exists(self):
-        from metascience_agent.evaluation.deterministic import known_commands
-        assert "stat-to-p" in known_commands()
+    def test_it_is_a_replayable_calculation(self):
+        from metascience_agent.evaluation.deterministic import reproducible_tools
+        assert "recalc_stat_to_p" in reproducible_tools()
 
 
 class TestTheRedTeamFindings:

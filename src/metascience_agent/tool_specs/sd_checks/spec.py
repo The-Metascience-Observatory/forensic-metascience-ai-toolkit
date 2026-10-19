@@ -50,8 +50,7 @@ SPECS = (
         # to be useful, I want them." Was `frozenset()` -- reachable from the
         # CLI and never by the agent.
         stages=frozenset({STAGE1}),
-        cli="sd-range",
-        cli_required_flags=frozenset(),
+        legacy_verb="sd-range",
     ),
     ToolSpec(
         name="grimmer_check",
@@ -84,7 +83,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="grimmer",
-        cli_required_flags=frozenset({"data_type", "decimals_sd"}),
+        legacy_verb="grimmer",
     ),
 )

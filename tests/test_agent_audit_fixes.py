@@ -119,10 +119,13 @@ class TestHarnessPlumbingIsNotABreach:
 # --------------------------------------------------------------- FIX 13 -----
 
 #: Passes `validate_reproduction` -- `metascience`, a known subcommand, no
-#: placeholders -- and exits 2. `--expected-total` is not a flag; the CLI takes
-#: `--expected`. This single mistake accounts for 57 of the archive's failures.
-RUNS_BUT_FAILS = "metascience summation --values 1,2,3 --expected-total 100"
-ACTUALLY_RUNS = "metascience grim 5.5 30"
+#: placeholders -- and exits 2. `expected_total` is not a parameter; the tool
+#: takes `expected_sum`. The verb-era form of this mistake (`--expected-total`)
+#: accounted for 57 of the archive's failures.
+RUNS_BUT_FAILS = ("metascience tool run check_summation --json "
+                  """'{"values": [1, 2, 3], "expected_total": 100}'""")
+ACTUALLY_RUNS = ("metascience tool run grim_check --json "
+                 """'{"mean": 5.5, "n": 30, "decimals": 1, "data_type": "likert"}'""")
 
 
 class TestReproductionsAreExecuted:

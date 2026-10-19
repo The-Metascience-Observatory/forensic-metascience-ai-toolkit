@@ -31,8 +31,7 @@ SPECS = (
             Param("cells", list, REQUIRED),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="parse-cells",
-        cli_required_flags=frozenset(),
+        legacy_verb="parse-cells",
     ),
     ToolSpec(
         name="parse_cells_as_declared",
@@ -44,8 +43,7 @@ SPECS = (
             Param("min_fit", float, 0.8),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="parse-cells-as",
-        cli_required_flags=frozenset({"declared"}),
+        legacy_verb="parse-cells-as",
     ),
     ToolSpec(
         name="parse_table",
@@ -61,7 +59,6 @@ SPECS = (
             Param("cross_check_format", str, 'auto'),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="parse-table",
-        cli_required_flags=frozenset(),
+        legacy_verb="parse-table",
     ),
 )

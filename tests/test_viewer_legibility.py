@@ -235,5 +235,5 @@ class TestATemplateWithNoRecordedVerdictIsNotOfferedAsACommand:
         from metascience_agent.evaluation.deterministic import validate_reproduction
         assert validate_reproduction("metascience grim <mean> <n>")["valid"] is False
         assert validate_reproduction(
-            'metascience statcheck --text "(chi2(3) = 18.9, p < 0.001)."'
+            """metascience tool run statcheck --json '{"text": "(chi2(3) = 18.9, p < 0.001)."}'"""
         )["valid"] is True

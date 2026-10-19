@@ -35,8 +35,9 @@ withheld are the CLI-only `analyze_paper_images` and `detect_tortured_phrases`, 
 below; the two `r_*_ground_truth` tools shell to R and ARE exposed; the rest
 are pure Python). Registry roles
 gate access: 58 tools are callable by the TOOL_AGENT, 17 by the SCIENCE_AGENT,
-42 by the ADJUDICATOR; 55 have a CLI command, 2 are CLI-only by design and are
-**not** listed on the MCP server. Analysis (v1.0.0, `mode="parallel"`; see
+42 by the ADJUDICATOR; 2 are CLI-only by design and are **not** listed on the
+MCP server. Every tool runs from the command line as `metascience tool run
+<tool> --json '{...}'`; the hand-written per-tool verbs were removed in 1.95.0. Analysis (v1.0.0, `mode="parallel"`; see
 `docs/specs/pipeline.md`; the current module/scheduler shape is
 `docs/specs/modules.md`) runs **two analysts concurrently** — the *tools
 agent* (numbers/tables/supplements, no internet, no code; formerly the "tool
@@ -175,7 +176,10 @@ the archive verbs -- because deleting a writer is not deleting a reader.
 - **Tool layer, names and backends (Phases 3b-5, 2026-10-13).**
   - `metascience tool list|describe|run` (`tool_cli.py`) runs ANY registered
     tool through `ToolSpec.call` -- the MCP gates -- and serves only what the
-    MCP server would under the same env. Reproductions are generated as
+    MCP server would under the same env (plus the two `CLI_ONLY` tools when
+    no role or manifest is set, i.e. for a person). It is the ONLY
+    command-line route to a tool: it refuses an argument name the tool lacks
+    rather than dropping it. Reproductions are generated as
     `metascience tool run <tool> --json '<args>'`, replaying the ledger call
     behind a finding (`findings_v2.backing_call`); the analysts no longer get a
     CLI map and do not write commands (`core/prompts/reproduction.md`).
@@ -230,8 +234,7 @@ the archive verbs -- because deleting a writer is not deleting a reader.
     from `severity9` + `rulebook.md` + `rulebook_roles.md` +
     `r_crosscheck_note()` + `reproduction.md`, then a toolset note when a
     pipeline restricts the tools and `grok_mcp_route.md` under Grok. No
-    tool→CLI-verb map is sent any more (`registry.cli_syntax_reference` still
-    exists, for people).
+    tool→CLI-verb map is sent any more.
   - `science_error_system_prompt()` = `science_error.md` + ladder +
     `rulebook.md` + `rulebook_roles.md` + `reproduction.md` (+ the Grok route).
   - `adjudication_system_prompt()` = `adjudication.md` + ladder +
@@ -254,9 +257,13 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   and `schema/adjudication.schema.json`, enforced via `--json-schema`.
   The v1 `findings.schema.json` and `report.schema.json` were deleted, as were
   the retired divergent master prompts; do not reintroduce either.
-- `cli.py` — Typer app; each tool has a command. Use `print_severity()` /
-  `bail_on_error()` / `_severity_color()` helpers; drive color only from the
-  `severity` field.
+- `cli.py` — Typer app for workflows (`analyze`, `batch`, `run`, `preflight`,
+  `pipeline`, `tool`, the `image-*` verbs, ...). It has NO per-tool verbs
+  (removed in 1.95.0; they called `tools/*.py` directly and skipped the
+  registry's gates) -- do not add one; `metascience tool run` serves every
+  tool. Archived reproductions still name the old verbs; `ToolSpec.legacy_verb`
+  maps them back to a tool, and the checker reports them as retired. Drive
+  color only from the `severity` field.
 - `extraction/pdf.py` — `extract_text_with_tables` (docling, served from the
   content-hash `.extraction_cache/`); output is capped and supports
   `first_page`/`last_page`.
@@ -537,7 +544,7 @@ Nearly every false accusation found in this repo was of the second kind.
   direction is informative. Counting checks on printed integers are untouched.
   MEASURED 2026-08-22: six of twenty severity-bearing tool findings on
   `10.1186--s12889-025-24026-y` were this one error. The guard is in the TOOLS,
-  not `ToolSpec.call`, because `cli.py` calls them directly.
+  not `ToolSpec.call`, so a direct caller of the tool function is guarded too.
 - **Misapplication guards are enforced IN CODE, not just in prompts.**
   `grim_test` and `debit_test` take a `data_type`; non-integer data (GRIM) and
   non-binary data (DEBIT) return `indeterminate`, never a finding. A tool
@@ -802,11 +809,11 @@ explicitly or it silently compares different questions (this produced a false
    `findings.schema.json` (v1.27.0), so there is only one place to look. The
    schema is enforced by `--json-schema`, so an unlisted technique is a hard
    rejection, not a soft one.
-5. **No CLI command is required.** `metascience tool run <name> --json ...`
-   serves every registered tool through `ToolSpec.call`, and reproductions are
-   generated in that form. A hand-written verb in `cli.py` (registry `cli=`)
-   is optional, for people; it calls `tools/*.py` directly and skips the
-   registry gates, so it must never be what a reproduction runs. A tool whose
+5. **No CLI command, and do not write one.** `metascience tool run <name>
+   --json ...` serves every registered tool through `ToolSpec.call`, and
+   reproductions are generated in that form. A hand-written verb would call
+   `tools/*.py` directly and skip the registry gates;
+   `tests/test_tool_exposure.py` fails if a retired one comes back. A tool whose
    result should be replayable as a reproduction also needs its name in
    `deterministic.reproducible_tools()` (readers, the dispatcher, tracks, R
    wrappers and `run_python_script` are deliberately not).

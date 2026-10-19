@@ -30,7 +30,6 @@ SPECS = (
             Param("provenance", str, "printed_table", guard=True),
         ),
         stages=frozenset({STAGE1}),
-        cli="check-table",
-        cli_required_flags=frozenset(),
+        legacy_verb="check-table",
     ),
 )

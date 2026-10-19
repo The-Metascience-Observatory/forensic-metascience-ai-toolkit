@@ -130,12 +130,13 @@ def _module_defs():
 
 
 def _disabled_verbs(toolset) -> frozenset[str]:
-    """The tools-agent tools a restricted toolset excludes: their CLI verbs
-    (archived per-tool commands) and their names (`metascience tool run X`)."""
+    """The tools-agent tools a restricted toolset excludes: their retired
+    per-tool verbs (as archived commands name them) and their names
+    (`metascience tool run X`)."""
     from .registry import SPECS
     role = set(stage_tools(TOOL_AGENT))
     off = [s for s in SPECS if s.name in role and s.name not in toolset]
-    return frozenset([s.cli for s in off if s.cli] + [s.name for s in off])
+    return frozenset([s.legacy_verb for s in off if s.legacy_verb] + [s.name for s in off])
 
 
 def _not_configured_state(config) -> tuple[str, str]:

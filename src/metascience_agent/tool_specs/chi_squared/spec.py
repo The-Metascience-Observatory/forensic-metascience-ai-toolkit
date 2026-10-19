@@ -41,7 +41,6 @@ SPECS = (
             Param("sampling", str, "simple_random", guard=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="chi2",
-        cli_required_flags=frozenset(),
+        legacy_verb="chi2",
     ),
 )

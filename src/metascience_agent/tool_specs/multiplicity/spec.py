@@ -36,8 +36,7 @@ SPECS = (
                        "label is refused, not filled in."),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="multiplicity",
-        cli_required_flags=frozenset({"family_label"}),
+        legacy_verb="multiplicity",
         adapter=_multiplicity_adapter,
     ),
 )

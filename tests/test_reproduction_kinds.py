@@ -3,7 +3,6 @@
 Regression for three defects measured on the 2026-09-01 flagged batch, all of
 the house shape: two sides of one comparison written at different times.
 """
-import pathlib
 
 from metascience_agent import agent
 from metascience_agent.evaluation.deterministic import classify_reproduction
@@ -74,7 +73,8 @@ class TestAgreementAcrossVocabularies:
     headline `check_count_percent` hit that the tool and finding AGREE about.
     """
 
-    CMD = "metascience check-count-percent 278 83 324 --decimals 0"
+    CMD = ("metascience tool run check_count_percent --json "
+           """'{"count": 278, "percentage": 83, "n": 324, "decimals": 0}'""")
 
     def _run(self, **kw):
         from metascience_agent.evaluation.deterministic import run_reproduction
@@ -264,53 +264,6 @@ class TestAnOmissionAndADisclaimerAgree:
         src = inspect.getsource(agent._annotate_reproductions)
         assert "NON_TOOL_TECHNIQUES" in src
         assert "internal_contradiction\"," not in src, "second list re-stated"
-
-
-class TestTheCliDoesNotTracebackAtReaders:
-    """`metascience` is what we hand a reader as "check this yourself", so an
-    unexpected argument must be an error message, not a stack trace.
-
-    Twenty call sites each wrote `[float(x.strip()) for x in flag.split(",")]`.
-    Measured 2026-09-01: `metascience summation --values '[31,31]'` -- a
-    command our own model wrote -- died with an unhandled ValueError and a Rich
-    traceback.
-    """
-
-    def _run(self, *args):
-        import subprocess
-        import sys
-        return subprocess.run(
-            [sys.executable, "-m", "metascience_agent.cli", *args],
-            capture_output=True, text=True, timeout=180)
-
-    def test_a_json_array_is_accepted_as_a_list(self):
-        # `[31,31]` and `31,31` are two spellings of one list. Repair, not
-        # invention: no value is guessed.
-        out = self._run("summation", "--values", "[31,31]",
-                        "--expected-sum", "62")
-        assert out.returncode == 0, out.stderr[:400]
-        assert "62" in out.stdout
-
-    def test_both_spellings_agree(self):
-        a = self._run("summation", "--values", "[31,31]", "--expected-sum", "62")
-        b = self._run("summation", "--values", "31,31", "--expected-sum", "62")
-        assert a.stdout == b.stdout
-
-    def test_a_non_number_is_a_clean_error_not_a_traceback(self):
-        out = self._run("summation", "--values", "31,abc", "--expected-sum", "46")
-        blob = out.stdout + out.stderr
-        assert out.returncode != 0
-        assert "Traceback" not in blob, "the reader was shown a stack trace"
-        assert "--values" in blob and "abc" in blob, "the error must locate it"
-
-    def test_the_parser_is_defined_once(self):
-        import inspect
-
-        from metascience_agent import cli
-        src = inspect.getsource(cli)
-        # The pattern this replaced, in its float form, should be gone.
-        assert 'float(x.strip()) for x in means.split(",")' not in src
-        assert src.count("def _parse_number_list") == 1
 
 
 class TestScriptCitationDuringTheRun:

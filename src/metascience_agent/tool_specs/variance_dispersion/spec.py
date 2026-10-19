@@ -38,7 +38,6 @@ SPECS = (
             Param("seed", int, 0),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="variance-dispersion",
-        cli_required_flags=frozenset({"homogeneous_variances"}),
+        legacy_verb="variance-dispersion",
     ),
 )

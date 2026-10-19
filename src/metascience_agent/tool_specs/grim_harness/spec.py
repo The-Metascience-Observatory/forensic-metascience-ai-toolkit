@@ -28,8 +28,6 @@ SPECS = (
             Param("paper_dir", str, REQUIRED),
         ),
         stages=frozenset({STAGE1}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
     ToolSpec(
         name="declare_table",
@@ -45,7 +43,5 @@ SPECS = (
             Param("percent_of_units", bool, False),
         ),
         stages=frozenset({STAGE1}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
 )

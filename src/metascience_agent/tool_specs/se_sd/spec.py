@@ -36,8 +36,7 @@ SPECS = (
             Param("bound_source", str, 'assumed', guard=True),
         ),
         stages=frozenset({STAGE1}),
-        cli="sd-or-se",
-        cli_required_flags=frozenset({"bound_source"}),
+        legacy_verb="sd-or-se",
         adapter=_sd_or_se_adapter,
     ),
 )

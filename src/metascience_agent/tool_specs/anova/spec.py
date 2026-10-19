@@ -43,8 +43,7 @@ SPECS = (
             Param("sampling", str, "simple_random", guard=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="anova",
-        cli_required_flags=frozenset(),
+        legacy_verb="anova",
     ),
     ToolSpec(
         name="recalc_f_to_p",
@@ -68,7 +67,6 @@ SPECS = (
                   help="Printed decimals of the reported F, read from the literal."),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="f-to-p",
-        cli_required_flags=frozenset(),
+        legacy_verb="f-to-p",
     ),
 )

@@ -1,11 +1,11 @@
 """`metascience tool`: one generic command for every registered tool.
 
-Phase 3b of the modular refactor. The per-tool verbs (`metascience grim`,
-`metascience check-ci`, ...) are hand-written and call `tools/*.py` directly,
-so NONE of `ToolSpec.call`'s gates run on them -- `grim` defaults
-`decimals=2` where the MCP surface refuses a missing precision. This command
-is generated from the registry and goes through `ToolSpec.call`, exactly the
-path the model's MCP calls take:
+THE command-line route to a tool. The hand-written per-tool verbs
+(`metascience grim`, `metascience check-ci`, ...) called `tools/*.py`
+directly, so NONE of `ToolSpec.call`'s gates ran on them -- `grim` defaulted
+`decimals=2` where the MCP surface refuses a missing precision. They were
+retired in 1.95.0. This command is generated from the registry and goes
+through `ToolSpec.call`, exactly the path the model's MCP calls take:
 
   metascience tool list [--role ROLE] [--json]
   metascience tool describe NAME
@@ -56,6 +56,21 @@ def _served() -> dict:
     except Exception as exc:  # ToolManifestError at import: fail closed
         _refuse(f"no tool surface: {type(exc).__name__}: {exc}", "tool_manifest_error")
     return dict(mcp_server._TOOLS_BY_NAME)
+
+
+def _operator_may_run(name: str) -> bool:
+    """The two CLI-only tools (`registry.CLI_ONLY`) run here for a PERSON.
+
+    They are off the MCP surface so that no model calls them; they are not
+    dangerous. With no role and no manifest in the environment this process
+    is an operator at a terminal, not a fenced agent, so they are served --
+    this command is their only command-line route since the per-tool verbs
+    were retired. Under any fence they stay refused.
+    """
+    from .registry import CLI_ONLY
+    fenced = any(os.environ.get(k, "").strip()
+                 for k in ("METASCIENCE_MCP_STAGE", "METASCIENCE_MCP_TOOLS"))
+    return name in CLI_ONLY and not fenced
 
 
 def _refuse(message: str, kind: str):
@@ -152,16 +167,34 @@ def run_cmd(
     if R.BY_NAME.get(name) is None:
         _refuse(f"unknown tool: {name}", "unknown_tool")
     served = _served()
-    if name not in served:
+    if name not in served and not _operator_may_run(name):
         stage = os.environ.get("METASCIENCE_MCP_STAGE", "").strip()
         _refuse(f"tool '{name}' is not on the "
                 + (f"{stage} role's surface" if stage else "served tool surface")
                 + "; it exists but may not be called here", "off_role_tool")
+    # A misspelled argument is refused, never dropped: dropping it runs the
+    # tool on its default for that parameter, which is a guess.
+    known = {p.name for p in R.BY_NAME[name].params}
+    unknown = sorted(set(args) - known)
+    if unknown:
+        _refuse(f"{name} has no parameter(s) {unknown}; see "
+                f"`metascience tool describe {name}`", "bad_arguments")
     if paper_dir is not None:
         from .run_script import PAPER_DIR_ENV
         os.environ[PAPER_DIR_ENV] = str(paper_dir)
     from .tools_mcp import as_mcp_content
-    result = R.BY_NAME[name].call(args)
+    # A library's own progress lines (statcheck prints several) go to stderr:
+    # stdout opens with the verdict line, which is what a replay reads.
+    import contextlib
+    with contextlib.redirect_stdout(sys.stderr):
+        try:
+            result = R.BY_NAME[name].call(args)
+        except Exception as exc:  # noqa: BLE001 -- the MCP server's answer, not a traceback
+            result = {"error": f"{type(exc).__name__}: {exc}", "severity": "indeterminate",
+                      "tool": name, "arguments": args,
+                      "note": "The tool raised instead of returning a result. Check the "
+                              "inputs (a missing required argument, n too small, zero "
+                              "SD) and retry."}
     content = as_mcp_content(result).get("content") or []
     text = "".join(c.get("text", "") for c in content if isinstance(c, dict))
     from . import receipts

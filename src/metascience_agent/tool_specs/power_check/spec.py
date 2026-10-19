@@ -44,8 +44,7 @@ SPECS = (
         # own reported effect needs. Withholding it cost a real run: the sweep
         # on PNAS 0801268105 reached for it three times and was refused.
         stages=frozenset({STAGE1, STAGE2}),
-        cli="required-n",
-        cli_required_flags=frozenset(),
+        legacy_verb="required-n",
     ),
     ToolSpec(
         name="verify_power_analysis",
@@ -72,7 +71,6 @@ SPECS = (
                        "accuse a correct calculation."),
         ),
         stages=frozenset({STAGE1}),
-        cli="power-check",
-        cli_required_flags=frozenset(),
+        legacy_verb="power-check",
     ),
 )

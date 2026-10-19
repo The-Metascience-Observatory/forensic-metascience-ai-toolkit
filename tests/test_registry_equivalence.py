@@ -381,10 +381,9 @@ class TestGoldenSnapshot:
         )
 
     @pytest.mark.parametrize("spec", R.SPECS, ids=lambda s: s.name)
-    def test_stages_guards_and_cli_unchanged(self, spec):
+    def test_stages_and_guards_unchanged(self, spec):
         snap = self._snapshot()[spec.name]
         assert sorted(spec.stages) == snap["stages"], f"{spec.name}: stage membership changed"
-        assert spec.cli == snap["cli"], f"{spec.name}: CLI name changed"
         assert sorted(spec.guards()) == snap["guards"], f"{spec.name}: guards changed"
         assert sorted(spec.withheld()) == snap["withheld"], f"{spec.name}: withheld changed"
 

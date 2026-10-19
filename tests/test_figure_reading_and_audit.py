@@ -18,7 +18,7 @@ def _report():
     return {
         "headline": {"statement": "x", "severity": "suspicious",
                      "rests_on": "stated_constraint", "evidence": "e",
-                     "reproduction": "metascience grim 5.5 30"},
+                     "reproduction": """metascience tool run grim_check --json '{"mean": 5.5, "n": 30, "decimals": 1, "data_type": "likert"}'"""},
         "verdict": "unresolved", "confidence": "high", "findings": [],
         "not_checked": [], "limitations": [], "coverage_summary": {},
     }
@@ -80,15 +80,17 @@ class TestReproductionValidatorDoesNotRejectWorkingCommands:
     11 flagged commands were rejected over a brace inside a JSON payload. The
     report then printed "not runnable as written" beside a command that runs."""
 
-    JSON_CMD = ("""metascience multiplicity --alpha 0.05 """
-                """--tests '[{"id":"M1","p_value":0.001}]'""")
+    JSON_CMD = ("""metascience tool run multiplicity_report --json """
+                """'{"alpha": 0.05, "family_label": "primary", """
+                """"tests": [{"id":"M1","p_value":0.001}]}'""")
 
     def test_a_json_payload_is_not_a_placeholder(self):
         r = validate_reproduction(self.JSON_CMD)
         assert r["valid"] is True, r["problems"]
 
     def test_angle_brackets_inside_quotes_are_fine(self):
-        r = validate_reproduction("""metascience grim 5.5 30 --note '<derived>'""")
+        r = validate_reproduction(
+            """metascience tool run grim_check --json '{"mean": 5.5, "note": "<derived>"}'""")
         assert r["valid"] is True, r["problems"]
 
     def test_a_real_template_is_still_caught(self):

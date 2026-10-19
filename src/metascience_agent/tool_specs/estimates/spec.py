@@ -43,8 +43,7 @@ SPECS = (
             Param("confidence_level", float, 0.95),
         ),
         stages=frozenset({STAGE1}),
-        cli="absence-of-evidence",
-        cli_required_flags=frozenset({"measure"}),
+        legacy_verb="absence-of-evidence",
     ),
     ToolSpec(
         name="check_estimate_ci",
@@ -73,7 +72,6 @@ SPECS = (
                   "How the interval was CONSTRUCTED, if the paper says -- \"bootstrap\", \"BCa\", \"exact\", \"Clopper-Pearson\", \"profile likelihood\", \"Fieller\", \"Wilson\", \"Bayesian credible\". The midpoint test assumes a WALD interval (estimate +/- z*SE), which is the only method symmetric about its estimate. Bootstrap intervals are mandatory practice for skewed cost data and exact intervals are routine in epidemiology; both fail a midpoint test innocently. Leave it out when the paper does not say -- the test then still runs and names the ambiguity rather than asserting an inconsistency.")
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="check-ci",
-        cli_required_flags=frozenset(),
+        legacy_verb="check-ci",
     ),
 )

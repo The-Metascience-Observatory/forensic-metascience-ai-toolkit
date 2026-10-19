@@ -38,7 +38,6 @@ SPECS = (
             Param("max_row_pairs", int, 5000, withheld=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="raw-duplication-detect",
-        cli_required_flags=frozenset(),
+        legacy_verb="raw-duplication-detect",
     ),
 )

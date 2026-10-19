@@ -46,8 +46,6 @@ SPECS = (
             Param("one_tailed_stated", bool, False, help=ONE_TAILED_STATED_HELP),
         ),
         stages=frozenset({STAGE1}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
     ToolSpec(
         name="check_regression_batch",
@@ -55,7 +53,6 @@ SPECS = (
         description=DESCRIPTIONS["check_regression_batch"],
         params=(Param("rows", list, REQUIRED),),
         stages=frozenset({STAGE1}),
-        cli="regression-batch",
-        cli_required_flags=frozenset(),
+        legacy_verb="regression-batch",
     ),
 )

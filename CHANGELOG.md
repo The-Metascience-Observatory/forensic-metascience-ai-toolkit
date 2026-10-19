@@ -9,6 +9,42 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.95.0] — 2026-10-19 — one command per tool: `metascience tool run`
+
+MINOR: the per-tool CLI verbs are removed, and two reproduction writers change
+form. No prompt, tool, severity or finding logic changes.
+
+- **The 55 hand-written per-tool verbs are gone** (`metascience grim`,
+  `check-ci`, `statcheck`, `extract-xml`, `tortured-phrases`, ...). Every
+  tool runs as `metascience tool run <tool> --json '{...}'`, through
+  `ToolSpec.call` -- the gates the agents get. The verbs called `tools/*.py`
+  directly and skipped those gates (`grim` defaulted `decimals=2` where the
+  registry refuses a missing precision), so a person at the terminal got a
+  looser tool than the model. `metascience tool list` and `tool describe
+  <tool>` list the tools and their parameters.
+- **`tool run` serves the two CLI-only tools to an operator.**
+  `detect_tortured_phrases` and `analyze_paper_images` stay off the MCP
+  surface, and stay refused under any agent fence (`METASCIENCE_MCP_STAGE`
+  or a tool manifest); with neither set they run, since this is now their
+  only command-line route.
+- **`tool run` is stricter about its input.** An argument name the tool does
+  not have is a usage error (exit 2) instead of being dropped, which ran the
+  tool on that parameter's default. A tool that raises returns the MCP
+  server's structured `indeterminate` instead of a traceback. A library's
+  progress lines go to stderr, so stdout opens with the verdict line that a
+  replay reads (statcheck printed several first).
+- **Reproductions are `tool run` everywhere.** The table dispatcher's rows
+  (including the split count/percent check) and the tortured-phrases track
+  wrote verb-form commands; they now go through
+  `registry.reproduction_command`. Archived runs keep their verb-form
+  commands: the checker reports each as a per-tool command retired in 1.95.0
+  and names the `tool run` form, never as an unknown subcommand, and does
+  not execute it. `ToolSpec.cli` is renamed `legacy_verb` and kept for that
+  reading; `cli_required_flags`, `registry.cli_specs` and
+  `registry.cli_syntax_reference` (no longer sent to any model) are removed.
+- `cli_compat` stays: the image analysis package's CLI still uses it.
+- The `--figures` hint no longer points at `figure-extractor.html`, which
+  exists in neither repository.
 ## [1.94.4] — 2026-10-19 — `--budget-usd` is now `--max-budget-usd`
 
 PATCH: CLI naming only; no prompt, tool, severity or finding changes.

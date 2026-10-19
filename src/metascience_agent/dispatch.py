@@ -62,6 +62,12 @@ def _specs():
     from . import registry as _registry
     return _registry.BY_NAME
 
+def _reproduction(tool: str, args: dict) -> str | None:
+    """The `metascience tool run` command replaying this call, or None."""
+    from . import registry as _registry
+    return _registry.reproduction_command(tool, args)[0]
+
+
 #: (cell kind, canonical data_type) -> tools that fire.
 #:
 #: Absence is meaningful and is recorded in `not_run` with a reason, so coverage
@@ -1269,7 +1275,8 @@ def check_table(
                 "inputs": {k: v for k, v in args.items() if k != "uncertainty"},
                 "severity": out.get("severity"),
                 "result": out,
-                "reproduction": (f"metascience {spec.cli} ..." if spec.cli else None),
+                "reproduction": _reproduction(
+                    tool_name, {k: v for k, v in args.items() if k != "uncertainty"}),
             }
             if n_derived:
                 _stamp_derived_n(record, derived_n[i])
@@ -1348,9 +1355,7 @@ def check_table(
             "inputs": args,
             "severity": out.get("severity"),
             "result": out,
-            "reproduction": (
-                f"metascience check-count-percent {count} {pct} {pair['n']} "
-                f"--decimals {decimals}"),
+            "reproduction": _reproduction("check_count_percent", args),
             # The denominator came from the group's OWN header, which is the
             # only place it may come from -- see `count_percent_pairs`.
             "n_provenance": {

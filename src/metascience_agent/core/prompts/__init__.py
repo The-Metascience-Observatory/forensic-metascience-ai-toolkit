@@ -89,15 +89,8 @@ def rulebook() -> str:
     return _read("rulebook.md")
 
 
-def _cli_syntax_reference(stage: str | None = None, drop=None) -> str:
-    """Imported lazily: registry imports the tools package, prompts does not."""
-    from ...registry import cli_syntax_reference
-
-    return cli_syntax_reference(stage, drop)
-
-
 #: Tools the figure pass owns. When `--figures` is off these are removed from
-#: the allowlist AND from the CLI map, not merely left unmentioned by the
+#: the allowlist, not merely left unmentioned by the
 #: stripped prose -- `agent._stage1_tools` states the rule for the legacy path
 #: in one line: "a tool that is offered can be called."
 FIGURE_TOOLS = frozenset({"extract_figures"})
@@ -672,7 +665,7 @@ def findings_schema_v2() -> dict:
     equality joins on exact registry names. A misplaced placeholder raises:
     silently skipping injection would be a hand-maintained list again.
     """
-    # Lazy like `_cli_syntax_reference`: registry imports the tools package,
+    # Lazy: registry imports the tools package,
     # prompts must not.
     from ...registry import NON_TECHNIQUE_TOOLS, SPECS
 

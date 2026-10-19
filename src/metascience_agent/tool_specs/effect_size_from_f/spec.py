@@ -47,7 +47,6 @@ SPECS = (
             Param("source_locator", str, None, meta=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="effect-size-from-f",
-        cli_required_flags=frozenset(),
+        legacy_verb="effect-size-from-f",
     ),
 )

@@ -67,5 +67,5 @@ class TestRegistryMarksItAGuard:
         d = BY_NAME["absence_of_evidence"].description
         assert "ALWAYS PASS `measure`" in d
 
-    def test_cli_requires_it(self):
-        assert "measure" in BY_NAME["absence_of_evidence"].cli_required_flags
+    def test_the_registry_declares_it(self):
+        assert "measure" in {p.name for p in BY_NAME["absence_of_evidence"].params}

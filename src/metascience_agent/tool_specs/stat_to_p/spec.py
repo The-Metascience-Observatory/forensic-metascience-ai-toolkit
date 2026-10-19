@@ -45,7 +45,6 @@ SPECS = (
             Param("df_max", float, None),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="stat-to-p",
-        cli_required_flags=frozenset(),
+        legacy_verb="stat-to-p",
     ),
 )

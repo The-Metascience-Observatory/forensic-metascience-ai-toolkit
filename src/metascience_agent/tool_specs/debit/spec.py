@@ -56,8 +56,7 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="debit",
-        cli_required_flags=frozenset({"data_type"}),
+        legacy_verb="debit",
     ),
     ToolSpec(
         name="debit_check_batch",
@@ -103,7 +102,5 @@ SPECS = (
                        "judging it."),
         ),
         stages=frozenset({STAGE1}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
 )

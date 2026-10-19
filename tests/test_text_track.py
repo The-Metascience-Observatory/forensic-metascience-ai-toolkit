@@ -227,7 +227,7 @@ class TestChild:
         assert "QUARANTINED" in phrase_row["explanation"]
         assert "headline" in phrase_row["explanation"]
         assert phrase_row["reproduction"].startswith(
-            "metascience tortured-phrases")
+            "metascience tool run detect_tortured_phrases --json")
         assert phrase_row["inputs"]["dictionary_version"]
         boiler_row = rows[1]
         assert boiler_row["severity_before_quarantine"] == "highly_suspicious"

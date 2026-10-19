@@ -310,41 +310,34 @@ def known_commands() -> set[str]:
     return names
 
 
-# Reviewed calculation verbs only. New CLI workflows must not become runnable
-# merely because they were registered: image-sweep, review-write and others
-# have side effects, and analyze/batch/eval can spend money. Keep this policy at
-# the subprocess boundary, shared with the live annotator.
-_REPRODUCTION_COMMANDS = frozenset({
-    "absence-of-evidence", "anova", "check-bounds", "check-ci",
-    "check-count-percent", "check-ratio", "chi2", "csf", "debit",
-    "duplication-detect", "effect-size", "effect-size-from-f", "f-to-p",
-    "flag-round-n", "flag-uninformative", "flow-check", "grim", "grim-sweep",
-    "grimmer", "grimu", "grimu-coexist", "multiplicity", "paired-d-interval",
-    "power-check", "prop-from-normal", "reconstruct-2x2", "regression-batch",
-    "required-n", "rivets-anova", "rivets-t", "sd-or-se", "sd-range",
-    "sprite", "stalt", "stat-to-p", "statcheck", "summation", "summation-batch",
-    "table1-dispersion", "ttest", "variance-dispersion",
+#: Tools whose `metascience tool run` replay may execute: reviewed
+#: calculations only. Readers, parsers, the dispatcher, the tracks, the R
+#: wrappers and `run_python_script` are not replayed. New tools must not become
+#: runnable merely because they were registered -- some have side effects, and
+#: analyze/batch/eval spend money -- so this is a list, kept at the subprocess
+#: boundary and shared with the live annotator. (Until 1.95.0 it was derived
+#: from a list of per-tool verbs; those verbs are retired.)
+_REPRODUCIBLE_TOOLS = frozenset({
+    "absence_of_evidence", "bayesian_table1_dispersion", "check_count_percent",
+    "check_effect_plausibility", "check_estimate_ci", "check_flow_arithmetic",
+    "check_proportion_from_normal", "check_ratio", "check_regression",
+    "check_regression_batch", "check_sd_or_se", "check_sd_range",
+    "check_statistic_bounds", "check_summation", "check_summation_batch",
+    "check_variance_dispersion", "csf_test", "debit_check",
+    "debit_check_batch", "detect_duplication", "effect_size_from_f",
+    "flag_round_n", "flag_uninformative_stat", "grim_check",
+    "grim_percentage", "grim_sweep", "grimmer_check",
+    "grimu_check", "grimu_coexistence", "multiplicity_report",
+    "paired_d_interval", "recalc_anova", "recalc_chi_squared",
+    "recalc_f_to_p", "recalc_independent_t", "recalc_stat_to_p",
+    "recalc_within_subjects_t", "reconstruct_2x2", "required_n",
+    "rivets_anova", "rivets_independent_t", "sprite_reconstruct",
+    "stalt_check", "statcheck", "verify_power_analysis",
 })
 
 
-#: Tools whose `metascience tool run` replay may execute: the calculations
-#: behind the verbs above, plus the four calculations that never had a verb.
-#: Readers, parsers, the dispatcher, the tracks, the R wrappers and
-#: `run_python_script` are not replayed.
 def reproducible_tools() -> frozenset:
-    """Computed on first use: the registry imports modules that import this one."""
-    global _REPRODUCIBLE
-    if _REPRODUCIBLE is not None:
-        return _REPRODUCIBLE
-    from ..registry import SPECS
-    _REPRODUCIBLE = frozenset(
-        {s.name for s in SPECS if s.cli in _REPRODUCTION_COMMANDS}
-        | {"debit_check_batch", "grim_percentage", "check_regression",
-           "recalc_within_subjects_t"})
-    return _REPRODUCIBLE
-
-
-_REPRODUCIBLE: frozenset | None = None
+    return _REPRODUCIBLE_TOOLS
 
 
 def reproduction_execution_problem(command: str) -> str | None:
@@ -365,12 +358,29 @@ def reproduction_execution_problem(command: str) -> str | None:
             return ("not automatically executed: only `metascience tool run` of a "
                     "reviewed calculation may be replayed")
         return None
-    if len(parts) < 2 or parts[0] != "metascience" or parts[1] not in _REPRODUCTION_COMMANDS:
-        return "not automatically executed: only reviewed calculation commands may be replayed"
-    if any(arg.split("=", 1)[0] == "--output" or arg.startswith("-o")
-           for arg in parts[2:]):
-        return "not automatically executed: reproduction checks may not write output files"
-    return None
+    retired = retired_verb_note(command)
+    if retired:
+        return f"not automatically executed: {retired}"
+    return "not automatically executed: only `metascience tool run` of a reviewed calculation may be replayed"
+
+
+def retired_verb_note(command: str) -> str | None:
+    """A sentence naming the retired per-tool verb a command uses, or None.
+
+    Archived reproductions were written as `metascience grim 5.5 30` until
+    1.95.0. The verb is gone, but the command was not WRONG when written, so
+    it is reported as retired -- with the tool that replays it -- and never as
+    an unknown subcommand, which would read as a defect in the old run.
+    """
+    parts = (command or "").split()
+    if len(parts) < 2 or parts[0] != "metascience":
+        return None
+    from ..registry import legacy_verbs
+    spec = legacy_verbs().get(parts[1])
+    if spec is None:
+        return None
+    return (f"`metascience {parts[1]}` is a per-tool command retired in 1.95.0; "
+            f"the same check is `metascience tool run {spec.name} --json '{{...}}'`")
 
 
 #: The value a finding SHOULD carry when no command can reproduce it. Named so
@@ -474,7 +484,10 @@ def validate_reproduction(command: str) -> dict:
     else:
         verb = parts[1]
         valid = known_commands()
-        if verb not in valid:
+        retired = retired_verb_note(cmd)
+        if retired:
+            problems.append(retired)
+        elif verb not in valid:
             problems.append(f"unknown subcommand {verb!r} (valid: {', '.join(sorted(valid))})")
 
     return {"valid": not problems, "problems": problems}

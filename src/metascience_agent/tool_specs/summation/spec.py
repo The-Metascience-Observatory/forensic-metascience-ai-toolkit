@@ -36,8 +36,7 @@ SPECS = (
             Param("description", str, 'values'),
         ),
         stages=frozenset({STAGE1, SCIENCE_AGENT}),
-        cli="summation",
-        cli_required_flags=frozenset(),
+        legacy_verb="summation",
     ),
     ToolSpec(
         name="check_summation_batch",
@@ -48,7 +47,6 @@ SPECS = (
             Param("tolerance", float, None),
         ),
         stages=frozenset({STAGE1, SCIENCE_AGENT}),
-        cli="summation-batch",
-        cli_required_flags=frozenset(),
+        legacy_verb="summation-batch",
     ),
 )

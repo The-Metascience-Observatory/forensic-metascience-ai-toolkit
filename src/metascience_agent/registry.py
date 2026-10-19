@@ -446,8 +446,10 @@ class ToolSpec:
     description: str                   # shown to the model; encodes guard guidance
     params: tuple[Param, ...]
     stages: frozenset                  # which agent stages may call it
-    cli: str | None = None             # CLI command name, or None if MCP-only
-    cli_required_flags: frozenset = frozenset()   # guards the CLI must expose
+    #: The per-tool `metascience <verb>` this tool had until 1.95.0, or None.
+    #: Those verbs are gone (`metascience tool run` is the one command), but
+    #: archived reproductions still name them, so readers need the mapping.
+    legacy_verb: str | None = None
     reference: str = ""                # markdown body for docs/tool_reference.md
     adapter: Callable | None = None    # for the two tools whose args need shaping
 
@@ -1299,68 +1301,9 @@ def cell_consuming_tools() -> frozenset[str]:
     return frozenset(s.name for s in SPECS if s.consumes_table_cells)
 
 
-def cli_specs() -> dict[str, ToolSpec]:
-    """CLI command name -> spec, for the commands the registry expects to exist."""
-    return {s.cli: s for s in SPECS if s.cli}
-
-
-def cli_syntax_reference(stage: str | None = None,
-                         drop: frozenset[str] | set[str] | None = None) -> str:
-    """A compact CLI-name map for the model, generated from the registry.
-
-    `stage` filters the map to one role's callable tools: an agent handed a
-    map naming 54 tools when it can call 15 is being invited to recommend
-    off-list calls (and the recommends-only-callable-tools tests treat the
-    map as a recommendation).
-
-    `drop` removes tools the ROLE could call but this RUN has switched off --
-    today only the figure pass. Same argument one level down: a map naming a
-    tool that has been removed from the allowlist invites exactly the off-list
-    recommendation the `stage` filter exists to prevent.
-
-    WHY THIS EXISTS, and why the full `tool_reference.md` should NOT be in the
-    system prompt.
-
-    Every tool was documented twice: once as its MCP definition (~7,088 tokens)
-    and again in tool_reference.md (~3,885 tokens), both sent on every turn. The
-    MCP description already carries the guard guidance -- `grimmer_check`'s says
-    "You MUST pass data_type" and cites the systolic-BP case -- so the prose was
-    genuinely redundant.
-
-    What the MCP definitions do NOT carry is the CLI command name, and the model
-    needs that to write a runnable `reproduction` string. The CLI verb often
-    differs from the tool name (`grim_check` -> `grim`, `check_estimate_ci` ->
-    `check-ci`), which is exactly how a real run emitted
-    `metascience recalc_independent_t --mean1 ...` -- a command that does not
-    exist.
-
-    So: the mapping, and nothing else. ~600 tokens instead of ~3,885, on every
-    turn of every paper.
-    """
-    lines = [
-        "# CLI names for `reproduction` commands",
-        "",
-        "Every finding's `reproduction` must be a real `metascience` command that runs",
-        "as written. The CLI verb is often NOT the tool name -- use this mapping.",
-        "Malformed commands are detected and the finding is marked",
-        '"not independently reproducible", which weakens it.',
-        "",
-    ]
-    _drop = frozenset(drop or ())
-    pool = [s for s in SPECS
-            if (stage is None or stage in s.stages) and s.name not in _drop]
-    for spec in sorted(pool, key=lambda s: s.name):
-        if spec.cli:
-            lines.append(f"  {spec.name} -> metascience {spec.cli}")
-    mcp_only = sorted(s.name for s in pool if not s.cli)
-    if mcp_only:
-        lines += [
-            "",
-            "MCP-only (no CLI form). A finding resting on one of these cannot carry a",
-            "runnable reproduction command; say so rather than inventing a verb:",
-        ]
-        lines += [f"  {n}" for n in mcp_only]
-    return "\n".join(lines)
+def legacy_verbs() -> dict[str, ToolSpec]:
+    """Retired per-tool verb -> spec, for reading archived reproductions."""
+    return {s.legacy_verb: s for s in SPECS if s.legacy_verb}
 
 
 def reproduction_command(tool: str, args: dict) -> tuple[str | None, str | None]:
@@ -1375,8 +1318,8 @@ def reproduction_command(tool: str, args: dict) -> tuple[str | None, str | None]
     change, both deliberate:
 
       * It RUNS THROUGH `ToolSpec.call`, so a replay applies the same gates the
-        model's call did. The per-tool verbs call `tools/*.py` directly and
-        skip them -- `metascience grim` defaulted `decimals=2` where the MCP
+        model's call did. The per-tool verbs (retired in 1.95.0) called
+        `tools/*.py` directly and skipped them -- `metascience grim` defaulted `decimals=2` where the MCP
         surface refuses a missing precision.
       * STRUCTURED INPUT RIDES ALONG. The per-tool generator refused any list
         or dict argument (`cells`, `rows`, `blocks`) because no flag could

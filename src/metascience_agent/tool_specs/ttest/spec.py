@@ -52,8 +52,7 @@ SPECS = (
             Param("sampling", str, "simple_random", guard=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="ttest",
-        cli_required_flags=frozenset(),
+        legacy_verb="ttest",
     ),
     ToolSpec(
         name="recalc_within_subjects_t",
@@ -77,7 +76,5 @@ SPECS = (
             Param("sampling", str, "simple_random", guard=True),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
 )

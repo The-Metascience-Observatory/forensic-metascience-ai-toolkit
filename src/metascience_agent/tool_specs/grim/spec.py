@@ -60,8 +60,7 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="grim",
-        cli_required_flags=frozenset({"bound_source", "data_type"}),
+        legacy_verb="grim",
     ),
     ToolSpec(
         name="grim_percentage",
@@ -102,8 +101,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
     ToolSpec(
         name="grim_sweep",
@@ -137,8 +134,7 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1}),
-        cli="grim-sweep",
-        cli_required_flags=frozenset(),
+        legacy_verb="grim-sweep",
     ),
     ToolSpec(
         name="reconstruct_2x2",
@@ -173,7 +169,6 @@ SPECS = (
         # to be useful, I want them." Was `frozenset()` -- reachable from the
         # CLI and never by the agent.
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="reconstruct-2x2",
-        cli_required_flags=frozenset(),
+        legacy_verb="reconstruct-2x2",
     ),
 )

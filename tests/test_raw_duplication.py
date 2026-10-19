@@ -78,13 +78,19 @@ def test_existing_agent_cli_and_registry_use_same_result(tmp_path):
     rows = [["id", "weight", "cortisol"]]
     rows += [[i, round(rng.uniform(52, 96), 2), round(rng.uniform(180, 620), 3)] for i in range(60)]
     rows[47][1:] = rows[12][1:]
-    path, output = tmp_path / "data.csv", tmp_path / "result.json"
+    path = tmp_path / "data.csv"
     with path.open("w", newline="") as handle:
         csv.writer(handle).writerows(rows)
     expected = detect_raw_duplication(str(path))
     spec = BY_NAME["detect_raw_duplication"]
     assert spec.fn is detect_raw_duplication
     assert spec.fn(str(path)) == expected
-    result = CliRunner().invoke(app, ["raw-duplication-detect", str(path), "--output", str(output)])
+    result = CliRunner().invoke(app, ["tool", "run", "detect_raw_duplication",
+                                      "--json", json.dumps({"path": str(path)})])
     assert result.exit_code == 0, result.output
-    assert json.loads(output.read_text()) == expected
+    body = result.output.partition("\n")[2]
+    # The command line is the registry path (`ToolSpec.call`), which adds the
+    # provenance fields; everything the tool itself computed is identical.
+    got = json.loads(body)
+    assert got == json.loads(json.dumps(spec.call({"path": str(path)})))
+    assert {k: got[k] for k in expected} == json.loads(json.dumps(expected))

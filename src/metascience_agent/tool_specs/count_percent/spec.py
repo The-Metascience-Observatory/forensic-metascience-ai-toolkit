@@ -34,7 +34,6 @@ SPECS = (
             Param("source_locator", str, None),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="check-count-percent",
-        cli_required_flags=frozenset(),
+        legacy_verb="check-count-percent",
     ),
 )

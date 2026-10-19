@@ -344,42 +344,52 @@ class TestTheFamilyGateHoldsOnEverySurface:
     """A guard only one caller honours is not a guard.
 
     `registry` declares `family_label` MANDATORY and `_multiplicity_adapter`
-    refuses a blank one over MCP. On the CLI, Typer's `...` makes the FLAG
-    required and says nothing about its VALUE, so `--family-label ""` printed
-    the full correction table -- FWER, Bonferroni, Holm, BH, BY, claim loss --
-    under an empty `Family:` heading and exited 0. The same call was refused on
-    one surface and answered on the other.
+    refuses a blank one over MCP. The hand-written `multiplicity` verb once
+    printed the full correction table -- FWER, Bonferroni, Holm, BH, BY, claim
+    loss -- under an empty `Family:` heading and exited 0: refused on one
+    surface, answered on the other. Since 1.95.0 the command line is
+    `metascience tool run`, which goes through the same gate; these pin that.
     """
 
-    def _run(self, *args):
-        return CliRunner().invoke(cli_app, ["multiplicity", *args])
+    TESTS = [{"id": "t1", "p_value": 0.01}, {"id": "t2", "p_value": 0.04},
+             {"id": "t3", "p_value": 0.2}]
+
+    def _run(self, family_label, tests=None):
+        import json as _json
+        r = CliRunner().invoke(cli_app, [
+            "tool", "run", "multiplicity_report", "--json",
+            _json.dumps({"tests": tests or self.TESTS, "family_label": family_label})])
+        assert r.exit_code == 0, r.output
+        verdict, _, body = r.output.partition("\n")
+        return verdict, _json.loads(body)
 
     def test_blank_family_label_is_refused_by_the_cli(self):
-        r = self._run("-p", "0.01,0.04,0.2", "--family-label", "")
-        assert r.exit_code != 0
+        verdict, out = self._run("")
+        assert verdict.startswith("INDETERMINATE")
         # The arithmetic must not appear at all. A refusal that still prints the
         # numbers reads as a warning, and the numbers get quoted anyway.
-        assert "Bonferroni threshold" not in r.output
+        assert out["applicable"] is False
+        assert not any("bonferroni" in k.lower() for k in out)
 
     def test_whitespace_only_family_label_is_refused_by_the_cli(self):
-        assert self._run("-p", "0.01,0.04,0.2", "--family-label", "   ").exit_code != 0
+        assert self._run("   ")[1]["applicable"] is False
 
     def test_the_cli_refusal_says_why_a_family_cannot_be_defaulted(self):
-        out = self._run("-p", "0.01,0.04,0.2", "--family-label", "").output
-        assert "judgement" in out
-        assert "family" in out.lower()
+        verdict, _ = self._run("")
+        assert "judgement" in verdict
+        assert "family" in verdict.lower()
 
     def test_the_two_surfaces_refuse_the_same_input(self):
         """MCP and CLI, same blank label, same outcome."""
         mcp = BY_NAME["multiplicity_report"].call(
             {"tests": [{"id": "t1", "p_value": 0.01}], "family_label": ""})
         assert mcp["applicable"] is False and mcp.get("error")
-        assert self._run("-p", "0.01", "--family-label", "").exit_code != 0
+        assert self._run("", tests=[{"id": "t1", "p_value": 0.01}])[1]["applicable"] is False
 
     def test_a_named_family_still_runs(self):
-        r = self._run("-p", "0.01,0.04,0.2", "--family-label", "three primary outcomes")
-        assert r.exit_code == 0
-        assert "three primary outcomes" in r.output
+        _, out = self._run("three primary outcomes")
+        assert out.get("applicable") is not False
+        assert "three primary outcomes" in str(out)
 
 
 class TestAssumptions:

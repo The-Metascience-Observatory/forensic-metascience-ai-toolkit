@@ -33,7 +33,6 @@ from __future__ import annotations
 import ast
 import pathlib
 
-import pytest
 
 from metascience_agent.tools.severity import (ACCUSATION_GRADE, ACCUSES_AT_ALL,
                                               HIGHLY_SUSPICIOUS, IMPOSSIBLE,
@@ -63,16 +62,6 @@ class TestTheTwoConceptsAreDistinct:
                 assert not isinstance(leaf, ast.Constant) or not isinstance(leaf.value, str), (
                     f"{names} contains a string literal; build it from the "
                     "named severity constants instead")
-
-
-class TestTheCliNowWarnsOnSuspicious:
-    def test_the_cli_uses_the_at_all_meaning_its_comment_describes(self):
-        from metascience_agent.cli import ACCUSATORY
-        assert SUSPICIOUS in ACCUSATORY, (
-            "warn_if_assumed prints what was ASSUMED whenever an accusation "
-            "rests on an unstated premise; a `suspicious` verdict on an assumed "
-            "data type is exactly that case")
-        assert ACCUSATORY == ACCUSES_AT_ALL
 
 
 class TestTheDeliberateHigherBarSurvives:

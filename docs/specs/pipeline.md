@@ -275,8 +275,9 @@ text is `modules/<name>/prompt.md` (`tool_expert.md` is
 `rulebook_roles.md`, `reproduction.md`, `grok_mcp_route.md`) is
 `core/prompts/`. `prompts.PROMPT_FILES` maps the old names to these files.
 `stage2_editorial.md` no longer exists. The analysts no longer receive a CLI
-map: reproductions are generated (`core/prompts/reproduction.md`), and
-`registry.cli_syntax_reference` is not sent.
+map: reproductions are generated (`core/prompts/reproduction.md`).
+`registry.cli_syntax_reference`, which built that map, was removed in 1.95.0
+with the per-tool verbs it named.
 
 **`tool_expert.md`** (evolves from `stage1_sweep.md`):
 - Carries over VERBATIM: tool discipline, `source_quote`/locator rules, the
@@ -329,7 +330,7 @@ map: reproductions are generated (`core/prompts/reproduction.md`), and
   cases for people, read by no code, and deliberately kept out of the
   prompts (its cases carry a venue-prestige calibration bias).
 - `registry.cli_syntax_reference(stage=)` gains a role filter so each agent's
-  CLI map names only tools that agent can call.
+  CLI map names only tools that agent can call. (Removed in 1.95.0.)
 
 **Prompt-contract tests:** each embedded example JSON is validated against the
 LIVE producer-subset schema by a test (an example that rots is a guard that

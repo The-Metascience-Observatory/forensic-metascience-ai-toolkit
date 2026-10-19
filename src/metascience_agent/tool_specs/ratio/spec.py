@@ -49,8 +49,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2, SCIENCE_AGENT}),
-        cli="check-ratio",
-        cli_required_flags=frozenset(
-            {"decimals_numerator", "decimals_denominator", "decimals_ratio"}),
+        legacy_verb="check-ratio",
     ),
 )

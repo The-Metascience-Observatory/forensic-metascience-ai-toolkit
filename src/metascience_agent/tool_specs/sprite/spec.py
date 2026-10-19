@@ -69,7 +69,6 @@ SPECS = (
                   help=PROVENANCE_HELP),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="sprite",
-        cli_required_flags=frozenset({"data_type", "decimals_sd"}),
+        legacy_verb="sprite",
     ),
 )

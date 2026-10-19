@@ -35,8 +35,6 @@ SPECS = (
                        "Set this when cross-checking grim_percentage."),
         ),
         stages=frozenset({STAGE2}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
     ToolSpec(
         name="r_sprite_ground_truth",
@@ -57,8 +55,6 @@ SPECS = (
                   help="RNG seed passed to R as set.seed(). Vary it to test whether a no-solution result is robust."),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli=None,
-        cli_required_flags=frozenset(),
     ),
     ToolSpec(
         name="statcheck",
@@ -69,8 +65,7 @@ SPECS = (
             Param("text", str, REQUIRED),
         ),
         stages=frozenset({STAGE1, STAGE2}),
-        cli="statcheck",
-        cli_required_flags=frozenset(),
+        legacy_verb="statcheck",
         adapter=_statcheck_adapter,
     ),
 )

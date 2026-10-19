@@ -39,7 +39,6 @@ SPECS = (
             Param("description", str, "participant flow"),
         ),
         stages=frozenset({SCIENCE_AGENT, ADJUDICATOR}),
-        cli="flow-check",
-        cli_required_flags=frozenset(),
+        legacy_verb="flow-check",
     ),
 )

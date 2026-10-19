@@ -384,7 +384,9 @@ class TestTheSplitCountPercentColumn:
             {"raw": "40.0", "row_label": "Pain", "col_label": f"{self.A} | %"}]
         r = [x for x in check_table(cells, [], {}).get("results", [])
              if x["tool"] == "check_count_percent"][0]
-        assert r["reproduction"] == "metascience check-count-percent 5 40.0 22 --decimals 1"
+        assert r["reproduction"] == (
+            "metascience tool run check_count_percent --json "
+            """'{"count":5,"decimals":1,"n":22,"percentage":40.0}'""")
         assert r["n_provenance"]["how"] == "printed_in_a_label"
         assert r["n_provenance"]["derived"] is False
 

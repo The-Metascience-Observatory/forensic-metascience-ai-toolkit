@@ -1,5 +1,10 @@
 """Accept the command shape the model actually writes.
 
+WHO USES THIS NOW: the image analysis package's CLI (through its alias module).
+The toolkit's own per-tool verbs it was written for were retired in 1.95.0 --
+`metascience tool run NAME --json '{...}'` takes the MCP parameter names
+directly, so it needs no rewriting. `_ALIASES` below names those retired verbs.
+
 THE MEASUREMENT THAT MOTIVATES THIS
 -----------------------------------
 Every finding is supposed to carry a command that reproduces it, and the run

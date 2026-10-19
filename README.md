@@ -30,7 +30,7 @@ that the figures were not examined.
 |---|---|---|
 | `pdf` | **WeasyPrint** (pure-Python HTML→PDF renderer) | `report.pdf` with no system PDF engine. Without it, rendering tries `wkhtmltopdf`, then `pandoc`; if both fail, the run still finishes and the failure is recorded in `run_meta.pdf_error`. |
 | `db` | **psycopg** (PostgreSQL driver), **watchfiles** (file-change watcher) | `db-push` and the review workbench, which keep findings in a local PostgreSQL database and watch the paper folders for changes. Without psycopg, `db-push` refuses and says why; it never skips silently. |
-| `html` | **fetchpdf** (our paper fetcher, from PyPI) | Two checks the fetcher already owns. (1) Its full landing-page test for papers whose only full text is a fetched HTML page, so a cookie wall or abstract-only page isn't read as the article. Without it, a built-in check runs that catches only obvious stubs. (2) The supplement integrity audit in `metascience batch`, which catches git-lfs pointer stubs and truncated downloads. Without it, `preflight` says the audit is unavailable. Not needed for papers you supply as PDF or XML. |
+| `html` | **[fetchpdf](https://github.com/The-Metascience-Observatory/fetchpdf)** (our paper fetcher, from PyPI) | Two checks the fetcher already owns. (1) Its full landing-page test for papers whose only full text is a fetched HTML page, so a cookie wall or abstract-only page isn't read as the article. Without it, a built-in check runs that catches only obvious stubs. (2) The supplement integrity audit in `metascience batch`, which catches git-lfs pointer stubs and truncated downloads. Without it, `preflight` says the audit is unavailable. Not needed for papers you supply as PDF or XML. |
 | `dev` | **pytest** (test runner), **pytest-asyncio** (async tests), **pytest-xdist** (parallel workers behind `metascience-test`), **ruff** (linter) | Running and developing the test suite. |
 
 
@@ -177,7 +177,10 @@ flowchart TD
     classDef ink fill:#263238,stroke:#263238,color:#fff
     class tools,sci,imgrev,adj agent
     class doi,human ink
+    click fetch href "https://github.com/The-Metascience-Observatory/fetchpdf" _blank
 ```
+
+Papers are fetched by [fetchpdf](https://github.com/The-Metascience-Observatory/fetchpdf).
 
 - **Tools agent** (58 tools are callable by the tool expert; no internet, no
   code): reads the paper, types every table cell, and checks each statistic

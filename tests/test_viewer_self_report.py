@@ -19,11 +19,11 @@ class TestTheCoverageCaveatTravelsWithItsNumber:
     landing screen, directly beneath the verdict."""
 
     def _payload(self, review, checked=0, consumable=525):
-        """The bullet reads `report_obj.coverage_summary.checkable`, which is
-        where the editorial stage records it -- not `D.coverage`."""
+        """The bullet reads `coverage_summary.checkable` -- the census, which
+        the v2 document carries at its top level -- not `D.coverage`. (It
+        used to live on the serial pipeline's `report_obj`.)"""
         p = collect(review)
-        ro = p.setdefault("report_obj", {})
-        ro.setdefault("coverage_summary", {})["checkable"] = {
+        p.setdefault("coverage_summary", {})["checkable"] = {
             "n_consumable": consumable, "cells_checked_via_check_table": checked}
         return p
 
@@ -203,8 +203,7 @@ class TestTheShortfallListIsScoped:
 
     def _payload(self, review):
         p = collect(review)
-        ro = p.setdefault("report_obj", {})
-        ro.setdefault("coverage_summary", {}).update(
+        p.setdefault("coverage_summary", {}).update(
             {"stats_found": 704, "stats_checked": 37})
         p.setdefault("run_meta", {})["reproducibility"] = {
             "n_findings": 33, "n_invalid": 29, "problems": ["x"]}

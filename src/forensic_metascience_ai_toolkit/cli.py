@@ -24,7 +24,6 @@ from . import NOT_RECORDED, __version__
 # bare environment.
 from .agent import DEFAULT_EFFORT, completed_review
 
-from .tools.severity import SEVERITY_COLORS, SEVERITY_LEVELS, normalize_severity
 
 from .progress import (  # noqa: F401 -- the three underscore aliases are
     # re-exported for tests/test_progress_callback.py, which imports them
@@ -64,44 +63,6 @@ def _image_command(name: str, attr: str, alias: str | None = None) -> None:
     app.command(name)(fn)
 
 console = Console()
-
-
-def _severity_color(severity: str | None) -> str:
-    return SEVERITY_COLORS.get(normalize_severity(severity), "white")
-
-
-def _published_findings(result: dict) -> list:
-    """The findings the report published, else the sweep's, else nothing.
-
-    Editorial findings are what a reader of the report sees. A failed
-    editorial pass still has a denominator if we fall back to the sweep
-    rather than printing five zeros that read as a clean paper.
-    """
-    report_obj = result.get("report_obj")
-    if isinstance(report_obj, dict) and isinstance(report_obj.get("findings"), list):
-        return report_obj["findings"]
-    findings = result.get("findings")
-    if isinstance(findings, dict) and isinstance(findings.get("findings"), list):
-        return findings["findings"]
-    if isinstance(findings, list):
-        return findings
-    return []
-
-
-def _finding_counts(result: dict) -> dict[str, int]:
-    """Tally by severity, every rung present at zero.
-
-    Present-at-zero on purpose: a missing key and a zero read differently,
-    and only one of them is a claim. Same rule as `webapp_index.severity_counts`.
-    """
-    counts = {s: 0 for s in SEVERITY_LEVELS}
-    for f in _published_findings(result):
-        if not isinstance(f, dict):
-            continue
-        sev = str(f.get("severity") or "").strip().lower()
-        if sev in counts:
-            counts[sev] += 1
-    return counts
 
 
 def _fmt_runtime(seconds) -> str:
@@ -144,23 +105,17 @@ def _print_analyze_summary(result: dict) -> None:
     else:
         console.print("[bold]Verdict:[/bold] [dim]none[/dim]")
 
-    if result.get("mode") == "parallel":
-        rows = (result.get("findings_v2") or {}).get("findings") or []
-        from collections import Counter
-        sev9 = Counter(f.get("severity") for f in rows
-                       if f.get("outcome") == "problem"
-                       and isinstance(f.get("severity"), int))
-        adj = (result.get("findings_v2") or {}).get("adjudication") or {}
-        console.print("Findings (1-9 ladder):")
-        for sev in sorted(sev9, reverse=True):
-            console.print(f"  S{sev}: {sev9[sev]}")
-        console.print(f"  merged: {adj.get('n_merged', 0)}, "
-                      f"discarded: {adj.get('n_discarded', 0)}")
-    else:
-        console.print("Findings:")
-        for sev, n in _finding_counts(result).items():
-            col = _severity_color(sev)
-            console.print(f"  [{col}]{n} {sev}[/{col}]")
+    rows = (result.get("findings_v2") or {}).get("findings") or []
+    from collections import Counter
+    sev9 = Counter(f.get("severity") for f in rows
+                   if f.get("outcome") == "problem"
+                   and isinstance(f.get("severity"), int))
+    adj = (result.get("findings_v2") or {}).get("adjudication") or {}
+    console.print("Findings (1-9 ladder):")
+    for sev in sorted(sev9, reverse=True):
+        console.print(f"  S{sev}: {sev9[sev]}")
+    console.print(f"  merged: {adj.get('n_merged', 0)}, "
+                  f"discarded: {adj.get('n_discarded', 0)}")
     console.print(f"Runtime: {_fmt_runtime(result.get('total_wall_seconds'))}")
     if result.get("is_error"):
         console.print(
@@ -365,7 +320,7 @@ def analyze(
     Analyze a scientific paper for statistical inconsistencies.
 
     Uses the `claude` CLI to intelligently apply forensic metascience
-    techniques and writes report.md / findings.json / run_meta.json.
+    techniques and writes report.md / findings.v2.json / run_meta.json.
     """
     from .usage_guard import WeeklyLimitReached, apply_cli_overrides
 
@@ -1710,7 +1665,7 @@ def benchmark_cmd(
 
 @app.command("anatomy")
 def anatomy_cmd(
-    findings_path: Path = typer.Argument(..., help="Path to a findings.json emitted by the sweep"),
+    findings_path: Path = typer.Argument(..., help="Path to a run's findings.v2.json"),
     alpha: float = typer.Option(0.05, "--alpha", help="Significance threshold for multiplicity"),
     output: Optional[Path] = typer.Option(None, "--output", "-o", help="Write markdown here"),
 ):
@@ -1724,8 +1679,8 @@ def anatomy_cmd(
     anat = anatomy_from_findings(data)
     if anat is None:
         console.print(
-            "[yellow]This findings.json has no `anatomy` block.[/yellow]\n"
-            "The sweep ran without enumerating studies/variables/tests, which means the "
+            "[yellow]This findings document has no `anatomy` block.[/yellow]\n"
+            "The run ran without enumerating studies/variables/tests, which means the "
             "forensic tools used DEFAULT data types and scale bounds. Re-run with the "
             "current prompt to get a typed anatomy."
         )

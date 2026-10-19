@@ -308,11 +308,11 @@ class TestConstantOutcomeCheck:
         import json
         d = tmp_path / "run"
         d.mkdir()
-        (d / "findings.json").write_text(json.dumps({"findings": rows}))
+        (d / "findings.v2.json").write_text(json.dumps({"findings": rows}))
         return tmp_path
 
     def test_a_tool_with_one_outcome_over_many_calls_is_reported(self, tmp_path):
-        rows = [{"technique": "always_passes", "severity": "consistent"}] * 20
+        rows = [{"technique": "always_passes", "tool_verdict": {"severity": "consistent"}}] * 20
         got = I.find_constant_outcome_checks(self._archive(tmp_path, rows))
         assert len(got) == 1
         assert got[0].extra["n_calls"] == 20
@@ -320,14 +320,14 @@ class TestConstantOutcomeCheck:
             "a clean corpus produces this too -- it is a question, not a verdict")
 
     def test_a_tool_that_has_ever_returned_something_else_is_silent(self, tmp_path):
-        rows = ([{"technique": "t", "severity": "consistent"}] * 19
-                + [{"technique": "t", "severity": "suspicious"}])
+        rows = ([{"technique": "t", "tool_verdict": {"severity": "consistent"}}] * 19
+                + [{"technique": "t", "tool_verdict": {"severity": "suspicious"}}])
         assert I.find_constant_outcome_checks(self._archive(tmp_path, rows)) == []
 
     def test_a_tool_with_too_few_calls_is_not_reported(self, tmp_path):
         """Three identical results are not evidence of anything, and reporting
         them is how a linter earns its reputation for noise."""
-        rows = [{"technique": "rare", "severity": "consistent"}] * 3
+        rows = [{"technique": "rare", "tool_verdict": {"severity": "consistent"}}] * 3
         assert I.find_constant_outcome_checks(self._archive(tmp_path, rows)) == []
 
 

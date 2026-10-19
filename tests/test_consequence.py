@@ -317,24 +317,19 @@ class TestViewerLadderHasOneSource:
                               "report_html": ""})
 
     def test_the_placeholder_is_substituted(self):
-        assert "__SEVERITY_ORDER__" not in self._viewer()
+        v = self._viewer()
+        assert "__SEVERITY_ORDER__" not in v
+        assert "__SEVERITY_LEVELS__" not in v
 
     def test_the_injected_order_is_the_python_ladder(self):
+        # PORTED 2026-10-19: the `const order={...}` map fed only the serial
+        # pipeline's findings page (its card sort), which is gone. The ladder
+        # the page still injects is `SEVERITY_ORDER`, and it must be the
+        # Python one, not a hand-written copy.
         from forensic_metascience_ai_toolkit.tools.severity import SEVERITY_LEVELS
-        m = re.search(r"const order=(\{.*?\});", self._viewer())
+        m = re.search(r"const SEVERITY_ORDER=(\[.*?\]);", self._viewer())
         assert m, "the injected severity order is gone"
-        assert json.loads(m.group(1)) == {s: i for i, s in enumerate(SEVERITY_LEVELS)}
-
-    def test_the_consequence_renderer_is_wired_into_the_finding_card(self):
-        """`"cHtml" in v` alone passes against the static template even with an
-        empty findings list; what matters is that `fHtml` CALLS it."""
-        v = self._viewer()
-        assert re.search(r"function fHtml\(f\)\{.*?\$\{cHtml\(f\)\}", v, re.DOTALL), (
-            "cHtml is defined but never called from the finding card"
-        )
-        assert re.search(r"function cHtml\(f\)\{(?!\s*return ''\s*\})", v), (
-            "cHtml is a stub"
-        )
+        assert json.loads(m.group(1)) == list(SEVERITY_LEVELS)
 
     def test_the_consequence_data_reaches_the_page(self):
         v = self._viewer([

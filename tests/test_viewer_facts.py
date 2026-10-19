@@ -38,21 +38,31 @@ class TestSeverityLedger:
     """The Overview printed the WRITE-UP severities under the label 'sweep tool
     verdicts ... passes included', and the table 300px below disagreed."""
 
+    # RE-MEASURED 2026-10-19 after the conversion to findings.v2.json and a
+    # rebuild of the bundle. The write-up universe is the same 20 rows on the
+    # 1-9 ladder (12 S3 / 4 S4 were the 12 suspicious / 4 highly_suspicious;
+    # the 4 indeterminate are `outcome: undecided` rows with a null severity,
+    # tallied "unknown"). The tool universe is the tools agent's ledger alone:
+    # 15 severity-bearing validated calls (7/4/3/1), recounted from
+    # toolcalls.tool_agent.json; the old 24 included the 9 of the deleted
+    # toolcalls.stage2.json (4 suspicious, 4 highly_suspicious, 1 consistent,
+    # recounted from git 94310afc^).
     def test_the_two_universes_are_different_on_the_real_bundle(self):
         led = VF.severity_ledger(_real())
         assert led["write_up"]["total"] == 20
-        assert led["tool"]["total"] == 24
-        assert led["write_up"]["counts"] == {
-            "suspicious": 12, "highly_suspicious": 4, "indeterminate": 4}
+        assert led["tool"]["total"] == 15
+        assert led["write_up"]["counts"] == {"S3": 12, "S4": 4, "unknown": 4}
         assert led["tool"]["counts"] == {
-            "highly_suspicious": 8, "suspicious": 11, "consistent": 2,
+            "highly_suspicious": 4, "suspicious": 7, "consistent": 1,
             "indeterminate": 3}
 
     def test_the_dropped_passes_are_named(self):
         """Not a neutral rounding. `consistent` is the ONLY category that is good
         news for the authors, and a summary that silently omits it is biased in
         the accusing direction."""
-        assert VF.severity_ledger(_real())["consistent_dropped"] == 2
+        # Re-measured 2026-10-19 after the conversion: 1 (the editorial
+        # ledger's other `consistent` went with toolcalls.stage2.json).
+        assert VF.severity_ledger(_real())["consistent_dropped"] == 1
 
     def test_each_universe_carries_the_population_it_counted(self):
         """The recurring defect was never arithmetic -- each count was right. It
@@ -198,17 +208,24 @@ class TestEvidenceGrade:
 
 
 class TestEvidenceLedger:
-    def test_the_real_bundle_splits_seven_four_one(self):
+    # RE-MEASURED 2026-10-19 after the conversion. The graded population is
+    # the 20 v2 rows (it was report.json's 12), graded from each row's own
+    # `computed_by`: 16 registry_tool, 4 model_reading, recounted from
+    # findings.v2.json. No row is agent_code, so nothing is hand_computed.
+    def test_the_real_bundle_splits_sixteen_zero_four(self):
         led = VF.evidence_ledger(_real())
-        assert led["n"] == 12
-        assert led["counts"] == {"computed": 7, "hand_computed": 4, "reading": 1}
+        assert led["n"] == 20
+        assert led["counts"] == {"computed": 16, "hand_computed": 0, "reading": 4}
 
     def test_the_number_that_actually_matters_is_surfaced(self):
         """Three of the four hand-computed findings on this paper are
         `suspicious`. A finding at that severity resting on unverified
         arithmetic is the shape most likely to become a false accusation, and
         nothing on its card said so."""
-        assert VF.evidence_ledger(_real())["accusatory_without_a_validated_check"] == 4
+        # Re-measured 2026-10-19 after the conversion: 3. Of the 4
+        # model_reading rows, 3 are S3 `problem` rows; the 4th is `undecided`
+        # with no severity, which is not accusatory.
+        assert VF.evidence_ledger(_real())["accusatory_without_a_validated_check"] == 3
 
     def test_every_finding_is_graded_none_silently_skipped(self):
         led = VF.evidence_ledger(_real())
@@ -433,76 +450,3 @@ class TestTheFactsActuallyReachTheBundle:
         assert "new RegExp" in head, "must compile the shipped strings, not re-embed literals"
 
 
-class TestTheFindingIndex:
-    """One row per finding, properties never a score.
-
-    Twelve findings, each roughly one screen, no collapse and no way to triage:
-    a reader had to scroll the whole page to learn whether anything touched a
-    conclusion they must act on.
-    """
-
-    def _payload(self, **over):
-        base = {
-            "findings": [{"id": "s1", "technique": "rivets_independent_t"},
-                         {"id": "s2", "technique": "manual"}],
-            "report_obj": {"findings": [
-                {"title": "B", "severity": "suspicious", "location": "Table 3",
-                 "stage1_finding_ids": ["s2"], "reproduction_valid": True,
-                 "consequence": {"basis": "asserted", "claims_affected": 2,
-                                 "flips_significance": False}},
-                {"title": "A", "severity": "impossible", "location": "Table 1",
-                 "stage1_finding_ids": ["s1"], "reproduction_valid": False,
-                 "consequence": {"basis": "computed", "claims_affected": 1,
-                                 "flips_significance": True}},
-            ]}}
-        base.update(over)
-        return base
-
-    def test_it_sorts_by_severity_not_by_input_order(self):
-        rows = VF.finding_index(self._payload())
-        assert [r["severity"] for r in rows] == ["impossible", "suspicious"]
-
-    def test_the_row_number_stays_the_finding_number(self):
-        """Sorting must not renumber: the index links to `#f{n}` and the card
-        prints `{n}.`, so a reordered number would point at the wrong card."""
-        rows = VF.finding_index(self._payload())
-        assert {r["title"]: r["n"] for r in rows} == {"B": 1, "A": 2}
-
-    def test_an_asserted_consequence_is_marked_and_a_computed_one_is_not(self):
-        """The one subjective column must not borrow the authority of the
-        objective ones beside it."""
-        rows = {r["title"]: r for r in VF.finding_index(self._payload())}
-        assert rows["B"]["changes_computed"] is False
-        assert rows["A"]["changes_computed"] is True
-
-    def test_the_evidence_grade_matches_the_card_banner(self):
-        """One computation, so the index and the card cannot disagree about the
-        same finding."""
-        rows = {r["title"]: r for r in VF.finding_index(self._payload())}
-        assert rows["B"]["evidence"] == "hand_computed"
-        assert rows["A"]["evidence"] == "computed"
-
-    def test_flips_and_claims_are_both_stated(self):
-        rows = {r["title"]: r for r in VF.finding_index(self._payload())}
-        assert rows["A"]["changes"] == "a significance decision and 1 stated claim"
-        assert rows["B"]["changes"] == "2 stated claims"
-
-    def test_undetermined_and_harmless_are_different_words(self):
-        """`None` means we did not determine it; `0` means we determined it
-        changes nothing. Rendering both as blank would let an undetermined
-        consequence read as a harmless one."""
-        p = self._payload()
-        p["report_obj"]["findings"][0]["consequence"] = {"basis": "asserted"}
-        p["report_obj"]["findings"][1]["consequence"] = {
-            "basis": "asserted", "claims_affected": 0, "flips_significance": False}
-        rows = {r["title"]: r for r in VF.finding_index(p)}
-        assert rows["B"]["changes"] == "not determined"
-        assert rows["A"]["changes"] == "nothing the paper states"
-
-    def test_a_missing_consequence_does_not_crash(self):
-        p = self._payload()
-        del p["report_obj"]["findings"][0]["consequence"]
-        assert VF.finding_index(p)[0]["changes"]
-
-    def test_no_report_findings_is_an_empty_index_not_an_error(self):
-        assert VF.finding_index({}) == []

@@ -110,17 +110,6 @@ class TestTheLedgerReachesTheGradedFindings:
         assert led["counts"] == {"computed": 5, "hand_computed": 0,
                                  "reading": 29}
 
-    def test_a_v1_payload_still_uses_report_obj(self):
-        """The fallback must not override a real report_obj."""
-        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
-        payload = {"report_obj": {"findings": [{"title": "from report",
-                                                "severity": "suspicious"}]},
-                   "findings": [{"id": "s1", "title": "from sweep"}]}
-        led = evidence_ledger(payload)
-        assert led["n"] == 1
-        assert led["per_finding"][0]["title"] == "from report"
-
-
 class TestTheAccusatoryCountUnderstandsBothLadders:
     """`accusatory_without_a_validated_check` compared `str(severity)` against
     v1 STRINGS. `str(4)` is `"4"`, which matched nothing, so the number this
@@ -149,12 +138,6 @@ class TestTheAccusatoryCountUnderstandsBothLadders:
         payload = {"findings": [{"severity": 2, "computed_by": "model_reading"}]}
         assert evidence_ledger(payload)[
             "accusatory_without_a_validated_check"] == 0
-
-    def test_a_v1_string_severity_still_counts(self):
-        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
-        payload = {"report_obj": {"findings": [{"severity": "suspicious"}]}}
-        assert evidence_ledger(payload)[
-            "accusatory_without_a_validated_check"] == 1
 
     def test_a_tool_computed_accusation_is_not_counted(self):
         """The question is accusations WITHOUT a validated check."""

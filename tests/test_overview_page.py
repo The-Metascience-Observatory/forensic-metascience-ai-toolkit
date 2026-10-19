@@ -260,7 +260,7 @@ class TestAbstract:
 # What each check returned
 # --------------------------------------------------------------------------
 
-from forensic_metascience_ai_toolkit.bundle import _check_table, _sankey  # noqa: E402
+from forensic_metascience_ai_toolkit.bundle import _check_table, _sankey, _v2_container  # noqa: E402
 
 CALLS = [
     {"tool": "grim_sweep", "validated": True},
@@ -268,34 +268,43 @@ CALLS = [
     {"tool": "statcheck", "validated": True},
     {"tool": "statcheck", "validated": False},   # not a forensic surface
 ]
-SWEEP = [
-    {"id": "f1", "technique": "grim", "severity": "suspicious"},
-    {"id": "f2", "technique": "grim", "severity": "consistent"},
-    {"id": "f3", "technique": "statcheck", "severity": "impossible"},
-]
-EDITORIAL = [{"stage1_finding_ids": ["f1", "f3"]}]
+# PORTED 2026-10-19 to v2 rows (as the bundle sees them, via
+# `_v2_container`). What reached the report is each row's own
+# `adjudication.action` -- the serial pipeline's EDITORIAL list of
+# `stage1_finding_ids` is gone -- so f2 is the one the adjudicator set aside.
+def _v2(fid, technique, severity, action):
+    return {"finding_id": fid, "technique": technique, "severity": severity,
+            "outcome": "problem", "adjudication": {"action": action}}
+
+
+SWEEP = _v2_container({"findings": [
+    _v2("f1", "grim", 4, "kept"),
+    _v2("f2", "grim", 2, "discarded"),
+    _v2("f3", "statcheck", 7, "kept"),
+]})["findings"]
 
 
 class TestCheckTable:
     def test_a_check_that_ran_and_found_nothing_still_gets_a_row(self):
         rows = {r["check"]: r for r in _check_table(
-            [{"tool": "debit_check", "validated": True}], [], [])}
+            [{"tool": "debit_check", "validated": True}], [])}
         assert rows["debit_check"]["calls"] == 1
         assert rows["debit_check"]["findings"] == 0
 
     def test_unvalidated_calls_are_not_counted(self):
-        rows = {r["check"]: r for r in _check_table(CALLS, SWEEP, EDITORIAL)}
+        rows = {r["check"]: r for r in _check_table(CALLS, SWEEP)}
         assert rows["statcheck"]["calls"] == 1, "one of the two was unvalidated"
 
     def test_the_kept_column_says_what_reached_the_report(self):
-        rows = {r["check"]: r for r in _check_table(CALLS, SWEEP, EDITORIAL)}
+        rows = {r["check"]: r for r in _check_table(CALLS, SWEEP)}
         assert rows["grim_sweep"]["findings"] == 2
         assert rows["grim_sweep"]["kept"] == 1
         assert rows["statcheck"]["kept"] == 1
 
     def test_a_finding_with_no_matching_call_is_hand_computed(self):
         rows = {r["check"]: r for r in _check_table(
-            [], [{"id": "x", "technique": "grim", "severity": "suspicious"}], [])}
+            [], [{"finding_id": "x", "technique": "grim", "severity": "S4",
+                  "outcome": "problem"}])}
         assert rows["hand-computed"]["findings"] == 1
 
 
@@ -304,7 +313,7 @@ class TestSankeyThirdStage:
         """A severity node receives its findings and passes them on. The old
         renderer summed both directions for a node's height, which is twice its
         real size once a third column exists."""
-        s = _sankey(CALLS, SWEEP, EDITORIAL)
+        s = _sankey(CALLS, SWEEP)
         mids = [n["id"] for n in s["nodes"] if n["column"] == 1]
         for node in mids:
             if node == "no finding":
@@ -314,14 +323,10 @@ class TestSankeyThirdStage:
             assert into == out, node
 
     def test_no_finding_terminates_rather_than_flowing_onward(self):
-        s = _sankey(CALLS, SWEEP, EDITORIAL)
+        s = _sankey(CALLS, SWEEP)
         assert not [l for l in s["links"] if l["source"] == "no finding"]
 
-    def test_without_an_editorial_stage_there_is_no_third_column(self):
-        s = _sankey(CALLS, SWEEP)
-        assert max(n["column"] for n in s["nodes"]) == 1
-
     def test_dropped_findings_are_visible_as_not_reported(self):
-        s = _sankey(CALLS, SWEEP, EDITORIAL)
+        s = _sankey(CALLS, SWEEP)
         dropped = sum(l["value"] for l in s["links"] if l["target"] == "not reported")
-        assert dropped == 1, "f2 was found and never reported"
+        assert dropped == 1, "f2 was found and set aside by the adjudicator"

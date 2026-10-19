@@ -199,8 +199,10 @@ class TestTheReaderSeesItInTheViewer:
              "input": {"path": SUPP}, "result": OVERFLOW}]
             + ([{"seq": 2, "tool": "Read", "input": {"file_path": SPILL},
                  "result": '1\t{"text": "..."}'}] if status == "partial" else []))
-        p.setdefault("report_obj", {}).setdefault(
-            "coverage_summary", {})["undelivered"] = u
+        # The viewer reads `cs.undelivered` from the payload's own
+        # `coverage_summary` (the v2 document's top level); the serial
+        # pipeline's `report_obj` copy is no longer read.
+        p.setdefault("coverage_summary", {})["undelivered"] = u
         return p
 
     def test_the_lost_file_is_named_on_the_coverage_page(self, review, tmp_path):

@@ -9,6 +9,61 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.100.0] — 2026-10-19 — the serial pipeline's output layout is no longer read
+
+MINOR: no finding or severity a live run produces changes. What changes is
+what is READ: the serial sweep→editorial pipeline (deleted in v1.27.0) left an
+output layout -- `report.json`, v1 `findings.json`,
+`toolcalls/messages.stage{1,2}.json`, `run_meta.stages.editorial` -- that
+every reader kept a branch for. Those branches are gone. A review directory
+without `findings.v2.json` now yields no findings rather than a fallback.
+
+- **The archive was converted first** (94310afc). The 35 serial-pipeline runs
+  under `tests/fixtures/papers` and `eval/ground_truth/papers`, and 26 in the
+  cerebrolysin corpus outside the repo, carry a `findings.v2.json` written by
+  `migrate-v2` one last time. Only the sweep rows convert: `report.json`'s
+  editorial layer (verdict, headline, report findings) was not carried, by
+  decision, and the repo copies of the old files are deleted (the corpus keeps
+  its originals). `toolcalls.stage1.json` is kept as
+  `toolcalls.tool_agent.json` -- same format -- because it is the replay
+  corpus behind `test_replay_ratchet`; `metascience replay` now defaults to it.
+  The conversion now files a v1 row whose technique is a registered tool as
+  `registry_tool`, the reading the v1 viewer gave it.
+- **Removed:** `migrate-v2` (module and verb), `repair-register`,
+  `author_questions.py`, `completeness.reconcile_findings`, the tripwire's
+  `stage2_carried_nothing`, `blinding.model_authored_text`,
+  `finding_files.artefacts_for_editorial`/`index_sweep`,
+  `viewer_facts.finding_index`, `webapp_index.severity_counts`; the v1
+  branches of `review_issues`, `evaluation` (harness, `check_findings_json` --
+  a v1 document is now refused by name -- and `agreement`), `handoff`,
+  `inertness`, the CLI summary, and `bundle.collect`.
+- **The viewer.** The v1 findings page (editorial cards over nested sweep
+  evidence, its filter bar, and 14 helpers only it used), the Questions for
+  the authors section, the stage-1 reconciliation and second-look blocks are
+  deleted -- each read a field only `report.json` or the v1 `findings.json`
+  carried, so on every parallel bundle they were already empty.
+- **Three readers were silently empty on every parallel run and now read the
+  v2 record:** the Overview's "verdict on this run", confidence and headline
+  (they read `run_meta.stages.editorial` and `report.json`; now
+  `adjudication` and its headline finding), the Coverage page's
+  limitations (now `run_meta.limitations`), and its refusal classification
+  and `facts.refusals` tally (now the document's `unchecked`).
+- **The workbench index** records drop the fields only `report.json` fed
+  (`worst_severity`, `severity_counts`, `headline_severity`,
+  `n_sweep_findings`, `n_not_checked`, `verdict_recorded`,
+  `verdict_is_legacy`); its review queue (`sort_papers`) now ranks by
+  `worst_severity_9`, so v2 papers finally sort by severity. The project
+  table loses its 5-word "Worst" column and the "(legacy, mapped)" S1-9
+  fallback. A downstream parser of `index.json` that read those keys will
+  find them absent.
+- **The value register** reads all three agents' stage messages directly
+  instead of a two-slot stage1/stage2 shim, so the adjudicator's spot
+  re-checks are now joined (registers on new runs can show more checks).
+- Ratchets: v1-residue reads 20 → 9, field reads 46 → 38 (what remains is
+  the serial annotator family reachable only via `agent.py`); the write-only
+  key ratchet 32 → 33 (`permission_denials` had only "counted as read"
+  because its name appeared in the deleted transcripts).
+
 ## [1.99.1] — 2026-10-19 — `batch` builds the offline viewer, as `analyze` does
 
 PATCH: no change to any finding, severity or prompt. `metascience analyze`

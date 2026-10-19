@@ -51,9 +51,15 @@ each finding's final 1–9 severity into a findings-v2 document.
 `mode="two_stage"` is a deprecated ALIAS for the same pipeline, and the only
 other accepted value. **The serial sweep→editorial pipeline was DELETED in
 v1.27.0** (~11,800 lines, after the measurement under §Testing & eval showed
-parallel ≥ legacy on all three fixtures). Everything that READS its output
-still works -- `bundle.py`, `webapp_index.py`, `migrate_v2.py`, `runs.py` and
-the archive verbs -- because deleting a writer is not deleting a reader.
+parallel ≥ legacy on all three fixtures). Its output layout (`report.json`,
+v1 `findings.json`, `toolcalls/messages.stage{1,2}.json`) is NO LONGER READ
+(1.100.0): the archived runs in `tests/fixtures/papers` and
+`eval/ground_truth/papers` were converted to `findings.v2.json` first (sweep
+rows only; `report.json`'s editorial layer was not carried, by decision), their
+`toolcalls.stage1.json` kept as `toolcalls.tool_agent.json` because it is the
+replay corpus, and then `migrate-v2` and every old-layout reader were deleted.
+Readers of a converted document's `legacy` block (`db_push`, `discovery`,
+`corpus_stats`) stay.
 
 ## Environment (read this first)
 

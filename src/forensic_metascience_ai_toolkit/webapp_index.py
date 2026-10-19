@@ -47,10 +47,9 @@ import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from . import verdicts as _verdicts
-from .report_render import severity_rank
 
 #: Bumped when a consumer parsing this file would break.
 SCHEMA_VERSION = "1.0"
@@ -135,46 +134,14 @@ from forensic_metascience_ai_toolkit.discovery import review_dirs as review_dirs
 IMAGE_PRODUCERS = frozenset({"image_track"})
 IMAGE_TECHNIQUES = frozenset({"analyze_paper_images", "image_duplication"})
 
-#: The id prefix the image track stamps on the findings it injects. A v1
-#: report row carries no `technique` at all -- `stage1_finding_ids` is the only
-#: thread back to who produced it.
-_IMAGE_ID_PREFIX = "IMGDUP"
-
-
 def is_image_finding(f: dict) -> bool:
-    """Did the image track produce this finding?
-
-    Kept separate from the count because the two surfaces disagree about what
-    a finding IS: findings-v2 names its producer, a v1 report row does not and
-    is identified only by the ids it merged. A report row that merged BOTH an
-    image id and a numeric one is NOT image-only -- it says something about the
-    numbers too, so it belongs in the non-image count.
-    """
+    """Did the image track produce this finding? Read off the row's own
+    `producer`, or its technique name."""
     if not isinstance(f, dict):
         return False
     if str(f.get("producer") or "") in IMAGE_PRODUCERS:
         return True
-    if str(f.get("technique") or "") in IMAGE_TECHNIQUES:
-        return True
-    ids = [str(i) for i in (f.get("stage1_finding_ids") or [])
-           if isinstance(i, (str, int))]
-    return bool(ids) and all(i.startswith(_IMAGE_ID_PREFIX) for i in ids)
-
-
-def severity_counts(findings: Iterable[dict]) -> dict[str, int]:
-    """Tally by severity, with every rung present at zero.
-
-    Present-at-zero on purpose: a missing key and a zero read differently in a
-    UI, and only one of them is a claim. `0 impossible` says we looked.
-    """
-    counts = {s: 0 for s in _SEVERITIES}
-    for f in findings:
-        if not isinstance(f, dict):
-            continue
-        sev = str(f.get("severity") or "").strip().lower()
-        if sev in counts:
-            counts[sev] += 1
-    return counts
+    return str(f.get("technique") or "") in IMAGE_TECHNIQUES
 
 
 def _worst_severity(counts: dict[str, int]) -> str | None:
@@ -196,28 +163,19 @@ def scan_run(review_dir: Path) -> dict:
     `status`, so the workbench can show a partial run as partial rather than
     hiding it or trusting it.
     """
-    report = _read_json(review_dir / "report.json") or {}
     meta = _read_json(review_dir / "run_meta.json") or {}
-    findings_obj = _read_json(review_dir / "findings.json") or {}
-    sweep = findings_obj.get("findings") if isinstance(findings_obj, dict) else None
     v2 = _read_json(review_dir / "findings.v2.json") or {}
     v2_extra = _v2_run_fields(v2)
-    if v2 and not report:
-        # A parallel/migrated run: the v2 document is the record of note.
-        report = {"verdict": (v2.get("adjudication") or {}).get("verdict"),
-                  "confidence": (v2.get("adjudication") or {}).get("confidence"),
-                  "findings": []}
-
-    raw_verdict = report.get("verdict")
+    adj = v2.get("adjudication") or {}
+    raw_verdict = adj.get("verdict")
     stages = meta.get("stages") or {}
 
     def _stage(name: str) -> dict:
         return stages.get(name) or {}
 
     errored = any(_stage(s).get("is_error")
-                  for s in ("sweep", "editorial",
-                            "tool_agent", "science_agent", "adjudicator"))
-    has_report = bool(report)
+                  for s in ("tool_agent", "science_agent", "adjudicator"))
+    has_report = bool(v2)
     if has_report and errored:
         status = "partial"
     elif has_report:
@@ -227,39 +185,22 @@ def scan_run(review_dir: Path) -> dict:
     else:
         status = "incomplete"
 
-    counts = severity_counts(report.get("findings") or [])
-    report_findings = [f for f in report.get("findings") or []
-                       if isinstance(f, dict)]
-    # The SAME source has to supply both counts, or the workbench shows a
-    # non-image count from one run beside a total from another.
-    if report_findings:
-        n_non_image = sum(1 for f in report_findings if not is_image_finding(f))
-    else:
-        n_non_image = v2_extra.get("n_non_image_problem_findings", 0)
     return {
         "name": review_dir.name,
         "path": review_dir.name,
         "status": status,
-        "kind": run_kind(v2) if v2 else "legacy",
-        # Through `canonical`, so an archived run written in the retired
-        # vocabulary sorts and filters beside a fresh one instead of forming
-        # its own bucket. `verdict_recorded` keeps what the file actually says.
+        "kind": run_kind(v2),
+        # Through `canonical`, so a verdict written in a retired vocabulary
+        # sorts and filters beside a fresh one instead of forming its own
+        # bucket.
         "verdict": _verdicts.canonical(raw_verdict),
-        "verdict_recorded": raw_verdict,
-        "verdict_is_legacy": _verdicts.is_legacy(raw_verdict),
-        "confidence": report.get("confidence"),
-        "headline_severity": (report.get("headline") or {}).get("severity"),
-        "n_findings": len(report.get("findings") or [])
-        or v2_extra.get("n_problem_findings", 0),
+        "confidence": adj.get("confidence"),
+        "n_findings": v2_extra.get("n_problem_findings", 0),
         # What is left when the image track's own findings are set aside. The
         # image column already counts those, and on an image-only corpus the
         # two columns were the same number twice (310 of masliah's 311 problem
         # findings, measured 2026-08-21).
-        "n_non_image_findings": n_non_image,
-        "n_sweep_findings": len(sweep) if isinstance(sweep, list) else None,
-        "severity_counts": counts,
-        "worst_severity": _worst_severity(counts),
-        "n_not_checked": len(report.get("not_checked") or []),
+        "n_non_image_findings": v2_extra.get("n_non_image_problem_findings", 0),
         **_analysed_at(review_dir, meta),
         "pipeline_version": meta.get("version"),
         "git_sha": meta.get("git_sha"),
@@ -277,9 +218,9 @@ def scan_run(review_dir: Path) -> dict:
 
 def _v2_run_fields(doc: dict) -> dict:
     """The findings-v2 additions to a run record (index schema addition,
-    docs/specs/webapp_db.md section 9): the 1-9 axis beside the legacy one,
-    per-technique counts, and the run_id. Empty for v1-only runs -- absence
-    means 'no v2 document', never zero."""
+    docs/specs/webapp_db.md section 9): the 1-9 axis, per-technique counts,
+    and the run_id. Empty when the run wrote no v2 document -- absence means
+    'no v2 document', never zero."""
     if not doc:
         return {}
     findings = [f for f in doc.get("findings") or [] if isinstance(f, dict)]
@@ -345,7 +286,7 @@ def _analysed_at(review_dir: Path, meta: dict) -> dict:
     recorded = meta.get("analysed_at") if isinstance(meta, dict) else None
     if recorded:
         return {"analysed_at": recorded, "analysed_at_source": "recorded"}
-    for cand in (review_dir / "run_meta.json", review_dir / "report.json"):
+    for cand in (review_dir / "run_meta.json", review_dir / "findings.v2.json"):
         if cand.is_file():
             when = datetime.fromtimestamp(cand.stat().st_mtime, tz=timezone.utc)
             return {
@@ -370,7 +311,7 @@ def numeric_channel(runs: list[dict]) -> dict:
     complete = [r for r in numeric if r["status"] in ("complete", "partial")]
     if not complete:
         return _channel("refused",
-                        "a review directory exists but holds no report.json; "
+                        "a review directory exists but holds no findings.v2.json; "
                         "the run did not reach a verdict",
                         subtype="no_report")
     if all(r.get("kind") == "partial_review" for r in complete):
@@ -1035,7 +976,7 @@ def _paper_identity(paper_dir: Path, review_dirs_: list[Path]) -> dict:
     carries first-author names and journal/volume/issue the XML and the
     directory name often lack. The scanner does not fetch; it only reads.
 
-    An image-only paper has no `findings.json`, so without the cache the
+    An image-only paper has no `findings.v2.json`, so without the cache the
     identity has to come off the fetcher's provenance sidecar or, failing
     that, the directory name. The directory name IS a DOI with `/` written
     as `--`, which is enough to identify the paper even when nothing else
@@ -1059,10 +1000,10 @@ def _paper_identity(paper_dir: Path, review_dirs_: list[Path]) -> dict:
         out["identity_source"] = "metadata.json"
         return out
     for d in review_dirs_:
-        obj = _read_json(d / "findings.json")
-        if isinstance(obj, dict) and (obj.get("paper_title") or obj.get("paper_metadata")):
+        obj = _read_json(d / "findings.v2.json")
+        if isinstance(obj, dict) and obj.get("paper_metadata"):
             pm = obj.get("paper_metadata") or {}
-            title = obj.get("paper_title") or pm.get("title")
+            title = pm.get("title")
             authors = pm.get("authors")
             out.update({"title": title, "authors": authors,
                         "first_author": first_author(authors) if isinstance(authors, str) else None,
@@ -1070,7 +1011,7 @@ def _paper_identity(paper_dir: Path, review_dirs_: list[Path]) -> dict:
                         "volume": pm.get("volume"), "issue": pm.get("issue"),
                         "year": pm.get("year"),
                         "doi": pm.get("doi") or out["doi"],
-                        "identity_source": f"findings.json ({d.name})"})
+                        "identity_source": f"findings.v2.json ({d.name})"})
             return out
     for cand in (paper_dir / f"{slug}.provenance.json", paper_dir / "provenance.json"):
         obj = _read_json(cand)
@@ -1127,14 +1068,10 @@ def scan_paper(paper_dir: Path, *, corpus_root: Path | None = None,
                 "name": "(migrated)", "path": ".", "status": "partial",
                 "verdict": _verdicts.canonical(
                     (v2.get("adjudication") or {}).get("verdict")),
-                "verdict_recorded": None, "verdict_is_legacy": False,
-                "confidence": None, "headline_severity": None,
+                "confidence": None,
                 "n_findings": extra.get("n_problem_findings", 0),
                 "n_non_image_findings":
                     extra.get("n_non_image_problem_findings", 0),
-                "n_sweep_findings": None,
-                "severity_counts": severity_counts([]),
-                "worst_severity": None, "n_not_checked": 0,
                 "analysed_at": legacy.get("analysed_at"),
                 "analysed_at_source": legacy.get("analysed_at_source"),
                 "pipeline_version": legacy.get("pipeline_version"),
@@ -1179,7 +1116,6 @@ def scan_paper(paper_dir: Path, *, corpus_root: Path | None = None,
         "runs": runs,
         "latest_run": latest["name"] if latest else None,
         "verdict": latest["verdict"] if latest else None,
-        "worst_severity": latest["worst_severity"] if latest else None,
         "n_findings": latest["n_findings"] if latest else None,
         "n_non_image_findings": (latest.get("n_non_image_findings")
                                  if latest else None),
@@ -1489,7 +1425,8 @@ def _apply_corpus_sweep_state(root: Path, papers: list[dict]) -> None:
 def _totals(papers: list[dict]) -> dict:
     """Corpus-level counts, computed here so the UI cannot compute them
     differently. Channel states are tallied per channel and per state, with
-    every state present at zero for the same reason `severity_counts` is."""
+    every state present at zero: a missing key and a zero read differently,
+    and only one of them is a claim."""
     by_channel: dict[str, dict[str, int]] = {}
     # Seeded from `scan_paper`'s own channel set, not from a literal list. The
     # list was a second copy, and adding `cross_paper` to `scan_paper` left it
@@ -1499,7 +1436,6 @@ def _totals(papers: list[dict]) -> dict:
         by_channel[ch] = {s: 0 for s in CHANNEL_STATES}
     verdicts_seen = {v: 0 for v in _verdicts.VERDICTS}
     verdicts_seen["none"] = 0
-    severities = {s: 0 for s in _SEVERITIES}
     reviewed = {"unreviewed": 0, "approved": 0, "withheld": 0}
     human = {"unreviewed": 0, "in_progress": 0, "complete": 0}
     n_pdf = n_xml = n_agent = n_image = n_image_discarded = n_image_refused = n_text = 0
@@ -1532,9 +1468,6 @@ def _totals(papers: list[dict]) -> dict:
                 by_channel[ch][rec["state"]] += 1
         v = p.get("verdict")
         verdicts_seen[v if v in verdicts_seen else "none"] += 1
-        w = p.get("worst_severity")
-        if w in severities:
-            severities[w] += 1
         st = ((p.get("review") or {}).get("publication") or {}).get("state", "unreviewed")
         reviewed[st if st in reviewed else "unreviewed"] += 1
         hs = ((p.get("review") or {}).get("paper_status") or "unreviewed")
@@ -1571,7 +1504,7 @@ def _totals(papers: list[dict]) -> dict:
         if (p.get("review") or {}).get("submitted_to_pubpeer") is True:
             n_submitted_pubpeer += 1
     return {"n_papers": len(papers), "channels": by_channel,
-            "verdicts": verdicts_seen, "worst_severity": severities,
+            "verdicts": verdicts_seen,
             "publication": reviewed, "sources": sources,
             "evidence": evidence, "total_cost_usd": round(cost, 2),
             "n_pdf": n_pdf, "n_xml": n_xml, "n_agent_run": n_agent,
@@ -1597,8 +1530,9 @@ def sort_papers(papers: list[dict]) -> list[dict]:
         # image papers).
         pp = p.get("pubpeer") if isinstance(p.get("pubpeer"), dict) else {}
         pubpeer_image = 0 if pp.get("is_image_integrity") else 1
-        rank = severity_rank(p.get("worst_severity"))
-        rank = 99 if rank is None else rank
+        # The 1-9 ladder, worst (9) first; unranked papers last.
+        sev9 = p.get("worst_severity_9")
+        rank = -sev9 if isinstance(sev9, int) else 99
         unreviewed = 0 if not (p.get("review") or {}).get("reviewed") else 1
         return (pubpeer_image, rank, unreviewed, p.get("paper_id") or "")
     return sorted(papers, key=key)

@@ -30,7 +30,8 @@ webapp sorts on severity while metascience stats count on `technique` ×
 Writer vocabulary: **model** (producer LLM output), **code** (deterministic
 producer: image/text track builders, screen runner), **annotator** (pipeline
 annotator chain), **adjudicator** (via `adjudicate.apply()`), **converter**
-(`migrate_v2.py`). A field whose writer is not *model* is ABSENT from the
+(`migrate_v2.py`, deleted in 1.100.0 after its last run; documents it wrote
+still carry the `legacy` block below). A field whose writer is not *model* is ABSENT from the
 producer-facing subset schema (§4) — enforced by omission, never by prose.
 
 | Field | Type | Writer | Req | Rule |
@@ -512,6 +513,10 @@ distinction the whole repo is built on, applied to its own reviewing stage.
   PROJECTION of `metadata.json`; producers emit no bibliographic fields.
 
 ## 12. Legacy converter details (A7 — beyond §1's field mapping; resolves critic open #5)
+
+> The converter (`migrate_v2.py`, `metascience migrate-v2`) was deleted in
+> 1.100.0, after converting the last archived serial-pipeline runs. This section
+> records what the documents it wrote contain; nothing reads the v1 layout now.
 
 - Orphan track outputs (`image_duplication_findings.json` — masliah holds
   544 — and standalone `text_forensics.json`) convert to **track-only v2

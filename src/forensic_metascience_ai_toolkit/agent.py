@@ -13,9 +13,9 @@ the stage driver (`_run_stage`), the annotators, input resolution and the
 output writers that `parallel.py` calls.
 
 The serial sweep -> editorial pipeline that used to live here was REMOVED in
-v1.27.0. Everything that READS its output still works -- `bundle.py`,
-`webapp_index.py`, `migrate_v2.py`, `runs.py` and the archive verbs -- because
-deleting a writer is not deleting a reader.
+v1.27.0, and the readers of its output layout (`report.json`, v1
+`findings.json`, `*.stage{1,2}.json`) were removed in 1.100.0, after the
+archived runs were converted to findings.v2.json.
 """
 
 import asyncio

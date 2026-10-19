@@ -604,7 +604,7 @@ def find_swallowed_failures(root: Path | None = None) -> list[Finding]:
 # 4. Checks with no power -- the dynamic half
 # ---------------------------------------------------------------------------
 
-def _archive_files(root: Path, name: str = "findings.json") -> list[Path]:
+def _archive_files(root: Path, name: str = "findings.v2.json") -> list[Path]:
     """Run records, found without walking the paper corpora."""
     out: list[Path] = []
     stack = [root]
@@ -656,8 +656,12 @@ def find_constant_outcome_checks(archive: Path | None = None,
         for it in (items or []):
             if not isinstance(it, dict):
                 continue
+            # What the TOOL returned, not the adjudicated 1-9 rung: a v2 row
+            # carries the tool's own word in `tool_verdict`, and a row with no
+            # tool verdict is counted by its outcome.
             tool = str(it.get("technique") or it.get("tool") or "")
-            sev = str(it.get("severity") or "")
+            tv = it.get("tool_verdict") if isinstance(it.get("tool_verdict"), dict) else {}
+            sev = str(tv.get("severity") or it.get("outcome") or "")
             if tool and sev:
                 outcomes.setdefault(tool, Counter())[sev] += 1
 
@@ -673,7 +677,7 @@ def find_constant_outcome_checks(archive: Path | None = None,
             what=(f"`{tool}` returned `{only}` on all {n} archived calls. It may "
                   "be correct and the corpus clean -- or the check may have had "
                   "no power to return anything else on these inputs."),
-            evidence=(f"grep -rl '\"technique\": \"{tool}\"' --include=findings.json ."),
+            evidence=(f"grep -rl '\"technique\": \"{tool}\"' --include=findings.v2.json ."),
             extra={"n_calls": n, "only_outcome": only}))
     return out
 

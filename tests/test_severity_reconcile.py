@@ -209,15 +209,24 @@ class TestTheLedgerIsWhereTheVerdictActuallySurvives:
 
 
 class TestItReachesTheViewer:
-    def test_a_divergence_is_rendered(self):
+    def test_a_divergence_reaches_the_payload(self):
         v = render_viewer({"paper_id": "X", "report_html": "", "findings": [
-            {"id": "f", "severity": "consistent", "technique": "grim",
+            {"id": "f", "severity": "S2", "severity_9": 2, "technique": "grim",
              "severity_source": {"model": "consistent", "tool": "impossible",
                                  "direction": "downgraded", "explained": False,
                                  "note": "NO REASON IS STATED."}},
         ]})
-        assert "function sSrc" in v
-        assert "severity_source" in v
+        assert "NO REASON IS STATED." in v
+
+    def test_a_divergence_is_rendered_on_the_findings_page(self, tmp_path):
+        from tests.test_bundle import section_html
+        payload = {"paper_id": "X", "report_html": "", "findings": [
+            {"id": "f", "severity": "S2", "severity_9": 2, "technique": "grim",
+             "title": "t", "outcome": "problem",
+             "severity_source": {"model": "consistent", "tool": "impossible",
+                                 "direction": "downgraded", "explained": False,
+                                 "note": "NO REASON IS STATED."}}]}
+        assert "NO REASON IS STATED." in section_html(payload, "findings", tmp_path)
 
 
 class TestWhatTheFirstRealRunBroke:

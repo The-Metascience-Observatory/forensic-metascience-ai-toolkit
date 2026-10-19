@@ -61,7 +61,7 @@ export interface Paper {
   channels: Record<string, { state: string; detail?: string }>;
   n_runs: number;
   runs: { name: string; status: string; verdict: string | null;
-          worst_severity: string | null; n_findings: number;
+          n_findings: number;
           n_non_image_findings?: number | null;
           pipeline_version?: string | null;
           analysed_at?: string | null }[];
@@ -69,7 +69,6 @@ export interface Paper {
   analysed_at?: string | null;
   analysed_at_source?: "recorded" | "file_mtime" | null;
   verdict: string | null;
-  worst_severity: string | null;
   worst_severity_9?: number | null;
   n_findings: number | null;
   // Absent (not 0) on an index written before this field existed -- the table

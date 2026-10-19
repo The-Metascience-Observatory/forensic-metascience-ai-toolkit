@@ -424,7 +424,7 @@ class Repository(SharedImageQueueMixin):
         search=str(args.get('q') or '').lower()
         if search: rows=[r for r in rows if search in ' '.join(str(r.get(k) or '') for k in ('title','doi','dir','authors')).lower()
                         or matches_paper_folder({'paper': {'dir': r.get('dir')}}, search)]
-        key=args.get('sort') or 'findings'; field={'author':'first_author','folder':'dir','run':'analysed_at','version':'pipeline_version','findings':'n_non_image_findings','image':'n_image_findings','sev9':'worst_severity_9','worst':'worst_severity'}.get(key,key)
+        key=args.get('sort') or 'findings'; field={'author':'first_author','folder':'dir','run':'analysed_at','version':'pipeline_version','findings':'n_non_image_findings','image':'n_image_findings','sev9':'worst_severity_9'}.get(key,key)
         reverse=args.get('direction','desc')=='desc'
         numeric=field in ('n_non_image_findings','n_findings','n_image_findings','worst_severity_9','year')
         missing=[r for r in rows if r.get(field) is None or r.get(field)=='']

@@ -69,7 +69,6 @@ MUST_BE_RENDERED = {
     # KIND of claim a verdict is, so if it reaches a reader the rest of the card
     # did too.
     "TOOL_INTEGRITY.evidence_meaning": '"evidence_meaning"',
-    "not_checked": '"not_checked"',
     "source_quote_verified": '"source_quote_verified"',
     "unchecked": '"unchecked"',
     # The unaligned control and its gate, written by `review_media` into the
@@ -160,9 +159,6 @@ VIEWER_MUST_RENDER = {
     "report.coverage_summary.stats_checked": "cs.stats_checked",
     "report.coverage_summary.checkable": "cs.checkable",
     "report.coverage_summary.completeness": "cs.completeness",
-    "report.coverage_summary.stage1_reconciliation": "cs.stage1_reconciliation",
-    "report.coverage_summary.stage1_reconciliation.accusatory_unexplained": "accusatory_unexplained",
-    "report.second_look": "rep.second_look||D.second_look",
     "report.coverage_summary.computation_audit": "cs.computation_audit",
     # WHICH FILES NEVER LOADED. A supplement the model could not pull through a
     # tool result is absent from the review, and on every surface it looks
@@ -175,8 +171,7 @@ VIEWER_MUST_RENDER = {
     "report.coverage_summary.computation_audit.n_transcribed": "ca.n_transcribed",
     "report.coverage_summary.completeness.n_supplement_items": "n_supplement_items",
     "report.coverage_summary.completeness.n_checked_measurable": "n_checked_measurable",
-    "report.not_checked": "rep.not_checked",
-    "report.limitations": "rep.limitations",
+    "run_meta.limitations": "(D.run_meta||{}).limitations",
     "report.headline.statement": "hl.statement",
     "report.headline.evidence": "hl.evidence",
     "report.headline.rests_on": "hl.rests_on",

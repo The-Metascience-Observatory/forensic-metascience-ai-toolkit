@@ -569,8 +569,8 @@ marker on converted runs; per-paper rollups + `n_drafts` + `anchor_health {ancho
 page_only, unanchored}`. **The five-state channel vocabulary
 (`ran|ran_result_discarded|refused|did_not_run|unknown`) is untouched** — it is a core
 invariant (`tests/test_webapp_index.py` is the contract). The scanner reads new file
-names (`findings.v2.json` / v2 `findings.json`, per-agent artifacts) with
-stage1/stage2 fallback for archives; missing index keeps its loud `IndexMissing`
+names (`findings.v2.json`, per-agent artifacts); the stage1/stage2 fallback for
+archives was removed in 1.100.0. A missing index keeps its loud `IndexMissing`
 behavior across the schema bump.
 
 ## 10. Fire-rate dashboard + findings-query

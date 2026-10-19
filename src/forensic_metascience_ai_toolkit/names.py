@@ -10,8 +10,8 @@ of them to a person maps it through `display()`.
 
 Derived from each module's MODULE.md (`name`, `label`, `producer` ->
 `display`), so a module's display name is declared once, beside its
-definition. The few identifiers that are not a module's (channel keys,
-retired labels on archived runs) are listed below.
+definition. The few identifiers that are not a module's (channel keys, the
+converted serial-pipeline producer) are listed below.
 """
 
 from __future__ import annotations
@@ -23,10 +23,9 @@ _EXTRA = {
     "tortured_phrases": "Text forensics (tortured phrases)",   # channel key
     "adjudication": "Adjudicator",
     "harness": "Harness sweep (deterministic)",   # producer, not a module
-    # Labels of the serial pipeline (deleted v1.27.0), still on archived runs.
-    "stage1": "Tools agent (serial sweep)",
-    "stage2": "Editorial (serial pipeline)",
-    "sweep": "Tools agent (serial sweep)",
+    # The producer `migrate-v2` stamped on rows converted from the serial
+    # pipeline's findings.json (the archived fixtures and old corpora).
+    "legacy_sweep": "Serial-pipeline sweep (converted)",
 }
 
 

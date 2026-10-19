@@ -218,12 +218,6 @@ class TestTheViewer:
         from forensic_metascience_ai_toolkit.bundle import render_viewer
         assert "esc(f.quote)" in render_viewer({})
 
-    def test_the_heading_stops_promising_as_printed_for_assembled_text(self):
-        from forensic_metascience_ai_toolkit.bundle import render_viewer
-        html = render_viewer({})
-        assert "Values, assembled by this review" in html
-        assert "Quoted by the review, not located" in html
-
     def test_an_unlocatable_quote_offers_no_jump_link(self):
         """A jump on text that is not in the document highlights nothing and
         leaves the reader believing they searched and the paper came up short."""
@@ -250,45 +244,6 @@ class TestOnTheRealCorpus:
         located = sum(1 for v in verdicts if v in ("verbatim", "elided"))
         assert located >= len(verdicts) // 3, dict(
             (v, verdicts.count(v)) for v in set(verdicts))
-
-
-class TestTableAndFigureMentionsAreLinks:
-    """Greg, 2026-08-01, verbatim: "Whenever a table or section is mentioned in
-    any of the pages, it should be a clickable link that will snap to the Paper
-    vs Text page."
-
-    Same intent as the quote verdicts above -- traceability from a claim back to
-    the place in the paper it came from. A finding whose Where says "Table 2,
-    Height row" is asking the reader to go and look at Table 2, and making them
-    find it by hand is the same friction as an unlocatable quote.
-
-    The machinery already existed: `goTable(label)` switches the source pane to
-    rendered view and highlights the label. This is wiring, not new plumbing.
-    """
-
-    def test_the_linkifier_exists_and_is_applied_to_where(self):
-        from forensic_metascience_ai_toolkit.bundle import render_viewer
-        html = render_viewer({})
-        assert "function refLinks(escaped)" in html
-        assert "refLinks(esc(f.location))" in html
-
-    def test_it_is_given_already_escaped_text(self):
-        """Linkifying before escaping would destroy the anchors; escaping after
-        would emit them literally. The order is load-bearing, and the pattern
-        must not be able to match inside an HTML entity -- that is the failure
-        that bit the search box, where a needle matched inside `&#39;` and
-        split it open."""
-        from forensic_metascience_ai_toolkit.bundle import render_viewer
-        html = render_viewer({})
-        assert "refLinks(esc(" in html
-        assert "esc(refLinks(" not in html
-
-    def test_the_title_is_left_alone(self):
-        """`fTitle` renders inside a clickable <summary>; a link there would
-        fight the disclosure toggle."""
-        from forensic_metascience_ai_toolkit.bundle import render_viewer
-        html = render_viewer({})
-        assert "const where=esc(String(f.location||'').trim());" in html
 
 
 class TestANumberCannotVerifyAsPartOfALongerNumber:

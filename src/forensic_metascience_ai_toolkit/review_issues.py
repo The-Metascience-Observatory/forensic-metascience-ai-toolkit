@@ -54,10 +54,10 @@ def _v2_numeric_issues(
 ) -> tuple[list[dict], dict, str] | None:
     """Issue rows from a findings-v2 document (a parallel-pipeline run).
 
-    Without this branch a parallel run was INVISIBLE to the reviewer: the
-    loop below reads report.json, which parallel runs do not write, so the
-    pane silently fell back to an older legacy run (found while surfacing
-    the medicina rematch, 2026-08-21). Only analyst rows map here -- the
+    Before this branch a parallel run was INVISIBLE to the reviewer: the
+    only reader was of report.json, which parallel runs do not write, so the
+    pane silently fell back to an older serial-pipeline run (found while
+    surfacing the medicina rematch, 2026-08-21). Only analyst rows map here -- the
     doc's image_track/text_track copies are SKIPPED because the paper-level
     track files already feed `_image_issues`/`_text_issues`, and mapping
     both would show every image finding twice.

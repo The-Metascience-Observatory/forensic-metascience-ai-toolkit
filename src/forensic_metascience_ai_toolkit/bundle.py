@@ -56,17 +56,13 @@ _PAPER_FILES = ("body.md", "abstract.md", "references.md", "references.json",
 _PAPER_GLOBS = ("*.xml", "*.provenance.json", "*_supplementary_info.json")
 #: `tool_ledger.json` and `guard_audit.json` used to be listed here and were
 #: never removed when the writers changed name. Nothing has ever written either
-#: one: the ledger is `toolcalls.stage{1,2}.json`, and the guard audit is nested
+#: one: the ledgers are `toolcalls.<agent>.json`, and the guard audit is nested
 #: at `sandbox_audit.stages.<stage>.guards`. The cost of the stale names was not
 #: the dead copy but the Guards pane, which read the missing file and reported
 #: "No guard audit recorded for this run" on every run ever produced.
-_ANALYSIS_FILES = ("report.md", "findings.json", "report.json", "run_meta.json",
-                   "sandbox_audit.json", "toolcalls.stage1.json",
-                   "toolcalls.stage2.json", "messages.stage1.json",
-                   "messages.stage2.json",
-                   # The PARALLEL-era layout (v1.0.0+). Until 2026-08-22 none
-                   # of these were copied, so a bundle of a current run
-                   # archived everything EXCEPT the findings document itself.
+#: (The serial pipeline's `findings.json`, `report.json` and `*.stage{1,2}.json`
+#: are no longer listed: that layout is not read.)
+_ANALYSIS_FILES = ("report.md", "run_meta.json", "sandbox_audit.json",
                    "findings.v2.json", "adjudication.json",
                    "value_register.json",
                    "toolcalls.tool_agent.json", "toolcalls.science_agent.json",
@@ -81,14 +77,8 @@ _ANALYSIS_FILES = ("report.md", "findings.json", "report.json", "run_meta.json",
 #: their stems are the paper's DOI.
 _FILE_BLURBS = {
     "report.md": "The review itself -- what you would read.",
-    "report.json": "The same review as structured fields, behind the prose.",
-    "findings.json": "Every sweep finding, with its tool inputs and annotations.",
     "run_meta.json": "Cost, tokens, wall time and the model each stage actually used.",
     "sandbox_audit.json": "Whether every statistic came from a validated tool.",
-    "toolcalls.stage1.json": "The ledger: each sweep tool call, its inputs and its result.",
-    "toolcalls.stage2.json": "The ledger for the editorial stage.",
-    "messages.stage1.json": "Full sweep transcript. Large, and rarely what you want.",
-    "messages.stage2.json": "Full editorial transcript. Large.",
     "findings.v2.json": "Every finding with its final 1-9 severity and the "
                         "adjudicator's ruling -- the review's document of record.",
     "adjudication.json": "The adjudicator's raw output: per-finding verdicts "
@@ -258,7 +248,7 @@ _MALFORMED_REGISTRY = re.compile(r"\bNCT\s?\d{1,7}\b|\bNCT\s?\d{9,}\b")
 _PAGE_RENDER = re.compile(r"^page[_-]?\d+\.(png|jpg|jpeg|webp)$", re.I)
 
 
-def _backfill_repro_split(meta: dict, findings: list[dict], report: dict) -> None:
+def _backfill_repro_split(meta: dict, findings: list[dict]) -> None:
     """Recompute the reproduction taxonomy for a bundle built from an OLD run.
 
     NOT a rewrite of the archive: the classification is deterministic and every
@@ -282,11 +272,6 @@ def _backfill_repro_split(meta: dict, findings: list[dict], report: dict) -> Non
         return
     cmds = [f.get("reproduction") or "" for f in (findings or [])
             if isinstance(f, dict)]
-    cmds += [f.get("reproduction") or "" for f in ((report or {}).get("findings") or [])
-             if isinstance(f, dict)]
-    head = ((report or {}).get("headline") or {}).get("reproduction")
-    if head:
-        cmds.append(head)
     if not cmds:
         return
     none = sum(1 for c in cmds if classify_reproduction(c) == "no_command_applies")
@@ -300,32 +285,16 @@ def _backfill_repro_split(meta: dict, findings: list[dict], report: dict) -> Non
     )
 
 
-def _reported_ids(findings: list[dict], editorial: list[dict]) -> set[str]:
-    """Which findings reached the report, by whichever record exists.
+def _reported_ids(findings: list[dict]) -> set[str]:
+    """Which findings reached the report: each v2 row records its own fate in
+    `adjudication.action`. The rule is IMPORTED from `report_v2` rather than
+    restated -- it is the renderer's own definition of what it prints.
 
-    THE EDITORIAL LIST COMES FROM `report.json`, WHICH THE PARALLEL PATH NEVER
-    WRITES. `grep -c "report.json" parallel.py` returns 0, so `report_obj` is
-    `{}`, `editorial` is `[]`, and `[] is not None` slips the guard below. Every
-    row then showed `kept: 0` and the Sankey's only outcome node read
-    `not reported (34)`.
-
-    MEASURED on the current ajcp run: the adjudicator RAN, kept 22 and merged 8,
-    `report.md` carries FIFTEEN finding headings, and the viewer told a reader
-    that none of the 34 reached the report.
-
-    A v2 row records its own fate in `adjudication.action`, so that is the
-    record to read when there is no editorial list. The rule is IMPORTED from
-    `report_v2` rather than restated -- it is the renderer's own definition of
-    what it prints, and a second copy here would drift from it exactly as the
-    `report.json` assumption did.
-
-    Note also the key: this function matches on `finding_id`, which is what a v2
-    row carries. The editorial path read `id`, so even a populated list would
-    not have matched a v2 finding.
+    This used to prefer `report.json`'s editorial list, which the parallel path
+    never writes; on every parallel run that left `kept: 0` and a Sankey whose
+    only outcome node read `not reported (34)` (measured on the ajcp run,
+    whose report.md carried fifteen findings).
     """
-    if editorial:
-        return {str(i) for e in editorial if isinstance(e, dict)
-                for i in (e.get("stage1_finding_ids") or [])}
     try:
         from .report_v2 import reported_finding_ids
         return reported_finding_ids({"findings": findings})
@@ -333,8 +302,7 @@ def _reported_ids(findings: list[dict], editorial: list[dict]) -> set[str]:
         return set()
 
 
-def _check_table(calls: list[dict], findings: list[dict],
-                 editorial: list[dict]) -> list[dict]:
+def _check_table(calls: list[dict], findings: list[dict]) -> list[dict]:
     """One row per check: how often it ran, what it found, what survived.
 
     The same data the Sankey draws, in the form you can actually read a number
@@ -347,7 +315,7 @@ def _check_table(calls: list[dict], findings: list[dict],
     except Exception:
         return []
 
-    kept_ids: set[str] = _reported_ids(findings, editorial)
+    kept_ids: set[str] = _reported_ids(findings)
 
     rows: dict[str, dict] = {}
 
@@ -388,7 +356,7 @@ def _check_table(calls: list[dict], findings: list[dict],
                     "hand-computed")
         r = row(tool)
         r["findings"] += 1
-        sev = f.get("severity") or "indeterminate"
+        sev = f.get("severity") or "unknown"
         r["severities"][sev] = r["severities"].get(sev, 0) + 1
         # ONE READER for the row's identity (v1 `id`, v2 `finding_id`, card copy).
         if _fv.ref(f) in kept_ids:
@@ -398,8 +366,7 @@ def _check_table(calls: list[dict], findings: list[dict],
                   key=lambda r: (-r["findings"], -r["calls"], r["check"]))
 
 
-def _sankey(calls: list[dict], findings: list[dict],
-            editorial: list[dict] | None = None) -> dict:
+def _sankey(calls: list[dict], findings: list[dict]) -> dict:
     """Which check produced which verdict, as a flow.
 
     Two columns: the tool on the left, the severity it returned on the right,
@@ -429,7 +396,7 @@ def _sankey(calls: list[dict], findings: list[dict],
         if not isinstance(f, dict):
             continue
         technique = f.get("technique")
-        severity = f.get("severity") or "indeterminate"
+        severity = f.get("severity") or "unknown"
         source = "hand-computed"
         for tool in _candidate_tools(technique):
             if tool in called:
@@ -470,31 +437,26 @@ def _sankey(calls: list[dict], findings: list[dict],
     links = [{"source": s, "target": t, "value": v}
              for (s, t), v in sorted(flows.items(), key=lambda kv: -kv[1])]
 
-    # A THIRD column: what the editorial stage did with each severity. Without
-    # it the diagram stops at "the sweep found this", which is not the same as
+    # A THIRD column: what the adjudicator did with each severity. Without it
+    # the diagram stops at "an analyst found this", which is not the same as
     # "the report says this" -- and on every run so far a substantial share of
-    # sweep findings are dropped or merged, invisibly.
-    # Same source and same key as the check table -- see `_reported_ids`. This
-    # read `report.json`'s editorial list, which the parallel path never writes,
-    # and matched on `id` where a v2 row carries `finding_id`. Both wrong the
-    # same way, so the only outcome node on every parallel run was
-    # `not reported (34)`.
-    if editorial is not None:
-        kept_ids = _reported_ids(findings or [], editorial)
-        fate: dict[tuple[str, str], int] = {}
-        for f in findings or []:
-            if not isinstance(f, dict):
-                continue
-            sev = f.get("severity") or "indeterminate"
-            fid = _fv.ref(f)
-            where = "reported" if fid in kept_ids else "not reported"
-            fate[(sev, where)] = fate.get((sev, where), 0) + 1
-        if fate:
-            for label in ("reported", "not reported"):
-                if any(w == label for _, w in fate):
-                    nodes.append({"id": label, "label": label, "column": 2})
-            links += [{"source": s, "target": w, "value": v}
-                      for (s, w), v in sorted(fate.items(), key=lambda kv: -kv[1])]
+    # findings are discarded or merged, invisibly. Same source and same key as
+    # the check table -- see `_reported_ids`.
+    kept_ids = _reported_ids(findings or [])
+    fate: dict[tuple[str, str], int] = {}
+    for f in findings or []:
+        if not isinstance(f, dict):
+            continue
+        sev = f.get("severity") or "unknown"
+        fid = _fv.ref(f)
+        where = "reported" if fid in kept_ids else "not reported"
+        fate[(sev, where)] = fate.get((sev, where), 0) + 1
+    if fate:
+        for label in ("reported", "not reported"):
+            if any(w == label for _, w in fate):
+                nodes.append({"id": label, "label": label, "column": 2})
+        links += [{"source": s, "target": w, "value": v}
+                  for (s, w), v in sorted(fate.items(), key=lambda kv: -kv[1])]
 
     return {"nodes": nodes, "links": links}
 
@@ -2092,8 +2054,7 @@ def _bundle_files(review_dir: Path, paper_dir: Path, pdfs: list[Path]) -> list[d
     return out
 
 
-def _tool_cards(coverage: dict, calls: list[dict], findings: list[dict],
-                report_obj: dict) -> dict:
+def _tool_cards(coverage: dict, calls: list[dict], findings: list[dict]) -> dict:
     """The integrity card for every check this run NAMES.
 
     WHY THE VIEWER NEEDS THIS. The document's most consequential word is
@@ -2154,8 +2115,6 @@ def _tool_cards(coverage: dict, calls: list[dict], findings: list[dict],
             named.append(text)
 
     for tool in (coverage or {}).get("tools_run") or []:
-        add(tool)
-    for tool in ((report_obj or {}).get("coverage_summary") or {}).get("tools_run") or []:
         add(tool)
     for call in calls or []:
         # VALIDATED CALLS ONLY. The ledger also carries `Read` and the harness's
@@ -3029,22 +2988,15 @@ def _v2_container(doc: dict) -> dict:
 
     cards.sort(key=_order)
     return {"findings": cards,
-            # THE REGISTER LIVES AT THE TOP LEVEL of a v2 document, not under
-            # `coverage`. Carried here so the payload can expose it; the
-            # viewer's legacy read is `coverage_summary.statistics_register`,
-            # which no parallel run has (it writes no report.json).
+            # The register and (from v1.23.0) the census live at the TOP LEVEL
+            # of a v2 document, not under `coverage`.
             "statistics_register": doc.get("statistics_register") or [],
-            # The census, from v1.23.0 onward. Same reasoning as the register
-            # above: it lives at the v2 document's top level, and the viewer's
-            # legacy read is `report_obj.coverage_summary`, which no parallel
-            # run has because no parallel run writes a report.json.
             "coverage_summary": doc.get("coverage_summary") or {},
             "coverage": doc.get("coverage") or {},
             "anatomy": doc.get("anatomy") or {},
             "unchecked": doc.get("unchecked") or [],
             "paper_id": doc.get("paper_id"),
-            "paper_metadata": doc.get("paper_metadata") or {},
-            "second_look": {}}
+            "paper_metadata": doc.get("paper_metadata") or {}}
 
 
 def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
@@ -3052,52 +3004,30 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
     review_dir = Path(review_dir)
     paper_dir = Path(paper_dir) if paper_dir else review_dir.parent
 
-    findings = _load(review_dir / "findings.json") or {}
+    # The findings-v2 document is the only findings record read. A review
+    # directory without one (the serial pipeline's layout, or a run that wrote
+    # nothing) yields a bundle with no finding cards, not a fallback.
     v2_doc = _load(review_dir / "findings.v2.json")
-    findings_format = "legacy"
+    findings: dict = {}
     adjudication_summary: dict = {}
     if isinstance(v2_doc, dict) and isinstance(v2_doc.get("findings"), list):
-        findings_format = "v2"
         adjudication_summary = v2_doc.get("adjudication") or {}
         findings = _v2_container(v2_doc)
-    report_obj = _load(review_dir / "report.json") or {}
-    # ONE READING ORDER. `report.md` prints its findings through
-    # `report_render.sort_findings` -- severity, then CONSEQUENCE, then the
-    # model's `rank` -- and the viewer printed them in the order they happen to
-    # sit in report.json. MEASURED on the wave-3 `10.1002--eat.24415` run: the
-    # report reads 1, 2, 3, 5, 7, 4, 6, 8, 9, 10 against the JSON order, so
-    # four of ten numbered findings named a different finding in the two
-    # documents that ship in the same bundle. Sorting here, in Python, is the
-    # only place the consequence rank is computable at all -- the viewer's JS
-    # has severity but no consequence ranking, which is why it was harsher: it
-    # put an equally severe finding that changes nothing above one that moves a
-    # conclusion. Copied, not mutated in place, so `report.json` on disk and
-    # the `rank` field in it are untouched.
-    from .report_render import sort_findings
-    if isinstance(report_obj.get("findings"), list):
-        report_obj = {**report_obj,
-                      "findings": sort_findings(report_obj["findings"])}
     run_meta = _load(review_dir / "run_meta.json") or {}
     _backfill_repro_split(run_meta.get("reproducibility") or {},
-                          (findings.get("findings") or []) if isinstance(findings, dict) else [],
-                          report_obj if isinstance(report_obj, dict) else {})
+                          findings.get("findings") or [])
     sandbox = _load(review_dir / "sandbox_audit.json") or {}
     report_md = ""
     p = review_dir / "report.md"
     if p.exists():
         report_md = p.read_text(encoding="utf-8", errors="replace")
 
-    if findings_format == "v2":
-        calls = (_distil_calls(_load(review_dir / "toolcalls.tool_agent.json"),
-                               "tool_expert")
-                 + _distil_calls(_load(review_dir / "toolcalls.science_agent.json"),
-                                 "science_error")
-                 + _distil_calls(_load(review_dir / "toolcalls.adjudicator.json"),
-                                 "adjudicator"))
-    else:
-        calls = (_distil_calls(_load(review_dir / "toolcalls.stage1.json"), "sweep")
-                 + _distil_calls(_load(review_dir / "toolcalls.stage2.json"),
-                                 "editorial"))
+    calls = (_distil_calls(_load(review_dir / "toolcalls.tool_agent.json"),
+                           "tool_expert")
+             + _distil_calls(_load(review_dir / "toolcalls.science_agent.json"),
+                             "science_error")
+             + _distil_calls(_load(review_dir / "toolcalls.adjudicator.json"),
+                             "adjudicator"))
 
     try:
         from .supplements import audit as _supp_audit
@@ -3192,36 +3122,18 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         "value_register_error": _read_text(review_dir / "value_register.error.txt"),
         "findings": anchor_findings(findings.get("findings") or [],
                                     pdfs[0] if pdfs else None, body_text),
-        # Which universe the findings above belong to. "v2" is the parallel
-        # pipeline's 1-9 ladder document (findings.v2.json); "legacy" is the
-        # retired serial layout. The findings page renders each natively --
-        # the 5-enum vocabulary and the ladder must never wear each other's
-        # words.
-        "findings_format": findings_format,
         # The adjudicator's paper-level block (verdict, paper_severity 1-9,
-        # headline_finding_id, summary). Empty on legacy runs.
+        # headline_finding_id, summary).
         "adjudication": adjudication_summary,
         "coverage": findings.get("coverage") or {},
-        # Every value the tool expert read, with what it did to each. Written
-        # by the parallel pipeline at the top level of findings.v2.json and
-        # looked for by the viewer under the LEGACY `coverage_summary`, so on
-        # every v2 run it was written by one path and read on another and the
-        # block rendered empty. Found 2026-09-03.
+        # Every value the tool expert read, with what it did to each, from the
+        # top level of findings.v2.json.
         "statistics_register": findings.get("statistics_register") or [],
-        # THE INDEPENDENT DENOMINATOR. Ported to the parallel pipeline in
-        # v1.23.0 and written onto the v2 document; `report_obj` stays the
-        # legacy home. Every `cs` in the page falls back to this.
+        # THE INDEPENDENT DENOMINATOR (the census), written onto the v2
+        # document since v1.23.0. Every `cs` in the page reads this.
         "coverage_summary": findings.get("coverage_summary") or {},
-        # THE SECOND-LOOK WORKLIST. It lives in `findings.json`, because it is
-        # computed for and handed to stage 2 -- so it never reached the payload
-        # and the panel that renders it could not fire on a real run. Found on
-        # the Romano run of 2026-08-13, hours after adding that panel: built,
-        # consumed by the model, invisible to the reader, which is this
-        # repository's signature defect committed twice in one day.
-        "second_look": findings.get("second_look") or {},
         "unchecked": findings.get("unchecked") or [],
         "report_html": _report_html(report_md),
-        "report_obj": report_obj,
         # IS THE AUDITED CELL COUNT SOMETHING THIS PIPELINE PRODUCES AT ALL?
         #
         # The fallback note below told a reader the census "was added after this
@@ -3237,12 +3149,7 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         # census onto the v2 document, so a run that HAS one must not be told
         # the capability is legacy-only -- that sentence was true when written
         # and becomes a lie the moment the port lands.
-        "census_computed_on_this_path": bool(
-            (report_obj or {}).get("coverage_summary")
-            or (findings or {}).get("coverage_summary")),
-        "census_is_a_legacy_capability": bool(
-            str((findings or {}).get("schema_version") or "").startswith("2")
-            and not (findings or {}).get("coverage_summary")),
+        "census_computed_on_this_path": bool(findings.get("coverage_summary")),
         "run_meta": run_meta,
         "sandbox_audit": sandbox,
         "guard_audit": _guards_by_stage(sandbox),
@@ -3255,14 +3162,12 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         "files": _bundle_files(review_dir, paper_dir, pdfs),
         "paper_facts": _paper_facts(paper_dir, body_text, review_dir, supp,
                                     figures, meta, references),
-        "sankey": _sankey(calls, findings.get("findings") or [],
-                          report_obj.get("findings") or []),
-        "check_table": _check_table(calls, findings.get("findings") or [],
-                                    report_obj.get("findings") or []),
+        "sankey": _sankey(calls, findings.get("findings") or []),
+        "check_table": _check_table(calls, findings.get("findings") or []),
         "figure_records": _figure_records(review_dir, paper_dir),
         # What each check that ran is entitled to conclude. See `_tool_cards`.
         "tool_cards": _tool_cards(findings.get("coverage") or {}, calls,
-                                  findings.get("findings") or [], report_obj),
+                                  findings.get("findings") or []),
         # Whether a missing supplement is the publication's gap or ours.
         "supplement_retrieval": _supplement_retrieval(paper_dir),
         "acronyms": _acronyms(body_text),
@@ -3308,7 +3213,6 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         "traceability": _tr,
         "traceability_sentence": _vf.traceability_sentence(_tr),
         "evidence": _vf.evidence_ledger(payload),
-        "index": _vf.finding_index(payload),
         # THE CLASSIFIER TABLE ITSELF, shipped as data rather than restated in
         # JS. Both copies existed and had already drifted -- the JS `na` tier 2
         # was six alternations behind Python's, so the same reason could be
@@ -3333,7 +3237,7 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         # list so a reader meets "3 of these 14 are our limitation" before they
         # meet a bare count of fourteen. Facts in Python; presentation in JS.
         "refusals": _vf.refusal_tally(
-            [r for r in ((report_obj or {}).get("not_checked") or [])
+            [r for r in (findings.get("unchecked") or [])
              if isinstance(r, dict)]),
     }
     # Last step, so nothing added later can slip a machine path past it. The
@@ -3566,7 +3470,6 @@ def render_viewer(payload: dict) -> str:
     title = html.escape(payload.get("paper_title") or payload.get("paper_id") or "Review")
     # The severity ladder comes from severity.py rather than being written out
     # a sixth time in JS, where nothing would catch it drifting.
-    order = json.dumps({level: i for i, level in enumerate(SEVERITY_LEVELS)})
     levels = json.dumps(list(SEVERITY_LEVELS))
     # Stored identifiers (producer values, stage labels, channel keys) shown to
     # a reader by their display names -- the one alias table, `names.py`.
@@ -3574,7 +3477,6 @@ def render_viewer(payload: dict) -> str:
     names_js = json.dumps(display_names()).replace("</", "<\\/")
     return (_VIEWER_TEMPLATE
             .replace("__TITLE__", title)
-            .replace("__SEVERITY_ORDER__", order)
             .replace("__SEVERITY_LEVELS__", levels)
             .replace("__DISPLAY_NAMES__", names_js)
             .replace("__DATA__", data))
@@ -4207,44 +4109,6 @@ function verdictHtml(v){
   return verdictWord(v)+` <span class="muted">-- ${esc(VERDICT_DEF[c])} (one verdict of three; click the word for the codebook)</span>`;
 }
 
-/* Consequence: what a finding CHANGES, as opposed to how wrong it is. Ordering
-   within a severity band, mirroring consequence.rank() on the Python side --
-   flips a decision, then affects stated claims, then unknown, then explicitly
-   flips nothing. Unknown outranks "flips nothing" deliberately: "we did not
-   determine this" must never be displayed above something we checked and
-   cleared. */
-function cRank(f){
-  const c = f && f.consequence; if(!c) return 21;
-  const claims = c.claims_affected||0;
-  const level = c.flips_significance===true ? 0
-    : claims>0 ? 10 : (c.flips_significance===false ? 30 : 20);
-  return level + (c.basis==='computed' ? 0 : 1);
-}
-/* Where the tool and the review disagreed about how serious something is.
-   Shown always, not only when unexplained: a reader deciding how much to trust
-   a downgrade needs to know one happened. */
-function sSrc(f){
-  const s = f && f.severity_source; if(!s) return '';
-  const cls = s.explained ? 'conseq' : 'conseq unexplained';
-  return `<p class="${cls}"><b>Severity ${esc(s.direction||'changed')}:</b> `
-    + `tool computed <code>${esc(s.tool)}</code>, review recorded `
-    + `<code>${esc(s.model)}</code>. ` + esc(s.note||'') + `</p>`;
-}
-function cHtml(f){
-  const c = f && f.consequence; if(!c) return '';
-  const bits=[];
-  if(c.flips_significance===true) bits.push('changes a significance decision');
-  else if(c.flips_significance===false) bits.push('changes no significance decision');
-  if(typeof c.claims_affected==='number' && c.claims_affected>0)
-    bits.push(c.claims_affected+' stated claim'+(c.claims_affected===1?'':'s')+' affected');
-  if(!bits.length) return '';
-  const computed = c.basis==='computed';
-  const tag = computed ? 'computed' : 'asserted, not computed';
-  const why = c.explanation ? ' &mdash; '+esc(c.explanation) : '';
-  return `<p class="conseq ${computed?'computed':''}"><b>Consequence:</b> `
-    + esc(bits.join('; ')) + why + ` <span class="muted">(${tag})</span></p>`;
-}
-
 /* Render any value honestly. A dict used to reach innerHTML as "[object
    Object]", which threw away the most useful content in the whole finding. */
 function val(v, depth){
@@ -4642,49 +4506,6 @@ const EV_CHIP={
   probabilistic:'probabilistic, never impossible',
   descriptive:'descriptive, renders no verdict',
 };
-function evChip(name, severity){
-  /* `manual` is the weakest class in the document and had no chip at all,
-     because it names no tool to carry one. It is exactly the case a reader
-     must not have to infer: the number was read off the paper by the model and
-     no validated check touched it. */
-  if(name==='manual') return ' <span class="def" title="'+
-    esc('Read off the paper by the model, NOT computed by a validated tool. '+
-        'The weakest evidence class in this document.')+
-    '" data-cb="cb-severity">not computed by a tool</span>';
-  const c=cardFor(name); if(!c||!c.evidence) return '';
-  const ceiling=c.severity_ceiling
-    ? ' Strongest verdict it may reach: '+String(c.severity_ceiling).replace(/_/g,' ')+'.'
-    : '';
-  const chip=' <span class="def" title="'+esc((c.evidence_meaning||'')+ceiling)+
-    '" data-cb="cb-tool-'+esc(c.tool)+'">'+esc(EV_CHIP[c.evidence]||c.evidence)+'</span>';
-  /* A FINDING MORE SEVERE THAN THE CHECK BEHIND IT CAN RETURN. Rare and real:
-     measured over every archived run, 2 of 294 stamped findings record a
-     severity above their tool's declared ceiling, both `multiplicity_report`
-     -- a descriptive tool that renders no verdict -- carried at `suspicious`.
-     The severity in those cases came from the write-up, not from the check,
-     and saying so is the whole purpose of stamping a class at all. Disclosed
-     rather than suppressed: hiding the chip here would remove the reader's
-     only cue in exactly the case where they most need one. */
-  const ci=SEVERITY_ORDER.indexOf(c.severity_ceiling), si=SEVERITY_ORDER.indexOf(severity);
-  if(ci>=0 && si>=0 && si<ci) return chip+' <span class="conseq unexplained">('+
-    'recorded above what this check can return -- the severity is the write-up\'s, '+
-    'not the tool\'s)</span>';
-  return chip;
-}
-/* Which checks an editorial finding rests on, and what each may conclude. The
-   editorial stage writes no `technique` of its own, so without this the
-   headline cards -- the ones a reader actually reads -- carried a severity
-   word and no evidence class at all, while the nested tool verdicts beneath
-   them carried both. */
-function evRests(backing){
-  const names=[...new Set((backing||[]).map(f=>
-    (f.inputs&&f.inputs.tool)||f.technique).filter(n=>n&&(n==='manual'||cardFor(n))))];
-  if(!names.length) return '';
-  return '<p class="conseq"><b>Rests on:</b> '+names.map(n=>
-    '<code>'+esc(n)+'</code>'+evChip(n,(backing.find(f=>
-      ((f.inputs&&f.inputs.tool)||f.technique)===n)||{}).severity)).join('; ')+'</p>';
-}
-
 const S=[];
 
 /* WHAT THIS REVIEW COULD NOT DO -- printed beside the verdict, not filed away
@@ -4719,7 +4540,7 @@ function limitsHtml(){
      assigned HERE, at each push, because that is the only place that knows --
      and AMBIGUITY DEFAULTS TO `L`, the reading against ourselves. */
   const L=[], B=[];
-  const rep=D.report_obj||{}, cs=rep.coverage_summary||D.coverage_summary||{}, rm=D.run_meta||{};
+  const cs=D.coverage_summary||{}, rm=D.run_meta||{};
   const practice=n=>(D.practice||[]).find(p=>p.practice===n)||{};
   const jump=(id,t)=>'<a href="#'+id+'">'+t+'</a>';
 
@@ -4792,9 +4613,7 @@ function limitsHtml(){
       +jump('coverage','Coverage and limits'));
   }
 
-  /* Both stages record refusals and they record DIFFERENT ones. Counting the
-     larger list here rather than the one the page happened to render. */
-  const nUnchecked=Math.max((D.unchecked||[]).length,(rep.not_checked||[]).length);
+  const nUnchecked=(D.unchecked||[]).length;
   if(nUnchecked) B.push('<b>'+nUnchecked+'</b> place'+(nUnchecked===1?'':'s')+' in '
     +'the paper were examined and then REFUSED, each for a stated reason. '
     +jump('coverage','see what and why'));
@@ -4837,8 +4656,8 @@ function limitsHtml(){
      arithmetic. Read from `D.facts.evidence`, computed once in Python, rather
      than recomputed here: the same rule that fixed the refusal classifier. */
   /* THE DENOMINATOR MUST COME FROM THE SAME BLOCK AS THE NUMERATOR.
-     It read `rep.findings.length`, and `rep` is the v1 `report_obj` that the
-     parallel path never writes -- so the live banner said
+     It read `rep.findings.length`, and `rep` was the serial pipeline's
+     `report_obj`, which the parallel path never writes -- so the live banner said
      "18 of 0 findings in this report rest on no validated computation",
      on every panel, because it is a persistent header. The numerator had been
      migrated to `D.facts.evidence`; the denominator was left behind.
@@ -4953,15 +4772,11 @@ function limitsHtml(){
 }
 
 S.push({id:'overview', label:'Overview', build(){
-  const m=D.paper_metadata||{}, rm=D.run_meta||{}, ed=(rm.stages||{}).editorial||{};
+  /* The verdict and its confidence are the adjudicator's. This read
+     `run_meta.stages.editorial`, which only the serial pipeline wrote, so the
+     row printed nothing on every parallel bundle. */
+  const m=D.paper_metadata||{}, rm=D.run_meta||{}, ed=D.adjudication||{};
   const c={}; (D.findings||[]).forEach(f=>c[f.severity]=(c[f.severity]||0)+1);
-  /* The two universes a count can come from, computed once: the sweep emits
-     one verdict per check (passes included); the report keeps only the
-     findings the editorial stage built on them. */
-  const edN=((D.report_obj||{}).findings||[]).length;
-  const cited=new Set();
-  ((D.report_obj||{}).findings||[]).forEach(e=>(e.stage1_finding_ids||[]).forEach(i=>cited.add(String(i))));
-  const kept=(D.findings||[]).filter(f=>cited.has(String(f.id))).length;
   /* One row per name in the fixed schema, in the order the payload gives them.
      Nothing is added or dropped per paper: two papers must produce the same
      table so they can be read side by side. */
@@ -4994,7 +4809,11 @@ S.push({id:'overview', label:'Overview', build(){
      showed only the coded verdict word -- then `questionable`, since replaced
      on 2026-08-11 by `unresolved` -- a three-valued label with no direction,
      standing in for a sentence that already existed. */
-  const hl=(D.report_obj||{}).headline||{};
+  /* The headline is the adjudicator's headline finding: its title as the
+     statement, its description as the evidence. `report.json`'s `headline`
+     block, which this read, exists only for serial-pipeline runs. */
+  const hf=(D.findings||[]).find(f=>f.id&&f.id===ed.headline_finding_id)||{};
+  const hl=hf.id?{statement:hf.title, severity:hf.severity, evidence:hf.description}:{};
   return `<h2>Overview</h2>
     ${/* WHAT PAPER IS THIS. Moving the metadata table below the verdict fixed a
           real problem -- the abstract used to push the conclusion a screen and a
@@ -5065,15 +4884,13 @@ S.push({id:'overview', label:'Overview', build(){
             the same as the severity above</summary>
             <span class="muted">A verdict grades WHAT THE CHECKS FOUND across
             the whole paper and has three values; a severity grades ONE FINDING
-            and has five. So a single ${sev(hl.severity)} finding need not stop
-            the numbers reconciling -- `+'`suspicious`'+` is a question, not a
+            and is a rung of the 1-9 ladder. So a single ${sev(hl.severity)} finding need not stop
+            the numbers reconciling -- a middle rung is a question, not a
             determination.</span></details>`:'')],
       ['confidence', ed.confidence?esc(ed.confidence)+' <span class="muted">-- grades the strength of the review evidence, not the paper</span>':'-'],
-    ].concat(edN?[
-      ['findings in the report', String(edN)+' <span class="muted">-- conclusions the review wrote; what the Findings page and its count in the contents show</span>'],
-    ]:[]).concat([
-      ['sweep findings the review recorded', String((D.findings||[]).length)+' <span class="muted">-- one per finding the sweep wrote down'+(edN?'; the report carried '+kept+' of them':'')+'</span>'],
-      ['tool calls', String((D.calls||[]).length)+' <span class="muted">-- both stages, file reads included; see Chain of reasoning</span>'],
+    ].concat([
+      ['findings the review recorded', String((D.findings||[]).length)+' <span class="muted">-- every row of the findings document, set-aside ones included; see Findings</span>'],
+      ['tool calls', String((D.calls||[]).length)+' <span class="muted">-- every agent, file reads included; see Chain of reasoning</span>'],
     ]).concat(
       /* TWO UNIVERSES, EACH UNDER ITS OWN NAME. This block printed the WRITE-UP
          severities under the heading "sweep tool verdicts -- one per check that
@@ -5137,7 +4954,7 @@ S.push({id:'overview', label:'Overview', build(){
       check that ran and found the paper's arithmetic sound -- it belongs in
       the accounting whether or not it earned a paragraph.</p>
     <p class="muted">The same flow as a diagram: which check produced which
-      severity, and which of those the editorial stage kept.</p>
+      severity, and which of those the adjudicator kept.</p>
     ${sankey(D.sankey)}
     <h3>How this review was produced</h3>
     ${kv((D.run_facts||[]).map(f=>[esc(f.fact),
@@ -6151,92 +5968,6 @@ S.push({id:'report', label:'Report', build(){
       .map(p=>[esc(p.practice),esc(p.detail)]))}`;
 }});
 
-/* THE ONLY ACTIONABLE PART OF THE DOCUMENT, and it was a sub-heading two
-   thirds of the way down the Report page, below a wall of prose. It is now a
-   section of its own with its own place in the contents: a reader who wants to
-   do something about this paper should not have to scroll to find out what.
-   The corresponding author's address sits beside it because a question you
-   cannot send is not actionable. */
-S.push({id:'questions', label:'Questions for the authors',
-  count:()=>((D.report_obj||{}).questions_for_authors||[]).length, build(){
-  const Q=(D.report_obj||{}).questions_for_authors||[];
-  const g=f=>((D.paper_facts||[]).find(x=>x.fact===f)||{}).value||'';
-  const to=g('Corresponding author');
-  if(!Q.length) return `<h2>Questions for the authors</h2>
-    <p class="muted">This review produced none. That is not the same as having
-      nothing to ask -- it means the editorial stage did not write any.</p>`;
-  return `<h2>Questions for the authors</h2>
-    <p class="muted">Each is answerable from what the authors already have.
-      None presupposes an error on their part: an inconsistency is far more
-      often a reporting slip, or a mistake by this tool in reading a number off
-      the page, than anything else.</p>
-    ${to && to.indexOf('not ')!==0
-      ? `${kv([['Send to', esc(to)]])}`
-      : `<p class="muted">No corresponding author was extracted, so these have
-           nowhere to go without looking one up.</p>`}
-    ${/* The questions are written to be SENT. What goes in the message is the
-          questions; "Would resolve" is our note to ourselves about why each is
-          worth asking, and pasting it to an author reads as us explaining our
-          own suspicions to them. So the copy takes the questions alone. */''}
-    ${/* The label and the note beside it used to read as ONE sentence on the
-          page -- "Copy the 5 questions questions only, without the Would
-          resolve notes" -- because each was written without the other in
-          view. */''}
-    <p><button type="button" class="copyq" onclick="copyQuestions(this)">Copy the
-      ${Q.length} question${Q.length===1?'':'s'}</button>
-      <span class="muted">(the <i>Would resolve</i> notes are ours, and are not
-        copied)</span></p>
-    <textarea id="qtext" class="offscreen" readonly>${esc(
-      Q.map((q,i)=>`${i+1}. ${q.question}`).join('\n\n'))}</textarea>
-    <ol class="qlist">${Q.map(q=>`<li>${esc(q.question)}${
-      q.why?`<br><span class="muted">Would resolve: ${esc(q.why)}</span>`:''}</li>`).join('')}</ol>`;
-}});
-
-/* Copy on a `file://` page.
-   `navigator.clipboard` requires a SECURE CONTEXT, and `file://` is not one in
-   Chrome -- the object is simply undefined there. A button wired only to it
-   would do nothing at all, silently, in the one way this bundle is actually
-   opened. `execCommand('copy')` is deprecated and works, which makes it the
-   right call for an offline document; the modern API is tried first for the
-   case where someone serves the bundle over HTTP.
-
-   The textarea is a real element on the page rather than one created on the
-   fly, so if BOTH paths fail the last resort is to select its contents and
-   leave the reader one Ctrl+C away instead of empty-handed. */
-function copyQuestions(btn){
-  const ta=document.getElementById('qtext'); if(!ta) return;
-  const done=ok=>{
-    const was=btn.textContent;
-    btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
-    setTimeout(()=>{btn.textContent=was;}, 1800);
-  };
-  /* try/catch AROUND the call, not only a rejection handler on the promise.
-     MEASURED in Chrome while testing this: `writeText` fails with
-     "NotAllowedError: Document is not focused" whenever the window is not the
-     OS foreground window, and a throw from the call itself would escape this
-     handler entirely -- leaving a button that does nothing and says nothing,
-     which is the failure this repo keeps finding in other forms. */
-  if(navigator.clipboard && window.isSecureContext){
-    try{
-      navigator.clipboard.writeText(ta.value)
-        .then(()=>done(true), ()=>done(legacyCopy(ta)));
-      return;
-    }catch(e){ /* fall through to the offline path */ }
-  }
-  done(legacyCopy(ta));
-}
-function legacyCopy(ta){
-  ta.classList.remove('offscreen');
-  ta.select();
-  ta.setSelectionRange(0, ta.value.length);
-  let ok=false;
-  try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
-  /* Left VISIBLE and selected when the copy failed, hidden again when it
-     worked. A failure that hides the text has taken the fallback away too. */
-  if(ok) ta.classList.add('offscreen');
-  return ok;
-}
-
 /* "Romano et al. 2025" -- how a person refers to a paper, as against the DOI
    slug, which is how the filesystem does. */
 function shortCite(){
@@ -6301,11 +6032,10 @@ function defineJargon(html){
 /* THE FINDINGS-V2 PAGE. A parallel-era run (v1.0.0+) has one finding
    universe, already adjudicated: each row carries its FINAL 1-9 severity,
    the adjudicator's action and rationale, and the paper-level verdict sits
-   in D.adjudication. None of the legacy machinery below (editorial cards
-   over nested sweep evidence, stage1_finding_ids joins, the 5-enum
-   dropdown) describes it, so it renders natively rather than wearing the
-   old vocabulary -- an S5 is not "impossible", and pretending so would put
-   this system's strongest word on findings that never earned it. */
+   in D.adjudication. It renders natively rather than wearing the serial
+   pipeline's 5-word vocabulary -- an S5 is not "impossible", and pretending
+   so would put this system's strongest word on findings that never earned
+   it. */
 function v2FindingsPage(){
   const adj=D.adjudication||{};
   const rows=D.findings||[];
@@ -6333,6 +6063,7 @@ function v2FindingsPage(){
       +(f.description?'<p style="margin:6px 0">'+esc(f.description)+'</p>':'')
       +(f.quote?'<blockquote style="margin:6px 0;padding-left:10px;border-left:3px solid var(--rule,#ccc)"><code>'+esc(f.quote)+'</code></blockquote>':'')
       +anchorLinks(f)
+      +((f.severity_source||{}).note?'<p class="muted" style="font-size:12px;margin:6px 0 0"><b>tool vs write-up:</b> '+esc(f.severity_source.note)+'</p>':'')
       +(a.rationale?'<p class="muted" style="font-size:12px;margin:6px 0 0"><b>adjudicator:</b> '+esc(a.rationale)+'</p>':'')
       +'</div>';
   };
@@ -6353,183 +6084,11 @@ function v2FindingsPage(){
 }
 
 S.push({id:'findings', label:'Findings', count(){
-  const ed=(D.report_obj||{}).findings||[];
-  return ed.length || (D.findings||[]).length;
+  return (D.findings||[]).length;
 }, countTitle(){
-  if(D.findings_format==='v2')
-    return (D.findings||[]).length+' adjudicated findings (1-9 ladder)';
-  const ed=(D.report_obj||{}).findings||[];
-  /* "tool verdicts" is the OTHER universe -- one per check that returned,
-     passes included -- and `D.findings` is the sweep's FINDINGS. Same mislabel
-     the Overview carried; corrected here so the tooltip and the page agree. */
-  return ed.length
-    ? ed.length+' findings in the report (the sweep recorded '+(D.findings||[]).length+' findings; see Overview)'
-    : (D.findings||[]).length+' sweep findings (no editorial findings)';
+  return (D.findings||[]).length+' adjudicated findings (1-9 ladder)';
 }, build(){
-  if(D.findings_format==='v2') return v2FindingsPage();
-  /* The ladder is injected from tools/severity.py at build time, not written
-     out again here. It already existed in five places; a sixth copy that the
-     tests do not reach would drift silently. */
-  const order=__SEVERITY_ORDER__;
-  const bySev=(a,b)=>((order[a.severity]??9)-(order[b.severity]??9)) || (cRank(a)-cRank(b));
-  const sweep=[...(D.findings||[])].sort(bySev);
-  const ed=[...((D.report_obj||{}).findings||[])];
-  if(!sweep.length && !ed.length) return '<h2>Findings</h2><p class="muted">No findings.</p>';
-
-  /* EDITORIAL FINDINGS ARE THE PAGE; the sweep findings are evidence nested
-     under them. A reader asking "does this paper have problems?" needs the
-     triaged, titled, ranked list -- the raw checks are what it rests on, not
-     the headline. This page used to show only the sweep, so the titled
-     findings the editorial stage actually wrote were never displayed
-     anywhere, and the reader met 23 tool verdicts instead of 9 conclusions.
-
-     Nothing is lost: every sweep finding is reachable, either nested under the
-     finding that cites it or in the "not carried into the report" group below,
-     and `findings.json` is in the file tree regardless. */
-  const byId={}; sweep.forEach(f=>{ if(f.id) byId[f.id]=f; });
-  const cited=new Set();
-  ed.forEach(e=>(e.stage1_finding_ids||[]).forEach(i=>cited.add(String(i))));
-  const orphans=sweep.filter(f=>!cited.has(String(f.id)));
-
-  /* THE DROPDOWN LISTS WHAT IS ON THE PAGE. It was built from `sweep`, and the
-     cards rendered at top level are the EDITORIAL findings plus the orphans --
-     a nested sweep finding carries its own severity but its parent card does
-     not inherit it (`data-sev` comes from the editorial finding). So an
-     `impossible` tool verdict that the editorial stage triaged down to
-     `suspicious` still put "impossible" in a dropdown, where it reads as the
-     strongest claim this system can make about the paper -- and selecting it
-     hid every card, because no rendered card carries that severity. The one
-     word the reader must never see without a finding behind it was offered by
-     a control that could not show them one.
-
-     Techniques are still taken from the sweep, and that is correct rather than
-     inconsistent: every sweep finding is either nested under a card -- whose
-     `data-tech` is built from its backing techniques -- or rendered as an
-     orphan with its own, so every option here reaches at least one card. */
-  const shown = ed.length ? ed.concat(orphans) : sweep;
-  const sevs=[...new Set(shown.map(f=>f.severity))].filter(Boolean)
-    .sort((a,b)=>(order[a]??9)-(order[b]??9));
-  const techs=[...new Set(sweep.map(f=>f.technique))].filter(Boolean).sort();
-  const filters=`<div style="margin:8px 0">
-      <input type="search" id="fq" placeholder="filter findings..." size="30">
-      <select id="fsev"><option value="">any severity</option>${sevs.map(s=>`<option>${esc(s)}</option>`).join('')}</select>
-      <select id="ftech"><option value="">any technique</option>${techs.map(s=>`<option>${esc(s)}</option>`).join('')}</select>
-      <span class="muted" id="fcount"></span>
-    </div>`;
-
-  /* HOW MUCH OF THIS PAGE CAN A READER TRACE BACK TO THE PAGE OF THE PAPER?
-     Counted from the sweep findings being rendered, not from run_meta, so the
-     number cannot disagree with what the reader is looking at. `technique:
-     manual` is excluded: the model read those off the paper itself, there is
-     no producing call to quote, and counting them as untraceable would report
-     a design fact as a coverage failure. */
-  /* ONE SENTENCE, COMPUTED ONCE (`viewer_facts.traceability_sentence`), shared
-     with the Overview. The two used to be computed separately from the same
-     array with slightly different filters, which is how the document ended up
-     answering one apparent question with three different numbers on three
-     pages. It also said "cite values this bundle cannot trace back to the page"
-     about findings that DO quote the paper -- see the note at the Overview
-     site. Both halves are now stated: what is traceable, and what the narrower
-     join could not tie to a specific call. */
-  const srcLine=((D.facts||{}).traceability_sentence)
-    ? `<p class="muted">${esc(D.facts.traceability_sentence)}</p>` : '';
-
-  /* THE INDEX. Twelve findings, each roughly one screen, no collapse and no
-     way to triage: a reader had to scroll the whole page to learn whether
-     anything here touches a conclusion they must act on.
-
-     WHAT KEEPS THIS FROM BEING A DASHBOARD -- the risk is real and the rules
-     are in `viewer_facts.finding_index`: no totals row, no aggregate anywhere,
-     severity is a sort key and a chip rather than a headline, every cell is a
-     property of ONE finding that a reader can go and check. The `changes`
-     column carries "(asserted)" wherever the pipeline did not compute the
-     consequence, so the one subjective column cannot borrow the authority of
-     the objective ones beside it. */
-  const idx=((D.facts||{}).index)||[];
-  const EVWORD={computed:'a validated check', hand_computed:'the model itself',
-                reading:'a reading of the paper'};
-  const idxHtml=idx.length?`<h3>The findings at a glance</h3>
-    <p class="muted">Sorted by severity. Every column is a property of one
-      finding, not a score, and there is deliberately no total: this is a list
-      of questions, and adding them up would make it a grade.</p>
-    ${tbl(['','finding','what it changes','computed by','re-runs','where'],
-      idx.map(r=>[
-        sev(r.severity),
-        `<a href="#f${r.n}">${esc(r.title)}</a>`,
-        esc(r.changes)+(r.changes_computed?'':' <span class="muted">(asserted)</span>'),
-        `<span class="muted">${esc(EVWORD[r.evidence]||r.evidence||'-')}</span>`,
-        r.reproduces?'yes':'<span class="muted">no</span>',
-        `<span class="muted">${esc(r.location||'-')}</span>`]))}`:'';
-
-  if(!ed.length){
-    return `<h2>Findings</h2>
-      <p class="muted">The editorial stage produced no findings for this run,
-        so what follows is the raw sweep. Most severe first. Terms are defined
-        in the <a href="#about">codebook</a>.</p>
-      ${srcLine}
-    ${idxHtml}
-      ${filters}<div id="flist">${sweep.map(fHtml).join('')}</div>`;
-  }
-  return `<h2>Findings</h2>
-    <p class="muted">The review's own findings, ordered by severity and then by
-      what each one changes. Under each, the tool verdicts it rests on -- open
-      one to see the arithmetic. Terms are defined in the
-      <a href="#about">codebook</a>.</p>
-    ${srcLine}
-    ${filters}
-    <div id="flist">${ed.map((e,i)=>edHtml(e,i,byId)).join('')}</div>
-    ${orphans.length?`<h3>Checks the report did not carry (${orphans.length})</h3>
-      <p class="muted">These ran and returned a verdict, and the editorial stage
-        did not build a finding on them. Most are <i>consistent</i> -- a check
-        that passed. They are here because "ran and found nothing" is a
-        different fact from "never ran", and neither should be invisible.</p>
-      <div id="orphans">${orphans.map(fHtml).join('')}</div>`:''}`;
-}, after(){
-  /* KEYED ON THE SAME CONDITION THE BUILDER USES. `build()` early-returns
-     `v2FindingsPage()` for a v2 run and renders no filter bar, so this wiring
-     has nothing to attach to -- it is v1 markup only. Reading the same flag
-     rather than probing for one of the elements keeps the two halves of this
-     section from drifting apart again, which is how they got here. */
-  if(D.findings_format==='v2') return;
-  const q=document.getElementById('fq'), s=document.getElementById('fsev'),
-        t=document.getElementById('ftech'), c=document.getElementById('fcount');
-  if(!q||!s||!t||!c) return;
-  /* Filter what the reader can SEE. `data-hay` was `JSON.stringify(finding)`,
-     which searches the payload instead: `granularity` HID the card headed
-     "Granularity of a standard deviation (GRIMMER)" -- because that heading is
-     synthesised at render time and appears nowhere in the JSON -- while
-     `stage1_finding_ids` matched 10 cards and `true` matched all 18. Taking
-     the rendered text also folds nested evidence into its parent's haystack
-     for free, since the evidence lives inside the card. */
-  document.querySelectorAll('#flist > .finding, #orphans > .finding').forEach(el=>{
-    el.dataset.hay = (el.textContent||'').replace(/\s+/g,' ').toLowerCase();
-  });
-  const run=()=>{
-    let n=0, nEd=0, nOrph=0;
-    /* Top-level cards only. A nested sweep finding is EVIDENCE for the card
-       above it, so hiding one on a technique filter would leave a finding
-       claiming support it appears not to have. Its text is folded into the
-       parent's haystack instead, so filtering by `grim` still surfaces the
-       editorial finding that rests on a GRIM check. */
-    document.querySelectorAll('#flist > .finding, #orphans > .finding').forEach(el=>{
-      const ok = (!q.value || el.dataset.hay.includes(q.value.toLowerCase()))
-        && (!s.value || el.dataset.sev===s.value)
-        && (!t.value || (el.dataset.tech||'').split(' ').includes(t.value));
-      el.style.display = ok?'':'none';
-      if(ok){ n++; if(el.parentElement && el.parentElement.id==='orphans') nOrph++; else nEd++; }
-    });
-    /* EACH HALF UNDER ITS OWN NAME. This read "18 shown" while the contents
-       badge beside it read 10, and both were right: 10 findings the report
-       wrote, plus 8 checks it did not carry, rendered on one page. A reader
-       who counts cards and compares gets a contradiction with nothing on
-       screen to resolve it, and the obvious inference is that one of our
-       counts is broken. The page now says which number is which -- the same
-       fix the Overview already got for the same collision. */
-    c.textContent = nOrph
-      ? n+' shown -- '+nEd+' from the report, '+nOrph+' check'+(nOrph===1?'':'s')+' it did not carry'
-      : n+' shown';
-  };
-  [q,s,t].forEach(e=>e && e.addEventListener('input',run)); run();
+  return v2FindingsPage();
 }});
 
 /* What each check is, in words a reader who is not a metascientist can use.
@@ -6578,109 +6137,6 @@ const OUTCOME={impossible:'the numbers cannot co-exist',
   highly_suspicious:'hard to explain innocently',suspicious:'a discrepancy',
   indeterminate:'could not be judged',consistent:'holds'};
 
-function fTitle(f){
-  const what=CHECK_NAMES[f.technique]||String(f.technique||'Check').replace(/_/g,' ');
-  /* `where` comes from the model and lands inside markup, so it is escaped
-     here: a `location` containing a `<` injected tags into the heading. The
-     70-character truncation is gone too -- a location is WHERE to look, and
-     "Table 2, Within-Person column, rows 4-9 of the mediation..." truncated at
-     70 stops exactly where it starts being useful. */
-  const where=esc(String(f.location||'').trim());
-  return esc(what)+(where?` -- ${where}`:'')
-    +(OUTCOME[f.severity]?` <span class="muted">(${OUTCOME[f.severity]})</span>`:'');
-}
-
-/* One editorial finding: the review's own conclusion, with the sweep findings
-   it rests on folded underneath. `title` has been in report.schema.json since
-   the beginning and the viewer never once read it. */
-function edHtml(e, i, byId){
-  const backing=(e.stage1_finding_ids||[]).map(id=>byId[String(id)]).filter(Boolean);
-  const techs=[...new Set(backing.map(f=>f.technique).filter(Boolean))];
-  /* The nested evidence is searchable through the parent -- see the filter in
-     `after()`. Without this, filtering by `grim` would hide the finding that
-     rests on a GRIM check because the word appears only in its evidence. */
-  const hay=JSON.stringify([e, backing]).toLowerCase();
-  /* THE EVIDENCE GRADE, from `viewer_facts.evidence_ledger`, which has been in
-     the payload since phase 0 and rendered on no card.
-
-     THE OLD PREDICATE WAS `!backing.length` AND IT IS THE WRONG ONE. Measured
-     on the archived cerebrolysin run it fires on 1 of 12 findings while FOUR
-     rest entirely on arithmetic the model did itself -- three of those
-     `suspicious`. A finding that cites sweep findings LOOKS backed; if every
-     one of them is `technique: manual`, nothing verified it.
-
-     Three grades, not two, because the weak cases fail differently: a
-     hand-computed finding has arithmetic nobody checked, a reading has no
-     arithmetic at all and nothing to re-run. The old single paragraph said one
-     sentence over both. */
-  const ev=(((D.facts||{}).evidence||{}).per_finding||[])[i]||{};
-  const unbacked=!backing.length;
-  return `<div class="finding ${esc(e.severity)}" id="f${i+1}"
-       data-sev="${esc(e.severity)}"
-       data-tech="${esc(techs.join(' '))}" data-hay="${esc(hay)}">
-    ${/* THE GRADE RIDES INSIDE THE CHIP, not only in a paragraph below it.
-          A screenshot crop that captures "suspicious" and the claim could miss
-          the qualification entirely -- which fails the viewer's governing test
-          in the band where it matters most. MEASURED across 23 archived runs:
-          88 of 222 findings (40%) are not computed, so this is the common case
-          rather than an edge one. The paragraph stays for the reader who is
-          still on the page; the chip is for the reader who is not. */''}
-    <div>${sev(e.severity)}${ev.chip && ev.grade!=='computed'
-      ? ` <span class="evfuse">${esc(ev.chip)}</span>` : ''}${
-      /* WHOSE STANDARD, beside the severity, for the same screenshot reason.
-         Only shown for the supplied class: the other three warrants say the
-         obligation is the paper's own or is arithmetic, which is what a reader
-         already assumes a review means. `field_norm` is the one that changes
-         how the sentence should be read, so it is the one that is printed. */
-      (((D.facts||{}).evidence||{}).uses_warrants)
-        && (ev.warrant||{}).warrant==='field_norm'
-      ? ` <span class="warrfuse" title="${esc((ev.warrant||{}).meaning||'')}">${
-          esc((ev.warrant||{}).stated ? 'a norm we supplied'
-                                      : 'no warrant named -- read as ours')}</span>` : ''}</div>
-    <h3>${i+1}. ${esc(e.title||'Untitled finding')}</h3>
-    ${ev.grade && ev.grade!=='computed'
-      ? `<p class="evgrade"><b>${esc(ev.headline||'')}</b> ${esc(ev.detail||'')}</p>`
-      : ''}
-    ${e.plain?`<p class="plain">${esc(e.plain)}</p>`:''}
-    ${cHtml(e)}
-    ${evRests(backing)}
-    <dl>
-      <dt>Where</dt><dd>${esc(e.location)||'<span class="muted">not given</span>'}</dd>
-      ${e.reported!==undefined?`<dt>Paper reports</dt><dd>${val(e.reported)}</dd>`:''}
-      ${e.computed!==undefined?`<dt>Review computes</dt><dd>${val(e.computed)}</dd>`:''}
-      ${e.assumptions?`<dt>Assumes</dt><dd>${val(e.assumptions)}</dd>`:''}
-    </dl>
-    ${/* WHAT WOULD SETTLE THIS -- the mandatory last content block, derived in
-          PYTHON at build time (`viewer_facts.settle_this`) from what the
-          finding and its backing checks already record. The gates this repo
-          spent days building ARE the list of things that could be missing, so
-          the answer is nearly always already on disk.
-
-          Phrased as "what would settle this", never "what would make us
-          withdraw it": we do not know in advance which way the answer goes, and
-          promising to withdraw is a promise about a conclusion not yet reached.
-          Never silent -- a card that ends without saying what would resolve it
-          invites the reader to treat it as settled already. */''}
-    ${ev.settle?`<div class="settle"><b>What would settle this.</b>
-      ${esc(ev.settle.text||'')}
-      ${(ev.settle.also||[]).length?`<ul>${(ev.settle.also||[])
-        .map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:''}</div>`:''}
-    ${reproHtml(e)}
-    ${backing.length?`<details class="evidence"><summary>${backing.length} tool
-        verdict${backing.length===1?'':'s'} this rests on</summary>
-      ${backing.sort((a,b)=>(__SEVERITY_ORDER__[a.severity]??9)-(__SEVERITY_ORDER__[b.severity]??9))
-        .map(fHtml).join('')}</details>`:''}
-    ${/* THE FRAME INSIDE THE CROP. The governing constraint on this whole
-          document is that a screenshot of any part of it still reads as a
-          question rather than an allegation -- and cropping is the attack. A
-          single card, screenshotted and forwarded, carried no statement of what
-          this document is. One muted line, on every card. */''}
-    <div class="cardfoot">Automated check of printed numbers -- a question for
-      the authors, not a finding of misconduct.
-      <span class="muted">${esc(shortCite())} &middot; finding ${i+1}</span></div>
-  </div>`;
-}
-
 /* A short citation for the card footer: first author and year where we have
    them, else the paper id. Built from `paper_facts`, so it agrees with the
    identity block rather than being a second rendering of the same fact. */
@@ -6693,133 +6149,12 @@ function shortCite(){
   return bits.length?bits.join(' '):(D.paper_id||'this paper');
 }
 
-function fHtml(f){
-  const problems = (f.computed && f.computed.problems) || [];
-  /* The model's own sentence is kept, below the title rather than as it: it is
-     often a methodology aside, and a reader scanning headings needs to know
-     what was checked before they are told how the check went. */
-  const sub = problems.length ? problems[0]
-    : (f.notes ? String(f.notes).split(/(?<=\.)\s/)[0] : '');
-  const hay = JSON.stringify(f).toLowerCase();
-  return `<div class="finding ${esc(f.severity)}" data-sev="${esc(f.severity)}" data-tech="${esc(f.technique||'')}"
-       data-hay="${esc(hay)}">
-    <div>${sev(f.severity)}</div>
-    <h3>${fTitle(f)}</h3>
-    ${f.plain?`<p class="plain">${esc(f.plain)}</p>`:''}
-    ${sub?`<p class="sub">${esc(sub)}</p>`:''}
-    <dl>
-      <dt>Where</dt><dd>${refLinks(esc(f.location))||'<span class="muted">not given</span>'}</dd>
-      ${f.quote?`<dt>${quoteLabel(f)}</dt><dd><code>${esc(f.quote)}</code>${quoteNote(f)}</dd>`:''}
-      ${sourceRow(f)}
-      ${/* THE ROUTED TOOL'S CLASS GOVERNS, NOT THE ROUTER'S. check_table is a
-            dispatcher whose own card says so in as many words: its `absolute`
-            class is a CEILING, and a `suspicious` row it returns may have come
-            from a probabilistic check underneath. Stamping the router's class
-            on such a row would overstate it, which is the one direction this
-            document may never err in. */''}
-      <dt>Check used</dt><dd><code>${esc(f.technique)}</code>${
-        f.inputs&&f.inputs.tool?` &rarr; <code>${esc(f.inputs.tool)}</code>`:''}${
-        evChip((f.inputs&&f.inputs.tool)||f.technique, f.severity)}</dd>
-      <dt>Paper reports</dt><dd>${val(f.reported)}</dd>
-      <dt>Check computes</dt><dd>${val(f.computed&&typeof f.computed==='object'
-        ? Object.fromEntries(Object.entries(f.computed).filter(([k])=>k!=='problems'))
-        : f.computed)}</dd>
-      ${problems.length>1?`<dt>Why flagged</dt><dd>${val(problems)}</dd>`:''}
-      ${f.inputs?`<dt>Inputs used</dt><dd>${val(f.inputs)}</dd>`:''}
-    </dl>
-    ${cHtml(f)}
-    ${sSrc(f)}
-    ${anchorLinks(f)}
-    ${f.notes?`<p>${esc(f.notes)}</p>`:''}
-    ${reproHtml(f)}
-  </div>`;
-}
-
 /* Why a finding has no runnable command. These are NOT all the same thing, and
    printing the raw internal message ("must invoke `metascience`, got
    'MCP-only'") read as an error when two of the four cases are not. */
 /* Jump from a finding to where it lives in the paper. The page number and the
    text offset were resolved at build time (see anchor_findings): the browser's
    built-in PDF viewer reports no text positions, so this cannot be done here. */
-/* Turn "Table 2" and "Figure 3A" into links to the place they name.
-   Greg's ask, verbatim: "Whenever a table or section is mentioned in any of
-   the pages, it should be a clickable link that will snap to the Paper vs Text
-   page." A finding whose Where says "Table 2, Height row" is asking the reader
-   to go and look at Table 2, and making them find it by hand is the same
-   friction as an unverifiable quote.
-
-   TAKES ALREADY-ESCAPED TEXT and must be given it. Linkifying first and
-   escaping after would destroy the anchors; escaping after linkifying would
-   emit them literally. The pattern cannot match inside an HTML entity -- an
-   entity is &...; with no letters spelling Table -- which is the failure that
-   bit the search box, where a needle matched inside &#39; and split it open. */
-function refLinks(escaped){
-  return String(escaped||'').replace(
-    /\b(Table|Figure|Fig\.)\s*([0-9]+[A-Za-z]?)/g,
-    (m,kind,num)=>'<a href="#" onclick="goTable(' +
-      JSON.stringify((kind==='Fig.'?'Figure':kind)+' '+num).replace(/"/g,'&quot;') +
-      ');return false">'+m+'</a>');
-}
-
-/* The heading over the quote states what KIND of text it is.
-   "As printed" is a promise: that these words are in the paper. It was printed
-   over every quote, including the 46 per cent that are assembled from values
-   found in different places. A reader who searches the PDF for one of those
-   finds nothing, which is the whole reason this label exists. */
-function quoteLabel(f){
-  const v = f.quote_verified;
-  /* "As printed" is a PROMISE that these words are in the paper, so ONLY the
-     two verdicts that actually located them may make it. An unstamped quote --
-     quote_verified absent because the paper could not be opened, so the
-     pipeline deliberately said nothing -- used to fall through to "As printed"
-     here, turning our inability to read the paper into a claim about it. The
-     neutral default makes no claim either way. */
-  if(v==='verbatim'||v==='elided') return 'As printed';
-  if(v==='stitched')   return 'Values, assembled by this review';
-  if(v==='unverified') return 'Quoted by the review, not located';
-  return 'Quoted by the review';
-}
-
-/* Say where to look, or say plainly that it was OUR search that came up empty.
-   Never phrase our failure as a fact about the paper. */
-function quoteNote(f){
-  const v = f.quote_verified;
-  if(v==='verbatim'||v==='elided'){
-    const w = f.quote_source ? esc(f.quote_source) : 'the paper';
-    return `<div class="muted" style="font-size:12px;margin-top:3px">found in ${w}${v==='elided'?', across an ellipsis':''}</div>`;
-  }
-  if(f.quote_problem){
-    return `<div class="muted" style="font-size:12px;margin-top:3px">${esc(f.quote_problem)}</div>`;
-  }
-  return '';
-}
-
-/* The passage the CHECKED NUMBERS were read from, as against f.quote, which is
-   the model's choice of what to quote about the finding. `sourcing.annotate`
-   puts this on a finding by joining it to the validated call that produced it,
-   and only when that join is unambiguous -- attaching the wrong row's passage
-   would be worse than attaching none, because a quote is the thing a reader
-   trusts INSTEAD of checking.
-
-   Same promise discipline as quoteLabel: only the two verdicts that actually
-   located the text may say "read from"; the others are stated as OUR search
-   failing, which over 499 findings is what they have always turned out to be. */
-function sourceRow(f){
-  const s = f.source; if(!s || !s.source_quote) return '';
-  const v = s.source_quote_verified;
-  const located = v==='verbatim'||v==='elided';
-  const label = located ? 'Numbers read from'
-              : v==='stitched'   ? 'Numbers read from, not one contiguous passage'
-              : v==='unverified' ? 'Numbers read from, not located by our search'
-              : 'Numbers read from, unchecked';
-  const where = located
-    ? `found in ${esc(s.source_quote_source||'the paper')}${v==='elided'?', across an ellipsis':''}`
-    : (v ? 'our search could not find this text in what we read -- most often our extraction, not the authors' : '');
-  const at = s.source_locator ? `<b>${esc(s.source_locator)}</b> &mdash; ` : '';
-  return `<dt>${label}</dt><dd>${at}<code>${esc(s.source_quote)}</code>${
-    where?`<div class="muted" style="font-size:12px;margin-top:3px">${where}</div>`:''}</dd>`;
-}
-
 function anchorLinks(f){
   const a = f._anchor; if(!a) return '';
   /* A jump link on text that is not in the document highlights nothing, and
@@ -6928,88 +6263,6 @@ function applyJump(){
       box.dispatchEvent(new Event('input'));
     }
   }
-}
-
-/* A reproduction string the model left as a TEMPLATE -- literal <...> slots,
-   an ellipsis where an argument belongs -- is not a command. The write path
-   stamps such strings `reproduction_valid: false`, but only runs made after
-   that validator existed carry the stamp at all: on an older review a
-   literal `metascience grim <mean> <n>` passed the one check below
-   (`reproduction_valid !== false`) and was offered in a <pre> as something
-   to paste. This mirrors evaluation/deterministic.py exactly: `<`, `>`, `{`
-   and `}` count only OUTSIDE quoted arguments, because a quoted argument is
-   data -- `--text "p < 0.001"` and a --tests '[{...}]' JSON blob are
-   runnable commands, not templates (measured there: treating quoted braces
-   as placeholders was a ~35% false-positive rate). The ellipsis and
-   TODO/FIXME/XXX markers count anywhere, as they do there. */
-function reproLooksTemplate(cmd){
-  cmd=String(cmd||'');
-  if(/\.\.\.|\u2026|TODO|FIXME|XXX/.test(cmd)) return true;
-  let bare='', q=null;
-  for(const ch of cmd){
-    if(q===null&&(ch==='"'||ch==="'"))q=ch;
-    else if(q!==null&&ch===q)q=null;
-    else if(q===null)bare+=ch;
-  }
-  return /[<>{}]/.test(bare);
-}
-
-function reproHtml(f){
-  const cmd = String(f.reproduction||'').trim();
-  /* `reproduction_valid === false` is the write path's verdict that this
-     command does NOT run as printed, and this is now the ONLY place a reader is
-     handed a command at all: `report.md` used to print its own
-     `**Reproduce:** ...` line and no longer prints one, so there is no second
-     document to disagree with and no second refusal. That makes this branch
-     more load-bearing, not less.
-
-     It was written because the two documents DID disagree. The report refused
-     the command; the viewer printed it anyway, in a <pre>, because it starts
-     with the word "metascience". On the wave-3 eat.24415 run that is 3 of 10
-     findings, and what got pasted into the viewer was the raw tool note: a
-     2.3 kB --tests '[{...}]' JSON blob with unsubstituted placeholders that
-     errors on first use. A command that fails when a reader tries it reads as a
-     broken tool, which is worse than admitting the gap.
-
-     `tpl` fires ONLY when the write path recorded no verdict at all
-     (`reproduction_valid` absent): a recorded `true` rests on an actual
-     execution, which outranks the static mirror here, and a recorded `false`
-     already takes the branch below. */
-  const tpl = f.reproduction_valid==null && cmd.startsWith('metascience')
-    && reproLooksTemplate(cmd);
-  if(cmd.startsWith('metascience') && f.reproduction_valid!==false && !tpl)
-    return `<pre>${esc(cmd)}</pre>`;
-  const why = String(f.reproduction_problem||'');
-  let msg;
-  if(/MCP-only/i.test(why)){
-    msg = `<b>No command-line equivalent.</b> This check runs only inside the
-      pipeline, so there is no <code>metascience</code> command to re-run it with.
-      That is a gap in the toolkit, not a defect in the finding: the inputs are
-      listed above and the check itself is deterministic.`;
-  } else if(tpl || /placeholder/i.test(why)){
-    msg = `<b>The command was left as a template.</b> It still contains
-      <code>&lt;...&gt;</code> placeholders, so it will not run as written.
-      Fill in the inputs listed above. This one IS a defect.${
-      tpl&&cmd.length<=200?` The template: <code>${esc(cmd)}</code>`:''}`;
-  } else if(/got '/i.test(why)){
-    msg = `<b>No command was supplied.</b> Prose was written where a command
-      belongs, so this finding cannot be re-run as printed. This one IS a defect.`;
-  } else if(why){
-    /* The raw exec output is 200-odd characters of click usage text and box
-       drawing, and it was printed inline directly beneath the accusation --
-       so the last thing under a finding that says `impossible` was a wall of
-       tooling failure. It is kept, because it names the exact broken argument
-       and that is what an operator needs, but folded away: the reader needs
-       "you cannot re-run this as printed", not our stack. */
-    msg = why.length>110
-      ? `<b>Not reproducible by a single command.</b>
-         <details><summary>what went wrong when we tried</summary>
-         <pre>${esc(why)}</pre></details>`
-      : `<b>Not reproducible by a single command.</b> ${esc(why)}`;
-  } else {
-    msg = `<b>No reproduction command.</b> This finding cannot be independently re-run.`;
-  }
-  return `<p class="muted" style="margin-top:8px">${msg}</p>`;
 }
 
 S.push({id:'values', label:'Values', count(){
@@ -7201,7 +6454,7 @@ S.push({id:'values', label:'Values', count(){
    register emitted is OUR wiring or the model's refusal, an empty one is a
    claim about the paper. */
 function modelRegisterBlock(){
-  const cs=(D.report_obj||{}).coverage_summary||D.coverage_summary||{};
+  const cs=D.coverage_summary||{};
   /* WHERE IT IS ACTUALLY WRITTEN. `cs.statistics_register` is the legacy
      home, under report.json's coverage_summary. The parallel pipeline writes
      the register at the TOP LEVEL of findings.v2.json
@@ -7599,7 +6852,7 @@ function showVar(id){
 }
 
 S.push({id:'calls', label:'Chain of reasoning', count:()=>(D.calls||[]).length,
-  countTitle:()=>'tool calls across both stages, file reads included', build(){
+  countTitle:()=>'tool calls across every agent, file reads included', build(){
   const c=D.calls||[], names=[...new Set(c.map(x=>x.tool))].sort();
   /* Counted here rather than read from source_coverage.json: this page renders
      the calls themselves, so a count computed from anything else could disagree
@@ -7958,7 +7211,7 @@ function codebookHtml(){
 
 S.push({id:'coverage', label:'Coverage and limits', build(){
   const u=D.unchecked||[], c=D.coverage||{};
-  const rep=D.report_obj||{}, cs=rep.coverage_summary||D.coverage_summary||{}, nc=rep.not_checked||[];
+  const cs=D.coverage_summary||{}, nc=u;
   const ck=cs.checkable||{};
   /* THE COMPLETENESS MANIFEST. Written into `coverage_summary` by agent.py and
      read by NOTHING until 2026-08-12 -- and it escaped VIEWER_MUST_RENDER as
@@ -8003,63 +7256,6 @@ S.push({id:'coverage', label:'Coverage and limits', build(){
         evidence that the file is empty, that its tables do not exist, or that
         the paper failed to report something -- and any check that would have
         run on it did not run.</p>`:'');
-  /* STAGE-1 RECONCILIATION. Every finding the sweep raised must end stage 2
-     with a disposition, for the same reason every checkable item must: the
-     alternative is silence, and silence reads as a clean pass. `clean` here
-     means no accusation was dropped WITHOUT a stated reason -- dropping one is
-     legitimate editorial work, doing it silently is what a reader cannot
-     audit. */
-  const sr=cs.stage1_reconciliation||{};
-  const srRows=sr.n_stage1?[
-    ['stage-1 findings raised',esc(sr.n_stage1)],
-    ['carried into this report',esc(sr.n_carried)],
-    ['not carried',esc(sr.n_dropped)],
-    ['accusations dropped with NO stated reason',
-      (sr.n_accusatory_unexplained||0)>0
-        ?`<strong class="bad">${esc(sr.n_accusatory_unexplained)}</strong>`
-        :esc(sr.n_accusatory_unexplained||0)]]:[];
-  const srList=(sr.accusatory_unexplained||[]).slice(0,8).map(r=>
-    `<li><code>${esc(r.severity)}</code> &mdash; ${esc(r.location||r.id||'')}</li>`).join('');
-  /* THE SECOND LOOK. Computed by code, handed to stage 2, and -- until
-     2026-08-13 -- shown to nobody. That is this repository's signature defect
-     landing on a field added the same day: produced, consumed by the model,
-     invisible to the reader.
-
-     Greg's standing requirement is to "see all output at every level, for the
-     purposes of testing and scrutiny", and this is the level where our own
-     accusations were graded. It is shown as a WORKLIST, never a verdict: a
-     flagged finding is not thereby wrong, and stage 2's answer to it lives in
-     `triage`. */
-  const sl=(rep.second_look||D.second_look||{});
-  const slItems=(sl.items||[]).slice(0,8);
-  const secondLook=(typeof sl.n_accusatory==='number')?`<h4>Accusations this
-      review flagged against itself</h4>
-    <p class="muted">Before the editorial stage triaged anything, code checked
-      every accusation for three weaknesses it can decide without judgement: a
-      number no registered tool produced, a quote we could not find in the
-      paper, and a severity resting on a scale bound the paper never stated.
-      <b>Nothing here is wrong because it is listed</b> -- this is what the
-      review was told to look at twice, and what it concluded is in its
-      triage.</p>
-    ${kv([['accusations made', esc(sl.n_accusatory)],
-          ['carrying a named weakness in their evidence',
-           (sl.n_flagged||0)>0?`<strong>${esc(sl.n_flagged)}</strong>`:esc(0)]]
-         .concat(Object.entries(sl.by_marker||{}).map(([k,v])=>
-           ['&nbsp;&nbsp;'+esc(k.replace(/_/g,' ')), esc(v)])))}
-    ${slItems.length?`<details><summary>Which ones</summary>
-      ${tbl(['finding','severity','where','weakness'],slItems.map(r=>[
-        esc(r.id||''), esc(r.severity||''), esc(r.location||''),
-        esc((r.markers||[]).join(', '))]))}</details>`:''}
-    ${sl.note?`<p class="muted">${esc(sl.note)}</p>`:''}`:'';
-
-  const recon=sr.reconcilable===false
-    ?`<h4>Stage-1 reconciliation</h4><p class="muted">${esc(sr.note||'Not possible for this run.')}</p>`
-    :(sr.n_stage1?`<h4>Stage-1 reconciliation</h4>
-      <p class="muted">A finding the sweep raised and this report never mentions is a
-        claim the review made and then withdrew. Dropping a <code>consistent</code>
-        result needs no explanation; dropping an accusation does.</p>
-      ${kv(srRows)}
-      ${srList?`<p class="muted">Dropped accusations with no recorded reason:</p><ul>${srList}</ul>`:''}`:'');
   const comp=cm.n_items?`<h4>Every checkable item, and whether it ended the run with a label</h4>
     <p class="muted">The census above counts table cells. This counts every
       checkable item the paper contains, prose included, and asks a harder
@@ -8273,33 +7469,16 @@ S.push({id:'coverage', label:'Coverage and limits', build(){
        predates the census commit by nine hours -- and the page simply fell
        back to the model's numbers with nothing said. A reader had no way to
        know the audited figure was missing rather than merely unflattering. */
-    : (D.census_is_a_legacy_capability
-        ? `<div class="note"><b>No audited cell count for this run.</b> The
-            census that measures how many table cells a check could actually
-            consume is computed only on the legacy analysis path, and this
-            review came through the current one, so there is no audited figure
-            to show and re-running would not produce one. The figures above are
-            the review's own account of what it found, not a measurement of
-            what was there.</div>`
-        : `<div class="note"><b>No audited cell count for this run.</b> The
+    : `<div class="note"><b>No audited cell count for this run.</b> The
             census that measures how many table cells a check could actually
             consume was added after this review ran, so the only figures
             available are the model's own, above. Treat them as the review's
             self-report. Re-running the paper at current HEAD produces the
-            audited count.</div>`);
+            audited count.</div>`;
 
-  /* TWO STAGES RECORD REFUSALS AND THEY RECORD DIFFERENT ONES. The viewer
-     rendered `findings.unchecked` (the sweep's) and never `report.not_checked`
-     (the editorial stage's), and measured across the archived runs the
-     editorial list is consistently the LONGER of the two -- 9 against 8, 12
-     against 10, 13 against 11. So the page showing "what we did not check" was
-     showing the shorter list every time.
-
-     They are NOT merged. The two lists paraphrase the same refusals in
-     different words, so any dedupe short of fuzzy matching leaves near
-     duplicates side by side, and fuzzy matching would silently drop a genuine
-     entry to tidy the table. The editorial list leads because it is the later
-     and fuller record; the sweep's sits under it, whole, one click down. */
+  /* The findings document's `unchecked` list, each row sorted by whose limit
+     it was. (Serial-pipeline runs also carried the editorial stage's
+     `report.not_checked`; that layout is no longer read.) */
   const refusals=nc.length
     ? `<h3>Checks that did not run, and whose limit it was (${nc.length})</h3>
        ${/* LEAD WITH THE SPLIT, not with the count. Greg, 2026-08-11: a reader
@@ -8327,20 +7506,16 @@ S.push({id:'coverage', label:'Coverage and limits', build(){
          const c=classifyRefusal(x.reason);
          return [esc(x.location), `<span class="whose ${c.key}">${c.label}</span>`,
                  esc(x.reason)];
-       }))}
-       ${u.length?`<details><summary>The sweep recorded its own ${u.length}
-         refusal(s), in its own words</summary>
-         <p class="muted">Recorded at the earlier stage. The two lists overlap and
-           are not merged: they paraphrase the same refusals differently, and
-           matching them up by hand risks dropping one that is genuinely new.</p>
-         ${tbl(['location','reason'],u.map(x=>[esc(x.location),esc(x.reason)]))}
-       </details>`:''}`
+       }))}`
     : `<h3>What this review could not check (${u.length})</h3>
        <p class="muted">A refusal is not a negative result. Everything here was
          left unexamined, for the reason given.</p>
        ${tbl(['location','reason'],u.map(x=>[esc(x.location),esc(x.reason)]))}`;
 
-  const lims=rep.limitations||[];
+  /* The run's own limitations, which the parallel pipeline records in
+     `run_meta` (`report.md` prints the same list). This read
+     `report.json`'s, so the block was empty on every parallel bundle. */
+  const lims=(D.run_meta||{}).limitations||[];
   const r=D.supplement_retrieval||{};
   return `<h2>Coverage and limits</h2>
     ${/* FIRST on this page, above every coverage figure, because those figures
@@ -8351,8 +7526,6 @@ S.push({id:'coverage', label:'Coverage and limits', build(){
     ${denom||'<p class="muted">This run recorded no checked-against-found count.</p>'}
     ${census}
     ${comp}
-    ${recon}
-    ${secondLook}
     ${compAudit}
     <h4>What ran</h4>
     ${kv(rows)}

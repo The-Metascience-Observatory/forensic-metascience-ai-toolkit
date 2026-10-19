@@ -222,7 +222,7 @@ assert.equal(firstSortDir("folder"), "asc");
 assert.equal(firstSortDir("year"), "desc");
 assert.equal(firstSortDir("run"), "desc");
 assert.equal(firstSortDir("verdict"), "desc");
-assert.equal(firstSortDir("worst"), "desc");
+assert.equal(firstSortDir("sev9"), "desc");
 assert.equal(firstSortDir("findings"), "desc");
 assert.equal(firstSortDir("image"), "desc");
 
@@ -254,7 +254,7 @@ function paper(over) {
     latest_run: null,
     analysed_at: null,
     verdict: null,
-    worst_severity: null,
+    worst_severity_9: null,
     n_findings: null,
     n_image_findings: null,
     review: { reviewed: false, n_decisions: 0 },
@@ -355,17 +355,16 @@ assert.deepEqual(ids(sortPapers(byVerdict, { key: "verdict", dir: "desc" })),
 assert.deepEqual(ids(sortPapers(byVerdict, { key: "verdict", dir: "asc" })),
   ["ok", "mid", "bad", "legacy", "none"]);
 
-const byWorst = [
-  paper({ paper_id: "cons", dir: "cons", worst_severity: "consistent" }),
-  paper({ paper_id: "imp", dir: "imp", worst_severity: "impossible" }),
-  paper({ paper_id: "sus", dir: "sus", worst_severity: "suspicious" }),
-  paper({ paper_id: "high", dir: "high", worst_severity: "highly_suspicious" }),
-  paper({ paper_id: "none", dir: "none", worst_severity: null }),
+const bySev9 = [
+  paper({ paper_id: "low", dir: "low", worst_severity_9: 1 }),
+  paper({ paper_id: "top", dir: "top", worst_severity_9: 9 }),
+  paper({ paper_id: "mid", dir: "mid", worst_severity_9: 4 }),
+  paper({ paper_id: "none", dir: "none", worst_severity_9: null }),
 ];
-assert.deepEqual(ids(sortPapers(byWorst, { key: "worst", dir: "desc" })),
-  ["imp", "high", "sus", "cons", "none"]);
-assert.deepEqual(ids(sortPapers(byWorst, { key: "worst", dir: "asc" })),
-  ["cons", "sus", "high", "imp", "none"]);
+assert.deepEqual(ids(sortPapers(bySev9, { key: "sev9", dir: "desc" })),
+  ["top", "mid", "low", "none"]);
+assert.deepEqual(ids(sortPapers(bySev9, { key: "sev9", dir: "asc" })),
+  ["low", "mid", "top", "none"]);
 
 // The column counts findings the IMAGE track did not produce. `stale` is an
 // index written before the field existed: it has a total and no non-image

@@ -50,7 +50,7 @@ from pathlib import Path
 #:
 #: `pyproject.toml` reads this via hatchling's `dynamic = ["version"]`, so there
 #: is exactly one place to edit. `tests/test_version.py` pins that they agree.
-__version__ = "1.99.1"
+__version__ = "1.100.0"
 
 #: What every provenance field prints when it could not be established. Shared
 #: so the report, the viewer and the CLI say it the same way -- and so that a

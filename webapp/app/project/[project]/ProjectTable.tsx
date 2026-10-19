@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 
 import { citationLine, displayFirstAuthor } from "@/app/Citation";
-import { SEV_COLOR } from "@/lib/severity";
 import { sev9Color, sev9Label } from "@/lib/constants.gen";
 import { sev9Of } from "@/lib/projectTableSort";
 import type { Paper } from "@/lib/store";
@@ -133,15 +132,8 @@ export function ProjectTable({ project, papers, onSortChange }: {
           <th aria-sort={ariaSort(sort, "sev9")}>
             <button type="button" className="sort-th"
                     onClick={() => onSort("sev9")}
-                    title="Sort by the 1-9 severity ladder (assigned; legacy values shown mapped)">
+                    title="Sort by the 1-9 severity ladder the adjudicator assigned">
               S1–9{sortMark(sort, "sev9")}
-            </button>
-          </th>
-          <th aria-sort={ariaSort(sort, "worst")}>
-            <button type="button" className="sort-th"
-                    onClick={() => onSort("worst")}
-                    title="Sort by worst severity">
-              Worst{sortMark(sort, "worst")}
             </button>
           </th>
           <th className="stack stack-wide" aria-sort={ariaSort(sort, "findings")}>
@@ -236,19 +228,14 @@ export function ProjectTable({ project, papers, onSortChange }: {
                 {(() => {
                   const n = sev9Of(p);
                   if (n == null) return "—";
-                  const mapped = typeof p.worst_severity_9 !== "number";
                   return (
-                    <span title={sev9Label(n) + (mapped ? " (legacy, mapped)" : "")}
+                    <span title={sev9Label(n)}
                           style={{ background: sev9Color(n), color: "white",
                                    borderRadius: 3, padding: "0 6px" }}>
-                      S{n}{mapped ? "*" : ""}
+                      S{n}
                     </span>
                   );
                 })()}
-              </td>
-              <td style={{ color: p.worst_severity
-                ? SEV_COLOR[p.worst_severity] : "var(--muted)" }}>
-                {p.worst_severity?.replace(/_/g, " ") ?? "—"}
               </td>
               <td title={nonImage == null
                 ? (p.n_findings == null

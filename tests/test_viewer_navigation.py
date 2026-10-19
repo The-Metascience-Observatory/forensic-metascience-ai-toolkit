@@ -69,16 +69,21 @@ class TestABuilderMayReturnANode:
 class TestTheV2GuardMatchesTheBuilder:
     def test_after_keys_on_the_same_flag_the_builder_branches_on(self):
         # Reading the same flag, rather than probing for one of the elements,
-        # is what keeps the two halves of the section from drifting apart
+        # is what kept the two halves of the section from drifting apart
         # again -- which is how they got here.
+        #
+        # PORTED 2026-10-19: the v1 findings page is gone, so there is no flag
+        # left to branch on. The same guarantee now takes its simplest form:
+        # the section always builds the v2 page, and carries no `after()` that
+        # could wire filter markup the builder never renders.
         import inspect
         src = inspect.getsource(bundle)
-        m = re.search(r"S\.push\(\{id:'findings'.*?\n\}\);", src, re.S)
+        m = re.search(r"S\.push\(\{id:'findings'.*?\n\}\}\);", src, re.S)
         assert m, "findings section not found"
         body = m.group(0)
-        assert "if(D.findings_format==='v2') return v2FindingsPage();" in body
-        after = body[body.index("after()"):]
-        assert "if(D.findings_format==='v2') return;" in after
+        assert "return v2FindingsPage();" in body
+        assert "after()" not in body
+        assert "fcount" not in body
 
 
 class TestTheEvidenceBannerDenominator:

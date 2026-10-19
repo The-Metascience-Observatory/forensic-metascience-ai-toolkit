@@ -154,24 +154,24 @@ class TestTheSankeyHasANodeForEveryLink:
         return _v2_container({"findings": [ADJUDICATED, MODEL_READING, DISCARDED]})["findings"]
 
     def test_every_link_endpoint_is_a_node(self):
-        s = _sankey(self.CALLS, self._cards(), None)
+        s = _sankey(self.CALLS, self._cards())
         ids = {n["id"] for n in s["nodes"]}
         dangling = [l for l in s["links"] if l["source"] not in ids or l["target"] not in ids]
         assert not dangling, dangling
 
     def test_the_accusation_rung_is_a_right_hand_node(self):
-        s = _sankey(self.CALLS, self._cards(), None)
+        s = _sankey(self.CALLS, self._cards())
         mids = [n["id"] for n in s["nodes"] if n["column"] == 1]
         assert "S4" in mids
         # worst rung first, then the v1 words' own order, then the sink
         assert mids.index("S4") < mids.index("no finding") if "no finding" in mids else True
 
     def test_the_third_column_joins_on_the_card_id(self):
-        s = _sankey(self.CALLS, self._cards(), [])   # v2: editorial list is empty
+        s = _sankey(self.CALLS, self._cards())
         reported = [l for l in s["links"] if l["target"] == "reported"]
         assert sum(l["value"] for l in reported) == 2, s["links"]   # two kept problems
 
     def test_the_check_table_kept_column_joins_on_the_card_id(self):
-        rows = {r["check"]: r for r in _check_table(self.CALLS, self._cards(), [])}
+        rows = {r["check"]: r for r in _check_table(self.CALLS, self._cards())}
         assert rows["grim_check"]["kept"] == 1
         assert rows["hand-computed"]["kept"] == 1

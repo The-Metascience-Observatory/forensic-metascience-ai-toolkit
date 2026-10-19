@@ -57,9 +57,6 @@ from . import finding_view as _fv
 # Severity: two universes, named
 # ---------------------------------------------------------------------------
 
-#: The ladder, worst first. Shared so a caller never re-spells it.
-SEVERITY_ORDER = ("impossible", "highly_suspicious", "suspicious",
-                  "indeterminate", "consistent")
 
 
 def _tally(values: Iterable[Any]) -> dict[str, int]:
@@ -527,24 +524,12 @@ def evidence_ledger(payload: dict | None) -> dict:
     # this worked by accident on the bundle path and not on a raw v2 document.
     sweep_by_id = {_fv.ref(f): f for f in (payload.get("findings") or [])
                    if isinstance(f, dict) and _fv.ref(f)}
-    report = [f for f in ((payload.get("report_obj") or {}).get("findings") or [])
-              if isinstance(f, dict)]
-
-    # `report_obj` COMES FROM report.json, WHICH THE PARALLEL PATH NEVER WRITES.
-    #
-    # So on every v2 run `report` was empty and this ledger graded NOTHING --
-    # which meant the fix to `evidence_grade` itself could not reach the page,
-    # because nothing was ever handed to it. Found by building the viewer and
-    # looking for the corrected grade in the output rather than trusting the
-    # unit test, which exercises `evidence_grade` directly.
-    #
     # A v2 document's findings ARE the report findings: v2 merged the sweep and
-    # report stages, which is the same fact that made `stage1_finding_ids`
-    # empty. So fall back to them, and `evidence_grade` reads each row's own
-    # `computed_by`.
-    if not report:
-        report = [f for f in (payload.get("findings") or [])
-                  if isinstance(f, dict)]
+    # report stages. (This once read `report_obj`, report.json's list, which
+    # the parallel path never writes -- so on every v2 run the ledger graded
+    # nothing.) `evidence_grade` reads each row's own `computed_by`.
+    report = [f for f in (payload.get("findings") or [])
+              if isinstance(f, dict)]
 
     supp_missing = bool((payload.get("supplements") or {}).get("missing"))
     per: list[dict] = []
@@ -571,8 +556,7 @@ def evidence_ledger(payload: dict | None) -> dict:
         # `finding_view.is_accusatory` reads all four row shapes.
         if g["grade"] != "computed" and _fv.is_accusatory(f):
             accusatory += 1
-        backing = [sweep_by_id[i] for i in (f.get("stage1_finding_ids") or [])
-                   if i in sweep_by_id]
+        backing: list = []
         # The two questions a reader needs are orthogonal and both belong here:
         # WHO COMPUTED IT (evidence grade) and WHOSE STANDARD IT INVOKES
         # (warrant). A finding can be perfectly computed against an obligation
@@ -796,80 +780,3 @@ def refusal_tally(rows: Iterable[dict] | None) -> dict:
             "Read them rather than the counts."
         )
     return out
-
-
-# ---------------------------------------------------------------------------
-# The finding index
-# ---------------------------------------------------------------------------
-
-def _consequence_phrase(cons: Any) -> tuple[str, bool]:
-    """One short phrase for what a finding CHANGES, and whether it was computed.
-
-    Returns `(phrase, computed)`. `computed` is False for anything the model
-    asserted, which on every archived run is everything -- the pipeline only
-    stamps `basis: computed` where a tool derived the consequence itself
-    (statcheck decision errors, claims lost to multiplicity correction).
-
-    THE SUFFIX IS NOT DECORATION. Consequence is the column a reader will sort
-    on and act from, and it currently sits beside columns that ARE computed. An
-    asserted judgement borrowing the credibility of the arithmetic next to it is
-    the same category error this module was written to fix, one column over.
-    """
-    if not isinstance(cons, dict):
-        return ("not determined", False)
-    computed = str(cons.get("basis") or "").lower() == "computed"
-    bits: list[str] = []
-    if cons.get("flips_significance") is True:
-        bits.append("a significance decision")
-    n = cons.get("claims_affected")
-    if isinstance(n, int) and n > 0:
-        bits.append(f"{n} stated claim{'s' if n != 1 else ''}")
-    if not bits:
-        # `None` and `0` are different: one is "we did not determine it", the
-        # other is "we determined it changes nothing". Rendering both as blank
-        # would let an undetermined consequence read as a harmless one.
-        return (("nothing the paper states" if n == 0 else "not determined"), computed)
-    return (" and ".join(bits), computed)
-
-
-def finding_index(payload: dict | None) -> list[dict]:
-    """One row per report finding: properties, never a score.
-
-    WHAT MAKES THIS NOT A DASHBOARD, which is a real risk and the reason the
-    rules are written down here rather than left to the renderer:
-
-      * no totals row, and no aggregate anywhere -- aggregation is what turns a
-        list of questions into a grade;
-      * severity is a SORT KEY and a small chip, never a headline number;
-      * every cell is a property of one finding that a reader can go and check,
-        with the anchor to check it against;
-      * the consequence column carries `(asserted)` wherever the pipeline did
-        not compute it, so the one subjective column cannot borrow the
-        authority of the objective ones.
-
-    The evidence grade comes from `evidence_ledger`, so the index and the card
-    banner cannot disagree about the same finding.
-    """
-    payload = payload or {}
-    report = [f for f in ((payload.get("report_obj") or {}).get("findings") or [])
-              if isinstance(f, dict)]
-    graded = evidence_ledger(payload)["per_finding"]
-    order = {s: i for i, s in enumerate(SEVERITY_ORDER)}
-
-    rows: list[dict] = []
-    for i, f in enumerate(report):
-        phrase, computed = _consequence_phrase(f.get("consequence"))
-        g = graded[i] if i < len(graded) else {}
-        rows.append({
-            "n": i + 1,
-            "severity": f.get("severity"),
-            "sort_key": order.get(str(f.get("severity")), 99),
-            "title": f.get("title") or "Untitled finding",
-            "changes": phrase,
-            "changes_computed": computed,
-            "evidence": g.get("grade"),
-            "reproduces": bool(f.get("reproduction_valid")),
-            "location": f.get("location") or "",
-        })
-    rows.sort(key=lambda r: (r["sort_key"], r["n"]))
-    return rows

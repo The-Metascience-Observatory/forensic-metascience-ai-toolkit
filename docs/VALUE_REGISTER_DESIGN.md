@@ -1,14 +1,14 @@
 # The value register
 
-> **Status (2026-10-16): built and live.** Every parallel-pipeline review calls
-> `agent.build_value_register` from `parallel.write_parallel_outputs` (through
-> a two-key shim mapping the tools agent and the proofreading agent onto the
-> old stage slots; the adjudicator's spot re-checks are not joined). It calls
+> **Status (2026-10-19): built and live.** Every parallel-pipeline review calls
+> `agent.build_value_register` from `parallel.write_parallel_outputs`, which
+> reads the tools agent's, the proofreading agent's and the adjudicator's
+> stage messages (the adjudicator's spot re-checks are joined since 1.100.0). It calls
 > `values.build_from_paper` and writes `value_register.json` beside the review,
 > or `value_register.error.txt` naming the failure. The offline viewer
 > (`bundle.py`) carries it in a Values tab, `metascience register-view` draws it
-> on the paper (`register_view.py`), and `metascience repair-register` rebuilds
-> it for an existing review. `scaffold/` also consumes `values`
+> on the paper (`register_view.py`). (`metascience repair-register`, which
+> rebuilt one from serial-pipeline files, was removed in 1.100.0.) `scaffold/` also consumes `values`
 > (`scaffold/interpret.py`), but the scaffold is not wired into the analysis
 > pipeline. The design below is the 2026-08-18 plan; where it and the code
 > disagree, the code wins.

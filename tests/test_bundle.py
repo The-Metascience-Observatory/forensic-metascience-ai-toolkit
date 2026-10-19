@@ -121,10 +121,11 @@ def review(tmp_path):
     rev.mkdir(parents=True)
     (paper / "body.md").write_text("# Body\n\nSome text.")
     (paper / "10.1234--demo.pdf").write_bytes(b"%PDF-1.4 fake")
-    (rev / "findings.json").write_text(json.dumps({
+    (rev / "findings.v2.json").write_text(json.dumps({
+        "schema_version": "2.0",
         "paper_id": "10.1234--demo",
-        "paper_title": "A demonstration paper",
-        "paper_metadata": {"authors": "Doe, J.", "year": "2026", "doi": "10.1234/demo"},
+        "paper_metadata": {"title": "A demonstration paper", "authors": "Doe, J.",
+                           "year": "2026", "doi": "10.1234/demo"},
         "anatomy": {
             "studies": [{"id": "s1", "label": "Study 1", "n": 40}],
             "variables": [{"id": "v1", "name": "Age", "family": "continuous",
@@ -132,19 +133,23 @@ def review(tmp_path):
             "tests": [{"id": "t1", "test_type": "t_test", "location": "Table 1",
                        "outcome_var": "v1", "predictor_vars": []}],
         },
-        "findings": [{"id": "f1", "severity": "suspicious", "location": "Table 1",
-                      "technique": "grim", "reproduction": "metascience grim 5.5 30"}],
+        "adjudication": {"ran": True, "verdict": "unresolved", "confidence": "high"},
+        "findings": [{"finding_id": "f1", "slug": "f1", "producer": "tool_expert",
+                      "technique": "grim", "title": "A GRIM mismatch in Table 1",
+                      "description": "The mean is not attainable at this n.",
+                      "location": "Table 1", "outcome": "problem", "severity": 5,
+                      "computed_by": "registry_tool",
+                      "reproduction": "metascience grim 5.5 30",
+                      "adjudication": {"action": "kept"}}],
         "coverage": {"stats_found": 5},
         "unchecked": [{"location": "Fig 2", "reason": "figure"}],
     }))
     (rev / "report.md").write_text("# Forensic review\n\n**Bold** text.\n")
-    (rev / "report.json").write_text(json.dumps({"verdict": "unresolved"}))
     (rev / "run_meta.json").write_text(json.dumps({
         "total_cost_usd": 12.5, "total_wall_seconds": 900,
-        "stages": {"editorial": {"verdict": "unresolved", "confidence": "high"}},
     }))
     (rev / "sandbox_audit.json").write_text(json.dumps({"breaches": 0}))
-    (rev / "toolcalls.stage1.json").write_text(json.dumps([
+    (rev / "toolcalls.tool_agent.json").write_text(json.dumps([
         {"seq": 1, "tool_short": "grim_check", "surface": "mcp", "validated": True,
          "input": {"mean": 5.5, "n": 30}, "result": '{"severity": "consistent"}'},
         {"seq": 2, "tool_short": "Read", "surface": "builtin_allowed", "validated": False,
@@ -199,9 +204,9 @@ class TestViewerIsSelfContained:
     def test_an_outbound_hyperlink_is_allowed(self, review):
         """The DOI is a link to the paper. Navigation works from file:// where
         fetch does not, so linking out is safe and useful."""
-        meta = json.loads((review / "findings.json").read_text())
+        meta = json.loads((review / "findings.v2.json").read_text())
         meta["paper_metadata"]["doi"] = "10.1234/demo"
-        (review / "findings.json").write_text(json.dumps(meta))
+        (review / "findings.v2.json").write_text(json.dumps(meta))
         assert "doi.org" in render_viewer(collect(review))
 
     def test_no_fetch_or_xhr(self, review):
@@ -235,7 +240,7 @@ class TestBuildBundle:
         assert (out / "README.txt").exists()
         assert (out / "paper" / "body.md").exists()
         assert (out / "paper" / "10.1234--demo.pdf").exists()
-        assert (out / "analysis" / "findings.json").exists()
+        assert (out / "analysis" / "findings.v2.json").exists()
 
     def test_the_pdf_is_linked_not_embedded(self, review, tmp_path):
         """Embedding a 1 MB PDF as base64 would triple the viewer's size for
@@ -254,7 +259,7 @@ class TestBuildBundle:
     def test_missing_optional_files_do_not_break_it(self, tmp_path):
         rev = tmp_path / "paper" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text("{}")
+        (rev / "findings.v2.json").write_text("{}")
         out = build_bundle(rev, tmp_path / "b")
         assert (out / "viewer.html").exists()
 
@@ -283,9 +288,9 @@ class TestTheBundleDoesNotShipTheOperatorsMachine:
         (review / "report.md").write_text(
             f"# Forensic review\n\n**Reproduce:** `metascience extract-xml "
             f"--xml-path {self.LEAK}`\n")
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"][0]["reproduction"] = f"metascience grim --xml {self.LEAK}"
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         return review
 
     def test_the_viewer_carries_no_home_directory(self, leaky):
@@ -307,8 +312,8 @@ class TestTheBundleDoesNotShipTheOperatorsMachine:
         file: "12.5" is also a font size in the stylesheet, and a test that
         cannot tell those apart would pass on the wrong reason forever."""
         meta = json.loads((review / "run_meta.json").read_text())
-        meta["stages"]["editorial"].update(
-            {"cost_usd": 3.07, "model_usage": {"opus": {"costUSD": 3.07}}})
+        meta.setdefault("stages", {})["tool_agent"] = {
+            "cost_usd": 3.07, "model_usage": {"opus": {"costUSD": 3.07}}}
         (review / "run_meta.json").write_text(json.dumps(meta))
         html = render_viewer(collect(review))
         assert "$12.5000" not in html
@@ -349,9 +354,9 @@ class TestTheBundleDoesNotShipTheOperatorsMachine:
         addressed to belongs in the forwarded bundle is an editorial call for
         the repo owner, not something this scrubber should decide silently.
         Pinned so that removing it is a decision, not a side effect."""
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["paper_metadata"]["corresponding_email"] = "a.author@university.edu"
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert "a.author@university.edu" in render_viewer(collect(review))
 
     def test_the_readme_says_the_raw_logs_are_not_scrubbed(self, review, tmp_path):
@@ -545,17 +550,13 @@ class TestTheFilesListDoesNotLie:
     def test_a_file_that_exists_is_listed(self, review):
         paths = [f["path"] for f in collect(review)["files"]]
         assert "paper/body.md" in paths
-        assert "analysis/findings.json" in paths
+        assert "analysis/findings.v2.json" in paths
 
     def test_a_file_that_does_not_exist_is_not_listed(self, review):
         (review.parent / "body.md").unlink()
         paths = [f["path"] for f in collect(review)["files"]]
         assert "paper/body.md" not in paths
-        assert "analysis/findings.json" in paths        # the rest survive
-
-    def test_report_json_absent_is_not_linked(self, review):
-        (review / "report.json").unlink()
-        assert "analysis/report.json" not in [f["path"] for f in collect(review)["files"]]
+        assert "analysis/findings.v2.json" in paths        # the rest survive
 
     def test_every_file_carries_a_description(self, review):
         assert all(f["what"].strip() for f in collect(review)["files"])
@@ -709,13 +710,13 @@ class TestTheMetadataTableIsAFixedSchema:
         from forensic_metascience_ai_toolkit.bundle import _METADATA_ROWS
         rev = tmp_path / "bare" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text("{}")
+        (rev / "findings.v2.json").write_text("{}")
         assert [f["fact"] for f in collect(rev)["paper_facts"]] == list(_METADATA_ROWS)
 
     def test_two_papers_produce_the_same_shape(self, review, tmp_path):
         rev = tmp_path / "other" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text("{}")
+        (rev / "findings.v2.json").write_text("{}")
         assert self._rows(review) == [f["fact"] for f in collect(rev)["paper_facts"]]
 
     def test_an_unfilled_row_says_it_was_not_in_the_paper(self, review):
@@ -729,7 +730,7 @@ class TestTheMetadataTableIsAFixedSchema:
         """A volume we failed to extract is our gap, not the paper's silence."""
         rev = tmp_path / "bare" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text("{}")
+        (rev / "findings.v2.json").write_text("{}")
         rows = {f["fact"]: f["value"] for f in collect(rev)["paper_facts"]}
         assert rows["Volume"] == "not recorded"
 
@@ -737,14 +738,15 @@ class TestTheMetadataTableIsAFixedSchema:
 class TestSankey:
     def test_a_finding_flows_from_the_tool_that_produced_it(self, review):
         s = collect(review)["sankey"]
-        assert {"source": "grim_check", "target": "suspicious", "value": 1} in s["links"]
+        # The middle column is the finding's own ladder rung, "S5" on a v2 row.
+        assert {"source": "grim_check", "target": "S5", "value": 1} in s["links"]
 
     def test_a_technique_naming_a_family_still_joins(self, review):
         """`technique: grim` against a `grim_percentage` call. Reuses
         `severity_reconcile._candidate_tools` rather than a second copy of the
         family map -- getting it wrong would attribute findings to tools that
         never ran."""
-        (review / "toolcalls.stage1.json").write_text(json.dumps([
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps([
             {"seq": 1, "tool_short": "grim_percentage", "surface": "mcp",
              "validated": True, "input": {"percent": 71.0, "n": 142},
              "result": '{"severity": "consistent"}'}]))
@@ -752,20 +754,20 @@ class TestSankey:
         assert any(l["source"] == "grim_percentage" for l in s["links"])
 
     def test_a_hand_computed_finding_is_named_as_such(self, review):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"][0]["technique"] = "manual"
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         s = collect(review)["sankey"]
         assert any(l["source"] == "hand-computed" for l in s["links"])
 
     def test_a_tool_that_found_nothing_gets_an_explicit_sink(self, review):
         """"ran and found nothing" and "never ran" are different facts, and a
         diagram that omits the first implies the second."""
-        calls = json.loads((review / "toolcalls.stage1.json").read_text())
+        calls = json.loads((review / "toolcalls.tool_agent.json").read_text())
         calls.append({"seq": 3, "tool_short": "statcheck", "surface": "mcp",
                       "validated": True, "input": {"text": "t(28)=2.1, p=.04"},
                       "result": '{"severity": "consistent"}'})
-        (review / "toolcalls.stage1.json").write_text(json.dumps(calls))
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps(calls))
         s = collect(review)["sankey"]
         assert {"source": "statcheck", "target": "no finding", "value": 1} in s["links"]
 
@@ -777,7 +779,7 @@ class TestSankey:
     def test_it_is_empty_rather_than_broken_with_no_data(self, tmp_path):
         rev = tmp_path / "bare" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text("{}")
+        (rev / "findings.v2.json").write_text("{}")
         assert collect(rev)["sankey"] == {"nodes": [], "links": []}
 
 
@@ -930,24 +932,24 @@ class TestResearchPractice:
         assert rows["Sample size justified"]["status"] == "unknown"
 
     def test_a_practice_that_is_present_is_reported_as_present(self, review):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["anatomy"]["tests"] = [{"id": "t1", "test_type": "t",
                                   "assumption_checks_reported": ["normality"]}]
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert self._p(review)["Assumption checks reported"]["status"] == "yes"
 
     def test_some_but_not_all_is_partial(self, review):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["anatomy"]["tests"] = [
             {"id": "t1", "assumption_checks_reported": ["normality"]},
             {"id": "t2", "assumption_checks_reported": []}]
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert self._p(review)["Assumption checks reported"]["status"] == "partial"
 
     def test_a_registry_id_without_a_preregistration_claim_is_partial(self, review):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["anatomy"]["studies"] = [{"id": "s1", "registry_id": "NCT1"}]
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert self._p(review)["Preregistered"]["status"] == "partial"
 
     def _unread(self, tmp_path):
@@ -956,7 +958,7 @@ class TestResearchPractice:
         read -- and the bundle is still built."""
         rev = tmp_path / "10.9999--unread" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text(json.dumps(
+        (rev / "findings.v2.json").write_text(json.dumps(
             {"paper_id": "10.9999--unread", "findings": [], "anatomy": {}}))
         return rev
 
@@ -985,9 +987,9 @@ class TestResearchPractice:
         """`preregistered` and `registry_id` are study-level fields, so with no
         studies the `any()` runs over an empty list and every paper scores
         `no`."""
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["anatomy"]["studies"] = []
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         row = self._p(review)["Preregistered"]
         assert row["status"] == "unknown"
         assert "not a fact about the paper" in row["detail"]
@@ -1047,7 +1049,7 @@ class TestTheTableExtractionErrorIsNotBlamedOnThePaper:
     def _paper(self, tmp_path, xml: str):
         rev = tmp_path / "10.4321--broken" / "forensic_review"
         rev.mkdir(parents=True)
-        (rev / "findings.json").write_text(json.dumps({"paper_id": "x", "findings": []}))
+        (rev / "findings.v2.json").write_text(json.dumps({"paper_id": "x", "findings": []}))
         (rev.parent / "10.4321--broken.xml").write_text(xml)
         return rev
 
@@ -1077,135 +1079,6 @@ class TestTheTableExtractionErrorIsNotBlamedOnThePaper:
         assert "The table extraction reported an error" not in html
 
 
-class TestTheFindingsPageAgreesWithTheReport:
-    """Two documents ship in one bundle and numbered their findings
-    differently. `report.md` prints them through `report_render.sort_findings`
-    -- severity, then CONSEQUENCE, then the model's `rank` -- and the viewer
-    printed report.json's array order. MEASURED on the wave-3
-    `10.1002--eat.24415` run: 4 of 10 numbered findings named a different
-    finding in the two documents, and the viewer was the harsher of the two --
-    it put a finding that changes nothing above one that moves a conclusion,
-    because JS has the severity ladder but no consequence rank.
-    """
-
-    @pytest.fixture
-    def graded(self, review):
-        """Two equally severe findings whose CONSEQUENCE differs, in the order
-        that severity alone cannot fix."""
-        (review / "report.json").write_text(json.dumps({"verdict": "unresolved", "findings": [
-            {"id": "e1", "rank": 1, "title": "Changes nothing", "severity": "suspicious",
-             "consequence": {"flips_significance": False, "claims_affected": 0,
-                             "basis": "asserted"}},
-            {"id": "e2", "rank": 2, "title": "Flips a headline result",
-             "severity": "suspicious",
-             "consequence": {"flips_significance": True, "claims_affected": 3,
-                             "basis": "computed"}},
-        ]}))
-        return review
-
-    def test_the_payload_is_in_the_reports_order(self, graded):
-        from forensic_metascience_ai_toolkit.report_render import sort_findings
-        got = [f["title"] for f in collect(graded)["report_obj"]["findings"]]
-        want = [f["title"] for f in sort_findings(
-            json.loads((graded / "report.json").read_text())["findings"])]
-        assert got == want
-        assert got[0] == "Flips a headline result"
-
-    def test_report_json_on_disk_is_not_rewritten(self, graded):
-        collect(graded)
-        on_disk = json.loads((graded / "report.json").read_text())["findings"]
-        assert [f["title"] for f in on_disk] == ["Changes nothing",
-                                                 "Flips a headline result"]
-
-    def test_the_page_numbers_match_the_payload(self, graded, tmp_path):
-        html = section_html(collect(graded), "findings", tmp_path)
-        assert re.search(r"<h3>1\. Flips a headline result", html)
-
-
-class TestTheViewerDoesNotOfferACommandThatCannotRun:
-    """`reproduction_valid is False` is the write path's verdict that the
-    command does not run as printed. `report.md` refused to print such a command
-    for that reason; the viewer printed it anyway, in a <pre>, because it starts
-    with the word "metascience". On the wave-3 eat.24415 run that is 3 of 10
-    findings, and what it pasted was the raw tool note: a 2.3 kB
-    --tests '[{...}]' blob with unsubstituted placeholders that errors on first
-    use. A command that fails when a reader tries it reads as a broken tool,
-    which is worse than admitting the gap.
-
-    `report.md` has since stopped printing a reproduction command at all, which
-    makes this the ONLY surface that offers a reader one -- so this refusal is
-    now the whole of the guarantee, not one half of it."""
-
-    @pytest.fixture
-    def invalid(self, review):
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0].update({
-            "reproduction": "metascience multiplicity --tests '[{\"id\":\"a\"}]'",
-            "reproduction_valid": False,
-            "reproduction_problem": "contains placeholder '{' -- not runnable as written",
-        })
-        (review / "findings.json").write_text(json.dumps(f))
-        return review
-
-    def test_an_invalid_command_is_not_offered_as_a_command(self, invalid, tmp_path):
-        html = section_html(collect(invalid), "findings", tmp_path)
-        assert "<pre>metascience multiplicity" not in html
-        assert "The command was left as a template" in html
-
-    def test_a_valid_command_is_still_offered(self, review, tmp_path):
-        """The fixture's finding carries a runnable command and no verdict
-        against it."""
-        html = section_html(collect(review), "findings", tmp_path)
-        assert "<pre>metascience grim 5.5 30</pre>" in html
-
-
-class TestTheSeverityFilterListsWhatIsOnThePage:
-    """The dropdown was built from the SWEEP, and the cards rendered at top
-    level are the editorial findings plus the orphans. Both directions of the
-    mismatch are wrong, and both happen: on the wave-3 `10.1002--mpr.70006` run
-    the editorial stage published one `impossible` finding and the sweep
-    contains none, so the single most consequential card on the page could not
-    be isolated; where a sweep `impossible` is triaged down instead, the word
-    appears in a control that then hides every card when selected. `impossible`
-    is the strongest claim this system can make, and it must never appear in
-    the interface without a finding behind it."""
-
-    def _sevs(self, html):
-        block = re.search(r'<select id="fsev">(.*?)</select>', html, re.S).group(1)
-        return re.findall(r"<option>([a-z_]+)</option>", block)
-
-    def _report(self, review, findings):
-        (review / "report.json").write_text(json.dumps(
-            {"verdict": "unresolved", "findings": findings}))
-
-    def test_a_severity_only_the_editorial_stage_used_is_offered(self, review, tmp_path):
-        """The sweep's worst is `suspicious`; the review's own conclusion is
-        `impossible`. The filter has to reach it."""
-        self._report(review, [{"id": "e1", "title": "Cannot co-exist",
-                               "severity": "impossible", "stage1_finding_ids": ["f1"]}])
-        assert "impossible" in self._sevs(section_html(collect(review), "findings", tmp_path))
-
-    def test_a_severity_the_editorial_stage_triaged_away_is_not_offered(self, review, tmp_path):
-        """The sweep says `impossible`, the review triaged it to `suspicious`,
-        and the tool verdict is nested inside that card -- where it keeps its
-        own severity but does not set the card's. Offering `impossible` here
-        promises a finding the page cannot show."""
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0]["severity"] = "impossible"
-        (review / "findings.json").write_text(json.dumps(f))
-        self._report(review, [{"id": "e1", "title": "Triaged down",
-                               "severity": "suspicious", "stage1_finding_ids": ["f1"]}])
-        assert self._sevs(section_html(collect(review), "findings", tmp_path)) == ["suspicious"]
-
-    def test_an_orphan_check_still_reaches_the_filter(self, review, tmp_path):
-        """An orphan IS rendered at top level, so its severity belongs in the
-        list -- the gate is what the page shows, not which stage produced it."""
-        self._report(review, [{"id": "e1", "title": "Unrelated",
-                               "severity": "indeterminate", "stage1_finding_ids": []}])
-        got = self._sevs(section_html(collect(review), "findings", tmp_path))
-        assert got == ["suspicious", "indeterminate"]      # ladder order, orphan included
-
-
 class TestTheAuditTableUsesTheVerdictsPredicate:
     """`CLEAN` printed directly above a table headed "The out-of-surface
     calls". The verdict counts `surface == "UNVALIDATED"`; the table filtered
@@ -1225,11 +1098,11 @@ class TestTheAuditTableUsesTheVerdictsPredicate:
     def test_a_real_breach_is_still_listed(self, review, tmp_path):
         (review / "sandbox_audit.json").write_text(json.dumps(
             {"n_unvalidated_total": 1, "n_severe_total": 1}))
-        calls = json.loads((review / "toolcalls.stage1.json").read_text())
+        calls = json.loads((review / "toolcalls.tool_agent.json").read_text())
         calls.append({"seq": 3, "tool_short": "Bash", "surface": "UNVALIDATED",
                       "validated": False, "input": {"command": "python -c ..."},
                       "result": "0.42"})
-        (review / "toolcalls.stage1.json").write_text(json.dumps(calls))
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps(calls))
         html = section_html(collect(review), "audit", tmp_path)
         assert "SEVERE BREACH" in html
         assert "The out-of-surface calls" in html
@@ -1313,7 +1186,7 @@ class TestTheChainOfReasoningSaysWhereEachNumberCameFrom:
     the value themselves -- the work this exists to spare them."""
 
     def test_a_sourced_call_shows_its_passage_and_our_verdict(self, review, tmp_path):
-        (review / "toolcalls.stage1.json").write_text(json.dumps([
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps([
             {"seq": 1, "tool_short": "grim_check", "surface": "mcp", "validated": True,
              "input": {"mean": 48.9, "n": 142, "source_quote": "Mean age was 48.9 years",
                        "source_locator": "Table 1, Age row"},
@@ -1329,7 +1202,7 @@ class TestTheChainOfReasoningSaysWhereEachNumberCameFrom:
         """A quote we cannot find is far more often a limit of our extraction
         than a fabrication -- hand-adjudicating every one of 22 unlocated quotes
         over 499 findings turned up no fabrications at all."""
-        (review / "toolcalls.stage1.json").write_text(json.dumps([
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps([
             {"seq": 1, "tool_short": "grim_check", "surface": "mcp", "validated": True,
              "input": {"mean": 48.9, "source_quote": "nowhere in this paper"},
              "source_quote_verified": "unverified",
@@ -1352,16 +1225,15 @@ class TestTheChainOfReasoningSaysWhereEachNumberCameFrom:
     def test_an_extractor_is_not_scored_as_unsourced(self, review, tmp_path):
         """`Read` was never offered the argument. Marking it unsourced would
         report a design decision as a coverage failure on every single run."""
-        (review / "toolcalls.stage1.json").write_text(json.dumps([
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps([
             {"seq": 1, "tool_short": "Read", "surface": "builtin_allowed",
              "validated": False, "input": {"file_path": "body.md"}, "result": "x"}]))
-        (review / "toolcalls.stage2.json").unlink(missing_ok=True)
         html = flat(section_html(collect(review), "calls", tmp_path))
         assert "No source passage recorded" not in html
         assert "checks recorded the passage" not in html
 
     def test_the_page_counts_its_own_coverage(self, review, tmp_path):
-        (review / "toolcalls.stage1.json").write_text(json.dumps([
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps([
             {"seq": 1, "tool_short": "grim_check", "surface": "mcp", "validated": True,
              "input": {"mean": 48.9, "source_quote": "Mean age was 48.9 years"},
              "source_quote_verified": "verbatim", "result": "{}"},
@@ -1377,38 +1249,17 @@ class TestTheFindingShowsWhereItsNumbersWereRead:
     """`f.quote` is the model's choice of what to quote ABOUT a finding;
     `f.source` is the passage the CHECKED NUMBERS were read from, joined to the
     finding by `sourcing.annotate` from the validated call that produced it.
-    A reader auditing an accusation wants the second."""
+    A reader auditing an accusation wants the second.
+
+    The per-card "Numbers read from" row belonged to the serial pipeline's
+    findings page and went with it; the traceability SENTENCE survives and is
+    rendered on the Overview, which is where these tests now read it."""
 
     def _one(self, review, tmp_path, source):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"][0]["source"] = source
-        (review / "findings.json").write_text(json.dumps(f))
-        return flat(section_html(collect(review), "findings", tmp_path))
-
-    def test_a_located_passage_is_shown_with_its_locator(self, review, tmp_path):
-        html = self._one(review, tmp_path, {
-            "source_quote": "Mean age was 48.9 years", "source_locator": "Table 1, Age row",
-            "source_quote_verified": "verbatim", "source_quote_source": "a table"})
-        assert "Numbers read from" in html
-        assert "Mean age was 48.9 years" in html
-        assert "Table 1, Age row" in html
-        assert "found in a table" in html
-
-    def test_an_unlocated_passage_does_not_make_the_as_printed_promise(self, review, tmp_path):
-        """Same discipline as quoteLabel: only the two verdicts that actually
-        located the text may claim the words are in the paper."""
-        html = self._one(review, tmp_path, {
-            "source_quote": "a sentence nobody can find",
-            "source_quote_verified": "unverified"})
-        assert "not located by our search" in html
-        assert "most often our extraction, not the authors" in html
-
-    def test_a_finding_with_no_source_renders_no_row(self, review, tmp_path):
-        """The ROW, specifically. The page header names the row in its own
-        explanatory sentence, so a bare phrase match passes for the wrong
-        reason -- as this test did until the header was added."""
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "<dt>Numbers read from</dt>" not in html
+        (review / "findings.v2.json").write_text(json.dumps(f))
+        return flat(section_html(collect(review), "overview", tmp_path))
 
     def test_the_page_counts_how_much_of_it_is_traceable(self, review, tmp_path):
         """Now ONE sentence, computed in Python (`viewer_facts`) and shared with
@@ -1423,12 +1274,17 @@ class TestTheFindingShowsWhereItsNumbersWereRead:
 
     def test_manual_findings_are_not_counted_as_untraceable(self, review, tmp_path):
         """No producing call exists for a hand-read value, so counting it as a
-        miss would report a design fact as a coverage failure."""
-        f = json.loads((review / "findings.json").read_text())
+        miss would report a design fact as a coverage failure.
+
+        A v2 row says it was hand-read through `computed_by: model_reading`
+        (the v2 schema has no `technique: manual`), which is what
+        `viewer_facts.traceability` reads first."""
+        f = json.loads((review / "findings.v2.json").read_text())
         for row in f["findings"]:
-            row["technique"] = "manual"
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
+            row["technique"] = "not_computational"
+            row["computed_by"] = "model_reading"
+        (review / "findings.v2.json").write_text(json.dumps(f))
+        html = flat(section_html(collect(review), "overview", tmp_path))
         # The JOIN clause is what must not appear: no producing call exists for
         # a hand-read value, so counting it as untraceable reports a design fact
         # as a coverage failure. The quote sentence itself is still true of
@@ -1456,14 +1312,16 @@ class TestTheOverviewLeadsWithTheReviewNotThePaper:
 
     def test_the_headline_sentence_is_printed_not_just_the_coded_verdict(
             self, review, tmp_path):
-        """`report.headline.statement` has always carried one plain sentence
-        saying what the review found. The Overview showed only `questionable`,
+        """The headline has always carried one plain sentence saying what the
+        review found. The Overview showed only `questionable`,
         a three-valued label with no direction, standing in for a sentence that
         already existed in the payload."""
-        r = json.loads((review / "report.json").read_text())
-        r["headline"] = {"severity": "suspicious",
-                         "statement": "One denominator does not match the rest."}
-        (review / "report.json").write_text(json.dumps(r))
+        # The headline is now the adjudicator's headline finding, whose title
+        # is the sentence (report.json's `headline` block was serial-only).
+        f = json.loads((review / "findings.v2.json").read_text())
+        f["findings"][0]["title"] = "One denominator does not match the rest."
+        f["adjudication"]["headline_finding_id"] = "f1"
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert "One denominator does not match the rest." in self._ov(review, tmp_path)
 
 
@@ -1478,7 +1336,9 @@ class TestWhatThisReviewCouldNotDo:
 
     def _limits(self, review, tmp_path, **files):
         for name, obj in files.items():
-            path = review / f"{name}.json"
+            # `findings` is the v2 document; the rest keep their own names.
+            path = review / ("findings.v2.json" if name == "findings"
+                             else f"{name}.json")
             cur = json.loads(path.read_text()) if path.exists() else {}
             cur.update(obj)
             path.write_text(json.dumps(cur))
@@ -1497,17 +1357,18 @@ class TestWhatThisReviewCouldNotDo:
         """`stats_found` was on the Coverage page and `stats_checked` was on no
         page at all, so a run that located 741 statistics and checked 122
         advertised the 741."""
-        html = self._limits(review, tmp_path, report={
+        html = self._limits(review, tmp_path, findings={
             "coverage_summary": {"stats_found": 741, "stats_checked": 122}})
         assert "<b>122 of 741</b>" in html
         assert "nothing here is evidence about them" in html
 
-    def test_refusals_are_counted_from_the_longer_of_the_two_lists(
-            self, review, tmp_path):
-        """Both stages record refusals and the editorial list is consistently
-        the longer -- measured 9 against 8, 12 against 10, 13 against 11."""
-        html = self._limits(review, tmp_path, report={
-            "not_checked": [{"location": f"L{i}", "reason": "r"} for i in range(9)]})
+    def test_refusals_are_counted(self, review, tmp_path):
+        """The refusals are counted on the landing page, not only listed on the
+        Coverage page. (This once took the longer of two lists -- the serial
+        pipeline's two stages each recorded refusals; a v2 document has one,
+        `unchecked`.)"""
+        html = self._limits(review, tmp_path, findings={
+            "unchecked": [{"location": f"L{i}", "reason": "r"} for i in range(9)]})
         assert "<b>9</b> places in the paper were examined and then REFUSED" in html
 
     def test_a_finding_with_no_tool_behind_it_is_declared_beside_the_verdict(
@@ -1522,23 +1383,25 @@ class TestWhatThisReviewCouldNotDo:
         where the ledger's chain predicate catches 88 (40%), so the overview
         understated the phenomenon FIVE-FOLD in every bundle shipped.
 
-        The third finding below is the case the old predicate could not see and
-        which is the commonest in practice: it CITES a sweep finding, so it
-        looks backed, and that sweep finding is `technique: manual` -- the
-        model's own arithmetic.
+        The case the old predicate could not see, and the commonest in
+        practice, was a finding that CITED a sweep finding (so looked backed)
+        whose technique was `manual` -- the model's own arithmetic. On a v2 row
+        that is `computed_by: agent_code`.
         """
+        # PORTED to v2: a v2 row is its own sweep finding, so the chain
+        # collapses to the row's `computed_by` (set from the tool ledger).
+        # The three cases below are the three grades: a registry tool, the
+        # model's own arithmetic, and a reading.
+        row = lambda fid, by, t: {"finding_id": fid, "slug": fid, "producer":
+                                  "tool_expert", "technique": t, "title": fid,
+                                  "severity": 5, "outcome": "problem",
+                                  "computed_by": by,
+                                  "adjudication": {"action": "kept"}}
         html = self._limits(review, tmp_path,
             findings={"findings": [
-                {"id": "f1", "technique": "grim_check"},
-                {"id": "f2", "technique": "manual"},
-            ]},
-            report={"findings": [
-                {"severity": "suspicious", "title": "computed",
-                 "stage1_finding_ids": ["f1"]},
-                {"severity": "suspicious", "title": "a reading",
-                 "stage1_finding_ids": []},
-                {"severity": "suspicious", "title": "looks backed, is not",
-                 "stage1_finding_ids": ["f2"]},
+                row("f1", "registry_tool", "grim"),
+                row("f2", "agent_code", "not_computational"),
+                row("f3", "model_reading", "not_computational"),
             ]})
         assert "<b>2 of 3</b> findings in this report rest on no validated" in html
         assert "ASSERTED, or hand-worked by the model" in html
@@ -1611,10 +1474,11 @@ class TestWhatThisReviewCouldNotDo:
         """A line that does not apply is omitted. "0 findings without tool
         backing" invites the reader to score the run out of ten; the purpose
         here is disclosure, not a scorecard."""
-        html = self._limits(review, tmp_path, report={"findings": [
-            {"severity": "suspicious", "stage1_finding_ids": ["f1"]}]})
-        assert "cites no sweep tool verdict" not in html
-        assert "cite no sweep tool verdict" not in html
+        # The fixture's one finding is `computed_by: registry_tool`, so there
+        # is nothing to declare and no "0 of 1" may be printed.
+        html = self._limits(review, tmp_path)
+        assert "rest on no validated computation" not in html
+        assert "rests on no validated computation" not in html
 
 
 class TestWhatEachCheckCanConclude:
@@ -1640,9 +1504,9 @@ class TestWhatEachCheckCanConclude:
         `"duplication"` for `detect_duplication`, so a naive lookup finds no
         card for exactly the findings a reader most wants classified. The
         mapping is severity_reconcile's, not a second copy of it."""
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"][0]["technique"] = "duplication"
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         cards = collect(review)["tool_cards"]
         assert cards["aliases"]["duplication"] == "detect_duplication"
 
@@ -1651,15 +1515,15 @@ class TestWhatEachCheckCanConclude:
         the codebook already calls it the weakest evidence class here. Listing
         it as undescribable would report the system's most candid admission as
         a documentation gap."""
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"][0]["technique"] = "manual"
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert "manual" not in collect(review)["tool_cards"]["undescribed"]
 
     def test_a_name_we_cannot_describe_is_named_rather_than_dropped(self, review):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["coverage"] = {"tools_run": ["grim_check", "no_such_tool"]}
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         assert collect(review)["tool_cards"]["undescribed"] == ["no_such_tool"]
 
     def test_the_codebook_renders_a_card_a_finding_can_link_to(self, review, tmp_path):
@@ -1667,43 +1531,11 @@ class TestWhatEachCheckCanConclude:
         assert "What each check can conclude" in html
         assert 'id="cb-tool-grim_check"' in html
 
-    def test_a_probabilistic_check_says_so_inline_never_impossible(
-            self, review, tmp_path):
-        """The two RESTRAINING classes carry their restraint in the chip itself.
-        A reader must not have to click to learn that a check cannot reach
-        `impossible`."""
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0]["technique"] = "check_effect_plausibility"
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "probabilistic, never impossible" in html
-
-    def test_a_severity_above_the_tools_ceiling_is_disclosed_not_hidden(
-            self, review, tmp_path):
-        """Rare and real: measured over every archived run, 2 of 294 stamped
-        findings record a severity above their tool's declared ceiling, both
-        `multiplicity_report` -- a descriptive tool -- carried at `suspicious`.
-        The severity there is the write-up's, not the check's."""
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0].update(technique="multiplicity_report", severity="suspicious")
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "recorded above what this check can return" in html
-
-    def test_a_finding_read_off_the_paper_says_no_tool_computed_it(
-            self, review, tmp_path):
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0]["technique"] = "manual"
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "not computed by a tool" in html
-
-
 class TestCoverageShowsTheDenominatorAndTheLongerRefusalList:
     def test_the_checked_against_found_pair_is_rendered(self, review, tmp_path):
-        r = json.loads((review / "report.json").read_text())
-        r["coverage_summary"] = {"stats_found": 704, "stats_checked": 37}
-        (review / "report.json").write_text(json.dumps(r))
+        f = json.loads((review / "findings.v2.json").read_text())
+        f["coverage_summary"] = {"stats_found": 704, "stats_checked": 37}
+        (review / "findings.v2.json").write_text(json.dumps(f))
         html = flat(section_html(collect(review), "coverage", tmp_path))
         # WORDING CHANGED 2026-08-10 and the change is the point: both numbers
         # are model-asserted, so they are labelled as the review's own account
@@ -1718,12 +1550,12 @@ class TestCoverageShowsTheDenominatorAndTheLongerRefusalList:
         measured against what was CHECKABLE -- and rendered nowhere a reader
         goes. Its `note` is the plainest sentence in the payload, so it is
         printed verbatim rather than paraphrased."""
-        r = json.loads((review / "report.json").read_text())
+        r = json.loads((review / "findings.v2.json").read_text())
         r["coverage_summary"] = {"stats_found": 704, "stats_checked": 37, "checkable": {
             "n_cells": 902, "n_consumable": 525, "cells_checked_via_check_table": 0,
             "blocked_on_declaration": 525, "blocked_on_input": 0,
             "note": "Coverage: 0 of 525 checkable cells were checked (0%)."}}
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "findings.v2.json").write_text(json.dumps(r))
         html = flat(section_html(collect(review), "coverage", tmp_path))
         assert "Coverage: 0 of 525 checkable cells were checked (0%)." in html
         # Relabelled 2026-08-10: each blocked bucket now names WHOSE limit it
@@ -1731,25 +1563,12 @@ class TestCoverageShowsTheDenominatorAndTheLongerRefusalList:
         # abandoned. This one is the fixable case.
         assert "no one declared what kind of quantity the row is" in html
 
-    def test_the_editorial_refusal_list_leads_and_the_sweeps_is_kept(
-            self, review, tmp_path):
-        """They are NOT merged: the two lists paraphrase the same refusals
-        differently, so any dedupe short of fuzzy matching leaves near
-        duplicates side by side, and fuzzy matching would drop a genuine entry
-        to tidy the table."""
-        r = json.loads((review / "report.json").read_text())
-        r["not_checked"] = [{"location": "Table 9", "reason": "the editorial reason"}]
-        (review / "report.json").write_text(json.dumps(r))
-        html = flat(section_html(collect(review), "coverage", tmp_path))
-        assert "the editorial reason" in html
-        assert "The sweep recorded its own 1 refusal" in html
-        assert "figure" in html   # the sweep's own entry, from the fixture
-
     def test_the_reviews_own_limitations_are_shown_where_coverage_is(
             self, review, tmp_path):
-        r = json.loads((review / "report.json").read_text())
+        # The parallel pipeline records its limitations in run_meta.
+        r = json.loads((review / "run_meta.json").read_text())
         r["limitations"] = ["statcheck recovered zero statistics."]
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "run_meta.json").write_text(json.dumps(r))
         html = flat(section_html(collect(review), "coverage", tmp_path))
         assert "statcheck recovered zero statistics." in html
 
@@ -1778,9 +1597,9 @@ class TestTheAnatomyShowsWhatTheReviewThinksThePaperClaims:
     """
 
     def _with_hypotheses(self, review, rows):
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["anatomy"]["hypotheses"] = rows
-        (review / "findings.json").write_text(json.dumps(f))
+        (review / "findings.v2.json").write_text(json.dumps(f))
         return collect(review)
 
     def test_the_hypothesis_statement_is_rendered(self, review, tmp_path):
@@ -1837,7 +1656,7 @@ class TestRunDetailsStopsHidingTheRunsOwnCaveats:
         """A stage that stopped early did not finish looking, which is a
         coverage fact, and it was reachable nowhere."""
         m = json.loads((review / "run_meta.json").read_text())
-        m["stages"]["sweep"] = {"model": "claude-opus-5", "truncated_by_budget": True}
+        m.setdefault("stages", {})["tool_agent"] = {"model": "claude-opus-5", "truncated_by_budget": True}
         (review / "run_meta.json").write_text(json.dumps(m))
         html = flat(section_html(collect(review), "run", tmp_path))
         assert "STAGE TRUNCATED BY BUDGET" in html
@@ -1847,38 +1666,12 @@ class TestRunDetailsStopsHidingTheRunsOwnCaveats:
         """The stage table names one model per stage while every archived run
         records `model_switched: true` with two resolved models."""
         m = json.loads((review / "run_meta.json").read_text())
-        m["stages"]["sweep"] = {"model": "claude-opus-5", "model_switched": True,
+        m.setdefault("stages", {})["tool_agent"] = {"model": "claude-opus-5", "model_switched": True,
                                 "models_resolved": ["claude-haiku-4-5", "claude-opus-5"]}
         (review / "run_meta.json").write_text(json.dumps(m))
         html = flat(section_html(collect(review), "run", tmp_path))
         assert "claude-haiku-4-5" in html
         assert "more than one model was used in this stage" in html
-
-
-class TestABrokenReproductionCommandDoesNotShoutOverTheFinding:
-    def test_a_long_exec_failure_is_folded_away_but_kept(self, review, tmp_path):
-        """200-odd characters of click usage text and box drawing were printed
-        inline directly beneath the accusation, so the last thing under a
-        finding that says `impossible` was a wall of tooling failure. Kept,
-        because it names the exact broken argument; folded, because the reader
-        needs "you cannot re-run this", not our stack."""
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0].update(
-            reproduction="metascience grim 5.5 30", reproduction_valid=False,
-            reproduction_problem="exited 2: Usage: metascience grim [OPTIONS] " + "x" * 120)
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "Not reproducible by a single command." in html
-        assert "what went wrong when we tried" in html
-        assert "exited 2: Usage: metascience grim" in html
-
-    def test_a_short_reason_stays_inline(self, review, tmp_path):
-        f = json.loads((review / "findings.json").read_text())
-        f["findings"][0].update(reproduction="grim 5.5 30", reproduction_valid=False,
-                                reproduction_problem="exited 1:")
-        (review / "findings.json").write_text(json.dumps(f))
-        html = flat(section_html(collect(review), "findings", tmp_path))
-        assert "what went wrong when we tried" not in html
 
 
 class TestABundleThatCannotOpenItsPaperSaysSo:
@@ -1995,7 +1788,7 @@ class TestTheToolsOwnVerdictIsInTheAccounting:
 
     @pytest.fixture
     def graded(self, review):
-        (review / "toolcalls.stage1.json").write_text(json.dumps(
+        (review / "toolcalls.tool_agent.json").write_text(json.dumps(
             [{"seq": i, "tool_short": "check_estimate_ci", "surface": "mcp",
               "validated": True, "input": {}, "result": '{"severity": "consistent"}'}
              for i in range(3)]
@@ -2017,9 +1810,10 @@ class TestTheToolsOwnVerdictIsInTheAccounting:
         something, and both are things a reader must be able to see."""
         row = [r for r in graded["check_table"] if r["check"] == "grim_percentage"][0]
         assert row["tool_verdicts"] == {"impossible": 1}
-        # The write-up recorded `suspicious` for the same check. The two
-        # columns disagreeing is the whole point of showing both.
-        assert row["severities"] == {"suspicious": 1}
+        # The write-up recorded S5 (the fixture finding's 1-9 rung) for the
+        # same check. The two columns disagreeing is the whole point of
+        # showing both.
+        assert row["severities"] == {"S5": 1}
         assert "impossible 1" in _text(section_html(graded, "overview", tmp_path))
 
     def test_the_two_columns_are_named_apart(self, graded, tmp_path):
@@ -2159,62 +1953,6 @@ class TestAHighlightIsReadableInBothThemes:
         assert css.count("--hit:") == 4
 
 
-class TestTheQuestionsCanBeCopiedWithoutOurNotes:
-    """Greg, 2026-08-10. The questions are written to be SENT. "Would resolve"
-    is our note to ourselves about why each is worth asking, and pasting it to
-    an author reads as us explaining our suspicions to them."""
-
-    @pytest.fixture
-    def asked(self, review):
-        r = json.loads((review / "report.json").read_text())
-        r["questions_for_authors"] = [
-            {"question": "Could you confirm the Table 1 denominator?",
-             "why": "This is the headline finding."},
-            {"question": "Was a Firth correction considered?", "why": "Separation."},
-        ]
-        (review / "report.json").write_text(json.dumps(r))
-        return collect(review)
-
-    def test_the_copy_carries_the_questions_and_not_the_notes(self, asked, tmp_path):
-        html = section_html(asked, "questions", tmp_path)
-        body = html.split('id="qtext"')[1].split("</textarea>")[0]
-        assert "Could you confirm the Table 1 denominator?" in body
-        assert "Was a Firth correction considered?" in body
-        assert "Would resolve" not in body
-        assert "This is the headline finding" not in body
-
-    def test_they_are_numbered_the_way_the_page_numbers_them(self, asked, tmp_path):
-        body = section_html(asked, "questions", tmp_path).split(
-            'id="qtext"')[1].split("</textarea>")[0]
-        assert re.search(r"1\.\s*Could you confirm", body)
-        assert re.search(r"2\.\s*Was a Firth", body)
-
-    def test_the_notes_still_show_on_the_page(self, asked, tmp_path):
-        """Copying without them is not the same as hiding them."""
-        assert "Would resolve" in _text(section_html(asked, "questions", tmp_path))
-
-    def test_the_button_says_how_many(self, asked, tmp_path):
-        assert "Copy the 2 questions" in _text(
-            section_html(asked, "questions", tmp_path))
-
-    def test_the_hidden_textarea_is_still_laid_out(self, review):
-        """`execCommand('copy')` copies the SELECTION and an element that is
-        not laid out cannot hold one. `display:none` here would break the only
-        copy path a `file://` page has when the clipboard API refuses -- which
-        Chrome does whenever its window is not the OS foreground window
-        ("NotAllowedError: Document is not focused"), measured while building
-        this."""
-        rules = _css_rules(collect(review))
-        assert ".offscreen" in rules, "no .offscreen rule"
-        assert "display:none" not in rules[".offscreen"]
-        assert "position:absolute" in rules[".offscreen"]
-
-    def test_a_review_with_no_questions_offers_no_button(self, review, tmp_path):
-        html = _text(section_html(collect(review), "questions", tmp_path))
-        assert "Copy the" not in html
-        assert "did not write any" in html
-
-
 class TestTheSidebarCountStaysOnItsOwnRow:
     """MEASURED by looking at the rendered page: `nav .c` was `float:right`
     inside a block anchor, and a float only stays on the line if the line has
@@ -2288,9 +2026,12 @@ class TestTheTwoGradesSayWhichScaleTheyAreOn:
 
     @pytest.fixture
     def graded(self, review):
-        r = json.loads((review / "report.json").read_text())
-        r["headline"] = {"severity": "highly_suspicious", "statement": "A thing."}
-        (review / "report.json").write_text(json.dumps(r))
+        # The headline is the adjudicator's headline finding (the fixture's
+        # S5 row); report.json's `headline` block was serial-only.
+        f = json.loads((review / "findings.v2.json").read_text())
+        f["findings"][0]["title"] = "A thing."
+        f["adjudication"]["headline_finding_id"] = "f1"
+        (review / "findings.v2.json").write_text(json.dumps(f))
         return collect(review)
 
     def test_the_headline_severity_names_its_object(self, graded, tmp_path):
@@ -2320,7 +2061,11 @@ class TestTheTwoGradesSayWhichScaleTheyAreOn:
         assert "the whole run, not the finding above" in html
         # And the sizes of the two scales are given, so "different" is not
         # left as an assertion the reader has to take on trust.
-        assert "has three values" in html and "has five" in html
+        assert "has three values" in html
+
+    def test_the_finding_scale_is_stated_as_the_ladder_it_is(self, graded, tmp_path):
+        html = _text(section_html(graded, "overview", tmp_path))
+        assert "has five" not in html
 
 
 class TestAGradeOnUsNeverShipsToTheAuthor:
@@ -2491,9 +2236,9 @@ class TestNoPercentageIsBuiltFromTwoGuesses:
 
     @pytest.fixture
     def asserted(self, review):
-        r = json.loads((review / "report.json").read_text())
+        r = json.loads((review / "findings.v2.json").read_text())
         r["coverage_summary"] = {"stats_found": 741, "stats_checked": 122}
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "findings.v2.json").write_text(json.dumps(r))
         return collect(review)
 
     def test_the_two_numbers_are_never_divided(self, asserted, tmp_path):
@@ -2517,13 +2262,13 @@ class TestNoPercentageIsBuiltFromTwoGuesses:
         assert "No audited cell count for this run" in html
 
     def test_the_census_leads_when_it_is_present(self, review, tmp_path):
-        r = json.loads((review / "report.json").read_text())
+        r = json.loads((review / "findings.v2.json").read_text())
         r["coverage_summary"] = {"stats_found": 741, "stats_checked": 122,
             "checkable": {"n_cells": 920, "n_consumable": 497, "n_runnable": 145,
                           "cells_checked_via_check_table": 43,
                           "blocked_on_input": 352, "blocked_on_declaration": 0,
                           "missing_inputs": {"n": 352}}}
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "findings.v2.json").write_text(json.dumps(r))
         html = _text(section_html(collect(review), "coverage", tmp_path))
         assert "the audited count" in html
         assert "920" in html and "497" in html and "145" in html
@@ -2533,12 +2278,12 @@ class TestNoPercentageIsBuiltFromTwoGuesses:
         """352 of 497 consumable cells are blocked because the PAPER prints no
         n. Filing that under our shortfall converts a property of the
         publication into an apparent failure of ours."""
-        r = json.loads((review / "report.json").read_text())
+        r = json.loads((review / "findings.v2.json").read_text())
         r["coverage_summary"] = {"stats_found": 741, "stats_checked": 122,
             "checkable": {"n_cells": 920, "n_consumable": 497, "n_runnable": 145,
                           "cells_checked_via_check_table": 43,
                           "blocked_on_input": 352, "blocked_on_declaration": 0}}
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "findings.v2.json").write_text(json.dumps(r))
         html = _text(section_html(collect(review), "coverage", tmp_path))
         assert "THE PAPER does not print an input" in html
 
@@ -2547,11 +2292,11 @@ class TestNoPercentageIsBuiltFromTwoGuesses:
         `check_table`; a run that called a check directly per cell scores 0.
         Printing that bare, beside a large denominator, is a number that reads
         as a failure and is not one."""
-        r = json.loads((review / "report.json").read_text())
+        r = json.loads((review / "findings.v2.json").read_text())
         r["coverage_summary"] = {"stats_found": 741, "stats_checked": 122,
             "checkable": {"n_cells": 920, "n_consumable": 497,
                           "cells_checked_via_check_table": 0}}
-        (review / "report.json").write_text(json.dumps(r))
+        (review / "findings.v2.json").write_text(json.dumps(r))
         html = _text(section_html(collect(review), "coverage", tmp_path))
         assert "UNDERSTATES" in html
 
@@ -2565,9 +2310,9 @@ class TestARefusalSaysWhoseLimitItWas:
     the reading "our tool failed 12 times" is wrong on 10 of them."""
 
     def _refusals(self, review, rows):
-        r = json.loads((review / "report.json").read_text())
-        r["not_checked"] = rows
-        (review / "report.json").write_text(json.dumps(r))
+        r = json.loads((review / "findings.v2.json").read_text())
+        r["unchecked"] = rows
+        (review / "findings.v2.json").write_text(json.dumps(r))
         return collect(review)
 
     def test_an_explicit_not_applicable_beats_every_keyword(
@@ -2682,11 +2427,11 @@ class TestAJudgementIsNotAnUnreproducibleFinding:
         """Not a rewrite of the archive: the classification is deterministic
         and every input -- each finding's own reproduction string -- is already
         in the payload. The review directory is left untouched."""
-        f = json.loads((review / "findings.json").read_text())
+        f = json.loads((review / "findings.v2.json").read_text())
         f["findings"] = [
-            {"id": "a", "severity": "suspicious", "reproduction": "metascience grim 5.5 30"},
-            {"id": "b", "severity": "suspicious", "reproduction": "No forensic tool applies."}]
-        (review / "findings.json").write_text(json.dumps(f))
+            {"finding_id": "a", "severity": 5, "reproduction": "metascience grim 5.5 30"},
+            {"finding_id": "b", "severity": 5, "reproduction": "No forensic tool applies."}]
+        (review / "findings.v2.json").write_text(json.dumps(f))
         m = json.loads((review / "run_meta.json").read_text())
         m["reproducibility"] = {"n_findings": 2, "n_valid": 1, "n_invalid": 1,
                                 "executed": True, "n_ran_ok": 1, "n_ran_failed": 0}
@@ -3054,9 +2799,11 @@ class TestTheTextIntegrityWarningReachesTheReader:
     def _payload(self, tmp_path, integrity):
         rd = tmp_path / "10.9999--demo" / "forensic_review"
         rd.mkdir(parents=True)
-        (rd / "findings.json").write_text(json.dumps({"paper_id": "x", "findings": []}))
-        (rd / "report.json").write_text(json.dumps(
-            {"coverage_summary": {"text_integrity": integrity}}))
+        # The census (and its text-integrity verdict) lives at the top level
+        # of the v2 document; report.json's copy was serial-only.
+        (rd / "findings.v2.json").write_text(json.dumps(
+            {"paper_id": "x", "findings": [],
+             "coverage_summary": {"text_integrity": integrity}}))
         return collect(rd)
 
     def test_the_integrity_verdict_reaches_the_payload(self, tmp_path):
@@ -3064,7 +2811,7 @@ class TestTheTextIntegrityWarningReachesTheReader:
             "quarantine": True,
             "patterns": [{"pattern": "control character in a number",
                           "count": 12, "corrupts_digits": True, "examples": []}]})
-        ti = (p["report_obj"].get("coverage_summary") or {}).get("text_integrity")
+        ti = (p["coverage_summary"] or {}).get("text_integrity")
         assert ti and ti["quarantine"] is True
         assert ti["patterns"][0]["corrupts_digits"] is True
 
@@ -3072,7 +2819,7 @@ class TestTheTextIntegrityWarningReachesTheReader:
         """The absence-as-knowledge failure in its usual place: a scan that
         could not run must not arrive as a paper with no corruption."""
         p = self._payload(tmp_path, {"error": "glyph scan failed: OSError"})
-        ti = (p["report_obj"].get("coverage_summary") or {}).get("text_integrity")
+        ti = (p["coverage_summary"] or {}).get("text_integrity")
         assert ti.get("error") and "quarantine" not in ti
 
     def test_the_viewer_consumes_it(self):
@@ -3162,7 +2909,7 @@ class TestAFailedRegisterSaysSoInsteadOfBlamingTheBundle:
     def _collect(self, tmp_path, *, error: str | None, register: dict | None):
         rd = tmp_path / "10.9999--demo" / "forensic_review"
         rd.mkdir(parents=True)
-        (rd / "findings.json").write_text(json.dumps({"paper_id": "x", "findings": []}))
+        (rd / "findings.v2.json").write_text(json.dumps({"paper_id": "x", "findings": []}))
         if error is not None:
             (rd / "value_register.error.txt").write_text(error)
         if register is not None:
@@ -3269,7 +3016,6 @@ def v2_review(tmp_path):
 class TestV2Bundle:
     def test_v2_findings_become_cards(self, v2_review):
         p = collect(v2_review)
-        assert p["findings_format"] == "v2"
         cards = p["findings"]
         assert len(cards) == 3
         by_slug = {c["slug"]: c for c in cards}
@@ -3318,7 +3064,6 @@ class TestV2Bundle:
         out = build_bundle(v2_review, tmp_path / "out")
         html = (out / "viewer.html").read_text()
         assert "Methods list Anti-CD3; Results report CD31" in html
-        assert "findings_format" in html
         assert "v2FindingsPage" in html
 
     def test_the_findings_section_renders_the_cards(self, v2_review, tmp_path):
@@ -3345,5 +3090,3 @@ class TestV2Bundle:
         with pytest.raises(RuntimeError, match="hollow bundle"):
             B.build_bundle(v2_review, tmp_path / "out")
 
-    def test_legacy_runs_still_collect_as_legacy(self, review):
-        assert collect(review)["findings_format"] == "legacy"

@@ -44,9 +44,11 @@ class TestBothSurfacesAgree:
     def test_neither_surface_shows_the_retired_word_as_the_verdict(
             self, review, tmp_path, recorded):  # noqa: F811
         rev = review  # the fixture yields the forensic_review dir itself
-        obj = json.loads((rev / "report.json").read_text())
-        obj["verdict"] = recorded
-        (rev / "report.json").write_text(json.dumps(obj))
+        # The verdict is the adjudicator's, on the v2 document (report.json
+        # was the serial pipeline's record and is no longer read).
+        obj = json.loads((rev / "findings.v2.json").read_text())
+        obj["adjudication"]["verdict"] = recorded
+        (rev / "findings.v2.json").write_text(json.dumps(obj))
 
         overview = flat(section_html(collect(review), "overview", tmp_path))
         # The retired word may appear in a "recorded as ..." note; it may not
@@ -54,6 +56,8 @@ class TestBothSurfacesAgree:
         m = re.search(r"verdict on this run.{0,200}", overview, re.S)
         assert m, "the Overview no longer labels the verdict"
         shown = m.group(0)
+        # Not vacuous: the canonical word IS rendered there.
+        assert "unresolved" in shown, shown
         for word in RETIRED:
             assert not re.search(rf">\s*{word}\s*<", shown), (
                 f"the viewer renders {word!r} as the verdict itself")

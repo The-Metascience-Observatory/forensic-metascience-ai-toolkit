@@ -84,9 +84,12 @@ LEGACY_BY_DESIGN = {"agent.py", "review_issues.py"}
 #: after that port. LOWER IS THE ONLY ACCEPTABLE DIRECTION.
 #: Do not raise this to make a change pass -- a new read is a fifth symptom
 #: waiting to happen, and the fix is to read the v2 record instead.
-#: 16 since 2026-10-19, when the readers of the serial pipeline's output layout
-#: started being removed.
-MAX_LIVE_READS = 16
+#: 9 since 2026-10-19 (1.100.0): the readers of the serial pipeline's output
+#: layout were removed -- bundle, cli, completeness.reconcile_findings,
+#: finding_files, viewer_facts.finding_index, webapp_index. What is left is
+#: the serial pipeline's annotator family (anchoring, consequence,
+#: report_render, severity_reconcile, warrants), reachable only via agent.py.
+MAX_LIVE_READS = 9
 
 
 def _live_reads() -> collections.Counter:
@@ -301,8 +304,8 @@ def _live_field_reads() -> collections.Counter:
 #: 46 since 2026-10-16: `history_db._sync_report_findings` reads `id` on
 #: legacy report rows. Not a new read -- the general modules moved back from
 #: the image package into this tree, which brought it inside the scan.
-#: 41 since 2026-10-19 (the old-layout readers removed so far).
-MAX_LIVE_FIELD_READS = 41
+#: 38 since 2026-10-19 (1.100.0, the old-layout readers removed).
+MAX_LIVE_FIELD_READS = 38
 
 
 class TestTheFieldLevelResidueDoesNotGrow:

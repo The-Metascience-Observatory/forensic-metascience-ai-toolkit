@@ -33,6 +33,17 @@ def _paper(tmp_path, name="10.1234--demo", files=None, dirs=()):
     return d
 
 
+def _v2(verdict="unresolved", severities=(), **top):
+    """A minimal findings-v2 document: one `problem` row per 1-9 severity."""
+    return {"schema_version": "2.0",
+            "adjudication": {"ran": True, "verdict": verdict},
+            "findings": [{"finding_id": f"f{i}", "technique": "grim",
+                          "outcome": "problem", "severity": sev,
+                          "adjudication": {"action": "kept"}}
+                         for i, sev in enumerate(severities)],
+            **top}
+
+
 def _cross(matches, **top):
     """A `cross_paper_matches.json` body, shaped like the real writer's."""
     return {"schema_version": "1.0", "corpus_root": "/c", "paper_key": "p",
@@ -313,12 +324,10 @@ class TestAPaperIsNotARun:
     def _multi(self, tmp_path):
         return _paper(tmp_path, files={
             "10.1234--demo.pdf": "x",
-            "forensic_review/report.json": {"verdict": "unresolved",
-                                            "findings": [{"severity": "suspicious"}]},
+            "forensic_review/findings.v2.json": _v2("unresolved", [3]),
             "forensic_review/run_meta.json": {"total_cost_usd": 3.0},
-            "forensic_review_current/report.json": {
-                "verdict": "does_not_reconcile",
-                "findings": [{"severity": "impossible"}]},
+            "forensic_review_current/findings.v2.json": _v2(
+                "does_not_reconcile", [9]),
             "forensic_review_current/run_meta.json": {"total_cost_usd": 5.0},
         })
 
@@ -334,9 +343,8 @@ class TestAPaperIsNotARun:
         that has ever been bundled."""
         d = _paper(tmp_path, files={
             "10.1234--demo.pdf": "x",
-            "forensic_review/report.json": {"verdict": "unresolved", "findings": []},
-            "forensic_review_bundle/analysis/report.json": {"verdict": "unresolved",
-                                                            "findings": []},
+            "forensic_review/findings.v2.json": _v2(),
+            "forensic_review_bundle/analysis/findings.v2.json": _v2(),
         })
         assert W.scan_paper(d)["n_runs"] == 1
 
@@ -348,22 +356,19 @@ class TestAPaperIsNotARun:
         rec = W.scan_paper(d)
         assert rec["latest_run"] == "forensic_review_current"
         assert rec["verdict"] == "does_not_reconcile"
-        assert rec["worst_severity"] == "impossible"
+        assert rec["worst_severity_9"] == 9
 
 
 class TestVerdictsAreComparableAcrossTheRename:
     def test_a_legacy_verdict_is_canonicalised_for_filtering(self, tmp_path):
-        """34 archived reports use the retired words. Left raw they form their
+        """34 archived reports used the retired words. Left raw they form their
         own filter buckets, so a corpus screen filtered to
         `does_not_reconcile` silently omits every `untrustworthy` run."""
         d = _paper(tmp_path, files={
             "10.1234--demo.pdf": "x",
-            "forensic_review/report.json": {"verdict": "untrustworthy",
-                                            "findings": []}})
+            "forensic_review/findings.v2.json": _v2("untrustworthy")})
         run = W.scan_paper(d)["runs"][0]
         assert run["verdict"] == "does_not_reconcile"
-        assert run["verdict_recorded"] == "untrustworthy"
-        assert run["verdict_is_legacy"] is True
 
 
 class TestAPartialRunIsNotAFailedOne:
@@ -372,14 +377,14 @@ class TestAPartialRunIsNotAFailedOne:
         review ($6.02, a verdict, four findings) into `failed.jsonl`."""
         d = _paper(tmp_path, files={
             "10.1234--demo.pdf": "x",
-            "forensic_review/report.json": {"verdict": "unresolved", "findings": []},
-            "forensic_review/run_meta.json": {"stages": {"sweep": {"is_error": True}}}})
+            "forensic_review/findings.v2.json": _v2(),
+            "forensic_review/run_meta.json": {"stages": {"tool_agent": {"is_error": True}}}})
         assert W.scan_paper(d)["runs"][0]["status"] == "partial"
 
     def test_an_error_with_no_report_is_failed(self, tmp_path):
         d = _paper(tmp_path, files={
             "10.1234--demo.pdf": "x",
-            "forensic_review/run_meta.json": {"stages": {"sweep": {"is_error": True}}}})
+            "forensic_review/run_meta.json": {"stages": {"tool_agent": {"is_error": True}}}})
         assert W.scan_paper(d)["runs"][0]["status"] == "failed"
 
 
@@ -456,10 +461,10 @@ class TestUnreviewedIsNotWithheld:
 class TestTheQueueOrdersByWhatNeedsAHuman:
     def test_worst_first_then_unreviewed(self, tmp_path):
         papers = [
-            {"paper_id": "clean", "worst_severity": "consistent", "review": {"reviewed": False}},
-            {"paper_id": "bad", "worst_severity": "impossible", "review": {"reviewed": False}},
-            {"paper_id": "bad-done", "worst_severity": "impossible", "review": {"reviewed": True}},
-            {"paper_id": "nothing", "worst_severity": None, "review": {"reviewed": False}},
+            {"paper_id": "clean", "worst_severity_9": 1, "review": {"reviewed": False}},
+            {"paper_id": "bad", "worst_severity_9": 9, "review": {"reviewed": False}},
+            {"paper_id": "bad-done", "worst_severity_9": 9, "review": {"reviewed": True}},
+            {"paper_id": "nothing", "worst_severity_9": None, "review": {"reviewed": False}},
         ]
         assert [p["paper_id"] for p in W.sort_papers(papers)] == [
             "bad", "bad-done", "clean", "nothing"]
@@ -469,10 +474,10 @@ class TestTheQueueOrdersByWhatNeedsAHuman:
         69 PubPeer image-integrity papers -- the index did not carry the
         label, so it could not be a sort key."""
         papers = [
-            {"paper_id": "fp-swamp", "worst_severity": "suspicious",
+            {"paper_id": "fp-swamp", "worst_severity_9": 5,
              "review": {"reviewed": False},
              "pubpeer": {"has_entry": False, "is_image_integrity": False}},
-            {"paper_id": "bik", "worst_severity": None,
+            {"paper_id": "bik", "worst_severity_9": None,
              "review": {"reviewed": False},
              "pubpeer": {"has_entry": True, "is_image_integrity": True,
                          "figures": ["Figure 1C"]}},
@@ -556,7 +561,7 @@ class TestItSurvivesTheCorpusOnDisk:
         _paper(tmp_path, "ok", files={"ok.pdf": "x"})
         bad = _paper(tmp_path, "bad", files={"bad.pdf": "x"})
         (bad / "forensic_review").mkdir()
-        (bad / "forensic_review" / "report.json").write_text("{not json")
+        (bad / "forensic_review" / "findings.v2.json").write_text("{not json")
         ix = W.scan_corpus(tmp_path)
         assert ix["totals"]["n_papers"] == 2
 
@@ -569,15 +574,6 @@ class TestItSurvivesTheCorpusOnDisk:
         d = _paper(tmp_path, files={"10.1234--demo.pdf": "x"})
         for rec in W.scan_paper(d)["channels"].values():
             assert rec["state"] in W.CHANNEL_STATES
-
-    def test_severity_counts_show_every_rung_at_zero(self, tmp_path):
-        """A missing key and a zero read differently in a UI, and only one of
-        them is a claim. `0 impossible` says we looked."""
-        counts = W.severity_counts([{"severity": "suspicious"}])
-        assert counts["impossible"] == 0
-        assert set(counts) == {"impossible", "highly_suspicious", "suspicious",
-                               "indeterminate", "consistent"}
-
 
 class TestVisualEvidenceIsCatalogued:
     """MEASURED on `cerebrolysin_papers`: 4 papers of 421 carry any visual
@@ -933,7 +929,7 @@ class TestProjectScan:
                files={"10.1--b.landing.html": "<html/>"})
         (tmp_path / "masliah_papers" / "10.1--a" / "forensic_review").mkdir()
         (tmp_path / "masliah_papers" / "10.1--a" / "forensic_review"
-         / "report.json").write_text('{"verdict":"unresolved","findings":[]}')
+         / "findings.v2.json").write_text(json.dumps(_v2()))
         _paper(tmp_path / "gino_paper" / "done", "10.2--c",
                files={"10.2--c.pdf": "x",
                       "review.json": '{"paper":{"status":"complete",'
@@ -981,8 +977,7 @@ class TestProjectScan:
     def test_analysed_at_is_the_recorded_stamp(self, tmp_path):
         d = _paper(tmp_path, files={"x.pdf": "x"})
         (d / "forensic_review").mkdir()
-        (d / "forensic_review" / "report.json").write_text(
-            '{"verdict":"unresolved","findings":[]}')
+        (d / "forensic_review" / "findings.v2.json").write_text(json.dumps(_v2()))
         (d / "forensic_review" / "run_meta.json").write_text(
             '{"analysed_at":"2026-08-14 09:30 UTC"}')
         rec = W.scan_paper(d)
@@ -992,8 +987,8 @@ class TestProjectScan:
     def test_analysed_at_falls_back_to_file_mtime_and_says_so(self, tmp_path):
         d = _paper(tmp_path, files={"x.pdf": "x"})
         (d / "forensic_review").mkdir()
-        report = d / "forensic_review" / "report.json"
-        report.write_text('{"verdict":"unresolved","findings":[]}')
+        doc = d / "forensic_review" / "findings.v2.json"
+        doc.write_text(json.dumps(_v2()))
         rec = W.scan_paper(d)
         assert rec["analysed_at"]
         assert rec["analysed_at_source"] == "file_mtime"
@@ -1059,11 +1054,8 @@ def test_refresh_index_paper_fills_n_findings_after_a_run(tmp_path):
     snap = tmp_path / "index.json"
     snap.write_text(json.dumps(idx))
     (paper / "forensic_review_grok-4-6_08_19_2026").mkdir()
-    (paper / "forensic_review_grok-4-6_08_19_2026" / "report.json").write_text(
-        json.dumps({"verdict": "unresolved",
-                    "findings": [{"severity": "suspicious"},
-                                 {"severity": "suspicious"},
-                                 {"severity": "indeterminate"}]}))
+    (paper / "forensic_review_grok-4-6_08_19_2026" / "findings.v2.json").write_text(
+        json.dumps(_v2("unresolved", [5, 5, 2])))
     got = W.refresh_index_paper(paper, index_path=snap)
     assert got["updated"] is True
     assert got["n_findings"] == 3
@@ -1211,8 +1203,7 @@ def test_n_findings_is_none_when_there_is_no_run(tmp_path):
 def test_n_findings_zero_is_a_count_not_an_absence(tmp_path):
     d = _paper(tmp_path, files={"x.pdf": "x"})
     (d / "forensic_review").mkdir()
-    (d / "forensic_review" / "report.json").write_text(
-        '{"verdict":"unresolved","findings":[]}')
+    (d / "forensic_review" / "findings.v2.json").write_text(json.dumps(_v2()))
     assert W.scan_paper(d)["n_findings"] == 0
 
 
@@ -1375,25 +1366,6 @@ class TestTheNonImageCountIsNotTheTotal:
         ])
         assert W.scan_paper(d)["n_non_image_findings"] == 0
 
-    def test_a_report_row_is_traced_through_the_ids_it_merged(self, tmp_path):
-        # v1 report findings carry no `technique` at all.
-        d = _paper(tmp_path, dirs=("forensic_review",))
-        (d / "forensic_review" / "report.json").write_text(json.dumps({
-            "verdict": "unresolved", "findings": [
-                {"title": "panels repeat", "severity": "suspicious",
-                 "stage1_finding_ids": ["IMGDUP-1", "IMGDUP-2"]},
-                {"title": "a mean is impossible", "severity": "impossible",
-                 "stage1_finding_ids": ["S1-4"]},
-                {"title": "an image finding the sweep also numbered",
-                 "severity": "suspicious",
-                 "stage1_finding_ids": ["IMGDUP-3", "S1-9"]},
-            ]}))
-        rec = W.scan_paper(d)
-        assert rec["n_findings"] == 3
-        # The mixed row says something about the NUMBERS too, so it stays in
-        # the non-image count; only the image-only row leaves.
-        assert rec["n_non_image_findings"] == 2
-
     def test_no_run_leaves_the_count_absent(self, tmp_path):
         d = _paper(tmp_path, files={"x.pdf": "x"})
         assert W.scan_paper(d)["n_non_image_findings"] is None
@@ -1405,17 +1377,17 @@ class TestTheIndexNamesTheVersionThatProducedTheRun:
 
     def test_the_release_reaches_the_paper_record(self, tmp_path):
         d = _paper(tmp_path, dirs=("forensic_review",))
-        (d / "forensic_review" / "report.json").write_text(
-            '{"verdict":"unresolved","findings":[]}')
+        (d / "forensic_review" / "findings.v2.json").write_text(json.dumps(_v2()))
         (d / "forensic_review" / "run_meta.json").write_text(
             '{"version": "1.3.0", "analysed_at": "2026-08-21 10:00 UTC"}')
         assert W.scan_paper(d)["pipeline_version"] == "1.3.0"
 
     def test_a_run_that_recorded_no_version_is_none_not_a_guess(self, tmp_path):
         d = _paper(tmp_path, dirs=("forensic_review",))
-        (d / "forensic_review" / "report.json").write_text(
-            '{"verdict":"unresolved","findings":[]}')
-        assert W.scan_paper(d)["pipeline_version"] is None
+        (d / "forensic_review" / "findings.v2.json").write_text(json.dumps(_v2()))
+        rec = W.scan_paper(d)
+        assert rec["latest_run"] == "forensic_review"
+        assert rec["pipeline_version"] is None
 
     def test_no_run_at_all_is_none(self, tmp_path):
         d = _paper(tmp_path, files={"x.pdf": "x"})

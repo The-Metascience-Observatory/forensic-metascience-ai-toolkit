@@ -238,8 +238,7 @@ def audit(paper_dir: str | Path, review_dir: str | Path | None = None) -> dict:
         return _finish(_summarise(rows, undeclared), review_dir)
 
     rd = Path(review_dir)
-    findings = _load(rd / "findings.json")
-    report = _load(rd / "report.json")
+    doc = _load(rd / "findings.v2.json") or {}
     # WHEN WAS THIS RUN MADE? A field absent from an ARCHIVED run because the
     # code did not exist yet is not a broken hand-off, and reporting it as one
     # is entry 8 of LESSONS.md -- "check whether the code POSTDATES the archive
@@ -248,7 +247,7 @@ def audit(paper_dir: str | Path, review_dir: str | Path | None = None) -> dict:
     # written to catch, committed inside the catcher.
     stale, stale_why = _predates_head(rd)
 
-    fl = (findings or {}).get("findings") or []
+    fl = doc.get("findings") or []
     rows.append({
         # RE-POINTED AT THE LIVE PIPELINE (prerequisite (d), 2026-09-04). The
         # needle was `agent.py`'s `findings_for_stage2`, a legacy-body local
@@ -285,32 +284,19 @@ def audit(paper_dir: str | Path, review_dir: str | Path | None = None) -> dict:
         "ok": prompt_ok and work.get("n_accusatory", 0) >= 0,
         "note": f"{work.get('n_flagged')} of {work.get('n_accusatory')} accusations flagged"})
 
-    # 7. STAGE 1 -> STAGE 2 dispositions.
-    rec = _c.reconcile_findings(fl, report or {})
-    rows.append({
-        "link": "every stage-1 finding gets a disposition",
-        "producer": "completeness.reconcile_findings",
-        "consumer": "viewer Coverage page",
-        "produced": rec.get("reconcilable") is not False,
-        "n": rec.get("n_stage1") or 0, "error": None,
-        "wired": _reads("bundle.py", "stage1_reconciliation"),
-        "ok": rec.get("reconcilable") is not False,
-        "note": f"{rec.get('n_dropped')} dropped, "
-                f"{rec.get('n_accusatory_unexplained')} accusations unexplained"})
-
-    # 8. COVERAGE_SUMMARY -> viewer, key by key. This is the exact surface where
-    #    `completeness` sat unread for weeks.
+    # 7. COVERAGE_SUMMARY -> viewer, key by key. This is the exact surface where
+    #    `completeness` sat unread for weeks. It lives at the top level of the
+    #    findings-v2 document.
     for key, needle in (("checkable", "cs.checkable"),
                         ("completeness", "cs.completeness"),
                         ("computation_audit", "cs.computation_audit"),
-                        ("undelivered", "cs.undelivered"),
-                        ("stage1_reconciliation", "cs.stage1_reconciliation")):
-        v = _dig(report or {}, f"coverage_summary.{key}")
+                        ("undelivered", "cs.undelivered")):
+        v = _dig(doc, f"coverage_summary.{key}")
         wired = _reads("bundle.py", needle)
         if v is None and stale:
             rows.append({
                 "link": f"coverage_summary.{key} is rendered",
-                "producer": "agent.py", "consumer": "bundle.py viewer",
+                "producer": "parallel.py", "consumer": "bundle.py viewer",
                 "produced": None, "n": 0, "error": None, "wired": wired,
                 "ok": None,
                 "note": f"NOT MEASURED: {stale_why}. The consumer is wired; "
@@ -319,10 +305,10 @@ def audit(paper_dir: str | Path, review_dir: str | Path | None = None) -> dict:
             continue
         rows.append({
             "link": f"coverage_summary.{key} is rendered",
-            "producer": "agent.py", "consumer": "bundle.py viewer",
+            "producer": "parallel.py", "consumer": "bundle.py viewer",
             "produced": _size(v) > 0, "n": _size(v), "error": None,
             "wired": wired, "ok": wired and _size(v) > 0,
-            "note": "" if v is not None else "absent from this run's report.json"})
+            "note": "" if v is not None else "absent from this run's findings.v2.json"})
 
     return _finish(_summarise(rows, undeclared), review_dir)
 
@@ -361,9 +347,8 @@ def _finish(out: dict, review_dir: str | Path | None) -> dict:
                     "note": f"the tool-call ledger ({found[0]}) could not be read"}
             else:
                 out["delivery"] = {"ok": None, "note": (
-                    "this run directory holds neither toolcalls.tool_agent.json "
-                    "nor toolcalls.stage1.json, so whether the model's fetches "
-                    "ARRIVED is not measured")}
+                    "this run directory holds no toolcalls.tool_agent.json, "
+                    "so whether the model's fetches ARRIVED is not measured")}
 
     # READY MEANS ALL THREE LEGS. A run whose hand-offs are sound, whose tools
     # are stranded, or whose fetches never arrived, is not ready in any sense a

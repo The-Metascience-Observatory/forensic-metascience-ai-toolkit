@@ -12,7 +12,6 @@ export type SortKey =
   | "run"
   | "version"
   | "verdict"
-  | "worst"
   | "sev9"
   | "findings"
   | "image"
@@ -104,22 +103,10 @@ function yearNum(p: Paper): number {
   return Number.isFinite(n) ? n : NaN;
 }
 
-/** Higher = more serious. First click (desc) puts the worst at the top. */
-import { legacyToNine } from "./constants.gen.ts";
-
-export function sev9Of(p: { worst_severity_9?: number | null;
-                            worst_severity: string | null }): number | null {
-  if (typeof p.worst_severity_9 === "number") return p.worst_severity_9;
-  return legacyToNine(p.worst_severity);
+/** The paper's worst assigned 1-9 rung, or null. */
+export function sev9Of(p: { worst_severity_9?: number | null }): number | null {
+  return typeof p.worst_severity_9 === "number" ? p.worst_severity_9 : null;
 }
-
-const SEVERITY_WEIGHT: Record<string, number> = {
-  impossible: 5,
-  highly_suspicious: 4,
-  suspicious: 3,
-  indeterminate: 2,
-  consistent: 1,
-};
 
 /** Higher = more serious. Legacy names rank with the current vocabulary. */
 const VERDICT_WEIGHT: Record<string, number> = {
@@ -294,13 +281,7 @@ export function sortPapers(papers: Paper[], sort: SortState | null): Paper[] {
       case "verdict":
         return cmpNum(rankOf(a.verdict, VERDICT_WEIGHT),
                       rankOf(b.verdict, VERDICT_WEIGHT), sort.dir);
-      case "worst":
-        return cmpNum(rankOf(a.worst_severity, SEVERITY_WEIGHT),
-                      rankOf(b.worst_severity, SEVERITY_WEIGHT), sort.dir);
       case "sev9":
-        // Assigned 1-9 first; a mapped legacy 5-enum value as fallback so
-        // mixed-era corpora still order (a mapped value never OUTRANKS an
-        // assigned one at the same rung -- integers compare equal).
         return cmpNum(sev9Of(a) ?? Number.NaN, sev9Of(b) ?? Number.NaN, sort.dir);
       case "findings":
         return cmpNum(findingsNum(a), findingsNum(b), sort.dir);

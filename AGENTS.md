@@ -387,7 +387,8 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   - `python -m metascience_agent.workbench.service --migrate` applies migrations
     004/005/006; `--sync --index webapp/data/index.json` bootstraps the local cache.
     Here `python` means the interpreter discovered from the console script above.
-    The `db` extra supplies psycopg and watchfiles.
+    psycopg and watchfiles are base dependencies; `metascience db-setup` creates
+    and migrates the database (or records `METASCIENCE_NO_DB_PUSH=1`).
     `workbench.importer` imports existing archives/reports without rerunning analysis,
     and reports digest/U+0000/unscoped-review conflicts.
   - Queue default order is `triage` (`image_queue.triage` = the image package's

@@ -9,6 +9,39 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.94.0] — 2026-10-19 — the findings database is set up, or declined
+
+MINOR: a new command, and a new way runs can be told not to push. No prompt,
+tool, severity or finding changes.
+
+- **`psycopg` and `watchfiles` are base dependencies.** Every finished run
+  pushes to the local findings database when a URL is configured. As an
+  extra, a machine with a URL but no driver finished every run normally and
+  queued each one in `db_push_pending.jsonl` without a word (`auto_push`'s
+  result is not read by either call site). `.[db]` is kept as an empty alias.
+- **`metascience db-setup`** walks a machine to one of two settled states.
+  `ready`: it checks PostgreSQL is installed (prints install commands for
+  apt, dnf, Homebrew or winget if not), the server is running (prints the
+  start command), the database exists (offers to create it, and prints the
+  `createuser`/`createdb` command when the role is missing or may not create
+  databases), and the schema is current (applies `db/schema.sql` then
+  migrations 003-006, from the first missing step forward, never back: 006
+  redefines a function 005 defines), then saves the URL to the repo `.env`.
+  `off`: `--no-database` writes `METASCIENCE_NO_DB_PUSH=1` to the `.env`,
+  which `auto_push` now reads there as well as from the environment.
+  `--check` exits 1 unless the machine is in one of the two.
+- **Preflight has a "Findings database" row** (`db_setup.status`): never
+  fatal, passing for `ready` or `off`, and naming the state otherwise
+  (not configured, remote refused, server unreachable, login refused, no
+  database, schema missing). At a terminal, `metascience preflight` offers
+  the walkthrough when the row does not pass.
+- Checked against this machine's PostgreSQL 16: the live database reports
+  `ready`; a throwaway schema went from all five steps missing to none, and
+  with 006's marker removed only 006 was re-applied. The walkthrough's
+  "permission denied to create database" hint was wrong on its first real
+  run (it said `createuser` to a role that exists) and now prints
+  `sudo -u postgres createdb -O <user> <db>`.
+
 ## [1.93.1] — 2026-10-19 — PyMuPDF is in the plain install; no image extras
 
 PATCH: packaging and documentation only; no prompt, tool, severity or finding

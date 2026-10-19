@@ -18,7 +18,17 @@ The plain install covers a full statistical review: reading PDFs, XML, HTML
 and supplements, all the forensic tools, statcheck, and both AI analysts plus
 the adjudicator. Everything else is an **extra**: either it is large, or it
 serves only one part of the toolkit that many users never touch. Add the extras
-you need, e.g. `pip install -e '.[pdf,db]'`.
+you need, e.g. `pip install -e '.[pdf,html]'`.
+
+**The findings database is optional.** Each finished run can be copied into
+a local PostgreSQL database, which `db-push` and the review workbench read.
+Without one, every result is still saved as files in the paper's
+`forensic_review/` folder. `preflight` reports which applies and offers to set
+one up. `metascience db-setup` walks through it: it checks that PostgreSQL is
+installed and running and prints the commands for your system if not, creates
+the database, applies the schema, and saves the URL to the repo `.env`. If you
+don't want a database, `metascience db-setup --no-database` records that and
+preflight stops asking.
 
 Image analysis is not an extra. It is a separate package,
 `metascience-observatory-image-analysis`. Install it after the toolkit and it
@@ -29,9 +39,8 @@ that the figures were not examined.
 | Extra | Packages | What it adds |
 |---|---|---|
 | `pdf` | **WeasyPrint** (pure-Python HTML→PDF renderer) | `report.pdf` with no system PDF engine. Without it, rendering tries `wkhtmltopdf`, then `pandoc`; if both fail, the run still finishes and the failure is recorded in `run_meta.pdf_error`. |
-| `db` | **psycopg** (PostgreSQL driver), **watchfiles** (file-change watcher) | `db-push` and the review workbench, which keep findings in a local PostgreSQL database and watch the paper folders for changes. Without psycopg, `db-push` refuses and says why; it never skips silently. |
 | `html` | **[fetchpdf](https://github.com/The-Metascience-Observatory/fetchpdf)** (our paper fetcher, from PyPI) | Two checks the fetcher already owns. (1) Its full landing-page test for papers whose only full text is a fetched HTML page, so a cookie wall or abstract-only page isn't read as the article. Without it, a built-in check runs that catches only obvious stubs. (2) The supplement integrity audit in `metascience batch`, which catches git-lfs pointer stubs and truncated downloads. Without it, `preflight` says the audit is unavailable. Not needed for papers you supply as PDF or XML. |
-| `dev` | **pytest** (test runner), **pytest-asyncio** (async tests), **pytest-xdist** (parallel workers behind `metascience-test`), **ruff** (linter) | Running and developing the test suite. |
+| `dev` | **pytest-xdist** (parallel workers behind `metascience-test`), **ruff** (linter) | Developing the toolkit. pytest and pytest-asyncio are base dependencies, so `metascience-test` runs on a plain install; without `dev` it installs pytest-xdist itself, or runs serially, and the ruff check skips. |
 
 
 The AI review needs an agent CLI on PATH: [Claude Code](https://claude.ai/code)

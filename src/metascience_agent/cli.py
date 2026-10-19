@@ -2981,6 +2981,181 @@ def gen_webapp_constants_cmd():
         console.print(f"wrote {path}")
 
 
+def _db_setup_walkthrough(url: Optional[str], yes: bool) -> bool:
+    """Guide this machine to `ready` or `off`. True when it got there."""
+    import os
+    from . import db_push as _db
+    from . import db_setup as S
+
+    env_file = _db.env_file_path()
+
+    def say(lines):
+        for line in lines:
+            console.print(f"    [bold]{escape(line)}[/bold]")
+
+    def ask(question, default=True):
+        return True if yes else typer.confirm(question, default=default)
+
+    def remember(updates):
+        if env_file is None:
+            console.print("  No repo .env on this install; set these in your shell profile:")
+            for k, v in updates.items():
+                console.print(f"    export {k}={v}" if v is not None else f"    unset {k}")
+            return
+        S.write_env(updates, env_file)
+        for k, v in updates.items():
+            if v is None:
+                os.environ.pop(k, None)
+        console.print(f"  [dim]saved to {env_file}[/dim]")
+
+    st = S.status()
+    if st["state"] == "ready" and not url:
+        console.print(f"[green]Findings database ready[/green]: {escape(st['detail'])}")
+        return True
+
+    console.print(
+        "\n[bold]The findings database[/bold] is a local PostgreSQL database. Each "
+        "finished run is copied into it, and `db-push` and the review workbench "
+        "read it. It is optional: without it every result is still saved as "
+        "files in the paper's forensic_review/ folder.")
+    if not url and st["state"] in ("not_configured", "off"):
+        if not ask("Set up a local findings database on this machine?"):
+            remember({_db.NO_DB_ENV: "1"})
+            console.print("[green]Recorded: this machine does without the database.[/green] "
+                          "`metascience db-setup --use-database` changes that.")
+            return True
+    if st["state"] == "off":
+        if os.environ.get(_db.NO_DB_ENV):
+            console.print(f"  {_db.NO_DB_ENV} is also set in your shell; unset it there too.")
+        remember({_db.NO_DB_ENV: None})
+
+    try:
+        target = url or _db.resolve_db_url() or (
+            S.default_url() if yes else typer.prompt(
+                "Database URL", default=S.default_url()))
+    except _db.DbUnavailable as exc:
+        console.print(f"[red]{escape(str(exc))}[/red] Pass a local one with --url.")
+        return False
+    if not _db.is_local_url(target):
+        console.print("[red]Only a database on this machine is supported "
+                      "(localhost, 127.0.0.1, ::1 or a unix socket).[/red]")
+        return False
+
+    console.print("\n[bold]1. PostgreSQL installed?[/bold]")
+    if not S.server_installed():
+        console.print("  No. Install it, then run `metascience db-setup` again:")
+        say(S.install_instructions())
+        return False
+    console.print("  yes")
+
+    console.print("[bold]2. Server running?[/bold]")
+    if S.server_accepting(target) is False:
+        console.print("  No. Start it, then run `metascience db-setup` again:")
+        say(S.start_instructions())
+        return False
+    console.print("  yes")
+
+    console.print(f"[bold]3. Database {escape(S._redact(target))}[/bold]")
+    try:
+        with _db._connect(target, connect_timeout=10) as conn:
+            missing = S.missing_steps(conn)
+        console.print("  exists")
+    except Exception as exc:  # noqa: BLE001
+        kind = S.classify_error(exc)
+        if kind == "no_database":
+            if not ask("  It does not exist yet. Create it?"):
+                return False
+            try:
+                S.create_database(target)
+            except Exception as exc2:  # noqa: BLE001
+                console.print(f"  [red]Could not create it:[/red] {escape(str(exc2).strip())}")
+                if "permission denied" in str(exc2).lower():
+                    console.print("  Your user may not create databases. Have the server's "
+                                  "superuser create it, then run `metascience db-setup` again:")
+                    say(S.create_instructions(target))
+                elif S.classify_error(exc2) == "auth_failed":
+                    console.print("  Create a database role for your user, then run "
+                                  "`metascience db-setup` again:")
+                    say(S.role_instructions())
+                return False
+            console.print("  created")
+            with _db._connect(target, connect_timeout=10) as conn:
+                missing = S.missing_steps(conn)
+        elif kind == "auth_failed":
+            console.print(f"  [red]The server refused the login:[/red] {escape(str(exc).strip())}")
+            console.print("  Create a database role for your user, then run "
+                          "`metascience db-setup` again:")
+            say(S.role_instructions())
+            return False
+        elif kind == "server_unreachable":
+            console.print(f"  [red]Cannot reach the server:[/red] {escape(str(exc).strip())}")
+            say(S.start_instructions())
+            return False
+        else:
+            console.print(f"  [red]{escape(str(exc).strip())}[/red]")
+            return False
+
+    console.print("[bold]4. Schema[/bold]")
+    if missing:
+        if not ask(f"  Apply {', '.join(missing)}?"):
+            return False
+        with _db._connect(target, connect_timeout=10) as conn:
+            applied = S.apply_steps(conn, missing)
+        console.print(f"  applied {', '.join(applied)}")
+    else:
+        console.print("  current")
+
+    if _db.resolve_db_url() != target:
+        remember({_db.DB_URL_ENV: target, _db.NO_DB_ENV: None})
+    st = S.status()
+    ok = st["state"] == "ready"
+    console.print(("[green]Findings database ready[/green]: " if ok else "[red]Not ready[/red]: ")
+                  + escape(st["detail"]))
+    return ok
+
+
+@app.command("db-setup")
+def db_setup_cmd(
+    url: Optional[str] = typer.Option(None, "--url", help="Local Postgres URL to use (default: the configured one, else postgresql:///metascience)"),
+    no_database: bool = typer.Option(False, "--no-database", help="Record that this machine does without the database (METASCIENCE_NO_DB_PUSH=1 in the repo .env)"),
+    use_database: bool = typer.Option(False, "--use-database", help="Undo --no-database and set the database up"),
+    yes: bool = typer.Option(False, "--yes", "-y", help="Accept every default without asking"),
+    check: bool = typer.Option(False, "--check", help="Only report the state; exit 1 unless ready or off"),
+):
+    """Set up the local findings database, or record that you do without it.
+
+    Checks, in order: PostgreSQL installed, server running, database exists
+    (offers to create it), schema applied (offers to apply what is missing),
+    then saves the URL to the repo .env. Each step that needs you prints the
+    command to run for this operating system. The database is optional;
+    `--no-database` records that choice so preflight stops asking.
+    """
+    import os
+    from . import db_push as _db
+    from . import db_setup as S
+    if check:
+        st = S.status()
+        console.print(f"{st['state']}: {escape(st['detail'])}")
+        raise typer.Exit(0 if st["state"] in ("ready", "off") else 1)
+    if no_database:
+        env_file = _db.env_file_path()
+        if env_file is None:
+            console.print(f"Set {_db.NO_DB_ENV}=1 in your shell profile.")
+        else:
+            S.write_env({_db.NO_DB_ENV: "1"}, env_file)
+            console.print(f"[green]Recorded[/green] {_db.NO_DB_ENV}=1 in {env_file}: "
+                          "runs are saved as files only.")
+        return
+    if use_database and not url:
+        st = S.status()
+        if st["state"] == "off":
+            env_file = _db.env_file_path()
+            if env_file is not None:
+                S.write_env({_db.NO_DB_ENV: None}, env_file)
+            os.environ.pop(_db.NO_DB_ENV, None)
+    raise typer.Exit(0 if _db_setup_walkthrough(url=url, yes=yes) else 1)
+
+
 @app.command("db-push")
 def db_push_cmd(
     target: Path = typer.Argument(..., help="A paper directory or a corpus root"),
@@ -5361,11 +5536,22 @@ def preflight_cmd(
     # about the environment as it is NOW, not as it was at import time.
     for name, good, detail in fatal_checks(refresh=True, backend=be):
         row(name, good, detail)
+    db_unsettled = False
     for name, good, detail in [backend_reachable_row(backend)] + optional_checks():
         row(name, good, detail, fatal=False)
+        if name == "Findings database" and not good:
+            db_unsettled = True
 
 
     console.print(table)
+
+    # The database is optional, but a machine should decide: set one up, or
+    # say it does without. Asked only at a terminal; scripts get the row.
+    import sys as _sys
+    if db_unsettled and _sys.stdin.isatty() and _sys.stdout.isatty():
+        if typer.confirm("\nThe findings database is not set up. Walk through "
+                         "setting it up now?", default=True):
+            _db_setup_walkthrough(url=None, yes=False)
 
     if corpus and corpus.is_dir():
         hist = _corpus_mean_cost(corpus, model)

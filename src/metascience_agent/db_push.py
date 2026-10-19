@@ -7,9 +7,9 @@ rebuild the DB. Rules enforced here:
 - BEST-EFFORT: an unreachable database never fails a paid run. A failed
   push appends to `<corpus>/db_push_pending.jsonl`; `--retry-pending`
   drains it. The auto-push hook swallows everything except KeyboardInterrupt.
-- NAMED REFUSAL when the driver is absent: install with
-  `pip install 'forensic-metascience-ai-toolkit[db]'` -- never a silent skip (the
-  statcheck lesson, applied to the DB).
+- NAMED REFUSAL when the driver is absent (a base dependency since 1.94.0,
+  so only a broken install): never a silent skip (the statcheck lesson,
+  applied to the DB).
 - One transaction PER RUN. Changed reports receive a linked revision ID;
   sealed history is preserved. Identical reports can hydrate missing index
   rows, and no-op replays do not rewrite findings. The legacy replacement
@@ -49,15 +49,25 @@ def _dotenv_url(env_file: Path | None = None) -> str | None:
     that redirects pushes. (`env_file` is a test seam.)
     """
     if env_file is None:
-        from .integration import default_env_file
-        explicit = os.environ.get("METASCIENCE_ENV_FILE")
-        env_file = Path(explicit) if explicit else default_env_file
+        env_file = env_file_path()
         if env_file is None:
             return None
+    return _dotenv_values(env_file).get(DB_URL_ENV) or None
+
+
+def env_file_path() -> Path | None:
+    """The `.env` every reader here uses: $METASCIENCE_ENV_FILE, else the repo
+    root's (None for an install with no repo root)."""
+    from .integration import default_env_file
+    explicit = os.environ.get("METASCIENCE_ENV_FILE")
+    return Path(explicit) if explicit else default_env_file
+
+
+def _dotenv_values(env_file: Path) -> dict[str, str]:
     try:
         text = env_file.read_text()
     except OSError:
-        return None
+        return {}
     values: dict[str, str] = {}
     for line in text.splitlines():
         line = line.strip()
@@ -65,7 +75,20 @@ def _dotenv_url(env_file: Path | None = None) -> str | None:
             continue
         key, _, val = line.partition("=")
         values[key.strip()] = val.strip().strip("'\"")
-    return values.get(DB_URL_ENV) or None
+    return values
+
+
+#: The off switch, read from the environment OR the `.env`, so the choice
+#: `metascience db-setup --no-database` records survives a new shell.
+NO_DB_ENV = "METASCIENCE_NO_DB_PUSH"
+
+
+def database_disabled() -> bool:
+    """True when this machine has said it does without the findings database."""
+    if os.environ.get(NO_DB_ENV):
+        return True
+    env_file = env_file_path()
+    return bool(env_file and _dotenv_values(env_file).get(NO_DB_ENV))
 
 
 #: Hosts a database URL may name. The findings database lives on THIS machine;
@@ -109,11 +132,11 @@ def _connect(db_url: str | None, *, connect_timeout: int | None = None):
             f"no database URL: set {DB_URL_ENV} (a local Postgres connection "
             "string), put it in the repo .env, or pass --db-url")
     try:
-        import psycopg  # noqa: PLC0415 -- the [db] extra, deliberately lazy
+        import psycopg  # noqa: PLC0415 -- deliberately lazy
     except ImportError as exc:
         raise DbUnavailable(
-            "the psycopg driver is not installed -- install the extra: "
-            "pip install 'forensic-metascience-ai-toolkit[db]'") from exc
+            "the psycopg driver is not installed -- it is a base dependency: "
+            "reinstall with `pip install -e .`") from exc
     # AUTOCOMMIT, so every `with conn.transaction()` below is a real, committed
     # transaction. Without it the first statement opens an implicit
     # transaction, each later `transaction()` block is only a SAVEPOINT inside
@@ -547,7 +570,7 @@ def auto_push(paper_dir: Path, review_dir: Path) -> dict | None:
     """The run-completion hook: fire-and-forget when a database URL
     resolves (env or repo .env). NEVER raises -- an unreachable database must
     not fail a paid run; the failure lands in the pending journal instead."""
-    if os.environ.get("METASCIENCE_NO_DB_PUSH"):
+    if database_disabled():
         # AN EXPLICIT OFF SWITCH, because the default is ON and the default is
         # the real database. `resolve_db_url` falls back to the repo's .env so
         # the CLI works without an exported variable, which means any script
@@ -558,7 +581,7 @@ def auto_push(paper_dir: Path, review_dir: Path) -> dict | None:
         # tests/conftest.py; this is the equivalent for everything that is not
         # the suite, and it is reported rather than silent so a caller can tell
         # "did not push" from "pushed nothing".
-        return {"pushed": 0, "skipped": "METASCIENCE_NO_DB_PUSH is set"}
+        return {"pushed": 0, "skipped": f"{NO_DB_ENV} is set"}
     try:
         if not resolve_db_url():
             return None

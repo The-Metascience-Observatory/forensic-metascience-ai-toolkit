@@ -128,12 +128,12 @@ class TestRefusals:
             D._connect(None)
         assert D.DB_URL_ENV in str(e.value)
 
-    def test_missing_driver_names_the_extra(self, monkeypatch):
+    def test_missing_driver_names_the_fix(self, monkeypatch):
         import sys
         monkeypatch.setitem(sys.modules, "psycopg", None)
         with pytest.raises(D.DbUnavailable) as e:
             D._connect("postgres://localhost/x")
-        assert "forensic-metascience-ai-toolkit[db]" in str(e.value)
+        assert "base dependency" in str(e.value)
 
     def test_connections_autocommit_so_writes_survive_close(self, monkeypatch):
         # Without autocommit push_run's first SELECT opened an implicit

@@ -97,6 +97,22 @@ dependencies = [
     # gap while it sat only in the `images` extra. A base dependency since
     # 1.93.1. AGPL-3.0, accepted (Dan, 2026-10-19).
     "pymupdf>=1.24",
+    # The local findings database (docs/specs/webapp_db.md): every finished
+    # run pushes to it when a database URL is configured, and the review
+    # workbench reads it. Base since 1.94.0: as an extra, a machine with a
+    # URL but no driver finished every run normally and silently queued it in
+    # db_push_pending.jsonl. `metascience db-setup` creates the database, or
+    # records that this machine does without one.
+    "psycopg[binary]>=3.1",
+    "watchfiles>=1.0",
+    # `metascience-test` is a console script every install gets, so what it
+    # needs to start is base, not `dev`: before this, a plain install shipped
+    # a command that died on `import pytest`. pytest-asyncio comes with it
+    # because pyproject sets `asyncio_mode = "auto"` and the suite's async
+    # tests fail without it. About 3 MB together. pytest-xdist stays in `dev`;
+    # the runner installs it itself when it is missing.
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
     # NOTE: `fetchpdf` was a BASE dependency here, pinned to
     # file:///home/dan/Dropbox/... -- a path that exists on one machine on
     # earth. Its own comment acknowledged the trade ("fragile off this machine
@@ -117,12 +133,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-db = [
-    # The local findings database (docs/specs/webapp_db.md). Absent driver is
-    # a NAMED refusal in db_push.py, never a silent skip.
-    "psycopg[binary]>=3.1",
-    "watchfiles>=1.0",
-]
 html = [
     # The single source of truth for landing-page / decoy-HTML detection
     # (`fetchpdf.retrieval.validate.validate_t2`), reused rather than copied,
@@ -131,14 +141,15 @@ html = [
     "fetchpdf>=0.1.0",
 ]
 dev = [
-    "pytest>=7.0.0",
-    "pytest-asyncio>=0.21.0",
+    # pytest and pytest-asyncio are base dependencies (see above).
     "pytest-xdist>=3.5.0",
     "ruff>=0.1.0",
 ]
 # Kept, empty, so `pip install -e '.[statcheck]'` in old notes still resolves;
 # statcheck is a base dependency now.
 statcheck = []
+# Same for `.[db]`: psycopg and watchfiles are base dependencies since 1.94.0.
+db = []
 # No `images` or `text-localization` extra (removed 1.93.1): the separately
 # distributed image analysis package declares OpenCV, docling, PyMuPDF and
 # EasyOCR itself, so installing it is the whole step. PyMuPDF, which this
@@ -191,7 +202,13 @@ line-length = 100
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W"]
+# Only what is enforced: syntax errors and the pyflakes rules, pinned at zero
+# in src/ by tests/test_ruff_errors.py. The style families (E, I, N, W) were
+# selected but never enforced, and src/ held 1,655 findings under
+# them on 2026-10-19, which buried the real ones in a plain `ruff check`.
+# Never run `ruff --fix` here: on 2026-09-02 it deleted re-exported imports
+# from cli.py and broke the module that imports them.
+select = ["E9", "F"]
 # N818 wants every exception class to end in "Error". Eight public names
 # here do not (BudgetExhausted, WeeklyLimitReached, MCPUnavailable, ...);
 # renaming them is an API break for nothing, so the rule is off.

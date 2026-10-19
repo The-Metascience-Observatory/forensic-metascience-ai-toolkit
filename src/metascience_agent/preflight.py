@@ -318,7 +318,17 @@ def optional_checks() -> list[CheckRow]:
          f"{ocr['engine']}; scanned tables can be transcribed" if ocr["available"]
          else ("absent -- an image supplement, or a PDF whose pages are pictures, "
                "is reported UNREAD rather than empty. " + ocr["smallest_install"])),
+        database_row(),
     ] + compute_rows
+
+
+def database_row() -> CheckRow:
+    """The findings database: set up (`ready`) or deliberately off (`off`)
+    both pass. Never fatal -- a run without a database is still correct -- but
+    every other state means finished runs are not reaching it."""
+    from . import db_setup
+    st = db_setup.status()
+    return ("Findings database", st["state"] in ("ready", "off"), st["detail"])
 
 
 #: One paper's conversion, as numbers. `(paper, channel, chars, tables,

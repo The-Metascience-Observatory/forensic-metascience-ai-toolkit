@@ -1,0 +1,1444 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.3389--fnins.2023.1186751",
+  "run_id": "r_c0084a4267fe52a7",
+  "findings": [
+    {
+      "slug": "dropout_percentage_grim",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Dropout percentage grim (Results, paragraph 1)",
+      "description": "grim_percentage returned `impossible`: 9 of 93 is 9.677%, which rounds to 9.7%, not 9.6%. A corroborating grim_sweep over every denominator up to the paper's own stated enrolment of 93 found 9.6% attainable only at n=52 (k=5), n=73 (k=7) and n=83 (k=8) -- so no denominator consistent with this trial reconciles a count of 9 with 9.6%. Both the numerator (9) and the denominator (93) are stated verbatim in the same paragraph, so no bound was assumed. grim_percentage is MCP-only and has no CLI verb, hence the reproduction command is the equivalent sweep. This GRIM-family `impossible` awaits the stage-2 R (`scrutiny`) cross-check. The consequence is nil: this is a one-digit rounding slip in a des",
+      "location": "Results, paragraph 1",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Premature discontinuations were reported in 9 patients due to loss to follow-up (9.6%)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:dropout_percentage_grim",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Premature discontinuations were reported in 9 patients due to loss to follow-up (9.6%).",
+      "inputs": {
+        "percentage": 9.6,
+        "n": 93,
+        "decimals": 1,
+        "data_type": "proportion"
+      },
+      "reported": {
+        "count": 9,
+        "percentage": 9.6,
+        "stated_total_enrolled": 93
+      },
+      "computed": {
+        "grim_percentage_severity": "impossible",
+        "implied_count_at_9.6pct": 8.928,
+        "nearest_possible_percentages": [
+          8.6,
+          9.7,
+          10.8
+        ],
+        "exact_value_for_9_of_93": "9.677% (rounds to 9.7)",
+        "grim_sweep_viable_ns_for_9.6pct": [
+          52,
+          73,
+          83
+        ],
+        "grim_sweep_viable_ks": [
+          5,
+          7,
+          8
+        ]
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A descriptive dropout percentage only; no inferential claim in the paper rests on it."
+      },
+      "notes": "grim_percentage returned `impossible`: 9 of 93 is 9.677%, which rounds to 9.7%, not 9.6%. A corroborating grim_sweep over every denominator up to the paper's own stated enrolment of 93 found 9.6% attainable only at n=52 (k=5), n=73 (k=7) and n=83 (k=8) -- so no denominator consistent with this trial reconciles a count of 9 with 9.6%. Both the numerator (9) and the denominator (93) are stated verbatim in the same paragraph, so no bound was assumed. grim_percentage is MCP-only and has no CLI verb, hence the reproduction command is the equivalent sweep. This GRIM-family `impossible` awaits the stage-2 R (`scrutiny`) cross-check. The consequence is nil: this is a one-digit rounding slip in a descriptive dropout figure and no claim depends on it.",
+      "reproduction": "metascience grim-sweep --values 9.6 --n-min 2 --n-max 93 --decimals 1 --value-type percentage --n-max-source stated",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "Premature discontinuations were reported in 9 patients due to loss to follow-up (9.6%).",
+        "source_locator": "Results, paragraph 1",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_8c876b5ad454be4b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "day180_composite_p_value",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Day180 composite p value (Results, composite outcome paragraph (primary endpoint))",
+      "description": "This is a READING of printed values, not a recomputation -- no tool in this kit converts a chi-squared plus df to a p-value, and I did not compute one myself. The argument needs no arithmetic: with 3 groups, df=2 for both timepoints, and p is strictly decreasing in chi-squared. The paper's own Supplementary Annex 1 prints 44 chi-squared/p pairs from the same software at df=2, two of which bracket 5.833 -- chi2=5.7111 gives p=0.05752 and chi2=6.082 gives p=0.04779. A chi-squared of 5.833 must therefore yield p between 0.048 and 0.058, most likely ~0.054. The printed 0.54 is a factor-of-ten discrepancy consistent with a lost decimal point. Verified identical in BOTH the XML and the PDF (page 5",
+      "location": "Results, composite outcome paragraph (primary endpoint)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Day 101\u2013\u03c7\u00b2 = 5.732, p = 0.06; Day 180 \u03c7\u00b2 = 5.833, p = 0.54"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:day180_composite_p_value",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Day 101\u2013\u03c7\u00b2 = 5.732, p = 0.06; Day 180 \u03c7\u00b2 = 5.833, p = 0.54",
+      "inputs": {
+        "main_text_pair": [
+          5.833,
+          0.54
+        ],
+        "si_bracketing_pairs": [
+          [
+            5.7111,
+            0.05752
+          ],
+          [
+            6.082,
+            0.04779
+          ]
+        ],
+        "df": 2
+      },
+      "reported": {
+        "day101_chi2": 5.732,
+        "day101_p": 0.06,
+        "day180_chi2": 5.833,
+        "day180_p": 0.54,
+        "df": 2
+      },
+      "computed": {
+        "bracketing_from_paper_own_SI": "SI Annex 1 prints chi2=5.7111 -> p=0.05752 and chi2=6.082 -> p=0.04779, both at df=2",
+        "implied_p_range_for_chi2_5.833": "between 0.04779 and 0.05752",
+        "reported_p_over_implied": "approximately 10x too large",
+        "day101_check": "consistent -- chi2=5.732 sits just above SI's 5.7111 (p=0.05752), so p just under 0.0575 rounds to 0.06 as printed"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's conclusion of 'no significant differences' at Day 180 survives at the corrected p of ~0.054, but the printed 0.54 misstates the strength of evidence on a co-primary endpoint by an order of magnitude, making a borderline result look decisively null."
+      },
+      "notes": "This is a READING of printed values, not a recomputation -- no tool in this kit converts a chi-squared plus df to a p-value, and I did not compute one myself. The argument needs no arithmetic: with 3 groups, df=2 for both timepoints, and p is strictly decreasing in chi-squared. The paper's own Supplementary Annex 1 prints 44 chi-squared/p pairs from the same software at df=2, two of which bracket 5.833 -- chi2=5.7111 gives p=0.05752 and chi2=6.082 gives p=0.04779. A chi-squared of 5.833 must therefore yield p between 0.048 and 0.058, most likely ~0.054. The printed 0.54 is a factor-of-ten discrepancy consistent with a lost decimal point. Verified identical in BOTH the XML and the PDF (page 5), so it is not an extraction artifact. Note the companion Day 101 value is internally consistent, which isolates the error to the Day 180 figure.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_a8fcef56aa04d98a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "si_significant_results_contradict_narrative",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Si significant results contradict narrative",
+      "description": "The main text states twice that no subscale reached significance ('Individual outcomes scales are similar to composite findings'). The supplementary annex reports otherwise: Digit Span Backward at Day 180 is significant on the omnibus test in both the ITT (p=0.02649) and per-protocol (p=0.04779) populations, and the CRB+rTMS vs placebo contrast survives the paper's own Bonferroni adjustment in both (0.0227 and 0.0423). Trail Making Test 1 at Day 180 is also significant on the ITT omnibus (p=0.04012). Two framings both deserve weight and the editorial stage should carry both: (a) the narrative claim is inaccurate as printed; (b) 2-3 results below 0.05 out of 22 uncorrected outcome tests is cl",
+      "location": "Supplementary Annex 1 (DS_B_v2-baseline, TMT1_v2-baseline) vs Discussion paragraph 2 and Results final paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "While primary outcomes and their subscales did not show statistically significant differences, the descriptive trends in this study support existing literature on the efficacy and safety of both rTMS and Cerebrolysin"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:si_significant_results_contradict_narrative",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "While primary outcomes and their subscales did not show statistically significant differences, the descriptive trends in this study support existing literature on the efficacy and safety of both rTMS and Cerebrolysin",
+      "inputs": {
+        "narrative_location": "Discussion paragraph 2; Results final paragraph",
+        "si_location": "Supplementary Annex 1, DS_B_v2-baseline and TMT1_v2-baseline rows"
+      },
+      "reported": {
+        "narrative_claim": "no subscale showed statistically significant differences; individual outcome scales similar to composite findings",
+        "si_dsb_v2_itt": {
+          "chi2": 7.2622,
+          "p": 0.02649,
+          "dunn_bonferroni_1v3": 0.0227401
+        },
+        "si_dsb_v2_pp": {
+          "chi2": 6.082,
+          "p": 0.04779,
+          "dunn_bonferroni_1v3": 0.0423081
+        },
+        "si_tmt1_v2_itt": {
+          "chi2": 6.4319,
+          "p": 0.04012
+        }
+      },
+      "computed": {
+        "si_omnibus_tests_below_0.05_itt": 2,
+        "si_omnibus_tests_below_0.05_pp": 1,
+        "surviving_bonferroni_within_outcome": "Digit Span Backward at Day 180, group 1 (CRB+rTMS) vs group 3 (PLC+SHM), significant in BOTH ITT (0.0227) and PP (0.0423)"
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The Discussion's claim that no subscale showed a statistically significant difference is contradicted by the paper's own supplementary annex, where Digit Span Backward at Day 180 is significant both before and after Bonferroni adjustment in ITT and PP."
+      },
+      "notes": "The main text states twice that no subscale reached significance ('Individual outcomes scales are similar to composite findings'). The supplementary annex reports otherwise: Digit Span Backward at Day 180 is significant on the omnibus test in both the ITT (p=0.02649) and per-protocol (p=0.04779) populations, and the CRB+rTMS vs placebo contrast survives the paper's own Bonferroni adjustment in both (0.0227 and 0.0423). Trail Making Test 1 at Day 180 is also significant on the ITT omnibus (p=0.04012). Two framings both deserve weight and the editorial stage should carry both: (a) the narrative claim is inaccurate as printed; (b) 2-3 results below 0.05 out of 22 uncorrected outcome tests is close to what chance alone predicts, so the underlying inference of 'no effect' may well be right even though the sentence describing it is wrong. Note the direction is conservative -- the paper understates its own positive findings rather than overstating them.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_ba7c29a2bc76b2f5",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "missing_cantab_outcome_reporting",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Missing cantab outcome reporting",
+      "description": "The Methods name 10 co-primary cognitive instruments. Supplementary Annex 1, offered as the complete individual-outcome reporting ('More information is available in the Supplementary Annex 1'), reports group differences for only 11 outcome families covering 7 of those instruments. The three CANTAB subscales -- One Touch Stockings, Multitasking Test and Reaction Time -- have no group-difference analysis anywhere in the paper or the annex, even though their columns are present in the deposited ITT dataset at all three visits AND their z-scores contribute to the composite primary endpoint. So these measures influenced the headline result while never being reported individually. This is a select",
+      "location": "Materials and methods, primary outcome list vs Supplementary Annex 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "three subscales of the Cambridge Neuropsychological Test Automated Battery (CANTAB): One Touch Stockings of Cambridge, The Multitasking Test, and Reaction Time"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:missing_cantab_outcome_reporting",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "three subscales of the Cambridge Neuropsychological Test Automated Battery (CANTAB): One Touch Stockings of Cambridge, The Multitasking Test, and Reaction Time",
+      "inputs": {
+        "methods_instrument_list": "10 cognitive function tests",
+        "si_outcome_blocks": 22
+      },
+      "reported": {
+        "stated_primary_instruments": 10,
+        "instruments_with_group_difference_analysis_in_SI": [
+          "MOCA",
+          "PSI_DSC",
+          "PSI_SS",
+          "SCWT_W-D",
+          "SCWT_C-D",
+          "DS_F",
+          "DS_B",
+          "TMT1",
+          "TMT2",
+          "HDRS",
+          "HADS"
+        ],
+        "instruments_absent_from_SI": [
+          "One Touch Stockings of Cambridge (OTS)",
+          "Multitasking Test (MTT)",
+          "Reaction Time (RTI)"
+        ]
+      },
+      "computed": {
+        "n_stated_coprimary_instruments_unreported": 3,
+        "dataset_columns_present_but_unreported": [
+          "OTS01_1/2/3",
+          "OTS02_1/2/3",
+          "MTTTC01_1/2/3",
+          "MTTTC02_1/2/3",
+          "RTISMRT_1/2/3",
+          "RTIFMRT_1/2/3"
+        ],
+        "note": "the corresponding z_ columns exist and feed the composite score"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Three of ten stated co-primary instruments contribute to the composite endpoint but have no reported individual analysis, so the claim that individual scales resemble the composite cannot be verified for them."
+      },
+      "notes": "The Methods name 10 co-primary cognitive instruments. Supplementary Annex 1, offered as the complete individual-outcome reporting ('More information is available in the Supplementary Annex 1'), reports group differences for only 11 outcome families covering 7 of those instruments. The three CANTAB subscales -- One Touch Stockings, Multitasking Test and Reaction Time -- have no group-difference analysis anywhere in the paper or the annex, even though their columns are present in the deposited ITT dataset at all three visits AND their z-scores contribute to the composite primary endpoint. So these measures influenced the headline result while never being reported individually. This is a selective-reporting gap, not an arithmetic error.",
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_c0555bb6e6ef31f1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "raw_duplication_saturation",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Raw duplication saturation",
+      "description": "DELIBERATE DOWNGRADE from the tool's `highly_suspicious` to `indeterminate`; the divergence is recorded rather than silent. Three reasons. (1) The `exclude_columns` argument did not take effect: I passed it twice, as a JSON array and as a comma-separated string, and both runs returned n_columns_excluded=0, excluded_columns=[] and byte-identical output (467,991 characters). So the verdict was computed with SUBJECT ID, GROUP code, SEX and all six date columns INCLUDED -- columns that repeat across patients by design (rulebook rule 11a). (2) The flagged share is a saturation signature, not a duplication signature: 2,260 pairs out of the 3,655 possible pairs among 86 patients is roughly 62% of t",
+      "location": "Linked replication dataset (Harvard Dataverse DOFCIV), sheet 'ITT_analysis set'",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:raw_duplication_saturation",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV.",
+      "inputs": {
+        "path": "10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+        "data_context": "raw_participant_level",
+        "exclude_columns_requested": [
+          "SUBJECT",
+          "GROUP",
+          "SEX",
+          "PRESDT",
+          "BRTHDT",
+          "VISDTC_1",
+          "VISDTC_2",
+          "VISDTC_3",
+          "D_PRESDT_VISDTC_2",
+          "D_PRESDT_VISDTC_3",
+          "VISDTC_2_PROTOCOL_DIFF",
+          "VISDTC_3_PROTOCOL_DIFF"
+        ]
+      },
+      "reported": {
+        "dataset": "ITT_analysis set, one row per ITT patient, ~120 columns"
+      },
+      "computed": {
+        "tool_severity_returned": "highly_suspicious",
+        "duplicated_row_pairs": 2260,
+        "repeated_column_sequences": 0,
+        "repeated_high_precision_values": 0,
+        "n_numeric_cells": 7738,
+        "n_columns_excluded": 0,
+        "possible_row_pairs_at_n86": 3655,
+        "share_of_all_possible_pairs_flagged": "approximately 62%"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this records that the raw-data duplication check could not be run under correct exclusions and returns no evidence against the paper."
+      },
+      "notes": "DELIBERATE DOWNGRADE from the tool's `highly_suspicious` to `indeterminate`; the divergence is recorded rather than silent. Three reasons. (1) The `exclude_columns` argument did not take effect: I passed it twice, as a JSON array and as a comma-separated string, and both runs returned n_columns_excluded=0, excluded_columns=[] and byte-identical output (467,991 characters). So the verdict was computed with SUBJECT ID, GROUP code, SEX and all six date columns INCLUDED -- columns that repeat across patients by design (rulebook rule 11a). (2) The flagged share is a saturation signature, not a duplication signature: 2,260 pairs out of the 3,655 possible pairs among 86 patients is roughly 62% of the entire pair space. A genuine copy-paste artifact is rare and localised; a detector firing on the majority of all pairs is describing the data type. (3) The sheet is a wide table of bounded low-cardinality cognitive scores (MoCA, digit span forward/backward, Hamilton depression and anxiety totals) alongside z-score transforms of those very columns, so every raw-score collision is counted again in its derived column (rule 11b, 11c). Notably the tool found ZERO repeated column sequences and ZERO repeated high-precision values -- the two signals that would indicate real copy-paste. No duplication finding is asserted against this paper.",
+      "reproduction": "metascience raw-duplication-detect --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx --data-context raw_participant_level",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_71305b88b48ed260",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "dataset_duplicate_column_names_visit3",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Dataset duplicate column names visit3",
+      "description": "In the deposited dataset the Visit-3 column block runs CWTTM1_3, CWTTM2_3, CWTTM3_3, then SCWT_W-D_2 and SCWT_C-D_2, then DGFRES_3, DGBRES_3 -- the two Stroop derived scores carry the Visit-2 suffix inside the Visit-3 block, and so do their z-score companions. Both names therefore appear twice in the header. This is consistent with a copy-paste when the Visit-3 block was built. IMPORTANT LIMIT: I have established a labelling defect, NOT duplicated content -- detect_raw_duplication reported zero repeated column sequences, so the two same-named columns are not verbatim copies of each other. It matters because the composite primary endpoint at Day 180 is assembled from these z_ columns, so if t",
+      "location": "Linked replication dataset, sheet 'ITT_analysis set', header row, Visit 3 column block",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:dataset_duplicate_column_names_visit3",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV.",
+      "inputs": {
+        "sheet": "ITT_analysis set",
+        "header_positions_visit2": "columns named *_2",
+        "header_positions_visit3": "columns named *_3 except the two Stroop derived scores"
+      },
+      "reported": {
+        "visit2_block_columns": [
+          "CWTTM1_2",
+          "CWTTM2_2",
+          "CWTTM3_2",
+          "SCWT_W-D_2",
+          "SCWT_C-D_2",
+          "DGFRES_2",
+          "DGBRES_2"
+        ],
+        "visit3_block_columns": [
+          "CWTTM1_3",
+          "CWTTM2_3",
+          "CWTTM3_3",
+          "SCWT_W-D_2",
+          "SCWT_C-D_2",
+          "DGFRES_3",
+          "DGBRES_3"
+        ]
+      },
+      "computed": {
+        "duplicated_header_names": [
+          "SCWT_W-D_2",
+          "SCWT_C-D_2"
+        ],
+        "expected_names_in_visit3_block": [
+          "SCWT_W-D_3",
+          "SCWT_C-D_3"
+        ],
+        "paired_z_columns_also_mislabelled": [
+          "z_SCWT_W-D_2",
+          "z_SCWT_C-D_2"
+        ]
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "If the mislabelled columns hold Visit-2 values, the Day-180 composite primary endpoint would be built partly from Visit-2 data; the naming alone does not establish this."
+      },
+      "notes": "In the deposited dataset the Visit-3 column block runs CWTTM1_3, CWTTM2_3, CWTTM3_3, then SCWT_W-D_2 and SCWT_C-D_2, then DGFRES_3, DGBRES_3 -- the two Stroop derived scores carry the Visit-2 suffix inside the Visit-3 block, and so do their z-score companions. Both names therefore appear twice in the header. This is consistent with a copy-paste when the Visit-3 block was built. IMPORTANT LIMIT: I have established a labelling defect, NOT duplicated content -- detect_raw_duplication reported zero repeated column sequences, so the two same-named columns are not verbatim copies of each other. It matters because the composite primary endpoint at Day 180 is assembled from these z_ columns, so if the values behind the mislabelled pair are Visit 2 rather than Visit 3 the Day-180 composite would incorporate two stale measurements. Warrants clarification from the authors rather than any stronger inference.",
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_4c5854c9c2ffa868",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "power_analysis_not_reproducible",
+      "producer": "legacy_sweep",
+      "technique": "verify_power_analysis",
+      "title": "Power analysis not reproducible (Materials and methods, power paragraph)",
+      "description": "Recomputed under the two standard readings of 'a medium-sized difference between groups': a three-group one-way ANOVA at Cohen's f=0.25 requires 53 per group (achieved power 0.54 at n=30), and a two-group comparison at d=0.5 requires 64 per group (achieved power 0.48). Neither reconciles with 30 per group, and the tool explicitly checked and rejected the one-tailed reading for the t-test case. STATED CAVEAT, which the editorial stage must carry: the paper did not use either procedure. It used Nnpar 1.0, a non-parametric MULTIVARIATE sample-size method that pools information across 10 correlated outcome scales at rho=0.4, and such a method can legitimately require fewer subjects than a univar",
+      "location": "Materials and methods, power paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The total required sample size for the study was determined to be 30 patients per group, including a 10% enhancement for potential dropouts. This sample size allows for the detection of a medium-sized difference between groups with an 80% power."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:power_analysis_not_reproducible",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The total required sample size for the study was determined to be 30 patients per group, including a 10% enhancement for potential dropouts. This sample size allows for the detection of a medium-sized difference between groups with an 80% power.",
+      "inputs": {
+        "test_type": "anova_oneway",
+        "effect_size": 0.25,
+        "alpha": 0.05,
+        "target_power": 0.8,
+        "groups": 3,
+        "n_reported": 30,
+        "n_reported_is_per_group": true,
+        "allows_attrition_inflation": true
+      },
+      "reported": {
+        "alpha": 0.05,
+        "alpha_sidedness": "one-sided",
+        "beta": 0.2,
+        "effect_size": "medium according to Cohen",
+        "rho_among_outcome_scales": 0.4,
+        "n_per_group": 30,
+        "software": "Nnpar 1.0"
+      },
+      "computed": {
+        "anova_oneway_f0.25_required_n_per_group": 53,
+        "anova_oneway_achieved_power_at_30": 0.5396,
+        "two_sample_t_d0.5_required_n_per_group": 64,
+        "two_sample_t_achieved_power_at_30": 0.4779,
+        "two_sample_t_note": "tool reports the one-tailed requirement does not reconcile either"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that 30 per group affords 80% power to detect a medium effect cannot be reproduced under any standard univariate reading of the stated parameters."
+      },
+      "notes": "Recomputed under the two standard readings of 'a medium-sized difference between groups': a three-group one-way ANOVA at Cohen's f=0.25 requires 53 per group (achieved power 0.54 at n=30), and a two-group comparison at d=0.5 requires 64 per group (achieved power 0.48). Neither reconciles with 30 per group, and the tool explicitly checked and rejected the one-tailed reading for the t-test case. STATED CAVEAT, which the editorial stage must carry: the paper did not use either procedure. It used Nnpar 1.0, a non-parametric MULTIVARIATE sample-size method that pools information across 10 correlated outcome scales at rho=0.4, and such a method can legitimately require fewer subjects than a univariate test. So this is a finding that the published power statement cannot be reproduced from the parameters given, not a demonstration that it is arithmetically wrong. Mitigating context: the paper repeatedly concedes the point itself -- 'Given the low sample size of the trial that would inherently lead to the low power of reported analyses' -- so the underpowering is disclosed rather than hidden.",
+      "reproduction": "metascience power-check --test-type anova_oneway --effect-size 0.25 --alpha 0.05 --target-power 0.8 --groups 3 --n-reported 30 --n-reported-is-per-group",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience power-check [OPTIONS] {test_type}\nTry 'metascience power-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "These included a one-sided type I error of alpha = 0.05, a type II error of \u03b2 = 0.2, and a medium-sized effect size according to Cohen.",
+        "source_locator": "Materials and methods, power paragraph",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_a7eb4f481a8ba588",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sae_test_on_single_event",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Sae test on single event (Results, adverse events paragraph and Table 1, SAE columns)",
+      "description": "A design/analysis observation, not an arithmetic error -- the numbers are internally consistent (the Dunn Z of exactly 0.000000 with p=1.0 for CRB+rTMS vs PLC+SHM correctly reflects both arms having zero SAEs). The point is that a rank-based omnibus test and three post-hoc contrasts on a variable with a single non-zero observation among 86 patients cannot detect any difference whatever, so the reported p=0.355 carries no evidential content about comparative safety. This matters because tolerability is a headline conclusion of the paper ('safe and well-tolerated'), and it rests on tests that were incapable of returning any other answer. Compounding this, the paper reports no confidence interv",
+      "location": "Results, adverse events paragraph and Table 1, SAE columns",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "One serious adverse event (SAE) was reported for the CRB + SHM group."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sae_test_on_single_event",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "One serious adverse event (SAE) was reported for the CRB + SHM group.",
+      "inputs": {
+        "table": "Table 1, SAE Z / P.unadj / P.adj columns",
+        "text_statistic": "Kruskal-Wallis chi-squared = 2.0714, df = 2, p-value = 0.355"
+      },
+      "reported": {
+        "total_saes": 1,
+        "n_analysed": 86,
+        "kw_chi2": 2.0714,
+        "kw_df": 2,
+        "kw_p": 0.355,
+        "dunn_z_values": [
+          -1.260425,
+          0,
+          1.239239
+        ],
+        "dunn_adjusted_p": [
+          0.6225488,
+          1,
+          0.6457706
+        ]
+      },
+      "computed": {
+        "non_zero_observations": 1,
+        "zero_observations": 85,
+        "interpretation": "a Kruskal-Wallis omnibus plus three Dunn post-hoc contrasts computed on a variable taking value 1 for exactly one patient and 0 for the other 85"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The abstract and Discussion conclusion that the combined intervention is safe and well tolerated rests partly on a significance test that a single event renders uninformative."
+      },
+      "notes": "A design/analysis observation, not an arithmetic error -- the numbers are internally consistent (the Dunn Z of exactly 0.000000 with p=1.0 for CRB+rTMS vs PLC+SHM correctly reflects both arms having zero SAEs). The point is that a rank-based omnibus test and three post-hoc contrasts on a variable with a single non-zero observation among 86 patients cannot detect any difference whatever, so the reported p=0.355 carries no evidential content about comparative safety. This matters because tolerability is a headline conclusion of the paper ('safe and well-tolerated'), and it rests on tests that were incapable of returning any other answer. Compounding this, the paper reports no confidence intervals anywhere, so the largest harm difference still compatible with the data cannot be bounded (see the absence_of_evidence entry in `unchecked`).",
+      "reproduction": "metascience get-table --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml --table-num 1",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_833df6118a4fecd2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_baseline_characteristics_table",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "No baseline characteristics table",
+      "description": "The trial states it is reported per the CONSORT 2010 extension for multi-arm trials, but there is no baseline characteristics table (CONSORT item 15). Only mean ages in prose and a gender figure are given -- no SDs, no per-arm ns, no baseline comparisons. Two consequences. First, the two Table-1-integrity checks this toolkit exists to run, csf_test and bayesian_table1_dispersion, have no input and cannot be run at all; the usual baseline-similarity forensics are therefore unavailable for this trial, which is a hole in this review rather than a clean result. Second, the paper pre-specifies stratified second-line analyses 'in case of heterogeneities' and then acknowledges a heterogeneity -- an",
+      "location": "Whole paper; Materials and methods, analysis populations paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Homogeneity analyses for baseline were performed based on the ITT population. In case of heterogeneities, stratified analyses were performed as second-line analyses."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_baseline_characteristics_table",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Homogeneity analyses for baseline were performed based on the ITT population. In case of heterogeneities, stratified analyses were performed as second-line analyses.",
+      "inputs": {
+        "searched": "main text, Tables 1-2, Supplementary Annex 1"
+      },
+      "reported": {
+        "baseline_table_present": false,
+        "baseline_data_reported": [
+          "mean age per arm in prose (55.46, 51.04, 49.87)",
+          "gender distribution in Figure 1 only",
+          "overall male-to-female ratio 4:1"
+        ],
+        "acknowledged_imbalance": "the Cerebrolysin and sham group was roughly five years older, on average"
+      },
+      "computed": {
+        "baseline_p_values_available": 0,
+        "csf_test_runnable": false,
+        "table1_dispersion_runnable": false,
+        "stratified_second_line_analyses_reported": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The pre-specified stratified analysis triggered by the acknowledged age imbalance is not reported, so the primary comparison is never adjusted for the one baseline difference the authors themselves flag."
+      },
+      "notes": "The trial states it is reported per the CONSORT 2010 extension for multi-arm trials, but there is no baseline characteristics table (CONSORT item 15). Only mean ages in prose and a gender figure are given -- no SDs, no per-arm ns, no baseline comparisons. Two consequences. First, the two Table-1-integrity checks this toolkit exists to run, csf_test and bayesian_table1_dispersion, have no input and cannot be run at all; the usual baseline-similarity forensics are therefore unavailable for this trial, which is a hole in this review rather than a clean result. Second, the paper pre-specifies stratified second-line analyses 'in case of heterogeneities' and then acknowledges a heterogeneity -- an age imbalance of roughly five years -- in the Discussion, yet no stratified or age-adjusted analysis is reported anywhere. That is an unexplained departure from the stated analysis plan.",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_bd0ea9050c1897b9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "per_arm_randomised_ns_never_reported",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Per arm randomised ns never reported (Results, paragraphs 1 and 4)",
+      "description": "A three-arm parallel-group RCT reported under CONSORT never states how many patients were randomised to each arm, nor the per-arm ITT or per-protocol sizes (CONSORT items 13a and 16). The only per-arm ns anywhere are 24/20/20 for the 64-patient complete-case subset used in the composite analysis. This has a direct forensic cost: without per-arm denominators, most percentage- and proportion-based checks (GRIM on any per-arm rate, reconstruct_2x2 on the adverse-event distribution) cannot be run at all, and a reader cannot judge whether allocation was balanced. It also means the 22 ITT patients dropped from the composite analysis (26% of the ITT set) cannot be located by arm.",
+      "location": "Results, paragraphs 1 and 4",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The study enrolled 93 individuals who had suffered traumatic brain injury 30 days before screening."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:per_arm_randomised_ns_never_reported",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The study enrolled 93 individuals who had suffered traumatic brain injury 30 days before screening.",
+      "inputs": {
+        "searched": "Results, Methods, Tables 1-2, Supplementary Annex 1, figure captions"
+      },
+      "reported": {
+        "total_randomised": 93,
+        "itt": 86,
+        "pp": 84,
+        "safety": 86,
+        "composite_complete_case": 64,
+        "per_arm_ns_given": "only for the composite complete-case subset: PLC + SHM 24, CRB + SHM 20, CRB + rTMS 20"
+      },
+      "computed": {
+        "arms": 3,
+        "per_arm_randomised_ns_reported": 0,
+        "per_arm_itt_ns_reported": 0,
+        "per_arm_pp_ns_reported": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Absent per-arm denominators, neither allocation balance nor differential attrition across the three arms can be assessed by any reader or tool."
+      },
+      "notes": "A three-arm parallel-group RCT reported under CONSORT never states how many patients were randomised to each arm, nor the per-arm ITT or per-protocol sizes (CONSORT items 13a and 16). The only per-arm ns anywhere are 24/20/20 for the 64-patient complete-case subset used in the composite analysis. This has a direct forensic cost: without per-arm denominators, most percentage- and proportion-based checks (GRIM on any per-arm rate, reconstruct_2x2 on the adverse-event distribution) cannot be run at all, and a reader cannot judge whether allocation was balanced. It also means the 22 ITT patients dropped from the composite analysis (26% of the ITT set) cannot be located by arm.",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_88147702f13b3c93",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "instrument_mislabel_hads_hars",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Instrument mislabel hads hars",
+      "description": "The Methods specify the Hamilton Anxiety Rating Scale (HARS) and the deposited dataset column is HARTS, consistent with it. Supplementary Annex 1 labels the same outcome HADS, which is the Hospital Anxiety and Depression Scale -- a different instrument with different content and scoring. Two of three sources agree, so the most likely reading is a labelling slip in the annex rather than a different measure having been analysed. Recorded because it occurs in a co-primary outcome definition, where an incorrect instrument name is the kind of error that suggests the passage was not checked; a reader relying on the annex alone would attribute the anxiety results to the wrong scale.",
+      "location": "Supplementary Annex 1, HADS_v1-baseline and HADS_v2-baseline rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the Hamilton Anxiety Rating Scale (HARS) ([Hamilton, 1959])"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:instrument_mislabel_hads_hars",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "the Hamilton Anxiety Rating Scale (HARS) ([Hamilton, 1959])",
+      "inputs": {
+        "methods_quote": "the Hamilton Anxiety Rating Scale (HARS)",
+        "si_label": "HADS",
+        "dataset_column": "HARTS"
+      },
+      "reported": {
+        "methods_name": "Hamilton Anxiety Rating Scale (HARS)",
+        "supplementary_annex_label": "HADS_v1-baseline, HADS_v2-baseline",
+        "dataset_column_name": "HARTS_1, HARTS_2, HARTS_3"
+      },
+      "computed": {
+        "distinct_instruments_conflated": [
+          "Hamilton Anxiety Rating Scale (HARS)",
+          "Hospital Anxiety and Depression Scale (HADS)"
+        ],
+        "sources_in_agreement": 2,
+        "sources_in_disagreement": 1
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The anxiety outcome is attributed to the wrong instrument in the only document that reports its group differences."
+      },
+      "notes": "The Methods specify the Hamilton Anxiety Rating Scale (HARS) and the deposited dataset column is HARTS, consistent with it. Supplementary Annex 1 labels the same outcome HADS, which is the Hospital Anxiety and Depression Scale -- a different instrument with different content and scoring. Two of three sources agree, so the most likely reading is a labelling slip in the annex rather than a different measure having been analysed. Recorded because it occurs in a co-primary outcome definition, where an incorrect instrument name is the kind of error that suggests the passage was not checked; a reader relying on the annex alone would attribute the anxiety results to the wrong scale.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_8b6555882e3d5e33",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "figure_caption_visit_numbering",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Figure caption visit numbering",
+      "description": "Figures 3 and 4 present the two timepoints of the primary endpoint, and both captions call their timepoint 'the second visit' -- one for Day 101 and one for Day 180, which cannot both be true. The wider paper carries four incompatible visit-numbering schemes: Methods says Visit 1 = Day 101 and Visit 2 = Day 180; Results calls the same two timepoints Visit 2 and Visit 3; the dataset uses _1/_2/_3; the annex uses v1/v2. Reported as duplicated caption boilerplate affecting the primary-outcome figures, per the textual-flag guidance. No number is wrong; the labelling makes the two headline figures ambiguous to a reader, and it is what makes the mislabelled Visit-3 dataset columns hard to adjudica",
+      "location": "Figure 3 and Figure 4 captions; Methods study-schedule paragraph vs Results",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Baseline difference composite cognitive outcome (z-scores) in the ITT population after the second visit on study day 180 across study groups"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:figure_caption_visit_numbering",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Baseline difference composite cognitive outcome (z-scores) in the ITT population after the second visit on study day 180 across study groups",
+      "inputs": {
+        "figure_captions": [
+          "Figure 3",
+          "Figure 4"
+        ],
+        "sections_compared": [
+          "Materials and methods",
+          "Results",
+          "Supplementary Annex 1",
+          "deposited dataset"
+        ]
+      },
+      "reported": {
+        "figure3_caption": "after the second visit on study day 101",
+        "figure4_caption": "after the second visit on study day 180",
+        "methods_schedule": "Screening and Baseline at Study Day 30, Visit 1 at Study Day 101, and Visit 2 at Study Day 180",
+        "results_text": "Composite outcomes in the ITT population for Visit 2 and Visit 3",
+        "dataset_suffixes": "_1, _2, _3",
+        "si_suffixes": "v1, v2"
+      },
+      "computed": {
+        "figures_describing_different_days_as_the_same_visit": 2,
+        "distinct_visit_numbering_schemes_in_use": 4
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The two primary-outcome figures cannot be unambiguously mapped to their timepoints from their captions alone."
+      },
+      "notes": "Figures 3 and 4 present the two timepoints of the primary endpoint, and both captions call their timepoint 'the second visit' -- one for Day 101 and one for Day 180, which cannot both be true. The wider paper carries four incompatible visit-numbering schemes: Methods says Visit 1 = Day 101 and Visit 2 = Day 180; Results calls the same two timepoints Visit 2 and Visit 3; the dataset uses _1/_2/_3; the annex uses v1/v2. Reported as duplicated caption boilerplate affecting the primary-outcome figures, per the textual-flag guidance. No number is wrong; the labelling makes the two headline figures ambiguous to a reader, and it is what makes the mislabelled Visit-3 dataset columns hard to adjudicate independently.",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_f82013cd9dc955cb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "trial_registration_number_absent",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Trial registration number absent (Materials and methods, paragraph 1)",
+      "description": "The paper states it follows the CONSORT 2010 multi-arm extension, which requires the trial registration number (item 23). The registry is named but no ISRCTN identifier appears anywhere in the body text, and the citation is undated ('n.d.'). Without the number the pre-registered protocol, its outcome list and its analysis plan cannot be retrieved, so none of the pre-specification claims in this review -- including the pre-specified stratified second-line analyses that were not reported -- can be independently verified against the registered protocol.",
+      "location": "Materials and methods, paragraph 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The protocol and subsequent trial information may be found in the ISRCTN clinical trial registry ([ISRCTN, n.d.])."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:trial_registration_number_absent",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The protocol and subsequent trial information may be found in the ISRCTN clinical trial registry ([ISRCTN, n.d.]).",
+      "inputs": {
+        "searched": "Materials and methods, Data availability statement, whole body text"
+      },
+      "reported": {
+        "registry_named": "ISRCTN",
+        "registration_number": "not given",
+        "citation_form": "ISRCTN, n.d."
+      },
+      "computed": {
+        "consort_item_23_satisfied": false
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Pre-specification of outcomes and analyses cannot be checked against the registry, so no claim in the paper can be confirmed as pre-planned."
+      },
+      "notes": "The paper states it follows the CONSORT 2010 multi-arm extension, which requires the trial registration number (item 23). The registry is named but no ISRCTN identifier appears anywhere in the body text, and the citation is undated ('n.d.'). Without the number the pre-registered protocol, its outcome list and its analysis plan cannot be retrieved, so none of the pre-specification claims in this review -- including the pre-specified stratified second-line analyses that were not reported -- can be independently verified against the registered protocol.",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_7610564693dbb1ce",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "malformed_protocol_amendment_date",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Malformed protocol amendment date (Materials and methods, paragraph 1)",
+      "description": "'171/02.04.2018' is not a well-formed date. Separately, two protocol amendments are listed (2018 and 2019) but the inclusion criteria record a third change dated 28/02/2020 raising the upper age limit from 70 to 80 years, which does not correspond to either listed amendment. Recorded as a textual flag in a load-bearing passage -- the protocol amendment record governs which eligibility criteria applied to which patients, and the age criterion is the one the Discussion later identifies as imbalanced between arms. Verified identical in the XML; no arithmetic claim rests on it.",
+      "location": "Materials and methods, paragraph 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The protocol was amended on 171/02.04.2018 (ref. no. 133/15.03.2018) and on 30/05/2019 (ref. no. 118/23.04.2019), extending the inclusion criteria and study end date to facilitate the inclusion of patients."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:malformed_protocol_amendment_date",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The protocol was amended on 171/02.04.2018 (ref. no. 133/15.03.2018) and on 30/05/2019 (ref. no. 118/23.04.2019), extending the inclusion criteria and study end date to facilitate the inclusion of patients.",
+      "inputs": {
+        "ethics_paragraph": "Materials and methods paragraph 1",
+        "inclusion_criteria_paragraph": "Materials and methods paragraph 2"
+      },
+      "reported": {
+        "malformed_date": "171/02.04.2018",
+        "amendments_listed": 2,
+        "amendment_dates_listed": [
+          "171/02.04.2018",
+          "30/05/2019"
+        ],
+        "third_amendment_implied_elsewhere": "updated 28/02/2020: 18-80 years"
+      },
+      "computed": {
+        "malformed_date_tokens": 1,
+        "amendments_listed_vs_implied": "2 listed, at least 3 implied"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A record-keeping defect in the protocol amendment history; no reported statistic depends on it."
+      },
+      "notes": "'171/02.04.2018' is not a well-formed date. Separately, two protocol amendments are listed (2018 and 2019) but the inclusion criteria record a third change dated 28/02/2020 raising the upper age limit from 70 to 80 years, which does not correspond to either listed amendment. Recorded as a textual flag in a load-bearing passage -- the protocol amendment record governs which eligibility criteria applied to which patients, and the age criterion is the one the Discussion later identifies as imbalanced between arms. Verified identical in the XML; no arithmetic claim rests on it.",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_63efeb204efbcc9d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "bonferroni_adjustment_tables_1_2",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Bonferroni adjustment tables 1 2 (Table 1 and Table 2, P.unadj and P.adj columns)",
+      "description": "Every Bonferroni relation in both tables that is not capped at 1 reproduces exactly at the printed precision (largest discrepancy 1e-07, inside the rounding window). The six remaining cells are P.adj = 1, the correct cap where 3 x P.unadj exceeds 1, and were not testable as sums. This confirms m=3 comparisons per family and that the adjustment was applied as described. Denominator: 6 of 12 adjustment relations evaluable, 6 consistent, 0 inconsistent.",
+      "location": "Table 1 and Table 2, P.unadj and P.adj columns",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Composite outcomes in the ITT population for Visit 2 and Visit 3 were compiled based on z-scores of each outcome scale baseline differences (n = 64: PLC + SHM: 24, CRB + SHM:20, CRB + rTMS:20, less than the total sample size due to missing data)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:bonferroni_adjustment_tables_1_2",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Composite outcomes in the ITT population for Visit 2 and Visit 3 were compiled based on z-scores of each outcome scale baseline differences (n = 64: PLC + SHM: 24, CRB + SHM:20, CRB + rTMS:20, less than the total sample size due to missing data).",
+      "inputs": {
+        "relation_tested": "P.adj = 3 x P.unadj for m=3 pairwise comparisons",
+        "decimals": [
+          7,
+          8
+        ],
+        "batch_rows": 10
+      },
+      "reported": {
+        "pairs_checked": [
+          [
+            0.2075163,
+            0.6225488
+          ],
+          [
+            0.2152569,
+            0.6457706
+          ],
+          [
+            0.09515263,
+            0.28545788
+          ],
+          [
+            0.01941951,
+            0.05825854
+          ],
+          [
+            0.06532219,
+            0.19596658
+          ],
+          [
+            0.02578002,
+            0.07734006
+          ]
+        ],
+        "capped_at_1_not_checked": 6
+      },
+      "computed": {
+        "n_relations_evaluated": 6,
+        "n_consistent": 6,
+        "n_inconsistent": 0,
+        "max_absolute_difference": 1e-07,
+        "tolerance_basis": "printed precision"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms the reported multiple-comparison adjustment within each table is arithmetically correct."
+      },
+      "notes": "Every Bonferroni relation in both tables that is not capped at 1 reproduces exactly at the printed precision (largest discrepancy 1e-07, inside the rounding window). The six remaining cells are P.adj = 1, the correct cap where 3 x P.unadj exceeds 1, and were not testable as sums. This confirms m=3 comparisons per family and that the adjustment was applied as described. Denominator: 6 of 12 adjustment relations evaluable, 6 consistent, 0 inconsistent.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[0.2075163,0.2075163,0.2075163],\"expected_sum\":0.6225488,\"decimals\":7,\"decimals_total\":7},{\"values\":[0.2152569,0.2152569,0.2152569],\"expected_sum\":0.6457706,\"decimals\":7,\"decimals_total\":7},{\"values\":[0.09515263,0.09515263,0.09515263],\"expected_sum\":0.28545788,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.01941951,0.01941951,0.01941951],\"expected_sum\":0.05825854,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.06532219,0.06532219,0.06532219],\"expected_sum\":0.19596658,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.02578002,0.02578002,0.02578002],\"expected_sum\":0.07734006,\"decimals\":8,\"decimals_total\":8}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_f4596451332f8b2f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_flow_and_count_sums",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Sample flow and count sums",
+      "description": "The whole participant-flow arithmetic reconciles exactly: the three composite subgroups sum to 64, the per-arm adverse event counts sum to the stated 21, ITT plus the 7 excluded equals the 93 enrolled, PP plus the two named losses equals ITT, and the COVID visit delays sum to 16. The 9 premature discontinuations decompose consistently as the 7 excluded before ITT plus the 2 lost between ITT and PP. Note this is the arithmetic only -- the 7 excluded from ITT are never stated as a number by the paper (I derived it) and are never explained, and 22 ITT patients (26%) are missing from the composite analysis with no reason given beyond 'missing data'.",
+      "location": "Results paragraphs 1-4; Materials and methods COVID paragraph",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "In contrast, the PP population comprises 84 patients (loss to follow-up from ITT\u2013CRB + SHM: 1, PLC + SHM: 1)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_flow_and_count_sums",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "In contrast, the PP population comprises 84 patients (loss to follow-up from ITT\u2013CRB + SHM: 1, PLC + SHM: 1).",
+      "inputs": {
+        "tolerance": 0,
+        "decimals": 0,
+        "batch_rows": 6
+      },
+      "reported": {
+        "enrolled": 93,
+        "itt": 86,
+        "pp": 84,
+        "composite_complete_case": 64,
+        "composite_subgroups": [
+          24,
+          20,
+          20
+        ],
+        "ae_per_arm": [
+          7,
+          6,
+          8
+        ],
+        "ae_total": 21,
+        "visit_delays": [
+          15,
+          1
+        ],
+        "visit_delay_total": 16
+      },
+      "computed": {
+        "n_sums_evaluated": 6,
+        "n_consistent": 6,
+        "n_inconsistent": 0,
+        "checks": [
+          "24+20+20=64",
+          "7+6+8=21",
+          "86+7=93",
+          "84+1+1=86",
+          "15+1=16",
+          "64+22=86"
+        ]
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Participant-flow counts are internally consistent; no claim is undermined."
+      },
+      "notes": "The whole participant-flow arithmetic reconciles exactly: the three composite subgroups sum to 64, the per-arm adverse event counts sum to the stated 21, ITT plus the 7 excluded equals the 93 enrolled, PP plus the two named losses equals ITT, and the COVID visit delays sum to 16. The 9 premature discontinuations decompose consistently as the 7 excluded before ITT plus the 2 lost between ITT and PP. Note this is the arithmetic only -- the 7 excluded from ITT are never stated as a number by the paper (I derived it) and are never explained, and 22 ITT patients (26%) are missing from the composite analysis with no reason given beyond 'missing data'.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[24,20,20],\"expected_sum\":64,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[7,6,8],\"expected_sum\":21,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[86,7],\"expected_sum\":93,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[84,1,1],\"expected_sum\":86,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[15,1],\"expected_sum\":16,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[64,22],\"expected_sum\":86,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_b7175c489cba0497",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "round_n_check",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Round n check (Results, paragraphs 1 and 4)",
+      "description": "The analysed sample sizes carry the irregular structure of real recruitment and attrition. Nothing to flag. The planned 30 per group is a designed recruitment target, which the heuristic correctly does not treat as suspicious.",
+      "location": "Results, paragraphs 1 and 4",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The ITT population is comprised of 86 TBI patients."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:round_n_check",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The ITT population is comprised of 86 TBI patients.",
+      "inputs": {
+        "ns": [
+          93,
+          86,
+          84,
+          64,
+          24,
+          20,
+          20
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reported": {
+        "ns": [
+          93,
+          86,
+          84,
+          64,
+          24,
+          20,
+          20
+        ]
+      },
+      "computed": {
+        "severity": "consistent",
+        "all_divisible_by_50": false,
+        "all_divisible_by_100": false,
+        "n_unique": 6,
+        "explanation": "Sample sizes show some non-round variation; no round-N flag"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No round-number anomaly in the reported sample sizes."
+      },
+      "notes": "The analysed sample sizes carry the irregular structure of real recruitment and attrition. Nothing to flag. The planned 30 per group is a designed recruitment target, which the heuristic correctly does not treat as suspicious.",
+      "reproduction": "metascience flag-round-n --ns 93,86,84,64,24,20,20",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The ITT population is comprised of 86 TBI patients.",
+        "source_locator": "Results, paragraphs 1 and 4",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_dcdadad04eecaeca",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_apa_statistics",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no apa statistics (Whole body text (Materials and methods, Results))",
+      "description": "statcheck recovered zero statistics and this is a fact about the REPORTING FORMAT, not evidence the paper is clean. statcheck matches APA-style inline results such as 'chi2(2) = 0.58, p = .75'; this paper writes 'Kruskal-Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493', which the parser does not recognise. Recorded explicitly so that a zero return is not read as a clean bill of health: the automated NHST consistency check contributed nothing to this review, and the four in-text test results plus the 44 supplementary ones had to be adjudicated by other means.",
+      "location": "Whole body text (Materials and methods, Results)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Non-parametric group differences were not statistically significant (Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE, and Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_apa_statistics",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Non-parametric group differences were not statistically significant (Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE, and Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE).",
+      "inputs": {
+        "text": "Materials and methods statistical paragraphs plus the full Results section"
+      },
+      "reported": {
+        "nhst_results_present_in_text": 4,
+        "format_used": "Kruskal-Wallis chi-squared = X, df = 2, p-value = Y"
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No automated NHST verification was obtained for this paper; coverage came from manual and other tool routes."
+      },
+      "notes": "statcheck recovered zero statistics and this is a fact about the REPORTING FORMAT, not evidence the paper is clean. statcheck matches APA-style inline results such as 'chi2(2) = 0.58, p = .75'; this paper writes 'Kruskal-Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493', which the parser does not recognise. Recorded explicitly so that a zero return is not read as a clean bill of health: the automated NHST consistency check contributed nothing to this review, and the four in-text test results plus the 44 supplementary ones had to be adjudicated by other means.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.pdf",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [input_path]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "Non-parametric group differences were not statistically significant (Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE, and Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE).",
+        "source_locator": "Results and Materials and methods, statistical analysis",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_55ee91a1f2730807",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table_cell_typing_coverage",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table cell typing coverage (Table 1 and Table 2 (all 36 body cells))",
+      "description": "Both tables typed at 100% coverage with no ambiguous cells. Neither table carries footnotes, and neither contains a single mean, SD, count-with-percentage or confidence interval -- every cell is a Dunn Z statistic or a p-value. That is why the granularity family of checks (GRIM, GRIMMER, DEBIT, SPRITE) has no purchase anywhere in this paper: those tools require integer-bounded observations reported as means, and this paper reports no means at all for any outcome. The four merged header cells recorded in `spans` (the AE/SAE and Day 101/Day 180 column groups) were left as anchors and not copied across their continuations. Denominator for the whole paper: 36 main-table cells available, 36 typed",
+      "location": "Table 1 and Table 2 (all 36 body cells)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Multiple pairwise comparisons between study group composite cognitive outcome (z-scores) using Dunn\u2019s test."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table_cell_typing_coverage",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Multiple pairwise comparisons between study group composite cognitive outcome (z-scores) using Dunn\u2019s test.",
+      "inputs": {
+        "source": "get_table cells passed directly to parse_cells_typed",
+        "footnotes": "none in either table"
+      },
+      "reported": {
+        "table1_cells": 18,
+        "table2_cells": 18
+      },
+      "computed": {
+        "coverage": 1,
+        "n_unusable": 0,
+        "n_ambiguous": 0,
+        "table1_kinds": {
+          "numeric": 12,
+          "count": 6
+        },
+        "table2_kinds": {
+          "numeric": 16,
+          "count": 2
+        },
+        "merged_cells_respected": 4
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Records what was extractable from the two main tables and why the granularity checks do not apply."
+      },
+      "notes": "Both tables typed at 100% coverage with no ambiguous cells. Neither table carries footnotes, and neither contains a single mean, SD, count-with-percentage or confidence interval -- every cell is a Dunn Z statistic or a p-value. That is why the granularity family of checks (GRIM, GRIMMER, DEBIT, SPRITE) has no purchase anywhere in this paper: those tools require integer-bounded observations reported as means, and this paper reports no means at all for any outcome. The four merged header cells recorded in `spans` (the AE/SAE and Day 101/Day 180 column groups) were left as anchors and not copied across their continuations. Denominator for the whole paper: 36 main-table cells available, 36 typed, 0 eligible for granularity testing.",
+      "reproduction": "metascience parse-cells --cells '[{\"raw\":\"1.6688222\",\"row_label\":\"CRB + rTMS-CRB + SHM\",\"col_label\":\"Day 101 Z\"},{\"raw\":\"0.09515263\",\"row_label\":\"CRB + rTMS-CRB + SHM\",\"col_label\":\"Day 101 P.unadj\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience parse-cells [OPTIONS] {json_path}\nTry 'metascience parse-cells --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_23db06812ade0b28",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncorrected_across_outcomes",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity uncorrected across outcomes",
+      "description": "NOT COMPUTED -- recorded as indeterminate because the tool would not run, and I did not substitute my own correction arithmetic. multiplicity_report returned n_tests=0 for the 22-test ITT family and again for the 22-test PP family; a minimal probe of three bare {p_value} objects also returned 0, which identifies a payload-parsing defect in the tool rather than anything about this paper. What can be stated from reading alone: the paper performs at least 48 omnibus tests (22 ITT + 22 PP in the annex, plus 2 composite and 2 safety in the text) and 132 supplementary pairwise comparisons. Bonferroni is applied only WITHIN each outcome's three pairwise contrasts; nothing corrects across the 22 out",
+      "location": "Supplementary Annex 1 (44 omnibus tests) and Results, final paragraph",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Given the low sample size of the trial that would inherently lead to the low power of reported analyses, no further hypothesis testing was performed."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncorrected_across_outcomes",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Given the low sample size of the trial that would inherently lead to the low power of reported analyses, no further hypothesis testing was performed.",
+      "inputs": {
+        "family_label": "Individual cognitive outcome scales, ITT population, Kruskal-Wallis omnibus tests (Supplementary Annex 1)",
+        "n_tests_submitted": 22,
+        "alpha": 0.05
+      },
+      "reported": {
+        "si_omnibus_tests_itt": 22,
+        "si_omnibus_tests_pp": 22,
+        "si_dunn_adjusted_p_values": 132,
+        "in_text_omnibus_tests": 4,
+        "correction_applied": "Bonferroni within each outcome's 3 pairwise comparisons only; none across the 22 outcomes or 2 timepoints"
+      },
+      "computed": {
+        "tool_returned": "n_tests: 0, note: no uncorrected tests",
+        "tool_status": "payload not parsed; verified with a minimal 3-element probe which also returned 0",
+        "counted_by_reading_only": {
+          "itt_omnibus_p_below_0.05": 2,
+          "pp_omnibus_p_below_0.05": 1,
+          "itt_omnibus_p_below_0.10": 4
+        }
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The number of surviving claims under correction could not be computed; the count of tests bears directly on how the one Bonferroni-surviving subscale result should be interpreted."
+      },
+      "notes": "NOT COMPUTED -- recorded as indeterminate because the tool would not run, and I did not substitute my own correction arithmetic. multiplicity_report returned n_tests=0 for the 22-test ITT family and again for the 22-test PP family; a minimal probe of three bare {p_value} objects also returned 0, which identifies a payload-parsing defect in the tool rather than anything about this paper. What can be stated from reading alone: the paper performs at least 48 omnibus tests (22 ITT + 22 PP in the annex, plus 2 composite and 2 safety in the text) and 132 supplementary pairwise comparisons. Bonferroni is applied only WITHIN each outcome's three pairwise contrasts; nothing corrects across the 22 outcome-by-timepoint families or across the two analysis populations. Two of the 22 ITT omnibus tests fall below 0.05, which is close to the 1.1 expected by chance -- so the multiplicity burden here most likely argues AGAINST reading the significant Digit Span Backward result as real, and the editorial stage should weigh it that way rather than as an additional problem. Separately, the Results state that 'no further hypothesis testing was performed', which is contradicted by the 176 tests reported in the supplement.",
+      "reproduction": "metascience multiplicity --family-label 'Individual cognitive outcome scales, ITT, Kruskal-Wallis omnibus' --tests '[{\"id\":\"si_itt_dsb_v2\",\"p_value\":0.02649,\"test_type\":\"other\",\"location\":\"SI Annex 1\",\"correction_applied\":\"none\"},{\"id\":\"si_itt_tmt1_v2\",\"p_value\":0.04012,\"test_type\":\"other\",\"location\":\"SI Annex 1\",\"correction_applied\":\"none\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0c8c73d5302acadc",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "00e3eb40d7195b0b28d7e691a0fde0966b4f4812f255f44360f1542e1da1f7f5",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-10 08:38 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

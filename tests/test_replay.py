@@ -44,7 +44,7 @@ class TestItActuallyReplays:
         """A bundle holds a COPY of its run's ledger under `analysis/`, so a
         naive walk replays every run twice. The first corpus replay reported 13
         runs against an archive of 11."""
-        n_ledgers = len(list(CORPUS.rglob("toolcalls.stage1.json")))
+        n_ledgers = len(list(CORPUS.rglob("toolcalls.tool_agent.json")))
         assert corpus["n_runs"] < n_ledgers, (
             f"{corpus['n_runs']} runs from {n_ledgers} ledger files -- bundle "
             "copies are being replayed as if they were separate runs")

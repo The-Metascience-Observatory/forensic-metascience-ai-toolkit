@@ -1,0 +1,1758 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1001--jamanetworkopen.2023.51752",
+  "run_id": "r_81b9c0af602a3b1a",
+  "findings": [
+    {
+      "slug": "ethnicity_98_8_pct_grim_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Ethnicity 98 8 pct grim impossible",
+      "description": "With n=618 stated in the same sentence, no integer count yields 98.8%: 610/618 = 98.7% and 611/618 = 98.9%. The percentage is also inconsistent with its own numerator, since 617 of 618 is 99.8%. Both the denominator (618) and the [0,100] bound on percentages are stated or logically necessary, not assumed, so the impossibility does not rest on any inferred constraint. The most economical explanation is a transposition of 99.8 to 98.8 rather than a data-integrity problem, but it is an arithmetic impossibility as printed.",
+      "location": "Results, first demographic paragraph (page 5): maternal ethnicity at child age 18 y",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "One mother (0.2%) reported Hispanic ethnicity, and 617 mothers (98.8%) reported non-Hispanic ethnicity."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ethnicity_98_8_pct_grim_impossible",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "One mother (0.2%) reported Hispanic ethnicity, and 617 mothers (98.8%) reported non-Hispanic ethnicity.",
+      "inputs": {
+        "percentage": 98.8,
+        "n": 618,
+        "decimals": 1
+      },
+      "reported": {
+        "count": 617,
+        "percentage": 98.8,
+        "denominator": 618
+      },
+      "computed": {
+        "implied_count": 610.584,
+        "rounded_count": 611,
+        "nearest_attainable_percentages": [
+          98.7,
+          98.9
+        ],
+        "consistent": false
+      },
+      "notes": "With n=618 stated in the same sentence, no integer count yields 98.8%: 610/618 = 98.7% and 611/618 = 98.9%. The percentage is also inconsistent with its own numerator, since 617 of 618 is 99.8%. Both the denominator (618) and the [0,100] bound on percentages are stated or logically necessary, not assumed, so the impossibility does not rest on any inferred constraint. The most economical explanation is a transposition of 99.8 to 98.8 rather than a data-integrity problem, but it is an arithmetic impossibility as printed.",
+      "reproduction": "metascience grim-sweep --values 98.8 --n-min 618 --n-max 618 --decimals 1",
+      "reproduction_valid": true,
+      "reproduction_problem": "The primary tool used was grim_percentage, which is MCP-only and has no CLI verb; the grim-sweep command shown reproduces the identical arithmetic (an empty n-set at n=618 is the same failure).",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_ba3829093730e29d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ethnicity_pct_summation",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Ethnicity pct summation",
+      "description": "Hispanic and non-Hispanic are an exhaustive two-category split of the 618 mothers, so the two percentages must sum to 100 within rounding (+/-0.1). They sum to 99.0, a shortfall of 1.0 percentage point. Independent corroboration of the GRIM-percentage failure on the same figure.",
+      "location": "Results, first demographic paragraph (page 5): maternal ethnicity at child age 18 y",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "One mother (0.2%) reported Hispanic ethnicity, and 617 mothers (98.8%) reported non-Hispanic ethnicity."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ethnicity_pct_summation",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "One mother (0.2%) reported Hispanic ethnicity, and 617 mothers (98.8%) reported non-Hispanic ethnicity.",
+      "inputs": {
+        "values": [
+          0.2,
+          98.8
+        ],
+        "expected_sum": 100,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "hispanic_pct": 0.2,
+        "non_hispanic_pct": 98.8
+      },
+      "computed": {
+        "actual_sum": 99,
+        "difference": -1,
+        "is_consistent": false
+      },
+      "notes": "Hispanic and non-Hispanic are an exhaustive two-category split of the 618 mothers, so the two percentages must sum to 100 within rounding (+/-0.1). They sum to 99.0, a shortfall of 1.0 percentage point. Independent corroboration of the GRIM-percentage failure on the same figure.",
+      "reproduction": "metascience summation --values 0.2 --values 98.8 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_6674053319315d31",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "race_12y_wrong_denominator_618",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Race 12y wrong denominator 618",
+      "description": "The paragraph describes the 594 mothers interviewed at child age 12 y, then asserts 'All 618 reported non-Hispanic ethnicity'. GRIM confirms the denominator for this block is 594 (559/594 = 94.1%, and the counts 3 + 0 + 559 + 32 sum exactly to 594 with percentages summing to 100.0), while 94.1% is unattainable at n=618. 618 is the child-age-18 interview total, so a figure from the wrong follow-up wave has been inserted into the 12-year sentence. A cross-reference error, not a data anomaly.",
+      "location": "Results, first demographic paragraph (pages 4-5): maternal race/ethnicity at child age 12 y",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Of the mothers interviewed at child age 12 years, 3 (0.5%) self-reported their race as Aleut, Eskimo, or American Indian; 0 as Asian or Pacific Islander; 559 (94.1%) as Black; and 32 (5.4%) as White. All 618 reported non-Hispanic ethnicity."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:race_12y_wrong_denominator_618",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Of the mothers interviewed at child age 12 years, 3 (0.5%) self-reported their race as Aleut, Eskimo, or American Indian; 0 as Asian or Pacific Islander; 559 (94.1%) as Black; and 32 (5.4%) as White. All 618 reported non-Hispanic ethnicity.",
+      "inputs": {
+        "test_a": {
+          "percentage": 94.1,
+          "n": 618,
+          "decimals": 1
+        },
+        "test_b": {
+          "percentage": 94.1,
+          "n": 594,
+          "decimals": 1
+        }
+      },
+      "reported": {
+        "black_count": 559,
+        "black_pct": 94.1,
+        "denominator_asserted_in_sentence": 618
+      },
+      "computed": {
+        "at_n_618": {
+          "consistent": false,
+          "severity": "impossible",
+          "nearest_attainable": [
+            94,
+            94.2
+          ]
+        },
+        "at_n_594": {
+          "consistent": true,
+          "severity": "consistent",
+          "implied_count": 558.954
+        }
+      },
+      "notes": "The paragraph describes the 594 mothers interviewed at child age 12 y, then asserts 'All 618 reported non-Hispanic ethnicity'. GRIM confirms the denominator for this block is 594 (559/594 = 94.1%, and the counts 3 + 0 + 559 + 32 sum exactly to 594 with percentages summing to 100.0), while 94.1% is unattainable at n=618. 618 is the child-age-18 interview total, so a figure from the wrong follow-up wave has been inserted into the 12-year sentence. A cross-reference error, not a data anomaly.",
+      "reproduction": "metascience grim-sweep --values 94.1 --n-min 594 --n-max 594 --decimals 1",
+      "reproduction_valid": true,
+      "reproduction_problem": "grim_percentage is MCP-only (no CLI verb); the grim-sweep form shown reproduces the same arithmetic for the n=594 leg. The contrasting n=618 leg requires a second run with --n-min 618 --n-max 618.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_cf0f14e0265fd5a1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t4_stage1_1218_pct_sum_100_7",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "T4 stage1 1218 pct sum 100 7",
+      "description": "Mothers of females and mothers of males exhaustively partition the analytic sample, so their percentages must sum to 100 within +/-0.1. The 0.7-point excess is seven times the maximum rounding error and cannot be a rounding artifact. The printed counts (238 + 247 = 485, against an Overall N of 486, consistent with the one dropped observation in footnote a) imply 49.1% and 50.9%; the male figure is correct and the female figure is not. Note that 49.8 is the value correctly printed two blocks below (Stage 2 at age 12 y, mothers of females: 252 (49.8)), consistent with a copy or fill-down error.",
+      "location": "Table 4, Maternal stage 1 hypertension at age 12 and 18 y (No. (%) column)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mothersoffemales 238(49.8) ... Mothersofmales 247(50.9)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t4_stage1_1218_pct_sum_100_7",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mothersoffemales 238(49.8) ... Mothersofmales 247(50.9)",
+      "inputs": {
+        "values": [
+          49.8,
+          50.9
+        ],
+        "expected_sum": 100,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "mothers_of_females": "238 (49.8)",
+        "mothers_of_males": "247 (50.9)",
+        "overall_n": 486
+      },
+      "computed": {
+        "actual_sum": 100.7,
+        "difference": 0.7,
+        "is_consistent": false
+      },
+      "notes": "Mothers of females and mothers of males exhaustively partition the analytic sample, so their percentages must sum to 100 within +/-0.1. The 0.7-point excess is seven times the maximum rounding error and cannot be a rounding artifact. The printed counts (238 + 247 = 485, against an Overall N of 486, consistent with the one dropped observation in footnote a) imply 49.1% and 50.9%; the male figure is correct and the female figure is not. Note that 49.8 is the value correctly printed two blocks below (Stage 2 at age 12 y, mothers of females: 252 (49.8)), consistent with a copy or fill-down error.",
+      "reproduction": "metascience summation --values 49.8 --values 50.9 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_4ed37f1a51761a6a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t1_obesity18_same_counts_two_percentages",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "T1 obesity18 same counts two percentages",
+      "description": "Two rows of the same table report identical sex-specific counts (307 female, 297 male) under an identical Overall N (605) yet print different percentage splits. At most one can be right, and the Severe-obesity row (50.8/49.2) is the one consistent with 307 and 297 of 604. Verified against the published PDF page 4, so this is not a text-extraction artifact. Low-stakes on its own since neither figure enters an effect estimate, but it is a second instance of the same table-construction fault seen in Table 4.",
+      "location": "Table 1, Obesity at age 18 y vs Severe obesity at age 18 y (No. (%) column)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Obesityatage18y ... Female 307(50.7) ... Male 297(49.3) | Severeobesityatage18y ... Female 307(50.8) ... Male 297(49.2)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t1_obesity18_same_counts_two_percentages",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Obesityatage18y ... Female 307(50.7) ... Male 297(49.3) | Severeobesityatage18y ... Female 307(50.8) ... Male 297(49.2)",
+      "inputs": {
+        "row_a": {
+          "label": "Obesity at age 18 y",
+          "overall_n": 605,
+          "female": "307 (50.7)",
+          "male": "297 (49.3)"
+        },
+        "row_b": {
+          "label": "Severe obesity at age 18 y",
+          "overall_n": 605,
+          "female": "307 (50.8)",
+          "male": "297 (49.2)"
+        }
+      },
+      "reported": {
+        "identical_counts": [
+          307,
+          297
+        ],
+        "identical_overall_n": 605,
+        "differing_percentage_pairs": [
+          [
+            50.7,
+            49.3
+          ],
+          [
+            50.8,
+            49.2
+          ]
+        ]
+      },
+      "computed": {
+        "at_most_one_pair_can_be_correct": true,
+        "pair_matching_printed_counts": [
+          50.8,
+          49.2
+        ]
+      },
+      "notes": "Two rows of the same table report identical sex-specific counts (307 female, 297 male) under an identical Overall N (605) yet print different percentage splits. At most one can be right, and the Severe-obesity row (50.8/49.2) is the one consistent with 307 and 297 of 604. Verified against the published PDF page 4, so this is not a text-extraction artifact. Low-stakes on its own since neither figure enters an effect estimate, but it is a second instance of the same table-construction fault seen in Table 4.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 4 --last-page 4",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies: this is a reconciliation of two printed rows, not a computation. The extract command reproduces the source values so a reader can confirm both rows verbatim; the inconsistency is then read directly off the page.",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_9b6470d3596a500b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t4_stage1_18_same_counts_two_percentages",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "T4 stage1 18 same counts two percentages",
+      "description": "Same fault as the Table 1 instance: identical counts (293, 298) and identical Overall N (592) yield two different percentage splits in the same table. The Stage-2 row (49.6/50.4) matches 293 and 298 of 591; the Stage-1 row does not. Notably 49.1 is the value that belongs to the Stage 1 at 12-and-18-y row two blocks below, which is exactly where the 100.7 summation failure occurs, consistent with a single column mis-shift affecting both rows.",
+      "location": "Table 4, Maternal stage 1 hypertension at age 18 y vs Maternal stage 2 hypertension at age 18 y (No. (%) column)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Stage1hypertensionatage18y ... Mothersoffemales 293(49.1) ... Mothersofmales 298(50.9) | Stage2hypertensionatage18y ... Mothersoffemales 293(49.6) ... Mothersofmales 298(50.4)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t4_stage1_18_same_counts_two_percentages",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Stage1hypertensionatage18y ... Mothersoffemales 293(49.1) ... Mothersofmales 298(50.9) | Stage2hypertensionatage18y ... Mothersoffemales 293(49.6) ... Mothersofmales 298(50.4)",
+      "inputs": {
+        "row_a": {
+          "label": "Stage 1 hypertension at age 18 y",
+          "overall_n": 592,
+          "mof": "293 (49.1)",
+          "mom": "298 (50.9)"
+        },
+        "row_b": {
+          "label": "Stage 2 hypertension at age 18 y",
+          "overall_n": 592,
+          "mof": "293 (49.6)",
+          "mom": "298 (50.4)"
+        }
+      },
+      "reported": {
+        "identical_counts": [
+          293,
+          298
+        ],
+        "identical_overall_n": 592,
+        "differing_percentage_pairs": [
+          [
+            49.1,
+            50.9
+          ],
+          [
+            49.6,
+            50.4
+          ]
+        ]
+      },
+      "computed": {
+        "at_most_one_pair_can_be_correct": true,
+        "pair_matching_printed_counts": [
+          49.6,
+          50.4
+        ]
+      },
+      "notes": "Same fault as the Table 1 instance: identical counts (293, 298) and identical Overall N (592) yield two different percentage splits in the same table. The Stage-2 row (49.6/50.4) matches 293 and 298 of 591; the Stage-1 row does not. Notably 49.1 is the value that belongs to the Stage 1 at 12-and-18-y row two blocks below, which is exactly where the 100.7 summation failure occurs, consistent with a single column mis-shift affecting both rows.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 7 --last-page 7",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies: this is a reconciliation of two printed rows rather than a computation. The extract command reproduces the source values verbatim from the published PDF.",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_bef3b5091caf29ad",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "arr_ci_p_direction_pattern",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Arr ci p direction pattern",
+      "description": "This is the paper's central statistical inconsistency and it is systematic rather than sporadic. Every one of the 17 ARR rows the paper declares significant has a reported p-value SMALLER than the p implied by its own printed 95% CI, most by a factor of 2 to 5 and one by more than 17. Among non-significant rows the discrepancies are small and run in both directions, and the continuous LSMD estimates quoted from eTables 5 and 6 reconcile almost exactly, so this is not a global rounding or tooling artifact but is confined to the ARR rows carrying the paper's claims. A benign explanation exists and should be stated: the CI may be a delta-method or bootstrap interval on the relative-risk scale w",
+      "location": "Tables 1-4, ARR (95% CI) and P value columns (all 36 rows of Tables 1 and 4 checked; 4 sampled rows of Tables 2-3; 8 text/eTable estimates)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "ARR(95%CI)b Pvaluec -- Two-sided asymptotic P value for the null hypothesis that the treatment effect is 0."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:arr_ci_p_direction_pattern",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "ARR(95%CI)b Pvaluec -- Two-sided asymptotic P value for the null hypothesis that the treatment effect is 0.",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "n_estimates_checked": 48,
+        "measure": "RR",
+        "confidence_level": 0.95,
+        "method": "SE recovered from CI width on the log scale, p recovered by normal approximation"
+      },
+      "reported": {
+        "significant_arr_rows_with_p_le_0.05": 17
+      },
+      "computed": {
+        "significant_rows_where_recovered_p_exceeds_reported_p": 17,
+        "significant_rows_where_recovered_p_below_reported_p": 0,
+        "example_ratios": {
+          "ARR_0.185_reported_p_lt_.001_recovered_.0177": "more than 17x",
+          "ARR_0.449_reported_.003_recovered_.0157": "5.2x",
+          "ARR_0.396_reported_.007_recovered_.0333": "4.8x",
+          "ARR_0.493_reported_.002_recovered_.0082": "4.1x",
+          "ARR_0.613_reported_.001_recovered_.0039": "3.9x",
+          "ARR_0.634_reported_.002_recovered_.0057": "2.9x",
+          "ARR_0.815_reported_.01_recovered_.0249": "2.5x",
+          "ARR_0.217_reported_p_lt_.001_recovered_.0024": "more than 2.4x",
+          "ARR_0.791_reported_.01_recovered_.0213": "2.1x",
+          "ARR_0.605_reported_.01_recovered_.0171": "1.7x"
+        },
+        "null_rows_direction": "mixed and small in both directions",
+        "etable_lsmd_estimates_direction": "reconcile essentially exactly (191.37 g, -2.226, -4.064, -0.553 all consistent)"
+      },
+      "notes": "This is the paper's central statistical inconsistency and it is systematic rather than sporadic. Every one of the 17 ARR rows the paper declares significant has a reported p-value SMALLER than the p implied by its own printed 95% CI, most by a factor of 2 to 5 and one by more than 17. Among non-significant rows the discrepancies are small and run in both directions, and the continuous LSMD estimates quoted from eTables 5 and 6 reconcile almost exactly, so this is not a global rounding or tooling artifact but is confined to the ARR rows carrying the paper's claims. A benign explanation exists and should be stated: the CI may be a delta-method or bootstrap interval on the relative-risk scale while the p-value comes from a Wald test on the underlying logistic coefficient, and post-double-selection lasso inference can produce differing variance estimates. The paper does not say this, and as printed a reader cannot reproduce any reported p from its own interval. Directionality is what elevates this above bookkeeping: a variance-estimator mismatch has no obvious reason to be one-signed across every significant row.",
+      "reproduction": "metascience check-ci --estimate 0.185 --ci-low 0.046 --ci-high 0.748 --measure RR",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_52330f37cfefba23",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sevobesity_female_abstract_p_vs_ci",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Sevobesity female abstract p vs ci",
+      "description": "The single largest p/CI divergence in the paper, and it sits in the Abstract, the Key Points and the Conclusions. The point estimate is properly log-centred within its interval (implied centre 0.1855 against 0.185 printed), so the CI is internally coherent, but that same interval yields z = -2.37, p = 0.018, more than an order of magnitude above the claimed P<.001. Under the paper's own Romano-Wolf correction this row carries MHT P = .04, far closer to the CI-implied 0.018 than the raw P<.001 is, so the corrected column is not consistent with the uncorrected one either. This underpins the headline 81% severe-obesity reduction in female offspring. Note also that the effect rests on very few e",
+      "location": "Abstract RESULTS; Results, Obesity section; Table 1, Severe obesity at age 12 and 18 y, Female",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "and severe obesity (ARR, 0.185; 95% CI, 0.046-0.748; P<.001)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sevobesity_female_abstract_p_vs_ci",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "and severe obesity (ARR, 0.185; 95% CI, 0.046-0.748; P<.001)",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.185,
+        "ci_low": 0.046,
+        "ci_high": 0.748,
+        "measure": "RR",
+        "confidence_level": 0.95
+      },
+      "reported": {
+        "ARR": 0.185,
+        "ci": "0.046-0.748",
+        "p": "<.001",
+        "mht_p": 0.04,
+        "n": 269
+      },
+      "computed": {
+        "recovered_se_log": 0.7114,
+        "recovered_z": -2.3718,
+        "recovered_p": 0.0177,
+        "implied_centre": 0.1855,
+        "ci_excludes_null": true,
+        "estimate_ci_geometry": "consistent"
+      },
+      "notes": "The single largest p/CI divergence in the paper, and it sits in the Abstract, the Key Points and the Conclusions. The point estimate is properly log-centred within its interval (implied centre 0.1855 against 0.185 printed), so the CI is internally coherent, but that same interval yields z = -2.37, p = 0.018, more than an order of magnitude above the claimed P<.001. Under the paper's own Romano-Wolf correction this row carries MHT P = .04, far closer to the CI-implied 0.018 than the raw P<.001 is, so the corrected column is not consistent with the uncorrected one either. This underpins the headline 81% severe-obesity reduction in female offspring. Note also that the effect rests on very few events: at the trial's 514:228 allocation the treatment arm of this row holds roughly 80 girls at a reported proportion of 0.02, i.e. about 2 cases.",
+      "reproduction": "metascience check-ci --estimate 0.185 --ci-low 0.046 --ci-high 0.748 --measure RR",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_8b5b961b3ac76aa7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "stage2_htn_mof_abstract_p_vs_ci",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Stage2 htn mof abstract p vs ci",
+      "description": "The second abstract-level claim (79% reduction in maternal stage 2 hypertension). The CI implies p = 0.0024, which does not satisfy P<.001 as printed, though the gap here is about 2.4x rather than the more than 17x seen for the severe-obesity claim. Both abstract p-values are stated as thresholds and neither is reachable from its own interval. Also worth flagging for the editorial stage: with a treatment-arm proportion of 0.05 in roughly 70 mothers, this estimate rests on approximately 3 to 4 events.",
+      "location": "Abstract RESULTS; Results, Hypertension section; Table 4, Maternal stage 2 hypertension at age 12 and 18 y, Mothers of females",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "stage2:ARR,0.217[95%CI,0.081-0.582;P<.001]"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:stage2_htn_mof_abstract_p_vs_ci",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "stage2:ARR,0.217[95%CI,0.081-0.582;P<.001]",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.217,
+        "ci_low": 0.081,
+        "ci_high": 0.582,
+        "measure": "RR",
+        "confidence_level": 0.95
+      },
+      "reported": {
+        "ARR": 0.217,
+        "ci": "0.081-0.582",
+        "p": "<.001",
+        "n": 232
+      },
+      "computed": {
+        "recovered_se_log": 0.5031,
+        "recovered_z": -3.037,
+        "recovered_p": 0.00239,
+        "implied_centre": 0.2171,
+        "ci_excludes_null": true,
+        "estimate_ci_geometry": "consistent"
+      },
+      "notes": "The second abstract-level claim (79% reduction in maternal stage 2 hypertension). The CI implies p = 0.0024, which does not satisfy P<.001 as printed, though the gap here is about 2.4x rather than the more than 17x seen for the severe-obesity claim. Both abstract p-values are stated as thresholds and neither is reachable from its own interval. Also worth flagging for the editorial stage: with a treatment-arm proportion of 0.05 in roughly 70 mothers, this estimate rests on approximately 3 to 4 events.",
+      "reproduction": "metascience check-ci --estimate 0.217 --ci-low 0.081 --ci-high 0.582 --measure RR",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f896eb6428c70d88",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sevobesity18_female_ci_crosses_null",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Sevobesity18 female ci crosses null",
+      "description": "The 95% CI runs from 0.293 to 1.075 and therefore contains the null, yet this row is presented in the Results text as part of a claim that nurse-visited female offspring were 'significantly less likely' to have severe obesity 'at both ages when considering each time point in isolation'. The interval implies p = 0.081. Even taking the printed P = .05 at face value, the paper's own stated threshold is 'A 2-sided P < .05', which p = .05 does not meet. The contradiction between a null-spanning interval and a significance claim is independent of the wider CI/p reconciliation issue.",
+      "location": "Results, Obesity section; Table 1, Severe obesity at age 18 y, Female",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Nurse-visited female offspring were significantly less likely to have obesity and severe obesity at both ages when considering each time point in isolation and together. ... and more than 40% at age 18 years (ARR, 0.561; 95% CI, 0.293-1.075; P =.05)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sevobesity18_female_ci_crosses_null",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Nurse-visited female offspring were significantly less likely to have obesity and severe obesity at both ages when considering each time point in isolation and together. ... and more than 40% at age 18 years (ARR, 0.561; 95% CI, 0.293-1.075; P =.05)",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.561,
+        "ci_low": 0.293,
+        "ci_high": 1.075,
+        "measure": "RR",
+        "reported_p": 0.05,
+        "confidence_level": 0.95
+      },
+      "reported": {
+        "ARR": 0.561,
+        "ci": "0.293-1.075",
+        "p": 0.05,
+        "mht_p": 0.05,
+        "n": 307
+      },
+      "computed": {
+        "recovered_se_log": 0.3316,
+        "recovered_z": -1.7431,
+        "recovered_p": 0.0813,
+        "ci_excludes_null": false,
+        "problems": [
+          "the p-value recovered from the CI is 0.0813, but p = 0.05 is reported",
+          "the CI includes the null (1.0), but the reported p = 0.05 says the result is significant"
+        ]
+      },
+      "notes": "The 95% CI runs from 0.293 to 1.075 and therefore contains the null, yet this row is presented in the Results text as part of a claim that nurse-visited female offspring were 'significantly less likely' to have severe obesity 'at both ages when considering each time point in isolation'. The interval implies p = 0.081. Even taking the printed P = .05 at face value, the paper's own stated threshold is 'A 2-sided P < .05', which p = .05 does not meet. The contradiction between a null-spanning interval and a significance claim is independent of the wider CI/p reconciliation issue.",
+      "reproduction": "metascience check-ci --estimate 0.561 --ci-low 0.293 --ci-high 1.075 --measure RR --reported-p 0.05",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_39be90151dbacaf2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t4_overall_rows_p01_vs_ci",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "T4 overall rows p01 vs ci (Table 4, three Overall rows reporting P = .01)",
+      "description": "Three separate Overall rows in Table 4 all print P = .01 while their intervals imply 0.025, 0.021 and 0.017 respectively, each roughly two-fold larger and each in the same direction. None of the three would round to .01. These rows underpin the statement that 'Nurse-visited mothers were significantly less likely to have stage 1 and stage 2 hypertension at child ages 12 and 18 years combined'; the direction of the discrepancy makes the overall maternal effect look more precisely estimated than the printed intervals support.",
+      "location": "Table 4, three Overall rows reporting P = .01",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Overall 507 0.59(0.49) 0.48(0.50) 0.815(0.682-0.975) .01 .03 | Overall 486 0.54(0.50) 0.43(0.50) 0.791(0.648-0.966) .01 .03 | Overall 480 0.23(0.42) 0.14(0.35) 0.605(0.400-0.914) .01 .02"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t4_overall_rows_p01_vs_ci",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Overall 507 0.59(0.49) 0.48(0.50) 0.815(0.682-0.975) .01 .03 | Overall 486 0.54(0.50) 0.43(0.50) 0.791(0.648-0.966) .01 .03 | Overall 480 0.23(0.42) 0.14(0.35) 0.605(0.400-0.914) .01 .02",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "rows": [
+          {
+            "estimate": 0.815,
+            "ci_low": 0.682,
+            "ci_high": 0.975,
+            "reported_p": 0.01
+          },
+          {
+            "estimate": 0.791,
+            "ci_low": 0.648,
+            "ci_high": 0.966,
+            "reported_p": 0.01
+          },
+          {
+            "estimate": 0.605,
+            "ci_low": 0.4,
+            "ci_high": 0.914,
+            "reported_p": 0.01
+          }
+        ],
+        "measure": "RR"
+      },
+      "reported": {
+        "p_all_three": 0.01
+      },
+      "computed": {
+        "recovered_p": [
+          0.0249,
+          0.0213,
+          0.0171
+        ],
+        "all_exceed_reported": true,
+        "ci_excludes_null": [
+          true,
+          true,
+          true
+        ]
+      },
+      "notes": "Three separate Overall rows in Table 4 all print P = .01 while their intervals imply 0.025, 0.021 and 0.017 respectively, each roughly two-fold larger and each in the same direction. None of the three would round to .01. These rows underpin the statement that 'Nurse-visited mothers were significantly less likely to have stage 1 and stage 2 hypertension at child ages 12 and 18 years combined'; the direction of the discrepancy makes the overall maternal effect look more precisely estimated than the printed intervals support.",
+      "reproduction": "metascience check-ci --estimate 0.815 --ci-low 0.682 --ci-high 0.975 --measure RR --reported-p 0.01",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_cb42d6dbd9595395",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "gestation_lsmd_estimate_and_p",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Gestation lsmd estimate and p",
+      "description": "Two small inconsistencies in one estimate: the CI midpoint is 0.7545 (printed 0.76, a rounding-level gap unlike the other LSMDs in this section, which centre exactly), and the interval implies p = 0.014 rather than the printed .02. Direction here is opposite to the ARR pattern, with the reported p LARGER than implied, which supports treating this as ordinary rounding rather than part of the systematic ARR issue. The other four LSMD estimates in the same section (191.37 g, -2.226, -4.064, -0.553) all reconcile exactly.",
+      "location": "Results, Length of Gestation and Child Weight (eTable 5 in Supplement 2)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Nurse-visited male offspring had longer mean gestations than control group male offspring (least squares mean difference [LSMD], 0.76 weeks; 95% CI, 0.150-1.359 weeks; P = .02)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:gestation_lsmd_estimate_and_p",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Nurse-visited male offspring had longer mean gestations than control group male offspring (least squares mean difference [LSMD], 0.76 weeks; 95% CI, 0.150-1.359 weeks; P = .02)",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.76,
+        "ci_low": 0.15,
+        "ci_high": 1.359,
+        "measure": "mean_difference",
+        "reported_p": 0.02
+      },
+      "reported": {
+        "LSMD": 0.76,
+        "ci": "0.150-1.359",
+        "p": 0.02
+      },
+      "computed": {
+        "implied_centre": 0.7545,
+        "recovered_se": 0.3084,
+        "recovered_z": 2.4641,
+        "recovered_p": 0.0137,
+        "problems": [
+          "the p-value recovered from the CI is 0.0137, but p = 0.02 is reported"
+        ]
+      },
+      "notes": "Two small inconsistencies in one estimate: the CI midpoint is 0.7545 (printed 0.76, a rounding-level gap unlike the other LSMDs in this section, which centre exactly), and the interval implies p = 0.014 rather than the printed .02. Direction here is opposite to the ARR pattern, with the reported p LARGER than implied, which supports treating this as ordinary rounding rather than part of the systematic ARR issue. The other four LSMD estimates in the same section (191.37 g, -2.226, -4.064, -0.553) all reconcile exactly.",
+      "reproduction": "metascience check-ci --estimate 0.76 --ci-low 0.15 --ci-high 1.359 --measure mean_difference --reported-p 0.02",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_7ad910b75f0c104f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "etable_lsmd_estimates_consistent",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Etable lsmd estimates consistent",
+      "description": "Recorded because this negative result is what gives the ARR pattern its force. Six secondary estimates drawn from eTables 5 and 6, four continuous LSMDs and two ARRs, all reconcile with their intervals and p-values, with point estimates sitting exactly at the CI midpoint on the correct scale. Whatever produces the systematic mismatch in the Tables 1-4 ARR rows does not affect these, so a global software or rounding explanation is not available.",
+      "location": "Results, Other Offspring and Maternal Outcomes (eTables 5 and 6 in Supplement 2)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "as well as higher birth weights (LSMD, 191.37 g; 95% CI, 55.01-327.75 g; P = .006) ... (mean arterial blood pressure: LSMD, -4.064 mm Hg [95% CI, -6.727 to -1.401; P = .003]; any health condition: ARR, 0.721 [95% CI, 0.588-0.884; P = .001])"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:etable_lsmd_estimates_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "as well as higher birth weights (LSMD, 191.37 g; 95% CI, 55.01-327.75 g; P = .006) ... (mean arterial blood pressure: LSMD, -4.064 mm Hg [95% CI, -6.727 to -1.401; P = .003]; any health condition: ARR, 0.721 [95% CI, 0.588-0.884; P = .001])",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimates_checked": [
+          {
+            "estimate": 191.37,
+            "ci_low": 55.01,
+            "ci_high": 327.75,
+            "reported_p": 0.006
+          },
+          {
+            "estimate": -2.226,
+            "ci_low": -4.091,
+            "ci_high": -0.362,
+            "reported_p": 0.02
+          },
+          {
+            "estimate": -4.064,
+            "ci_low": -6.727,
+            "ci_high": -1.401,
+            "reported_p": 0.003
+          },
+          {
+            "estimate": -0.553,
+            "ci_low": -0.966,
+            "ci_high": -0.14,
+            "reported_p": 0.009
+          },
+          {
+            "estimate": 0.879,
+            "ci_low": 0.775,
+            "ci_high": 0.997,
+            "reported_p": 0.04,
+            "measure": "RR"
+          },
+          {
+            "estimate": 0.721,
+            "ci_low": 0.588,
+            "ci_high": 0.884,
+            "reported_p": 0.001,
+            "measure": "RR"
+          }
+        ]
+      },
+      "reported": {
+        "n_estimates": 6
+      },
+      "computed": {
+        "recovered_p": [
+          0.00595,
+          0.01929,
+          0.00278,
+          0.00868,
+          0.04474,
+          0.00166
+        ],
+        "all_consistent": true,
+        "midpoints_match": true
+      },
+      "notes": "Recorded because this negative result is what gives the ARR pattern its force. Six secondary estimates drawn from eTables 5 and 6, four continuous LSMDs and two ARRs, all reconcile with their intervals and p-values, with point estimates sitting exactly at the CI midpoint on the correct scale. Whatever produces the systematic mismatch in the Tables 1-4 ARR rows does not affect these, so a global software or rounding explanation is not available.",
+      "reproduction": "metascience check-ci --estimate 191.37 --ci-low 55.01 --ci-high 327.75 --measure mean_difference --reported-p 0.006",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_9c7f143cbcb0a9b6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "arr_null_rows_minor_p_ci_gaps",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Arr null rows minor p ci gaps (Tables 1-4, non-significant ARR rows)",
+      "description": "Recorded for the denominator. Roughly half the non-significant ARR rows also show small p/CI gaps, but these are modest in size and run in BOTH directions, which is the signature of ordinary estimator and rounding differences. The contrast with the uniformly one-signed pattern across the 17 significant rows is the point; without this row a reader could dismiss the main finding as noise affecting the whole table equally.",
+      "location": "Tables 1-4, non-significant ARR rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Overall 576 0.26(0.44) 0.23(0.42) 0.881(0.655-1.186) .39 .39"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:arr_null_rows_minor_p_ci_gaps",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Overall 576 0.26(0.44) 0.23(0.42) 0.881(0.655-1.186) .39 .39",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "examples": [
+          {
+            "estimate": 0.881,
+            "reported_p": 0.39,
+            "recovered_p": 0.4029
+          },
+          {
+            "estimate": 1.454,
+            "reported_p": 0.09,
+            "recovered_p": 0.0752
+          },
+          {
+            "estimate": 0.784,
+            "reported_p": 0.11,
+            "recovered_p": 0.1245
+          },
+          {
+            "estimate": 1.51,
+            "reported_p": 0.23,
+            "recovered_p": 0.2006
+          },
+          {
+            "estimate": 0.86,
+            "reported_p": 0.51,
+            "recovered_p": 0.5236
+          },
+          {
+            "estimate": 1.003,
+            "reported_p": 0.96,
+            "recovered_p": 0.9652
+          }
+        ],
+        "measure": "RR"
+      },
+      "reported": {
+        "n_null_rows_flagged": 18,
+        "n_null_rows_consistent": 13
+      },
+      "computed": {
+        "direction": "mixed -- recovered p above reported in some rows, below in others",
+        "typical_magnitude": "0.01 to 0.04 absolute"
+      },
+      "notes": "Recorded for the denominator. Roughly half the non-significant ARR rows also show small p/CI gaps, but these are modest in size and run in BOTH directions, which is the signature of ordinary estimator and rounding differences. The contrast with the uniformly one-signed pattern across the 17 significant rows is the point; without this row a reader could dismiss the main finding as noise affecting the whole table equally.",
+      "reproduction": "metascience check-ci --estimate 0.881 --ci-low 0.655 --ci-high 1.186 --measure RR --reported-p 0.39",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ad224294a130b20e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "debit_proportions_indeterminate_no_arm_n",
+      "producer": "legacy_sweep",
+      "technique": "debit_check",
+      "title": "Debit proportions indeterminate no arm n",
+      "description": "A negative result that had to be actively guarded. The four main tables report every outcome as a binary 0/1 proportion with an SD, the textbook DEBIT target, but the ns printed are ROW totals spanning both arms while the proportions are per-arm, and per-arm sample sizes appear nowhere in the paper. Running DEBIT with the row total produced three 'impossible' verdicts; sweeping plausible arm sizes flips every one of them to consistent. Those three verdicts are artifacts of the substituted n and are NOT reported as findings. The correct conclusion is that the missing per-arm denominators block DEBIT, GRIM and SPRITE across all 138 proportion cells, a reporting gap that removes the paper's mos",
+      "location": "Tables 1-4, 'Proportion, mean (SD)' columns (138 binary-outcome cells)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Female 269(50.0) 0.12(0.33) 0.02(0.16) 0.185(0.046-0.748) <.001 .04"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:debit_proportions_indeterminate_no_arm_n",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Female 269(50.0) 0.12(0.33) 0.02(0.16) 0.185(0.046-0.748) <.001 .04",
+      "inputs": {
+        "first_pass": {
+          "n_rows": 14,
+          "n_supplied": "row total N (e.g. 269), because per-arm n is not printed anywhere",
+          "data_type": "binary"
+        },
+        "sensitivity_pass": {
+          "n_rows": 9,
+          "n_supplied": "plausible treatment-arm sizes derived from the 514:228 allocation, swept +/-3",
+          "data_type": "binary"
+        }
+      },
+      "reported": {
+        "first_pass_result": "3 of 14 rows returned impossible (0.02/0.16, 0.05/0.23, 0.10/0.31)"
+      },
+      "computed": {
+        "sensitivity_result": "each of the three flips to consistent at some plausible arm size -- 0.02/0.16 consistent at n=80, 0.05/0.23 consistent at n=74, 0.10/0.31 consistent at n=77 -- and impossible at others",
+        "verdict": "DEBIT is not evaluable on this paper"
+      },
+      "notes": "A negative result that had to be actively guarded. The four main tables report every outcome as a binary 0/1 proportion with an SD, the textbook DEBIT target, but the ns printed are ROW totals spanning both arms while the proportions are per-arm, and per-arm sample sizes appear nowhere in the paper. Running DEBIT with the row total produced three 'impossible' verdicts; sweeping plausible arm sizes flips every one of them to consistent. Those three verdicts are artifacts of the substituted n and are NOT reported as findings. The correct conclusion is that the missing per-arm denominators block DEBIT, GRIM and SPRITE across all 138 proportion cells, a reporting gap that removes the paper's most checkable surface from scrutiny.",
+      "reproduction": "metascience debit --mean 0.02 --sd 0.16 --n 80 --data-type binary",
+      "reproduction_valid": true,
+      "reproduction_problem": "The batch form debit_check_batch is MCP-only; the single-row CLI command shown reproduces the decisive sensitivity case (n=80 returns consistent, refuting the n=269 impossible verdict).",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_3e73f0a616705ad7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "duplication_none_across_tables",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Duplication none across tables",
+      "description": "No evidence of copy-paste or recycled data. Every repeated (mean, SD) pair the tool surfaced lies between blocks that describe the SAME participants (Tables 1 and 3 are both the offspring cohort; Tables 2 and 4 are both the mothers), which I declared via sample_id, so none is an independent-source match. Two structural reasons make duplication uninformative here and should be stated rather than left implicit: for a binary variable the SD is a deterministic function of the mean, so identical pairs arise automatically whenever two proportions coincide, and the same participants genuinely recur across outcome tables. This check cannot incriminate this paper and does not.",
+      "location": "Tables 1, 2, 3 and 4 ('Proportion, mean (SD)' cells, 138 cells, 3962 cross-source comparisons)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Proportion, mean (SD) Control Treatment"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:duplication_none_across_tables",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Proportion, mean (SD) Control Treatment",
+      "inputs": {
+        "n_blocks": 4,
+        "sample_ids": {
+          "Table 1": "offspring",
+          "Table 3": "offspring",
+          "Table 2": "mothers",
+          "Table 4": "mothers"
+        },
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "near_match": false
+      },
+      "reported": {
+        "n_cells_total": 138,
+        "n_comparisons": 3962
+      },
+      "computed": {
+        "max_identical_pairs_across_independent_sources": 0,
+        "tool_severity": "indeterminate",
+        "duplicate_groups_all_flagged": "same_sample_caveat true"
+      },
+      "notes": "No evidence of copy-paste or recycled data. Every repeated (mean, SD) pair the tool surfaced lies between blocks that describe the SAME participants (Tables 1 and 3 are both the offspring cohort; Tables 2 and 4 are both the mothers), which I declared via sample_id, so none is an independent-source match. Two structural reasons make duplication uninformative here and should be stated rather than left implicit: for a binary variable the SD is a deterministic function of the mean, so identical pairs arise automatically whenever two proportions coincide, and the same participants genuinely recur across outcome tables. This check cannot incriminate this paper and does not.",
+      "reproduction": "metascience duplication-detect --blocks-file tables1-4_proportions.json --decimals-mean 2 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_d83468e2741f8bd2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "mht_p_below_raw_p",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Mht p below raw p (Tables 1-4, MHT P value column vs P value column)",
+      "description": "A multiplicity-corrected p-value smaller than its uncorrected counterpart is not strictly impossible under Romano-Wolf, because the stepdown p is read off a bootstrap null distribution rather than obtained by inflating the asymptotic p. Six rows show it and most gaps are one unit in the last digit. The row warranting clarification regardless is Table 4 stage 1 at age 12 y, mothers of females, where the MHT column prints '.00' against a raw '.01'. '.00' is not a p-value, it is unattainable, and it violates the journal's and the paper's own convention, since '<.001' is used elsewhere in the very same column. Combined with the CI-implied p for that row (0.0124), the corrected value should plain",
+      "location": "Tables 1-4, MHT P value column vs P value column",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mothersoffemales 253(50.0) 0.61(0.49) 0.43(0.50) 0.695(0.523-0.925) .01 .00"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:mht_p_below_raw_p",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mothersoffemales 253(50.0) 0.61(0.49) 0.43(0.50) 0.695(0.523-0.925) .01 .00",
+      "inputs": {
+        "rows_where_mht_p_below_raw_p": [
+          {
+            "row": "T4 stage 1 12y, mothers of females",
+            "raw": 0.01,
+            "mht": 0
+          },
+          {
+            "row": "T4 stage 1 18y, Overall",
+            "raw": 0.1,
+            "mht": 0.07
+          },
+          {
+            "row": "T4 stage 1 18y, mothers of females",
+            "raw": 0.003,
+            "mht": 0.002
+          },
+          {
+            "row": "T4 stage 2 18y, mothers of females",
+            "raw": 0.27,
+            "mht": 0.25
+          },
+          {
+            "row": "T3 stage 1 18y, Overall",
+            "raw": 0.84,
+            "mht": 0.83
+          },
+          {
+            "row": "T3 stage 1 18y, Females",
+            "raw": 0.61,
+            "mht": 0.6
+          }
+        ]
+      },
+      "reported": {
+        "mht_method": "Romano-Wolf stepdown, familywise error rate"
+      },
+      "computed": {
+        "n_rows_with_mht_below_raw": 6,
+        "most_extreme": "MHT P printed as '.00' against a raw P of '.01'"
+      },
+      "notes": "A multiplicity-corrected p-value smaller than its uncorrected counterpart is not strictly impossible under Romano-Wolf, because the stepdown p is read off a bootstrap null distribution rather than obtained by inflating the asymptotic p. Six rows show it and most gaps are one unit in the last digit. The row warranting clarification regardless is Table 4 stage 1 at age 12 y, mothers of females, where the MHT column prints '.00' against a raw '.01'. '.00' is not a p-value, it is unattainable, and it violates the journal's and the paper's own convention, since '<.001' is used elsewhere in the very same column. Combined with the CI-implied p for that row (0.0124), the corrected value should plainly not be below .001.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 7 --last-page 7",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies -- Romano-Wolf bootstrap p-values cannot be recomputed without the individual-level data. The extract command reproduces the printed columns for inspection.",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_15ff83b2e3d72c59",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "intergenerational_correlation_11_3",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Intergenerational correlation 11 3",
+      "description": "Two quantities given the same name in one sentence are irreconcilable. A correlation coefficient cannot be 11.3, and a 0.188 difference cannot abolish an association reported as 11.3. The surrounding sentence describes eTable 8 as holding 'estimated regression coefficients', so the likeliest reading is that 11.3 is a regression coefficient (plausibly a log-odds) mislabelled as a correlation, or a typesetting of 0.113. Graded suspicious rather than impossible because the underlying analysis is probably sound and only the prose label is wrong, but as printed the sentence supports the Discussion claim that 'NFP broke the link between persistence in stage 2 hypertension between mothers and daugh",
+      "location": "Results, Intergenerational Mobility (eTable 8 in Supplement 2)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "in the control group, having a mother with severe hypertension was associated with a higher chance (11.3 correlation coefficient) of having a female child with severe hypertension. This association was absent in the treated group, with a significant 0.188 treatment difference in the intergenerational correlation coefficients."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:intergenerational_correlation_11_3",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "in the control group, having a mother with severe hypertension was associated with a higher chance (11.3 correlation coefficient) of having a female child with severe hypertension. This association was absent in the treated group, with a significant 0.188 treatment difference in the intergenerational correlation coefficients.",
+      "inputs": {
+        "value_labelled_correlation_coefficient": 11.3,
+        "treatment_difference_same_label": 0.188
+      },
+      "reported": {
+        "control_coefficient": 11.3,
+        "treatment_difference": 0.188
+      },
+      "computed": {
+        "bound_on_correlation": "|r| <= 1 by definition",
+        "mutual_consistency": "a difference of 0.188 cannot eliminate an association of 11.3"
+      },
+      "notes": "Two quantities given the same name in one sentence are irreconcilable. A correlation coefficient cannot be 11.3, and a 0.188 difference cannot abolish an association reported as 11.3. The surrounding sentence describes eTable 8 as holding 'estimated regression coefficients', so the likeliest reading is that 11.3 is a regression coefficient (plausibly a log-odds) mislabelled as a correlation, or a typesetting of 0.113. Graded suspicious rather than impossible because the underlying analysis is probably sound and only the prose label is wrong, but as printed the sentence supports the Discussion claim that 'NFP broke the link between persistence in stage 2 hypertension between mothers and daughters', and that claim cannot be evaluated from the numbers given. eTable 8 was not available for checking.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 9 --last-page 9",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies: the constraint |r| <= 1 is definitional, and the underlying eTable 8 sits in Supplement 2, which was not provided.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_5e74913bcc7d4d45",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "absence_of_evidence_male_null_claims",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Absence of evidence male null claims",
+      "description": "The tool declines to judge without a stated smallest effect size of interest, and that refusal IS the result: the paper specifies no SESOI and performs no equivalence test, so 'no intervention effect' is not supported by these intervals. The male offspring intervals are strikingly wide -- severe obesity at 12 and 18 y in males remains compatible with a 3.75-fold INCREASE in risk, and stage 1 hypertension in males with a 4.55-fold effect in either direction. Three male obesity rows in fact point toward higher risk in the nurse-visited arm (ARRs 1.454, 1.510, 1.517). The maternal rows are the exception: Table 2's intervals are genuinely narrow (e.g. 0.839 to 1.234), so 'no effect' is far bette",
+      "location": "Abstract Key Points and RESULTS; Results, Obesity and Hypertension sections; Tables 1-4 male / mothers-of-males rows",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "No intervention effect was found for these outcomes among male offspring or mothers of males."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:absence_of_evidence_male_null_claims",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "No intervention effect was found for these outcomes among male offspring or mothers of males.",
+      "inputs": {
+        "tool": "absence_of_evidence",
+        "intervals_tested": [
+          {
+            "row": "T1 obesity 12y Male",
+            "ci": [
+              0.963,
+              2.197
+            ]
+          },
+          {
+            "row": "T1 severe obesity 12&18y Male",
+            "ci": [
+              0.613,
+              3.753
+            ]
+          },
+          {
+            "row": "T3 stage 1 HTN 12&18y Males",
+            "ci": [
+              0.22,
+              2.898
+            ]
+          },
+          {
+            "row": "T1 severe obesity 12y Male",
+            "ci": [
+              0.803,
+              2.837
+            ]
+          },
+          {
+            "row": "T2 maternal obesity 12y Mothers of males",
+            "ci": [
+              0.839,
+              1.234
+            ]
+          }
+        ],
+        "measure": "RR",
+        "null_value": 1,
+        "sesoi": null
+      },
+      "reported": {
+        "claim": "no intervention effect among male offspring or mothers of males"
+      },
+      "computed": {
+        "largest_compatible_effect": {
+          "T1_obesity_12y_male": 2.197,
+          "T1_sevobesity_1218_male": 3.753,
+          "T3_stage1_1218_males": 4.545,
+          "T1_sevobesity_12y_male": 2.837,
+          "T2_obesity_12y_mom": 1.234
+        },
+        "sesoi_provided": false,
+        "verdict": "equivalence cannot be assessed; no conclusion of no effect is licensed"
+      },
+      "notes": "The tool declines to judge without a stated smallest effect size of interest, and that refusal IS the result: the paper specifies no SESOI and performs no equivalence test, so 'no intervention effect' is not supported by these intervals. The male offspring intervals are strikingly wide -- severe obesity at 12 and 18 y in males remains compatible with a 3.75-fold INCREASE in risk, and stage 1 hypertension in males with a 4.55-fold effect in either direction. Three male obesity rows in fact point toward higher risk in the nurse-visited arm (ARRs 1.454, 1.510, 1.517). The maternal rows are the exception: Table 2's intervals are genuinely narrow (e.g. 0.839 to 1.234), so 'no effect' is far better supported for mothers' obesity than for male offspring. The abstract's single undifferentiated null claim papers over that difference, and the Discussion leans on it to explain the sex moderation.",
+      "reproduction": "metascience absence-of-evidence --ci-low 0.963 --ci-high 2.197 --measure RR --null-value 1",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_114f88e447086dda",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "effect_plausibility_headline_effects",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Effect plausibility headline effects",
+      "description": "A deliberate negative check on the most tempting narrative. Relative risks of 0.185 and 0.217 sound extraordinary for a home-visiting programme measured 12 to 18 years after it ended, but on the standardized scale they are g = 0.35 and g = 0.56, one at the medicine_rct median and the other just past the 75th percentile and well inside the usual range. The apparent drama comes from ratios computed on low base rates, not from an implausibly large effect. Per-arm ns are apportioned from the 514:228 randomization ratio because the paper does not print them; d is insensitive to that split. No effect-size-implausibility finding is warranted.",
+      "location": "Table 1 (severe obesity 12 and 18 y, female) and Table 4 (stage 2 hypertension 12 and 18 y, mothers of females)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "a mean (SD) proportion of 0.57 (0.50) had stage 1 hypertension and 0.27 (0.44) had stage 2 hypertension"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:effect_plausibility_headline_effects",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "a mean (SD) proportion of 0.57 (0.50) had stage 1 hypertension and 0.27 (0.44) had stage 2 hypertension",
+      "inputs": {
+        "tool": "check_effect_plausibility",
+        "maternal_stage2": {
+          "mean1": 0.27,
+          "sd1": 0.44,
+          "n1": 161,
+          "mean2": 0.05,
+          "sd2": 0.23,
+          "n2": 71,
+          "field": "medicine_rct",
+          "design": "rct"
+        },
+        "offspring_sevobesity": {
+          "mean1": 0.12,
+          "sd1": 0.33,
+          "n1": 186,
+          "mean2": 0.02,
+          "sd2": 0.16,
+          "n2": 83,
+          "field": "medicine_rct",
+          "design": "rct"
+        }
+      },
+      "reported": {
+        "ARR_maternal_stage2": 0.217,
+        "ARR_offspring_sevobesity": 0.185
+      },
+      "computed": {
+        "maternal_stage2": {
+          "hedges_g": 0.5647,
+          "band": "above the field's 75th percentile (0.55)",
+          "tool_severity": "indeterminate"
+        },
+        "offspring_sevobesity": {
+          "hedges_g": 0.3455,
+          "band": "within the usual range (field median 0.3)",
+          "tool_severity": "consistent"
+        },
+        "benchmark": {
+          "median": 0.3,
+          "p75": 0.55,
+          "p95": 1
+        }
+      },
+      "notes": "A deliberate negative check on the most tempting narrative. Relative risks of 0.185 and 0.217 sound extraordinary for a home-visiting programme measured 12 to 18 years after it ended, but on the standardized scale they are g = 0.35 and g = 0.56, one at the medicine_rct median and the other just past the 75th percentile and well inside the usual range. The apparent drama comes from ratios computed on low base rates, not from an implausibly large effect. Per-arm ns are apportioned from the 514:228 randomization ratio because the paper does not print them; d is insensitive to that split. No effect-size-implausibility finding is warranted.",
+      "reproduction": "metascience effect-size --mean1 0.27 --sd1 0.44 --n1 161 --mean2 0.05 --sd2 0.23 --n2 71 --field medicine_rct --design rct",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_827330c51ef9a8fc",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_nhst_statistics",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no nhst statistics (Whole article (15 pages))",
+      "description": "Zero APA-format NHST statistics recovered, which is correct rather than a tool failure: the paper reports no t, F, r or chi-squared values anywhere. Every inference is presented as an adjusted relative risk with a CI and a bare p-value. This is why check_estimate_ci rather than statcheck carried the sweep, and it also means no test statistic exists to cross-check the reported p-values against a second source.",
+      "location": "Whole article (15 pages)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "A 2-sided P < .05 was set as the threshold for significance by logistic regression and multiple hypothesis testing."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_nhst_statistics",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "A 2-sided P < .05 was set as the threshold for significance by logistic regression and multiple hypothesis testing.",
+      "inputs": {
+        "pdf_path": "10.1001--jamanetworkopen.2023.51752.pdf"
+      },
+      "reported": {
+        "apa_style_test_statistics": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "success": true
+      },
+      "notes": "Zero APA-format NHST statistics recovered, which is correct rather than a tool failure: the paper reports no t, F, r or chi-squared values anywhere. Every inference is presented as an adjusted relative risk with a CI and a bare p-value. This is why check_estimate_ci rather than statcheck carried the sweep, and it also means no test statistic exists to cross-check the reported p-values against a second source.",
+      "reproduction": "metascience statcheck --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_c36e837b89db04ed",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_sizes_not_round",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Sample sizes not round (Methods and Results, participant flow)",
+      "description": "No round-number signature. 514 + 228 = 742 reconciles exactly, and the follow-up totals vary irregularly across waves and outcomes in the way genuine attrition and missing measurements produce. Nothing here supports a fabrication reading.",
+      "location": "Methods and Results, participant flow",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "We randomly assigned 742 women ... (control condition, 514 participants) or ... (treatment condition, 228 participants)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_sizes_not_round",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "We randomly assigned 742 women ... (control condition, 514 participants) or ... (treatment condition, 228 participants).",
+      "inputs": {
+        "ns": [
+          742,
+          514,
+          228,
+          594,
+          578,
+          618,
+          629,
+          576,
+          605,
+          563,
+          598,
+          568,
+          596,
+          507,
+          592
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reported": {
+        "n_randomized": 742,
+        "control": 514,
+        "treatment": 228
+      },
+      "computed": {
+        "all_divisible_by_50": false,
+        "all_divisible_by_100": false,
+        "n_unique": 15,
+        "severity": "consistent"
+      },
+      "notes": "No round-number signature. 514 + 228 = 742 reconciles exactly, and the follow-up totals vary irregularly across waves and outcomes in the way genuine attrition and missing measurements produce. Nothing here supports a fabrication reading.",
+      "reproduction": "metascience flag-round-n --ns 742 --ns 514 --ns 228 --ns 594 --ns 578 --ns 618 --ns 629 --ns 576 --ns 605 --ns 563 --ns 598 --ns 568 --ns 596 --ns 507 --ns 592",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_552cab2c80257875",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "race_percentage_summations_consistent",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Race percentage summations consistent (Results, first demographic paragraph (pages 4-5))",
+      "description": "Both race breakdowns are internally sound: the 12-year counts sum to 594 and their percentages to 100.0, the 18-year counts sum to 618 and their percentages to 100.0, and 93.5% passes GRIM at n=618. This isolates the two demographic problems, the impossible 98.8% and the stray '618' in the 12-year sentence, rather than leaving them to look like a systematic denominator failure across the paragraph.",
+      "location": "Results, first demographic paragraph (pages 4-5)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "3 (0.5%) ... 559 (94.1%) as Black; and 32 (5.4%) as White"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:race_percentage_summations_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "3 (0.5%) ... 559 (94.1%) as Black; and 32 (5.4%) as White",
+      "inputs": {
+        "race_12y": {
+          "values": [
+            0.5,
+            94.1,
+            5.4
+          ],
+          "expected_sum": 100
+        },
+        "race_18y": {
+          "values": [
+            0.8,
+            93.5,
+            5.7
+          ],
+          "expected_sum": 100
+        }
+      },
+      "reported": {
+        "race_12y_counts": [
+          3,
+          0,
+          559,
+          32
+        ],
+        "race_18y_counts": [
+          5,
+          0,
+          578,
+          35
+        ]
+      },
+      "computed": {
+        "race_12y_sum": 100,
+        "race_18y_sum": 100,
+        "both_consistent": true,
+        "grim_93_5_at_618": "consistent"
+      },
+      "notes": "Both race breakdowns are internally sound: the 12-year counts sum to 594 and their percentages to 100.0, the 18-year counts sum to 618 and their percentages to 100.0, and 93.5% passes GRIM at n=618. This isolates the two demographic problems, the impossible 98.8% and the stray '618' in the 12-year sentence, rather than leaving them to look like a systematic denominator failure across the paragraph.",
+      "reproduction": "metascience summation --values 0.5 --values 94.1 --values 5.4 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f4c65f8c3753951b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_table_value_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Text table value reconciliation",
+      "description": "Every summary statistic quoted in the Results narrative matches its table cell exactly, and the percentage-reduction claims track their ARRs. One trivial slip: the 79% reduction quoted for maternal stage 2 hypertension corresponds to ARR 0.217, i.e. 78.3%. Also worth noting, the sentence introducing ARR 0.396 says 'reduced the risk of obesity' where the row is severe obesity. Neither affects any estimate. Transcription integrity is good, which matters because it means the p/CI problems are in the underlying analysis rather than in the typesetting.",
+      "location": "Results, Obesity and Hypertension sections vs Tables 1 and 4",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "of mothers of female offspring in the control group, a mean (SD) proportion of 0.57 (0.50) had stage 1 hypertension and 0.27 (0.44) had stage 2 hypertension"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_table_value_reconciliation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "of mothers of female offspring in the control group, a mean (SD) proportion of 0.57 (0.50) had stage 1 hypertension and 0.27 (0.44) had stage 2 hypertension",
+      "inputs": {
+        "text_values_checked": [
+          "0.18 (0.39)",
+          "0.25 (0.43)",
+          "0.12 (0.33)",
+          "0.32 (0.47)",
+          "0.21 (0.41)",
+          "0.57 (0.50)",
+          "0.27 (0.44)",
+          "ARR 0.396",
+          "ARR 0.561",
+          "ARR 0.449",
+          "ARR 0.185",
+          "ARR 0.613",
+          "ARR 0.217"
+        ]
+      },
+      "reported": {
+        "n_values_cross_checked": 13
+      },
+      "computed": {
+        "all_match_tables": true,
+        "percent_reduction_claims_match": {
+          "55% vs ARR 0.449": true,
+          "81% vs ARR 0.185": true,
+          "39% vs ARR 0.613": true,
+          "79% vs ARR 0.217": "1-0.217 = 78.3%, rounded up to 79%",
+          "12% vs ARR 0.879": true
+        }
+      },
+      "notes": "Every summary statistic quoted in the Results narrative matches its table cell exactly, and the percentage-reduction claims track their ARRs. One trivial slip: the 79% reduction quoted for maternal stage 2 hypertension corresponds to ARR 0.217, i.e. 78.3%. Also worth noting, the sentence introducing ARR 0.396 says 'reduced the risk of obesity' where the row is severe obesity. Neither affects any estimate. Transcription integrity is good, which matters because it means the p/CI problems are in the underlying analysis rather than in the typesetting.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 5 --last-page 7",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies -- this is a transcription reconciliation between the narrative and the tables. The extract command reproduces both sources.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_4357b74e1ef19bd2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "stage2_1218_offspring_outcome_dropped_post_hoc",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Stage2 1218 offspring outcome dropped post hoc (Table 3, footnote b)",
+      "description": "An outcome was dropped after the case counts were seen. The paper is transparent about it, which counts in its favour, and 3 cases genuinely cannot support a logistic regression. Two things still follow. First, the Romano-Wolf correction for the offspring stage-2 block is applied over 2 outcomes rather than 3, so that block is corrected across a family chosen post hoc; the footnote to Table 3 states this explicitly while Tables 1, 2 and 4 use blocks of 3. Second, the excluded cells lean 2 control to 1 treatment, the same direction as the paper's thesis, so the exclusion is not neutral with respect to the narrative even though it is neutral with respect to feasibility.",
+      "location": "Table 3, footnote b",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "There are only 3 patients with stage 2 hypertension at both age 12 and 18 years, all females (2 in the control group and 1 in the treatment group). Given the extremely low number of cases, we chose to exclude this outcome from the analysis."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:stage2_1218_offspring_outcome_dropped_post_hoc",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "There are only 3 patients with stage 2 hypertension at both age 12 and 18 years, all females (2 in the control group and 1 in the treatment group). Given the extremely low number of cases, we chose to exclude this outcome from the analysis.",
+      "inputs": {
+        "outcome": "offspring stage 2 hypertension at age 12 and 18 y combined",
+        "cases": 3,
+        "control": 2,
+        "treatment": 1
+      },
+      "reported": {
+        "decision": "outcome excluded from analysis after inspection of case counts"
+      },
+      "computed": {
+        "effect_on_multiplicity": "the stage-2 offspring block contains 2 outcomes instead of 3, unlike every other block",
+        "consistency_with_analysis_elsewhere": "comparable sparsity was retained in Table 4 (maternal stage 2 at 12 and 18 y, treatment proportion 0.05)"
+      },
+      "notes": "An outcome was dropped after the case counts were seen. The paper is transparent about it, which counts in its favour, and 3 cases genuinely cannot support a logistic regression. Two things still follow. First, the Romano-Wolf correction for the offspring stage-2 block is applied over 2 outcomes rather than 3, so that block is corrected across a family chosen post hoc; the footnote to Table 3 states this explicitly while Tables 1, 2 and 4 use blocks of 3. Second, the excluded cells lean 2 control to 1 treatment, the same direction as the paper's thesis, so the exclusion is not neutral with respect to the narrative even though it is neutral with respect to feasibility.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 6 --last-page 6",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies: this is an analysis-conduct observation read from a table footnote, not a computation.",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_a221ece323ae97a7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_overall_arr_outside_subgroup_range",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 overall arr outside subgroup range",
+      "description": "In two Table 2 rows the Overall adjusted relative risk lies outside the range spanned by its own two subgroup estimates. This is not impossible: post-double-selection lasso chooses a different covariate set for each stratum, the strata are analysed on different samples, and adjusted relative risks are non-collapsible, so all three estimates answer subtly different questions. Recorded as indeterminate rather than suspicious because a benign explanation is readily available. It is noted only because it shows Overall and subgroup rows are not nested analyses and should not be read as a decomposition.",
+      "location": "Table 2, Maternal obesity at age 18 y and at age 12 and 18 y",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Overall 598 0.60(0.49) 0.58(0.49) 0.950(0.836-1.080) .43 .67 | Mothersoffemales 296(49.6) ... 0.939(0.778-1.133) .51 .76 | Mothersofmales 301(50.4) ... 0.929(0.778-1.110) .41 .65"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_overall_arr_outside_subgroup_range",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Overall 598 0.60(0.49) 0.58(0.49) 0.950(0.836-1.080) .43 .67 | Mothersoffemales 296(49.6) ... 0.939(0.778-1.133) .51 .76 | Mothersofmales 301(50.4) ... 0.929(0.778-1.110) .41 .65",
+      "inputs": {
+        "row_obesity_18y": {
+          "overall": 0.95,
+          "mothers_of_females": 0.939,
+          "mothers_of_males": 0.929
+        },
+        "row_obesity_1218y": {
+          "overall": 1.03,
+          "mothers_of_females": 1.017,
+          "mothers_of_males": 1.005
+        }
+      },
+      "reported": {
+        "n_rows_affected": 2
+      },
+      "computed": {
+        "overall_outside_subgroup_range": true,
+        "direction": "Overall ARR exceeds both sex-specific ARRs in both rows"
+      },
+      "notes": "In two Table 2 rows the Overall adjusted relative risk lies outside the range spanned by its own two subgroup estimates. This is not impossible: post-double-selection lasso chooses a different covariate set for each stratum, the strata are analysed on different samples, and adjusted relative risks are non-collapsible, so all three estimates answer subtly different questions. Recorded as indeterminate rather than suspicious because a benign explanation is readily available. It is noted only because it shows Overall and subgroup rows are not nested analyses and should not be read as a decomposition.",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 5 --last-page 5",
+      "reproduction_valid": true,
+      "reproduction_problem": "No forensic CLI check applies -- non-collapsibility makes this a judgement about model specification rather than an arithmetic violation.",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_b953661a23983b43",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "243f7c5c4f18f4662eb64d7f309ff944409e000bc3eab8fc54cd20bdb6f01ac5",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.0.1",
+    "analysed_at": "2026-10-19T20:18:26Z",
+    "analysed_at_source": "file_mtime"
+  }
+}

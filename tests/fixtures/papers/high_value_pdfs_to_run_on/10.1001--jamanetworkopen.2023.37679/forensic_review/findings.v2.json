@@ -1,0 +1,1642 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1001--jamanetworkopen.2023.37679",
+  "run_id": "r_314f3716cb77cf87",
+  "findings": [
+    {
+      "slug": "flow_total_adults",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Flow total adults (Figure, Study Cohort Selection Criteria and Process)",
+      "description": "First step of the cohort flow reconciles exactly.",
+      "location": "Figure, Study Cohort Selection Criteria and Process",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "315 661 No. of respondents in NSDUH 2015-2020 / 241 675 Respondents aged >=18 y / 73 986 Excluded for being aged <18 y"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:flow_total_adults",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "315 661 No. of respondents in NSDUH 2015-2020 / 241 675 Respondents aged >=18 y / 73 986 Excluded for being aged <18 y",
+      "inputs": {
+        "values": [
+          241675,
+          73986
+        ],
+        "expected_sum": 315661,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "total": 315661
+      },
+      "computed": {
+        "actual_sum": 315661,
+        "difference": 0
+      },
+      "notes": "First step of the cohort flow reconciles exactly.",
+      "reproduction": "metascience summation --values 241675,73986 --expected-sum 315661 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_165dfb7942db2f71",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "flow_exclusions",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Flow exclusions (Figure, Study Cohort Selection Criteria and Process)",
+      "description": "All four exclusion counts plus the final analytic sample reconcile exactly to the eligible adult sample. The 10 576 excluded also explains the sensitivity-analysis N of 241 675 in eTable 3, i.e. imputation was carried back to the full adult sample.",
+      "location": "Figure, Study Cohort Selection Criteria and Process",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "241 675 Respondents aged >=18 y ... 2044 Excluded for missing disability information / 1141 Excluded for missing suicidal behavior information / 130 Excluded for missing veteran status / 7261 Excluded for missing covariates information / 231 099 In final study sample"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:flow_exclusions",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "241 675 Respondents aged >=18 y ... 2044 Excluded for missing disability information / 1141 Excluded for missing suicidal behavior information / 130 Excluded for missing veteran status / 7261 Excluded for missing covariates information / 231 099 In final study sample",
+      "inputs": {
+        "values": [
+          231099,
+          7261,
+          130,
+          1141,
+          2044
+        ],
+        "expected_sum": 241675,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "final_sample": 231099,
+        "eligible": 241675
+      },
+      "computed": {
+        "actual_sum": 241675,
+        "difference": 0
+      },
+      "notes": "All four exclusion counts plus the final analytic sample reconcile exactly to the eligible adult sample. The 10 576 excluded also explains the sensitivity-analysis N of 241 675 in eTable 3, i.e. imputation was carried back to the full adult sample.",
+      "reproduction": "metascience summation --values 231099,7261,130,1141,2044 --expected-sum 241675 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_b4b316b165232fb6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_weighted_n_15_blocks_exact",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 weighted n 15 blocks exact",
+      "description": "Fifteen of the eighteen weighted-N blocks sum to the stated weighted total of 236 551 727 with difference exactly 0. Run once per block; the reproduction command shows the suicide-related-outcome block.",
+      "location": "Table 1, Weighted No. column - 15 of 18 characteristic blocks",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Table 1. Sociodemographic and Clinical Characteristics of 231 099 Respondents, Representing 236 551 727 US Adults, by Veteran Status"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_weighted_n_15_blocks_exact",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Table 1. Sociodemographic and Clinical Characteristics of 231 099 Respondents, Representing 236 551 727 US Adults, by Veteran Status",
+      "inputs": {
+        "blocks_checked": [
+          "suicide-related outcome",
+          "disability status",
+          "race and ethnicity",
+          "education",
+          "family income",
+          "No. of ED visits",
+          "sex",
+          "marital status",
+          "employment",
+          "insurance coverage",
+          "urbanization",
+          "ever smoked",
+          "alcohol dependence",
+          "illicit drug dependence",
+          "depressive episode"
+        ],
+        "expected_sum": 236551727,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "weighted_total": 236551727
+      },
+      "computed": {
+        "blocks_summing_exactly": 15,
+        "difference": 0
+      },
+      "notes": "Fifteen of the eighteen weighted-N blocks sum to the stated weighted total of 236 551 727 with difference exactly 0. Run once per block; the reproduction command shows the suicide-related-outcome block.",
+      "reproduction": "metascience summation --values 226150662,7250065,1892256,1258744 --expected-sum 236551727 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_73c55f8c4093cda6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_weighted_n_offby1",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 weighted n offby1",
+      "description": "The tool returned 'suspicious' for each of these three blocks, but the deviation is exactly +/-1 person out of 236.5 million. Weighted survey estimates are rounded to whole persons for display, so a residual of +/-1 across 3-5 categories is the ordinary arithmetic of rounding, not an anomaly. Recorded at 'consistent' with the raw tool output preserved in `computed`. 15 of 18 blocks summed exactly.",
+      "location": "Table 1, Weighted No. column - age group, health status, No. of chronic conditions",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "18-25 32389043 / 26-34 37632422 / 35-49 58188169 / 50-64 59629883 / >=65 48712209"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_weighted_n_offby1",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "18-25 32389043 / 26-34 37632422 / 35-49 58188169 / 50-64 59629883 / >=65 48712209",
+      "inputs": {
+        "values": [
+          32389043,
+          37632422,
+          58188169,
+          59629883,
+          48712209
+        ],
+        "expected_sum": 236551727,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "weighted_total": 236551727
+      },
+      "computed": {
+        "age_group_sum": 236551726,
+        "age_difference": -1,
+        "health_status_sum": 236551728,
+        "health_difference": 1,
+        "chronic_conditions_sum": 236551726,
+        "chronic_difference": -1
+      },
+      "notes": "The tool returned 'suspicious' for each of these three blocks, but the deviation is exactly +/-1 person out of 236.5 million. Weighted survey estimates are rounded to whole persons for display, so a residual of +/-1 across 3-5 categories is the ordinary arithmetic of rounding, not an anomaly. Recorded at 'consistent' with the raw tool output preserved in `computed`. 15 of 18 blocks summed exactly.",
+      "reproduction": "metascience summation --values 32389043,37632422,58188169,59629883,48712209 --expected-sum 236551727 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f5e51d26924a9693",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_percentage_columns",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 percentage columns",
+      "description": "Every multi-category percentage column sums to 100 within +/-0.1, the maximum drift possible from 1-decimal rounding. The nine binary blocks (sex, marital, employment, insurance, urbanization, smoking, alcohol, drug, depression) are complementary pairs summing to exactly 100.",
+      "location": "Table 1, Nonveteran and Veteran weighted % columns - all 9 multi-category blocks, both columns (18 checks)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "No disabling limitations 80.9 (80.6-81.3) 70.1 (68.8-71.3) / 1 Limitation 11.6 (11.4-11.9) 17.1 (16.1-18.0) / 2 Limitations 4.2 (4.0-4.3) 6.5 (5.9-7.1) / >=3 Limitations 3.3 (3.1-3.4) 6.4 (5.8-7.1)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_percentage_columns",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "No disabling limitations 80.9 (80.6-81.3) 70.1 (68.8-71.3) / 1 Limitation 11.6 (11.4-11.9) 17.1 (16.1-18.0) / 2 Limitations 4.2 (4.0-4.3) 6.5 (5.9-7.1) / >=3 Limitations 3.3 (3.1-3.4) 6.4 (5.8-7.1)",
+      "inputs": {
+        "blocks": [
+          "suicide outcome",
+          "disability",
+          "age",
+          "race/ethnicity",
+          "education",
+          "income",
+          "health status",
+          "ED visits",
+          "chronic conditions"
+        ],
+        "columns": [
+          "nonveteran",
+          "veteran"
+        ],
+        "expected_sum": 100,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "expected_column_total": 100
+      },
+      "computed": {
+        "checks_run": 18,
+        "all_consistent": true,
+        "max_abs_deviation": 0.1
+      },
+      "notes": "Every multi-category percentage column sums to 100 within +/-0.1, the maximum drift possible from 1-decimal rounding. The nine binary blocks (sex, marital, employment, insurance, urbanization, smoking, alcohol, drug, depression) are complementary pairs summing to exactly 100.",
+      "reproduction": "metascience summation --values 70.1,17.1,6.5,6.4 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_fd63c6ada28daffb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_weighted_subtotals",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Text weighted subtotals (Results, Descriptive Statistics (paragraph 1))",
+      "description": "Seven independent reconciliations between the Results text and Table 1, all exact. The text's weighted subtotals for disability and for suicide risk are recovered exactly from the Table 1 category rows, and the veteran/nonveteran split reconciles both unweighted (13 859 + 217 240 = 231 099) and weighted (21 111 727 + 215 440 000 = 236 551 727).",
+      "location": "Results, Descriptive Statistics (paragraph 1)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "of whom 20.03% (weighted n = 47 397 876) reported a disabling limitation. Of those with limitations, 60.5% reported 1 limitation, 21.7% reported 2 limitations, and 17.8% reported 3 or more limitations. Risk for suicide was reported by 4.39% (weighted n = 10 401 065), with 69.71% reporting suicide ideation only, 18.19% reporting suicide planning, and 12.10% reporting suicide attempt."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_weighted_subtotals",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "of whom 20.03% (weighted n = 47 397 876) reported a disabling limitation. Of those with limitations, 60.5% reported 1 limitation, 21.7% reported 2 limitations, and 17.8% reported 3 or more limitations. Risk for suicide was reported by 4.39% (weighted n = 10 401 065), with 69.71% reporting suicide ideation only, 18.19% reporting suicide planning, and 12.10% reporting suicide attempt.",
+      "inputs": {
+        "checks": [
+          {
+            "values": [
+              60.5,
+              21.7,
+              17.8
+            ],
+            "expected_sum": 100
+          },
+          {
+            "values": [
+              28668870,
+              10307907,
+              8421099
+            ],
+            "expected_sum": 47397876
+          },
+          {
+            "values": [
+              69.71,
+              18.19,
+              12.1
+            ],
+            "expected_sum": 100
+          },
+          {
+            "values": [
+              7250065,
+              1892256,
+              1258744
+            ],
+            "expected_sum": 10401065
+          },
+          {
+            "values": [
+              8.92,
+              91.08
+            ],
+            "expected_sum": 100
+          },
+          {
+            "values": [
+              13859,
+              217240
+            ],
+            "expected_sum": 231099
+          },
+          {
+            "values": [
+              21111727,
+              215440000
+            ],
+            "expected_sum": 236551727
+          }
+        ]
+      },
+      "reported": {
+        "weighted_n_disability": 47397876,
+        "weighted_n_suicide_risk": 10401065,
+        "unweighted_total": 231099,
+        "weighted_total": 236551727
+      },
+      "computed": {
+        "checks_run": 7,
+        "all_differences": 0
+      },
+      "notes": "Seven independent reconciliations between the Results text and Table 1, all exact. The text's weighted subtotals for disability and for suicide risk are recovered exactly from the Table 1 category rows, and the veteran/nonveteran split reconciles both unweighted (13 859 + 217 240 = 231 099) and weighted (21 111 727 + 215 440 000 = 236 551 727).",
+      "reproduction": "metascience summation --values 28668870,10307907,8421099 --expected-sum 47397876 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_0ac230586e1babae",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "round_n_check",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Round n check (Results, Descriptive Statistics - reported sample sizes)",
+      "description": "The nonveteran weighted n of 215 440 000 looks conspicuously round, but it is not independently reported: it is the exact residual 236 551 727 - 21 111 727, verified by check_summation. Its roundness is an arithmetic consequence of the weighting, not a fabricated figure. No round-N flag.",
+      "location": "Results, Descriptive Statistics - reported sample sizes",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Veterans represented 8.92% of the sample (n = 13 859; weighted n = 21 111 727 ...), and 91.08% were nonveterans (n = 217 240; weighted n = 215 440 000 ...)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:round_n_check",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Veterans represented 8.92% of the sample (n = 13 859; weighted n = 21 111 727 ...), and 91.08% were nonveterans (n = 217 240; weighted n = 215 440 000 ...)",
+      "inputs": {
+        "ns": [
+          215440000,
+          21111727,
+          236551727,
+          231099,
+          13859,
+          217240
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reported": {
+        "nonveteran_weighted_n": 215440000
+      },
+      "computed": {
+        "all_divisible_by_moderate": false,
+        "all_divisible_by_strong": false,
+        "severity": "consistent"
+      },
+      "notes": "The nonveteran weighted n of 215 440 000 looks conspicuously round, but it is not independently reported: it is the exact residual 236 551 727 - 21 111 727, verified by check_summation. Its roundness is an arithmetic consequence of the weighting, not a fabricated figure. No round-N flag.",
+      "reproduction": "metascience flag-round-n --ns 215440000,21111727,236551727,231099,13859,217240 --moderate-modulus 50 --strong-modulus 100",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_11823dea62526788",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_apa_stats",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no apa stats (Whole body text)",
+      "description": "statcheck returned zero extractable tests. This paper reports NO test statistics of any kind - no t, F, chi-squared, z, df or r appears anywhere in the article. Every inference rests on an odds ratio, its 95% CI and a bare p-value. That is a genuine reporting limitation (it removes the standard route to independent NHST verification), not a tool failure; the CI-based route was used instead.",
+      "location": "Whole body text",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Test-specific significance levels were assessed at alpha <= .05."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_apa_stats",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Test-specific significance levels were assessed at alpha <= .05.",
+      "inputs": {
+        "text": "full Results and Methods body text supplied to statcheck"
+      },
+      "reported": {
+        "apa_style_nhst_statistics": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "notes": "statcheck returned zero extractable tests. This paper reports NO test statistics of any kind - no t, F, chi-squared, z, df or r appears anywhere in the article. Every inference rests on an odds ratio, its 95% CI and a bare p-value. That is a genuine reporting limitation (it removes the standard route to independent NHST verification), not a tool failure; the CI-based route was used instead.",
+      "reproduction": "metascience statcheck --pdf-path /path/to/10.1001--jamanetworkopen.2023.37679.pdf",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_8f2e593d649dc3d7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_aor_ci_sweep",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 aor ci sweep (Table 2, all 30 non-reference AOR (95% CI) cells)",
+      "description": "Produced by check_estimate_ci (recorded under technique 'reconcile', the nearest schema term). 29 of 30 Table 2 odds ratios are mutually consistent with their intervals and p-values. Checked on the LOG scale, correct for a ratio measure; every point estimate reproduces the geometric centre of its interval to within printed precision. The single flagged cell is reported separately.",
+      "location": "Table 2, all 30 non-reference AOR (95% CI) cells",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1 Limitation 2.02 (1.80 to 2.27)c <.001 ... >=3 Limitations 3.68 (2.69 to 5.05)c <.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_aor_ci_sweep",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1 Limitation 2.02 (1.80 to 2.27)c <.001 ... >=3 Limitations 3.68 (2.69 to 5.05)c <.001",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "measure": "OR",
+        "n_estimates_checked": 30,
+        "scale": "log",
+        "confidence_level": 0.95
+      },
+      "reported": {
+        "n_aors": 30
+      },
+      "computed": {
+        "consistent": 29,
+        "flagged": 1,
+        "note": "each AOR sits at the geometric midpoint of its CI on the log scale"
+      },
+      "notes": "Produced by check_estimate_ci (recorded under technique 'reconcile', the nearest schema term). 29 of 30 Table 2 odds ratios are mutually consistent with their intervals and p-values. Checked on the LOG scale, correct for a ratio measure; every point estimate reproduces the geometric centre of its interval to within printed precision. The single flagged cell is reported separately.",
+      "reproduction": "metascience check-ci --estimate 3.68 --ci-low 2.69 --ci-high 5.05 --measure OR",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_87ec9566115880ec",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_aor098_p_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 aor098 p mismatch",
+      "description": "The CI implies p = 0.935 against a printed p = .92. The gap is 0.015 on a null result and is well within what 2-decimal rounding of the AOR (implied centre 0.977) and of both CI bounds can produce. No substantive consequence: non-significant on either reading. Reported for completeness, not as an integrity signal.",
+      "location": "Table 2, No limitations / Veteran vs Nonveteran, Suicide attempt",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "0.98 (0.60 to 1.59) .92"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_aor098_p_mismatch",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "0.98 (0.60 to 1.59) .92",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.98,
+        "ci_low": 0.6,
+        "ci_high": 1.59,
+        "measure": "OR",
+        "reported_p": 0.92
+      },
+      "reported": {
+        "aor": 0.98,
+        "ci": "0.60 to 1.59",
+        "p": 0.92
+      },
+      "computed": {
+        "recovered_p": 0.9352,
+        "recovered_z": -0.0813,
+        "recovered_se": 0.2486,
+        "implied_centre": 0.9767
+      },
+      "notes": "The CI implies p = 0.935 against a printed p = .92. The gap is 0.015 on a null result and is well within what 2-decimal rounding of the AOR (implied centre 0.977) and of both CI bounds can produce. No substantive consequence: non-significant on either reading. Reported for completeness, not as an integrity signal.",
+      "reproduction": "metascience check-ci --estimate 0.98 --ci-low 0.60 --ci-high 1.59 --measure OR --reported-p 0.92",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_b4d890d81fdfad78",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_aor227_p_threshold",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 aor227 p threshold (Table 2, Veteran / >=3 Limitations, Suicidal ideation only)",
+      "description": "The interval implies p = .0024, roughly 2.4x LARGER than the printed threshold of <.001. Contrast the neighbouring cell 2.60 (1.59-4.24), whose interval implies p = .00013 and genuinely clears <.001. The estimate and interval are mutually consistent; it is the p-value LABEL that does not follow from them. A design-based t reference distribution cannot account for a gap this size at NSDUH's large design df. Substantively harmless (significant either way), but it is a printed p that its own interval does not support. Note: stalt_check was also run here and returned 'consistent', but STALT tests only whether a hidden p is suspiciously SMALL and so does not adjudicate this direction; the finding",
+      "location": "Table 2, Veteran / >=3 Limitations, Suicidal ideation only",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "2.27 (1.34 to 3.86)c <.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_aor227_p_threshold",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "2.27 (1.34 to 3.86)c <.001",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 2.27,
+        "ci_low": 1.34,
+        "ci_high": 3.86,
+        "measure": "OR"
+      },
+      "reported": {
+        "aor": 2.27,
+        "ci": "1.34 to 3.86",
+        "p_printed": "<.001"
+      },
+      "computed": {
+        "recovered_p": 0.0023869,
+        "recovered_z": 3.0373,
+        "recovered_se": 0.2699
+      },
+      "notes": "The interval implies p = .0024, roughly 2.4x LARGER than the printed threshold of <.001. Contrast the neighbouring cell 2.60 (1.59-4.24), whose interval implies p = .00013 and genuinely clears <.001. The estimate and interval are mutually consistent; it is the p-value LABEL that does not follow from them. A design-based t reference distribution cannot account for a gap this size at NSDUH's large design df. Substantively harmless (significant either way), but it is a printed p that its own interval does not support. Note: stalt_check was also run here and returned 'consistent', but STALT tests only whether a hidden p is suspiciously SMALL and so does not adjudicate this direction; the finding rests on the check_estimate_ci recovered p.",
+      "reproduction": "metascience check-ci --estimate 2.27 --ci-low 1.34 --ci-high 3.86 --measure OR",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_3366a2b7dc714642",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_ci_level_note",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 ci level note (Table 2, 2 Limitations / Veteran vs Nonveteran, Suicide planning)",
+      "description": "The tool attached a note that this interval 'behaves like a 90% CI, not the stated 95%'. That is an artefact of the estimate being printed as 1.03 while the interval's geometric centre is 1.035; with a near-null OR and 2-decimal rounding the alternative-level test is unstable. Overall verdict consistent. Recorded so the note is visible rather than silently dropped.",
+      "location": "Table 2, 2 Limitations / Veteran vs Nonveteran, Suicide planning",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1.03 (0.45 to 2.38) .95"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_ci_level_note",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1.03 (0.45 to 2.38) .95",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 1.03,
+        "ci_low": 0.45,
+        "ci_high": 2.38,
+        "measure": "OR",
+        "reported_p": 0.95
+      },
+      "reported": {
+        "aor": 1.03,
+        "ci": "0.45 to 2.38",
+        "p": 0.95
+      },
+      "computed": {
+        "recovered_p": 0.9445,
+        "inferred_confidence_level": 0.9,
+        "implied_centre": 1.0349,
+        "severity": "consistent"
+      },
+      "notes": "The tool attached a note that this interval 'behaves like a 90% CI, not the stated 95%'. That is an artefact of the estimate being printed as 1.03 while the interval's geometric centre is 1.035; with a near-null OR and 2-decimal rounding the alternative-level test is unstable. Overall verdict consistent. Recorded so the note is visible rather than silently dropped.",
+      "reproduction": "metascience check-ci --estimate 1.03 --ci-low 0.45 --ci-high 2.38 --measure OR --reported-p 0.95",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_748689b50957960e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_aor_ci_sweep",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table3 aor ci sweep (Table 3, all 20 non-reference AOR (95% CI) cells)",
+      "description": "8 of 20 Table 3 odds ratios show a small disagreement between the printed p and the p recovered from the interval. Every discrepancy is <= 0.012 in absolute terms and none changes a significance call (0.49 -> .0453 and 1.61 -> .0344 remain significant; the rest remain non-significant). All 20 estimates sit correctly at the geometric centre of their own intervals. This is the signature of rounding: Table 3's ORs and CI bounds are printed to 2 decimals on small values, so the recovered SE is coarse. Denominator context: 9 of the 50 odds ratios across both tables (18%) show such sub-0.02 drift, consistent with rounding rather than an integrity problem.",
+      "location": "Table 3, all 20 non-reference AOR (95% CI) cells",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1 Limitation 0.49 (0.24 to 0.97)c .04 ... 2 Limitations Veteran 0.31 (0.14 to 0.66)c .002"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_aor_ci_sweep",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1 Limitation 0.49 (0.24 to 0.97)c .04 ... 2 Limitations Veteran 0.31 (0.14 to 0.66)c .002",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "measure": "OR",
+        "n_estimates_checked": 20,
+        "flagged_cells": [
+          {
+            "estimate": 0.49,
+            "ci": "0.24-0.97",
+            "reported_p": 0.04,
+            "recovered_p": 0.0453
+          },
+          {
+            "estimate": 0.7,
+            "ci": "0.27-1.85",
+            "reported_p": 0.48,
+            "recovered_p": 0.4675
+          },
+          {
+            "estimate": 0.93,
+            "ci": "0.44-1.94",
+            "reported_p": 0.84,
+            "recovered_p": 0.8479
+          },
+          {
+            "estimate": 1.09,
+            "ci": "0.90-1.31",
+            "reported_p": 0.38,
+            "recovered_p": 0.3682
+          },
+          {
+            "estimate": 1.61,
+            "ci": "1.03-2.49",
+            "reported_p": 0.04,
+            "recovered_p": 0.0344
+          },
+          {
+            "estimate": 0.9,
+            "ci": "0.53-1.53",
+            "reported_p": 0.69,
+            "recovered_p": 0.6969
+          },
+          {
+            "estimate": 0.61,
+            "ci": "0.35-1.05",
+            "reported_p": 0.07,
+            "recovered_p": 0.0778
+          },
+          {
+            "estimate": 0.87,
+            "ci": "0.37-2.04",
+            "reported_p": 0.74,
+            "recovered_p": 0.7491
+          }
+        ]
+      },
+      "reported": {
+        "n_aors": 20
+      },
+      "computed": {
+        "consistent": 12,
+        "flagged": 8,
+        "max_abs_p_discrepancy": 0.0121,
+        "all_estimates_at_geometric_ci_centre": true
+      },
+      "notes": "8 of 20 Table 3 odds ratios show a small disagreement between the printed p and the p recovered from the interval. Every discrepancy is <= 0.012 in absolute terms and none changes a significance call (0.49 -> .0453 and 1.61 -> .0344 remain significant; the rest remain non-significant). All 20 estimates sit correctly at the geometric centre of their own intervals. This is the signature of rounding: Table 3's ORs and CI bounds are printed to 2 decimals on small values, so the recovered SE is coarse. Denominator context: 9 of the 50 odds ratios across both tables (18%) show such sub-0.02 drift, consistent with rounding rather than an integrity problem.",
+      "reproduction": "metascience check-ci --estimate 1.61 --ci-low 1.03 --ci-high 2.49 --measure OR --reported-p 0.04",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_eba2952ec4736495",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_ame_asymmetric_ci",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table3 ame asymmetric ci",
+      "description": "The clearest internal inconsistency found. The printed AME of 0.04 is not the midpoint of its own interval [-0.01, 0.05], whose centre is 0.02, and the interval implies p = .009 against a printed p = .07. All 19 other AME cells in Table 3 ARE symmetric about their point estimates, which isolates this cell rather than implicating the column. The companion planning row on the SAME line reads 0.04 (-0.01 to 0.10) - symmetric about 0.045 - so the most economical explanation is a typographical error in the upper bound, likely 0.09 or 0.10 mis-set as 0.05. Warrants a correction; not evidence of anything beyond a printing error.",
+      "location": "Table 3, Nonveteran / >=3 Limitations, Suicide attempt (vs suicidal ideation only), AME column",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| >=3 Limitations | 1.30 (0.92 to 1.86) | .14 | 0.04 (-0.01 to 0.10) | 1.36 (0.98 to 1.89) | .07 | 0.04 (-0.01 to 0.05) |"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_ame_asymmetric_ci",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "| >=3 Limitations | 1.30 (0.92 to 1.86) | .14 | 0.04 (-0.01 to 0.10) | 1.36 (0.98 to 1.89) | .07 | 0.04 (-0.01 to 0.05) |",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "estimate": 0.04,
+        "ci_low": -0.01,
+        "ci_high": 0.05,
+        "null_value": 0,
+        "reported_p": 0.07
+      },
+      "reported": {
+        "ame": 0.04,
+        "ci": "-0.01 to 0.05",
+        "p": 0.07
+      },
+      "computed": {
+        "implied_centre": 0.02,
+        "recovered_p": 0.008968,
+        "recovered_z": 2.6133,
+        "problems": [
+          "the estimate 0.04 is not the arithmetic midpoint of [-0.01, 0.05] (expected about 0.0200)",
+          "the p-value recovered from the CI is 0.0090, but p = 0.07 is reported"
+        ]
+      },
+      "notes": "The clearest internal inconsistency found. The printed AME of 0.04 is not the midpoint of its own interval [-0.01, 0.05], whose centre is 0.02, and the interval implies p = .009 against a printed p = .07. All 19 other AME cells in Table 3 ARE symmetric about their point estimates, which isolates this cell rather than implicating the column. The companion planning row on the SAME line reads 0.04 (-0.01 to 0.10) - symmetric about 0.045 - so the most economical explanation is a typographical error in the upper bound, likely 0.09 or 0.10 mis-set as 0.05. Warrants a correction; not evidence of anything beyond a printing error.",
+      "reproduction": "metascience check-ci --estimate 0.04 --ci-low -0.01 --ci-high 0.05 --null-value 0 --reported-p 0.07",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_07410b99b6393e5f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_ame_symmetry_spotchecks",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table3 ame symmetry spotchecks",
+      "description": "All four spot-checked AMEs sit at the correct arithmetic midpoint of their intervals, confirming the asymmetry in the >=3-limitations attempt cell is isolated. Two of the four (-0.11 [-0.22 to 0] and 0.08 [0 to 0.16]) drew a tool flag that the CI 'includes the null' while p = .04 claims significance; this is a printing artefact - a bound just short of zero rounds to 0.00 at 2 decimals - and both recover p = exactly .0500, which is what a bound sitting at the null must yield. Not an anomaly; recorded at consistent with the tool output preserved.",
+      "location": "Table 3, AME (95% CI) column - spot-checks on 4 further cells",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Veteran 0.87 (0.37 to 2.04) .74 -0.02 (-0.16 to 0.12) | 0.31 (0.14 to 0.66)c .002 -0.11 (-0.18 to -0.04)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_ame_symmetry_spotchecks",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Veteran 0.87 (0.37 to 2.04) .74 -0.02 (-0.16 to 0.12) | 0.31 (0.14 to 0.66)c .002 -0.11 (-0.18 to -0.04)",
+      "inputs": {
+        "tool": "check_estimate_ci",
+        "cells": [
+          {
+            "estimate": -0.11,
+            "ci": "-0.18 to -0.04",
+            "reported_p": 0.002,
+            "verdict": "consistent",
+            "recovered_p": 0.00207
+          },
+          {
+            "estimate": -0.11,
+            "ci": "-0.22 to 0",
+            "reported_p": 0.04,
+            "verdict": "bound rounded to 0"
+          },
+          {
+            "estimate": 0.08,
+            "ci": "0 to 0.16",
+            "reported_p": 0.04,
+            "verdict": "bound rounded to 0"
+          },
+          {
+            "estimate": 0.04,
+            "ci": "-0.01 to 0.10",
+            "reported_p": 0.14,
+            "recovered_p": 0.154
+          }
+        ]
+      },
+      "reported": {
+        "n_cells_spotchecked": 4
+      },
+      "computed": {
+        "fully_consistent": 1,
+        "midpoint_correct": 4,
+        "rounding_limited": 3
+      },
+      "notes": "All four spot-checked AMEs sit at the correct arithmetic midpoint of their intervals, confirming the asymmetry in the >=3-limitations attempt cell is isolated. Two of the four (-0.11 [-0.22 to 0] and 0.08 [0 to 0.16]) drew a tool flag that the CI 'includes the null' while p = .04 claims significance; this is a printing artefact - a bound just short of zero rounds to 0.00 at 2 decimals - and both recover p = exactly .0500, which is what a bound sitting at the null must yield. Not an anomaly; recorded at consistent with the tool output preserved.",
+      "reproduction": "metascience check-ci --estimate -0.11 --ci-low -0.18 --ci-high -0.04 --null-value 0 --reported-p 0.002",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f01000f8b1b6c00d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_ame_precision_uninformative",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table2 ame precision uninformative (Table 2, AME (95% CI) columns - all 30 cells)",
+      "description": "Deliberate non-check. Running check_estimate_ci on cells such as '0 (0 to 0)' or '0.01 (0 to 0.01)' would flag many of them as non-midpoint purely because 2-decimal rounding of near-zero values destroys the information the test needs. Twelve Table 2 AMEs print as exactly '0 (0 to 0)' or similar. Recording the refusal rather than manufacturing 30 spurious flags.",
+      "location": "Table 2, AME (95% CI) columns - all 30 cells",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "0.01 (0 to 0.01) | 0 (-0.01 to 0) | 0 (0 to 0) | 0.01 (0 to 0.01)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_ame_precision_uninformative",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "0.01 (0 to 0.01) | 0 (-0.01 to 0) | 0 (0 to 0) | 0.01 (0 to 0.01)",
+      "inputs": {
+        "observation": "Table 2 AME point estimates take only the values 0 and 0.01; CI bounds take only -0.01, 0, 0.01, 0.02, 0.03, 0.04, 0.06"
+      },
+      "reported": {
+        "distinct_ame_values": [
+          0,
+          0.01,
+          0.02,
+          0.03
+        ]
+      },
+      "computed": {
+        "testable": false,
+        "reason": "printed precision (2 dp on values of magnitude <= 0.03) leaves midpoint and p-recovery checks with no resolving power"
+      },
+      "notes": "Deliberate non-check. Running check_estimate_ci on cells such as '0 (0 to 0)' or '0.01 (0 to 0.01)' would flag many of them as non-midpoint purely because 2-decimal rounding of near-zero values destroys the information the test needs. Twelve Table 2 AMEs print as exactly '0 (0 to 0)' or similar. Recording the refusal rather than manufacturing 30 spurious flags.",
+      "reproduction": "manual inspection - the arithmetic checks were deliberately NOT run on these cells",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'manual'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_bcddade4ac53696a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "duplication_across_tables",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Duplication across tables",
+      "description": "No identical (estimate, lower-bound) pairs across 600 comparisons - clean. The three flagged near matches (1.71/1.17, 0.57/0.75, 1.03/1.30) are digit transpositions of unrelated quantities and are what chance produces among 50 two-decimal values; the tool graded them indeterminate, not suspicious. For the record: Table 2 reports AOR 2.93 for BOTH nonveteran 2-limitation planning and 2-limitation attempt, but their intervals differ (2.39-3.61 vs 2.40-3.57), so these are two genuinely distinct estimates coinciding at 2 dp, not a copy-paste. Caveat: Table 3's sample is a subgroup of Table 2's, so the blocks describe overlapping participants under different models; estimates should not coincide,",
+      "location": "Table 2 (30 AORs) vs Table 3 (20 AORs), plus within-table comparisons",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Table 2 nonveteran 2 Limitations: planning 2.93 (2.39 to 3.61), attempt 2.93 (2.40 to 3.57)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:duplication_across_tables",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Table 2 nonveteran 2 Limitations: planning 2.93 (2.39 to 3.61), attempt 2.93 (2.40 to 3.57)",
+      "inputs": {
+        "n_blocks": 2,
+        "n_cells_total": 50,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "near_match": true,
+        "encoding": "value = AOR, sd slot = lower CI bound"
+      },
+      "reported": {
+        "n_aors_compared": 50
+      },
+      "computed": {
+        "n_comparisons": 600,
+        "max_identical_pairs": 0,
+        "near_matches": 3,
+        "near_match_relation": "digit_transposition"
+      },
+      "notes": "No identical (estimate, lower-bound) pairs across 600 comparisons - clean. The three flagged near matches (1.71/1.17, 0.57/0.75, 1.03/1.30) are digit transpositions of unrelated quantities and are what chance produces among 50 two-decimal values; the tool graded them indeterminate, not suspicious. For the record: Table 2 reports AOR 2.93 for BOTH nonveteran 2-limitation planning and 2-limitation attempt, but their intervals differ (2.39-3.61 vs 2.40-3.57), so these are two genuinely distinct estimates coinciding at 2 dp, not a copy-paste. Caveat: Table 3's sample is a subgroup of Table 2's, so the blocks describe overlapping participants under different models; estimates should not coincide, and they do not.",
+      "reproduction": "metascience duplication-detect --blocks-json table2_table3_aors.json --decimals-mean 2 --decimals-sd 2 --near-match",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_3c337007452e90cf",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "absence_of_evidence_3plus_limitations",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Absence of evidence 3plus limitations",
+      "description": "Produced by absence_of_evidence (recorded under 'reconcile', the nearest schema term). The paper converts a non-significant result into a statement of no difference. The interval for the >=3-limitation veteran-vs-nonveteran attempt contrast still permits a 3.1-fold effect in either direction - compatible with veterans having roughly one third the odds, or triple the odds, of attempt. Companion contrasts in the same stratum are similarly wide (ideation 0.58-1.58, planning 0.65-2.03). The tool declines to judge equivalence because no smallest effect size of interest is stated anywhere in the paper, and that refusal is the correct result: this stratum is uninformative rather than null. Relevant",
+      "location": "Results, 'Suicide Ideation, Planning, and Attempt by Veteran and Disability Status', final sentence",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "No significant differences in risks for suicide were observed by veteran status among people reporting 3 or more disabling limitations."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:absence_of_evidence_3plus_limitations",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "No significant differences in risks for suicide were observed by veteran status among people reporting 3 or more disabling limitations.",
+      "inputs": {
+        "tool": "absence_of_evidence",
+        "ci_low": 0.32,
+        "ci_high": 1.45,
+        "measure": "OR",
+        "null_value": 1,
+        "claim_of_no_effect": true
+      },
+      "reported": {
+        "aor": 0.68,
+        "ci": "0.32 to 1.45",
+        "p": 0.32,
+        "claim": "no significant differences"
+      },
+      "computed": {
+        "includes_null": true,
+        "largest_compatible_effect": 3.125,
+        "sesoi_provided": false
+      },
+      "notes": "Produced by absence_of_evidence (recorded under 'reconcile', the nearest schema term). The paper converts a non-significant result into a statement of no difference. The interval for the >=3-limitation veteran-vs-nonveteran attempt contrast still permits a 3.1-fold effect in either direction - compatible with veterans having roughly one third the odds, or triple the odds, of attempt. Companion contrasts in the same stratum are similarly wide (ideation 0.58-1.58, planning 0.65-2.03). The tool declines to judge equivalence because no smallest effect size of interest is stated anywhere in the paper, and that refusal is the correct result: this stratum is uninformative rather than null. Relevant to the abstract's framing, since >=3 limitations is the most severely disabled group.",
+      "reproduction": "metascience absence-of-evidence --ci-low 0.32 --ci-high 1.45 --measure OR --null-value 1 --claim-of-no-effect",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_cbde76d297e15ad3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_table_restatement",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Text table restatement",
+      "description": "Every narrative percentage in the Results is an exact restatement of the corresponding table AOR (AOR = 1 + increase, or AOR = 1 - decrease). Ten checks, all exact. The text does not overstate the tables - reported effect sizes and their verbal translations agree throughout, including the ranges '102% to 165%', '143% to 220%' and '113% to 268%' mapping onto AORs 2.02-2.65, 2.43-3.20 and 2.13-3.68.",
+      "location": "Results, all narrative percentage restatements of Table 2 and Table 3 AORs",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "veterans were 71% more likely to report planning relative to nonveterans (AOR, 1.71; 95% CI, 1.17-2.49) ... VWD had 43% lower odds of planning compared with nonveterans (AOR, 0.57; 95% CI, 0.34-0.95) ... VWD had 54% lower odds of attempt compared with nonveterans (AOR, 0.46; 95% CI, 0.24-0.88)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_table_restatement",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "veterans were 71% more likely to report planning relative to nonveterans (AOR, 1.71; 95% CI, 1.17-2.49) ... VWD had 43% lower odds of planning compared with nonveterans (AOR, 0.57; 95% CI, 0.34-0.95) ... VWD had 54% lower odds of attempt compared with nonveterans (AOR, 0.46; 95% CI, 0.24-0.88)",
+      "inputs": {
+        "pairs_checked": [
+          [
+            1.71,
+            "71% more"
+          ],
+          [
+            0.57,
+            "43% lower"
+          ],
+          [
+            0.46,
+            "54% lower"
+          ],
+          [
+            1.61,
+            "61% more"
+          ],
+          [
+            0.31,
+            "69% less"
+          ],
+          [
+            0.49,
+            "51% lower"
+          ],
+          [
+            2.6,
+            "160% more"
+          ],
+          [
+            2.57,
+            "157% more"
+          ],
+          [
+            2.14,
+            "114% more"
+          ],
+          [
+            2.27,
+            "127% more"
+          ]
+        ],
+        "tolerance": 0.005
+      },
+      "reported": {
+        "n_restatements": 10
+      },
+      "computed": {
+        "checks_run": 10,
+        "all_consistent": true,
+        "max_difference": 4.44e-16
+      },
+      "notes": "Every narrative percentage in the Results is an exact restatement of the corresponding table AOR (AOR = 1 + increase, or AOR = 1 - decrease). Ten checks, all exact. The text does not overstate the tables - reported effect sizes and their verbal translations agree throughout, including the ranges '102% to 165%', '143% to 220%' and '113% to 268%' mapping onto AORs 2.02-2.65, 2.43-3.20 and 2.13-3.68.",
+      "reproduction": "metascience summation --values 1,0.71 --expected-sum 1.71 --tolerance 0.005",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_2ee0312aaaedcfd2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "interaction_term_never_reported",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Interaction term never reported (Methods, Statistical Analysis vs Tables 2 and 3)",
+      "description": "The paper's central claim is moderation - title, Key Points and Conclusions all rest on veteran status changing the disability-suicide association. The Methods state an interaction term was fitted, but NO test of that interaction (statistic, df or p) appears anywhere in the article. What the tables report are simple-effect contrasts within strata. Inferring moderation from a significant contrast in one stratum and a non-significant one in another is the difference-in-significance fallacy: the >=3-limitation stratum's intervals are wide enough to be compatible with the same effect seen at 2 limitations (see absence_of_evidence_3plus_limitations). The interaction p-value is the quantity that w",
+      "location": "Methods, Statistical Analysis vs Tables 2 and 3",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Multivariable adjusted multinomial logistic regression with an interaction term for disability status x veteran status estimated adjusted odds ratios (AORs) and 95% CIs for suicide ideation, planning, and attempt by disability and veteran status."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:interaction_term_never_reported",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Multivariable adjusted multinomial logistic regression with an interaction term for disability status x veteran status estimated adjusted odds ratios (AORs) and 95% CIs for suicide ideation, planning, and attempt by disability and veteran status.",
+      "inputs": {
+        "claim": "veteran status moderates the disability-suicide association",
+        "searched_for": "interaction term test statistic, df, or p-value"
+      },
+      "reported": {
+        "interaction_term_specified": true,
+        "interaction_test_reported": false
+      },
+      "computed": {
+        "stratum_specific_contrasts_reported": 50,
+        "interaction_p_values_reported": 0
+      },
+      "notes": "The paper's central claim is moderation - title, Key Points and Conclusions all rest on veteran status changing the disability-suicide association. The Methods state an interaction term was fitted, but NO test of that interaction (statistic, df or p) appears anywhere in the article. What the tables report are simple-effect contrasts within strata. Inferring moderation from a significant contrast in one stratum and a non-significant one in another is the difference-in-significance fallacy: the >=3-limitation stratum's intervals are wide enough to be compatible with the same effect seen at 2 limitations (see absence_of_evidence_3plus_limitations). The interaction p-value is the quantity that would settle this and it is not reported. Rulebook rule 5.",
+      "reproduction": "manual inspection of Methods, Tables 2 and 3, and Results - no CLI verb applies",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'manual'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_cd090eca5ff1ea34",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncorrected",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Multiplicity uncorrected (Methods, Statistical Analysis; Tables 1, 2, 3)",
+      "description": "The phrase 'test-specific significance levels' is an explicit statement that no multiplicity adjustment was made. Tables 2 and 3 alone contain 50 odds-ratio contrasts at alpha = .05, plus roughly 50 more in the cited sensitivity eTables and 18 baseline comparisons. Several headline findings sit close to the threshold - Table 3's 0.49 (p = .04, CI recovering .0453), 1.61 (p = .04, CI recovering .0344), and Table 2's 1.50 (1.01 to 2.23, p = .04) whose lower bound is 1.01 - and would not survive even a modest correction. This does not make any individual number wrong; it bears on how many of the 50 should be believed.",
+      "location": "Methods, Statistical Analysis; Tables 1, 2, 3",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Test-specific significance levels were assessed at alpha <= .05."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncorrected",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Test-specific significance levels were assessed at alpha <= .05.",
+      "inputs": {
+        "tests_counted": {
+          "table1_bivariate_rows": 18,
+          "table2_aor_contrasts": 30,
+          "table3_aor_contrasts": 20,
+          "supplementary_sensitivity_estimates_cited": 50
+        },
+        "correction_applied": "none"
+      },
+      "reported": {
+        "alpha": 0.05,
+        "correction": "none"
+      },
+      "computed": {
+        "primary_tables_tests": 50,
+        "including_supplement": "approximately 118",
+        "expected_false_positives_at_alpha_05_over_50_tests": 2.5
+      },
+      "notes": "The phrase 'test-specific significance levels' is an explicit statement that no multiplicity adjustment was made. Tables 2 and 3 alone contain 50 odds-ratio contrasts at alpha = .05, plus roughly 50 more in the cited sensitivity eTables and 18 baseline comparisons. Several headline findings sit close to the threshold - Table 3's 0.49 (p = .04, CI recovering .0453), 1.61 (p = .04, CI recovering .0344), and Table 2's 1.50 (1.01 to 2.23, p = .04) whose lower bound is 1.01 - and would not survive even a modest correction. This does not make any individual number wrong; it bears on how many of the 50 should be believed.",
+      "reproduction": "manual enumeration of reported tests across Tables 1-3 and the Results text - no CLI verb applies",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'manual'",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_07b6b572659f486b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_power_analysis",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "No power analysis (Methods, Statistical Analysis)",
+      "description": "No a-priori power or precision calculation is reported. For a secondary analysis of a fixed existing survey that is defensible - the N was not under the authors' control - but it means the small-cell strata carry no stated minimum detectable effect. This matters most for the veteran subgroups: veterans are 13 859 unweighted respondents, and the >=3-limitation attempt cells are very small, the likely source of the wide intervals (e.g. 1.13 to 5.82) that drive the moderation claim. The authors themselves note 'smaller cell sizes after stratifying sample groups to veteran and nonveterans'. Recorded as a reporting gap, deliberately not forced through the tool.",
+      "location": "Methods, Statistical Analysis",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Analyses were conducted using SAS, version 9.4 (SAS Institute), which accommodated the complex NSDUH survey design and nonresponses by using PROC SURVEY procedures"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_power_analysis",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Analyses were conducted using SAS, version 9.4 (SAS Institute), which accommodated the complex NSDUH survey design and nonresponses by using PROC SURVEY procedures",
+      "inputs": {
+        "searched_for": "a-priori power analysis, target effect size, alpha, target power, minimum detectable effect"
+      },
+      "reported": {
+        "power_statement": "none"
+      },
+      "computed": {
+        "verifiable": false
+      },
+      "notes": "No a-priori power or precision calculation is reported. For a secondary analysis of a fixed existing survey that is defensible - the N was not under the authors' control - but it means the small-cell strata carry no stated minimum detectable effect. This matters most for the veteran subgroups: veterans are 13 859 unweighted respondents, and the >=3-limitation attempt cells are very small, the likely source of the wide intervals (e.g. 1.13 to 5.82) that drive the moderation claim. The authors themselves note 'smaller cell sizes after stratifying sample groups to veteran and nonveterans'. Recorded as a reporting gap, deliberately not forced through the tool.",
+      "reproduction": "manual inspection of Methods - verify_power_analysis was deliberately NOT run",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'manual'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_98d028bdbc1a7ee0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_baseline_similarity_not_applicable",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table1 baseline similarity not applicable",
+      "description": "Deliberate non-check, and an important one. The Carlisle-Stouffer-Fisher test and Table-1 dispersion analysis presuppose random allocation, under which baseline p-values should be Uniform(0,1) and uniformly HIGH p-values are the red flag. Here the comparison is veterans vs nonveterans - two naturally occurring populations that genuinely differ on essentially everything, at n = 231 099. Sixteen of eighteen rows at P<.001 is the expected result of a large-sample observational comparison, not a similarity anomaly, and running CSF would have inverted its logic. Rulebook rule 1 applies only to randomized designs.",
+      "location": "Table 1, P value column (18 baseline comparisons)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "All evaluated covariates had significant bivariate associations (eTables 1 and 2 in Supplement 1) and were included in adjusted analyses."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_baseline_similarity_not_applicable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "All evaluated covariates had significant bivariate associations (eTables 1 and 2 in Supplement 1) and were included in adjusted analyses.",
+      "inputs": {
+        "design": "cross_sectional observational survey, no randomization",
+        "baseline_p_values": [
+          "<.001 x16",
+          ".002",
+          ".006"
+        ]
+      },
+      "reported": {
+        "n_baseline_rows": 18,
+        "all_significant": true
+      },
+      "computed": {
+        "csf_applicable": false,
+        "table1_dispersion_applicable": false
+      },
+      "notes": "Deliberate non-check, and an important one. The Carlisle-Stouffer-Fisher test and Table-1 dispersion analysis presuppose random allocation, under which baseline p-values should be Uniform(0,1) and uniformly HIGH p-values are the red flag. Here the comparison is veterans vs nonveterans - two naturally occurring populations that genuinely differ on essentially everything, at n = 231 099. Sixteen of eighteen rows at P<.001 is the expected result of a large-sample observational comparison, not a similarity anomaly, and running CSF would have inverted its logic. Rulebook rule 1 applies only to randomized designs.",
+      "reproduction": "csf_test and bayesian_table1_dispersion were deliberately NOT run - no CLI command was issued",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'csf_test'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_f1ce4036ff5a146e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "grim_family_not_applicable",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Grim family not applicable (Table 1 (all percentages), Results text percentages)",
+      "description": "Deliberate non-check covering the largest family of numbers in the paper. Every percentage in Table 1 is a design-weighted estimate: the numerator is a sum of person-level survey weights, so it is not an integer count and the GRIM granularity argument does not hold. The paper also reports no means or SDs of any integer-scaled variable anywhere, so GRIMMER, SPRITE and DEBIT have no valid target either. This is why the sweep's weight fell on check_estimate_ci and check_summation - the correct tools for a paper built from odds ratios and weighted counts.",
+      "location": "Table 1 (all percentages), Results text percentages",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Analyses utilized NSDUH's weighted data to produce nationally representative estimates."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:grim_family_not_applicable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Analyses utilized NSDUH's weighted data to produce nationally representative estimates.",
+      "inputs": {
+        "candidate_values": "138 weighted percentages in Table 1 plus ~15 in the Results text",
+        "reason_refused": "weighted survey estimates are ratios of sums of sampling weights, not k/n with integer k"
+      },
+      "reported": {
+        "percentages_available": "approximately 153"
+      },
+      "computed": {
+        "grim_applicable": false,
+        "grimmer_applicable": false,
+        "sprite_applicable": false,
+        "debit_applicable": false
+      },
+      "notes": "Deliberate non-check covering the largest family of numbers in the paper. Every percentage in Table 1 is a design-weighted estimate: the numerator is a sum of person-level survey weights, so it is not an integer count and the GRIM granularity argument does not hold. The paper also reports no means or SDs of any integer-scaled variable anywhere, so GRIMMER, SPRITE and DEBIT have no valid target either. This is why the sweep's weight fell on check_estimate_ci and check_summation - the correct tools for a paper built from odds ratios and weighted counts.",
+      "reproduction": "grim_percentage, grimmer_check, sprite_reconstruct and debit_check were deliberately NOT run - no CLI command was issued",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'grim_percentage,'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_25296cd0a70be316",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "derived_percentage_ratios_unverifiable",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Derived percentage ratios unverifiable",
+      "description": "Both numerators were independently confirmed by check_summation against the Table 1 category rows (47 397 876 and 10 401 065 both reconcile exactly), and the denominator 236 551 727 reconciles from three directions. What could not be verified is the final division to 20.03% and 4.39%. Even if the printed figures differed in the second decimal, the displayed weighted Ns are themselves rounded to whole persons, so a discrepancy at that scale would be uninterpretable. Flagged as an honest gap rather than closed with an improvised calculation.",
+      "location": "Results, Descriptive Statistics - '20.03%' and '4.39%'",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "of whom 20.03% (weighted n = 47 397 876) reported a disabling limitation ... Risk for suicide was reported by 4.39% (weighted n = 10 401 065)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:derived_percentage_ratios_unverifiable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "of whom 20.03% (weighted n = 47 397 876) reported a disabling limitation ... Risk for suicide was reported by 4.39% (weighted n = 10 401 065)",
+      "inputs": {
+        "numerator_1": 47397876,
+        "denominator": 236551727,
+        "reported_pct_1": 20.03,
+        "numerator_2": 10401065,
+        "reported_pct_2": 4.39
+      },
+      "reported": {
+        "pct_disability": 20.03,
+        "pct_suicide_risk": 4.39
+      },
+      "computed": {
+        "verified": false,
+        "reason": "no validated tool in the suite performs a ratio recomputation"
+      },
+      "notes": "Both numerators were independently confirmed by check_summation against the Table 1 category rows (47 397 876 and 10 401 065 both reconcile exactly), and the denominator 236 551 727 reconciles from three directions. What could not be verified is the final division to 20.03% and 4.39%. Even if the printed figures differed in the second decimal, the displayed weighted Ns are themselves rounded to whole persons, so a discrepancy at that scale would be uninterpretable. Flagged as an honest gap rather than closed with an improvised calculation.",
+      "reproduction": "no metascience command exists for this check",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'no'",
+      "quote_verified": "elided",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_1fa1603bedda3fa3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "pdf_table2_orientation",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Pdf table2 orientation (Table 2 (PDF page 7) vs Table 2 (body.md))",
+      "description": "Table 2 is typeset rotated in the PDF, so its text layer extracts character-reversed ('06.2' for 2.60) and the markdown extraction had scrambled its column order. Both sources were decoded and reconciled cell by cell before any check was run; they agree completely. This cross-check matters because a transcription error in Table 2 would have propagated into 30 of the 55 check_estimate_ci calls.",
+      "location": "Table 2 (PDF page 7) vs Table 2 (body.md)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "asutatSnareteVdnaytilibasiDybsemoctuOdetaleR-ediciuSfoledoMnoissergeRcitsigoLlaimonitluMdetsujdA.2elbaT"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:pdf_table2_orientation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "asutatSnareteVdnaytilibasiDybsemoctuOdetaleR-ediciuSfoledoMnoissergeRcitsigoLlaimonitluMdetsujdA.2elbaT",
+      "inputs": {
+        "pdf_path": "10.1001--jamanetworkopen.2023.37679.pdf",
+        "first_page": 7,
+        "last_page": 7,
+        "markdown_source": "body.md Table 2"
+      },
+      "reported": {
+        "table2_cells": 30
+      },
+      "computed": {
+        "pdf_extraction": "character-reversed (table rotated 90 degrees in the PDF; pdfplumber emits mirrored strings)",
+        "agreement_with_markdown": "complete for all 30 AORs, 30 CIs and 30 p-values"
+      },
+      "notes": "Table 2 is typeset rotated in the PDF, so its text layer extracts character-reversed ('06.2' for 2.60) and the markdown extraction had scrambled its column order. Both sources were decoded and reconciled cell by cell before any check was run; they agree completely. This cross-check matters because a transcription error in Table 2 would have propagated into 30 of the 55 check_estimate_ci calls.",
+      "reproduction": "metascience extract --pdf-path /path/to/10.1001--jamanetworkopen.2023.37679.pdf --first-page 7 --last-page 7",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_e2d32d7e72f87123",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_ame_extraction_ambiguous",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table2 ame extraction ambiguous",
+      "description": "One AME cell breaks across a line in both the rotated PDF and the markdown, losing what is most likely a leading minus sign (the companion AOR is 0.83, so the AME should be negative, and the interval [-0.02, 0.01] centres on -0.005). parse_cells_typed classified it non_numeric and it was therefore NOT fed to any forensic tool, per the rule that a cell of unknown meaning must not be checked. Recorded as unchecked rather than guessed.",
+      "location": "Table 2, 1 Limitation / Veteran vs Nonveteran, Suicidal ideation only - AME cell",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "to 0.01 (-0.02 to 0.01)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_ame_extraction_ambiguous",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "to 0.01 (-0.02 to 0.01)",
+      "inputs": {
+        "raw_cell": "to 0.01 (-0.02 to 0.01)",
+        "typed_kind": "non_numeric"
+      },
+      "reported": {
+        "cell_as_extracted": "to 0.01 (-0.02 to 0.01)"
+      },
+      "computed": {
+        "kind": "non_numeric",
+        "warning": "could not parse 'to 0.01 (-0.02 to 0.01)' as a numeric cell",
+        "coverage_of_typed_sample": 0.923
+      },
+      "notes": "One AME cell breaks across a line in both the rotated PDF and the markdown, losing what is most likely a leading minus sign (the companion AOR is 0.83, so the AME should be negative, and the interval [-0.02, 0.01] centres on -0.005). parse_cells_typed classified it non_numeric and it was therefore NOT fed to any forensic tool, per the rule that a cell of unknown meaning must not be checked. Recorded as unchecked rather than guessed.",
+      "reproduction": "metascience parse-cells --cells-json table_cells.json",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_91ffb4240cf96839",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "9f2eda63cad89d4e50221156c3ed3f111e817ba21e2d3278f17b8f0e2de7975d",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.0.1",
+    "analysed_at": "2026-10-19T20:18:26Z",
+    "analysed_at_source": "file_mtime"
+  }
+}

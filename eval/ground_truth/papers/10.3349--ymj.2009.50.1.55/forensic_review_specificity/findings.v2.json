@@ -1,0 +1,1258 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.3349--ymj.2009.50.1.55",
+  "run_id": "r_323ac9bbb71473c6",
+  "findings": [
+    {
+      "slug": "age_sd_experimental_exceeds_stated_range",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Age sd experimental exceeds stated range",
+      "description": "The bound is STATED by the paper, not assumed by me: the enrolment sentence restricts the sample to patients 'in their 20s', which is the interval [20, 29]. For n = 28 confined to that interval the largest attainable sample SD is 4.58; the reported 5.84 is 127% of that ceiling. The paper additionally leans on a narrow age range as a design strength, criticising prior work for 'wide range of patient's age', so the narrow-age claim is load-bearing in the authors' own argument rather than incidental. Note this row does not feed the primary chi-squared test, so it does not alter the headline p-value; it is a Table 1 data-integrity problem.",
+      "location": "Table 1, Age (Mean\u00b1SD) row, experimental group column",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD)  23.9\u00b15.84 yrs  [experimental group without postoperative antibiotics (n=28)]"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_experimental_exceeds_stated_range",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD)  23.9\u00b15.84 yrs  [experimental group without postoperative antibiotics (n=28)]",
+      "inputs": {
+        "sd": 5.84,
+        "min_val": 20,
+        "max_val": 29,
+        "n": 28,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "mean": 23.9,
+        "sd": 5.84,
+        "n": 28,
+        "stated_age_criterion": "patients in their 20s (i.e. 20-29 years)"
+      },
+      "computed": {
+        "max_possible_sd": 4.582575694955841,
+        "sd_as_fraction_of_max": 1.2743924789781953,
+        "is_plausible": false,
+        "margin_source": "printed precision (2 dp)"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Undermines the reported baseline age description and the Discussion's claim that a narrow patient age range distinguishes this study from prior work; it does not touch the primary infection comparison."
+      },
+      "notes": "The bound is STATED by the paper, not assumed by me: the enrolment sentence restricts the sample to patients 'in their 20s', which is the interval [20, 29]. For n = 28 confined to that interval the largest attainable sample SD is 4.58; the reported 5.84 is 127% of that ceiling. The paper additionally leans on a narrow age range as a design strength, criticising prior work for 'wide range of patient's age', so the narrow-age claim is load-bearing in the authors' own argument rather than incidental. Note this row does not feed the primary chi-squared test, so it does not alter the headline p-value; it is a Table 1 data-integrity problem.",
+      "reproduction": "metascience sd-range --sd 5.84 --min-val 20 --max-val 29 --n 28 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_4383e9b4280feebd",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_control_exceeds_stated_range",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Age sd control exceeds stated range (Table 1, Age (Mean\u00b1SD) row, control group column)",
+      "description": "Same stated bound as the experimental arm. Reported SD 6.33 is 138% of the 4.58 ceiling for n = 28 on [20, 29]. Both arms fail independently, so this is not a single mistyped cell.",
+      "location": "Table 1, Age (Mean\u00b1SD) row, control group column",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs  [control group with postoperative antibiotics for 3 days (n=28)]"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_control_exceeds_stated_range",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs  [control group with postoperative antibiotics for 3 days (n=28)]",
+      "inputs": {
+        "sd": 6.33,
+        "min_val": 20,
+        "max_val": 29,
+        "n": 28,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "mean": 24.3,
+        "sd": 6.33,
+        "n": 28,
+        "stated_age_criterion": "patients in their 20s (i.e. 20-29 years)"
+      },
+      "computed": {
+        "max_possible_sd": 4.582575694955841,
+        "sd_as_fraction_of_max": 1.3813192451938316,
+        "is_plausible": false,
+        "margin_source": "printed precision (2 dp)"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Same as the experimental arm: the baseline age description and the narrow-age-range design claim cannot both hold, while the primary infection comparison is unaffected."
+      },
+      "notes": "Same stated bound as the experimental arm. Reported SD 6.33 is 138% of the 4.58 ceiling for n = 28 on [20, 29]. Both arms fail independently, so this is not a single mistyped cell.",
+      "reproduction": "metascience sd-range --sd 6.33 --min-val 20 --max-val 29 --n 28 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_5dd4374967f66236",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_experimental_not_rescued_by_se_mislabel",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_or_se",
+      "title": "Age sd experimental not rescued by se mislabel",
+      "description": "Rules out the most common innocent explanation. If 5.84 were a mislabelled standard error the implied SD would be 30.9 years, which is 6.7 times the ceiling and worse still. The tool returns likely_interpretation = 'neither', so no reading of the printed dispersion is compatible with an age range of 20-29.",
+      "location": "Table 1, Age (Mean\u00b1SD) row, experimental group column",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD)  23.9\u00b15.84 yrs"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_experimental_not_rescued_by_se_mislabel",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD)  23.9\u00b15.84 yrs",
+      "inputs": {
+        "reported_value": 5.84,
+        "n": 28,
+        "reported_as": "SD",
+        "variable_range_min": 20,
+        "variable_range_max": 29,
+        "decimals": 2
+      },
+      "reported": {
+        "reported_value": 5.84,
+        "reported_as": "SD",
+        "n": 28
+      },
+      "computed": {
+        "as_sd_implied_sd": 5.84,
+        "as_se_implied_sd": 30.90237531323442,
+        "plausibility_ceiling": 4.582575694955841,
+        "likely_interpretation": "neither",
+        "ceiling_source": "range/2 (from (20.0, 29.0))"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Eliminates SD/SE confusion as an explanation for the impossible age dispersion, which narrows the remaining explanations to a wider-than-stated age range or a reporting error."
+      },
+      "notes": "Rules out the most common innocent explanation. If 5.84 were a mislabelled standard error the implied SD would be 30.9 years, which is 6.7 times the ceiling and worse still. The tool returns likely_interpretation = 'neither', so no reading of the printed dispersion is compatible with an age range of 20-29.",
+      "reproduction": "metascience sd-or-se --reported-value 5.84 --n 28 --reported-as SD --variable-range-min 20 --variable-range-max 29 --decimals 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_2c9ea0e2881a0b36",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_control_not_rescued_by_se_mislabel",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_or_se",
+      "title": "Age sd control not rescued by se mislabel",
+      "description": "As with the experimental arm, neither the SD nor the SE reading clears the ceiling; under the SE reading the implied SD is 33.5 years.",
+      "location": "Table 1, Age (Mean\u00b1SD) row, control group column",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_control_not_rescued_by_se_mislabel",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs",
+      "inputs": {
+        "reported_value": 6.33,
+        "n": 28,
+        "reported_as": "SD",
+        "variable_range_min": 20,
+        "variable_range_max": 29,
+        "decimals": 2
+      },
+      "reported": {
+        "reported_value": 6.33,
+        "reported_as": "SD",
+        "n": 28
+      },
+      "computed": {
+        "as_sd_implied_sd": 6.33,
+        "as_se_implied_sd": 33.49521159807772,
+        "plausibility_ceiling": 4.582575694955841,
+        "likely_interpretation": "neither",
+        "ceiling_source": "range/2 (from (20.0, 29.0))"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Eliminates SD/SE confusion for the control arm as well."
+      },
+      "notes": "As with the experimental arm, neither the SD nor the SE reading clears the ceiling; under the SE reading the implied SD is 33.5 years.",
+      "reproduction": "metascience sd-or-se --reported-value 6.33 --n 28 --reported-as SD --variable-range-min 20 --variable-range-max 29 --decimals 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_3feb2fbeeac5be0b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_sensitivity_generous_20_to_30",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Age sd sensitivity generous 20 to 30",
+      "description": "Robustness run against a deliberately over-generous reading of 'in their 20s' that admits an extra year at the top. The reported SD still exceeds the ceiling by 24%, so the finding does not depend on reading the inclusion criterion strictly.",
+      "location": "Table 1, Age row, control group column (sensitivity analysis)",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Fifty-six patients in their 20s without a specific medical history"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_sensitivity_generous_20_to_30",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Fifty-six patients in their 20s without a specific medical history",
+      "inputs": {
+        "sd": 6.33,
+        "min_val": 20,
+        "max_val": 30,
+        "n": 28,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "sd": 6.33,
+        "n": 28,
+        "assumed_range_for_sensitivity": "20 to 30"
+      },
+      "computed": {
+        "max_possible_sd": 5.091750772173156,
+        "sd_as_fraction_of_max": 1.2431873206744486,
+        "is_plausible": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Shows the impossibility survives a lenient interpretation of the stated age criterion."
+      },
+      "notes": "Robustness run against a deliberately over-generous reading of 'in their 20s' that admits an extra year at the top. The reported SD still exceeds the ceiling by 24%, so the finding does not depend on reading the inclusion criterion strictly.",
+      "reproduction": "metascience sd-range --sd 6.33 --min-val 20 --max-val 30 --n 28 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_e7c1640cf3a450ba",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_minimum_span_bracket",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Age sd minimum span bracket",
+      "description": "This is a bracketing run, not a check of a paper-stated value, hence indeterminate: it quantifies how far the data would have to depart from the stated criterion. A span of 12 years (20-32) still fails; 13 years (20-33) is the first that admits SD = 6.33, and even there the SD sits at 95.6% of the theoretical maximum, which is only attainable if patients are stacked almost entirely at the two extremes of the range. A realistic unimodal age distribution would need a wider span still. Either way the sample cannot be described as 'in their 20s'.",
+      "location": "Table 1, Age row, control group column (bracketing analysis)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_sd_range",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_minimum_span_bracket",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD)  24.3\u00b16.33 yrs",
+      "inputs": {
+        "sd": 6.33,
+        "min_val": 20,
+        "max_val": 33,
+        "n": 28,
+        "decimals_sd": 2,
+        "companion_run": {
+          "min_val": 20,
+          "max_val": 32
+        }
+      },
+      "reported": {
+        "sd": 6.33,
+        "n": 28
+      },
+      "computed": {
+        "range_12_max_sd": 6.110100926607787,
+        "range_12_plausible": false,
+        "range_13_max_sd": 6.619276003825103,
+        "range_13_plausible": true,
+        "range_13_sd_as_fraction_of_max": 0.956297938980345
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Quantifies the contradiction: reconciling the reported SD requires an age span of at least 13 years plus a near-bimodal distribution, contradicting the stated enrolment criterion."
+      },
+      "notes": "This is a bracketing run, not a check of a paper-stated value, hence indeterminate: it quantifies how far the data would have to depart from the stated criterion. A span of 12 years (20-32) still fails; 13 years (20-33) is the first that admits SD = 6.33, and even there the SD sits at 95.6% of the theoretical maximum, which is only attainable if patients are stacked almost entirely at the two extremes of the range. A realistic unimodal age distribution would need a wider span still. Either way the sample cannot be described as 'in their 20s'.",
+      "reproduction": "metascience sd-range --sd 6.33 --min-val 20 --max-val 33 --n 28 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_9af12603e41569f2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "primary_chi_squared_recalculation",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Primary chi squared recalculation",
+      "description": "The paper's only inferential statistic reproduces exactly as an uncorrected Pearson chi-squared on a 2x2 table of 3/28 vs 2/28. This also resolves an ambiguity in the Results narrative: the p-value pins the tested counts to 3 vs 2, confirming the single wound-dehiscence patient was NOT counted as an infection event. The paper reports no chi-squared statistic and no df, only the bare p.",
+      "location": "Results, final paragraph (also Abstract and Conclusion)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:primary_chi_squared_recalculation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "reported_p": 0.639,
+        "use_yates": false,
+        "decimals_p": 3
+      },
+      "reported": {
+        "p_value": 0.639,
+        "test": "chi-squared",
+        "counts": "3 of 28 infections (experimental) vs 2 of 28 (control)"
+      },
+      "computed": {
+        "calculated_chi2": 0.2196078431372549,
+        "calculated_p": 0.639338884785466,
+        "df": 1,
+        "test_type": "Pearson",
+        "p_matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The reported p is arithmetically correct for the test the authors say they ran."
+      },
+      "notes": "The paper's only inferential statistic reproduces exactly as an uncorrected Pearson chi-squared on a 2x2 table of 3/28 vs 2/28. This also resolves an ambiguity in the Results narrative: the p-value pins the tested counts to 3 vs 2, confirming the single wound-dehiscence patient was NOT counted as an infection event. The paper reports no chi-squared statistic and no df, only the bare p.",
+      "reproduction": "metascience chi2 --observed '[[3,25],[2,26]]' --reported-p 0.639 --decimals-p 3",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_81a66ef9d8a3da7f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi_squared_expected_counts_below_five",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi squared expected counts below five",
+      "description": "Analysis-design mismatch (rulebook rule 5). Both infection cells have an expected count of 2.5, well below the conventional minimum of 5 for an uncorrected Pearson chi-squared, so the chosen test is not valid for this table; Fisher's exact test is the appropriate choice and returns p = 1.00 rather than 0.639. The paper reports no assumption check and does not mention Fisher's exact. This does NOT change the conclusion's direction: both tests are non-significant, so the substantive claim survives, but the reported p-value overstates the precision of the comparison.",
+      "location": "Results, final paragraph; Methods, statistical analysis paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "recalc_chi_squared",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Statistical analysis was performed using a \u03c7\u00b2-test on the Statistical Package for the Social Sciences (SPSS for windows, ver. 12.0, SPSS Inc., Chicago, IL, USA)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi_squared_expected_counts_below_five",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Statistical analysis was performed using a \u03c7\u00b2-test on the Statistical Package for the Social Sciences (SPSS for windows, ver. 12.0, SPSS Inc., Chicago, IL, USA).",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "reported_p": 0.639,
+        "use_yates": false,
+        "decimals_p": 3
+      },
+      "reported": {
+        "test": "Pearson chi-squared",
+        "p_value": 0.639
+      },
+      "computed": {
+        "expected_counts": [
+          [
+            2.5,
+            25.5
+          ],
+          [
+            2.5,
+            25.5
+          ]
+        ],
+        "min_expected_count": 2.5,
+        "fisher_exact_p": 1,
+        "fisher_odds_ratio": 1.56
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The headline p = 0.639 comes from a test whose assumptions the data violate; the appropriate Fisher's exact p is 1.00, but the 'no significant difference' conclusion is unchanged."
+      },
+      "notes": "Analysis-design mismatch (rulebook rule 5). Both infection cells have an expected count of 2.5, well below the conventional minimum of 5 for an uncorrected Pearson chi-squared, so the chosen test is not valid for this table; Fisher's exact test is the appropriate choice and returns p = 1.00 rather than 0.639. The paper reports no assumption check and does not mention Fisher's exact. This does NOT change the conclusion's direction: both tests are non-significant, so the substantive claim survives, but the reported p-value overstates the precision of the comparison.",
+      "reproduction": "metascience chi2 --observed '[[3,25],[2,26]]' --reported-p 0.639 --decimals-p 3",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_21bdc13b063a3555",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_baseline_dispersion",
+      "producer": "legacy_sweep",
+      "technique": "bayesian_table1_dispersion",
+      "title": "Table1 baseline dispersion (Table 1, all baseline rows (Age, Sex))",
+      "description": "Read with heavy caution. Tau-hat = 2.40 indicates under-dispersion, i.e. baseline arms more alike than randomisation typically produces (rulebook rule 1: high baseline p-values are the red flag, never reassurance), and the derived p-values are 0.81 and 0.59. But this Table 1 has only TWO baseline rows, which is far too few to estimate a dispersion multiplier reliably; the CSF cross-check returned indeterminate on the same p-values, and the tool caps below highly_suspicious without corroboration. Compounding this, the age row's p-value is derived from the very SDs shown to be impossible above, so one of the two inputs is known to be corrupt. Treat as weak corroborating context only, never as ",
+      "location": "Table 1, all baseline rows (Age, Sex)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs / 24.3\u00b16.33 yrs; Sex (Male : Female) 16 : 12 / 14 : 14"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_baseline_dispersion",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs / 24.3\u00b16.33 yrs; Sex (Male : Female) 16 : 12 / 14 : 14",
+      "inputs": {
+        "rows": [
+          {
+            "label": "Age (years)",
+            "means": [
+              23.9,
+              24.3
+            ],
+            "sds": [
+              5.84,
+              6.33
+            ],
+            "ns": [
+              28,
+              28
+            ]
+          },
+          {
+            "label": "Sex (male:female)",
+            "counts": [
+              [
+                16,
+                12
+              ],
+              [
+                14,
+                14
+              ]
+            ]
+          }
+        ],
+        "design": "parallel_rct"
+      },
+      "reported": {
+        "age": "23.9\u00b15.84 vs 24.3\u00b16.33, n = 28 each",
+        "sex": "16:12 vs 14:14"
+      },
+      "computed": {
+        "precision_multiplier_tau_hat": 2.40081131909807,
+        "precision_multiplier_ci": [
+          1.8660500682304473,
+          4.089027268250803
+        ],
+        "mean_z_squared": 0.1734937922621168,
+        "derived_baseline_p_values": [
+          0.8067995078912829,
+          0.5920336764281287
+        ],
+        "ks_p_value": 0.33287304233749765,
+        "csf_cross_check_severity": "indeterminate",
+        "n_rows": 2
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Suggestive of baseline over-similarity, but with only two rows and one corrupt input it cannot independently support any claim about the randomisation."
+      },
+      "notes": "Read with heavy caution. Tau-hat = 2.40 indicates under-dispersion, i.e. baseline arms more alike than randomisation typically produces (rulebook rule 1: high baseline p-values are the red flag, never reassurance), and the derived p-values are 0.81 and 0.59. But this Table 1 has only TWO baseline rows, which is far too few to estimate a dispersion multiplier reliably; the CSF cross-check returned indeterminate on the same p-values, and the tool caps below highly_suspicious without corroboration. Compounding this, the age row's p-value is derived from the very SDs shown to be impossible above, so one of the two inputs is known to be corrupt. Treat as weak corroborating context only, never as a standalone signal.",
+      "reproduction": "metascience table1-dispersion --rows '[{\"label\":\"Age (years)\",\"means\":[23.9,24.3],\"sds\":[5.84,6.33],\"ns\":[28,28]},{\"label\":\"Sex (male:female)\",\"counts\":[[16,12],[14,14]]}]' --design parallel_rct",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ea70899a6775fe30",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "count_and_total_summations",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Count and total summations (Table 1 (all count rows) and Results, paragraphs 1-2)",
+      "description": "All 5 of 5 sums reconcile exactly with zero tolerance. The counts are internally coherent throughout: the sex ratios stated in prose (4:3 and 1:1) match the table's 16:12 and 14:14; both arms sum to 28 and to 56 overall; and the narrative breakdown of infected patients (1 with sinus haziness plus the other 4) sums to the 5 infections in Table 1. The count layer of this paper is clean.",
+      "location": "Table 1 (all count rows) and Results, paragraphs 1-2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Sex (Male : Female) 16 : 12 / 14 : 14; Postoperative infection (n) 3 / 2; There were 3 infections in the experimental group and 2 infections in the control group ... One patient in the experimental group was diagnosed with an infection by facial swelling, redness and sinus haziness in the waters' view, and the other 4 patients were diagnosed with a postoperative infection"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:count_and_total_summations",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Sex (Male : Female) 16 : 12 / 14 : 14; Postoperative infection (n) 3 / 2; There were 3 infections in the experimental group and 2 infections in the control group ... One patient in the experimental group was diagnosed with an infection by facial swelling, redness and sinus haziness in the waters' view, and the other 4 patients were diagnosed with a postoperative infection",
+      "inputs": {
+        "rows": [
+          {
+            "values": [
+              16,
+              12
+            ],
+            "expected_sum": 28,
+            "decimals": [
+              0,
+              0
+            ],
+            "tolerance": 0
+          },
+          {
+            "values": [
+              14,
+              14
+            ],
+            "expected_sum": 28,
+            "decimals": [
+              0,
+              0
+            ],
+            "tolerance": 0
+          },
+          {
+            "values": [
+              28,
+              28
+            ],
+            "expected_sum": 56,
+            "decimals": [
+              0,
+              0
+            ],
+            "tolerance": 0
+          },
+          {
+            "values": [
+              3,
+              2
+            ],
+            "expected_sum": 5,
+            "decimals": [
+              0,
+              0
+            ],
+            "tolerance": 0
+          },
+          {
+            "values": [
+              1,
+              4
+            ],
+            "expected_sum": 5,
+            "decimals": [
+              0,
+              0
+            ],
+            "tolerance": 0
+          }
+        ]
+      },
+      "reported": {
+        "sex_experimental": "16 + 12",
+        "sex_control": "14 + 14",
+        "group_ns": "28 + 28",
+        "infections_by_arm": "3 + 2",
+        "narrative_infection_breakdown": "1 + 4"
+      },
+      "computed": {
+        "n_rows": 5,
+        "n_evaluated": 5,
+        "n_inconsistent": 0,
+        "all_differences": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No arithmetic discrepancy in any reported count; the event counts underlying the primary test are internally consistent."
+      },
+      "notes": "All 5 of 5 sums reconcile exactly with zero tolerance. The counts are internally coherent throughout: the sex ratios stated in prose (4:3 and 1:1) match the table's 16:12 and 14:14; both arms sum to 28 and to 56 overall; and the narrative breakdown of infected patients (1 with sinus haziness plus the other 4) sums to the 5 infections in Table 1. The count layer of this paper is clean.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[16,12],\"expected_sum\":28,\"decimals\":[0,0],\"tolerance\":0},{\"values\":[14,14],\"expected_sum\":28,\"decimals\":[0,0],\"tolerance\":0},{\"values\":[28,28],\"expected_sum\":56,\"decimals\":[0,0],\"tolerance\":0},{\"values\":[3,2],\"expected_sum\":5,\"decimals\":[0,0],\"tolerance\":0},{\"values\":[1,4],\"expected_sum\":5,\"decimals\":[0,0],\"tolerance\":0}]'",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_8de9cb6188e61f50",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "duplication_scan_table1",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Duplication scan table1 (Table 1, Age row, both arms)",
+      "description": "Denominator is very small and the result carries correspondingly little weight: the paper contains exactly one table with exactly two (mean, SD) pairs, giving a single cross-block comparison. No duplication detected, but with one comparison this is close to uninformative and should not be cited as evidence of integrity.",
+      "location": "Table 1, Age row, both arms",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs / 24.3\u00b16.33 yrs"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:duplication_scan_table1",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs / 24.3\u00b16.33 yrs",
+      "inputs": {
+        "blocks": [
+          {
+            "label": "Table 1 - experimental arm",
+            "sample_id": "experimental",
+            "independent": true,
+            "cells": [
+              {
+                "label": "Age",
+                "value": 23.9,
+                "sd": 5.84
+              }
+            ]
+          },
+          {
+            "label": "Table 1 - control arm",
+            "sample_id": "control",
+            "independent": true,
+            "cells": [
+              {
+                "label": "Age",
+                "value": 24.3,
+                "sd": 6.33
+              }
+            ]
+          }
+        ],
+        "decimals_mean": 1,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "experimental": "23.9 (5.84)",
+        "control": "24.3 (6.33)"
+      },
+      "computed": {
+        "n_blocks": 2,
+        "n_cells_total": 2,
+        "n_comparisons": 1,
+        "max_identical_pairs": 0,
+        "duplicate_groups": []
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No copy-paste signature, on a denominator of one comparison."
+      },
+      "notes": "Denominator is very small and the result carries correspondingly little weight: the paper contains exactly one table with exactly two (mean, SD) pairs, giving a single cross-block comparison. No duplication detected, but with one comparison this is close to uninformative and should not be cited as evidence of integrity.",
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Table 1 - experimental arm\",\"sample_id\":\"experimental\",\"independent\":true,\"cells\":[{\"label\":\"Age\",\"value\":23.9,\"sd\":5.84}]},{\"label\":\"Table 1 - control arm\",\"sample_id\":\"control\",\"independent\":true,\"cells\":[{\"label\":\"Age\",\"value\":24.3,\"sd\":6.33}]}]' --decimals-mean 1 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_4e6c7f4ec3b97895",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "grim_age_correctly_refused",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Grim age correctly refused (Table 1, Age row (both arms))",
+      "description": "Recorded deliberately as a documented refusal rather than omitted. Age in years is a continuous ratio measure and the paper nowhere states that ages were recorded as whole years, so GRIM is not applicable and the tool correctly declines. I did NOT re-run it with data_type='integer' to force a verdict: had ages been whole numbers, 23.9 x 28 = 669.2 and 24.3 x 28 = 680.4 would both be non-integral and would fail GRIM, but that conclusion rests entirely on an assumption the paper never makes, and asserting it would be a false accusation. The age anomaly is established instead by the SD-range check, which rests only on the paper's own stated inclusion criterion.",
+      "location": "Table 1, Age row (both arms)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:grim_age_correctly_refused",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs",
+      "inputs": {
+        "mean": 23.9,
+        "n": 28,
+        "scale_min": 20,
+        "scale_max": 29,
+        "decimals": 1,
+        "data_type": "continuous",
+        "bound_source": "stated"
+      },
+      "reported": {
+        "mean": 23.9,
+        "n": 28,
+        "decimals": 1
+      },
+      "computed": {
+        "applicable": false,
+        "severity": "indeterminate",
+        "error": "GRIM does not apply to data_type='continuous'; it assumes integer observations on a bounded scale."
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this records why a granularity check on age was not pursued."
+      },
+      "notes": "Recorded deliberately as a documented refusal rather than omitted. Age in years is a continuous ratio measure and the paper nowhere states that ages were recorded as whole years, so GRIM is not applicable and the tool correctly declines. I did NOT re-run it with data_type='integer' to force a verdict: had ages been whole numbers, 23.9 x 28 = 669.2 and 24.3 x 28 = 680.4 would both be non-integral and would fail GRIM, but that conclusion rests entirely on an assumption the paper never makes, and asserting it would be a false accusation. The age anomaly is established instead by the SD-range check, which rests only on the paper's own stated inclusion criterion.",
+      "reproduction": "metascience grim --mean 23.9 --n 28 --scale-min 20 --scale-max 29 --decimals 1 --data-type continuous --bound-source stated",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ed1ab364423ddda6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_apa_statistics",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no apa statistics (Full body text (Results and Discussion))",
+      "description": "In this sweep statcheck was run with the `text` argument set to the Results/Discussion body text returned by extract_xml; the PDF-path command above is the equivalent runnable CLI form. Zero statistics were recovered, and this is a reporting finding rather than a tool failure: the paper never prints a test statistic or degrees of freedom anywhere, giving only a bare 'p = 0.639'. There is therefore no APA-form triple for statcheck to verify, and independent verification was only possible because the underlying cell counts appear in Table 1 (rulebook rule 10: cell counts outrank stated p-values).",
+      "location": "Full body text (Results and Discussion)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference ... (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_apa_statistics",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference ... (p = 0.639).",
+      "inputs": {
+        "text": "Results and Discussion body text extracted from the JATS XML"
+      },
+      "reported": {
+        "n_statistics_in_apa_form": 0
+      },
+      "computed": {
+        "success": true,
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No NHST result in the paper is stated in a form statcheck can audit; verification had to proceed from the raw counts instead."
+      },
+      "notes": "In this sweep statcheck was run with the `text` argument set to the Results/Discussion body text returned by extract_xml; the PDF-path command above is the equivalent runnable CLI form. Zero statistics were recovered, and this is a reporting finding rather than a tool failure: the paper never prints a test statistic or degrees of freedom anywhere, giving only a bare 'p = 0.639'. There is therefore no APA-form triple for statcheck to verify, and independent verification was only possible because the underlying cell counts appear in Table 1 (rulebook rule 10: cell counts outrank stated p-values).",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3349--ymj.2009.50.1.55/10.3349--ymj.2009.50.1.55.pdf",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d1ec38dc0b9f02f4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_typed_cell_coverage",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table1 typed cell coverage (Table 1, all 8 data cells)",
+      "description": "Coverage record, reported so the denominator is visible. The batched table pass ran 0 of 8 possible checks: the two age cells print as '23.9\u00b15.84 yrs' with a trailing unit that the typed parser cannot reduce, the two sex cells are ratios rather than scalars, and the four bare counts feed table-level checks only. The age cells were therefore checked individually and directly by check_sd_range and check_sd_or_se using values read from the PDF, and the counts by check_summation_batch and recalc_chi_squared. Nothing in Table 1 went unchecked, but nothing was checked by the batched path.",
+      "location": "Table 1, all 8 data cells",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs | Sex (Male : Female) 16 : 12 | Postoperative infection (n) 3 | Wound dehiscence (n) 0"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_typed_cell_coverage",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Age (Mean\u00b1SD) 23.9\u00b15.84 yrs | Sex (Male : Female) 16 : 12 | Postoperative infection (n) 3 | Wound dehiscence (n) 0",
+      "inputs": {
+        "cells": "8 cells hand-transcribed from PDF page 3, since the XML reports Table 1 as image_only",
+        "variables": [
+          "age (continuous, 20-29 yrs)",
+          "sex_ratio (nominal)",
+          "infection (binary)",
+          "dehiscence (binary)"
+        ],
+        "bindings": {
+          "Age (Mean\u00b1SD)": "age",
+          "Sex (Male : Female)": "sex_ratio",
+          "Postoperative infection (n)": "infection",
+          "Wound dehiscence (n)": "dehiscence"
+        }
+      },
+      "reported": {
+        "n_cells": 8
+      },
+      "computed": {
+        "coverage": 0.5,
+        "kind_counts": {
+          "non_numeric": 4,
+          "count": 4
+        },
+        "n_checks_run": 0,
+        "n_not_run": 8,
+        "not_run_reasons": [
+          "not a numeric cell (x4: the two 'mean\u00b1SD yrs' cells and the two 'male : female' ratio cells)",
+          "a bare count contributes to table-level checks only (x4)"
+        ]
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Documents that the automated table pass contributed no checks here and that every Table 1 cell was covered by targeted tools instead."
+      },
+      "notes": "Coverage record, reported so the denominator is visible. The batched table pass ran 0 of 8 possible checks: the two age cells print as '23.9\u00b15.84 yrs' with a trailing unit that the typed parser cannot reduce, the two sex cells are ratios rather than scalars, and the four bare counts feed table-level checks only. The age cells were therefore checked individually and directly by check_sd_range and check_sd_or_se using values read from the PDF, and the counts by check_summation_batch and recalc_chi_squared. Nothing in Table 1 went unchecked, but nothing was checked by the batched path.",
+      "reproduction": "metascience check-table --cells '[{\"raw\":\"23.9\u00b15.84 yrs\",\"row_label\":\"Age (Mean\u00b1SD)\",\"col_label\":\"Experimental group without postoperative antibiotics (n=28)\"},{\"raw\":\"24.3\u00b16.33 yrs\",\"row_label\":\"Age (Mean\u00b1SD)\",\"col_label\":\"Control group with postoperative antibiotics for 3 days (n=28)\"},{\"raw\":\"16 : 12\",\"row_label\":\"Sex (Male : Female)\",\"col_label\":\"Experimental group without postoperative antibiotics (n=28)\"},{\"raw\":\"14 : 14\",\"row_label\":\"Sex (Male : Female)\",\"col_label\":\"Control group with postoperative antibiotics for 3 days (n=28)\"},{\"raw\":\"3\",\"row_label\":\"Postoperative infection (n)\",\"col_label\":\"Experimental group without postoperative antibiotics (n=28)\"},{\"raw\":\"2\",\"row_label\":\"Postoperative infection (n)\",\"col_label\":\"Control group with postoperative antibiotics for 3 days (n=28)\"},{\"raw\":\"0\",\"row_label\":\"Wound dehiscence (n)\",\"col_label\":\"Experimental group without postoperative antibiotics (n=28)\"},{\"raw\":\"1\",\"row_label\":\"Wound dehiscence (n)\",\"col_label\":\"Control group with postoperative antibiotics for 3 days (n=28)\"}]' --variables '[{\"id\":\"age\",\"name\":\"Age at surgery\",\"measurement_level\":\"ratio\",\"discreteness\":\"continuous\",\"family\":\"continuous\",\"units\":\"years\",\"lower_bound\":20,\"upper_bound\":29,\"confidence\":\"high\"},{\"id\":\"sex_ratio\",\"name\":\"Sex\",\"measurement_level\":\"nominal\",\"discreteness\":\"discrete\",\"family\":\"nominal_category\",\"confidence\":\"high\"},{\"id\":\"infection\",\"name\":\"Postoperative wound infection\",\"measurement_level\":\"nominal\",\"discreteness\":\"discrete\",\"family\":\"binary\",\"confidence\":\"high\"},{\"id\":\"dehiscence\",\"name\":\"Wound dehiscence\",\"measurement_level\":\"nominal\",\"discreteness\":\"discrete\",\"family\":\"binary\",\"confidence\":\"high\"}]' --bindings '{\"Age (Mean\u00b1SD)\":\"age\",\"Sex (Male : Female)\":\"sex_ratio\",\"Postoperative infection (n)\":\"infection\",\"Wound dehiscence (n)\":\"dehiscence\"}'",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_71a53f726bc4fc93",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "power_analysis_not_reproducible",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Power analysis not reproducible",
+      "description": "Recorded as a refusal with its reason, not as a pass. Two observations that do not require any computation. First, the paper writes 'a test power \u03b2= 0.20': beta is the Type II error rate, so the power is 1 - beta = 0.80, and calling beta the power is a terminology error. Second, and more substantively, the stated design was sized to detect a difference between a 5% and a 35% infection rate, i.e. 30 percentage points. The observed contrast was 3 of 28 versus 2 of 28. A trial powered only for a 30-point difference cannot support a claim that no difference exists.",
+      "location": "Discussion, paragraph beginning 'Therefore, this study was undertaken'",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Twenty eight patients were enrolled in each group. The samples were selected at a significance level of \u03b1= 0.05 and a test power \u03b2= 0.20. A smaller infection rate was set to 5%, and the difference in the estimated infection rate was set to 30%, based on previous report that the incidence of postoperative wound infection using prophylactic antibiotics, ranges from 5.6% to 33.4%."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:power_analysis_not_reproducible",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Twenty eight patients were enrolled in each group. The samples were selected at a significance level of \u03b1= 0.05 and a test power \u03b2= 0.20. A smaller infection rate was set to 5%, and the difference in the estimated infection rate was set to 30%, based on previous report that the incidence of postoperative wound infection using prophylactic antibiotics, ranges from 5.6% to 33.4%.",
+      "inputs": {},
+      "reported": {
+        "alpha": 0.05,
+        "beta": 0.2,
+        "p1": 0.05,
+        "difference": 0.3,
+        "implied_p2": 0.35,
+        "n_per_group": 28
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The sample-size justification behind the Conclusion's 'may not be necessary' claim cannot be reproduced from the printed inputs."
+      },
+      "notes": "Recorded as a refusal with its reason, not as a pass. Two observations that do not require any computation. First, the paper writes 'a test power \u03b2= 0.20': beta is the Type II error rate, so the power is 1 - beta = 0.80, and calling beta the power is a terminology error. Second, and more substantively, the stated design was sized to detect a difference between a 5% and a 35% infection rate, i.e. 30 percentage points. The observed contrast was 3 of 28 versus 2 of 28. A trial powered only for a 30-point difference cannot support a claim that no difference exists.",
+      "reproduction": "Not reproducible as a CLI command: verify_power_analysis requires an effect_size (Cohen's h for two proportions), which the paper does not state.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_3592ee8350c34263",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "negative_conclusion_without_interval",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Negative conclusion without interval",
+      "description": "This is the paper's headline claim and it is an absence-of-evidence inference: a non-significant p from a 5-event trial is treated as evidence that postoperative antibiotics are unnecessary. The largest effect still compatible with these data cannot be bounded from anything the paper prints, because no interval is reported. The recalculation incidentally recovered a Fisher odds ratio of 1.56, i.e. the point estimate actually favours the arm that received postoperative antibiotics, but with 5 events in total the interval around it would be very wide. Severity is asserted, not computed: nothing here is arithmetically impossible, and the concern is inferential.",
+      "location": "Abstract (Conclusion) and Discussion, final paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Conclusion: Prolonged prophylactic antibiotic use after orthognathic surgery may not be necessary, provided that there are no other significant factors for wound infections."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:negative_conclusion_without_interval",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Conclusion: Prolonged prophylactic antibiotic use after orthognathic surgery may not be necessary, provided that there are no other significant factors for wound infections.",
+      "inputs": {},
+      "reported": {
+        "basis_for_claim": "p = 0.639, non-significant chi-squared",
+        "confidence_interval": "none reported anywhere in the paper",
+        "observed_events": "3 of 28 vs 2 of 28"
+      },
+      "computed": {
+        "fisher_odds_ratio_from_recalc": 1.56
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Abstract's conclusion that prolonged prophylaxis 'may not be necessary' rests on a non-significant result from 5 total events with no interval to bound the effect it could be missing."
+      },
+      "notes": "This is the paper's headline claim and it is an absence-of-evidence inference: a non-significant p from a 5-event trial is treated as evidence that postoperative antibiotics are unnecessary. The largest effect still compatible with these data cannot be bounded from anything the paper prints, because no interval is reported. The recalculation incidentally recovered a Fisher odds ratio of 1.56, i.e. the point estimate actually favours the arm that received postoperative antibiotics, but with 5 events in total the interval around it would be very wide. Severity is asserted, not computed: nothing here is arithmetically impossible, and the concern is inferential.",
+      "reproduction": "Not reproducible as a CLI command: absence-of-evidence requires ci_low and ci_high, and the paper reports no confidence interval for any quantity.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_92052859ae22e664",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "unblinded_subjective_outcome_assessment",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Unblinded subjective outcome assessment (Patients and Methods, paragraphs 1-2)",
+      "description": "Design context bearing on how much weight the 3-versus-2 event counts can carry. The trial was explicitly unblinded (no placebo), all operations were performed by one surgeon, and two of the four CDC criteria the authors adopted are subjective, one of them being diagnosis by the surgeon. Allocation itself was by Excel-generated codes, which is a reasonable randomisation method, so the concern is assessment rather than allocation. Severity is indeterminate because this is a qualitative judgement about bias risk, not a numeric anomaly, and it is asserted rather than computed.",
+      "location": "Patients and Methods, paragraphs 1-2",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The patients in the experimental group received only 1.0 g of a third-generation cephalosporin (Cefpiramide) intravenously 30 minutes before surgery and did not receive the placebo. ... A horizontal maxillary osteotomy and vertical ramus mandibular osteotomy were performed by the same oral surgeon"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:unblinded_subjective_outcome_assessment",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The patients in the experimental group received only 1.0 g of a third-generation cephalosporin (Cefpiramide) intravenously 30 minutes before surgery and did not receive the placebo. ... A horizontal maxillary osteotomy and vertical ramus mandibular osteotomy were performed by the same oral surgeon",
+      "inputs": {},
+      "reported": {
+        "placebo": "explicitly not administered",
+        "surgeon": "single operator for all cases",
+        "outcome_criteria": "CDC SSI criteria including subjective signs: pain or tenderness, localized swelling, redness or heat, and 'Diagnosis of SSI by the surgeon or attending physician'"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Unblinded subjective assessment by the operating surgeon weakens the evidential value of the event counts but implies no specific direction of error."
+      },
+      "notes": "Design context bearing on how much weight the 3-versus-2 event counts can carry. The trial was explicitly unblinded (no placebo), all operations were performed by one surgeon, and two of the four CDC criteria the authors adopted are subjective, one of them being diagnosis by the surgeon. Allocation itself was by Excel-generated codes, which is a reasonable randomisation method, so the concern is assessment rather than allocation. Severity is indeterminate because this is a qualitative judgement about bias risk, not a numeric anomaly, and it is asserted rather than computed.",
+      "reproduction": "Not reproducible as a CLI command: this is a design observation read from the Methods, and no forensic tool evaluates blinding.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_9019c0f6dfe04dea",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_attrition_or_flow_reporting",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "No attrition or flow reporting (Patients and Methods, paragraph 1; Results throughout)",
+      "description": "Reporting gap recorded under rulebook rule 7. All 56 enrolled patients appear in the analysis with no exclusions, withdrawals or losses to follow-up mentioned, and there is no CONSORT flow diagram or trial registration number. Complete retention is not implausible over a 2-week postoperative window in a surgical cohort, so this is noted as a transparency gap rather than treated as a signal in itself. Note the group sizes 28/28/56 are not suspiciously round in the 50/100 sense, so no round-N concern arises.",
+      "location": "Patients and Methods, paragraph 1; Results throughout",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Fifty-six patients in their 20s without a specific medical history ... were enrolled in this study."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_attrition_or_flow_reporting",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Fifty-six patients in their 20s without a specific medical history ... were enrolled in this study.",
+      "inputs": {},
+      "reported": {
+        "enrolled": 56,
+        "analysed": 56,
+        "withdrawals_or_losses": "not reported"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Absence of flow reporting means the analysed sample cannot be independently reconciled against enrolment, though the reported counts are internally consistent."
+      },
+      "notes": "Reporting gap recorded under rulebook rule 7. All 56 enrolled patients appear in the analysis with no exclusions, withdrawals or losses to follow-up mentioned, and there is no CONSORT flow diagram or trial registration number. Complete retention is not implausible over a 2-week postoperative window in a surgical cohort, so this is noted as a transparency gap rather than treated as a signal in itself. Note the group sizes 28/28/56 are not suspiciously round in the 50/100 sense, so no round-N concern arises.",
+      "reproduction": "Not reproducible as a CLI command: this records the absence of reported figures, and no tool checks for a missing CONSORT flow.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_9f81616bf7bf4e29",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "bc59b1707304752151184092ded657b69958c4d8f1dbd42f4a01347cfda2b457",
+    "migrated_at": "2026-10-19T20:18:28Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-07 19:53 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

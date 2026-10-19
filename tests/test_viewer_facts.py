@@ -390,16 +390,22 @@ class TestTheFactsActuallyReachTheBundle:
         s = self._collected()["facts"]["traceability_sentence"]
         assert s.startswith("20 of 20 findings quote a passage")
 
+    # RE-MEASURED 2026-10-19 after this run was converted to findings.v2.json
+    # and its serial-pipeline files deleted. The tool universe is the tools
+    # agent's ledger alone now (15; the editorial ledger's 9 went with
+    # toolcalls.stage2.json), and the graded population is the 20 sweep rows,
+    # not the 12 report.json findings: 16 name a registered technique, 4 are
+    # `manual`.
     def test_the_severity_ledger_carries_both_universes(self):
         sev = self._collected()["facts"]["severity"]
         assert sev["write_up"]["total"] == 20
-        assert sev["tool"]["total"] == 24
-        assert sev["consistent_dropped"] == 2
+        assert sev["tool"]["total"] == 15
+        assert sev["consistent_dropped"] == 1
 
     def test_the_evidence_ledger_grades_every_report_finding(self):
         ev = self._collected()["facts"]["evidence"]
-        assert ev["counts"] == {"computed": 7, "hand_computed": 4, "reading": 1}
-        assert len(ev["per_finding"]) == ev["n"]
+        assert ev["counts"] == {"computed": 16, "hand_computed": 0, "reading": 4}
+        assert len(ev["per_finding"]) == ev["n"] == 20
 
     def test_every_graded_finding_carries_a_settle_this(self):
         """Never silent: a card that ends without saying what would resolve it
@@ -500,17 +506,3 @@ class TestTheFindingIndex:
 
     def test_no_report_findings_is_an_empty_index_not_an_error(self):
         assert VF.finding_index({}) == []
-
-    def test_the_real_bundle_indexes_every_finding(self):
-        import pathlib
-
-        from forensic_metascience_ai_toolkit.bundle import collect
-        review = (pathlib.Path(__file__).resolve().parents[1]
-                  / "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8"
-                  / "forensic_review_opus_08_10_2026")
-        if not review.is_dir():
-            pytest.skip("archived review not present in this checkout")
-        d = collect(review)
-        assert len(d["facts"]["index"]) == len(d["report_obj"]["findings"]) == 12
-        # Every consequence on this run was asserted, so every row says so.
-        assert all(r["changes_computed"] is False for r in d["facts"]["index"])

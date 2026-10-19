@@ -35,6 +35,9 @@ replayed the two report-stage conditions over every archived run on disk --
   read an ARTEFACT-FORMAT fact as an INFORMATION-LOSS fact, which is precisely
   the failure this module exists to catch, one level up. Those runs are now
   excluded as NOT MEASURABLE rather than scored in either direction.
+  (The report-stage condition, `stage2_carried_nothing`, compared the serial
+  pipeline's sweep with its report.json; it was removed with that layout in
+  1.100.0.)
 
 AND THE LIMIT OF THAT NUMBER, which must travel with it: a condition that has
 never fired has an UNMEASURED true-positive rate. 0/47 proves these do not fire
@@ -172,21 +175,6 @@ def _xml_paper_has_text(paper_dir: Path) -> Trip:
                  if fired else ""))
 
 
-def _stage2_carried_something(findings: list, report: dict | None) -> Trip:
-    """Stage 1 produced findings and stage 2 carried none of them."""
-    if report is None:
-        return Trip("stage2_carried_nothing", False, not_measured=True,
-                    message="no structured report: not measurable, not a pass")
-    ed = report.get("findings") or []
-    fired = bool(findings) and not ed
-    return Trip(
-        "stage2_carried_nothing", fired,
-        expected=f"{len(findings)} sweep finding(s)",
-        got=f"{len(ed)} finding(s) in the report",
-        message=("The sweep wrote findings down and the report carried none of "
-                 "them forward." if fired else ""))
-
-
 def _no_stage_reported_an_error(run_meta: dict | None) -> Trip:
     """A stage told us it failed. The least ambiguous signal there is.
 
@@ -196,7 +184,8 @@ def _no_stage_reported_an_error(run_meta: dict | None) -> Trip:
     `is_error: True, error_subtype: "api_error"`, no `report.json` was written,
     and the run billed $5.18.
 
-    `_stage2_carried_something` returned NOT MEASURED on it. That was the
+    The old report-stage check (`stage2_carried_nothing`, since removed)
+    returned NOT MEASURED on it. That was the
     correct call for the case it was designed against -- two archived runs whose
     stage 2 worked fine and simply predate the JSON report schema, where firing
     would have invented a false-positive rate. But it means the absence of a
@@ -295,7 +284,7 @@ def _no_secondary_model_wrote_content(run_meta: dict | None) -> Trip:
                      "produced substantial output. If that output was a summary "
                      "folded back into the analysis context, the review rests "
                      "partly on a model nobody chose. Inspect "
-                     "messages.stage*.json before trusting the findings."))
+                     "the messages.*.json transcripts before trusting the findings."))
     return Trip("secondary_model_wrote_content", False,
                 expected=f"{measured} model-usage record(s) checked",
                 got="every secondary model stayed within the housekeeping ceiling")
@@ -320,10 +309,6 @@ PREFLIGHT_CONDITIONS: tuple[Callable[[Path], Trip], ...] = (
 def check_preflight(paper_dir: str | Path) -> list[Trip]:
     d = Path(paper_dir)
     return [fn(d) for fn in PREFLIGHT_CONDITIONS]
-
-
-def check_report(findings: list, report: dict | None) -> list[Trip]:
-    return [_stage2_carried_something(findings or [], report)]
 
 
 def summarise(trips: list[Trip]) -> dict:

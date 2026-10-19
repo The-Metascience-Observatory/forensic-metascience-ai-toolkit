@@ -1,0 +1,1006 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.3349--ymj.2009.50.1.55",
+  "run_id": "r_a8e5b3ff0f66eb39",
+  "findings": [
+    {
+      "slug": "chi_squared_recalculation",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi squared recalculation (Results, final paragraph, and Table 1 infection row)",
+      "description": "The paper's single inferential result reproduces exactly from the counts printed in Table 1. The reported p = 0.639 matches the uncorrected Pearson value 0.63934 to three decimals, which also identifies which convention SPSS was run under. This is the strongest positive evidence in the sweep: the headline number is exactly what the reported data produce.",
+      "location": "Results, final paragraph, and Table 1 infection row",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi_squared_recalculation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "reported_p": 0.639,
+        "decimals_p": 3
+      },
+      "reported": {
+        "p": 0.639,
+        "test": "chi-squared"
+      },
+      "computed": {
+        "calculated_chi2_pearson": 0.2196078431372549,
+        "calculated_p_pearson": 0.639338884785466,
+        "df": 1,
+        "p_matches": true
+      },
+      "notes": "The paper's single inferential result reproduces exactly from the counts printed in Table 1. The reported p = 0.639 matches the uncorrected Pearson value 0.63934 to three decimals, which also identifies which convention SPSS was run under. This is the strongest positive evidence in the sweep: the headline number is exactly what the reported data produce.",
+      "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+        "source_locator": "Results, final paragraph, and Table 1 infection row",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_4b6c6f50deee8086",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi_squared_expected_counts_below_five",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi squared expected counts below five",
+      "description": "The tool's own output gives expected counts of 2.5 in both infection cells, half the conventional minimum of 5 for the chi-squared approximation; Fisher's exact test is the standard choice at these counts. This is a test-selection issue (rulebook rule 5), not a numerical error, and it does not change the paper's conclusion -- it makes the reported p optimistically precise rather than wrong in direction. Recorded as suspicious rather than higher because uncorrected 2x2 chi-squared on small counts was routine practice in 2009 clinical reporting.",
+      "location": "Results, final paragraph (test choice), against Table 1 infection row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "recalc_chi_squared",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Statistical  analysis  was  performed  using  a \ue0b2 2 -test on  the  Statistical  Package  for  the  Social  Sciences (SPSS  for  windows,  ver.  12.0,  SPSS  Inc.,  Chicago, IL,  USA)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi_squared_expected_counts_below_five",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Statistical  analysis  was  performed  using  a \ue0b2 2 -test on  the  Statistical  Package  for  the  Social  Sciences (SPSS  for  windows,  ver.  12.0,  SPSS  Inc.,  Chicago, IL,  USA).",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "reported_p": 0.639,
+        "decimals_p": 3
+      },
+      "reported": {
+        "test": "chi-squared",
+        "p": 0.639
+      },
+      "computed": {
+        "expected_counts_infection_cells": 2.5,
+        "conventional_minimum_expected_count": 5,
+        "yates_corrected_p": 1,
+        "fisher_exact_p": 1,
+        "pearson_p_the_paper_reported": 0.639338884785466
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's sole conclusion is unaffected in direction: the uncorrected Pearson test it reports (p = 0.639), the Yates-corrected test (p = 1.0) and Fisher's exact test (p = 1.0) are all non-significant, so the stated finding of no difference stands under every convention."
+      },
+      "notes": "The tool's own output gives expected counts of 2.5 in both infection cells, half the conventional minimum of 5 for the chi-squared approximation; Fisher's exact test is the standard choice at these counts. This is a test-selection issue (rulebook rule 5), not a numerical error, and it does not change the paper's conclusion -- it makes the reported p optimistically precise rather than wrong in direction. Recorded as suspicious rather than higher because uncorrected 2x2 chi-squared on small counts was routine practice in 2009 clinical reporting.",
+      "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+        "source_locator": "Results, final paragraph, and Table 1 infection row",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_3cfd63a55932cdf7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_test_statistic_or_df_reported",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "No test statistic or df reported (Results, final paragraph, and Abstract)",
+      "description": "statcheck returned stats_found = 0 over the full Results and Discussion text. That is not a defect of the scanner: the paper reports its only inferential test as a bare p-value, with neither the chi-squared statistic nor its degrees of freedom, so there is no APA-format triple to parse and no internal redundancy against which the p could have been checked by a reader. The check was recoverable here only because Table 1 prints the underlying cell counts; had it not, the paper's single claim would have been unverifiable. Recorded as a reporting-completeness finding, not an arithmetic one.",
+      "location": "Results, final paragraph, and Abstract",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_test_statistic_or_df_reported",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+      "inputs": {
+        "text": "Results and Discussion prose as extracted from the XML body"
+      },
+      "reported": {
+        "p": 0.639,
+        "chi2_statistic": "not reported",
+        "df": "not reported"
+      },
+      "computed": {
+        "statcheck_stats_found": 0
+      },
+      "notes": "statcheck returned stats_found = 0 over the full Results and Discussion text. That is not a defect of the scanner: the paper reports its only inferential test as a bare p-value, with neither the chi-squared statistic nor its degrees of freedom, so there is no APA-format triple to parse and no internal redundancy against which the p could have been checked by a reader. The check was recoverable here only because Table 1 prints the underlying cell counts; had it not, the paper's single claim would have been unverifiable. Recorded as a reporting-completeness finding, not an arithmetic one.",
+      "reproduction": "metascience statcheck --text \"According to the chi2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).\"",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+        "source_locator": "Results and Discussion, prose",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_c4d21cb9d59c4831",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "null_conclusion_without_interval_or_effect_size",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Null conclusion without interval or effect size",
+      "description": "absence_of_evidence could not be run because the paper prints no confidence interval and no coefficient with a standard error, so there is nothing to pass it. The point estimate recoverable from the counts (Fisher odds ratio 1.56, from recalc_chi_squared) actually favours MORE infection in the arm that received fewer antibiotics, and with 3 and 2 events the interval around it would be very wide. This is the ordinary and widespread practice of reading a non-significant p as evidence of no effect; it is a limitation of the inference, not a sign of anything wrong with the numbers.",
+      "location": "Abstract (Results and Conclusion) and Discussion, final paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Conclusion: Prolonged prophylactic antibiotic use after orthognathic surgery may not be necessary, provided that there are no  other  significant  factors  for  wound  infections."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:null_conclusion_without_interval_or_effect_size",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Conclusion: Prolonged prophylactic antibiotic use after orthognathic surgery may not be necessary, provided that there are no  other  significant  factors  for  wound  infections.",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ]
+      },
+      "reported": {
+        "conclusion": "no significant difference; prolonged use may not be necessary",
+        "p": 0.639,
+        "confidence_interval": "none reported",
+        "effect_size": "none reported"
+      },
+      "computed": {
+        "odds_ratio_from_the_printed_2x2_via_recalc_chi_squared": 1.56,
+        "interval_on_that_odds_ratio": "not obtainable -- no registered tool derives a CI from a 2x2 count table"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's headline recommendation -- that prolonged postoperative prophylaxis may be unnecessary -- is an acceptance of the null argued from p = 0.639 alone, with no interval stating how large a difference in infection rate the data still permit."
+      },
+      "notes": "absence_of_evidence could not be run because the paper prints no confidence interval and no coefficient with a standard error, so there is nothing to pass it. The point estimate recoverable from the counts (Fisher odds ratio 1.56, from recalc_chi_squared) actually favours MORE infection in the arm that received fewer antibiotics, and with 3 and 2 events the interval around it would be very wide. This is the ordinary and widespread practice of reading a non-significant p as evidence of no effect; it is a limitation of the inference, not a sign of anything wrong with the numbers.",
+      "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_7a8587fe5deea3e7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "design_powered_for_a_much_larger_difference",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Design powered for a much larger difference",
+      "description": "This is a reading of the paper's own stated design parameters against its own reported counts, with no calculation. A quantitative sensitivity figure was NOT computed: required_n and verify_power_analysis both need the effect size on the test's own metric (Cohen's h for two proportions), which the paper does not print and which I am not permitted to derive by hand. The paper is commendably explicit about its design assumptions, which is what makes this visible at all; many papers state none.",
+      "location": "Discussion, sample-size paragraph, against Table 1 infection row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The samples were selected at a significance level of \u03b1 =0.05 and a test power \u03b2 =0.20. A smaller infection  rate  was  set  to  5%,  and  the  difference  in the  estimated infection rate was set to 30%"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:design_powered_for_a_much_larger_difference",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The samples were selected at a significance level of \u03b1 =0.05 and a test power \u03b2 =0.20. A smaller infection  rate  was  set  to  5%,  and  the  difference  in the  estimated infection rate was set to 30%",
+      "inputs": {
+        "stated_alpha": 0.05,
+        "stated_beta": 0.2,
+        "stated_smaller_rate": 0.05,
+        "stated_difference": 0.3,
+        "n_per_group": 28
+      },
+      "reported": {
+        "design_smaller_rate_pct": 5,
+        "design_difference_pct": 30,
+        "n_per_group": 28,
+        "observed_infections_exp": 3,
+        "observed_infections_ctrl": 2
+      },
+      "computed": {
+        "comparison": "The stated design targets a 30 percentage-point difference between arms; the observed difference is one patient (3 events versus 2 events out of 28 per arm). No arithmetic is performed here -- the design target and the observed event counts are both quoted as printed."
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The conclusion that prolonged prophylaxis 'may not be necessary' rests on a design sized to detect only a very large difference (5% versus 35%), so a clinically meaningful smaller difference could not have been detected by this trial and its absence from the results is uninformative."
+      },
+      "notes": "This is a reading of the paper's own stated design parameters against its own reported counts, with no calculation. A quantitative sensitivity figure was NOT computed: required_n and verify_power_analysis both need the effect size on the test's own metric (Cohen's h for two proportions), which the paper does not print and which I am not permitted to derive by hand. The paper is commendably explicit about its design assumptions, which is what makes this visible at all; many papers state none.",
+      "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_9cce564194f55181",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_sd_versus_stated_age_band",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Age sd versus stated age band",
+      "description": "Both SDs exceed the maximum an age range of 20-29 permits, so the two statements cannot both be literally true. The innocent explanation is strong and is probably the right one: 'in their 20s' reads naturally as loose shorthand for a young-adult cohort rather than a strict inclusion criterion, and the paper states no numeric age range anywhere. A supporting check points the same way -- check_proportion_from_normal on 0 of 28 patients below age 20 gives binomial p = 0.00062 against a normal N(23.9, 5.84) model, but the result explicitly does NOT violate its distribution-free bound [0.0000, 0.6916], so a right-skewed age distribution with a hard floor near 20 explains the SDs and the phrase to",
+      "location": "Patients and Methods, first sentence, against Table 1 Age row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "highly_suspicious",
+        "tool": "check_sd_range",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Fifty-six  patients  in  their  20s  without  a  specific medical history"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_sd_versus_stated_age_band",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Fifty-six  patients  in  their  20s  without  a  specific medical history",
+      "inputs": {
+        "sd": 5.84,
+        "min_val": 20,
+        "max_val": 29,
+        "n": 28,
+        "decimals_sd": 2,
+        "bound_source": "assumed"
+      },
+      "reported": {
+        "SD_experimental": 5.84,
+        "SD_control": 6.33,
+        "M_experimental": 23.9,
+        "M_control": 24.3,
+        "n_per_group": 28,
+        "stated_age_description": "in their 20s"
+      },
+      "computed": {
+        "assumed_range_used": [
+          20,
+          29
+        ],
+        "max_possible_sd_for_that_range_at_n28": 4.582575694955841,
+        "reported_sd_as_fraction_of_max_experimental": 1.2743924789781953,
+        "reported_sd_as_fraction_of_max_control": 1.3813192451938316
+      },
+      "notes": "Both SDs exceed the maximum an age range of 20-29 permits, so the two statements cannot both be literally true. The innocent explanation is strong and is probably the right one: 'in their 20s' reads naturally as loose shorthand for a young-adult cohort rather than a strict inclusion criterion, and the paper states no numeric age range anywhere. A supporting check points the same way -- check_proportion_from_normal on 0 of 28 patients below age 20 gives binomial p = 0.00062 against a normal N(23.9, 5.84) model, but the result explicitly does NOT violate its distribution-free bound [0.0000, 0.6916], so a right-skewed age distribution with a hard floor near 20 explains the SDs and the phrase together. The Discussion also criticises earlier studies for a 'wide range of patient's age', which sits awkwardly beside SDs of nearly 6 years, but that is a rhetorical tension rather than an arithmetic one. Recorded so a reader can see it; not treated as evidence against the paper.",
+      "reproduction": "metascience sd-range --sd 5.84 --min-val 20 --max-val 29 --n 28 --decimals-sd 2 --bound-source assumed",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `highly_suspicious` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Fifty-six patients in their 20s without a specific medical history",
+        "source_locator": "Patients and Methods, first sentence, against Table 1 Age row",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_7387f890138b14af",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_proportion_below_twenty",
+      "producer": "legacy_sweep",
+      "technique": "check_proportion_from_normal",
+      "title": "Age proportion below twenty",
+      "description": "Run as a second, distribution-aware view of the same tension as age_sd_versus_stated_age_band, and it declines to convict. Under a normal model a quarter of the experimental arm would fall below 20, which is incompatible with 'in their 20s' -- but the observed 0/28 stays inside the distribution-free bound, so a skewed age distribution accounts for it without any reporting error. The control arm gives the same picture (theoretical 0.2485, binomial p = 0.000605, no distribution-free violation). Recorded as indeterminate: the check ran and could not decide between a wrong SD and loose prose. Note also that the reported_proportion of 0 is my inference from the phrase 'in their 20s', not a propor",
+      "location": "Patients and Methods, first sentence, against Table 1 Age row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "suspicious",
+        "tool": "check_proportion_from_normal",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Fifty-six  patients  in  their  20s  without  a  specific medical history"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_proportion_below_twenty",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Fifty-six  patients  in  their  20s  without  a  specific medical history",
+      "inputs": {
+        "reported_proportion": 0,
+        "mean": 23.9,
+        "sd": 5.84,
+        "n": 28,
+        "threshold": 20,
+        "direction": "below"
+      },
+      "reported": {
+        "implied_proportion_below_20": 0,
+        "M": 23.9,
+        "SD": 5.84,
+        "n": 28
+      },
+      "computed": {
+        "theoretical_proportion_below_20_under_normal": 0.25212800967996707,
+        "binomial_p_two_sided": 0.000615350068596305,
+        "distribution_free_bound_95": [
+          0,
+          0.6915783241002849
+        ],
+        "distribution_free_violation": false
+      },
+      "notes": "Run as a second, distribution-aware view of the same tension as age_sd_versus_stated_age_band, and it declines to convict. Under a normal model a quarter of the experimental arm would fall below 20, which is incompatible with 'in their 20s' -- but the observed 0/28 stays inside the distribution-free bound, so a skewed age distribution accounts for it without any reporting error. The control arm gives the same picture (theoretical 0.2485, binomial p = 0.000605, no distribution-free violation). Recorded as indeterminate: the check ran and could not decide between a wrong SD and loose prose. Note also that the reported_proportion of 0 is my inference from the phrase 'in their 20s', not a proportion the paper printed.",
+      "reproduction": "metascience prop-from-normal --reported-proportion 0 --mean 23.9 --sd 5.84 --n 28 --threshold 20 --direction below",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `suspicious` where the finding claims `indeterminate`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Fifty-six patients in their 20s without a specific medical history",
+        "source_locator": "Patients and Methods, first sentence, against Table 1 Age row",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_740e95713737f142",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "grimmer_age_cells",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Grimmer age cells (Table 1, Age row (both groups))",
+      "description": "Both age mean/SD pairs are reconstructible from integer ages at n = 28: valid (sum, sum-of-squares) combinations exist for each. IMPORTANT CORRECTION TO THE RECORD: a first pass omitted scale_min/scale_max and the tool fell back to a 1-7 Likert default, returning 'out_of_range' for both rows. That was an artefact of my inputs, not a property of the paper, and it is reported here so the false alarm is visible rather than buried. The discreteness premise (ages recorded in whole years) is ASSUMED -- the paper never states it -- but that assumption only matters for a failing verdict, and these pass.",
+      "location": "Table 1, Age row (both groups)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:grimmer_age_cells",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |",
+      "inputs": {
+        "mean": 23.9,
+        "sd": 5.84,
+        "n": 28,
+        "scale_min": 10,
+        "scale_max": 60,
+        "decimals": 1,
+        "decimals_sd": 2,
+        "data_type": "integer",
+        "discreteness_source": "assumed"
+      },
+      "reported": {
+        "M_experimental": 23.9,
+        "SD_experimental": 5.84,
+        "M_control": 24.3,
+        "SD_control": 6.33,
+        "n": 28
+      },
+      "computed": {
+        "experimental_working_combinations_found": 5,
+        "experimental_example": {
+          "sum": 669,
+          "sum_squares": 16905,
+          "exact_mean": 23.89286,
+          "exact_sd": 5.839453
+        },
+        "control_working_combinations_found": 4,
+        "control_example": {
+          "sum": 680,
+          "sum_squares": 17596,
+          "exact_mean": 24.28571,
+          "exact_sd": 6.329573
+        }
+      },
+      "notes": "Both age mean/SD pairs are reconstructible from integer ages at n = 28: valid (sum, sum-of-squares) combinations exist for each. IMPORTANT CORRECTION TO THE RECORD: a first pass omitted scale_min/scale_max and the tool fell back to a 1-7 Likert default, returning 'out_of_range' for both rows. That was an artefact of my inputs, not a property of the paper, and it is reported here so the false alarm is visible rather than buried. The discreteness premise (ages recorded in whole years) is ASSUMED -- the paper never states it -- but that assumption only matters for a failing verdict, and these pass.",
+      "reproduction": "metascience grimmer --mean 23.9 --sd 5.84 --n 28 --scale-min 10 --scale-max 60 --decimals 1 --decimals-sd 2 --data-type integer",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "| Age (Mean \u00b1 SD) | 23.9 \u00b1 5.84 yrs | 24.3 \u00b1 6.33 yrs |",
+        "source_locator": "Table 1, Age row, experimental group",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_7f26a9cb0f44585d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "grim_no_discriminating_power",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Grim no discriminating power (Table 1, Age row (both groups))",
+      "description": "GRIM has no resolution at n = 28 with one decimal place, so it returns indeterminate rather than a vacuous pass. Recorded deliberately: a reader should know that the age means were NOT cleared by GRIM, only that GRIM could not have caught anything here. The same applies to the control mean of 24.3.",
+      "location": "Table 1, Age row (both groups)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:grim_no_discriminating_power",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |",
+      "inputs": {
+        "mean": 23.9,
+        "n": 28,
+        "decimals": 1,
+        "data_type": "integer",
+        "scale_min": 10,
+        "scale_max": 60,
+        "bound_source": "assumed",
+        "discreteness_source": "assumed"
+      },
+      "reported": {
+        "M_experimental": 23.9,
+        "M_control": 24.3,
+        "n": 28,
+        "decimals": 1
+      },
+      "computed": {
+        "check_can_fail": false,
+        "failure_mode": "no_discriminating_power",
+        "tool_verdict": "Every value printable to 1 dp is attainable as a mean of 28 integers, so no reported figure could have failed this check."
+      },
+      "notes": "GRIM has no resolution at n = 28 with one decimal place, so it returns indeterminate rather than a vacuous pass. Recorded deliberately: a reader should know that the age means were NOT cleared by GRIM, only that GRIM could not have caught anything here. The same applies to the control mean of 24.3.",
+      "reproduction": "metascience grim --mean 23.9 --n 28 --decimals 1 --data-type integer --scale-min 10 --scale-max 60 --bound-source assumed",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "| Age (Mean \u00b1 SD) | 23.9 \u00b1 5.84 yrs | 24.3 \u00b1 6.33 yrs |",
+        "source_locator": "Table 1, Age row, experimental group",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_678bcb2d20cd3a66",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "counts_reconcile",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Counts reconcile (Table 1, all rows, against Methods and Results prose)",
+      "description": "Every count in the paper reconciles exactly, including three separate cross-references: the Table 1 sex counts against the prose ratios (16:12 is 4:3, 14:14 is 1:1), the two arms against the stated total of 56, and the per-arm infection counts against the five infected patients narrated individually in the Results ('One patient in the experimental group... and the other 4 patients'). Arithmetic tolerance was set to exactly 0, as these are integer counts.",
+      "location": "Table 1, all rows, against Methods and Results prose",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| Sex (Male : Female)         | 16 : 12                                                         | 14 : 14                                                            |"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:counts_reconcile",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "| Sex (Male : Female)         | 16 : 12                                                         | 14 : 14                                                            |",
+      "inputs": {
+        "rows": [
+          {
+            "values": [
+              16,
+              12
+            ],
+            "expected_sum": 28
+          },
+          {
+            "values": [
+              14,
+              14
+            ],
+            "expected_sum": 28
+          },
+          {
+            "values": [
+              28,
+              28
+            ],
+            "expected_sum": 56
+          },
+          {
+            "values": [
+              3,
+              2
+            ],
+            "expected_sum": 5
+          }
+        ]
+      },
+      "reported": {
+        "sex_experimental": [
+          16,
+          12
+        ],
+        "sex_control": [
+          14,
+          14
+        ],
+        "group_ns": [
+          28,
+          28
+        ],
+        "infections": [
+          3,
+          2
+        ]
+      },
+      "computed": {
+        "n_rows": 4,
+        "n_evaluated": 4,
+        "n_inconsistent": 0,
+        "all_differences": 0
+      },
+      "notes": "Every count in the paper reconciles exactly, including three separate cross-references: the Table 1 sex counts against the prose ratios (16:12 is 4:3, 14:14 is 1:1), the two arms against the stated total of 56, and the per-arm infection counts against the five infected patients narrated individually in the Results ('One patient in the experimental group... and the other 4 patients'). Arithmetic tolerance was set to exactly 0, as these are integer counts.",
+      "reproduction": "metascience summation-batch --rows \"[{\\\"values\\\":[16,12],\\\"expected_sum\\\":28,\\\"decimals\\\":[0,0],\\\"tolerance\\\":0},{\\\"values\\\":[14,14],\\\"expected_sum\\\":28,\\\"decimals\\\":[0,0],\\\"tolerance\\\":0},{\\\"values\\\":[28,28],\\\"expected_sum\\\":56,\\\"decimals\\\":[0,0],\\\"tolerance\\\":0},{\\\"values\\\":[3,2],\\\"expected_sum\\\":5,\\\"decimals\\\":[0,0],\\\"tolerance\\\":0}]\"",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "| Sex (Male : Female) | 16 : 12 | 14 : 14 |",
+        "source_locator": "Table 1, all rows, with Methods sentence on group allocation",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_5dc6974ba3d176b8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_cell_typing_coverage_gap",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Table1 cell typing coverage gap (Table 1, Age row and Sex row)",
+      "description": "This is OUR defect, not the paper's, and it is recorded so the coverage figure is honest. Half of Table 1's eight cells could not be typed automatically: the mean-SD cells carry a trailing unit ('23.9 \u00b1 5.84 yrs') that the parser does not strip, and the sex cells use ratio notation ('16 : 12') that no format in the vocabulary expresses. Both clusters returned an EMPTY candidate_formats list, so parse_cells_as_declared could not rescue them either. The four values were therefore read by eye from two independent extractions that agree exactly -- the docling markdown grid and the raw page-3 text layer, which both render '23.9\u00b15.84 yrs' and '16 : 12' -- and checked individually with grimmer, che",
+      "location": "Table 1, Age row and Sex row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_cell_typing_coverage_gap",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "| Age (Mean \u00b1 SD)             | 23.9 \u00b1 5.84 yrs                                                 | 24.3 \u00b1 6.33 yrs                                                    |",
+      "inputs": {
+        "cells": "the 8 Table 1 cells recovered from the PDF grid"
+      },
+      "reported": {
+        "cells_in_table": 8
+      },
+      "computed": {
+        "coverage": 0.5,
+        "n_unread": 4,
+        "n_unread_numeric_shaped": 4,
+        "unread_shapes": [
+          "9.9 \u00b1 9.9 A",
+          "9 : 9"
+        ],
+        "candidate_formats_offered": 0
+      },
+      "notes": "This is OUR defect, not the paper's, and it is recorded so the coverage figure is honest. Half of Table 1's eight cells could not be typed automatically: the mean-SD cells carry a trailing unit ('23.9 \u00b1 5.84 yrs') that the parser does not strip, and the sex cells use ratio notation ('16 : 12') that no format in the vocabulary expresses. Both clusters returned an EMPTY candidate_formats list, so parse_cells_as_declared could not rescue them either. The four values were therefore read by eye from two independent extractions that agree exactly -- the docling markdown grid and the raw page-3 text layer, which both render '23.9\u00b15.84 yrs' and '16 : 12' -- and checked individually with grimmer, check_sd_range and check_summation_batch rather than through check_table.",
+      "reproduction": "metascience parse-cells --cells \"[{\\\"raw\\\":\\\"23.9 \u00b1 5.84 yrs\\\",\\\"row_label\\\":\\\"Age (Mean \u00b1 SD)\\\",\\\"col_label\\\":\\\"Experimental group without postoperative antibiotics (n = 28)\\\"},{\\\"raw\\\":\\\"16 : 12\\\",\\\"row_label\\\":\\\"Sex (Male : Female)\\\",\\\"col_label\\\":\\\"Experimental group without postoperative antibiotics (n = 28)\\\"}]\"",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_44e910eb39eb4770",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_image_only_in_xml",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Table1 image only in xml (Table 1 (XML), recovered from PDF page 3)",
+      "description": "The XML carries Table 1 as a picture with no cells, which would have left the paper's only table unchecked. Pass 2 recovered it from the PDF, where it appears twice in agreement -- once as a reconstructed markdown grid and once in the page text -- so the recovery is corroborated rather than single-sourced. Recorded as consistent because the gap was closed, not because nothing was wrong with the source.",
+      "location": "Table 1 (XML), recovered from PDF page 3",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "[Table 1: Results according to the Postoperative Antibiotic Prophylaxis \u2014 image only, no cells; see tables]"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_image_only_in_xml",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "[Table 1: Results according to the Postoperative Antibiotic Prophylaxis \u2014 image only, no cells; see tables]",
+      "inputs": {
+        "xml_path": "10.3349--ymj.2009.50.1.55.xml",
+        "pdf_path": "10.3349--ymj.2009.50.1.55.pdf"
+      },
+      "reported": {
+        "n_tables_in_xml": 1,
+        "n_tables_image_only": 1
+      },
+      "computed": {
+        "resolution": "The table was recovered in full from the PDF text layer on page 3, giving all four data rows and both column headers."
+      },
+      "notes": "The XML carries Table 1 as a picture with no cells, which would have left the paper's only table unchecked. Pass 2 recovered it from the PDF, where it appears twice in agreement -- once as a reconstructed markdown grid and once in the page text -- so the recovery is corroborated rather than single-sourced. Recorded as consistent because the gap was closed, not because nothing was wrong with the source.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3349--ymj.2009.50.1.55/10.3349--ymj.2009.50.1.55.pdf --first-page 3 --last-page 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] PDF_PATH\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-page",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_ac09dcc1c9985211",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "beta_labelled_as_test_power",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Beta labelled as test power (Discussion, sample-size paragraph)",
+      "description": "A terminology slip: beta = 0.20 is the type II error rate, not the test power. Recorded because it sits in the sentence that justifies the sample size -- a load-bearing methods statement -- rather than in incidental text. It changes nothing arithmetically and the intended meaning is clear.",
+      "location": "Discussion, sample-size paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The samples were selected at a significance level of \u03b1 =0.05 and a test power \u03b2 =0.20."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:beta_labelled_as_test_power",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The samples were selected at a significance level of \u03b1 =0.05 and a test power \u03b2 =0.20.",
+      "inputs": {
+        "alpha": 0.05,
+        "beta": 0.2
+      },
+      "reported": {
+        "stated": "a test power \u03b2 = 0.20"
+      },
+      "computed": {
+        "reading": "As printed the sentence asserts 20% power alongside alpha = 0.05, which would be an unusable design. The conventional reading is that beta is the type II error rate and power is 1 - beta = 0.80, which is what 28 per group is consistent with."
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No reported number changes -- the intended design (alpha = 0.05, power = 0.80) is unambiguous from context, and the sample size of 28 per arm is reported independently."
+      },
+      "notes": "A terminology slip: beta = 0.20 is the type II error rate, not the test power. Recorded because it sits in the sentence that justifies the sample size -- a load-bearing methods statement -- rather than in incidental text. It changes nothing arithmetically and the intended meaning is clear.",
+      "reproduction": "No command applies: this is a notation error read off the sentence, not a computation.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_d457b04718aed332",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "unblinded_allocation_with_subjective_outcome",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Unblinded allocation with subjective outcome",
+      "description": "The paper is transparent about this: it states plainly that no placebo was given, and the surgery was performed by a single surgeon. The direction of any resulting bias is not determinable from what is reported, and with 3 and 2 events the question is moot for the significance of the result. Recorded because the outcome definition is partly subjective and the trial is presented as prospective and randomised, where a reader may assume masking.",
+      "location": "Patients and Methods, allocation paragraph, and SSI criteria list",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The  patients  in  the  experimental  group received  only  1.0 g  of  a  third-generation  cephalosporin (Cefpiramide)  intravenously 30  minutes before  surgery  and  did  not  receive  the  placebo."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:unblinded_allocation_with_subjective_outcome",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The  patients  in  the  experimental  group received  only  1.0 g  of  a  third-generation  cephalosporin (Cefpiramide)  intravenously 30  minutes before  surgery  and  did  not  receive  the  placebo.",
+      "inputs": {
+        "design": "two-arm randomised trial without placebo"
+      },
+      "reported": {
+        "randomisation": "Microsoft Excel randomisation codes",
+        "placebo": "not given",
+        "outcome_ascertainment": "CDC SSI criteria assessed clinically"
+      },
+      "computed": {
+        "reading": "Allocation was randomised but not masked; the paper reports no blinding of patients, of the operating surgeon, or of the assessor who applied the SSI criteria."
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The primary outcome includes assessor-judged signs -- 'pain or tenderness, localized swelling, redness or heat' and 'Diagnosis of SSI by the surgeon or attending physician' -- so the absence of masking bears directly on the infection counts that the single reported test is computed from."
+      },
+      "notes": "The paper is transparent about this: it states plainly that no placebo was given, and the surgery was performed by a single surgeon. The direction of any resulting bias is not determinable from what is reported, and with 3 and 2 events the question is moot for the significance of the result. Recorded because the outcome definition is partly subjective and the trial is presented as prospective and randomised, where a reader may assume masking.",
+      "reproduction": "No command applies: this is a design observation read from the Methods, not a computation.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_290b69b82485d8f3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_trial_registration",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "No trial registration (Patients and Methods, final paragraph)",
+      "description": "Recorded so that the anatomy's hypothesis status is auditable: H1 is classed 'confirmatory' rather than 'preregistered_confirmatory' because the paper states its aim in advance but cites no registration. For a 2009 trial this is unremarkable and is NOT presented as a defect -- prospective registration was not yet universally enforced. Severity indeterminate: an absence in the text is not evidence that no protocol existed.",
+      "location": "Patients and Methods, final paragraph",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The study protocol was approved by the Institutional Review Board of the College of Dentistry, Yonsei University (YUDC)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_trial_registration",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The study protocol was approved by the Institutional Review Board of the College of Dentistry, Yonsei University (YUDC).",
+      "inputs": {
+        "searched": "full XML body text and full PDF text"
+      },
+      "reported": {
+        "ethics_approval": "IRB, College of Dentistry, Yonsei University",
+        "trial_registration": "none stated"
+      },
+      "computed": {
+        "reading": "The paper names an IRB approval but no trial registry identifier and no protocol citation anywhere in the text."
+      },
+      "notes": "Recorded so that the anatomy's hypothesis status is auditable: H1 is classed 'confirmatory' rather than 'preregistered_confirmatory' because the paper states its aim in advance but cites no registration. For a 2009 trial this is unremarkable and is NOT presented as a defect -- prospective registration was not yet universally enforced. Severity indeterminate: an absence in the text is not evidence that no protocol existed.",
+      "reproduction": "No command applies: this is an absence read from the full text, not a computation.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_982257541c96a246",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "242f79a3b698a74fb9c139ccce145f719cce4ed15f93b90a06f822b88b142bbd",
+    "migrated_at": "2026-10-19T20:18:28Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-17 02:27 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

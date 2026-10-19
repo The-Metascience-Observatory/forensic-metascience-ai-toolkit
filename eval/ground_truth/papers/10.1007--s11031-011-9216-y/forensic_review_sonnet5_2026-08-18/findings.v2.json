@@ -1,0 +1,703 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "run_id": "r_9dcbc6e4c17e62f9",
+  "findings": [
+    {
+      "slug": "exp1_df_exceeds_sample_size",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Exp1 df exceeds sample size",
+      "description": "This is a pure counting argument (df cannot exceed N-2 for any subset of a fixed sample), verified against the paper's own explicitly stated N=47 and against the paper's own repeated use of df=43 for the omnibus model on this same experiment. The F statistic and p-value themselves are internally consistent (recalc_f_to_p on F(1,46)=6.95 gives p=.0114, matching the printed 'p = 011' i.e. p=.011), so the anomaly is specifically the printed denominator df, not the p-value arithmetic. An innocent explanation is a single-digit typographical slip (e.g., intended df=43, matching the rest of the experiment) rather than fabrication; language is kept to 'anomaly'/'inconsistency' per rulebook rule 9. T",
+      "location": "Experiment 1, Self-evaluations (unshared-birthday conditions)",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Experiment 1... Female university (N = 47) students participated in the study for monetary compensation. ... Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp1_df_exceeds_sample_size",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Experiment 1... Female university (N = 47) students participated in the study for monetary compensation. ... Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+      "reported": {
+        "stated_N": 47,
+        "reported_error_df": 46
+      },
+      "computed": {
+        "max_possible_error_df_for_any_two_group_split_of_N": 45,
+        "derivation": "For any independent two-group comparison drawn from a total sample of N participants, the maximum attainable error (denominator) df is N-2, because that value requires using every single participant as one of only two groups. With the paper's own stated N=47 for Experiment 1, max error df = 47-2 = 45. The paper reports F(1, 46), i.e. error df = 46, which requires n1+n2 >= 48 -- one more participant than the entire stated sample. This exceeds even the omnibus 2x2 model's own error df of 43 (also printed for this experiment, e.g. F(1,43)=38.80, F(1,43)=7.77, F(1,43)=5.99), which is itself already the largest error df attainable from a 4-cell model on N=47."
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The df printed for this specific contrast (the paper's own demonstration that positive mood produces symmetric contrast responses in the absence of ambiguous similarity information) cannot have come from the stated N=47 sample under any two-group partition; the printed p-value is internally consistent with the (impossible) df as printed, so a reader cannot recover what the correct test actually was."
+      },
+      "notes": "This is a pure counting argument (df cannot exceed N-2 for any subset of a fixed sample), verified against the paper's own explicitly stated N=47 and against the paper's own repeated use of df=43 for the omnibus model on this same experiment. The F statistic and p-value themselves are internally consistent (recalc_f_to_p on F(1,46)=6.95 gives p=.0114, matching the printed 'p = 011' i.e. p=.011), so the anomaly is specifically the printed denominator df, not the p-value arithmetic. An innocent explanation is a single-digit typographical slip (e.g., intended df=43, matching the rest of the experiment) rather than fabrication; language is kept to 'anomaly'/'inconsistency' per rulebook rule 9. This paper carries a journal retraction header and is documented (Levelt Committee) as containing fabricated data, which is relevant background but not itself evidence for this specific finding.",
+      "reproduction": "metascience f-to-p --f-value 6.95 --df1 1 --df2 46 --reported-p 0.011",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_317ffb7bafdd3461",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "recurring_df_124_across_experiments",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Recurring df 124 across experiments",
+      "description": "Recurring identical denominator dfs across analyses that should generally have different degrees of freedom is the kind of too-good/repeated pattern flagged at low-moderate severity per rulebook rule 8. A legitimate explanation is that the authors used a pooled error term from an undocumented model (common in Jaccard 1998-style single-df contrast methods) that happens to coincide numerically -- the paper does not report enough information (per-cell or per-condition n) to reconstruct which model actually produces df=124, so this cannot be pushed to impossible; it is recorded as an unexplained reporting gap.",
+      "location": "Experiment 2 (Positive mood / Negative mood sections) and Experiment 4 (Manipulation check / No-load / Cognitive load sections)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "As can be seen in Table 1, in the positive mood conditions, direction of comparison, F(1, 124) = 14.79, p < .001... Among the negative mood conditions, only the main effect of direction was significant, F(1, 124) = 56.97, p < .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:recurring_df_124_across_experiments",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "As can be seen in Table 1, in the positive mood conditions, direction of comparison, F(1, 124) = 14.79, p < .001... Among the negative mood conditions, only the main effect of direction was significant, F(1, 124) = 56.97, p < .001.",
+      "reported": {
+        "exp2_recurring_df": 124,
+        "exp2_total_N": 141,
+        "exp4_recurring_df": 124,
+        "exp4_total_N": 193
+      },
+      "computed": {
+        "exp2_omnibus_df_excl_control": 118,
+        "exp2_omnibus_df_incl_control": 132,
+        "exp4_omnibus_df_excl_control": 110,
+        "derivation": "Experiment 2's own two explicit models are self-consistent: the 8-cell factorial-only omnibus ANOVA uses error df=118 (implying factorial N=126 and control n=141-126=15), and the model including the control condition as a 9th cell uses error df=132 (141-9=132, matching F(1,132)=340.44 for the manipulation check and the four control-contrast F(1,132) tests). Neither of those two internally-consistent models produces df=124. The identical literal value 124 is then reused, unexplained, for BOTH the positive-mood-only and negative-mood-only breakdown tests in Experiment 2, AND for the mood manipulation check and multiple control contrasts in Experiment 4 -- a completely different experiment with a different total N (193, not 141) and a different omnibus df (110, not 118)."
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "A reader cannot verify the denominator df used for the paper's key simple-effects breakdowns (the tests that support the asymmetric-responding claim in both Experiments 2 and 4), because it matches no model the paper otherwise documents."
+      },
+      "notes": "Recurring identical denominator dfs across analyses that should generally have different degrees of freedom is the kind of too-good/repeated pattern flagged at low-moderate severity per rulebook rule 8. A legitimate explanation is that the authors used a pooled error term from an undocumented model (common in Jaccard 1998-style single-df contrast methods) that happens to coincide numerically -- the paper does not report enough information (per-cell or per-condition n) to reconstruct which model actually produces df=124, so this cannot be pushed to impossible; it is recorded as an unexplained reporting gap.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.pdf",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_1f596d20a35411cc",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_full_text_sweep",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck full text sweep (Whole-text NHST sweep (Pilot study through Experiment 4))",
+      "description": "statcheck parsed 63 APA-format NHST statistics across the paper. 3 were flagged for a numeric gap between the printed p and the p implied by the printed test statistic and df, but all 3 are UNDER-claims (printed p larger/more conservative than the true p implied by the statistic) and none changes a significance decision. Each of the 3 was individually re-verified below.",
+      "location": "Whole-text NHST sweep (Pilot study through Experiment 4)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_full_text_sweep",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001.",
+      "reported": {
+        "stats_found": 63,
+        "errors_flagged_upstream": 3,
+        "decision_errors": 0
+      },
+      "computed": {
+        "decision_error_count": 0,
+        "methodology_quote": "0 decision errors (a p-value on the wrong side of its own significance threshold)"
+      },
+      "notes": "statcheck parsed 63 APA-format NHST statistics across the paper. 3 were flagged for a numeric gap between the printed p and the p implied by the printed test statistic and df, but all 3 are UNDER-claims (printed p larger/more conservative than the true p implied by the statistic) and none changes a significance decision. Each of the 3 was individually re-verified below.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.pdf",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_e79cd1b05f1b410c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "pilot_f27_p76_discrepancy",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Pilot f27 p76 discrepancy (Pilot study, self-evaluations ANOVA)",
+      "description": "Underlying tool call used recalc_stat_to_p (a generalization of recalc_f_to_p covering t/F/chi2/r/z conversions); no separate enum entry exists for it, so it is filed under recalc_f_to_p, the closest registered technique. F(1,42)=.27 implies p about .606, not .76 -- a sizeable gap, but the printed p is the MORE conservative (larger) of the two, i.e. an under-claim of significance, not an over-claim. Per the tool's own directional design (only over-claims are flagged), and since both values are non-significant with the identical substantive conclusion ('did not differ'), this is reported consistent; the magnitude of the gap is recorded for transparency.",
+      "location": "Pilot study, self-evaluations ANOVA",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Those in the negative mood (M = 6.98, SD = .53), positive mood (M = 6.98, SD = .80), and the control condition (M = 6.82, SD = .67), did not differ F(1, 42) = .27, p = .76."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:pilot_f27_p76_discrepancy",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Those in the negative mood (M = 6.98, SD = .53), positive mood (M = 6.98, SD = .80), and the control condition (M = 6.82, SD = .67), did not differ F(1, 42) = .27, p = .76.",
+      "reported": {
+        "F": 0.27,
+        "df": "1,42",
+        "p": 0.76
+      },
+      "computed": {
+        "computed_p": 0.6060596461077595,
+        "achievable_p_interval": [
+          0.5994869635823482,
+          0.6094043504526856
+        ]
+      },
+      "notes": "Underlying tool call used recalc_stat_to_p (a generalization of recalc_f_to_p covering t/F/chi2/r/z conversions); no separate enum entry exists for it, so it is filed under recalc_f_to_p, the closest registered technique. F(1,42)=.27 implies p about .606, not .76 -- a sizeable gap, but the printed p is the MORE conservative (larger) of the two, i.e. an under-claim of significance, not an over-claim. Per the tool's own directional design (only over-claims are flagged), and since both values are non-significant with the identical substantive conclusion ('did not differ'), this is reported consistent; the magnitude of the gap is recorded for transparency.",
+      "reproduction": "metascience f-to-p --f-value 0.27 --df1 1 --df2 42 --reported-p 0.76",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+        "source_locator": "Experiment 1, Self-evaluations (unshared birthday conditions)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_0f564999288411a0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "exp3_f150_p83_discrepancy",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Exp3 f150 p83 discrepancy (Experiment 3, Perceptions of similarity)",
+      "description": "Underlying tool call used recalc_stat_to_p (generalization of recalc_f_to_p); filed under recalc_f_to_p for lack of a dedicated enum entry. F(1,94)=1.50 implies p about .224, not .83 -- a large gap (more than 3x). Again this is an under-claim (printed p far more conservative), and both values are non-significant with the same substantive conclusion; not flagged per the tool's directional calibration, but recorded given the size of the discrepancy.",
+      "location": "Experiment 3, Perceptions of similarity",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "In contrast, in the neutral mood condition, when information was ambiguous, direction of comparison did not influence ratings of similarity, F(1, 94) = .31, p = .58. Identical effects emerged when the information was unambiguous, F(1, 94) = 1.50, p = .83."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp3_f150_p83_discrepancy",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "In contrast, in the neutral mood condition, when information was ambiguous, direction of comparison did not influence ratings of similarity, F(1, 94) = .31, p = .58. Identical effects emerged when the information was unambiguous, F(1, 94) = 1.50, p = .83.",
+      "reported": {
+        "F": 1.5,
+        "df": "1,94",
+        "p": 0.83
+      },
+      "computed": {
+        "computed_p": 0.22373171933517688,
+        "achievable_p_interval": [
+          0.22220653854843875,
+          0.22449907195895621
+        ]
+      },
+      "notes": "Underlying tool call used recalc_stat_to_p (generalization of recalc_f_to_p); filed under recalc_f_to_p for lack of a dedicated enum entry. F(1,94)=1.50 implies p about .224, not .83 -- a large gap (more than 3x). Again this is an under-claim (printed p far more conservative), and both values are non-significant with the same substantive conclusion; not flagged per the tool's directional calibration, but recorded given the size of the discrepancy.",
+      "reproduction": "metascience f-to-p --f-value 1.5 --df1 1 --df2 94 --reported-p 0.83",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+        "source_locator": "Experiment 1, Self-evaluations (unshared birthday conditions)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_93c1867ff72581c5",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "exp3_r53_p008_check",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Exp3 r53 p008 check (Experiment 3, Perceptions of similarity)",
+      "description": "Underlying tool call used recalc_stat_to_p (kind='r'), which has no dedicated enum entry and is filed under recalc_f_to_p as the closest registered technique. Reported p=.008 is within a small margin of the computed p=.0054 given r(24)=.53, n=26; not a decision-changing gap.",
+      "location": "Experiment 3, Perceptions of similarity",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "When information was unambiguous, self and other attractiveness were significantly related in the positive, r(24) = .87, p < .001, and neutral mood, r(24) = .53, p = .008, reflecting assimilation of self."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp3_r53_p008_check",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "When information was unambiguous, self and other attractiveness were significantly related in the positive, r(24) = .87, p < .001, and neutral mood, r(24) = .53, p = .008, reflecting assimilation of self.",
+      "reported": {
+        "r": 0.53,
+        "df": 24,
+        "p": 0.008
+      },
+      "computed": {
+        "computed_p": 0.005354890010790464,
+        "achievable_p_interval": [
+          0.004406276904699083,
+          0.0058904387111606985
+        ]
+      },
+      "notes": "Underlying tool call used recalc_stat_to_p (kind='r'), which has no dedicated enum entry and is filed under recalc_f_to_p as the closest registered technique. Reported p=.008 is within a small margin of the computed p=.0054 given r(24)=.53, n=26; not a decision-changing gap.",
+      "reproduction": "metascience f-to-p --note \"recalc_stat_to_p kind=r not exposed as separate CLI verb\" (see tool call: statistic=0.53, kind=r, n=26, reported_p=0.008)",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --note ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+        "source_locator": "Experiment 1, Self-evaluations (unshared birthday conditions)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_d5ba2ce2847f009f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "exp1_f695_p011_verified",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Exp1 f695 p011 verified (Experiment 1, Self-evaluations (unshared birthday conditions))",
+      "description": "The F-to-p arithmetic is internally consistent once the printed 'p = 011' is read as the intended 'p = .011' (missing leading decimal point, a typesetting slip -- see the separate finding on the missing-decimal typos). The genuine anomaly for this statistic is the denominator df itself (see exp1_df_exceeds_sample_size), not this p-value.",
+      "location": "Experiment 1, Self-evaluations (unshared birthday conditions)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp1_f695_p011_verified",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+      "reported": {
+        "F": 6.95,
+        "df": "1,46",
+        "p_as_printed": "011"
+      },
+      "computed": {
+        "computed_p": 0.011390429259048302,
+        "achievable_p_interval": [
+          0.011362891625558433,
+          0.011418037997871812
+        ]
+      },
+      "notes": "The F-to-p arithmetic is internally consistent once the printed 'p = 011' is read as the intended 'p = .011' (missing leading decimal point, a typesetting slip -- see the separate finding on the missing-decimal typos). The genuine anomaly for this statistic is the denominator df itself (see exp1_df_exceeds_sample_size), not this p-value.",
+      "reproduction": "metascience f-to-p --f-value 6.95 --df1 1 --df2 46 --reported-p 0.011",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+        "source_locator": "Experiment 1, Self-evaluations (unshared birthday conditions)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_d21e49f014782ea1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "missing_decimal_points_in_printed_p",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Missing decimal points in printed p",
+      "description": "Two results print a p-value missing its leading decimal point ('p = 011' instead of 'p = .011'; 'p = 001' instead of 'p = .001', in 'F(1, 110) = 11.23, p = 001'). Recomputation confirms the intended values (.011 and .001 respectively) are numerically consistent with the printed F/df, so this is a typesetting/proofreading defect rather than a computational error. Recorded as a textual anomaly per the sweep's remit to note errors in load-bearing result sentences, capped at suspicious since it carries no arithmetic violation.",
+      "location": "Experiment 1, Self-evaluations paragraph; Experiment 4, Self-evaluations paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "F(1, 46) = 6.95, p = 011."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:missing_decimal_points_in_printed_p",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "F(1, 46) = 6.95, p = 011.",
+      "reported": {
+        "exp1_instance": "p = 011",
+        "exp4_instance": "p = 001"
+      },
+      "computed": {},
+      "notes": "Two results print a p-value missing its leading decimal point ('p = 011' instead of 'p = .011'; 'p = 001' instead of 'p = .001', in 'F(1, 110) = 11.23, p = 001'). Recomputation confirms the intended values (.011 and .001 respectively) are numerically consistent with the printed F/df, so this is a typesetting/proofreading defect rather than a computational error. Recorded as a textual anomaly per the sweep's remit to note errors in load-bearing result sentences, capped at suspicious since it carries no arithmetic violation.",
+      "reproduction": "N/A -- textual/typographical observation, no arithmetic tool applies",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_a856a879c1d4e4d9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_table2_cells_missing_n",
+      "producer": "legacy_sweep",
+      "technique": "tool_existed_unused",
+      "title": "Table1 table2 cells missing n",
+      "description": "Both tables report mean (SD) on stated, printable Likert scales (self-evaluation: 1-7 single item; similarity: 1-9 three-item composite), which would ordinarily make GRIM/GRIMMER/SPRITE (for self-evaluation) directly applicable -- but NEITHER table, nor the surrounding participants paragraphs, states a per-cell or per-condition n anywhere in the paper. Error df alone (e.g. df=118, df=88) fixes only N - k_cells, not the individual cell sizes, so per-cell n cannot be recovered without assuming balance, which the instructions direct against. This is recorded as a genuine coverage gap (a 'no per-cell n reported' pattern across all four experiments) rather than as an anomaly about the authors, th",
+      "location": "Table 1 (Experiment 2) and Table 2 (Experiment 3), all mean (SD) cells",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "5.25 (.93)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_table2_cells_missing_n",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "5.25 (.93)",
+      "reported": {
+        "table1_cells": 8,
+        "table2_cells": 16
+      },
+      "computed": {
+        "attempted_tools": [
+          "grim_check",
+          "grimmer_check",
+          "sprite_reconstruct"
+        ],
+        "check_table_verdict": "0 of 24 checks run; grim_check/grimmer_check/sprite_reconstruct all refused with reason 'needs n and this cell carries none'"
+      },
+      "notes": "Both tables report mean (SD) on stated, printable Likert scales (self-evaluation: 1-7 single item; similarity: 1-9 three-item composite), which would ordinarily make GRIM/GRIMMER/SPRITE (for self-evaluation) directly applicable -- but NEITHER table, nor the surrounding participants paragraphs, states a per-cell or per-condition n anywhere in the paper. Error df alone (e.g. df=118, df=88) fixes only N - k_cells, not the individual cell sizes, so per-cell n cannot be recovered without assuming balance, which the instructions direct against. This is recorded as a genuine coverage gap (a 'no per-cell n reported' pattern across all four experiments) rather than as an anomaly about the authors, though it is worth noting that this is exactly the reporting gap that would make the most powerful checks (GRIM/GRIMMER on stated-scale single-item means) inapplicable to this paper.",
+      "reproduction": "metascience check-table (see check_table calls in this run; refused for want of n)",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extr",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_375e413046dda848",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "figures_carry_no_unique_values",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Figures carry no unique values (Figures 1-3 (PDF pages 3, 11, 13))",
+      "description": "Figure 1 is a conceptual flow diagram (no data). Figures 2 and 3 are bar charts of self-evaluation means already printed in Table 2 (Figure 2, Experiment 3) and in the Results prose (Figure 3, Experiment 4 No-load/Cognitive-load paragraphs), so no figure carries a value that is not independently checkable from text or table.",
+      "location": "Figures 1-3 (PDF pages 3, 11, 13)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "In the presence of ambiguous distinctiveness information, positive mood leads to more positive self-evaluations, across upward and downward comparisons, than does neutral mood (from Experi- ment 3"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:figures_carry_no_unique_values",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "In the presence of ambiguous distinctiveness information, positive mood leads to more positive self-evaluations, across upward and downward comparisons, than does neutral mood (from Experi- ment 3",
+      "reported": {
+        "n_figures": 3,
+        "n_data_figures": 2
+      },
+      "computed": {},
+      "notes": "Figure 1 is a conceptual flow diagram (no data). Figures 2 and 3 are bar charts of self-evaluation means already printed in Table 2 (Figure 2, Experiment 3) and in the Results prose (Figure 3, Experiment 4 No-load/Cognitive-load paragraphs), so no figure carries a value that is not independently checkable from text or table.",
+      "reproduction": "metascience extract-figures --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.pdf",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_56dac39b5717be61",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "exp2_control_contrast_multiplicity",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Exp2 control contrast multiplicity",
+      "description": "No claims in this family of planned control-contrasts are lost to multiplicity correction, though 3 of 4 p-values are reported only as 'p < .001' thresholds rather than exact values, limiting how precisely this can be assessed.",
+      "location": "Experiment 2, Positive mood section (four contrasts vs control condition)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Compared to the control condition, participants in both the upward, F(1,132) = 13.76, p < .001, and downward, F(1,132) = 21.53, p < .001, comparison conditions rated themselves more positively... Compared to the control condition, they lowered self-ratings after upward comparison, F(1,132) = 14.06, p < .001 and raised self-ratings after downward comparison, F(1,132) = 10.69, p = .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp2_control_contrast_multiplicity",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Compared to the control condition, participants in both the upward, F(1,132) = 13.76, p < .001, and downward, F(1,132) = 21.53, p < .001, comparison conditions rated themselves more positively... Compared to the control condition, they lowered self-ratings after upward comparison, F(1,132) = 14.06, p < .001 and raised self-ratings after downward comparison, F(1,132) = 10.69, p = .001.",
+      "reported": {
+        "n_tests_in_family": 4
+      },
+      "computed": {
+        "n_surviving_floor": 1,
+        "n_surviving_ceiling": 1,
+        "n_claims_lost_to_correction": 0,
+        "note": "3 of the 4 tests reported p as a threshold ('p < .001') and were excluded from the arithmetic; only the exact p=.001 test could be evaluated, and it survives every correction method"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "computed",
+        "explanation": "Computed from 0 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "No claims in this family of planned control-contrasts are lost to multiplicity correction, though 3 of 4 p-values are reported only as 'p < .001' thresholds rather than exact values, limiting how precisely this can be assessed.",
+      "reproduction": "metascience multiplicity --family-label \"Experiment 2 control contrasts\" (see tool call)",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Compared to the control condition, participants in both the upward, F(1,132) = 13.76, p < .001, and downward, F(1,132) = 21.53, p < .001, comparison conditions rated themselves more positively... Compared to the control condition, they lowered self-ratings after upward comparison, F(1,132) = 14.06, p < .001 and raised self-ratings after downward comparison, F(1,132) = 10.69, p = .001.",
+        "source_locator": "Experiment 2, Positive mood section",
+        "source_quote_verified": "elided",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_f39d52646ae6116e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "exp4_control_contrast_multiplicity",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Exp4 control contrast multiplicity",
+      "description": "Of the tests with an exact printed p (4 of 8; the other 4 are 'p < .001' thresholds and excluded from the arithmetic), none is lost to correction under any of the four methods computed.",
+      "location": "Experiment 4, No-load and Cognitive-load conditions (eight contrasts vs control condition)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found, regardless of whether participants upwardly compared (M = 5.64, SD = .78; F(1,124) = 17.39, p < .001) or downwardly compared (M = 5.15, SD = .81), F(1,124) = 11.90, p = .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:exp4_control_contrast_multiplicity",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found, regardless of whether participants upwardly compared (M = 5.64, SD = .78; F(1,124) = 17.39, p < .001) or downwardly compared (M = 5.15, SD = .81), F(1,124) = 11.90, p = .001.",
+      "reported": {
+        "n_tests_in_family": 8
+      },
+      "computed": {
+        "n_surviving_floor": 4,
+        "n_surviving_ceiling": 4,
+        "n_claims_lost_to_correction": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "computed",
+        "explanation": "Computed from 0 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "Of the tests with an exact printed p (4 of 8; the other 4 are 'p < .001' thresholds and excluded from the arithmetic), none is lost to correction under any of the four methods computed.",
+      "reproduction": "metascience multiplicity --family-label \"Experiment 4 control contrasts\" (see tool call)",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found, regardless of whether participants upwardly compared (M = 5.64, SD = .78; F(1,124) = 17.39, p < .001) or downwardly compared (M = 5.15, SD = .81), F(1,124) = 11.90, p = .001.",
+        "source_locator": "Experiment 4, No load and Cognitive load conditions",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_4a462b6d50ff8c81",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "retraction_header_present",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Retraction header present (Article title / whole document)",
+      "description": "The paper's own title as extracted carries a journal-applied 'RETRACTED ARTICLE' prefix. This paper is one of the works implicated in the Stapel research-fraud case (Levelt Committee findings); this is background context for interpreting the findings above, not itself a computed result.",
+      "location": "Article title / whole document",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "RETRACTED ARTICLE: Happiness as alchemy: Positive mood leads to self-serving responses to social comparisons"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:retraction_header_present",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "RETRACTED ARTICLE: Happiness as alchemy: Positive mood leads to self-serving responses to social comparisons",
+      "reported": {},
+      "computed": {},
+      "notes": "The paper's own title as extracted carries a journal-applied 'RETRACTED ARTICLE' prefix. This paper is one of the works implicated in the Stapel research-fraud case (Levelt Committee findings); this is background context for interpreting the findings above, not itself a computed result.",
+      "reproduction": "N/A",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_87810f2c582a3eae",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "3cff7af9bff07a64d8e644c26910dd40a7a1f6e54ee06a8ce9156acadc545957",
+    "migrated_at": "2026-10-19T20:18:28Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-18 05:03 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

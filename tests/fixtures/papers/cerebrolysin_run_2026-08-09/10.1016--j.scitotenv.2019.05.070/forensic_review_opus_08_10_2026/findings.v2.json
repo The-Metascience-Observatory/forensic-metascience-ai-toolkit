@@ -1,0 +1,1903 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1016--j.scitotenv.2019.05.070",
+  "run_id": "r_6ebae7214e2bc9b0",
+  "findings": [
+    {
+      "slug": "fim_means_grim_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Fim means grim impossible",
+      "description": "Ten of the 27 mean cells in Table IV cannot be produced by any set of integers of the stated group size. The failure mode returned is `granularity`, which depends only on the scores being integer-valued sums and on n -- it does NOT depend on the assumed scale bounds, so rulebook rule 4's cap does not apply. FIM item scores are integers 1-7 (paper: 'a decreasing scale in 7 stages, from 7 ... to 1'), so the totals are integers; the paper does not state this in so many words, which is the one inferential step involved. Cross-checked against R `scrutiny` on four of the ten values (59.23/18, 88.23/18, 29.22/30, 96.95/30): both engines returned inconsistent, so the verdict stands on two independen",
+      "location": "Table IV (Evolution of the FIM score), Motor / Cognition / Total score rows in all three groups",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Motor score\t59.23 \u00b1 10.44\t66.52 \u00b1 11.07\t0.70\t70.94 \u00b1 11.91 \u204e\t1.12"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:fim_means_grim_impossible",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Motor score\t59.23 \u00b1 10.44\t66.52 \u00b1 11.07\t0.70\t70.94 \u00b1 11.91 \u204e\t1.12",
+      "inputs": {
+        "table": "Table IV",
+        "variables": [
+          "fim_motor (13-91)",
+          "fim_cog (5-35)",
+          "fim_total (18-126)"
+        ],
+        "data_type": "count",
+        "bound_source": "assumed",
+        "decimals": 2
+      },
+      "reported": {
+        "grim_failing_means_n18": [
+          59.23,
+          66.52,
+          88.23,
+          98.24
+        ],
+        "grim_failing_means_n30": [
+          67.68,
+          29.22,
+          31.78,
+          88.28,
+          96.95,
+          100.85
+        ],
+        "group_ns": {
+          "Group I": 22,
+          "Group II": 18,
+          "Group III": 30
+        }
+      },
+      "computed": {
+        "n_checks_run": 81,
+        "n_not_run": 0,
+        "impossible": 34,
+        "suspicious": 4,
+        "indeterminate": 1,
+        "consistent": 42,
+        "n_means_failing_grim": 10,
+        "n_mean_sd_cells": 27,
+        "example": "59.23 x 18 = 1066.14; nearest integer sum 1066 gives 59.2222, which does not round back to 59.23",
+        "r_scrutiny_cross_check": {
+          "59.23_n18": "inconsistent",
+          "88.23_n18": "inconsistent",
+          "29.22_n30": "inconsistent",
+          "96.95_n30": "inconsistent"
+        }
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 9,
+        "basis": "asserted",
+        "explanation": "Table IV is the sole source for every FIM number in the paper, including the nine reported FIM ANOVAs and the claim that 'the best ES was recorded for the group combining all three associated therapies'; if these means cannot be means of the stated samples, none of those figures can be verified."
+      },
+      "notes": "Ten of the 27 mean cells in Table IV cannot be produced by any set of integers of the stated group size. The failure mode returned is `granularity`, which depends only on the scores being integer-valued sums and on n -- it does NOT depend on the assumed scale bounds, so rulebook rule 4's cap does not apply. FIM item scores are integers 1-7 (paper: 'a decreasing scale in 7 stages, from 7 ... to 1'), so the totals are integers; the paper does not state this in so many words, which is the one inferential step involved. Cross-checked against R `scrutiny` on four of the ten values (59.23/18, 88.23/18, 29.22/30, 96.95/30): both engines returned inconsistent, so the verdict stands on two independent implementations. Table IV was also reconciled cell-by-cell against the PDF version of record, which prints the identical values -- these are not an extraction artifact. Two further Table IV means (104.88 at n=18, 59.06 at n=30) were downgraded by the tool to `suspicious` under a truncation-rather-than-rounding convention and are reported separately.",
+      "reproduction": "metascience check-table --cells-json table4_fim_cells.json --variables-json fim_vars.json --bindings-json fim_bindings.json",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)",
+        "source_locator": "Results, Spasticity assessment Ashworth Scale, para 2",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_2a200b21c5dbdd7e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "anova_f_outside_achievable_range",
+      "producer": "legacy_sweep",
+      "technique": "rivets_anova",
+      "title": "Anova f outside achievable range",
+      "description": "Every one of the five reported ANOVA F values tested falls outside the interval reachable from the paper's own printed means and SDs, with a Monte Carlo exact-match rate of 0 across 5,000 draws of the rounding box. The direction is NOT consistent: four reported F values are smaller than achievable and one (SS-QOL total, 21.217 vs 18.12-18.16) is larger, which argues against a single benign explanation such as the authors having run a repeated-measures rather than a one-way ANOVA -- removing within-subject error would raise F systematically, not lower it in four cases out of five. Two caveats. First, the recomputation treats the tabulated dispersions as SDs; Table II explicitly labels its dis",
+      "location": "Results: Barthel Index para 1, FIM Scale para 1, SS-QOL Scale para 1",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The Barthel Index evolution exhibits statistically significant difference among all groups as assessed by one-way ANOVA (F = 4.766, p = 0.012 for BFT + Lokomat + Cerebrolysin and F = 5.741, p = 0.006 for BFT + Lokomat group, and F = 3.122, p = 0.049 for BFT group)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:anova_f_outside_achievable_range",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The Barthel Index evolution exhibits statistically significant difference among all groups as assessed by one-way ANOVA (F = 4.766, p = 0.012 for BFT + Lokomat + Cerebrolysin and F = 5.741, p = 0.006 for BFT + Lokomat group, and F = 3.122, p = 0.049 for BFT group).",
+      "inputs": {
+        "means_barthel_G1": [
+          51.14,
+          59.77,
+          65.91
+        ],
+        "sds_barthel_G1": [
+          9.36,
+          10.22,
+          10.82
+        ],
+        "ns": [
+          22,
+          22,
+          22
+        ],
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "decimals_f": 3
+      },
+      "reported": {
+        "barthel_G1": {
+          "F": 4.766,
+          "p": 0.012
+        },
+        "barthel_G3": {
+          "F": 3.122,
+          "p": 0.049
+        },
+        "fim_total_G1": {
+          "F": 10.84
+        },
+        "fim_total_G2": {
+          "F": 9.238
+        },
+        "ssqol_total_G1": {
+          "F": 21.217
+        }
+      },
+      "computed": {
+        "barthel_G1": {
+          "F_range": [
+            11.732,
+            11.783
+          ],
+          "p_range": [
+            4.5e-05,
+            4.67e-05
+          ]
+        },
+        "barthel_G3": {
+          "F_range": [
+            4.359,
+            4.387
+          ],
+          "p_range": [
+            0.0153,
+            0.0157
+          ]
+        },
+        "fim_total_G1": {
+          "F_range": [
+            12.814,
+            12.861
+          ]
+        },
+        "fim_total_G2": {
+          "F_range": [
+            9.444,
+            9.481
+          ]
+        },
+        "ssqol_total_G1": {
+          "F_range": [
+            18.12,
+            18.158
+          ]
+        },
+        "n_tested": 5,
+        "n_outside_range": 5,
+        "monte_carlo_match_rate": 0
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 24,
+        "basis": "asserted",
+        "explanation": "For the Barthel control group the paper prints F = 3.122, p = 0.049 -- just inside its own alpha -- where the printed means and SDs imply p between 0.0153 and 0.0157; for Barthel Group I the reported p = 0.012 versus an achievable ~4.6e-05 means no reported ANOVA in the paper can be taken at face value."
+      },
+      "notes": "Every one of the five reported ANOVA F values tested falls outside the interval reachable from the paper's own printed means and SDs, with a Monte Carlo exact-match rate of 0 across 5,000 draws of the rounding box. The direction is NOT consistent: four reported F values are smaller than achievable and one (SS-QOL total, 21.217 vs 18.12-18.16) is larger, which argues against a single benign explanation such as the authors having run a repeated-measures rather than a one-way ANOVA -- removing within-subject error would raise F systematically, not lower it in four cases out of five. Two caveats. First, the recomputation treats the tabulated dispersions as SDs; Table II explicitly labels its dispersion 'SEM', and under the SEM reading the Barthel F would be roughly 0.5, still nowhere near 4.766, so that row fails under either reading. Tables IV and V carry no SD/SEM label at all. Second, three of the five means feeding the FIM recomputation are themselves GRIM-impossible, so for those the inputs are already in question. The paper reports 24 such F values in total and none carries degrees of freedom.",
+      "reproduction": "metascience rivets-anova --means 51.14 59.77 65.91 --sds 9.36 10.22 10.82 --ns 22 22 22 --reported-f 4.766 --reported-p 0.012 --decimals-mean 2 --decimals-sd 2 --decimals-f 3 --decimals-p 3",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-anova [OPTIONS]\nTry 'metascience rivets-anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "SS-SQL: F = 21.217, p &lt; 0.001 for BFT + Lokomat+Cerebrolysin",
+        "source_locator": "Results, Quality of life evaluation - SS-QOL Scale, para 1; means/SDs from Table V",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_a465e1006d8905b9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "spasticity_13_04_percent_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Spasticity 13 04 percent impossible",
+      "description": "13.04% is not a share of 22 patients: it implies 2.87 people. The neighbouring achievable value is 13.64% (3/22), and 18.18 + 13.64 = 31.82 exactly reproduces the total the same sentence reports, so the most economical reading is a transposition of 13.64 to 13.04. Table III supports this: patients with Ashworth >= 2 in Group I go 9 -> 5 -> 2 out of 22, i.e. 40.91% -> 22.73% -> 9.09%, giving decrements of 18.18 and 13.64 points. The value is present identically in the PDF version of record. Note 13.04% is exactly 3/23, one more than the stated group size.",
+      "location": "Results, Spasticity assessment Ashworth Scale, para 2",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:spasticity_13_04_percent_impossible",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)",
+      "inputs": {
+        "percentage": 13.04,
+        "n": 22,
+        "decimals": 2,
+        "data_type": "proportion"
+      },
+      "reported": {
+        "percentage": 13.04,
+        "n": 22
+      },
+      "computed": {
+        "implied_count": 2.8688,
+        "possible_percentages_nearby": [
+          0,
+          4.55,
+          9.09,
+          13.64,
+          18.18,
+          22.73,
+          27.27
+        ],
+        "passes_under_truncation": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects only the arithmetic of the sentence describing the Group I spasticity decrease; the associated p = 0.016 and the Table III counts it is derived from are unaffected."
+      },
+      "notes": "13.04% is not a share of 22 patients: it implies 2.87 people. The neighbouring achievable value is 13.64% (3/22), and 18.18 + 13.64 = 31.82 exactly reproduces the total the same sentence reports, so the most economical reading is a transposition of 13.64 to 13.04. Table III supports this: patients with Ashworth >= 2 in Group I go 9 -> 5 -> 2 out of 22, i.e. 40.91% -> 22.73% -> 9.09%, giving decrements of 18.18 and 13.64 points. The value is present identically in the PDF version of record. Note 13.04% is exactly 3/23, one more than the stated group size.",
+      "reproduction": "MCP-only tool grim_percentage; the CLI exposes no verb for the percentage variant of GRIM. Equivalent check: 13.04 x 22 / 100 = 2.8688, which is not an integer, so no count out of 22 yields 13.04%.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'MCP-only'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)",
+        "source_locator": "Results, Spasticity assessment Ashworth Scale, para 2",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_6aa971d32886359a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "spasticity_components_do_not_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Spasticity components do not sum (Results, Spasticity assessment Ashworth Scale, para 2)",
+      "description": "This is the same defect as `spasticity_13_04_percent_impossible` seen from the summation side, and is the ONLY one of 56 sums in the paper that fails to reconcile. The parallel sentence for Group II (16.67 + 11.11 = 27.78) reconciles exactly. Recorded separately because it is the check that localises which of the three printed numbers is wrong: the total 31.82 and the first component 18.18 are both achievable at n = 22, so the middle term is the odd one out.",
+      "location": "Results, Spasticity assessment Ashworth Scale, para 2",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:spasticity_components_do_not_sum",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months)",
+      "inputs": {
+        "values": [
+          18.18,
+          13.04
+        ],
+        "expected_sum": 31.82,
+        "decimals": 2
+      },
+      "reported": {
+        "components": [
+          18.18,
+          13.04
+        ],
+        "stated_total": 31.82
+      },
+      "computed": {
+        "actual_sum": 31.22,
+        "difference": -0.6,
+        "tolerance": 0.015,
+        "tolerance_basis": "printed precision"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "One descriptive sentence; the direction and significance of the Group I spasticity change are carried by Table III and the reported p = 0.016, neither of which depends on this decomposition."
+      },
+      "notes": "This is the same defect as `spasticity_13_04_percent_impossible` seen from the summation side, and is the ONLY one of 56 sums in the paper that fails to reconcile. The parallel sentence for Group II (16.67 + 11.11 = 27.78) reconciles exactly. Recorded separately because it is the check that localises which of the three printed numbers is wrong: the total 31.82 and the first component 18.18 are both achievable at n = 22, so the middle term is the odd one out.",
+      "reproduction": "metascience summation --values 18.18 13.04 --expected-sum 31.82 --decimals 2",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation [OPTIONS]\nTry 'metascience summation --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --expected-sum (P",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Group I (n = 22) \u2013 Lokomat combined with balneo-physiotherapy and Cerebrolysin; Group II (n = 18) \u2013 Lokomat associated only with balneo-physiotherapy; and Group III (n = 30) \u2013 balneo-physiotherapy alone (Control group).",
+        "source_locator": "Tables I-V and Results text",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_a9d9ff421b7f2142",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "baseline_gender_imbalance_contradicts_claim",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Baseline gender imbalance contradicts claim",
+      "description": "The paper states flatly that no demographic or clinical characteristic differed among the three groups, but the gender split does: 13.6% and 16.7% female in the two Lokomat arms against 46.7% in the control arm, chi-squared(2) = 8.47, p = 0.0145. No per-row p-values are printed in Table I, so this is a recomputation against an unsupported blanket claim rather than a disagreement with a stated statistic. Importantly, allocation here was explicitly NOT random -- patients were assigned by history, comorbidity and willingness to consent to Lokomat training -- so a baseline imbalance is expected rather than anomalous; what is flagged is the claim of no difference, not the imbalance itself. For th",
+      "location": "Table I, Gender rows; claim in Results, Patient characteristics",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Females\t3\t13.64\t3\t16.67\t14\t46.67"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:baseline_gender_imbalance_contradicts_claim",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Females\t3\t13.64\t3\t16.67\t14\t46.67",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            19
+          ],
+          [
+            3,
+            15
+          ],
+          [
+            14,
+            16
+          ]
+        ]
+      },
+      "reported": {
+        "claim": "no statistically significant differences were observed among the three groups",
+        "female_pct": {
+          "Group I": 13.64,
+          "Group II": 16.67,
+          "Group III": 46.67
+        }
+      },
+      "computed": {
+        "chi2": 8.4679,
+        "df": 2,
+        "p": 0.0145,
+        "expected_females": [
+          6.29,
+          5.14,
+          8.57
+        ]
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Undermines the stated comparability of the groups, on which every between-group comparison in the paper rests, since no outcome analysis adjusts for sex."
+      },
+      "notes": "The paper states flatly that no demographic or clinical characteristic differed among the three groups, but the gender split does: 13.6% and 16.7% female in the two Lokomat arms against 46.7% in the control arm, chi-squared(2) = 8.47, p = 0.0145. No per-row p-values are printed in Table I, so this is a recomputation against an unsupported blanket claim rather than a disagreement with a stated statistic. Importantly, allocation here was explicitly NOT random -- patients were assigned by history, comorbidity and willingness to consent to Lokomat training -- so a baseline imbalance is expected rather than anomalous; what is flagged is the claim of no difference, not the imbalance itself. For the same reason I deliberately did not run csf_test or bayesian_table1_dispersion on Table I: both test whether groups are MORE similar than randomisation allows, and their null does not apply to a non-randomised allocation.",
+      "reproduction": "metascience chi2 --observed '[[3,19],[3,15],[14,16]]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1396 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Females 3 13.64 3 16.67 14 46.67",
+        "source_locator": "Table I, Gender rows (Females / Males) across the three groups",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_c2ce24f8c4d6e1e4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_dispersion_labelled_sem_behaves_as_sd",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_or_se",
+      "title": "Table2 dispersion labelled sem behaves as sd (Table II, 'Mean \u00b1 SEM' rows)",
+      "description": "Table II's row label says SEM, but the paper's own effect-size definition uses 's1 ... the standard deviation value of initial score', and the ES values printed in Table II are reproduced by dividing the mean change by the tabulated dispersion -- i.e. the authors used these numbers as SDs. Under the SEM reading the implied SD would be 43.9 on a 0-100 scale, 86% of the maximum possible, and the effect sizes would be about 4.7 times smaller than printed, turning the paper's 'large' effects into small ones. The 0-100 range is my assumption, not the paper's, so severity is capped at suspicious per rulebook rule 4. Tables IV and V print '\u00b1' with no SD/SEM designation anywhere in the caption, head",
+      "location": "Table II, 'Mean \u00b1 SEM' rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean \u00b1 SEM\t51.14 \u00b1 9.36"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_dispersion_labelled_sem_behaves_as_sd",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mean \u00b1 SEM\t51.14 \u00b1 9.36",
+      "inputs": {
+        "reported_value": 9.36,
+        "n": 22,
+        "reported_as": "SE",
+        "variable_range_min": 0,
+        "variable_range_max": 100,
+        "bound_source": "assumed"
+      },
+      "reported": {
+        "value": 9.36,
+        "labelled_as": "SEM",
+        "n": 22
+      },
+      "computed": {
+        "as_sd": {
+          "sd": 9.36,
+          "implied_se": 1.996,
+          "fraction_of_ceiling": 0.183
+        },
+        "as_se": {
+          "implied_sd": 43.9,
+          "fraction_of_ceiling": 0.858
+        },
+        "likely_interpretation": "SD",
+        "plausibility_ceiling": 51.18,
+        "ceiling_source": "range/2 from assumed Barthel range 0-100"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 52,
+        "basis": "asserted",
+        "explanation": "Every effect size in Tables II, IV and V (52 ES values) and every recomputed ANOVA depends on whether the tabulated dispersion is an SD or an SEM, and the paper never says."
+      },
+      "notes": "Table II's row label says SEM, but the paper's own effect-size definition uses 's1 ... the standard deviation value of initial score', and the ES values printed in Table II are reproduced by dividing the mean change by the tabulated dispersion -- i.e. the authors used these numbers as SDs. Under the SEM reading the implied SD would be 43.9 on a 0-100 scale, 86% of the maximum possible, and the effect sizes would be about 4.7 times smaller than printed, turning the paper's 'large' effects into small ones. The 0-100 range is my assumption, not the paper's, so severity is capped at suspicious per rulebook rule 4. Tables IV and V print '\u00b1' with no SD/SEM designation anywhere in the caption, header or footnote, so the ambiguity extends to every dispersion value in the paper.",
+      "reproduction": "metascience sd-or-se --reported-value 9.36 --n 22 --reported-as SE --variable-range-min 0 --variable-range-max 100 --bound-source assumed",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience sd-or-se [OPTIONS] {reported_value} {n}\nTry 'metascience sd-or-se --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Mean \u00b1 SEM 51.14 \u00b1 9.36 59.77 \u00b1 10.22 0.92 65.91 \u00b1 10.82 \u204e 1.58",
+        "source_locator": "Table II, Mean \u00b1 SEM rows",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_9e7d4812c570f6c5",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_table_barthel_12month_mean_disagree",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Text table barthel 12month mean disagree",
+      "description": "The narrative and Table II disagree by exactly 1.0 on the control group's 12-month Barthel mean. Both the XML and the PDF version of record print 59.83 in the text and 58.83 in the table, so this is a genuine published inconsistency rather than an extraction artifact. The table value is the one consistent with the printed effect size of 0.82 under the paper's own ES formula. Note the tool-supported part of this finding is the reconciliation of the two sources; the ES relationship quoted here is context read off the paper's stated formula, not an independent tool result.",
+      "location": "Results, Barthel Index para 2 vs Table II, BFT group Mean row at 12 months",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the Barthel Index mean increasing from 50.50 at the beginning to 55.67 at 6 months (p = 0.513) and 59.83 at 12 months (p = 0.044)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_table_barthel_12month_mean_disagree",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "the Barthel Index mean increasing from 50.50 at the beginning to 55.67 at 6 months (p = 0.513) and 59.83 at 12 months (p = 0.044)",
+      "inputs": {
+        "text": "59.83",
+        "table_II": "58.83 \u00b1 11.74",
+        "source_reconciliation": "XML and PDF both checked"
+      },
+      "reported": {
+        "text_value": 59.83,
+        "table_value": 58.83,
+        "group": "BFT control",
+        "n": 30
+      },
+      "computed": {
+        "discrepancy": 1,
+        "es_printed_in_table": 0.82
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The reported p = 0.044 for the control group's 12-month Barthel change is attached to whichever mean is correct, and the reader cannot tell which."
+      },
+      "notes": "The narrative and Table II disagree by exactly 1.0 on the control group's 12-month Barthel mean. Both the XML and the PDF version of record print 59.83 in the text and 58.83 in the table, so this is a genuine published inconsistency rather than an extraction artifact. The table value is the one consistent with the printed effect size of 0.82 under the paper's own ES formula. Note the tool-supported part of this finding is the reconciliation of the two sources; the ES relationship quoted here is context read off the paper's stated formula, not an independent tool result.",
+      "reproduction": "metascience get-table --xml-path 10.1016--j.scitotenv.2019.05.070.xml --table-num 2",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "a significant risk factor was found (RR = 0.66, 95% (0.5; 0.88), OR = 0.16, 95% (0.04; 0.64), p = 0.006 &lt; 0.05)",
+        "source_locator": "Results, Motor deficiency evaluation - Barthel Index, risk analysis para",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_0ef00a3f0f22d049",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "cognition_score_reported_as_total_fim",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Cognition score reported as total fim",
+      "description": "A FIM cognition score of 105.77 is outside the instrument's range whichever sub-scale definition is used -- the paper's own Table IV gives 32.73 for that cell, and 105.77 is the total FIM score reported two sentences earlier in the same paragraph. This is a copy error in a primary results sentence, present identically in the XML and the PDF version of record. Recorded as a textual/semantic flag with no arithmetic tool behind it, per the instruction to cap such observations at suspicious.",
+      "location": "Results, Functional independence evaluation - FIM Scale, para 2",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "and the cognition score increased from 27.32 to 30.32 at 6 months (p = 0.300) and at 12 months to 105.77 (p = 0.009)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:cognition_score_reported_as_total_fim",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "and the cognition score increased from 27.32 to 30.32 at 6 months (p = 0.300) and at 12 months to 105.77 (p = 0.009)",
+      "inputs": {
+        "text_value": 105.77,
+        "table_value": 32.73
+      },
+      "reported": {
+        "stated_cognition_12m": 105.77,
+        "table_IV_cognition_12m": 32.73,
+        "table_IV_total_12m": 105.77
+      },
+      "computed": {
+        "note": "the value printed for the 12-month cognition score is identical to the 12-month TOTAL FIM score in the same paragraph"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "An error in the reported value of a primary outcome sentence; it suggests the Results paragraphs were not checked against the tables they summarise."
+      },
+      "notes": "A FIM cognition score of 105.77 is outside the instrument's range whichever sub-scale definition is used -- the paper's own Table IV gives 32.73 for that cell, and 105.77 is the total FIM score reported two sentences earlier in the same paragraph. This is a copy error in a primary results sentence, present identically in the XML and the PDF version of record. Recorded as a textual/semantic flag with no arithmetic tool behind it, per the instruction to cap such observations at suspicious.",
+      "reproduction": "No tool applies: this is a text-versus-table transcription error identified by reading. Verify with: metascience get-table --xml-path 10.1016--j.scitotenv.2019.05.070.xml --table-num 4",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_766b5eaf373b87c7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table5_ssqol_sprite_not_confirmed_by_r",
+      "producer": "legacy_sweep",
+      "technique": "sprite_reconstruct",
+      "title": "Table5 ssqol sprite not confirmed by r",
+      "description": "Our SPRITE returned `no_solution_proven` -- the only SPRITE outcome that is evidence -- for two Table V cells, and GRIMMER independently reported an sd_granularity failure on the same two. But the R cross-check did not confirm: rsprite2 raised rather than returning an infeasibility proof, and its wrapper states explicitly that a raise is not proof (measured at 16.2% on statistics from genuine integer samples). Following the stage rule that an errored or unavailable cross-check yields `indeterminate`, neither cell is reported as impossible. A further caveat that would apply even if the cross-check had confirmed: the SS-QOL domain bounds are my assumption (0-245), because the paper names the t",
+      "location": "Table V, Social rows: Group I at 6 months and Group III at 6 months",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Social\t16.18 \u00b1 2.08\t18.14 \u00b1 2.31*\t0.94\t19.36 \u00b1 2.12*\t1.53"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table5_ssqol_sprite_not_confirmed_by_r",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Social\t16.18 \u00b1 2.08\t18.14 \u00b1 2.31*\t0.94\t19.36 \u00b1 2.12*\t1.53",
+      "inputs": {
+        "mean": 18.14,
+        "sd": 2.31,
+        "n": 22,
+        "scale_min": 0,
+        "scale_max": 245,
+        "decimals": 2
+      },
+      "reported": {
+        "cells": [
+          "18.14 \u00b1 2.31 (n=22)",
+          "17.63 \u00b1 2.38 (n=30)"
+        ]
+      },
+      "computed": {
+        "our_sprite": "no_solution_proven for both cells",
+        "our_grimmer": "sd_granularity failure for both cells",
+        "rsprite2": "set_parameters() raised a GRIMMER error rather than proving infeasibility, for both cells",
+        "verdict": "downgraded to indeterminate"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing is concluded from these two cells; the finding records a check that was attempted and could not be resolved."
+      },
+      "notes": "Our SPRITE returned `no_solution_proven` -- the only SPRITE outcome that is evidence -- for two Table V cells, and GRIMMER independently reported an sd_granularity failure on the same two. But the R cross-check did not confirm: rsprite2 raised rather than returning an infeasibility proof, and its wrapper states explicitly that a raise is not proof (measured at 16.2% on statistics from genuine integer samples). Following the stage rule that an errored or unavailable cross-check yields `indeterminate`, neither cell is reported as impossible. A further caveat that would apply even if the cross-check had confirmed: the SS-QOL domain bounds are my assumption (0-245), because the paper names the three domains without stating their item counts or ranges.",
+      "reproduction": "metascience sprite --mean 18.14 --sd 2.31 --n 22 --scale-min 0 --scale-max 245 --decimals-mean 2 --decimals-sd 2 --data-type count",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience sprite [OPTIONS] {mean} {sd} {n}\nTry 'metascience sprite --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --mean ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_9b331583138ef254",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "population_sd_convention_cells",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Population sd convention cells",
+      "description": "Four cells are reproducible only if the standard deviation was computed with n rather than n-1 in the denominator -- the default in numpy and Excel's STDEVP. This is a legitimate and common reporting choice, NOT evidence of fabrication, and the tool flags it at `suspicious` purely so it can be confirmed against the methods. The paper states only that 'standard deviations' were calculated and gives no convention. Worth noting that a mixed convention would be odd: most cells in the same tables are consistent under the sample convention.",
+      "location": "Table IV Cognition score G1 baseline; Table V Social G1 12 months, Mental G2 baseline, Social G2 12 months",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Cognition score\t27.32 \u00b1 4.46\t30.32 \u00b1 4.82\t0.67\t32.73 \u00b1 5.15 \u204e\t1.21"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:population_sd_convention_cells",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Cognition score\t27.32 \u00b1 4.46\t30.32 \u00b1 4.82\t0.67\t32.73 \u00b1 5.15 \u204e\t1.21",
+      "inputs": {
+        "data_type": "count",
+        "decimals": 2,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "cells": [
+          "27.32 \u00b1 4.46 (n=22)",
+          "19.36 \u00b1 2.12 (n=22)",
+          "23.94 \u00b1 4.16 (n=18)",
+          "19.11 \u00b1 2.33 (n=18)"
+        ]
+      },
+      "computed": {
+        "n_cells": 4,
+        "finding": "no integer sample reproduces the SD under the sample (n-1, Bessel) convention, but one does under the population (n) convention",
+        "example_working_combination": {
+          "cell": "27.32 \u00b1 4.46, n=22",
+          "sum": 601,
+          "sum_squares": 16855,
+          "exact_mean": 27.318182,
+          "exact_sd": 4.455705
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "An undisclosed SD convention slightly deflates the reported dispersions and hence slightly inflates every effect size derived from them."
+      },
+      "notes": "Four cells are reproducible only if the standard deviation was computed with n rather than n-1 in the denominator -- the default in numpy and Excel's STDEVP. This is a legitimate and common reporting choice, NOT evidence of fabrication, and the tool flags it at `suspicious` purely so it can be confirmed against the methods. The paper states only that 'standard deviations' were calculated and gives no convention. Worth noting that a mixed convention would be odd: most cells in the same tables are consistent under the sample convention.",
+      "reproduction": "metascience grimmer --mean 27.32 --sd 4.46 --n 22 --scale-min 5 --scale-max 35 --decimals 2 --decimals-sd 2 --data-type count",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience grimmer [OPTIONS] {mean} {sd} {n}\nTry 'metascience grimmer --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --mea",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_558afc0f10fe7726",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "fim_truncation_convention_cells",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Fim truncation convention cells",
+      "description": "These two Table IV means fail GRIM under conventional rounding but are recovered exactly if the third decimal was truncated rather than rounded. The tool downgrades them from impossible to suspicious for that reason, and they are deliberately EXCLUDED from the count of ten genuine GRIM failures in `fim_means_grim_impossible`. Recorded separately so the headline count is not inflated: truncation is a defensible formatting choice, whereas the other ten values are not recoverable under either convention.",
+      "location": "Table IV, Total score G2 at 12 months and Motor score G3 at baseline",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "impossible",
+        "tool": "grim_check",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Total score\t88.23 \u00b1 11.07\t98.24 \u00b1 11.47\t0.90\t104.88 \u00b1 12.12 \u204e\t1.50"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:fim_truncation_convention_cells",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Total score\t88.23 \u00b1 11.07\t98.24 \u00b1 11.47\t0.90\t104.88 \u00b1 12.12 \u204e\t1.50",
+      "inputs": {
+        "data_type": "count",
+        "bound_source": "assumed",
+        "decimals": 2
+      },
+      "reported": {
+        "cells": [
+          "104.88 (n=18)",
+          "59.06 (n=30)"
+        ]
+      },
+      "computed": {
+        "104.88_n18": {
+          "nearest_sum": 1888,
+          "exact": 104.888889,
+          "rounds_to": 104.89,
+          "truncates_to": 104.88,
+          "failure_mode": "rounding_convention"
+        },
+        "59.06_n30": {
+          "nearest_sum": 1772,
+          "exact": 59.066667,
+          "rounds_to": 59.07,
+          "truncates_to": 59.06,
+          "failure_mode": "rounding_convention"
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Consistent with a truncation convention; no claim depends on it."
+      },
+      "notes": "These two Table IV means fail GRIM under conventional rounding but are recovered exactly if the third decimal was truncated rather than rounded. The tool downgrades them from impossible to suspicious for that reason, and they are deliberately EXCLUDED from the count of ten genuine GRIM failures in `fim_means_grim_impossible`. Recorded separately so the headline count is not inflated: truncation is a defensible formatting choice, whereas the other ten values are not recoverable under either convention.",
+      "reproduction": "metascience grim --mean 104.88 --n 18 --scale-min 18 --scale-max 126 --decimals 2 --data-type count --bound-source assumed",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience grim [OPTIONS] {mean} {n}\nTry 'metascience grim --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --mean          ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)",
+        "source_locator": "Results, Spasticity assessment Ashworth Scale, para 2",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_3891018798892e5c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "barthel_table_fully_consistent",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Barthel table fully consistent (Table II, Mean \u00b1 SEM rows for all three groups)",
+      "description": "All nine Barthel mean/SD cells pass GRIM, GRIMMER and SPRITE -- 27 of 27 checks consistent, no refusals. This is the single most important calibration point in the review: the same three groups, the same three timepoints and the same authors produce a fully clean Barthel table and a Table IV in which ten of 27 FIM means are arithmetically impossible. Whatever went wrong is localised, not global, and a blanket reading of the paper as fabricated is not supported. One caveat that weakens this pass: the classic Barthel Index is scored in 5-point increments, so its true granularity is 5/n rather than 1/n, and GRIM at 1/n is therefore a weaker test than the instrument allows. No available tool acc",
+      "location": "Table II, Mean \u00b1 SEM rows for all three groups",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean \u00b1 SEM\t50.50 \u00b1 10.14\t\t55.67 \u00b1 11.11\t\t0.51\t58.83 \u00b1 11.74 \u204e\t\t0.82"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:barthel_table_fully_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mean \u00b1 SEM\t50.50 \u00b1 10.14\t\t55.67 \u00b1 11.11\t\t0.51\t58.83 \u00b1 11.74 \u204e\t\t0.82",
+      "inputs": {
+        "variable": "barthel",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "data_type": "count",
+        "decimals": 2
+      },
+      "reported": {
+        "cells": 9,
+        "groups": [
+          22,
+          18,
+          30
+        ]
+      },
+      "computed": {
+        "n_checks_run": 27,
+        "n_not_run": 0,
+        "consistent": 27,
+        "impossible": 0,
+        "suspicious": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms the Barthel data are granularity-consistent and bounds the scope of the Table IV problem."
+      },
+      "notes": "All nine Barthel mean/SD cells pass GRIM, GRIMMER and SPRITE -- 27 of 27 checks consistent, no refusals. This is the single most important calibration point in the review: the same three groups, the same three timepoints and the same authors produce a fully clean Barthel table and a Table IV in which ten of 27 FIM means are arithmetically impossible. Whatever went wrong is localised, not global, and a blanket reading of the paper as fabricated is not supported. One caveat that weakens this pass: the classic Barthel Index is scored in 5-point increments, so its true granularity is 5/n rather than 1/n, and GRIM at 1/n is therefore a weaker test than the instrument allows. No available tool accepts a step size other than 1, so the stronger test could not be run (recorded under `unchecked`).",
+      "reproduction": "metascience check-table --cells-json table2_barthel_cells.json --variables-json barthel_var.json --bindings-json barthel_bindings.json",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_4877676c58401a5b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ssqol_table_largely_consistent",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Ssqol table largely consistent (Table V, all three group blocks)",
+      "description": "Across all 36 mean/SD cells of Table V, not one MEAN fails GRIM. The eight non-consistent results are all SD-side: four population-SD-convention flags and four from the two cells whose SPRITE claim the R cross-check failed to confirm (both reported separately). So Table V, like Table II, shows granularity-consistent means; Table IV is the outlier. Reported here with its denominator: 100 of 108 checks consistent.",
+      "location": "Table V, all three group blocks",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "impossible",
+        "tool": "grim_check",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Physical\t106.18 \u00b1 12.84\t118.41 \u00b1 12.68*\t0.95\t127.50 \u00b1 13.12*\t1.66"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ssqol_table_largely_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Physical\t106.18 \u00b1 12.84\t118.41 \u00b1 12.68*\t0.95\t127.50 \u00b1 13.12*\t1.66",
+      "inputs": {
+        "variables": [
+          "ssqol_phys",
+          "ssqol_ment",
+          "ssqol_soc",
+          "ssqol_tot"
+        ],
+        "bounds": "0-245 (assumed)",
+        "data_type": "count",
+        "decimals": 2
+      },
+      "reported": {
+        "mean_sd_cells": 36,
+        "groups": [
+          22,
+          18,
+          30
+        ]
+      },
+      "computed": {
+        "total_checks": 108,
+        "consistent": 100,
+        "impossible": 4,
+        "suspicious": 4,
+        "not_run": 0,
+        "grim_failures_on_means": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Establishes that the SS-QOL means are internally reproducible, which narrows the Table IV anomaly rather than generalising it."
+      },
+      "notes": "Across all 36 mean/SD cells of Table V, not one MEAN fails GRIM. The eight non-consistent results are all SD-side: four population-SD-convention flags and four from the two cells whose SPRITE claim the R cross-check failed to confirm (both reported separately). So Table V, like Table II, shows granularity-consistent means; Table IV is the outlier. Reported here with its denominator: 100 of 108 checks consistent.",
+      "reproduction": "metascience check-table --cells-json table5_ssqol_g1_cells.json --variables-json ssqol_vars.json --bindings-json ssqol_bindings.json",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "the percentage of patients with a score \u2265 2 decreased by 31.82% in the BFT + Lokomat + Cerebrolysin group (18.18% in the first 6 months, and 13.04% in the next 6 months) (p = 0.016)",
+        "source_locator": "Results, Spasticity assessment Ashworth Scale, para 2",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_69dbc5944d7e3b55",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "all_summations_reconcile_except_one",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "All summations reconcile except one",
+      "description": "Every category count in Tables I, II and III sums to its stated group size; every percentage column sums to 100 within its rounding window; FIM motor + cognition reproduces FIM total in all nine cells; SS-QOL physical + mental + social reproduces the total in all nine cells; the group sizes sum to 70 and the sample flow (70 analysed + 15 excluded = 85 complete datasets) reconciles. Table I's hemiplegia block initially looks over-subscribed but resolves cleanly on the correct reading: Global + Facio-brachial + Crural sums to n in every group, and Left + Right sums to the Global count, so it is two nested classifications rather than one broken column. The lone failure is the spasticity sentenc",
+      "location": "Tables I-V and Results text: 56 count, percentage, subgroup and sample-flow sums",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Group I (n = 22) \u2013 Lokomat combined with balneo-physiotherapy and Cerebrolysin; Group II (n = 18) \u2013 Lokomat associated only with balneo-physiotherapy; and Group III (n = 30) \u2013 balneo-physiotherapy alone (Control group)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:all_summations_reconcile_except_one",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Group I (n = 22) \u2013 Lokomat combined with balneo-physiotherapy and Cerebrolysin; Group II (n = 18) \u2013 Lokomat associated only with balneo-physiotherapy; and Group III (n = 30) \u2013 balneo-physiotherapy alone (Control group).",
+      "inputs": {
+        "batch": "56 rows spanning group sizes, sample flow, all Table I demographic blocks, Table II severity distributions, Table III Ashworth distributions, Table IV motor+cognition vs total, Table V domains vs total"
+      },
+      "reported": {
+        "n_sums_checked": 56
+      },
+      "computed": {
+        "n_evaluated": 56,
+        "n_consistent": 55,
+        "n_inconsistent": 1,
+        "n_indeterminate": 0,
+        "only_failure": "18.18 + 13.04 vs stated 31.82"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms the descriptive tables are internally coherent; no claim is affected."
+      },
+      "notes": "Every category count in Tables I, II and III sums to its stated group size; every percentage column sums to 100 within its rounding window; FIM motor + cognition reproduces FIM total in all nine cells; SS-QOL physical + mental + social reproduces the total in all nine cells; the group sizes sum to 70 and the sample flow (70 analysed + 15 excluded = 85 complete datasets) reconciles. Table I's hemiplegia block initially looks over-subscribed but resolves cleanly on the correct reading: Global + Facio-brachial + Crural sums to n in every group, and Left + Right sums to the Global count, so it is two nested classifications rather than one broken column. The lone failure is the spasticity sentence reported above. This is a strongly consistent structural picture and should be weighed against the granularity and ANOVA findings.",
+      "reproduction": "metascience summation-batch --rows-json summation_rows.json",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Group I (n = 22) \u2013 Lokomat combined with balneo-physiotherapy and Cerebrolysin; Group II (n = 18) \u2013 Lokomat associated only with balneo-physiotherapy; and Group III (n = 30) \u2013 balneo-physiotherapy alone (Control group).",
+        "source_locator": "Tables I-V and Results text",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_e28fa97cc4ffb070",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "risk_analysis_chi2_reproduces",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Risk analysis chi2 reproduces",
+      "description": "The 2x2 reconstructed from the stated proportions (16/40 improved vs 3/30) reproduces the reported p = 0.006 under Fisher's exact test (0.00644) and is close under Pearson (0.00522). The reported OR of 0.16 is the reciprocal of the Fisher odds ratio 6.0, i.e. the authors reported the odds of NOT improving, which is consistent with RR = 0.66 being the risk ratio for non-improvement (0.60/0.90). This paragraph is the most internally sound piece of analysis in the paper.",
+      "location": "Results, Motor deficiency evaluation - Barthel Index, risk-analysis paragraph",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "40% of the patients with the Lokomat procedure + the BFT procedure (N1 = 40 patients) had shown major improvements, compared with the group of patients with only BFT procedure (N2 = 30 patients), where only 10% showed improvements."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:risk_analysis_chi2_reproduces",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "40% of the patients with the Lokomat procedure + the BFT procedure (N1 = 40 patients) had shown major improvements, compared with the group of patients with only BFT procedure (N2 = 30 patients), where only 10% showed improvements.",
+      "inputs": {
+        "observed": [
+          [
+            16,
+            24
+          ],
+          [
+            3,
+            27
+          ]
+        ]
+      },
+      "reported": {
+        "p": 0.006
+      },
+      "computed": {
+        "chi2_pearson": 7.8019,
+        "p_pearson": 0.005219,
+        "chi2_yates": 6.3586,
+        "p_yates": 0.011682,
+        "fisher_p": 0.006438,
+        "fisher_odds_ratio": 6,
+        "df": 1,
+        "p_matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The paper's headline risk-analysis claim reproduces exactly."
+      },
+      "notes": "The 2x2 reconstructed from the stated proportions (16/40 improved vs 3/30) reproduces the reported p = 0.006 under Fisher's exact test (0.00644) and is close under Pearson (0.00522). The reported OR of 0.16 is the reciprocal of the Fisher odds ratio 6.0, i.e. the authors reported the odds of NOT improving, which is consistent with RR = 0.66 being the risk ratio for non-improvement (0.60/0.90). This paragraph is the most internally sound piece of analysis in the paper.",
+      "reproduction": "metascience chi2 --observed '[[16,24],[3,27]]' --reported-p 0.006",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1396 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_2242b24ea98010f6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "rr_and_or_consistent_with_cis",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Rr and or consistent with cis (Results, Barthel Index risk-analysis paragraph)",
+      "description": "Both ratio estimates sit at their CI-implied midpoints on the log scale and both recovered p-values bracket the reported 0.006. Checked on the log scale as required for ratio measures.",
+      "location": "Results, Barthel Index risk-analysis paragraph",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "a significant risk factor was found (RR = 0.66, 95% (0.5; 0.88), OR = 0.16, 95% (0.04; 0.64), p = 0.006 < 0.05)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:rr_and_or_consistent_with_cis",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "a significant risk factor was found (RR = 0.66, 95% (0.5; 0.88), OR = 0.16, 95% (0.04; 0.64), p = 0.006 < 0.05)",
+      "inputs": {
+        "measure": "RR and OR",
+        "confidence_level": 0.95,
+        "null_value": 1
+      },
+      "reported": {
+        "RR": 0.66,
+        "RR_CI": [
+          0.5,
+          0.88
+        ],
+        "OR": 0.16,
+        "OR_CI": [
+          0.04,
+          0.64
+        ],
+        "p": 0.006
+      },
+      "computed": {
+        "RR": {
+          "recovered_se_log": 0.14422,
+          "recovered_p": 0.003961,
+          "implied_centre": 0.6633,
+          "ci_excludes_null": true
+        },
+        "OR": {
+          "recovered_se_log": 0.70731,
+          "recovered_p": 0.009572,
+          "implied_centre": 0.16,
+          "ci_excludes_null": true
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No discrepancy."
+      },
+      "notes": "Both ratio estimates sit at their CI-implied midpoints on the log scale and both recovered p-values bracket the reported 0.006. Checked on the log scale as required for ratio measures.",
+      "reproduction": "metascience check-ci --estimate 0.66 --ci-low 0.5 --ci-high 0.88 --measure RR --reported-p 0.006",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_becd9327a6e7e561",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "between_group_p_values_match_uncorrected_tests",
+      "producer": "legacy_sweep",
+      "technique": "recalc_independent_t",
+      "title": "Between group p values match uncorrected tests",
+      "description": "Both between-group p-values reproduce from the Table V means and SDs as ordinary two-sample t-tests. But the Methods state 'ANOVA with a post-hoc analysis (Bonferroni)', and these values match the UNCORRECTED comparison: with three pairwise group contrasts, a Bonferroni-adjusted p for the SS-QOL total would be roughly three times 0.039, i.e. about 0.12, and would not be significant. So the numbers are arithmetically consistent but appear not to carry the correction the Methods claim. Recorded as `consistent` because that is what the recomputation shows; the correction discrepancy is an interpretive point for the editorial stage.",
+      "location": "Results, SS-QOL Scale, final paragraph; means/SDs from Table V",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "In addition, the SS-SQL total score was significantly higher at 12 months for the BFT + Lokomat + Cerebrolysin group than the BFT group (p = 0.040)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:between_group_p_values_match_uncorrected_tests",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "In addition, the SS-SQL total score was significantly higher at 12 months for the BFT + Lokomat + Cerebrolysin group than the BFT group (p = 0.040).",
+      "inputs": {
+        "ssqol_total": {
+          "mean1": 179.14,
+          "sd1": 18.64,
+          "n1": 22,
+          "mean2": 168.77,
+          "sd2": 16.44,
+          "n2": 30
+        },
+        "ssqol_mental": {
+          "mean1": 32.27,
+          "sd1": 4.28,
+          "n1": 22,
+          "mean2": 28.17,
+          "sd2": 3.11,
+          "n2": 30
+        }
+      },
+      "reported": {
+        "ssqol_total_p": 0.04,
+        "ssqol_mental_p": 0.002
+      },
+      "computed": {
+        "ssqol_total": {
+          "welch_t": 2.0823,
+          "welch_p": 0.043462,
+          "student_t": 2.1235,
+          "student_p": 0.038683,
+          "p_matches": true
+        },
+        "ssqol_mental": {
+          "welch_t": 3.8149,
+          "welch_p": 0.000509,
+          "student_t": 4.0047,
+          "student_p": 0.000206,
+          "p_matches": true
+        }
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "If the stated Bonferroni correction were actually applied to the three-group contrasts, the SS-QOL total superiority claim (p = 0.040) and the 6-month mental claim (p = 0.024) would both cease to be significant."
+      },
+      "notes": "Both between-group p-values reproduce from the Table V means and SDs as ordinary two-sample t-tests. But the Methods state 'ANOVA with a post-hoc analysis (Bonferroni)', and these values match the UNCORRECTED comparison: with three pairwise group contrasts, a Bonferroni-adjusted p for the SS-QOL total would be roughly three times 0.039, i.e. about 0.12, and would not be significant. So the numbers are arithmetically consistent but appear not to carry the correction the Methods claim. Recorded as `consistent` because that is what the recomputation shows; the correction discrepancy is an interpretive point for the editorial stage.",
+      "reproduction": "metascience ttest --mean1 179.14 --sd1 18.64 --n1 22 --mean2 168.77 --sd2 16.44 --n2 30 --reported-p 0.04",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience ttest [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience ttest --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_e10406f00d05cfa4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "headline_effect_size_above_field_95th_percentile",
+      "producer": "legacy_sweep",
+      "technique": "check_effect_plausibility",
+      "title": "Headline effect size above field 95th percentile",
+      "description": "The between-group standardised difference on the SS-QOL mental domain at 12 months is g = 1.11, at or above the 95th percentile of published effects in clinical medicine. The paper's own within-group ES for the same cell is 2.11. Two of the three ordinary explanations the tool names cannot be ruled out here: the comparator is an active one (balneo-physiotherapy, not a waitlist), but the dispersion may be an SEM rather than an SD -- which would move the effect in the opposite direction -- and the SS-QOL scoring range is never stated so a scale mismatch cannot be excluded. Severity is capped at suspicious; a large effect is unusual, never impossible, and the benchmark percentiles are explicitl",
+      "location": "Table V, Mental rows at 12 months, Group I vs Group III",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mental\t23.77 \u00b1 4.02\t28.18 \u00b1 4.24*\t1.10\t32.27 \u00b1 4.28*\t2.11"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:headline_effect_size_above_field_95th_percentile",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mental\t23.77 \u00b1 4.02\t28.18 \u00b1 4.24*\t1.10\t32.27 \u00b1 4.28*\t2.11",
+      "inputs": {
+        "mean1": 32.27,
+        "sd1": 4.28,
+        "n1": 22,
+        "mean2": 28.17,
+        "sd2": 3.11,
+        "n2": 30,
+        "field": "medicine_rct"
+      },
+      "reported": {
+        "paper_es_within_group": 2.11,
+        "group_means_12m": {
+          "Group I": 32.27,
+          "Group III": 28.17
+        }
+      },
+      "computed": {
+        "cohens_d": 1.1241,
+        "hedges_g": 1.1071,
+        "pooled_sd": 3.6474,
+        "df": 50,
+        "band": "at or above the field's 95th percentile (1.0)",
+        "benchmark": {
+          "median": 0.3,
+          "p75": 0.55,
+          "p95": 1,
+          "provenance": "uncited_estimate"
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Bears on the plausibility of the paper's central claim that adding Cerebrolysin to Lokomat plus physiotherapy produces a large quality-of-life advantage over physiotherapy alone."
+      },
+      "notes": "The between-group standardised difference on the SS-QOL mental domain at 12 months is g = 1.11, at or above the 95th percentile of published effects in clinical medicine. The paper's own within-group ES for the same cell is 2.11. Two of the three ordinary explanations the tool names cannot be ruled out here: the comparator is an active one (balneo-physiotherapy, not a waitlist), but the dispersion may be an SEM rather than an SD -- which would move the effect in the opposite direction -- and the SS-QOL scoring range is never stated so a scale mismatch cannot be excluded. Severity is capped at suspicious; a large effect is unusual, never impossible, and the benchmark percentiles are explicitly an uncited estimate rather than a published table.",
+      "reproduction": "metascience effect-size --mean1 32.27 --sd1 4.28 --n1 22 --mean2 28.17 --sd2 3.11 --n2 30 --field medicine_rct --provenance printed_table",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Mental 23.77 \u00b1 4.02 28.18 \u00b1 4.24* 1.10 32.27 \u00b1 4.28* 2.11",
+        "source_locator": "Table V, Mental rows at 12 months, Group I vs Group III",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_c7e68bb9d2d2b841",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_duplicated_summary_statistics",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "No duplicated summary statistics",
+      "description": "1,728 cross-group (mean, SD) comparisons produced no identical pairs. Blocks were defined per GROUP rather than per table, because the three groups are genuinely different participants while the three tables describe the same people measured on different instruments -- comparing tables against each other would have flagged legitimate within-person repetition. A few isolated SDs recur across groups (12.12, 11.47, 11.91) but no mean/SD PAIR does, which is unremarkable at two decimal places. This rules out the copy-paste signature that per-cell checks cannot see.",
+      "location": "Tables II, IV and V, all mean \u00b1 dispersion cells for the three groups",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are significantly different statistically for ANOVA compared to baseline evaluation (p < 0.05, 0.01, respectively)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_duplicated_summary_statistics",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are significantly different statistically for ANOVA compared to baseline evaluation (p < 0.05, 0.01, respectively).",
+      "inputs": {
+        "blocks": "one per independent group (G1 n=22, G2 n=18, G3 n=30), each carrying all 24 outcome mean/SD pairs across Tables II, IV and V"
+      },
+      "reported": {
+        "blocks": 3,
+        "cells_total": 72
+      },
+      "computed": {
+        "n_comparisons": 1728,
+        "max_identical_pairs": 0,
+        "duplicate_groups": []
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No evidence of recycled data between the three groups."
+      },
+      "notes": "1,728 cross-group (mean, SD) comparisons produced no identical pairs. Blocks were defined per GROUP rather than per table, because the three groups are genuinely different participants while the three tables describe the same people measured on different instruments -- comparing tables against each other would have flagged legitimate within-person repetition. A few isolated SDs recur across groups (12.12, 11.47, 11.91) but no mean/SD PAIR does, which is unremarkable at two decimal places. This rules out the copy-paste signature that per-cell checks cannot see.",
+      "reproduction": "metascience duplication-detect --blocks-json group_blocks.json --decimals-mean 2 --decimals-sd 2",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience duplication-detect [OPTIONS] {json_path}\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Values are significantly different statistically for ANOVA compared to baseline evaluation (p &lt; 0.05, 0.01, respectively).",
+        "source_locator": "Tables II, IV and V, mean \u00b1 dispersion cells for the three independent groups",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_60bba591ba512cb9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "power_analysis_not_reproducible",
+      "producer": "legacy_sweep",
+      "technique": "verify_power_analysis",
+      "title": "Power analysis not reproducible (Methods, Statistical analysis)",
+      "description": "The calculation cannot be reproduced because no effect size is stated -- a reporting gap, not evidence the calculation is wrong. There is a separate and more substantive problem the tool cannot see: the formula the paper actually prints, n = N*X/(X + N - 1) with X = Z^2(alpha/2)*p(1-p)/MOE^2, is a formula for estimating a PROPORTION in a finite population with a given margin of error. It contains no power term at all, so it cannot deliver '1-beta = 0.80', and the paper states neither p, nor MOE, nor the population size N that it requires. That the required N (>= 70) exactly equals the N recruited (70) is also worth a reader's attention.",
+      "location": "Methods, Statistical analysis",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "A sample calculation was performed, considering a confidence level of 95% at \u03b1 = 0.05 and a test power at 1-\u03b2 = 0.80."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:power_analysis_not_reproducible",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "A sample calculation was performed, considering a confidence level of 95% at \u03b1 = 0.05 and a test power at 1-\u03b2 = 0.80.",
+      "inputs": {
+        "test_type": "anova_oneway",
+        "alpha": 0.05,
+        "target_power": 0.8,
+        "n_reported": 70,
+        "groups": 3
+      },
+      "reported": {
+        "alpha": 0.05,
+        "power": 0.8,
+        "n_required_stated": 70,
+        "n_recruited": 70
+      },
+      "computed": {
+        "reproducible": false,
+        "missing_inputs": [
+          "effect_size"
+        ]
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The adequacy of the sample size cannot be assessed from what the paper reports."
+      },
+      "notes": "The calculation cannot be reproduced because no effect size is stated -- a reporting gap, not evidence the calculation is wrong. There is a separate and more substantive problem the tool cannot see: the formula the paper actually prints, n = N*X/(X + N - 1) with X = Z^2(alpha/2)*p(1-p)/MOE^2, is a formula for estimating a PROPORTION in a finite population with a given margin of error. It contains no power term at all, so it cannot deliver '1-beta = 0.80', and the paper states neither p, nor MOE, nor the population size N that it requires. That the required N (>= 70) exactly equals the N recruited (70) is also worth a reader's attention.",
+      "reproduction": "metascience power-check --test-type anova_oneway --alpha 0.05 --target-power 0.8 --n-reported 70 --groups 3",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience power-check [OPTIONS] {test_type}\nTry 'metascience power-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "A sample calculation was performed, considering a confidence level of 95% at \u03b1 = 0.05 and a test power at 1-\u03b2 = 0.80. ... According to this formula, the sample size should be higher or equal to 70.",
+        "source_locator": "Statistical analysis section",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_c14f54233b001f23",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_test_statistics_machine_readable",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "No test statistics machine readable (Whole Results section)",
+      "description": "statcheck extracted zero test statistics from the complete Results text. This is not a tool failure: the paper reports all 24 ANOVA F values in the form 'F = 10.840, p < 0.001', with no degrees of freedom anywhere in the article. Without df, an F cannot be converted to a p and no automated consistency check is possible -- which is why the F values had to be verified indirectly, by recomputation from the group means and SDs (see `anova_f_outside_achievable_range`). The omission of df from every reported test is itself a reporting deficiency worth recording.",
+      "location": "Whole Results section",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "total FIM: F = 10.840, p < 0.001 for BFT + Lokomat+Cerebrolysin; F = 9.238, p < 0.001 for BFT + Lokomat; F = 12.958, p < 0.001 for BFT group"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_test_statistics_machine_readable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "total FIM: F = 10.840, p < 0.001 for BFT + Lokomat+Cerebrolysin; F = 9.238, p < 0.001 for BFT + Lokomat; F = 12.958, p < 0.001 for BFT group",
+      "inputs": {
+        "text": "full Results text covering Barthel, Ashworth, FIM and SS-QOL sections"
+      },
+      "reported": {
+        "n_anova_f_values": 24,
+        "n_with_degrees_of_freedom": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 24,
+        "basis": "asserted",
+        "explanation": "None of the 24 reported F tests can be checked by the standard automated route, so all verification of them depends on recomputation from the tables."
+      },
+      "notes": "statcheck extracted zero test statistics from the complete Results text. This is not a tool failure: the paper reports all 24 ANOVA F values in the form 'F = 10.840, p < 0.001', with no degrees of freedom anywhere in the article. Without df, an F cannot be converted to a p and no automated consistency check is possible -- which is why the F values had to be verified indirectly, by recomputation from the group means and SDs (see `anova_f_outside_achievable_range`). The omission of df from every reported test is itself a reporting deficiency worth recording.",
+      "reproduction": "metascience statcheck --text \"$(cat results_text.txt)\"",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "The Barthel Index evolution exhibits statistically significant difference among all groups as assessed by one-way ANOVA (F = 4.766, p = 0.012 for BFT + Lokomat + Cerebrolysin and F = 5.741, p = 0.006 for BFT + Lokomat group, and F = 3.122, p = 0.049 for BFT group).",
+        "source_locator": "Results sections (Barthel, Ashworth, FIM, SS-QOL) \u2014 full reported-statistics text",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_b9defbb6ef1ad0de",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_tool_refused",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity tool refused",
+      "description": "multiplicity_report returned n_tests = 0 on three attempts, with and without an explicit `correction_applied` field and with `p_is_threshold` supplied, so the intended arithmetic was never performed. Recording the refusal rather than substituting hand arithmetic. What could not be quantified: the paper runs 24 omnibus ANOVAs plus roughly 60 post-hoc and between-group comparisons across four instruments on the same 70 patients, and states a Bonferroni correction only within each ANOVA -- never across outcomes or across the three group contrasts. The uncorrected multiplicity burden is therefore substantial but is left unquantified here.",
+      "location": "Results, SS-QOL final paragraph and within-group comparisons across all outcomes",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "ANOVA analysis revealed a significant improvement at 6 months in the mental score of the BFT + Lokomat + Cerebrolysin group versus the BFT group (p = 0.024)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_tool_refused",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "ANOVA analysis revealed a significant improvement at 6 months in the mental score of the BFT + Lokomat + Cerebrolysin group versus the BFT group (p = 0.024).",
+      "inputs": {
+        "family_label": "Between-group SS-QOL comparisons vs control; and within-group change-from-baseline tests across all outcomes for Group I"
+      },
+      "reported": {
+        "family_1": [
+          0.024,
+          0.002,
+          0.015,
+          0.04
+        ],
+        "family_2": [
+          0.232,
+          0.009,
+          0.016,
+          0.002,
+          0.3,
+          0.009,
+          0.024,
+          0.024,
+          0.039,
+          0.016
+        ]
+      },
+      "computed": {
+        "n_tests": 0,
+        "note": "no uncorrected tests",
+        "attempts": 3
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The number of the paper's claims that would survive correction could not be computed."
+      },
+      "notes": "multiplicity_report returned n_tests = 0 on three attempts, with and without an explicit `correction_applied` field and with `p_is_threshold` supplied, so the intended arithmetic was never performed. Recording the refusal rather than substituting hand arithmetic. What could not be quantified: the paper runs 24 omnibus ANOVAs plus roughly 60 post-hoc and between-group comparisons across four instruments on the same 70 patients, and states a Bonferroni correction only within each ANOVA -- never across outcomes or across the three group contrasts. The uncorrected multiplicity burden is therefore substantial but is left unquantified here.",
+      "reproduction": "metascience multiplicity --tests-json between_group_family.json --family-label \"Between-group SS-QOL comparisons vs control\"",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests-jso",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_a05bdbc4ac01c078",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "xml_pdf_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Xml pdf reconciliation (Tables I, II, III and IV; Results text)",
+      "description": "The XML reported no table as image_only and none as alignment_uncertain, so no table required PDF recovery or realignment. The PDF was nonetheless read for pages 4-6 to confirm the values underpinning the GRIM findings and to obtain the Fig. 1 caption. Every value checked agrees, including all ten GRIM-failing FIM means, the 13.04% figure, the 59.83-versus-58.83 text/table discrepancy and the 105.77 cognition-score error. The anomalies are therefore in the published article, not in the extraction. One extraction-side note that is NOT a finding about the paper: the XML's article metadata carries a stray value in its `issue` field ('Eur. J. Neurol. 13 2006'), evidently a reference bleeding int",
+      "location": "Tables I, II, III and IV; Results text",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Motor score 59.23\u00b110.44 66.52\u00b111.07 0.70 70.94\u00b111.91 1.12"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:xml_pdf_reconciliation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Motor score 59.23\u00b110.44 66.52\u00b111.07 0.70 70.94\u00b111.91 1.12",
+      "inputs": {
+        "xml_path": "10.1016--j.scitotenv.2019.05.070.xml",
+        "pdf_path": "10.1016--j.scitotenv.2019.05.070.pdf",
+        "pdf_pages": "4-6"
+      },
+      "reported": {
+        "sources": [
+          "Elsevier CALS XML",
+          "PDF version of record, pages 4-6"
+        ]
+      },
+      "computed": {
+        "agreement": "complete for every cell compared",
+        "cells_compared": "all of Table I, Table II, Table III and Table IV"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms every numeric finding in this review is sourced from the version of record."
+      },
+      "notes": "The XML reported no table as image_only and none as alignment_uncertain, so no table required PDF recovery or realignment. The PDF was nonetheless read for pages 4-6 to confirm the values underpinning the GRIM findings and to obtain the Fig. 1 caption. Every value checked agrees, including all ten GRIM-failing FIM means, the 13.04% figure, the 59.83-versus-58.83 text/table discrepancy and the 105.77 cognition-score error. The anomalies are therefore in the published article, not in the extraction. One extraction-side note that is NOT a finding about the paper: the XML's article metadata carries a stray value in its `issue` field ('Eur. J. Neurol. 13 2006'), evidently a reference bleeding into the metadata.",
+      "reproduction": "metascience extract --pdf-path 10.1016--j.scitotenv.2019.05.070.pdf --first-page 4 --last-page 6",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ca1963da14b2efc2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "design_repeated_measures_analysed_as_one_way_anova",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Design repeated measures analysed as one way anova",
+      "description": "Every within-group time effect is described as 'one-way ANOVA' over baseline, 6 months and 12 months -- but these are three measurements on the SAME patients, which violates the independence assumption a one-way ANOVA requires. A repeated-measures ANOVA or mixed model is the matching analysis. This inflates the error term and generally makes the test conservative, so it does not by itself explain the direction of the F discrepancies reported above. Related design points: allocation was explicitly non-random (by patient history, comorbidity and consent to Lokomat), there is no trial registration number, no CONSORT flow diagram, and no adverse-event reporting for a 12-month intravenous drug pr",
+      "location": "Methods, Statistical analysis; Results throughout",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "ANOVA with a post-hoc analysis (Bonferroni) was used to analyze the differences among groups for evaluations, where the compared data were expressed as an average"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:design_repeated_measures_analysed_as_one_way_anova",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "ANOVA with a post-hoc analysis (Bonferroni) was used to analyze the differences among groups for evaluations, where the compared data were expressed as an average",
+      "inputs": {
+        "design": "three timepoints on the same 22/18/30 patients"
+      },
+      "reported": {
+        "stated_test": "one-way ANOVA",
+        "structure": "same patients measured at baseline, 6 months and 12 months"
+      },
+      "computed": {
+        "issue": "three correlated repeated measurements per patient treated as independent groups"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 24,
+        "basis": "asserted",
+        "explanation": "All 24 within-group ANOVAs use a test that does not match the repeated-measures structure of the data."
+      },
+      "notes": "Every within-group time effect is described as 'one-way ANOVA' over baseline, 6 months and 12 months -- but these are three measurements on the SAME patients, which violates the independence assumption a one-way ANOVA requires. A repeated-measures ANOVA or mixed model is the matching analysis. This inflates the error term and generally makes the test conservative, so it does not by itself explain the direction of the F discrepancies reported above. Related design points: allocation was explicitly non-random (by patient history, comorbidity and consent to Lokomat), there is no trial registration number, no CONSORT flow diagram, and no adverse-event reporting for a 12-month intravenous drug protocol. Recorded as a methodological observation with no arithmetic behind it.",
+      "reproduction": "No tool applies: design-validity observation from reading the Methods. Rulebook rule 5.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_fe0da184d4b71166",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "figure1_caption_calls_p057_weakly_significant",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Figure1 caption calls p057 weakly significant (Fig. 1 caption, page 6)",
+      "description": "The Methods state 'Statistical significance was considered at p < 0.05', yet the Fig. 1 caption describes p = 0.057 as 'weakly significant' and p = 0.016 as 'highly statistically significant' -- neither label matches the single stated threshold. The figure carries no values that are not already printed in Table III and the Results text, so no unique data are lost by our inability to read the plotted bars. A descriptive reporting flag, not an arithmetic one.",
+      "location": "Fig. 1 caption, page 6",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "illustrates a highly statistically significant decrease (p=0.016) for the BFT+Lokomat+Cerebrolysin group, weakly significant (p=0.057) for the BFT+Lokomat group and not significant (p=0.595) for the BFT group."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:figure1_caption_calls_p057_weakly_significant",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "illustrates a highly statistically significant decrease (p=0.016) for the BFT+Lokomat+Cerebrolysin group, weakly significant (p=0.057) for the BFT+Lokomat group and not significant (p=0.595) for the BFT group.",
+      "inputs": {
+        "caption": "Fig. 1",
+        "methods_threshold": "Statistical significance was considered at p < 0.05"
+      },
+      "reported": {
+        "p_values": [
+          0.016,
+          0.057,
+          0.595
+        ],
+        "stated_alpha": 0.05
+      },
+      "computed": {
+        "issue": "p = 0.057 exceeds the paper's own stated significance threshold but is described as 'weakly significant'"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Presents a non-significant Group II spasticity result as partially supportive of the paper's conclusion."
+      },
+      "notes": "The Methods state 'Statistical significance was considered at p < 0.05', yet the Fig. 1 caption describes p = 0.057 as 'weakly significant' and p = 0.016 as 'highly statistically significant' -- neither label matches the single stated threshold. The figure carries no values that are not already printed in Table III and the Results text, so no unique data are lost by our inability to read the plotted bars. A descriptive reporting flag, not an arithmetic one.",
+      "reproduction": "metascience extract --pdf-path 10.1016--j.scitotenv.2019.05.070.pdf --first-page 6 --last-page 6",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_aa798cf0484fc17c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "unfunded_trial_of_substantial_scale",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Unfunded trial of substantial scale (Funding statement; Study design)",
+      "description": "A 70-patient, 12-month, two-site study combining a robotic gait orthosis with 120 days of intravenous Cerebrolysin per patient is declared as having received no external funding. Rulebook rule 7 flags unfunded trials of implausible scale as worth noting. Recorded descriptively and capped at suspicious; there are legitimate explanations, including care delivered as part of routine hospital practice. Also noted without inference: this clinical stroke-rehabilitation study appears in Science of the Total Environment, an environmental science journal, and the article contains no environmental content.",
+      "location": "Funding statement; Study design",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "This research received no external funding."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:unfunded_trial_of_substantial_scale",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "This research received no external funding.",
+      "inputs": {
+        "n": 70,
+        "duration_months": 12,
+        "drug": "Cerebrolysin 10 mL/day, 10 days per month for one year",
+        "device": "Lokomat robotic orthosis, 30 min/day for 14 days every 6 months"
+      },
+      "reported": {
+        "funding": "none",
+        "protocol": "70 patients, 12 months, two hospitals, robotic gait training plus 12 monthly courses of intravenous Cerebrolysin"
+      },
+      "computed": {
+        "observation": "resource-intensive protocol declared with no external funding"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Context for editorial assessment; no specific numeric claim depends on it."
+      },
+      "notes": "A 70-patient, 12-month, two-site study combining a robotic gait orthosis with 120 days of intravenous Cerebrolysin per patient is declared as having received no external funding. Rulebook rule 7 flags unfunded trials of implausible scale as worth noting. Recorded descriptively and capped at suspicious; there are legitimate explanations, including care delivered as part of routine hospital practice. Also noted without inference: this clinical stroke-rehabilitation study appears in Science of the Total Environment, an environmental science journal, and the article contains no environmental content.",
+      "reproduction": "No tool applies: observation from the Funding statement and Methods.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_2d726d772f4ba8c5",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "76b16d5dbb05e2ee7491753850a25e0b8dedb40e4352c4c8c841cbb018b24c33",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-10 09:54 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

@@ -1,0 +1,1407 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1007--s11064-023-03861-8",
+  "run_id": "r_d51c2cde8cb63cc7",
+  "findings": [
+    {
+      "slug": "table1_row_totals",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 row totals (Table 1 (Experimental Protocol in Nerve Lesion), row Total column)",
+      "description": "Run via check_summation_batch (23 sums in one call). 3 of 18 per-group row totals in Table 1 exceed the sum of their own three assay-stream cells by exactly 2 animals each. The remaining 15 rows reconcile exactly. Animal counts must hold exactly, so tolerance was set to 0. The constant +2 offset in all three failures is consistent with transcription/editing error rather than a random arithmetic slip, but the direction always over-states the number of animals.",
+      "location": "Table 1 (Experimental Protocol in Nerve Lesion), row Total column",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Experiments were carried out on 348 male albino Wistar Rats"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_row_totals",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Experiments were carried out on 348 male albino Wistar Rats",
+      "inputs": {
+        "tolerance": 0,
+        "decimals": 0,
+        "rows_checked": 18,
+        "failing_rows": [
+          {
+            "row": "C. Nerve Lesion 8 wk",
+            "cells": [
+              6,
+              6,
+              8
+            ],
+            "cells_sum": 20,
+            "printed_total": 22
+          },
+          {
+            "row": "D. NL + Ag-NPs 4 wk",
+            "cells": [
+              6,
+              6,
+              8
+            ],
+            "cells_sum": 20,
+            "printed_total": 22
+          },
+          {
+            "row": "E. NL + Cu-NPs 10 wk",
+            "cells": [
+              8,
+              6,
+              8
+            ],
+            "cells_sum": 22,
+            "printed_total": 24
+          }
+        ]
+      },
+      "reported": {
+        "printed_row_totals": [
+          22,
+          22,
+          24
+        ]
+      },
+      "computed": {
+        "actual_sums": [
+          20,
+          20,
+          22
+        ],
+        "difference": -2,
+        "n_inconsistent": 3,
+        "n_evaluated": 18
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 3,
+        "basis": "asserted",
+        "explanation": "The per-group n that every significance test in Tables 2-6 depends on cannot be pinned down for these three groups, since the table gives two different answers for each."
+      },
+      "notes": "Run via check_summation_batch (23 sums in one call). 3 of 18 per-group row totals in Table 1 exceed the sum of their own three assay-stream cells by exactly 2 animals each. The remaining 15 rows reconcile exactly. Animal counts must hold exactly, so tolerance was set to 0. The constant +2 offset in all three failures is consistent with transcription/editing error rather than a random arithmetic slip, but the direction always over-states the number of animals.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[6,6,8],\"expected_sum\":22,\"decimals\":0,\"decimals_total\":0},{\"values\":[6,6,8],\"expected_sum\":22,\"decimals\":0,\"decimals_total\":0},{\"values\":[8,6,8],\"expected_sum\":24,\"decimals\":0,\"decimals_total\":0}]' --tolerance 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_eeae8f13f8b1a528",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_column_totals",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 column totals (Table 1, Grand Total row against the assay columns above it)",
+      "description": "Two of the three printed column Grand Totals are LOWER than the sum of the cells printed above them (106 vs 114; 112 vs 118). The Biochemical Analyses column reconciles exactly. Note the direction is opposite to the row-total errors, which over-state; these under-state.",
+      "location": "Table 1, Grand Total row against the assay columns above it",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Experiments were carried out on 348 male albino Wistar Rats"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_column_totals",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Experiments were carried out on 348 male albino Wistar Rats",
+      "inputs": {
+        "tolerance": 0,
+        "decimals": 0,
+        "columns_checked": 3,
+        "physiological_column": [
+          6,
+          6,
+          6,
+          6,
+          8,
+          6,
+          8,
+          6,
+          6,
+          6,
+          8,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "bscb_column": [
+          6,
+          6,
+          8,
+          6,
+          6,
+          6,
+          8,
+          6,
+          6,
+          8,
+          6,
+          6,
+          6,
+          6,
+          8,
+          8,
+          6,
+          6
+        ],
+        "biochem_column": [
+          6,
+          6,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          6,
+          8,
+          8,
+          6,
+          6,
+          6,
+          6,
+          8,
+          8,
+          8
+        ]
+      },
+      "reported": {
+        "printed_grand_totals": {
+          "Physiological/Pain/Morphological": 106,
+          "BSCB & Edema": 112,
+          "Biochemical Analyses": 130
+        }
+      },
+      "computed": {
+        "actual_column_sums": {
+          "Physiological/Pain/Morphological": 114,
+          "BSCB & Edema": 118,
+          "Biochemical Analyses": 130
+        },
+        "differences": {
+          "Physiological/Pain/Morphological": 8,
+          "BSCB & Edema": 6,
+          "Biochemical Analyses": 0
+        },
+        "n_inconsistent": 2,
+        "n_evaluated": 3
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The number of animals contributing to the physiological/pain measurements (Tables 2 and 3) and to the BSCB measurements (Table 4) is stated two ways that differ by 8 and 6 animals respectively."
+      },
+      "notes": "Two of the three printed column Grand Totals are LOWER than the sum of the cells printed above them (106 vs 114; 112 vs 118). The Biochemical Analyses column reconciles exactly. Note the direction is opposite to the row-total errors, which over-state; these under-state.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[6,6,6,6,8,6,8,6,6,6,8,6,6,6,6,6,6,6],\"expected_sum\":106,\"decimals\":0,\"decimals_total\":0},{\"values\":[6,6,8,6,6,6,8,6,6,8,6,6,6,6,8,8,6,6],\"expected_sum\":112,\"decimals\":0,\"decimals_total\":0},{\"values\":[6,6,8,8,8,8,8,8,6,8,8,6,6,6,6,8,8,8],\"expected_sum\":130,\"decimals\":0,\"decimals_total\":0}]' --tolerance 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_175a741caa7aee3e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_total_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 total reconciliation",
+      "description": "The paper's animal accounting yields THREE mutually inconsistent totals: the individual cells of Table 1 sum to 362; the printed per-group Total column sums to 368; and both the stated text figure and the printed Grand Total cell say 348. Only the last two agree with each other, and they agree only because 106 + 112 + 130 = 348 -- i.e. the grand total is internally consistent with the (incorrect) column totals rather than with the animals actually listed. All three numbers cannot describe the same experiment.",
+      "location": "Table 1 grand total and Animals section ('348 male albino Wistar Rats')",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Experiments were carried out on 348 male albino Wistar Rats"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_total_reconciliation",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Experiments were carried out on 348 male albino Wistar Rats",
+      "inputs": {
+        "tolerance": 0,
+        "decimals": 0,
+        "true_column_sums": [
+          114,
+          118,
+          130
+        ],
+        "comparisons": [
+          "vs stated N = 348",
+          "vs sum of the 18 printed row Totals = 368"
+        ]
+      },
+      "reported": {
+        "stated_total_N": 348,
+        "printed_grand_total_cell": 348,
+        "sum_of_printed_row_totals": 368
+      },
+      "computed": {
+        "sum_of_printed_cells": 362,
+        "difference_vs_stated_N": 14,
+        "difference_vs_row_totals": -6,
+        "n_inconsistent": 2,
+        "n_evaluated": 2
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The headline sample size of the study -- 348 rats -- is not recoverable from the paper's own allocation table, which accounts for either 362 or 368 animals depending on which printed figures are added."
+      },
+      "notes": "The paper's animal accounting yields THREE mutually inconsistent totals: the individual cells of Table 1 sum to 362; the printed per-group Total column sums to 368; and both the stated text figure and the printed Grand Total cell say 348. Only the last two agree with each other, and they agree only because 106 + 112 + 130 = 348 -- i.e. the grand total is internally consistent with the (incorrect) column totals rather than with the animals actually listed. All three numbers cannot describe the same experiment.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[114,118,130],\"expected_sum\":348,\"decimals\":0,\"decimals_total\":0},{\"values\":[114,118,130],\"expected_sum\":368,\"decimals\":0,\"decimals_total\":0}]' --tolerance 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_541505eb4aa76578",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_respiration_nl4wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T2 respiration nl4wk star",
+      "description": "n was set to 8 per group, the TOP of the paper's stated 6-8 range, which is the assumption most favourable to the authors' significance claim; at n=6 the p-values would be larger still. The achievable two-tailed p across the entire rounding interval implied by the printed 0-decimal means and SDs is [0.354, 0.786], and one-tailed [0.177, 0.393]. p < 0.05 is unreachable under Welch's and Student's tests, one- or two-tailed. The paper's stated analysis was ANOVA followed by Dunnett's test, which is MORE conservative than the unadjusted t-test recomputed here, so the discrepancy can only widen under the authors' own method.",
+      "location": "Table 2, Respiration cycle/min, Nerve Lesion 4 wk (12 \u00b1 9*) vs Control (14 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_respiration_nl4wk_star",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 12,
+        "sd1": 9,
+        "n1": 8,
+        "mean2": 14,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 0.596,
+        "p_point": 0.566,
+        "p_min_two_tailed": 0.354,
+        "p_max_two_tailed": 0.786,
+        "p_min_one_tailed": 0.177,
+        "reported_p_in_range": false
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The asterisk marking respiration rate as significantly altered at 4 weeks after nerve lesion cannot be produced by the group statistics printed beside it."
+      },
+      "notes": "n was set to 8 per group, the TOP of the paper's stated 6-8 range, which is the assumption most favourable to the authors' significance claim; at n=6 the p-values would be larger still. The achievable two-tailed p across the entire rounding interval implied by the printed 0-decimal means and SDs is [0.354, 0.786], and one-tailed [0.177, 0.393]. p < 0.05 is unreachable under Welch's and Student's tests, one- or two-tailed. The paper's stated analysis was ANOVA followed by Dunnett's test, which is MORE conservative than the unadjusted t-test recomputed here, so the discrepancy can only widen under the authors' own method.",
+      "reproduction": "metascience rivets-t --mean1 12 --sd1 9 --n1 8 --mean2 14 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_f62b682408656c6a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_respiration_nl10wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T2 respiration nl10wk star",
+      "description": "Same reasoning and same favourable n=8 assumption as t2_respiration_nl4wk_star. p < 0.05 is unreachable under every standard reading. The Results text asserts 'Respiration rate after nerve lesion in saline treated rats showed significant decrease after 10 weeks', which is the claim this asterisk supports.",
+      "location": "Table 2, Respiration cycle/min, Nerve Lesion 10 wk (12 \u00b1 8*) vs Control (14 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_respiration_nl10wk_star",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 12,
+        "sd1": 8,
+        "n1": 8,
+        "mean2": 14,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 0.662,
+        "p_point": 0.525,
+        "p_min_two_tailed": 0.301,
+        "p_max_two_tailed": 0.765,
+        "p_min_one_tailed": 0.151,
+        "reported_p_in_range": false
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Results sentence 'Respiration rate after nerve lesion in saline treated rats showed significant decrease after 10 weeks' is not supported by the means and SDs printed in Table 2."
+      },
+      "notes": "Same reasoning and same favourable n=8 assumption as t2_respiration_nl4wk_star. p < 0.05 is unreachable under every standard reading. The Results text asserts 'Respiration rate after nerve lesion in saline treated rats showed significant decrease after 10 weeks', which is the claim this asterisk supports.",
+      "reproduction": "metascience rivets-t --mean1 12 --sd1 8 --n1 8 --mean2 14 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_038b395b55c10f9c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_respiration_cblal10wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T2 respiration cblal10wk star",
+      "description": "n=8 per group assumed (top of stated 6-8 range, most favourable to the claim). This asterisk underpins the Results claim that 'Al nanoparticles showed significant increase in cerebrolysin treated nerve lesioned group', a cerebrolysin-treatment result.",
+      "location": "Table 2, Respiration cycle/min, \u00a7CBL + NL + Al 10 wk (16 \u00b1 6*) vs Control (14 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_respiration_cblal10wk_star",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 16,
+        "sd1": 6,
+        "n1": 8,
+        "mean2": 14,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 0.843,
+        "p_point": 0.418,
+        "p_min_two_tailed": 0.182,
+        "p_max_two_tailed": 0.709,
+        "p_min_one_tailed": 0.091,
+        "reported_p_in_range": false
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that Al nanoparticles produced a significant respiration increase in the cerebrolysin-treated nerve-lesioned group is not supported by the printed group statistics."
+      },
+      "notes": "n=8 per group assumed (top of stated 6-8 range, most favourable to the claim). This asterisk underpins the Results claim that 'Al nanoparticles showed significant increase in cerebrolysin treated nerve lesioned group', a cerebrolysin-treatment result.",
+      "reproduction": "metascience rivets-t --mean1 16 --sd1 6 --n1 8 --mean2 14 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_989b5548496b1ab0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_pawwithdrawal_nlal10wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T3 pawwithdrawal nlal10wk star",
+      "description": "n=8 per group assumed (top of stated 6-8 range). This is a PRIMARY outcome cell: paw withdrawal latency is one of the two pain measures the abstract's central hyperalgesia claim rests on. p < 0.05 is unreachable under Welch's and Student's, one- or two-tailed, and Dunnett's adjustment would only make it larger.",
+      "location": "Table 3, Paw Withdrawal Latency (Sec), NL + Al NPs 10 wk (4 \u00b1 5*) vs Control (6 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_pawwithdrawal_nlal10wk_star",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 4,
+        "sd1": 5,
+        "n1": 8,
+        "mean2": 6,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 0.97,
+        "p_point": 0.352,
+        "p_min_two_tailed": 0.122,
+        "p_max_two_tailed": 0.672,
+        "p_min_one_tailed": 0.061,
+        "reported_p_in_range": false
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "A starred primary pain outcome -- exacerbation of paw-withdrawal hyperalgesia by Al nanoparticles at 10 weeks -- cannot be significant given the means and SDs printed beside it."
+      },
+      "notes": "n=8 per group assumed (top of stated 6-8 range). This is a PRIMARY outcome cell: paw withdrawal latency is one of the two pain measures the abstract's central hyperalgesia claim rests on. p < 0.05 is unreachable under Welch's and Student's, one- or two-tailed, and Dunnett's adjustment would only make it larger.",
+      "reproduction": "metascience rivets-t --mean1 4 --sd1 5 --n1 8 --mean2 6 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_b07b3cf3c8f9395b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_bodywt_cblnl10wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T2 bodywt cblnl10wk star",
+      "description": "Not an impossibility. The smallest achievable TWO-tailed p over the rounding interval is 0.051 -- just above 0.05 -- so the asterisk is reachable only under a one-tailed test, which the paper never states it used, and only at the extreme corner of the rounding box with n=8 (the top of the stated 6-8 range). At n=6 it would not be reachable two-tailed at all. Recorded as suspicious rather than higher because a one-tailed reading is a legitimate convention the tool accepts.",
+      "location": "Table 2, Body wt (g), #CBL + NL 10 wk (274 \u00b1 8*) vs Control (267 \u00b1 8)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_bodywt_cblnl10wk_star",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 274,
+        "sd1": 8,
+        "n1": 8,
+        "mean2": 267,
+        "sd2": 8,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 1.75,
+        "p_point": 0.102,
+        "t_min": 1.412,
+        "t_max": 2.133,
+        "p_min_two_tailed": 0.051,
+        "p_max_two_tailed": 0.18,
+        "reported_p_in_range": true
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that cerebrolysin significantly raised body weight at 10 weeks survives only under an unstated one-tailed test at the most favourable admissible n."
+      },
+      "notes": "Not an impossibility. The smallest achievable TWO-tailed p over the rounding interval is 0.051 -- just above 0.05 -- so the asterisk is reachable only under a one-tailed test, which the paper never states it used, and only at the extreme corner of the rounding box with n=8 (the top of the stated 6-8 range). At n=6 it would not be reachable two-tailed at all. Recorded as suspicious rather than higher because a one-tailed reading is a legitimate convention the tool accepts.",
+      "reproduction": "metascience rivets-t --mean1 274 --sd1 8 --n1 8 --mean2 267 --sd2 8 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0ae2d9ddd3b72073",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_pawwithdrawal_cblag10wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T3 pawwithdrawal cblag10wk star",
+      "description": "Not an impossibility: p < 0.05 is reachable, but only in the extreme corner of the rounding box. At the printed values themselves p = 0.204. The tool's verdict is that the reported precision is too coarse to pin the test down (achievable p spans 0.031 to 0.577), which is the honest description: the asterisk is neither confirmed nor refuted by what the paper prints. The same arithmetic covers the identically-valued Table 3 cells NL+Ag 8 wk (4 \u00b1 3*) and NL+Cu 4 wk (4 \u00b1 3*).",
+      "location": "Table 3, Paw Withdrawal Latency (Sec), \u00a7CBL + NL + Ag 10 wk (4 \u00b1 3*) vs Control (6 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_pawwithdrawal_cblag10wk_star",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 4,
+        "sd1": 3,
+        "n1": 8,
+        "mean2": 6,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 1.333,
+        "p_point": 0.204,
+        "t_min": 0.571,
+        "t_max": 2.4,
+        "p_min_two_tailed": 0.031,
+        "p_max_two_tailed": 0.577,
+        "reported_p_in_range": true
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 3,
+        "basis": "asserted",
+        "explanation": "Three starred primary pain-outcome cells reporting 4 \u00b1 3 against a 6 \u00b1 3 control cannot be adjudicated from the printed precision, so the cerebrolysin and nanoparticle claims resting on them are unverifiable rather than wrong."
+      },
+      "notes": "Not an impossibility: p < 0.05 is reachable, but only in the extreme corner of the rounding box. At the printed values themselves p = 0.204. The tool's verdict is that the reported precision is too coarse to pin the test down (achievable p spans 0.031 to 0.577), which is the honest description: the asterisk is neither confirmed nor refuted by what the paper prints. The same arithmetic covers the identically-valued Table 3 cells NL+Ag 8 wk (4 \u00b1 3*) and NL+Cu 4 wk (4 \u00b1 3*).",
+      "reproduction": "metascience rivets-t --mean1 4 --sd1 3 --n1 8 --mean2 6 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_47743d1e8dfaef95",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_respiration_nlal8wk_star",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "T2 respiration nlal8wk star",
+      "description": "Reachable but not pinned: p at the printed values is 0.204, and the achievable interval spans 0.031 to 0.577. The same arithmetic covers the identically-valued NL + Cu 10 wk cell (16 \u00b1 3*). Recorded to document that a further group of starred respiration cells is unverifiable at the printed precision, distinct from the three that are outright unreachable.",
+      "location": "Table 2, Respiration cycle/min, NL + Al NPs 8 wk (16 \u00b1 3*) vs Control (14 \u00b1 3)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_respiration_nlal8wk_star",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point.",
+      "inputs": {
+        "mean1": 16,
+        "sd1": 3,
+        "n1": 8,
+        "mean2": 14,
+        "sd2": 3,
+        "n2": 8,
+        "reported_p": 0.05,
+        "p_is_threshold": true,
+        "decimals_mean": 0,
+        "decimals_sd": 0
+      },
+      "reported": {
+        "marker": "*",
+        "meaning": "P < 0.05 from control group"
+      },
+      "computed": {
+        "t_point": 1.333,
+        "p_point": 0.204,
+        "t_min": 0.571,
+        "t_max": 2.4,
+        "p_min_two_tailed": 0.031,
+        "p_max_two_tailed": 0.577,
+        "reported_p_in_range": true
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Two further starred respiration comparisons cannot be adjudicated from the printed precision."
+      },
+      "notes": "Reachable but not pinned: p at the printed values is 0.204, and the achievable interval spans 0.031 to 0.577. The same arithmetic covers the identically-valued NL + Cu 10 wk cell (16 \u00b1 3*). Recorded to document that a further group of starred respiration cells is unverifiable at the printed precision, distinct from the three that are outright unreachable.",
+      "reproduction": "metascience rivets-t --mean1 16 --sd1 3 --n1 8 --mean2 14 --sd2 3 --n2 8 --reported-p 0.05 --p-is-threshold --decimals-mean 0 --decimals-sd 0",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_f6feb9da843edef2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "arterial_ph_non_significance_contradicted",
+      "producer": "legacy_sweep",
+      "technique": "rivets_independent_t",
+      "title": "Arterial ph non significance contradicted",
+      "description": "This is the mirror image of the starred-cell problem: a comparison the paper explicitly calls non-significant, and leaves unstarred, is significant by a wide margin. n was set to 6 per group -- the BOTTOM of the stated 6-8 range, the assumption most favourable to the authors' claim of no difference. The entire achievable p interval is [0.00013, 0.0019], i.e. below 0.002 at every admissible rounding, roughly 25-fold below the paper's own alpha. The tool graded this `suspicious` on its wide-t-interval heuristic; the substantive point is that the whole interval sits below 0.05, so the stated non-significance cannot hold under any rounding or n in range. Note the direction: a pH of 7.23 is a mar",
+      "location": "Results, Physiological Variables paragraph; against Table 2 Arterial pH, NL + Ag NPs 10 wk (7.23 \u00b1 0.06, unstarred) vs Control (7.38 \u00b1 0.04)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The arterial pH exhibited slight decrease in nerve lesioned group with or without nanoparticles intoxication; however, the values were not significantly altered (Table 2)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:arterial_ph_non_significance_contradicted",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The arterial pH exhibited slight decrease in nerve lesioned group with or without nanoparticles intoxication; however, the values were not significantly altered (Table 2).",
+      "inputs": {
+        "mean1": 7.23,
+        "sd1": 0.06,
+        "n1": 6,
+        "mean2": 7.38,
+        "sd2": 0.04,
+        "n2": 6,
+        "decimals_mean": 2,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "marker": "none",
+        "stated_conclusion": "the values were not significantly altered"
+      },
+      "computed": {
+        "t_point": 5.095,
+        "p_point": 0.00072,
+        "t_min": 4.338,
+        "t_max": 6.012,
+        "p_min": 0.00013,
+        "p_max": 0.00194
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Results sentence stating that arterial pH was 'not significantly altered' is contradicted by Table 2's own means and SDs, which imply p < 0.002."
+      },
+      "notes": "This is the mirror image of the starred-cell problem: a comparison the paper explicitly calls non-significant, and leaves unstarred, is significant by a wide margin. n was set to 6 per group -- the BOTTOM of the stated 6-8 range, the assumption most favourable to the authors' claim of no difference. The entire achievable p interval is [0.00013, 0.0019], i.e. below 0.002 at every admissible rounding, roughly 25-fold below the paper's own alpha. The tool graded this `suspicious` on its wide-t-interval heuristic; the substantive point is that the whole interval sits below 0.05, so the stated non-significance cannot hold under any rounding or n in range. Note the direction: a pH of 7.23 is a marked acidosis, so this is a real physiological effect the paper reports as absent.",
+      "reproduction": "metascience rivets-t --mean1 7.23 --sd1 0.06 --n1 6 --mean2 7.38 --sd2 0.04 --n2 6 --decimals-mean 2 --decimals-sd 2",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "The arterial pH exhibited slight decrease in nerve lesioned group with or without nanoparticles intoxication; however, the values were not significantly altered (Table 2).",
+        "source_locator": "Results, Physiological Variables; against Table 2 Arterial pH column: NL + Ag NPs 10 wk \"7.23 \u00b1 0.06\" (unstarred) vs Control \"7.38 \u00b1 0.04\"",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_75e2a81be5a5b494",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_duplicate_rectalT_paCO2",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "T2 duplicate rectalT paCO2",
+      "description": "A rectal temperature in degrees Celsius and an arterial CO2 tension in Torr are reported with an identical mean AND identical SD to two decimals, in the same table row. One identical pair out of 8089 comparisons. IMPORTANT CAVEAT, which lowers the strength of this finding: the tool infers value spans from the whole table (span_mean 346.77), but these two particular variables both happen to live in the narrow 35-37 range by coincidence of their units, so the true coincidence probability is materially higher than the reported 0.00011. Treat as a copy-paste candidate warranting clarification, not as evidence of fabrication. Capped at `suspicious` per rulebook rule 11; duplication is improbable,",
+      "location": "Table 2, NL + Cu NPs 10 wk row: Rectal T \u00b0C and PaCO2 Torr cells",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "36.89 \u00b1 0.54"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_duplicate_rectalT_paCO2",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "36.89 \u00b1 0.54",
+      "inputs": {
+        "n_blocks": 8,
+        "blocking": "one block per physiological variable, 18 groups each",
+        "n_cells_total": 144,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "near_match": false
+      },
+      "reported": {
+        "rectal_temperature_C": "36.89 \u00b1 0.54",
+        "paCO2_Torr": "36.89 \u00b1 0.54"
+      },
+      "computed": {
+        "n_comparisons": 8089,
+        "max_identical_pairs": 1,
+        "chance_probability": 0.00011,
+        "duplicate_value": [
+          36.89,
+          0.54
+        ]
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Neither value carries a claim in the paper's argument; the concern is provenance of the Table 2 numbers generally, not this comparison."
+      },
+      "notes": "A rectal temperature in degrees Celsius and an arterial CO2 tension in Torr are reported with an identical mean AND identical SD to two decimals, in the same table row. One identical pair out of 8089 comparisons. IMPORTANT CAVEAT, which lowers the strength of this finding: the tool infers value spans from the whole table (span_mean 346.77), but these two particular variables both happen to live in the narrow 35-37 range by coincidence of their units, so the true coincidence probability is materially higher than the reported 0.00011. Treat as a copy-paste candidate warranting clarification, not as evidence of fabrication. Capped at `suspicious` per rulebook rule 11; duplication is improbable, never impossible. A first pass with all 144 cells in a SINGLE block made 0 comparisons and returned `consistent` -- the finding only appears once the table is blocked by variable, recorded here so that negative first result is not mistaken for a clean sweep.",
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"RectalT_C\",\"independent\":true,\"cells\":[{\"label\":\"NLCu10wk\",\"value\":36.89,\"sd\":0.54}]},{\"label\":\"PaCO2_Torr\",\"independent\":true,\"cells\":[{\"label\":\"NLCu10wk\",\"value\":36.89,\"sd\":0.54}]}]' --decimals-mean 2 --decimals-sd 2",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience duplication-detect [OPTIONS] {json_path}\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_16f0fdb6dd30bd94",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "corrupted_numerals_in_data_cells",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Corrupted numerals in data cells",
+      "description": "Five data cells and one footnote are malformed. Two cells print an en-dash where a decimal point belongs ('2\u201316' for what must be 2.16; '1\u201314' for 1.14) and three print an acute accent where the \u00b1 belongs ('1.84\u00b40.33'). The Table 5 footnote reads 'Mean \u00b1 SD of\u20138 rats', losing the '6' that the other four tables print. CRITICALLY, the XML and the PDF agree exactly on all six, so these are defects in the published version of record and NOT artifacts of our extraction -- this was checked precisely because a disagreement would have been an extraction/versioning problem and not attributable to the authors. Two of the five affected cells are SD values that consequently cannot be read at all, so no ",
+      "location": "Table 4 ([131]-Iodine and Water content columns), Table 5 (Albumin and HSP columns and its footnote)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "indeterminate",
+        "tool": "parse_table",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1.98 \u00b1 0.43** 1.86 \u00b1 0.33** 2\u201316 \u00b1 0.42** 2.23 \u00b1 0.44**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:corrupted_numerals_in_data_cells",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1.98 \u00b1 0.43** 1.86 \u00b1 0.33** 2\u201316 \u00b1 0.42** 2.23 \u00b1 0.44**",
+      "inputs": {
+        "cells_examined": "all printed cells of Tables 4 and 5 in both the JATS XML and the publisher PDF",
+        "cross_check": "extract_xml/get_table vs extract_pdf pages 7-8"
+      },
+      "reported": {
+        "table4_NLAg8wk_iodine_T10_11": "2\u201316 \u00b1 0.42**",
+        "table4_NLAl10wk_iodine_T10_11": "1.84\u00b40.33**",
+        "table4_CBLNLAl10wk_water_L5_S2": "65.63\u00b40.34*#",
+        "table5_NLAg4wk_HSP_L5_S2": "24.59\u00b42.08**",
+        "table5_NLAg8wk_albumin_L5_S2": "3.28 \u00b1 1\u201314**",
+        "table5_footnote": "Values are Mean \u00b1 SD of\u20138 rats at each point."
+      },
+      "computed": {
+        "n_corrupted_data_cells": 5,
+        "n_corrupted_footnotes": 1,
+        "xml_pdf_agreement": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 5,
+        "basis": "asserted",
+        "explanation": "Five reported measurements in the BSCB and biochemical tables cannot be read as numbers, so the group values behind five starred comparisons are unavailable to any reader or re-analyst."
+      },
+      "notes": "Five data cells and one footnote are malformed. Two cells print an en-dash where a decimal point belongs ('2\u201316' for what must be 2.16; '1\u201314' for 1.14) and three print an acute accent where the \u00b1 belongs ('1.84\u00b40.33'). The Table 5 footnote reads 'Mean \u00b1 SD of\u20138 rats', losing the '6' that the other four tables print. CRITICALLY, the XML and the PDF agree exactly on all six, so these are defects in the published version of record and NOT artifacts of our extraction -- this was checked precisely because a disagreement would have been an extraction/versioning problem and not attributable to the authors. Two of the five affected cells are SD values that consequently cannot be read at all, so no dispersion-based check can be run on them.",
+      "reproduction": "metascience get-table /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.xml 4",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_a1c1a4a8ccfaff28",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "fig8_legend_describes_albumin",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Fig8 legend describes albumin (Figure 8 caption (GFAP immunoreactivity figure))",
+      "description": "The Figure 8 legend opens by defining the panel as GFAP immunoreactivity, then describes the nanoparticle effect as exacerbating 'albumin leakage' -- the wording of the Figure 5 legend, which really is the albumin figure. The same caption also contains 'CBK 5 ml/kg' for CBL. This is duplicated boilerplate in a load-bearing sentence: the legend is the only place the Figure 8 quantities are defined, and it names the wrong analyte. Recorded descriptively; no arithmetic claim is made and severity is capped at suspicious per the textual-flag rule.",
+      "location": "Figure 8 caption (GFAP immunoreactivity figure)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Treatment with nanoparticles (NPs) Cu or Ag (50\u201360 nm) exacerbated albumin leakage at 4, 8 or 10 weeks from the nerve lesioned group significantly."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:fig8_legend_describes_albumin",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Treatment with nanoparticles (NPs) Cu or Ag (50\u201360 nm) exacerbated albumin leakage at 4, 8 or 10 weeks from the nerve lesioned group significantly.",
+      "inputs": {
+        "figures_compared": [
+          "Figure 5 caption (albumin)",
+          "Figure 8 caption (GFAP)"
+        ]
+      },
+      "reported": {
+        "figure_8_subject": "glial fibrillary acidic protein (GFAP) positive immunoreactive cells",
+        "sentence_as_printed": "exacerbated albumin leakage"
+      },
+      "computed": {
+        "duplicated_boilerplate": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The only description of what Figure 8 plots identifies the wrong protein, so the GFAP cell-count result cannot be interpreted with confidence from the paper as published."
+      },
+      "notes": "The Figure 8 legend opens by defining the panel as GFAP immunoreactivity, then describes the nanoparticle effect as exacerbating 'albumin leakage' -- the wording of the Figure 5 legend, which really is the albumin figure. The same caption also contains 'CBK 5 ml/kg' for CBL. This is duplicated boilerplate in a load-bearing sentence: the legend is the only place the Figure 8 quantities are defined, and it names the wrong analyte. Recorded descriptively; no arithmetic claim is made and severity is capped at suspicious per the textual-flag rule.",
+      "reproduction": "not independently reproducible as a CLI check -- no forensic verb applies to caption text; re-read via `metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.xml --first-section 27 --last-section 28`",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0e6dc3a05c93d825",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "tailflick_latency_60s",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Tailflick latency 60s",
+      "description": "ASSUMPTION-DEPENDENT and therefore deliberately capped well below any impossibility claim. The paper states no cut-off time, so this rests on an EXTERNAL benchmark not given in the paper: normal rat tail-flick latency to a ~52 \u00b0C radiant stimulus is a few seconds, and cut-offs of roughly 10-15 s are conventional precisely to avoid tissue injury. A 60-64 s control latency would mean uninjured animals held their tails in a noxious 52 \u00b0C stimulus for a full minute. No forensic tool applies -- this is a domain-plausibility observation, not arithmetic, and is recorded as such rather than dressed up as a computation. Note the internal contrast: nerve-lesioned animals in the same column reach 2-4 s",
+      "location": "Table 3, Radiant heat thermal stimulation of tail \u2014 Tail Latency (Sec) 52 \u00b0C, Control and Sham rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Control 15 \u00b1 2 6 \u00b1 3 60 \u00b1 3"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:tailflick_latency_60s",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Control 15 \u00b1 2 6 \u00b1 3 60 \u00b1 3",
+      "inputs": {
+        "control_tail_flick_latency_s": 60,
+        "sham_tail_flick_latency_s": 64,
+        "nerve_lesion_10wk_latency_s": 4,
+        "stated_stimulus": "radiant heat thermal stimulus 52 \u00b0C"
+      },
+      "reported": {
+        "control": "60 \u00b1 3",
+        "sham": "64 \u00b1 2"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "If the control tail-flick latencies are mis-scaled or mis-transcribed, the thermal hyperalgesia effect size that the abstract reports is not interpretable in the stated units."
+      },
+      "notes": "ASSUMPTION-DEPENDENT and therefore deliberately capped well below any impossibility claim. The paper states no cut-off time, so this rests on an EXTERNAL benchmark not given in the paper: normal rat tail-flick latency to a ~52 \u00b0C radiant stimulus is a few seconds, and cut-offs of roughly 10-15 s are conventional precisely to avoid tissue injury. A 60-64 s control latency would mean uninjured animals held their tails in a noxious 52 \u00b0C stimulus for a full minute. No forensic tool applies -- this is a domain-plausibility observation, not arithmetic, and is recorded as such rather than dressed up as a computation. Note the internal contrast: nerve-lesioned animals in the same column reach 2-4 s, a 15- to 30-fold difference, far outside the dynamic range such an assay normally shows.",
+      "reproduction": "not independently reproducible as a CLI check -- no validated tool applies to a domain-plausibility judgement; re-read the values via `metascience get-table /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.xml 3`",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_7f9fa285e5963681",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_test_statistics_reported",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "No test statistics reported",
+      "description": "statcheck recovered ZERO NHST statistics from the entire paper. This is not a tool failure -- it is an accurate description of the reporting. The paper contains no F statistic, no t statistic, no degrees of freedom and no exact p-value anywhere; every one of its several hundred inferential claims is carried by an asterisk in a table cell or a figure. The consequence is that no reported test statistic can be recalculated against its own p-value, and the only route to checking any claim is reconstruction from the group means and SDs, which is what the rivets_independent_t findings above do. Severity is `indeterminate` because nothing could be verified, NOT because the paper passed a check.",
+      "location": "Whole paper (Statistical Treatment section; Tables 2-6; Figures 2, 5, 8)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "ANOVA followed by Dunnett\u2019s test for multiple group comparison was done using one control group using commercial software StatView 5 (Abacus Concept, USA) on a Macintosh computer in Classic Environment. A p-value less than 0.05 was considered significant."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_test_statistics_reported",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "ANOVA followed by Dunnett\u2019s test for multiple group comparison was done using one control group using commercial software StatView 5 (Abacus Concept, USA) on a Macintosh computer in Classic Environment. A p-value less than 0.05 was considered significant.",
+      "inputs": {
+        "pdf_path": "10.1007--s11064-023-03861-8.pdf",
+        "scope": "all 25 PDF pages"
+      },
+      "reported": {
+        "claimed_analysis": "ANOVA followed by Dunnett's test",
+        "p_values_printed": "thresholds only: * P < 0.05, ** P < 0.01, # P < 0.05"
+      },
+      "computed": {
+        "stats_found": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Every inferential claim in the paper is unauditable by direct recalculation; all verification must go through reconstruction from descriptives."
+      },
+      "notes": "statcheck recovered ZERO NHST statistics from the entire paper. This is not a tool failure -- it is an accurate description of the reporting. The paper contains no F statistic, no t statistic, no degrees of freedom and no exact p-value anywhere; every one of its several hundred inferential claims is carried by an asterisk in a table cell or a figure. The consequence is that no reported test statistic can be recalculated against its own p-value, and the only route to checking any claim is reconstruction from the group means and SDs, which is what the rivets_independent_t findings above do. Severity is `indeterminate` because nothing could be verified, NOT because the paper passed a check.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.pdf",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [input_path]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "ANOVA followed by Dunnett\u2019s test for multiple group comparison was done using one control group using commercial software StatView 5 (Abacus Concept, USA) on a Macintosh computer in Classic Environment. A p-value less than 0.05 was considered significant.",
+        "source_locator": "Statistical Treatment of the Data Obtained; whole-PDF NHST sweep",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_aa4cce2e6ff3bde2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncomputable",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity uncomputable",
+      "description": "The multiplicity arithmetic cannot be run on this paper at all, and the reason is worth stating plainly: the tool drops thresholded p-values rather than coercing them, and every p-value in this paper is a threshold. So no family-wise error rate, no Benjamini-Hochberg count, and no surviving-claims interval can be computed. What can be said without arithmetic is the scale: Tables 2-6 alone print on the order of 500 group-versus-control comparisons against a single shared control group (136 + 51 + 102 + 112 + 112), plus three figure panels, and the stated Dunnett's adjustment operates only within a single measure -- it does not span the 8 variables of Table 2, the 3 measures of Table 3, or the",
+      "location": "Table 3 footnote; family = 17 non-control groups x 3 pain measures",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "*P < 0.05; **P < 0.01 from control group, #P < 0.05 from Nerve lesion, ANOVA followed by Dunnett\u2019s test for multiple group comparison from one group."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncomputable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "*P < 0.05; **P < 0.01 from control group, #P < 0.05 from Nerve lesion, ANOVA followed by Dunnett\u2019s test for multiple group comparison from one group.",
+      "inputs": {
+        "family_label": "Table 3: all group-vs-control comparisons across the three pain measures",
+        "n_tests_submitted": 51,
+        "all_p_is_threshold": true,
+        "alpha": 0.05
+      },
+      "reported": {
+        "stated_correction": "Dunnett's test, within each ANOVA, against one control group"
+      },
+      "computed": {
+        "n_tests_evaluable": 0,
+        "note": "no uncorrected tests -- all 51 were dropped because their p-values are thresholds rather than exact values"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "How many of the paper's several hundred asterisked claims would survive correction across measures cannot be determined from what is printed."
+      },
+      "notes": "The multiplicity arithmetic cannot be run on this paper at all, and the reason is worth stating plainly: the tool drops thresholded p-values rather than coercing them, and every p-value in this paper is a threshold. So no family-wise error rate, no Benjamini-Hochberg count, and no surviving-claims interval can be computed. What can be said without arithmetic is the scale: Tables 2-6 alone print on the order of 500 group-versus-control comparisons against a single shared control group (136 + 51 + 102 + 112 + 112), plus three figure panels, and the stated Dunnett's adjustment operates only within a single measure -- it does not span the 8 variables of Table 2, the 3 measures of Table 3, or the five tables. Recorded as `indeterminate`, since a refusal is the result here and must not be read as either a pass or a quantified failure.",
+      "reproduction": "metascience multiplicity --family-label 'Table 3 group-vs-control comparisons across three pain measures' --tests '[{\"id\":\"t3_1\",\"p_value\":0.05,\"p_is_threshold\":true,\"correction_applied\":\"none\"}]' --alpha 0.05",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "*P &lt; 0.05; **P &lt; 0.01 from control group, #P &lt; 0.05 from Nerve lesion, ANOVA followed by Dunnett\u2019s test for multiple group comparison from one group.",
+        "source_locator": "Table 3 footnote; family = 17 non-control groups x 3 pain measures",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_f1b60323ee3e060f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_typed_cells_all_refused",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_or_se",
+      "title": "Table3 typed cells all refused",
+      "description": "Run via check_table, which typed all 54 cells successfully (100% parse coverage, every cell mean_sd) and then dispatched to check_sd_or_se -- the only applicable check -- which refused on all 54. Two independent structural reasons. First, the outcome variables are continuous (withdrawal weight in grams, latency in seconds), which correctly bars GRIM, GRIMMER, SPRITE and DEBIT; applying them here would manufacture impossibilities out of ordinary measurements. Second, the paper never states an exact n for any cell, only the range '6-8 rats at each point', so even the dispersion check cannot be pinned. This is the denominator that matters for the whole review: 0 of 54 checks could run. The tabl",
+      "location": "Table 3 (Von Frey / paw withdrawal / tail flick), all 54 printed cells",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point. For simplicity, the values are adjusted to nearest numbers."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_typed_cells_all_refused",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point. For simplicity, the values are adjusted to nearest numbers.",
+      "inputs": {
+        "dispatcher": "check_table",
+        "n_cells": 54,
+        "declared_variable_family": "continuous",
+        "bindings": "all rows bound to a single continuous pain-measure variable",
+        "provenance": "printed_table"
+      },
+      "reported": {
+        "cell_format": "mean \u00b1 SD with significance markers"
+      },
+      "computed": {
+        "parse_coverage": 1,
+        "kind_counts": {
+          "mean_sd": 54
+        },
+        "n_checks_run": 0,
+        "n_not_run": 54,
+        "refusal_reason": "check_sd_or_se needs n and this cell carries none",
+        "cells_carrying_markers": 41
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No per-cell granularity check can be run anywhere in this paper's five results tables, so the absence of such findings is not evidence the values are sound."
+      },
+      "notes": "Run via check_table, which typed all 54 cells successfully (100% parse coverage, every cell mean_sd) and then dispatched to check_sd_or_se -- the only applicable check -- which refused on all 54. Two independent structural reasons. First, the outcome variables are continuous (withdrawal weight in grams, latency in seconds), which correctly bars GRIM, GRIMMER, SPRITE and DEBIT; applying them here would manufacture impossibilities out of ordinary measurements. Second, the paper never states an exact n for any cell, only the range '6-8 rats at each point', so even the dispersion check cannot be pinned. This is the denominator that matters for the whole review: 0 of 54 checks could run. The tables of this paper are by construction almost entirely immune to per-cell forensic arithmetic, and the significance-reconstruction route used elsewhere in this sweep is the only one available. The same reasoning applies unchanged to Tables 2, 4, 5 and 6, whose variables are likewise all continuous and whose footnotes state the same 6-8 range.",
+      "reproduction": "metascience check-table --cells '[{\"raw\":\"15 \u00b1 2\",\"row_label\":\"Control\",\"col_label\":\"VonFrey_Weight_g\"}]' --variables '[{\"id\":\"pain_measure\",\"name\":\"pain measure\",\"measurement_level\":\"ratio\",\"discreteness\":\"continuous\",\"family\":\"continuous\",\"confidence\":\"high\"}]' --bindings '{\"Control\":\"pain_measure\"}'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Values are Mean \u00b1 SD of 6\u20138 rats at each point. For simplicity, the values are adjusted to nearest numbers.",
+        "source_locator": "Table 3 (Von Frey / paw withdrawal / tail flick), all 54 printed cells",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_d494061a5dc7cec4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "data_availability_withheld",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Data availability withheld (Data Availability and Data Availability Statement sections)",
+      "description": "No data are deposited and no repository, accession or supplementary data file is named for a 348-animal study funded by multiple public bodies. Under rulebook rule 7 this is a state-but-withhold pattern. It is a weak signal on its own and is recorded as such; its relevance here is that it closes off the one route that could resolve the discrepancies found above -- the underlying per-animal values would settle the Table 1 accounting and every unreachable-p asterisk at once. The paper also supplies no supplementary materials of any kind, so no participant-level duplication analysis was possible.",
+      "location": "Data Availability and Data Availability Statement sections",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Enquiries about data availability should be directed to the authors."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:data_availability_withheld",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Enquiries about data availability should be directed to the authors.",
+      "inputs": {
+        "stated_n_animals": 348,
+        "funders_listed": "Air Force Office of Scientific Research, NIH R01 AG028679, Swedish Medical Research Council, EverNeuroPharma and others"
+      },
+      "reported": {
+        "data_availability_statement": "Enquiries about data availability should be directed to the authors."
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "None of the numeric discrepancies identified in this sweep can be resolved by a reader, because the underlying data are not available."
+      },
+      "notes": "No data are deposited and no repository, accession or supplementary data file is named for a 348-animal study funded by multiple public bodies. Under rulebook rule 7 this is a state-but-withhold pattern. It is a weak signal on its own and is recorded as such; its relevance here is that it closes off the one route that could resolve the discrepancies found above -- the underlying per-animal values would settle the Table 1 accounting and every unreachable-p asterisk at once. The paper also supplies no supplementary materials of any kind, so no participant-level duplication analysis was possible.",
+      "reproduction": "not independently reproducible as a CLI check -- no forensic verb applies to a data-availability statement; re-read via `metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.xml --first-section 42 --last-section 45`",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_4a760b2c84eb55d8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "article_is_retracted",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Article is retracted (Article title in the version of record)",
+      "description": "Contextual fact, not a forensic result, and deliberately carries no severity above `indeterminate`. The version of record is flagged as retracted in its own title. The retraction notice itself was not among the supplied files, so the stated grounds for retraction are unknown to this sweep and NOTHING in this review should be read as reconstructing or endorsing them. The findings above were derived independently from the paper's own numbers and stand or fall on their own.",
+      "location": "Article title in the version of record",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "RETRACTED ARTICLE: Cerebrolysin Attenuates Exacerbation of Neuropathic Pain, Blood-spinal Cord Barrier Breakdown and Cord Pathology Following Chronic Intoxication of Engineered Ag, Cu or Al (50\u201360 nm) Nanoparticles"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:article_is_retracted",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "RETRACTED ARTICLE: Cerebrolysin Attenuates Exacerbation of Neuropathic Pain, Blood-spinal Cord Barrier Breakdown and Cord Pathology Following Chronic Intoxication of Engineered Ag, Cu or Al (50\u201360 nm) Nanoparticles",
+      "inputs": {
+        "source": "JATS XML article-meta title and PDF title"
+      },
+      "reported": {
+        "title_prefix": "RETRACTED ARTICLE"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Bears on how the paper's claims should be cited, but does not itself establish anything about the numbers checked here."
+      },
+      "notes": "Contextual fact, not a forensic result, and deliberately carries no severity above `indeterminate`. The version of record is flagged as retracted in its own title. The retraction notice itself was not among the supplied files, so the stated grounds for retraction are unknown to this sweep and NOTHING in this review should be read as reconstructing or endorsing them. The findings above were derived independently from the paper's own numbers and stand or fall on their own.",
+      "reproduction": "not independently reproducible as a CLI check -- this is article metadata, not a statistic; read via `metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/10.1007--s11064-023-03861-8.xml`",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_06f02a80fc938ced",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "aef430870a2b879f0036c4475ace580627c860d4bfb0f2d59734a1ce9a720714",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-10 07:37 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

@@ -128,9 +128,14 @@ def convert_row(row: dict) -> dict:
         "severity_is_provisional": True,
         "impossible": impossible,
         "tool_verdict": tool_verdict,
+        # A v1 sweep row names the tool it used in `technique` and seldom
+        # carries `severity_source`; the v1 viewer graded a registered
+        # technique as computed (`viewer_facts._tool_produced`'s fallback), so
+        # the conversion keeps that reading instead of filing every such row
+        # as the model's own.
         "computed_by": ("deterministic_track"
                         if _producer_for(row) != "legacy_sweep"
-                        else "registry_tool" if tool_verdict
+                        else "registry_tool" if (tool_verdict or spec is not None)
                         else "model_reading"),
         "quarantined": quarantined,
         "anchors": anchors,

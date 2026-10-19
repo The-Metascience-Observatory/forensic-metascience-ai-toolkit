@@ -595,7 +595,12 @@ class TestTheWriteOnlyRatchet:
     #: (read by humans and the model in artefacts), and Grok transcript
     #: fields. One real catch was wired instead of pinned: `web_unbacked`
     #: now reaches the adjudicator docket.
-    MAX_WRITE_ONLY = 32
+    #: RE-PINNED 2026-10-19: 32 -> 33, and no key became write-only. The
+    #: serial-pipeline transcripts (`messages.stage{1,2}.json`) were deleted
+    #: from tests/fixtures, and `permission_denials` (a run_meta field copied
+    #: from the CLI's result event, read by people) had only ever counted as
+    #: "consumed" because its name appeared inside those transcripts.
+    MAX_WRITE_ONLY = 33
 
     def test_write_only_keys_have_not_multiplied(self):
         from forensic_metascience_ai_toolkit.inertness import scan

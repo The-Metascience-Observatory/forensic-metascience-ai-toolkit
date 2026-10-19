@@ -1,0 +1,1705 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "run_id": "r_d9f5da2c9bff134a",
+  "findings": [
+    {
+      "slug": "e4_control_sd_impossible",
+      "producer": "legacy_sweep",
+      "technique": "sprite_reconstruct",
+      "title": "E4 control sd impossible",
+      "description": "The self-evaluation measure is a single seven-point integer item, so the observations must be whole numbers. With a mean of exactly 4.20, at least a fifth of responses must depart from 4, which forces a sample SD of roughly 0.41 or more; 0.21 is below the floor. Verified independently by R's rsprite2 (infeasible=true), and robust to the unknown control-group size: no integer sample exists at n = 15, 20, 30 or 60. n=15 is the value implied by the reported degrees of freedom. Value confirmed identically in both the XML and the PDF version of record.",
+      "location": "Experiment 4, No load conditions and Cognitive load conditions (control-condition statistics, repeated twice)",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e4_control_sd_impossible",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found",
+      "inputs": {
+        "mean": 4.2,
+        "sd": 0.21,
+        "n": 15,
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "mean": 4.2,
+        "sd": 0.21,
+        "scale": "1-7 single item (self-rated attractiveness)"
+      },
+      "computed": {
+        "outcome": "no_solution_proven",
+        "n_tested": [
+          15,
+          20,
+          30,
+          60
+        ],
+        "all_infeasible": true,
+        "explanation_at_n15": "total 63: no integer sum-of-squares Q with the required parity falls in the window [265.19, 265.25] implied by SD=0.21 at 2 dp",
+        "r_rsprite2_infeasible": true,
+        "min_achievable_sd_for_integer_mean_4.20": "approx 0.41"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 8,
+        "basis": "asserted",
+        "explanation": "This control mean and SD is the reference point against which all eight of Experiment 4's self-evaluation contrasts are tested, so the impossibility sits under the whole of the paper's cognitive-load conclusion."
+      },
+      "notes": "The self-evaluation measure is a single seven-point integer item, so the observations must be whole numbers. With a mean of exactly 4.20, at least a fifth of responses must depart from 4, which forces a sample SD of roughly 0.41 or more; 0.21 is below the floor. Verified independently by R's rsprite2 (infeasible=true), and robust to the unknown control-group size: no integer sample exists at n = 15, 20, 30 or 60. n=15 is the value implied by the reported degrees of freedom. Value confirmed identically in both the XML and the PDF version of record.",
+      "reproduction": "metascience sprite --mean 4.2 --sd 0.21 --n 15 --scale-min 1 --scale-max 7 --decimals-mean 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d31406881d8cf945",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e3_table2_selfeval_two_cells_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "E3 table2 selfeval two cells impossible",
+      "description": "Cell n=12 is exact: N=96 stated, a balanced 2x2x2 design, and df_error=88 = 96-8 confirms eight cells. Both means pass GRIM; it is the SD of .52 that admits no integer sum-of-squares of the required parity. The two failing cells are precisely the two that share the SD value .52. Independently confirmed by R's rsprite2 for both cells. Table 2 values are byte-identical in the XML and the PDF.",
+      "location": "Table 2, Self-evaluation row, Positive/Unambiguous/Upward and Positive/Unambiguous/Downward columns",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Self-evaluation ... 6.58 (.52) 4.08 (.52)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e3_table2_selfeval_two_cells_impossible",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Self-evaluation ... 6.58 (.52) 4.08 (.52)",
+      "inputs": {
+        "cells": [
+          {
+            "mean": 6.58,
+            "sd": 0.52,
+            "n": 12
+          },
+          {
+            "mean": 4.08,
+            "sd": 0.52,
+            "n": 12
+          }
+        ],
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "cell_1": "6.58 (.52)",
+        "cell_2": "4.08 (.52)",
+        "scale": "1-7 single item",
+        "n_per_cell": 12
+      },
+      "computed": {
+        "cell_1": {
+          "grim_consistent": true,
+          "candidate_sums": [
+            79
+          ],
+          "grimmer": "no valid (S,Q) combination",
+          "sprite_outcome": "no_solution_proven",
+          "r_rsprite2_infeasible": true
+        },
+        "cell_2": {
+          "grim_consistent": true,
+          "candidate_sums": [
+            49
+          ],
+          "grimmer": "no valid (S,Q) combination",
+          "sprite_outcome": "no_solution_proven",
+          "r_rsprite2_infeasible": true
+        },
+        "denominator": "24 checks run over the 8 self-evaluation cells; 4 impossible results (2 cells x 2 tools), 20 consistent; 8 further checks refused on the Similarity row as a multi-item composite"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Both affected cells are in the unambiguous-cue condition that Experiment 3 uses as its comparison baseline for the claim that self-serving responding requires ambiguity."
+      },
+      "notes": "Cell n=12 is exact: N=96 stated, a balanced 2x2x2 design, and df_error=88 = 96-8 confirms eight cells. Both means pass GRIM; it is the SD of .52 that admits no integer sum-of-squares of the required parity. The two failing cells are precisely the two that share the SD value .52. Independently confirmed by R's rsprite2 for both cells. Table 2 values are byte-identical in the XML and the PDF.",
+      "reproduction": "metascience grimmer --mean 6.58 --sd 0.52 --n 12 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "finding_id": "f_c73baf09592d481f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e3_target_attractiveness_out_of_range",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "E3 target attractiveness out of range (Experiment 3, Manipulation check)",
+      "description": "Experiment 3 states its attractiveness ratings used 'the seam [same] measures used in Experiments 1 and 2', both of which explicitly define a seven-point scale (1 = not at all attractive, 7 = extremely attractive). A mean of 7.33 exceeds that maximum and is unattainable at any n. The bound is stated by the paper via explicit cross-reference rather than assumed by me. Either the mean is wrong or the methods description of the scale is wrong; a nine-point scale would reconcile 7.33 and 4.17 around a midpoint of 5, but the paper does not say that. Note also that the same value 7.33 is reported in the same paragraph as the positive-mood mean, and both attractiveness SDs are identically 1.19.",
+      "location": "Experiment 3, Manipulation check",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "severity": 5,
+      "severity_is_provisional": true,
+      "impossible": true,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the upward comparison target was rated more attractive (M = 7.33, SD = 1.19) than the downward target (M = 4.17, SD = 1.19), F(1,88) = 170.34, p < .001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e3_target_attractiveness_out_of_range",
+        "original_severity": "impossible",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "the upward comparison target was rated more attractive (M = 7.33, SD = 1.19) than the downward target (M = 4.17, SD = 1.19), F(1,88) = 170.34, p < .001",
+      "inputs": {
+        "mean": 7.33,
+        "n": 48,
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals": 2,
+        "data_type": "likert",
+        "bound_source": "stated"
+      },
+      "reported": {
+        "mean": 7.33,
+        "sd": 1.19,
+        "stated_scale_max": 7
+      },
+      "computed": {
+        "failure_mode": "out_of_range",
+        "grim_consistent": true,
+        "implied_sum": 351.84,
+        "rounded_sum": 352,
+        "max_possible_sum": 336,
+        "sum_in_range": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The affected claim is Experiment 3's direction-of-comparison manipulation check, which licenses the interpretation of the entire experiment as an upward-versus-downward comparison."
+      },
+      "notes": "Experiment 3 states its attractiveness ratings used 'the seam [same] measures used in Experiments 1 and 2', both of which explicitly define a seven-point scale (1 = not at all attractive, 7 = extremely attractive). A mean of 7.33 exceeds that maximum and is unattainable at any n. The bound is stated by the paper via explicit cross-reference rather than assumed by me. Either the mean is wrong or the methods description of the scale is wrong; a nine-point scale would reconcile 7.33 and 4.17 around a midpoint of 5, but the paper does not say that. Note also that the same value 7.33 is reported in the same paragraph as the positive-mood mean, and both attractiveness SDs are identically 1.19.",
+      "reproduction": "metascience grim --mean 7.33 --n 48 --scale-min 1 --scale-max 7 --decimals 2 --data-type likert --bound-source stated",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_26f21c49482ba13b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e1_shared_upward_cell_impossible",
+      "producer": "legacy_sweep",
+      "technique": "sprite_reconstruct",
+      "title": "E1 shared upward cell impossible",
+      "description": "Graded highly_suspicious rather than impossible because the exact cell size is not stated. N=47 across a 2x2 design (df_error=43 confirms four cells) gives 47/4 = 11.75, so cells must be 11 or 12 if roughly balanced, and this mean/SD pair is unreconstructable at both. A markedly unbalanced allocation would weaken the result, and the paper reports none.",
+      "location": "Experiment 1, Self-evaluations (shared birthday / upward comparison cell)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "participant responses showed asymmetric assimilation towards the upward comparison target (M = 5.08, SD = .52)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e1_shared_upward_cell_impossible",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "participant responses showed asymmetric assimilation towards the upward comparison target (M = 5.08, SD = .52)",
+      "inputs": {
+        "mean": 5.08,
+        "sd": 0.52,
+        "n_tested": [
+          11,
+          12
+        ],
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "mean": 5.08,
+        "sd": 0.52,
+        "scale": "1-7 single item"
+      },
+      "computed": {
+        "at_n12": {
+          "grim_consistent": true,
+          "sprite_outcome": "no_solution_proven",
+          "candidate_sum": 61
+        },
+        "at_n11": {
+          "grim_consistent": false,
+          "sprite_outcome": "grim_fail"
+        },
+        "denominator": "12 checks per n over the 4 prose cell means; at n=12, 5 impossible / 7 consistent; at n=11, 9 impossible / 3 consistent"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "This is the cell carrying Experiment 1's headline claim of assimilation to an upward comparison target under a shared-birthday cue."
+      },
+      "notes": "Graded highly_suspicious rather than impossible because the exact cell size is not stated. N=47 across a 2x2 design (df_error=43 confirms four cells) gives 47/4 = 11.75, so cells must be 11 or 12 if roughly balanced, and this mean/SD pair is unreconstructable at both. A markedly unbalanced allocation would weaken the result, and the paper reports none.",
+      "reproduction": "metascience sprite --mean 5.08 --sd 0.52 --n 12 --scale-min 1 --scale-max 7 --decimals-mean 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_76bfc76ce1934ca2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e2_table1_three_cells_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "E2 table1 three cells impossible",
+      "description": "Cell sizes are not printed. The factorial N of 126 is implied by df_error=118 plus 8 cells, and reconciles exactly with the stated N=141 once the df-implied control of 15 is added, so cell sizes of 15 or 16 (126/8 = 15.75) are well supported. Three cells are unreconstructable under BOTH candidate sizes. Graded highly_suspicious rather than impossible because the per-cell n is inferred rather than stated. Table 1 cell values are byte-identical in the XML and the PDF.",
+      "location": "Table 1, Self-evaluation row (Positive/Different birthday/Upward; Negative/Different birthday/Upward; Negative/Different birthday/Downward)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "impossible",
+        "tool": "grimmer_check",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Self-evaluation 5.25 (.93) 5.53 (.52) 3.17 (.98) 5.13 (.72) 3.33 (.90) 5.20 (.68) 3.07 (.62) 5.35 (.70)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e2_table1_three_cells_impossible",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Self-evaluation 5.25 (.93) 5.53 (.52) 3.17 (.98) 5.13 (.72) 3.33 (.90) 5.20 (.68) 3.07 (.62) 5.35 (.70)",
+      "inputs": {
+        "n_tested": [
+          15,
+          16
+        ],
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "cells_failing_at_both_n": [
+          "3.17 (.98)",
+          "3.07 (.62)",
+          "5.35 (.70)"
+        ],
+        "scale": "1-7 single item",
+        "factorial_N": 126
+      },
+      "computed": {
+        "at_n16": {
+          "impossible": 18,
+          "consistent": 6,
+          "cells_failing": [
+            "5.53",
+            "3.17",
+            "3.33",
+            "5.20",
+            "3.07",
+            "5.35"
+          ]
+        },
+        "at_n15": {
+          "impossible": 13,
+          "consistent": 11,
+          "cells_failing": [
+            "5.25",
+            "3.17",
+            "5.13",
+            "3.07",
+            "5.35"
+          ]
+        },
+        "failing_at_both": [
+          "3.17 (.98)",
+          "3.07 (.62)",
+          "5.35 (.70)"
+        ],
+        "denominator": "24 checks per n over the 8 cells"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 3,
+        "basis": "asserted",
+        "explanation": "Two of the three affected cells are the negative-mood/different-birthday cells that carry Experiment 2's claim that negative mood produces symmetric contrast."
+      },
+      "notes": "Cell sizes are not printed. The factorial N of 126 is implied by df_error=118 plus 8 cells, and reconciles exactly with the stated N=141 once the df-implied control of 15 is added, so cell sizes of 15 or 16 (126/8 = 15.75) are well supported. Three cells are unreconstructable under BOTH candidate sizes. Graded highly_suspicious rather than impossible because the per-cell n is inferred rather than stated. Table 1 cell values are byte-identical in the XML and the PDF.",
+      "reproduction": "metascience grimmer --mean 3.17 --sd 0.98 --n 15 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_22e0b1d9e4411009",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e4_six_cells_impossible",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "E4 six cells impossible",
+      "description": "Graded highly_suspicious rather than impossible because the cell size rests on a factorial N of 118 derived from df_error=110, and that derived N is itself contradicted by the stated N=193 (see finding e4_sample_size_discrepancy). If the true cells were near 22-23 participants, GRIM would have much less power and these means might be reconstructable. The finding is therefore conditional on the degrees of freedom being right; it cannot be conditional on both, since 193 and 133 cannot both be the analysed sample.",
+      "location": "Experiment 4, No load conditions and Cognitive load conditions (prose cell means)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "impossible",
+        "tool": "grimmer_check",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "upwardly compared (M = 5.64, SD = .78; F(1,124) = 17.39, p < .001) or downwardly compared (M = 5.15, SD = .81)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e4_six_cells_impossible",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "upwardly compared (M = 5.64, SD = .78; F(1,124) = 17.39, p < .001) or downwardly compared (M = 5.15, SD = .81)",
+      "inputs": {
+        "n_tested": [
+          14,
+          15
+        ],
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "cells_failing_at_both_n": [
+          "5.64 (.78)",
+          "5.15 (.81)",
+          "5.47 (.51)",
+          "3.24 (1.09)",
+          "3.09 (.94)",
+          "5.53 (.87)"
+        ],
+        "cells_passing_at_one_n": [
+          "5.71 (.83)",
+          "3.33 (1.05)"
+        ],
+        "scale": "1-7 single item"
+      },
+      "computed": {
+        "at_n15": {
+          "impossible": 19,
+          "consistent": 5
+        },
+        "at_n14": {
+          "impossible": 20,
+          "consistent": 4
+        },
+        "n_cells_failing_at_both": 6,
+        "denominator": "24 checks per n over the 8 cells"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 6,
+        "basis": "asserted",
+        "explanation": "These six cells carry the whole of Experiment 4's cognitive-load moderation claim, which is the paper's mechanistic conclusion."
+      },
+      "notes": "Graded highly_suspicious rather than impossible because the cell size rests on a factorial N of 118 derived from df_error=110, and that derived N is itself contradicted by the stated N=193 (see finding e4_sample_size_discrepancy). If the true cells were near 22-23 participants, GRIM would have much less power and these means might be reconstructable. The finding is therefore conditional on the degrees of freedom being right; it cannot be conditional on both, since 193 and 133 cannot both be the analysed sample.",
+      "reproduction": "metascience grimmer --mean 5.15 --sd 0.81 --n 15 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0bb0c7b0e5b11adf",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e4_sample_size_discrepancy",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "E4 sample size discrepancy",
+      "description": "This is the one study of five whose sample arithmetic does not reconcile. The pilot (42+3=45), Experiment 1 (43+4=47), Experiment 2 (126+15=141) and Experiment 3 (8 cells of 12 = 96) all reconcile exactly against their stated Ns, which is what makes Experiment 4's 60-participant shortfall stand out rather than looking like a routine reporting convention.",
+      "location": "Experiment 4, Participants and design vs. Results and discussion",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "University (N = 193, 103 female) students participated in the study for monetary compensation."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e4_sample_size_discrepancy",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "University (N = 193, 103 female) students participated in the study for monetary compensation.",
+      "inputs": {
+        "values": [
+          118,
+          15
+        ],
+        "expected_sum": 193,
+        "decimals": 0,
+        "decimals_total": 0,
+        "tolerance": 0,
+        "description": "factorial N implied by df_error=110 plus 8 cells, plus control N implied by contrast df_error=124 plus 9 groups"
+      },
+      "reported": {
+        "stated_N": 193,
+        "factorial_df_error": 110,
+        "contrast_df_error": 124
+      },
+      "computed": {
+        "actual_sum": 133,
+        "expected_sum": 193,
+        "difference": -60,
+        "is_consistent": false,
+        "other_studies_reconciling_exactly": 4
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Sixty participants, roughly a third of the stated sample, are unaccounted for in every analysis Experiment 4 reports; no exclusions, attrition or missing data are mentioned."
+      },
+      "notes": "This is the one study of five whose sample arithmetic does not reconcile. The pilot (42+3=45), Experiment 1 (43+4=47), Experiment 2 (126+15=141) and Experiment 3 (8 cells of 12 = 96) all reconcile exactly against their stated Ns, which is what makes Experiment 4's 60-participant shortfall stand out rather than looking like a routine reporting convention.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[118,15],\"expected_sum\":193,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Experiment 4 df-implied N vs stated N\"}]'",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_90bfade2b8d4fcb1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "pilot_mood_anova_f_out_of_range",
+      "producer": "legacy_sweep",
+      "technique": "rivets_anova",
+      "title": "Pilot mood anova f out of range (Pilot study, para 2)",
+      "description": "This is a genuine one-way ANOVA on three groups (df 2,42 matches N=45 exactly), so there is no factorial-error-term explanation available. Group sizes are not stated; I tested equal allocation and two lopsided alternatives, and the reported F=18.44 falls below the achievable interval in all three. Graded suspicious rather than highly_suspicious because some extreme unequal allocation I did not test might reconcile it, and because the discrepancy does not change the significance decision.",
+      "location": "Pilot study, para 2",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "highly_suspicious",
+        "tool": "rivets_anova",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:pilot_mood_anova_f_out_of_range",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001.",
+      "inputs": {
+        "means": [
+          7.2,
+          6.15,
+          4.98
+        ],
+        "sds": [
+          0.93,
+          0.52,
+          0.98
+        ],
+        "ns": [
+          15,
+          15,
+          15
+        ],
+        "reported_f": 18.44,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "decimals_f": 2
+      },
+      "reported": {
+        "F": 18.44,
+        "df": "2, 42",
+        "means": [
+          7.2,
+          6.15,
+          4.98
+        ],
+        "sds": [
+          0.93,
+          0.52,
+          0.98
+        ]
+      },
+      "computed": {
+        "f_range_equal_ns": [
+          26.01,
+          26.98
+        ],
+        "f_range_ns_10_25_10": [
+          22.2,
+          23.07
+        ],
+        "f_range_ns_19_7_19": [
+          28.03,
+          29.05
+        ],
+        "reported_f_in_range": false,
+        "direction": "reported F is below every achievable range tested"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The affected claim is the pilot's demonstration that the mood induction worked; the reported F is smaller than the group statistics imply, so the conclusion of a significant effect is unchanged."
+      },
+      "notes": "This is a genuine one-way ANOVA on three groups (df 2,42 matches N=45 exactly), so there is no factorial-error-term explanation available. Group sizes are not stated; I tested equal allocation and two lopsided alternatives, and the reported F=18.44 falls below the achievable interval in all three. Graded suspicious rather than highly_suspicious because some extreme unequal allocation I did not test might reconcile it, and because the discrepancy does not change the significance decision.",
+      "reproduction": "metascience rivets-anova --means '[7.2,6.15,4.98]' --sds '[0.93,0.52,0.98]' --ns '[15,15,15]' --reported-f 18.44 --decimals-mean 2 --decimals-sd 2 --decimals-f 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_189a499608e6bc4a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_body",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck body (Whole body text (Pilot, Experiments 1-4))",
+      "description": "3 of 65 is a low rate and is unremarkable on its own -- roughly half of clean control papers contain at least one such mismatch. Two have benign explanations: the pilot's F(1,42) is almost certainly a typo for F(2,42), since the design has three groups and F(2,42)=0.27 gives p=.757, matching the printed .76 (this is corroborated below by rivets_anova); and p=.83 for F=1.50 may be a transposition of .23. The paper also prints two malformed p-values, 'p = 011' (Experiment 1) and 'p = 001' (Experiment 4), which I normalised to .011 and .001 for statcheck.",
+      "location": "Whole body text (Pilot, Experiments 1-4)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Identical effects emerged when the information was unambiguous, F(1, 94) = 1.50, p = .83."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_body",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Identical effects emerged when the information was unambiguous, F(1, 94) = 1.50, p = .83.",
+      "inputs": {
+        "text": "all reported NHST results from the Pilot and Experiments 1-4, transcribed verbatim"
+      },
+      "reported": {
+        "n_statistics": 65,
+        "n_flagged": 3,
+        "n_decision_errors": 0
+      },
+      "computed": {
+        "errors": [
+          {
+            "raw": "F(1, 94) = 1.50, p = .83",
+            "computed_p": 0.2237,
+            "location": "Experiment 3, Perceptions of similarity"
+          },
+          {
+            "raw": "F(1, 42) = .27, p = .76",
+            "computed_p": 0.6061,
+            "location": "Pilot study, self-evaluations"
+          },
+          {
+            "raw": "r(24) = .53, p = .008",
+            "computed_p": 0.0054,
+            "location": "Experiment 3, Perceptions of similarity"
+          }
+        ],
+        "decision_errors": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "computed",
+        "explanation": "None of the three inconsistencies crosses alpha, so no reported conclusion changes; all three affected results are non-significant or already significant either way. Computed from 0 statistic(s) whose recomputed p crosses the paper's alpha."
+      },
+      "notes": "3 of 65 is a low rate and is unremarkable on its own -- roughly half of clean control papers contain at least one such mismatch. Two have benign explanations: the pilot's F(1,42) is almost certainly a typo for F(2,42), since the design has three groups and F(2,42)=0.27 gives p=.757, matching the printed .76 (this is corroborated below by rivets_anova); and p=.83 for F=1.50 may be a transposition of .23. The paper also prints two malformed p-values, 'p = 011' (Experiment 1) and 'p = 001' (Experiment 4), which I normalised to .011 and .001 for statcheck.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.pdf",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_ac2f7ced3333759c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e4_direction_contradiction",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "E4 direction contradiction (Experiment 4, Cognitive load conditions)",
+      "description": "Both descriptions are inverted relative to the control mean of 4.20: the condition called 'more positive' has a mean of 3.33, which is lower, and the condition called 'less positive' has a mean of 5.53, which is higher. The parallel no-load paragraph gets the same comparison the right way round (5.47 above control, 3.24 below), so this is not a consistent labelling convention. Confirmed identically in the XML and the PDF version of record, so it is not an extraction artifact. No forensic tool covers a text-versus-number direction contradiction; recorded as a reading.",
+      "location": "Experiment 4, Cognitive load conditions",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "This pattern was identical to the neutral mood condition, in which upward comparison led to more positive self-ratings (M = 3.33, SD = 1.05), F(1,124) = 18.83, p < .001, and downward comparison led to less positive self-ratings (M = 5.53, SD = .87), F(1,124) = 7.84, p = .006, relative to the control condition."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e4_direction_contradiction",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "This pattern was identical to the neutral mood condition, in which upward comparison led to more positive self-ratings (M = 3.33, SD = 1.05), F(1,124) = 18.83, p < .001, and downward comparison led to less positive self-ratings (M = 5.53, SD = .87), F(1,124) = 7.84, p = .006, relative to the control condition.",
+      "inputs": {
+        "comparison": "printed cell means against the printed control mean of 4.20"
+      },
+      "reported": {
+        "control_mean": 4.2,
+        "described_as_more_positive": 3.33,
+        "described_as_less_positive": 5.53
+      },
+      "computed": {
+        "note": "no tool applies; this is a reading of three printed numbers, not a computed statistic"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The affected claim is that neutral-mood participants under load showed symmetric assimilation, which is the comparison Experiment 4 uses to argue that load abolishes the positive-mood asymmetry."
+      },
+      "notes": "Both descriptions are inverted relative to the control mean of 4.20: the condition called 'more positive' has a mean of 3.33, which is lower, and the condition called 'less positive' has a mean of 5.53, which is higher. The parallel no-load paragraph gets the same comparison the right way round (5.47 above control, 3.24 below), so this is not a consistent labelling convention. Confirmed identically in the XML and the PDF version of record, so it is not an extraction artifact. No forensic tool covers a text-versus-number direction contradiction; recorded as a reading.",
+      "reproduction": "Not reproducible as a CLI command: this finding is a direct reading of three printed numbers (4.20, 3.33, 5.53) against the sentence describing them, not a computed statistic.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_3bd5f8ead4194632",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "control_mean_4_20_recurrence",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Control mean 4 20 recurrence",
+      "description": "Two hanging-control conditions, run in different experiments on different participants (N=141 and N=193, different designs), report a self-evaluation mean of exactly 4.20. detect_duplication did not flag this because it matches on (mean, SD) pairs and the SDs differ (.86 vs .21); the recurrence is in the means only, and 4.20 is not an especially round value on a 1-7 scale. Reported at suspicious as a single unusual coincidence, not as established duplication. Note that Experiment 2's version (SD=.86) is reconstructable, while Experiment 4's (SD=.21) is not -- see finding e4_control_sd_impossible.",
+      "location": "Table 1 footnote (Experiment 2) and Experiment 4, No load / Cognitive load conditions",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. | Compared to a control condition (M = 4.20, SD = .21)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:control_mean_4_20_recurrence",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. | Compared to a control condition (M = 4.20, SD = .21)",
+      "inputs": {
+        "comparison": "Experiment 2 control-condition statistics against Experiment 4 control-condition statistics"
+      },
+      "reported": {
+        "exp2_control": "M = 4.20, SD = .86",
+        "exp4_control": "M = 4.20, SD = .21"
+      },
+      "computed": {
+        "means_identical": true,
+        "sds_differ": true,
+        "detect_duplication_identical_pairs": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Both experiments use their control mean as the baseline against which every self-evaluation contrast is judged, so the two baselines being numerically identical is worth clarification."
+      },
+      "notes": "Two hanging-control conditions, run in different experiments on different participants (N=141 and N=193, different designs), report a self-evaluation mean of exactly 4.20. detect_duplication did not flag this because it matches on (mean, SD) pairs and the SDs differ (.86 vs .21); the recurrence is in the means only, and 4.20 is not an especially round value on a 1-7 scale. Reported at suspicious as a single unusual coincidence, not as established duplication. Note that Experiment 2's version (SD=.86) is reconstructable, while Experiment 4's (SD=.21) is not -- see finding e4_control_sd_impossible.",
+      "reproduction": "Not reproducible as a single CLI command: the recurrence is in the means only, and duplication-detect matches (mean, SD) pairs. See the duplication_sweep finding for the run that covered these blocks.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_2d07834871793a1e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "duplication_sweep",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Duplication sweep",
+      "description": "This is a negative result and is recorded as such: across 1407 cross-source comparisons there is not a single identical (mean, SD) pair between independent samples. The three flagged items are digit transpositions between 5.35 and 5.53 rather than exact repeats, which is weak. Whatever is wrong with this paper's numbers, wholesale copy-paste of summary statistics between experiments is not it.",
+      "location": "Tables 1-2 and all prose cell means across the Pilot and Experiments 1-4",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "n/a -- cross-block comparison of 58 (mean, SD) cells"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:duplication_sweep",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "n/a -- cross-block comparison of 58 (mean, SD) cells",
+      "inputs": {
+        "blocks": [
+          "Exp 1 prose cell means",
+          "Exp 2 Table 1",
+          "Exp 3 Table 2 self-evaluation",
+          "Exp 3 Table 2 similarity",
+          "Exp 4 prose cell means",
+          "Pilot prose means",
+          "manipulation-check means across experiments"
+        ],
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "near_match": true
+      },
+      "reported": {
+        "blocks": 7,
+        "cells": 58
+      },
+      "computed": {
+        "n_comparisons": 1407,
+        "max_identical_pairs": 0,
+        "duplicate_groups": 3,
+        "kinds": [
+          "near_match: 5.35 vs 5.53 digit_transposition (x3)"
+        ],
+        "verdict": "no improbable cross-independent-source overlap"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim depends on this; the check found no copy-paste signature and is recorded as evidence of what was ruled out."
+      },
+      "notes": "This is a negative result and is recorded as such: across 1407 cross-source comparisons there is not a single identical (mean, SD) pair between independent samples. The three flagged items are digit transpositions between 5.35 and 5.53 rather than exact repeats, which is weak. Whatever is wrong with this paper's numbers, wholesale copy-paste of summary statistics between experiments is not it.",
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Exp 2 Table 1\",\"sample_id\":\"exp2\",\"independent\":true,\"cells\":[{\"label\":\"pos/same/up\",\"value\":5.25,\"sd\":0.93},{\"label\":\"pos/same/down\",\"value\":5.53,\"sd\":0.52},{\"label\":\"pos/diff/up\",\"value\":3.17,\"sd\":0.98},{\"label\":\"pos/diff/down\",\"value\":5.13,\"sd\":0.72},{\"label\":\"neg/same/up\",\"value\":3.33,\"sd\":0.9},{\"label\":\"neg/same/down\",\"value\":5.2,\"sd\":0.68},{\"label\":\"neg/diff/up\",\"value\":3.07,\"sd\":0.62},{\"label\":\"neg/diff/down\",\"value\":5.35,\"sd\":0.7}]}]' --decimals-mean 2 --decimals-sd 2",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_11af15da3948cdd4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e2_attractiveness_f_model_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "rivets_anova",
+      "title": "E2 attractiveness f model mismatch (Experiment 2, Manipulation check)",
+      "description": "Downgraded from the tool's highly_suspicious to indeterminate, deliberately. The tool recomputes a ONE-WAY ANOVA, but the paper's F carries df_error=118, i.e. it comes from the residual of the full 2x2x2 model. The one-way error term uses df=124; moving six further effects (all reported as Fs<1) out of the residual raises the mean square and lowers F by roughly the ratio 124/118, which brings the expected value to about 725 -- close to the printed 716.92. The apparent discrepancy is therefore largely explained by the model I could fit versus the model they fitted, and I am not treating it as evidence against the paper. The same caveat does not apply to the pilot ANOVA, which really is one-wa",
+      "location": "Experiment 2, Manipulation check",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "highly_suspicious",
+        "tool": "rivets_anova",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The upward comparison target was rated more attractive (M = 5.98, SD = .69) than the downward target (M = 2.46, SD = .74), F(1,118) = 716.92, p < .001."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e2_attractiveness_f_model_mismatch",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The upward comparison target was rated more attractive (M = 5.98, SD = .69) than the downward target (M = 2.46, SD = .74), F(1,118) = 716.92, p < .001.",
+      "inputs": {
+        "means": [
+          5.98,
+          2.46
+        ],
+        "sds": [
+          0.69,
+          0.74
+        ],
+        "ns": [
+          63,
+          63
+        ],
+        "reported_f": 716.92,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "decimals_f": 2
+      },
+      "reported": {
+        "F": 716.92,
+        "df": "1, 118"
+      },
+      "computed": {
+        "f_range": [
+          749.41,
+          776.76
+        ],
+        "reported_f_in_range": false,
+        "tool_severity": "highly_suspicious"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the manipulation check is significant under either value by an enormous margin."
+      },
+      "notes": "Downgraded from the tool's highly_suspicious to indeterminate, deliberately. The tool recomputes a ONE-WAY ANOVA, but the paper's F carries df_error=118, i.e. it comes from the residual of the full 2x2x2 model. The one-way error term uses df=124; moving six further effects (all reported as Fs<1) out of the residual raises the mean square and lowers F by roughly the ratio 124/118, which brings the expected value to about 725 -- close to the printed 716.92. The apparent discrepancy is therefore largely explained by the model I could fit versus the model they fitted, and I am not treating it as evidence against the paper. The same caveat does not apply to the pilot ANOVA, which really is one-way.",
+      "reproduction": "metascience rivets-anova --means '[5.98,2.46]' --sds '[0.69,0.74]' --ns '[63,63]' --reported-f 716.92 --decimals-mean 2 --decimals-sd 2 --decimals-f 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_5e314fb8ba7cac86",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e3_attractiveness_f_consistent",
+      "producer": "legacy_sweep",
+      "technique": "rivets_anova",
+      "title": "E3 attractiveness f consistent (Experiment 3, Manipulation check)",
+      "description": "The reported F is internally consistent with the printed means and SDs. This matters as a control on the previous finding: the same recomputation method reproduces this F but not the pilot's, which argues the pilot discrepancy is not an artifact of my method. Note separately that one of the two means feeding this consistent F is the out-of-range 7.33 -- the F is consistent with the printed numbers, but one of those numbers cannot be a mean of the stated scale.",
+      "location": "Experiment 3, Manipulation check",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "F(1,88) = 170.34, p < .001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e3_attractiveness_f_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "F(1,88) = 170.34, p < .001",
+      "inputs": {
+        "means": [
+          7.33,
+          4.17
+        ],
+        "sds": [
+          1.19,
+          1.19
+        ],
+        "ns": [
+          48,
+          48
+        ],
+        "reported_f": 170.34,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "decimals_f": 2
+      },
+      "reported": {
+        "F": 170.34,
+        "df": "1, 88"
+      },
+      "computed": {
+        "f_range": [
+          167.03,
+          171.6
+        ],
+        "reported_f_in_range": true,
+        "point_f": 169.24
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing changes; this records that the F reconciles with its own group statistics."
+      },
+      "notes": "The reported F is internally consistent with the printed means and SDs. This matters as a control on the previous finding: the same recomputation method reproduces this F but not the pilot's, which argues the pilot discrepancy is not an artifact of my method. Note separately that one of the two means feeding this consistent F is the out-of-range 7.33 -- the F is consistent with the printed numbers, but one of those numbers cannot be a mean of the stated scale.",
+      "reproduction": "metascience rivets-anova --means '[7.33,4.17]' --sds '[1.19,1.19]' --ns '[48,48]' --reported-f 170.34 --decimals-mean 2 --decimals-sd 2 --decimals-f 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_53ac67835831a8a7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "pilot_selfeval_anova_consistent",
+      "producer": "legacy_sweep",
+      "technique": "rivets_anova",
+      "title": "Pilot selfeval anova consistent (Pilot study, para 3)",
+      "description": "The F value is consistent with the group statistics, and the recomputed p of .757 matches the printed .76 -- which confirms that the printed numerator df of 1 is a typo for 2 (three groups) rather than a substantive error. This resolves one of the three statcheck flags. Note in passing that two of the three pilot self-evaluation means are identical at 6.98.",
+      "location": "Pilot study, para 3",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Those in the negative mood (M = 6.98, SD = .53), positive mood (M = 6.98, SD = .80), and the control condition (M = 6.82, SD = .67), did not differ F(1, 42) = .27, p = .76."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:pilot_selfeval_anova_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Those in the negative mood (M = 6.98, SD = .53), positive mood (M = 6.98, SD = .80), and the control condition (M = 6.82, SD = .67), did not differ F(1, 42) = .27, p = .76.",
+      "inputs": {
+        "means": [
+          6.98,
+          6.98,
+          6.82
+        ],
+        "sds": [
+          0.53,
+          0.8,
+          0.67
+        ],
+        "ns": [
+          15,
+          15,
+          15
+        ],
+        "reported_f": 0.27,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "decimals_f": 2
+      },
+      "reported": {
+        "F": 0.27,
+        "df_printed": "1, 42",
+        "p": 0.76
+      },
+      "computed": {
+        "f_range": [
+          0.2477,
+          0.3144
+        ],
+        "reported_f_in_range": true,
+        "point_p": 0.7569
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing changes; the F value and p reconcile once the numerator df is read as 2."
+      },
+      "notes": "The F value is consistent with the group statistics, and the recomputed p of .757 matches the printed .76 -- which confirms that the printed numerator df of 1 is a typo for 2 (three groups) rather than a substantive error. This resolves one of the three statcheck flags. Note in passing that two of the three pilot self-evaluation means are identical at 6.98.",
+      "reproduction": "metascience rivets-anova --means '[6.98,6.98,6.82]' --sds '[0.53,0.8,0.67]' --ns '[15,15,15]' --reported-f 0.27 --decimals-mean 2 --decimals-sd 2 --decimals-f 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_80bdfbcb2141e125",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e2_control_sd_reconstructable",
+      "producer": "legacy_sweep",
+      "technique": "sprite_reconstruct",
+      "title": "E2 control sd reconstructable",
+      "description": "Included as the control case for finding e4_control_sd_impossible: the same nominal mean of 4.20 with SD .86 IS reconstructable at n=15, so the impossibility of Experiment 4's .21 is a property of that SD and not of my method or of the assumed scale. The unique reconstruction (twelve 4s, one 3, one 5, one 7) is an unusual shape for real data but is not itself an anomaly.",
+      "location": "Table 1 footnote (recovered from the PDF; absent from the XML)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. All self-evaluations differed from the control condition at p < .05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e2_control_sd_reconstructable",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. All self-evaluations differed from the control condition at p < .05",
+      "inputs": {
+        "mean": 4.2,
+        "sd": 0.86,
+        "n": 15,
+        "scale_min": 1,
+        "scale_max": 7,
+        "decimals_mean": 2,
+        "decimals_sd": 2,
+        "data_type": "likert"
+      },
+      "reported": {
+        "mean": 4.2,
+        "sd": 0.86,
+        "scale": "1-7 single item"
+      },
+      "computed": {
+        "outcome": "found",
+        "num_valid_samples": 100,
+        "value_frequencies": {
+          "3": 1,
+          "4": 12,
+          "5": 1,
+          "7": 1
+        },
+        "note": "every valid reconstruction has identical value frequencies, i.e. the multiset is unique"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing changes; recorded as the direct contrast with Experiment 4's control condition, which is not reconstructable."
+      },
+      "notes": "Included as the control case for finding e4_control_sd_impossible: the same nominal mean of 4.20 with SD .86 IS reconstructable at n=15, so the impossibility of Experiment 4's .21 is a property of that SD and not of my method or of the assumed scale. The unique reconstruction (twelve 4s, one 3, one 5, one 7) is an unusual shape for real data but is not itself an anomaly.",
+      "reproduction": "metascience sprite --mean 4.2 --sd 0.86 --n 15 --scale-min 1 --scale-max 7 --decimals-mean 2 --decimals-sd 2 --data-type likert",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_a269d87124da21a7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_size_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Sample size reconciliation",
+      "description": "Four of the five studies reconcile their stated N exactly against the degrees of freedom they report. This is what licenses treating the derived cell sizes as trustworthy for the GRIM/GRIMMER work above, and what makes Experiment 4's 60-participant gap an outlier rather than a house style.",
+      "location": "Pilot, Experiments 1-3 (Participants sections vs reported degrees of freedom)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "University students (N = 96) participated in the study for course credit. | University (N = 141, 75 women) students participated"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_size_reconciliation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "University students (N = 96) participated in the study for course credit. | University (N = 141, 75 women) students participated",
+      "inputs": {
+        "rows": [
+          {
+            "values": [
+              42,
+              3
+            ],
+            "expected_sum": 45
+          },
+          {
+            "values": [
+              43,
+              4
+            ],
+            "expected_sum": 47
+          },
+          {
+            "values": [
+              126,
+              15
+            ],
+            "expected_sum": 141
+          },
+          {
+            "values": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "expected_sum": 96
+          }
+        ],
+        "decimals": 0,
+        "tolerance": 0
+      },
+      "reported": {
+        "pilot": 45,
+        "exp1": 47,
+        "exp2": 141,
+        "exp3": 96
+      },
+      "computed": {
+        "n_evaluated": 4,
+        "n_consistent": 4,
+        "n_inconsistent": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing changes; this establishes the baseline against which Experiment 4's shortfall is judged."
+      },
+      "notes": "Four of the five studies reconcile their stated N exactly against the degrees of freedom they report. This is what licenses treating the derived cell sizes as trustworthy for the GRIM/GRIMMER work above, and what makes Experiment 4's 60-participant gap an outlier rather than a house style.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[42,3],\"expected_sum\":45,\"decimals\":0,\"tolerance\":0},{\"values\":[43,4],\"expected_sum\":47,\"decimals\":0,\"tolerance\":0},{\"values\":[126,15],\"expected_sum\":141,\"decimals\":0,\"tolerance\":0},{\"values\":[12,12,12,12,12,12,12,12],\"expected_sum\":96,\"decimals\":0,\"tolerance\":0}]'",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_72d4b3045cb167f0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_e4_anova",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity e4 anova",
+      "description": "The paper applies no multiplicity correction anywhere, but for this family it does not matter: the p-values are mostly far below alpha, and only the marginal mood-by-direction effect (p=.04) fails Bonferroni. Recorded because the absence of correction is a real feature of the paper's analysis and because the result is a null one worth stating rather than leaving implicit. The authors do report supplementary Tukey HSD tests in footnotes 2 and 5, which is more than most papers of this era did.",
+      "location": "Experiment 4, Self-evaluations (the seven effects of one three-way ANOVA)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The effects of load, F(1, 110) = 8.00, p = .006; mood F(1, 110) = 9.83, p = .002; direction, F(1, 110) = 135.31, p < .001; load and mood, F(1, 110) = 10.97, p = .001; load and direction, F(1, 110) = 10.44, p = .002 and mood and direction, F(1, 110) = 4.14, p = .04, were also significant."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_e4_anova",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The effects of load, F(1, 110) = 8.00, p = .006; mood F(1, 110) = 9.83, p = .002; direction, F(1, 110) = 135.31, p < .001; load and mood, F(1, 110) = 10.97, p = .001; load and direction, F(1, 110) = 10.44, p = .002 and mood and direction, F(1, 110) = 4.14, p = .04, were also significant.",
+      "inputs": {
+        "family_label": "Experiment 4 self-evaluation: the seven effects of the single load x mood x direction ANOVA, all on the same participants",
+        "alpha": 0.05,
+        "n_tests_supplied": 7
+      },
+      "reported": {
+        "n_effects": 7,
+        "correction_stated": "none"
+      },
+      "computed": {
+        "n_tests_evaluated": 6,
+        "n_dropped_threshold_p": 1,
+        "fwer_if_independent": 0.2649,
+        "n_significant_uncorrected": 6,
+        "n_surviving_floor": 5,
+        "n_surviving_ceiling": 6,
+        "n_claims_lost_to_correction": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "computed",
+        "explanation": "No claim is lost to correction; between 5 (Bonferroni) and 6 (Benjamini-Hochberg) of the six evaluable effects survive. Computed from 0 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "The paper applies no multiplicity correction anywhere, but for this family it does not matter: the p-values are mostly far below alpha, and only the marginal mood-by-direction effect (p=.04) fails Bonferroni. Recorded because the absence of correction is a real feature of the paper's analysis and because the result is a null one worth stating rather than leaving implicit. The authors do report supplementary Tukey HSD tests in footnotes 2 and 5, which is more than most papers of this era did.",
+      "reproduction": "metascience multiplicity --family-label 'Experiment 4 self-evaluation ANOVA effects' --tests '[{\"id\":\"e4_3way\",\"p_value\":0.001},{\"id\":\"e4_load\",\"p_value\":0.006},{\"id\":\"e4_mood\",\"p_value\":0.002},{\"id\":\"e4_load_mood\",\"p_value\":0.001},{\"id\":\"e4_load_direction\",\"p_value\":0.002},{\"id\":\"e4_mood_direction\",\"p_value\":0.04}]' --alpha 0.05",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_859f2837cf97e991",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "xml_pdf_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Xml pdf reconciliation (Table 1 and Table 2 (XML vs PDF version of record))",
+      "description": "All 24 table cell values agree exactly between the XML and the PDF, so the tables themselves are safe to check. But the XML extraction dropped Table 1's footnote, which is the ONLY place the Experiment 2 control-condition mean and SD (4.20, .86) appear. Neither table was flagged alignment_uncertain or image_only, and all six merged-cell spans were confined to header rows, so no body value was duplicated by the parser. Recorded as indeterminate and against the tooling, not the authors.",
+      "location": "Table 1 and Table 2 (XML vs PDF version of record)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "From Experiment 2. Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. All self-evaluations differed from the control condition at p < .05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:xml_pdf_reconciliation",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "From Experiment 2. Mean self-evaluations in the control condition were 4.20 with a standard deviation of .86. All self-evaluations differed from the control condition at p < .05",
+      "inputs": {
+        "xml_source": "get_table(table_num=1) and get_table(table_num=2)",
+        "pdf_source": "extract_pdf pages 8-11"
+      },
+      "reported": {
+        "xml_n_footnotes_table1": 0,
+        "pdf_table1_footnote_present": true
+      },
+      "computed": {
+        "cell_values_agree": true,
+        "n_cells_compared": 24,
+        "n_disagreements": 0,
+        "structural_disagreement": "XML reported n_footnotes=0 for Table 1; the PDF carries a substantive footnote giving the Experiment 2 control-condition mean and SD"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "This is an extraction-tooling gap, not a defect in the paper; it is recorded so that a reader knows the XML route alone would have missed the Experiment 2 control statistics entirely."
+      },
+      "notes": "All 24 table cell values agree exactly between the XML and the PDF, so the tables themselves are safe to check. But the XML extraction dropped Table 1's footnote, which is the ONLY place the Experiment 2 control-condition mean and SD (4.20, .86) appear. Neither table was flagged alignment_uncertain or image_only, and all six merged-cell spans were confined to header rows, so no body value was duplicated by the parser. Recorded as indeterminate and against the tooling, not the authors.",
+      "reproduction": "metascience get-table --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.xml --table-num 1",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_87fcd44e428a99b3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_caption_promises_absent_rows",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table1 caption promises absent rows (Table 1 caption vs Table 1 body)",
+      "description": "Table 1 has exactly one data row, Self-evaluation, in both the XML grid and the PDF. Neither 'ratings of target similarity' nor 'use of information to benefit the self' appears anywhere in Experiment 2's text or table. Experiment 2's Dependent measures section likewise never describes a similarity measure, although Experiment 3 has one. This is a collected-but-unreported measure pattern (rulebook rule 7), or at minimum a caption inherited from a fuller table that was cut.",
+      "location": "Table 1 caption vs Table 1 body",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Effects of upward (more attractive) versus downward (less attractive) comparisons on self-evaluations, ratings of target similarity, and use of information to benefit the self as a function of mood and shared birthday information"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_caption_promises_absent_rows",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Effects of upward (more attractive) versus downward (less attractive) comparisons on self-evaluations, ratings of target similarity, and use of information to benefit the self as a function of mood and shared birthday information",
+      "inputs": {
+        "comparison": "Table 1 caption text against the single row the table contains, in both XML and PDF"
+      },
+      "reported": {
+        "caption_promises": [
+          "self-evaluations",
+          "ratings of target similarity",
+          "use of information to benefit the self"
+        ],
+        "rows_actually_present": [
+          "Self-evaluation"
+        ]
+      },
+      "computed": {
+        "n_measures_promised": 3,
+        "n_measures_reported": 1
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Two dependent measures named in the table's own caption are never reported anywhere in Experiment 2, so their results cannot be evaluated at all."
+      },
+      "notes": "Table 1 has exactly one data row, Self-evaluation, in both the XML grid and the PDF. Neither 'ratings of target similarity' nor 'use of information to benefit the self' appears anywhere in Experiment 2's text or table. Experiment 2's Dependent measures section likewise never describes a similarity measure, although Experiment 3 has one. This is a collected-but-unreported measure pattern (rulebook rule 7), or at minimum a caption inherited from a fuller table that was cut.",
+      "reproduction": "Not reproducible as a CLI command: this compares the caption string against the set of row labels returned by get-table, which no forensic tool evaluates.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_16d548ff28001b4c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e3_correlation_df_inconsistent",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "E3 correlation df inconsistent (Experiment 3, Perceptions of similarity)",
+      "description": "Each of these correlations is computed within one mood-by-ambiguity combination, which spans two cells and therefore 24 participants given N=96 in eight balanced cells; that implies df=22, not 24. The printed df=24 implies n=26. The discrepancy is small and could be a convention slip (reporting n rather than n-2), but it sits alongside the Experiment 3 cell size of 12 that the GRIMMER findings depend on, so it is recorded rather than passed over.",
+      "location": "Experiment 3, Perceptions of similarity",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "When information was unambiguous, self and other attractiveness were significantly related in the positive, r(24) = .87, p < .001, and neutral mood, r(24) = .53, p = .008"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e3_correlation_df_inconsistent",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "When information was unambiguous, self and other attractiveness were significantly related in the positive, r(24) = .87, p < .001, and neutral mood, r(24) = .53, p = .008",
+      "inputs": {
+        "comparison": "correlation df against the cell sizes implied by N=96 in 8 cells"
+      },
+      "reported": {
+        "df": 24,
+        "implied_n": 26
+      },
+      "computed": {
+        "n_implied_by_df": 26,
+        "n_implied_by_design": 24,
+        "difference": 2
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 3,
+        "basis": "asserted",
+        "explanation": "Affects the three correlations used to argue that similarity ratings mediate the self-evaluation effect; the significance decisions are unchanged by a two-participant difference."
+      },
+      "notes": "Each of these correlations is computed within one mood-by-ambiguity combination, which spans two cells and therefore 24 participants given N=96 in eight balanced cells; that implies df=22, not 24. The printed df=24 implies n=26. The discrepancy is small and could be a convention slip (reporting n rather than n-2), but it sits alongside the Experiment 3 cell size of 12 that the GRIMMER findings depend on, so it is recorded rather than passed over.",
+      "reproduction": "Not reproducible as a CLI command: this compares a printed degrees-of-freedom value against the cell sizes implied by the design, which no forensic tool evaluates.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_97504cdc48100514",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "e1_simple_effect_df_inconsistent",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "E1 simple effect df inconsistent (Experiment 1, Self-evaluations)",
+      "description": "Every other test in Experiment 1 uses df_error=43, correct for N=47 in a 2x2 design. This one simple effect uses 46, which is N-1 and corresponds to no error term in the stated design. The p-value is unaffected (F(1,46)=6.95 gives p=.0114; F(1,43)=6.95 gives p=.0116, both printing as .011), so this is a reporting inconsistency rather than a computational one.",
+      "location": "Experiment 1, Self-evaluations",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:e1_simple_effect_df_inconsistent",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+      "inputs": {
+        "comparison": "simple-effect df against the omnibus 2x2 ANOVA df in the same analysis"
+      },
+      "reported": {
+        "df_error_simple_effect": 46,
+        "df_error_omnibus": 43
+      },
+      "computed": {
+        "df_from_2x2_design": 43,
+        "df_printed": 46,
+        "df_equal_to_N_minus_1": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects the simple-effect test carrying Experiment 1's symmetric-contrast claim in the different-birthday condition; p is .011 under either df, so the conclusion is unchanged."
+      },
+      "notes": "Every other test in Experiment 1 uses df_error=43, correct for N=47 in a 2x2 design. This one simple effect uses 46, which is N-1 and corresponds to no error term in the stated design. The p-value is unaffected (F(1,46)=6.95 gives p=.0114; F(1,43)=6.95 gives p=.0116, both printing as .011), so this is a reporting inconsistency rather than a computational one.",
+      "reproduction": "Not reproducible as a CLI command: this compares two printed degrees-of-freedom values against the stated design, which no forensic tool evaluates.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_14b32f94f57aa0d9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "data_availability_state_but_withhold",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Data availability state but withhold (Experiment 3, footnote 4)",
+      "description": "A state-but-withhold data-availability claim (rulebook rule 7): the paper asserts complete data are available but deposits nothing, and the offer is attached to a single footnote in one experiment rather than to the paper as a whole. This co-occurs with two dependent measures named in Table 1's caption that are never reported (see table1_caption_promises_absent_rows). Recorded as suspicious, in the specific sense that the claim cannot be acted on, not as evidence of intent.",
+      "location": "Experiment 3, footnote 4",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Complete data and results available from the first author."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:data_availability_state_but_withhold",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Complete data and results available from the first author.",
+      "inputs": {
+        "comparison": "the paper's data-availability statement against the material actually supplied"
+      },
+      "reported": {
+        "claim": "complete data available on request",
+        "data_actually_provided": "none"
+      },
+      "computed": {
+        "n_supplementary_files": 0,
+        "n_measures_collected_but_never_reported": 2
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Every impossibility recorded above could be resolved or refuted immediately by the raw data the footnote offers; none of it is deposited."
+      },
+      "notes": "A state-but-withhold data-availability claim (rulebook rule 7): the paper asserts complete data are available but deposits nothing, and the offer is attached to a single footnote in one experiment rather than to the paper as a whole. This co-occurs with two dependent measures named in Table 1's caption that are never reported (see table1_caption_promises_absent_rows). Recorded as suspicious, in the specific sense that the claim cannot be acted on, not as evidence of intent.",
+      "reproduction": "Not reproducible as a CLI command: this records the presence of a data-availability claim and the absence of deposited data, which no forensic tool evaluates.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_981e93ac5a550484",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "identical_sds_weak_signal",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Identical sds weak signal (Experiment 3 Manipulation check; Table 2 Similarity row)",
+      "description": "Three coincidences of repeated values, each individually unremarkable: two attractiveness SDs identical at 1.19 in the same sentence; two similarity means identical at 6.81 in adjacent Table 2 cells; two pilot self-evaluation means identical at 6.98. Rulebook rule 8 -- individually weak signals, reported but not escalated. They are noted because they co-occur with the impossibility findings, and because the SD pair 1.19/1.19 sits in the same sentence as the out-of-range mean 7.33. Recorded as indeterminate: repeated values are ordinary in small samples and prove nothing on their own.",
+      "location": "Experiment 3 Manipulation check; Table 2 Similarity row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the upward comparison target was rated more attractive (M = 7.33, SD = 1.19) than the downward target (M = 4.17, SD = 1.19) | Similarity ... 6.81 (1.16) 6.81 (.63)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:identical_sds_weak_signal",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "the upward comparison target was rated more attractive (M = 7.33, SD = 1.19) than the downward target (M = 4.17, SD = 1.19) | Similarity ... 6.81 (1.16) 6.81 (.63)",
+      "inputs": {
+        "comparison": "printed values within Experiment 3 and within the pilot"
+      },
+      "reported": {
+        "identical_sd_pair": "1.19 and 1.19",
+        "identical_mean_pair": "6.81 and 6.81",
+        "identical_mean_pair_pilot": "6.98 and 6.98"
+      },
+      "computed": {
+        "n_identical_pairs_noted": 3
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim depends on this; it is recorded as a weak corroborating pattern only."
+      },
+      "notes": "Three coincidences of repeated values, each individually unremarkable: two attractiveness SDs identical at 1.19 in the same sentence; two similarity means identical at 6.81 in adjacent Table 2 cells; two pilot self-evaluation means identical at 6.98. Rulebook rule 8 -- individually weak signals, reported but not escalated. They are noted because they co-occur with the impossibility findings, and because the SD pair 1.19/1.19 sits in the same sentence as the out-of-range mean 7.33. Recorded as indeterminate: repeated values are ordinary in small samples and prove nothing on their own.",
+      "reproduction": "Not reproducible as a CLI command: detect_duplication (see duplication_sweep) found no identical (mean, SD) pairs; these are repeats of a single component, which that tool does not flag.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_e279e32b88c19993",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "4531eeda89c912d5f28555ddd0e968c65f0b3d14e6abb1b32853e12170a46b97",
+    "migrated_at": "2026-10-19T20:18:28Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-07 20:18 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

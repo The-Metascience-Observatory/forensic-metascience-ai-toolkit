@@ -1,0 +1,649 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.3349--ymj.2009.50.1.55",
+  "run_id": "r_d639045a82396f45",
+  "findings": [
+    {
+      "slug": "chi2_infection_recalc",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 infection recalc (Results, para 2)",
+      "description": "Reconstructed the 2x2 table from Table 1's raw counts (3 infected / 25 not-infected of 28 experimental; 2/26 of 28 control). Pearson chi2 = 0.2196, p = 0.6393, matching the reported p = 0.639 exactly. No inconsistency.",
+      "location": "Results, para 2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_infection_recalc",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+      "inputs": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "reported_p": 0.639,
+        "decimals_p": 3
+      },
+      "reported": {
+        "observed": [
+          [
+            3,
+            25
+          ],
+          [
+            2,
+            26
+          ]
+        ],
+        "p": 0.639
+      },
+      "computed": {
+        "chi2_pearson": 0.2196078431372549,
+        "p_pearson": 0.639338884785466,
+        "fisher_odds_ratio": 1.56,
+        "tool": "recalc_chi_squared"
+      },
+      "notes": "Reconstructed the 2x2 table from Table 1's raw counts (3 infected / 25 not-infected of 28 experimental; 2/26 of 28 control). Pearson chi2 = 0.2196, p = 0.6393, matching the reported p = 0.639 exactly. No inconsistency.",
+      "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+        "source_locator": "Results, para 2",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_4b6c6f50deee8086",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sex_ratio_sums",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Sex ratio sums (Table 1, Sex row)",
+      "description": "Both group sex counts sum exactly to their stated group n of 28. Also matches the ratios given in prose (4:3 and 1:1, i.e. 16:12 and 14:14 reduced).",
+      "location": "Table 1, Sex row",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Sex (Male : Female) | 16 : 12 | 14 : 14"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sex_ratio_sums",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Sex (Male : Female) | 16 : 12 | 14 : 14",
+      "inputs": {
+        "rows": [
+          {
+            "values": [
+              16,
+              12
+            ],
+            "expected_sum": 28
+          },
+          {
+            "values": [
+              14,
+              14
+            ],
+            "expected_sum": 28
+          }
+        ]
+      },
+      "reported": {
+        "experimental": "16:12",
+        "control": "14:14"
+      },
+      "computed": {
+        "experimental_sum": 28,
+        "control_sum": 28,
+        "tool": "check_summation_batch"
+      },
+      "notes": "Both group sex counts sum exactly to their stated group n of 28. Also matches the ratios given in prose (4:3 and 1:1, i.e. 16:12 and 14:14 reduced).",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[16,12],\"expected_sum\":28},{\"values\":[14,14],\"expected_sum\":28}]'",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `consistent`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Sex (Male : Female) | 16 : 12 | 14 : 14",
+        "source_locator": "Table 1, Sex row",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_5dc6974ba3d176b8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_grim_experimental",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Age grim experimental (Results, para 1 / Table 1, Age row)",
+      "description": "Age is not stated by the paper to be recorded as whole years, so discreteness is ASSUMED, not stated -- this check cannot reach 'impossible' regardless of outcome. An initial pass mistakenly left the tool's default Likert scale_min/max=1-7 in place, which returned a spurious 'out of range' failure -- an artifact of my own tool-call error, not a property of the paper (age is obviously not a 1-7 scale). Rerun with a defensible, logically-necessary human-age bound [0,120]: GRIM has no discriminating power at this n/precision, so the result is indeterminate, not evidence either way.",
+      "location": "Results, para 1 / Table 1, Age row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_grim_experimental",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)",
+      "inputs": {
+        "mean": 23.9,
+        "n": 28,
+        "decimals": 1,
+        "data_type": "integer",
+        "scale_min": 0,
+        "scale_max": 120,
+        "discreteness_source": "assumed",
+        "bound_source": "logically_necessary"
+      },
+      "reported": {
+        "mean": 23.9,
+        "n": 28
+      },
+      "computed": {
+        "tool": "grim_check",
+        "failure_mode": "no_discriminating_power",
+        "note": "At n=28 with 1 decimal place, GRIM cannot fail for any mean printable to that precision, so a pass here is uninformative rather than reassuring."
+      },
+      "notes": "Age is not stated by the paper to be recorded as whole years, so discreteness is ASSUMED, not stated -- this check cannot reach 'impossible' regardless of outcome. An initial pass mistakenly left the tool's default Likert scale_min/max=1-7 in place, which returned a spurious 'out of range' failure -- an artifact of my own tool-call error, not a property of the paper (age is obviously not a 1-7 scale). Rerun with a defensible, logically-necessary human-age bound [0,120]: GRIM has no discriminating power at this n/precision, so the result is indeterminate, not evidence either way.",
+      "reproduction": "metascience grim --mean 23.9 --n 28 --decimals 1 --data-type integer --scale-min 0 --scale-max 120",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)",
+        "source_locator": "Results, para 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_3514b3c3628428d6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_grim_control",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Age grim control (Results, para 1 / Table 1, Age row)",
+      "description": "Same caveat as age_grim_experimental: discreteness assumed, GRIM uninformative at this n/precision.",
+      "location": "Results, para 1 / Table 1, Age row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The mean (SD) age of the control group was 24.3 years (6.33)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_grim_control",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The mean (SD) age of the control group was 24.3 years (6.33)",
+      "inputs": {
+        "mean": 24.3,
+        "n": 28,
+        "decimals": 1,
+        "data_type": "integer",
+        "scale_min": 0,
+        "scale_max": 120,
+        "discreteness_source": "assumed",
+        "bound_source": "logically_necessary"
+      },
+      "reported": {
+        "mean": 24.3,
+        "n": 28
+      },
+      "computed": {
+        "tool": "grim_check",
+        "failure_mode": "no_discriminating_power"
+      },
+      "notes": "Same caveat as age_grim_experimental: discreteness assumed, GRIM uninformative at this n/precision.",
+      "reproduction": "metascience grim --mean 24.3 --n 28 --decimals 1 --data-type integer --scale-min 0 --scale-max 120",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The mean (SD) age of the control group was 24.3 years (6.33)",
+        "source_locator": "Results, para 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_f032db26223f8c36",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_grimmer_experimental",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Age grimmer experimental (Results, para 1 / Table 1, Age row)",
+      "description": "Under a defensible logically-necessary age bound [0,120] (rather than the tool's default 1-7 Likert range, which is inapplicable to age and produced a spurious out-of-range result on the first, mis-specified call), integer sum/sum-of-squares combinations exist that reproduce mean=23.9, SD=5.84 at n=28. Consistent, though discreteness of age-in-years is assumed rather than stated by the paper.",
+      "location": "Results, para 1 / Table 1, Age row",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_grimmer_experimental",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)",
+      "inputs": {
+        "mean": 23.9,
+        "sd": 5.84,
+        "n": 28,
+        "decimals": 1,
+        "decimals_sd": 2,
+        "data_type": "integer",
+        "scale_min": 0,
+        "scale_max": 120,
+        "discreteness_source": "assumed"
+      },
+      "reported": {
+        "mean": 23.9,
+        "sd": 5.84,
+        "n": 28
+      },
+      "computed": {
+        "tool": "grimmer_check",
+        "working_combinations_found": 5,
+        "example": {
+          "sum": 669,
+          "exact_mean": 23.89286,
+          "exact_sd": 5.839453
+        }
+      },
+      "notes": "Under a defensible logically-necessary age bound [0,120] (rather than the tool's default 1-7 Likert range, which is inapplicable to age and produced a spurious out-of-range result on the first, mis-specified call), integer sum/sum-of-squares combinations exist that reproduce mean=23.9, SD=5.84 at n=28. Consistent, though discreteness of age-in-years is assumed rather than stated by the paper.",
+      "reproduction": "metascience grimmer --mean 23.9 --sd 5.84 --n 28 --decimals 1 --decimals-sd 2 --data-type integer --scale-min 0 --scale-max 120",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The mean (SD) age of the experimental group was 23.9 years (5.84)",
+        "source_locator": "Results, para 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_77613b7ce2605803",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_grimmer_control",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Age grimmer control (Results, para 1 / Table 1, Age row)",
+      "description": "Consistent under a logically-necessary age bound; discreteness assumed.",
+      "location": "Results, para 1 / Table 1, Age row",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The mean (SD) age of the control group was 24.3 years (6.33)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_grimmer_control",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "The mean (SD) age of the control group was 24.3 years (6.33)",
+      "inputs": {
+        "mean": 24.3,
+        "sd": 6.33,
+        "n": 28,
+        "decimals": 1,
+        "decimals_sd": 2,
+        "data_type": "integer",
+        "scale_min": 0,
+        "scale_max": 120,
+        "discreteness_source": "assumed"
+      },
+      "reported": {
+        "mean": 24.3,
+        "sd": 6.33,
+        "n": 28
+      },
+      "computed": {
+        "tool": "grimmer_check",
+        "working_combinations_found": 4,
+        "example": {
+          "sum": 680,
+          "exact_mean": 24.28571,
+          "exact_sd": 6.329573
+        }
+      },
+      "notes": "Consistent under a logically-necessary age bound; discreteness assumed.",
+      "reproduction": "metascience grimmer --mean 24.3 --sd 6.33 --n 28 --decimals 1 --decimals-sd 2 --data-type integer --scale-min 0 --scale-max 120",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The mean (SD) age of the control group was 24.3 years (6.33)",
+        "source_locator": "Results, para 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_9c38eba03033dd15",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_sizes_round_n",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Sample sizes round n (Patients and Methods, para 1 / Table 1)",
+      "description": "Not suspiciously round; heuristic only per rulebook rule 8.",
+      "location": "Patients and Methods, para 1 / Table 1",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Fifty-six patients in their 20s without a specific medical history...were enrolled in this study."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_sizes_round_n",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Fifty-six patients in their 20s without a specific medical history...were enrolled in this study.",
+      "inputs": {
+        "ns": [
+          28,
+          28,
+          56
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reported": {
+        "ns": [
+          28,
+          28,
+          56
+        ]
+      },
+      "computed": {
+        "tool": "flag_round_n",
+        "all_divisible_by_moderate": false,
+        "all_divisible_by_strong": false
+      },
+      "notes": "Not suspiciously round; heuristic only per rulebook rule 8.",
+      "reproduction": "metascience flag-round-n --ns 28,28,56",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "elided",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Fifty-six patients in their 20s without a specific medical history...were enrolled in this study.",
+        "source_locator": "Patients and Methods, para 1",
+        "source_quote_verified": "elided",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_6f22ff3bddf9713e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_apa_stats",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no apa stats (Whole text (Results/Discussion))",
+      "description": "statcheck scans for APA-formatted inline statistics (e.g. chi2(1)=X, p=Y). The paper reports only a bare p-value (\"p = 0.639\") with no accompanying chi2 statistic or df printed in text, so statcheck's text-pattern scanner finds nothing to parse -- this is a property of the paper's minimal reporting style, not evidence of anything. The chi2 statistic itself was independently recalculated and verified above from the raw counts.",
+      "location": "Whole text (Results/Discussion)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_apa_stats",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).",
+      "inputs": {
+        "text": "full Results/Discussion body text"
+      },
+      "reported": {
+        "stats_found": 0
+      },
+      "computed": {
+        "tool": "statcheck",
+        "message": "No statistics found in text"
+      },
+      "notes": "statcheck scans for APA-formatted inline statistics (e.g. chi2(1)=X, p=Y). The paper reports only a bare p-value (\"p = 0.639\") with no accompanying chi2 statistic or df printed in text, so statcheck's text-pattern scanner finds nothing to parse -- this is a property of the paper's minimal reporting style, not evidence of anything. The chi2 statistic itself was independently recalculated and verified above from the raw counts.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3349--ymj.2009.50.1.55/10.3349--ymj.2009.50.1.55.pdf",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_7f96c1f3b39e237a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "infection_case_narrative_ambiguity",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Infection case narrative ambiguity (Results, para 2)",
+      "description": "This is a wording/reporting-clarity issue, not an arithmetic impossibility -- the paper never assigns each of the 4 remaining infected patients to a specific group, so the ambiguity cannot be resolved by any forensic tool. Capped at suspicious per instruction; flagged because it sits in the passage describing the primary outcome (infection counts feeding directly into the headline chi-squared test).",
+      "location": "Results, para 2",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "One patient in the experimental group was diagnosed with an infection by facial swelling, redness and sinus haziness in the waters' view, and the other 4 patients were diagnosed with a postoperative infection by swelling and redness, and pain on the mandibular area."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:infection_case_narrative_ambiguity",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "One patient in the experimental group was diagnosed with an infection by facial swelling, redness and sinus haziness in the waters' view, and the other 4 patients were diagnosed with a postoperative infection by swelling and redness, and pain on the mandibular area.",
+      "inputs": {},
+      "reported": {
+        "experimental_group_infections_table": 3,
+        "control_group_infections_table": 2
+      },
+      "computed": {
+        "method": "count check by inspection: sentence literally attributes '1 patient' plus 'the other 4 patients' to symptom categories directly following the phrase 'in the experimental group', summing to 5 patients, versus Table 1's stated 3 infections in the experimental group (and 2 in control, total 5)."
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "If read literally, this sentence attributes 5 infected patients to the experimental group alone, contradicting the Table 1 / preceding-sentence count of 3 experimental-group infections (and 2 control-group infections, total 5). The more probable reading is that '1 patient' belongs to the experimental group and 'the other 4' are distributed across both groups (2 exp + 2 control, or similar), which would reconcile the totals (1+4=5=3+2), but the sentence as written does not make that split explicit."
+      },
+      "notes": "This is a wording/reporting-clarity issue, not an arithmetic impossibility -- the paper never assigns each of the 4 remaining infected patients to a specific group, so the ambiguity cannot be resolved by any forensic tool. Capped at suspicious per instruction; flagged because it sits in the passage describing the primary outcome (infection counts feeding directly into the headline chi-squared test).",
+      "reproduction": "",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_3773626567e5c43e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_image_only_recovered",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Table1 image only recovered (Table 1)",
+      "description": "The JATS XML encodes Table 1 as an image with no extractable cells (image_only=true). Recovered the table from the PDF (docling grid extraction), which yielded the same 4 rows x 2 columns seen nowhere else. All figures in the table were cross-checked against the values restated in prose (age means/SDs, sex ratios, infection counts) and agree exactly -- no XML/PDF or table/prose discrepancy found.",
+      "location": "Table 1",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Table 1. Results according to the Postoperative Antibiotic Prophylaxis"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_image_only_recovered",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:28Z"
+      },
+      "quote": "Table 1. Results according to the Postoperative Antibiotic Prophylaxis",
+      "inputs": {},
+      "reported": {},
+      "computed": {},
+      "notes": "The JATS XML encodes Table 1 as an image with no extractable cells (image_only=true). Recovered the table from the PDF (docling grid extraction), which yielded the same 4 rows x 2 columns seen nowhere else. All figures in the table were cross-checked against the values restated in prose (age means/SDs, sex ratios, infection counts) and agree exactly -- no XML/PDF or table/prose discrepancy found.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3349--ymj.2009.50.1.55/10.3349--ymj.2009.50.1.55.pdf",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_8e2a24e88d74ee75",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "d81243dd0e3fb171114a8ff8339d93c91bec06ef9e2dbae06835cf9a29fd7431",
+    "migrated_at": "2026-10-19T20:18:28Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-18 04:49 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

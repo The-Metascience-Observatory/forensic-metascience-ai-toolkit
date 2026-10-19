@@ -1,0 +1,1096 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1073--pnas.0801268105",
+  "run_id": "r_b2a5ac51270ed713",
+  "findings": [
+    {
+      "slug": "ancova_17day_p_above_threshold",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Ancova 17day p above threshold (Results, paragraph 2 (ANCOVA after 17 training days))",
+      "description": "The upper tail of F is the only tail F has, so no one-tailed reading rescues this. The whole rounding interval implied by the printed F (4.645 to 4.655) sits above 0.05, so the discrepancy is not a rounding artefact. The innocent explanations are (a) the authors rounded 0.0504 down to 'P < 0.05' by eye, or (b) the printed F is itself rounded from a computation whose unrounded value they tested. Note that recalc_stat_to_p returned 'consistent' for this row: that tool is DIRECTIONAL and takes reported_p = 0.05 as an equality, so it only flags a p BELOW the achievable interval. The finding rests on the printed operator 'P < 0.05', which neither tool accepts as an argument.",
+      "location": "Results, paragraph 2 (ANCOVA after 17 training days)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "recalc_f_to_p",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "statistically significant group differences after 17 ( F (1,13) = 4.65; P &lt; 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ancova_17day_p_above_threshold",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "statistically significant group differences after 17 ( F (1,13) = 4.65; P &lt; 0.05",
+      "inputs": {
+        "f_value": 4.65,
+        "df1": 1,
+        "df2": 13,
+        "reported_p": 0.05,
+        "decimals_f": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "F": 4.65,
+        "df1": 1,
+        "df2": 13,
+        "claimed_p": "P < 0.05"
+      },
+      "computed": {
+        "p_from_F_1_13_at_4.65": 0.05036533861993608,
+        "achievable_p_interval_over_F_rounding": [
+          0.05025876412041708,
+          0.0504721820939981
+        ],
+        "interval_lies_entirely_above_0.05": true
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "One of the two per-experiment ANCOVAs the paper calls 'statistically significant group differences' does not reach the alpha = 0.05 it is claimed against; this is a load-bearing step in the dose-response argument."
+      },
+      "notes": "The upper tail of F is the only tail F has, so no one-tailed reading rescues this. The whole rounding interval implied by the printed F (4.645 to 4.655) sits above 0.05, so the discrepancy is not a rounding artefact. The innocent explanations are (a) the authors rounded 0.0504 down to 'P < 0.05' by eye, or (b) the printed F is itself rounded from a computation whose unrounded value they tested. Note that recalc_stat_to_p returned 'consistent' for this row: that tool is DIRECTIONAL and takes reported_p = 0.05 as an equality, so it only flags a p BELOW the achievable interval. The finding rests on the printed operator 'P < 0.05', which neither tool accepts as an argument.",
+      "reproduction": "metascience f-to-p --f-value 4.65 --df1 1 --df2 13 --reported-p 0.05 --decimals-f 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "statistically significant group differences after 17 ( F (1,13) = 4.65; P &lt; 0.05; \ud835\udf02 p 2 = 0.26)",
+        "source_locator": "Results, ANCOVA 17 training days",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_83918750fb977e43",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ancova_19day_p_above_threshold",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Ancova 19day p above threshold (Results, paragraph 2 (ANCOVA after 19 training days))",
+      "description": "Same reasoning as the 17-day row: F has only an upper tail, and the entire rounding interval of the printed F lies above 0.05. This one misses by a wider margin (0.055 vs 0.050). recalc_stat_to_p also returned 'consistent' here for the same directional reason described in the 17-day finding.",
+      "location": "Results, paragraph 2 (ANCOVA after 19 training days)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "recalc_f_to_p",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "and 19 training days ( F (1,12) = 4.53; P &lt; 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ancova_19day_p_above_threshold",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "and 19 training days ( F (1,12) = 4.53; P &lt; 0.05",
+      "inputs": {
+        "f_value": 4.53,
+        "df1": 1,
+        "df2": 12,
+        "reported_p": 0.05,
+        "decimals_f": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "F": 4.53,
+        "df1": 1,
+        "df2": 12,
+        "claimed_p": "P < 0.05"
+      },
+      "computed": {
+        "p_from_F_1_12_at_4.53": 0.05471257217444821,
+        "achievable_p_interval_over_F_rounding": [
+          0.054598244457662724,
+          0.05482718813104914
+        ],
+        "interval_lies_entirely_above_0.05": true
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The second of the two ANCOVAs described as showing 'statistically significant group differences' has p = 0.055, above its own stated alpha; with the 17-day result this removes both per-experiment significance claims that anchor the dose-response conclusion."
+      },
+      "notes": "Same reasoning as the 17-day row: F has only an upper tail, and the entire rounding interval of the printed F lies above 0.05. This one misses by a wider margin (0.055 vs 0.050). recalc_stat_to_p also returned 'consistent' here for the same directional reason described in the 17-day finding.",
+      "reproduction": "metascience f-to-p --f-value 4.53 --df1 1 --df2 12 --reported-p 0.05 --decimals-f 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "and 19 training days ( F (1,12) = 4.53; P &lt; 0.05; \ud835\udf02 p 2 = 0.27)",
+        "source_locator": "Results, ANCOVA 19 training days",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_23eea83e99662776",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ancova_12day_p_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Ancova 12day p mismatch (Results, paragraph 2 (ANCOVA after 12 training days))",
+      "description": "This is the only exact p-value in the primary family, which is why it is the one row where the mismatch is fully visible rather than hidden behind a threshold. The reported 0.09 is almost exactly half the computed 0.181 -- see the `ancova_family_halved_p` finding, which treats the three ANCOVAs together. An innocent explanation for a single row would be a transposition or a typo, but the same factor recurs across all three ANCOVAs.",
+      "location": "Results, paragraph 2 (ANCOVA after 12 training days)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ancova_12day_p_mismatch",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09",
+      "inputs": {
+        "f_value": 1.93,
+        "df1": 1,
+        "df2": 19,
+        "reported_p": 0.09,
+        "decimals_f": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "F": 1.93,
+        "df1": 1,
+        "df2": 19,
+        "reported_p": 0.09
+      },
+      "computed": {
+        "p_from_F_1_19_at_1.93": 0.18082674166525667,
+        "achievable_p_interval_over_F_rounding": [
+          0.18028917308859063,
+          0.18136629443447508
+        ],
+        "reported_p_inside_interval": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The 12-day comparison is described as 'a trend' at P = 0.09; the F and df printed beside it give p = 0.18, which would not ordinarily be described as a trend."
+      },
+      "notes": "This is the only exact p-value in the primary family, which is why it is the one row where the mismatch is fully visible rather than hidden behind a threshold. The reported 0.09 is almost exactly half the computed 0.181 -- see the `ancova_family_halved_p` finding, which treats the three ANCOVAs together. An innocent explanation for a single row would be a transposition or a typo, but the same factor recurs across all three ANCOVAs.",
+      "reproduction": "metascience f-to-p --f-value 1.93 --df1 1 --df2 19 --reported-p 0.09 --decimals-f 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09; \ud835\udf02 p 2 = 0.09)",
+        "source_locator": "Results, ANCOVA 12 training days",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_23cccac0b9ffedcb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ancova_family_halved_p",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "Ancova family halved p (Results, paragraph 2 (all three per-experiment ANCOVAs))",
+      "description": "The 12-day row pins the factor exactly (0.181 / 0.09 = 2.01), and halving the other two computed p-values gives 0.025 and 0.027, both of which would be reported as 'P < 0.05'. A single coherent explanation covers all three: one-tailed p-values. The F distribution has no one-tailed variant -- its p is an upper tail by construction -- so halving is not a recognised convention here, though it is a recognised convention for a directional t-test and a plausible route if the authors converted from a t. This is an inference across three tool results rather than a single computation, and it is capped at `suspicious` accordingly. No registered tool tests a family of p-values for a common scaling fact",
+      "location": "Results, paragraph 2 (all three per-experiment ANCOVAs)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ancova_family_halved_p",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09",
+      "inputs": {
+        "source_values": "the three computed p-values returned by recalc_f_to_p for F(1,19)=1.93, F(1,13)=4.65 and F(1,12)=4.53"
+      },
+      "reported": {
+        "ancova_12day": "F(1,19) = 1.93; P = 0.09",
+        "ancova_17day": "F(1,13) = 4.65; P < 0.05",
+        "ancova_19day": "F(1,12) = 4.53; P < 0.05"
+      },
+      "computed": {
+        "method": "for each ANCOVA, divide the p computed by recalc_f_to_p by 2 and compare with what the paper printed",
+        "computed_p_12day_from_recalc_f_to_p": 0.18082674166525667,
+        "half_of_computed_p_12day": 0.09041337083262833,
+        "reported_p_12day": 0.09,
+        "ratio_computed_over_reported_12day": 2.009186018502852,
+        "half_of_computed_p_17day": 0.02518266930996804,
+        "half_of_computed_p_19day": 0.027356286087224103
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "If the three ANCOVA p-values were obtained by halving, then the paper's claim of 'statistically significant group differences after 17 and 19 training days' -- the per-experiment evidence for the dose-response conclusion in the abstract -- rests on a halving that the F distribution does not license."
+      },
+      "notes": "The 12-day row pins the factor exactly (0.181 / 0.09 = 2.01), and halving the other two computed p-values gives 0.025 and 0.027, both of which would be reported as 'P < 0.05'. A single coherent explanation covers all three: one-tailed p-values. The F distribution has no one-tailed variant -- its p is an upper tail by construction -- so halving is not a recognised convention here, though it is a recognised convention for a directional t-test and a plausible route if the authors converted from a t. This is an inference across three tool results rather than a single computation, and it is capped at `suspicious` accordingly. No registered tool tests a family of p-values for a common scaling factor.",
+      "reproduction": "metascience f-to-p --f-value 1.93 --df1 1 --df2 19 --reported-p 0.09 --decimals-f 2 --decimals-p 2  # then compare 0.180827 with 2 x 0.09",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extra ar",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_453066451c9c59d6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "training_function_df_imply_17_per_group",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Training function df imply 17 per group",
+      "description": "THE MODELLING ASSUMPTION IS DOING THE WORK AND MUST BE STATED: this reads df2 as n_observations - 2, the residual df of a simple linear regression of n-back level on session number, which is what 'the specific training gain was well explained by a linear function' most naturally describes. Under that reading each of the four groups independently implies exactly 17 participants -- an identical figure across four groups the paper describes as differently sized (16, 22, 16, 15 combined trained plus control) -- and 4 x 17 = 68 against 34 analysed trained participants. The cleanest innocent explanation is that each participant contributed TWO data points per session, one per modality stream, whic",
+      "location": "Results, footnote on the four training functions",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "8 days training: R 2 = 0.78, F (1,134) = 473.44, P &lt; 0.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:training_function_df_imply_17_per_group",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "8 days training: R 2 = 0.78, F (1,134) = 473.44, P &lt; 0.001",
+      "inputs": {
+        "rows": "five summation rows: [17]x8 vs 136, [17]x12 vs 204, [17]x17 vs 289, [17]x19 vs 323, and [17,17,17,17] vs 34",
+        "tolerance": 0
+      },
+      "reported": {
+        "df2_8day": 134,
+        "df2_12day": 202,
+        "df2_17day": 287,
+        "df2_19day": 321,
+        "stated_trained_N_analysed": 34
+      },
+      "computed": {
+        "observations_implied_by_df2_plus_2_8day": 136,
+        "participants_implied_8day_136_over_8_sessions": 17,
+        "participants_implied_12day_204_over_12_sessions": 17,
+        "participants_implied_17day_289_over_17_sessions": 17,
+        "participants_implied_19day_323_over_19_sessions": 17,
+        "sum_of_four_implied_group_sizes": 68,
+        "stated_analysed_trained_N": 34,
+        "difference": 34
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "The four regression F-tests that establish 'an impressive learning curve for the training task in all four experiments' are fitted to roughly twice as many observations as the reported trained sample can supply under the standard reading of the residual df."
+      },
+      "notes": "THE MODELLING ASSUMPTION IS DOING THE WORK AND MUST BE STATED: this reads df2 as n_observations - 2, the residual df of a simple linear regression of n-back level on session number, which is what 'the specific training gain was well explained by a linear function' most naturally describes. Under that reading each of the four groups independently implies exactly 17 participants -- an identical figure across four groups the paper describes as differently sized (16, 22, 16, 15 combined trained plus control) -- and 4 x 17 = 68 against 34 analysed trained participants. The cleanest innocent explanation is that each participant contributed TWO data points per session, one per modality stream, which would halve the implied counts; but that requires exactly 8.5 participants in every one of the four groups, which is not possible, so it does not resolve the discrepancy. Other innocent routes: the regression may have been fitted at block level rather than session level, or may include terms whose df I cannot see. Because the finding rests on an assumed model rather than a stated one, it is capped at `suspicious` and should not be read as an impossibility.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[17,17,17,17,17,17,17,17],\"expected_sum\":136,\"decimals\":[0,0,0,0,0,0,0,0],\"tolerance\":0},{\"values\":[17,17,17,17],\"expected_sum\":34,\"decimals\":[0,0,0,0],\"tolerance\":0}]'",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "8 days training: R 2 = 0.78, F (1,134) = 473.44, P &lt; 0.001; 12 days training: R 2 = 0.81, F (1,202) = 863.59, P &lt; 0.001;17daystraining: R 2 = 0.73, F (1,287) = 769.63;19daystraining: R 2 = 0.79, F (1,321) = 1230.23, P &lt; 0.001",
+        "source_locator": "Results, footnote on training functions",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_c1bade4d9aa3887f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "eta_squared_performance_group_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "Eta squared performance group mismatch",
+      "description": "Every other partial eta-squared in the paper (F(1,67)=5.27 -> 0.07; F(3,30)=9.25 -> 0.48; F(1,19)=1.93 -> 0.09; F(1,13)=4.65 -> 0.26; F(1,12)=4.53 -> 0.27; F(1,68)=6.38 -> 0.09; F(1,67)=14.08 -> 0.17; F(3,29)=8.93 -> 0.48; F(2,22)=6.19 -> 0.36; F(3,29)=7.80 -> 0.45) reproduces its printed value from this identity, so the convention in use is established from the paper's own numbers and is not an assumption I imported. This single row does not. The obvious innocent explanation is a rounding-up slip (0.063 typed as 0.07), which is trivial in consequence. No registered tool computes partial eta-squared from F and df, so this arithmetic is my own and is capped at `suspicious`; the derivation is ",
+      "location": "Results, paragraph 3 (main effect of performance group)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "there was also a main effect of performance group ( F (1,68) = 4.56; P &lt; 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:eta_squared_performance_group_mismatch",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "there was also a main effect of performance group ( F (1,68) = 4.56; P &lt; 0.05",
+      "inputs": {
+        "F": 4.56,
+        "df1": 1,
+        "df2": 68,
+        "reported_eta_p2": 0.07
+      },
+      "reported": {
+        "F": 4.56,
+        "df1": 1,
+        "df2": 68,
+        "reported_eta_p2": 0.07
+      },
+      "computed": {
+        "method": "partial eta-squared identity for a fixed effect, eta_p2 = F*df1 / (F*df1 + df2)",
+        "eta_p2_from_F_4.56_df1_1_df2_68": 0.06284565916398764,
+        "rounds_to": 0.06,
+        "reported_eta_p2": 0.07,
+        "other_eta_p2_values_in_paper_matching_the_identity": 10,
+        "other_eta_p2_values_in_paper_failing_it": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects only the reported magnitude of the secondary finding that lower-Gf participants gained more; the significance claim is unaffected."
+      },
+      "notes": "Every other partial eta-squared in the paper (F(1,67)=5.27 -> 0.07; F(3,30)=9.25 -> 0.48; F(1,19)=1.93 -> 0.09; F(1,13)=4.65 -> 0.26; F(1,12)=4.53 -> 0.27; F(1,68)=6.38 -> 0.09; F(1,67)=14.08 -> 0.17; F(3,29)=8.93 -> 0.48; F(2,22)=6.19 -> 0.36; F(3,29)=7.80 -> 0.45) reproduces its printed value from this identity, so the convention in use is established from the paper's own numbers and is not an assumption I imported. This single row does not. The obvious innocent explanation is a rounding-up slip (0.063 typed as 0.07), which is trivial in consequence. No registered tool computes partial eta-squared from F and df, so this arithmetic is my own and is capped at `suspicious`; the derivation is given in full above so a reader can redo it.",
+      "reproduction": "No CLI command applies: no registered tool converts F and df to partial eta-squared. The identity eta_p2 = F*df1/(F*df1+df2) = 4.56/(4.56+68) = 0.0628 can be checked by hand.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_116705b1176b96bb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "eta_squared_family_consistent",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "Eta squared family consistent",
+      "description": "Reported so that the denominator is visible: eleven partial eta-squared values are printed, ten reproduce exactly and one does not. Without this row the single mismatch would look like a lone probe rather than one exception out of eleven. Arithmetic performed without a registered tool; the identity is stated so it can be rechecked.",
+      "location": "Results, paragraphs 2-5 (ten reported partial eta-squared values)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "confirmed by the significant group \u00d7 test-session interaction ( F (1,67) = 5.27; P &lt; 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:eta_squared_family_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "confirmed by the significant group \u00d7 test-session interaction ( F (1,67) = 5.27; P &lt; 0.05",
+      "inputs": {
+        "pairs": "the ten (F, df1, df2, eta_p2) triples listed above"
+      },
+      "reported": {
+        "pairs_checked": "F(1,67)=5.27/0.07, F(3,30)=9.25/0.48, F(1,19)=1.93/0.09, F(1,13)=4.65/0.26, F(1,12)=4.53/0.27, F(1,68)=6.38/0.09, F(1,67)=14.08/0.17, F(3,29)=8.93/0.48, F(2,22)=6.19/0.36, F(3,29)=7.80/0.45"
+      },
+      "computed": {
+        "method": "partial eta-squared identity eta_p2 = F*df1 / (F*df1 + df2), evaluated for each printed (F, df1, df2) and compared with the printed eta_p2 at its printed precision",
+        "n_pairs_checked": 10,
+        "n_matching_at_printed_precision": 10,
+        "n_failing": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this records that the paper's effect sizes are internally coherent with its test statistics, which is what makes the single exception above legible as an exception."
+      },
+      "notes": "Reported so that the denominator is visible: eleven partial eta-squared values are printed, ten reproduce exactly and one does not. Without this row the single mismatch would look like a lone probe rather than one exception out of eleven. Arithmetic performed without a registered tool; the identity is stated so it can be rechecked.",
+      "reproduction": "No CLI command applies: no registered tool converts F and df to partial eta-squared.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_a25c2e619869448a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "r_squared_training_functions_consistent",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "R squared training functions consistent",
+      "description": "This matters for reading the `training_function_df_imply_17_per_group` finding: the four footnote tests are internally coherent as regressions, so whatever produced the large residual dfs produced F and R-squared that agree with each other. Arithmetic performed without a registered tool; the identity is stated above.",
+      "location": "Results, footnote on the four training functions",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "12 days training: R 2 = 0.81, F (1,202) = 863.59, P &lt; 0.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:r_squared_training_functions_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "12 days training: R 2 = 0.81, F (1,202) = 863.59, P &lt; 0.001",
+      "inputs": {
+        "pairs": "the four (R2, F, df2) triples listed above"
+      },
+      "reported": {
+        "pairs": "R2=0.78 with F(1,134)=473.44; R2=0.81 with F(1,202)=863.59; R2=0.73 with F(1,287)=769.63; R2=0.79 with F(1,321)=1230.23"
+      },
+      "computed": {
+        "method": "for a single-predictor regression, R2 = F / (F + df2), evaluated for each of the four footnote tests",
+        "R2_from_F_473.44_df2_134": 0.779402,
+        "R2_from_F_863.59_df2_202": 0.810442,
+        "R2_from_F_769.63_df2_287": 0.728364,
+        "R2_from_F_1230.23_df2_321": 0.793065,
+        "all_four_match_printed_at_two_decimals": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the F and R-squared of each training function are mutually consistent, so the df anomaly recorded separately is not accompanied by an internal contradiction in these statistics."
+      },
+      "notes": "This matters for reading the `training_function_df_imply_17_per_group` finding: the four footnote tests are internally coherent as regressions, so whatever produced the large residual dfs produced F and R-squared that agree with each other. Arithmetic performed without a registered tool; the identity is stated above.",
+      "reproduction": "No CLI command applies: no registered tool converts F and df to R-squared for a regression.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_61022f6336ae11f6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "reported_d_vs_t_and_n",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "Reported d vs t and n (Results, paragraph 2 (both Cohen's d values))",
+      "description": "Neither printed d equals t/sqrt(n), but both fall short of it by nearly the same factor (0.69 and 0.71), which is the signature of a legitimate alternative standardiser -- d computed against the pooled pre/post SD rather than the SD of the difference scores. That conversion factor corresponds to a pre-post correlation of roughly 0.75, an unremarkable value for a repeated administration of a matrices test. I record this as CONSISTENT rather than as an anomaly: the check ran and found the two values coherent with each other. It cannot be pushed further because the paper prints the Gf means and SDs only in Figure 3, so check_effect_plausibility could not be given group statistics to test the pr",
+      "location": "Results, paragraph 2 (both Cohen's d values)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "was substantially superior ( t (33) = 5.53; P &lt; 0.001; Cohen's d = 0.65)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:reported_d_vs_t_and_n",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "was substantially superior ( t (33) = 5.53; P &lt; 0.001; Cohen's d = 0.65)",
+      "inputs": {
+        "t_trained": 5.53,
+        "n_trained": 34,
+        "d_trained": 0.65,
+        "t_control": 2.08,
+        "n_control": 35,
+        "d_control": 0.25
+      },
+      "reported": {
+        "trained": "t(33) = 5.53, n = 34, d = 0.65",
+        "control": "t(34) = 2.08, n = 35, d = 0.25"
+      },
+      "computed": {
+        "method": "compare each printed d with the paired-samples d_z implied by its own t and n, d_z = t / sqrt(n)",
+        "d_z_trained_5.53_over_sqrt_34": 0.948434,
+        "ratio_reported_d_over_d_z_trained": 0.685339,
+        "d_z_control_2.08_over_sqrt_35": 0.351592,
+        "ratio_reported_d_over_d_z_control": 0.711044
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected: the two effect sizes are mutually consistent under a single standardiser, so neither appears mistyped."
+      },
+      "notes": "Neither printed d equals t/sqrt(n), but both fall short of it by nearly the same factor (0.69 and 0.71), which is the signature of a legitimate alternative standardiser -- d computed against the pooled pre/post SD rather than the SD of the difference scores. That conversion factor corresponds to a pre-post correlation of roughly 0.75, an unremarkable value for a repeated administration of a matrices test. I record this as CONSISTENT rather than as an anomaly: the check ran and found the two values coherent with each other. It cannot be pushed further because the paper prints the Gf means and SDs only in Figure 3, so check_effect_plausibility could not be given group statistics to test the printed d against.",
+      "reproduction": "No CLI command applies for the d_z conversion: recalc_within_subjects_t is MCP-only and recovers a correlation rather than a d, and the group means and SDs it would need are printed only in Figure 3.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_9622d1794266c7f5",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_primary_family",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity primary family",
+      "description": "The p-values passed here are the EXACT values recomputed by recalc_f_to_p and recalc_stat_to_p, not the paper's printed thresholds -- six of the seven are printed as bounds, which multiplicity_report would otherwise drop, leaving the family uncheckable. Family definition is a judgement: these seven tests bear on one hypothesis in one pooled sample, which is the standard case for family-wise control. A reader who regards the four experiments as separate studies would define smaller families and lose fewer claims. Uncorrected testing is ordinary in this literature and this is arithmetic about the numbers, not an allegation. All four survivors and casualties are unchanged whichever of the four ",
+      "location": "Results, paragraphs 2-3 (seven primary transfer and dose-response tests)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_primary_family",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09",
+      "inputs": {
+        "family_label": "Primary Gf-transfer and dose-response tests on the same 69 participants",
+        "p_values": [
+          0.0451341,
+          3.85822e-06,
+          0.0248325,
+          0.000173593,
+          0.180827,
+          0.0503653,
+          0.0547126
+        ],
+        "alpha": 0.05
+      },
+      "reported": {
+        "correction_stated_by_authors": "none for this family; Gabriel's procedure is used only for the four post-hoc contrasts among training groups"
+      },
+      "computed": {
+        "n_tests_in_family": 7,
+        "fwer_if_independent": 0.3017,
+        "n_significant_uncorrected": 4,
+        "n_surviving_floor_bonferroni": 2,
+        "n_surviving_ceiling_benjamini_hochberg": 2,
+        "n_claims_lost_to_correction_read_off_BH": 2,
+        "bonferroni_threshold": 0.0071428571428571435,
+        "benjamini_yekutieli_threshold": 0.005509641873278238
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Of four results significant at uncorrected alpha, two survive every correction method; the two lost are the control-group retest t-test and the group x test-session interaction that the paper cites as confirming the transfer effect."
+      },
+      "notes": "The p-values passed here are the EXACT values recomputed by recalc_f_to_p and recalc_stat_to_p, not the paper's printed thresholds -- six of the seven are printed as bounds, which multiplicity_report would otherwise drop, leaving the family uncheckable. Family definition is a judgement: these seven tests bear on one hypothesis in one pooled sample, which is the standard case for family-wise control. A reader who regards the four experiments as separate studies would define smaller families and lose fewer claims. Uncorrected testing is ordinary in this literature and this is arithmetic about the numbers, not an allegation. All four survivors and casualties are unchanged whichever of the four correction methods is used, which is unusual and makes the bound tight.",
+      "reproduction": "metascience multiplicity --family-label 'Primary Gf-transfer and dose-response tests' --tests '[{\"id\":\"control_gain_t\",\"p_value\":0.0451341,\"correction_applied\":\"none\"},{\"id\":\"trained_gain_t\",\"p_value\":3.85822e-06,\"correction_applied\":\"none\"},{\"id\":\"group_x_session\",\"p_value\":0.0248325,\"correction_applied\":\"none\"},{\"id\":\"gain_by_training_time\",\"p_value\":0.000173593,\"correction_applied\":\"none\"},{\"id\":\"ancova_12day\",\"p_value\":0.180827,\"correction_applied\":\"none\"},{\"id\":\"ancova_17day\",\"p_value\":0.0503653,\"correction_applied\":\"none\"},{\"id\":\"ancova_19day\",\"p_value\":0.0547126,\"correction_applied\":\"none\"}]' --alpha 0.05",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "revealed a trend for group differences after 12 days ( F (1,19) = 1.93; P = 0.09; \ud835\udf02 p 2 = 0.09), and statistically significant group differences after 17 ( F (1,13) = 4.65; P &lt; 0.05; \ud835\udf02 p 2 = 0.26), and 19 training days ( F (1,12) = 4.53; P &lt; 0.05; \ud835\udf02 p 2 = 0.27)",
+        "source_locator": "Results, paragraphs 2-3",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_5b8a6c65b9b20554",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "main_test_statistics_consistent",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Main test statistics consistent",
+      "description": "Recorded to make the denominator explicit: thirteen F/t results are printed with a p-value, ten reconcile and three (all three per-experiment ANCOVAs) do not. That the discrepancies are confined to exactly one family of tests, and share one factor, is what makes them interpretable. statcheck independently parsed three of the footnote regressions and returned 0 errors and 0 decision errors; it could not parse the semicolon-delimited results, which is why each was converted individually.",
+      "location": "Results, paragraphs 2-5 and footnote (eight F/t conversions)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "transfer to fluid intelligence varied as a function of training time ( F (3,30) = 9.25; P &lt; 0.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:main_test_statistics_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "transfer to fluid intelligence varied as a function of training time ( F (3,30) = 9.25; P &lt; 0.001",
+      "inputs": {
+        "note": "ten separate recalc_f_to_p / recalc_stat_to_p calls, each with decimals_f=2 and the printed p threshold"
+      },
+      "reported": {
+        "tests_checked": "t(34)=2.08 P<0.05; t(33)=5.53 P<0.001; F(1,67)=5.27 P<0.05; F(3,30)=9.25 P<0.001; F(1,68)=6.38 P<0.05; F(1,68)=4.56 P<0.05; F(1,67)=14.08 P<0.001; F(3,29)=8.93 P<0.001; F(2,22)=6.19 P<0.01; F(3,29)=7.80 P<0.001"
+      },
+      "computed": {
+        "p_t34_2.08": 0.04513410686581814,
+        "p_t33_5.53": 3.858215104900958e-06,
+        "p_F1_67_5.27": 0.024832524029183057,
+        "p_F3_30_9.25": 0.00017359258672154486,
+        "p_F1_68_6.38": 0.013875935039353034,
+        "p_F1_68_4.56": 0.03633191787362737,
+        "p_F1_67_14.08": 0.0003683385433506775,
+        "p_F3_29_8.93": 0.00023932918990401969,
+        "p_F2_22_6.19": 0.0073669020101307745,
+        "p_F3_29_7.80": 0.000575417316960357,
+        "n_consistent_with_printed_threshold": 10,
+        "n_inconsistent": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; every test statistic outside the three ANCOVAs supports the significance threshold printed beside it."
+      },
+      "notes": "Recorded to make the denominator explicit: thirteen F/t results are printed with a p-value, ten reconcile and three (all three per-experiment ANCOVAs) do not. That the discrepancies are confined to exactly one family of tests, and share one factor, is what makes them interpretable. statcheck independently parsed three of the footnote regressions and returned 0 errors and 0 decision errors; it could not parse the semicolon-delimited results, which is why each was converted individually.",
+      "reproduction": "metascience f-to-p --f-value 9.25 --df1 3 --df2 30 --reported-p 0.001 --decimals-f 2 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_605eabe63dcf873f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_size_arithmetic_consistent",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Sample size arithmetic consistent (Materials and Methods, Participants and Procedure)",
+      "description": "The four per-setting ns are the COMBINED trained plus control counts, which is not stated explicitly but is the only reading under which they reconcile with the reported totals -- and they do so exactly, at zero tolerance, after the one excluded participant. This is worth recording because it means the sample-size reporting is internally sound, which sharpens rather than softens the separate finding that the training-function dfs imply 68 trained participants.",
+      "location": "Materials and Methods, Participants and Procedure",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "8 days ( n = 16), 12 days ( n = 22), 17 days ( n = 16), and 19 days ( n = 15))"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_size_arithmetic_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "8 days ( n = 16), 12 days ( n = 22), 17 days ( n = 16), and 19 days ( n = 15))",
+      "inputs": {
+        "rows": "[16,22,16,15] vs 69; [35,35] vs 70; [34,35] vs 69, all at tolerance 0"
+      },
+      "reported": {
+        "total_recruited": 70,
+        "trained_assigned": 35,
+        "trained_analysed": 34,
+        "control": 35,
+        "per_setting": [
+          16,
+          22,
+          16,
+          15
+        ]
+      },
+      "computed": {
+        "sum_of_four_setting_ns": 69,
+        "expected_69_equals_34_trained_plus_35_control": true,
+        "sum_35_plus_35": 70,
+        "sum_34_plus_35": 69,
+        "n_rows_evaluated": 3,
+        "n_rows_inconsistent": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the participant flow reconciles exactly, including the single documented exclusion."
+      },
+      "notes": "The four per-setting ns are the COMBINED trained plus control counts, which is not stated explicitly but is the only reading under which they reconcile with the reported totals -- and they do so exactly, at zero tolerance, after the one excluded participant. This is worth recording because it means the sample-size reporting is internally sound, which sharpens rather than softens the separate finding that the training-function dfs imply 68 trained participants.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[16,22,16,15],\"expected_sum\":69,\"decimals\":[0,0,0,0],\"tolerance\":0},{\"values\":[35,35],\"expected_sum\":70,\"decimals\":[0,0],\"tolerance\":0},{\"values\":[34,35],\"expected_sum\":69,\"decimals\":[0,0],\"tolerance\":0}]'",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "rangingfrom8to19sessions(i.e., 8 days ( n = 16), 12 days ( n = 22), 17 days ( n = 16), and 19 days ( n = 15))",
+        "source_locator": "Materials and Methods, Participants and Procedure",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_886670359a94b5d3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "df_68_inconsistent_with_analysed_n",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Df 68 inconsistent with analysed n (Results, paragraph 3 (median-split analyses))",
+      "description": "This is a cross-reference contradiction, not a calculation. The paper analyses 69 participants (34 trained plus 35 control) and uses error df 67 for its two-group comparisons on that sample, which is what N minus 2 gives. The two median-split analyses in this paragraph both report error df 68, which corresponds to N = 70 -- the total BEFORE the one participant who failed to complete training was discarded. A 2 (training) x 2 (performance group) between-subjects model on 69 participants would give error df 65, not 68, so neither the stated analysed N nor the described design produces 68 under a standard reading. The likeliest innocent explanation is that the excluded participant's pretest dat",
+      "location": "Results, paragraph 3 (median-split analyses)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "There was an effect of training ( F (1,68) = 6.38; P &lt; 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:df_68_inconsistent_with_analysed_n",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "There was an effect of training ( F (1,68) = 6.38; P &lt; 0.05",
+      "inputs": {},
+      "reported": {
+        "df_reported_twice": "1,68",
+        "analysed_N": 69,
+        "df_used_elsewhere_for_the_same_sample": "1,67"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Affects the two median-split analyses supporting the claim that the training benefit is independent of initial Gf; it does not bear on the primary transfer or dose-response claims."
+      },
+      "notes": "This is a cross-reference contradiction, not a calculation. The paper analyses 69 participants (34 trained plus 35 control) and uses error df 67 for its two-group comparisons on that sample, which is what N minus 2 gives. The two median-split analyses in this paragraph both report error df 68, which corresponds to N = 70 -- the total BEFORE the one participant who failed to complete training was discarded. A 2 (training) x 2 (performance group) between-subjects model on 69 participants would give error df 65, not 68, so neither the stated analysed N nor the described design produces 68 under a standard reading. The likeliest innocent explanation is that the excluded participant's pretest data was retained for these particular analyses; the paper does not say so.",
+      "reproduction": "No command applies: this is a comparison between the degrees of freedom printed in two places and the sample size stated in Methods, not an arithmetic result.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_26858baa9a3b58a1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "training_function_17day_p_omitted",
+      "producer": "legacy_sweep",
+      "technique": "recalc_f_to_p",
+      "title": "Training function 17day p omitted (Results, footnote on the four training functions)",
+      "description": "The other three training functions in the same footnote each carry 'P < 0.001'; this one carries none, which reads as a typesetting omission rather than a substantive one. Recorded as indeterminate because there was no reported p to check the statistic against -- the tool computed the value but had nothing to compare it with. Reporting an incompletely specified test is a property of the publication, not a limit of the toolkit.",
+      "location": "Results, footnote on the four training functions",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "17daystraining: R 2 = 0.73, F (1,287) = 769.63"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:training_function_17day_p_omitted",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "17daystraining: R 2 = 0.73, F (1,287) = 769.63",
+      "inputs": {
+        "f_value": 769.63,
+        "df1": 1,
+        "df2": 287,
+        "decimals_f": 2
+      },
+      "reported": {
+        "F": 769.63,
+        "df1": 1,
+        "df2": 287,
+        "reported_p": "none printed"
+      },
+      "computed": {
+        "p_from_F_1_287_at_769.63": 3.2658286159662356e-83
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected: the omitted p-value is approximately 3e-83, far below any threshold the paper would have printed."
+      },
+      "notes": "The other three training functions in the same footnote each carry 'P < 0.001'; this one carries none, which reads as a typesetting omission rather than a substantive one. Recorded as indeterminate because there was no reported p to check the statistic against -- the tool computed the value but had nothing to compare it with. Reporting an incompletely specified test is a property of the publication, not a limit of the toolkit.",
+      "reproduction": "metascience f-to-p --f-value 769.63 --df1 1 --df2 287 --decimals-f 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "17daystraining: R 2 = 0.73, F (1,287) = 769.63;19daystraining",
+        "source_locator": "Results, footnote, 17-day training function",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_3769e946a4851d67",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "null_claims_without_intervals",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Null claims without intervals (Results, paragraphs 3-5 (four null claims))",
+      "description": "absence_of_evidence is the right check and could not be run on any of the four: it requires a confidence interval, or a coefficient with its standard error, and the paper prints only bounds on F with no effect size, no interval, and in one case no df. 'Not significant' is not 'no effect', and at these sample sizes (n as low as 15 per experiment) the intervals around these nulls would be wide. This is a reporting gap recorded as indeterminate, not an anomaly in the numbers. The paper is also explicitly candid about one of them, noting that 'numerically the lowGf participants showed somewhat larger gains'.",
+      "location": "Results, paragraphs 3-5 (four null claims)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "There was no significant performance group by training-gain interaction ( F &lt; 1)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:null_claims_without_intervals",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "There was no significant performance group by training-gain interaction ( F &lt; 1).",
+      "inputs": {},
+      "reported": {
+        "claim_1": "F < 1 for the performance group x training-gain interaction",
+        "claim_2": "F(1,68) < 0.3 for pretest digit span",
+        "claim_3": "F(1,52) < 0.1 for pretest reading span",
+        "claim_4": "reading span: 'both groups improved equally in the posttest session'"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 3,
+        "basis": "asserted",
+        "explanation": "These four null results support the Discussion claims that the training 'proved to be useful for all participants and had no adverse effects for participants with high initial working memory capacity' and that the gain is unrelated to initial ability -- conclusions that cannot be evaluated without knowing what effects the data still permit."
+      },
+      "notes": "absence_of_evidence is the right check and could not be run on any of the four: it requires a confidence interval, or a coefficient with its standard error, and the paper prints only bounds on F with no effect size, no interval, and in one case no df. 'Not significant' is not 'no effect', and at these sample sizes (n as low as 15 per experiment) the intervals around these nulls would be wide. This is a reporting gap recorded as indeterminate, not an anomaly in the numbers. The paper is also explicitly candid about one of them, noting that 'numerically the lowGf participants showed somewhat larger gains'.",
+      "reproduction": "No command applies: absence_of_evidence requires an interval or a coefficient with its standard error, and the paper prints neither for any of these four null claims.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_c9ae76acb78f7f26",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "outcome_data_only_in_figures",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Outcome data only in figures (Figures 2 and 3)",
+      "description": "The paper contains no tables at all; the PDF extraction returned zero. This is the single largest coverage limit on this review. With the group means, SDs and ns, GRIM and GRIMMER would apply directly (the Gf score is a count of correct solutions, an integer), recalc_independent_t and rivets_independent_t could test the reported t values against the group statistics, and check_effect_plausibility could test the printed Cohen's d for internal consistency. None of that was possible. Values read off the bars would carry figure_pixels provenance and are barred from the exact-arithmetic family, so digitising them would not recover these checks.",
+      "location": "Figures 2 and 3",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean values and corresponding standard errors of the fluid intelligence test scores for the control and the trained groups, collapsed over training time."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:outcome_data_only_in_figures",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mean values and corresponding standard errors of the fluid intelligence test scores for the control and the trained groups, collapsed over training time.",
+      "inputs": {},
+      "reported": {
+        "tables_in_paper": 0,
+        "gf_means_and_dispersions_printed_in_text": "none"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "The fluid-intelligence means, the gain scores, and their dispersions -- the actual outcome data behind every claim in the abstract -- appear only as bars in Figure 3, so no granularity, dispersion or effect-size check can be run against them."
+      },
+      "notes": "The paper contains no tables at all; the PDF extraction returned zero. This is the single largest coverage limit on this review. With the group means, SDs and ns, GRIM and GRIMMER would apply directly (the Gf score is a count of correct solutions, an integer), recalc_independent_t and rivets_independent_t could test the reported t values against the group statistics, and check_effect_plausibility could test the printed Cohen's d for internal consistency. None of that was possible. Values read off the bars would carry figure_pixels provenance and are barred from the exact-arithmetic family, so digitising them would not recover these checks.",
+      "reproduction": "No command applies: this records that the paper prints its outcome data only in figures, which is a reading of the publication rather than a calculation.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d6f54877833e0e36",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_preregistration_or_data_availability",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "No preregistration or data availability (Front matter and Acknowledgments)",
+      "description": "The paper states two hypotheses in advance (transfer, and dose-dependence) and both are treated as confirmatory in this review's anatomy on the strength of the abstract, but no registration or protocol is cited, so the distinction between confirmatory and exploratory rests on the paper's own framing. This is unremarkable for a 2008 publication -- preregistration was not a norm in this field at the time -- and is recorded for completeness rather than as a criticism. No data-availability statement is present and no supplementary files accompany the article.",
+      "location": "Front matter and Acknowledgments",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The authors declare no conflict of interest."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_preregistration_or_data_availability",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The authors declare no conflict of interest.",
+      "inputs": {},
+      "reported": {
+        "registration": "none stated",
+        "data_availability_statement": "none present",
+        "conflict_of_interest": "none declared"
+      },
+      "computed": {},
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No specific claim is affected; this records that neither the confirmatory status of the hypotheses nor the underlying data can be independently verified."
+      },
+      "notes": "The paper states two hypotheses in advance (transfer, and dose-dependence) and both are treated as confirmatory in this review's anatomy on the strength of the abstract, but no registration or protocol is cited, so the distinction between confirmatory and exploratory rests on the paper's own framing. This is unremarkable for a 2008 publication -- preregistration was not a norm in this field at the time -- and is recorded for completeness rather than as a criticism. No data-availability statement is present and no supplementary files accompany the article.",
+      "reproduction": "No command applies: this is a reading of the paper's front matter.",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_212b3a7ff7e54b1e",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "b8a83e635af50844f4fd40cd7f05fcd314bd5bfe045d99a20832f6c461daca73",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-16 21:08 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

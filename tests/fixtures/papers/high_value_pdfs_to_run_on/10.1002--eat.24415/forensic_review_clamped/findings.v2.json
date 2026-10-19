@@ -1,0 +1,1358 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1002--eat.24415",
+  "run_id": "r_d0dd42618e666231",
+  "findings": [
+    {
+      "slug": "compliance_percentage_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Compliance percentage mismatch (Results, paragraph 1 (EMA compliance))",
+      "description": "TOOL ACTUALLY CALLED: check_count_percent (the `technique` enum has no entry for it; grim_percentage is the nearest registered percentage-check family, and check_count_percent is the strictly stronger version of it where the count is printed). The two counts are mutually consistent and independently verifiable: 6 surveys/day x 7 days x 107 participants = 4494, so the denominator is right. 3131/4494 = 69.67%, which the paper prints as 70.00% - rounded to a whole number but then formatted to two decimals, asserting a precision it does not have. Printing '69.67%' or '70%' would both have been accurate. Presentational defect, not a data-integrity one; nothing inferential depends on it.",
+      "location": "Results, paragraph 1 (EMA compliance)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:compliance_percentage_mismatch",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+      "inputs": {
+        "count": 3131,
+        "n": 4494,
+        "percentage": 70,
+        "decimals": 2
+      },
+      "reported": {
+        "count": 3131,
+        "denominator": 4494,
+        "percentage": "70.00%"
+      },
+      "computed": {
+        "computed_percentage": 69.670672,
+        "rounding_interval": [
+          69.995,
+          70.01
+        ],
+        "implied_denominator": 4472.8571,
+        "difference": -0.329328
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Overstates EMA compliance by 0.33 percentage points; affects only the descriptive characterisation of compliance as 'good', not any inferential result."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_count_percent (the `technique` enum has no entry for it; grim_percentage is the nearest registered percentage-check family, and check_count_percent is the strictly stronger version of it where the count is printed). The two counts are mutually consistent and independently verifiable: 6 surveys/day x 7 days x 107 participants = 4494, so the denominator is right. 3131/4494 = 69.67%, which the paper prints as 70.00% - rounded to a whole number but then formatted to two decimals, asserting a precision it does not have. Printing '69.67%' or '70%' would both have been accurate. Presentational defect, not a data-integrity one; nothing inferential depends on it.",
+      "reproduction": "metascience check-count-percent --count 3131 --n 4494 --percentage 70.00 --decimals 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_4aa0dc63dbc6afa4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_counts_and_percentages",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Table1 counts and percentages (Table 1, all n (%) rows)",
+      "description": "TOOL ACTUALLY CALLED: check_table, which dispatched check_count_percent to each n (%) cell; the `technique` enum has no entry for either, so the nearest registered percentage family is named. All 15 count/percentage pairs reconcile exactly against N = 107 (88/107 = 82.24%, 99/107 = 92.52%, 29/107 = 27.10%). Denominator: 15 of 15 checkable n (%) cells passed. The 18 `indeterminate` results are grim_percentage correctly REFUSING on nominal/ordinal category variables - the applicability guard working as designed, not a problem with the paper.",
+      "location": "Table 1, all n (%) rows",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020])."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_counts_and_percentages",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+      "inputs": {
+        "table": "Table 1",
+        "n": 107,
+        "cells": 21,
+        "kinds": {
+          "mean_sd": 6,
+          "n_percent": 15
+        }
+      },
+      "reported": {
+        "cells_checked": 15,
+        "denominator": 107
+      },
+      "computed": {
+        "n_checks_run": 36,
+        "n_count_percent_consistent": 15,
+        "n_indeterminate": 18,
+        "n_not_run": 3,
+        "parse_coverage": 1
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every printed count reproduces its printed percentage at N = 107; the demographic description of the sample is internally sound."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_table, which dispatched check_count_percent to each n (%) cell; the `technique` enum has no entry for either, so the nearest registered percentage family is named. All 15 count/percentage pairs reconcile exactly against N = 107 (88/107 = 82.24%, 99/107 = 92.52%, 29/107 = 27.10%). Denominator: 15 of 15 checkable n (%) cells passed. The 18 `indeterminate` results are grim_percentage correctly REFUSING on nominal/ordinal category variables - the applicability guard working as designed, not a problem with the paper.",
+      "reproduction": "metascience check-table --cells table1_cells.json --variables table1_vars.json --bindings table1_bindings.json",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_e6865aeb6a868fd0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_category_sums",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 category sums",
+      "description": "TOOL ACTUALLY CALLED: check_summation_batch (one call, 7 rows). All seven sums reconcile. Each percentage column sums to 99.99 rather than 100.00, which is ordinary rounding: at 2 dp with 3-8 addends the permitted window is +/-0.52 to +/-0.54, so a 0.01 shortfall is expected, not an anomaly.",
+      "location": "Table 1, gender / education / race-ethnicity blocks, and sample flow",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020])."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_category_sums",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+      "inputs": {
+        "expected_sum_counts": 107,
+        "expected_sum_percentages": 100,
+        "expected_sum_flow": 112,
+        "tolerance_counts": 0
+      },
+      "reported": {
+        "gender_counts": [
+          18,
+          88,
+          1,
+          0,
+          0
+        ],
+        "education_counts": [
+          0,
+          1,
+          6,
+          21,
+          6,
+          29,
+          14,
+          25,
+          5
+        ],
+        "race_counts": [
+          99,
+          1,
+          1,
+          0,
+          0,
+          6
+        ],
+        "sample_flow": [
+          107,
+          5
+        ]
+      },
+      "computed": {
+        "n_rows": 7,
+        "n_evaluated": 7,
+        "n_inconsistent": 0,
+        "gender_sum": 107,
+        "education_sum": 107,
+        "race_sum": 107,
+        "flow_sum": 112,
+        "percentage_sums": 99.99
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "All three categorical blocks are exhaustive and sum exactly to N = 107, and the sample flow 107 + 5 = 112 reconciles."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_summation_batch (one call, 7 rows). All seven sums reconcile. Each percentage column sums to 99.99 rather than 100.00, which is ordinary rounding: at 2 dp with 3-8 addends the permitted window is +/-0.52 to +/-0.54, so a 0.01 shortfall is expected, not an anomaly.",
+      "reproduction": "metascience summation-batch --rows table1_sums.json",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      },
+      "finding_id": "f_3722ba53ae8071fa",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_grim_granularity",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Table1 grim granularity (Table 1, BDI / CIA / DERS total-score rows)",
+      "description": "IMPORTANT - DELIBERATE DOWNGRADE. check_table returned `suspicious` for all three rows, but with `grim_consistent: true` and `failure_mode: out_of_range`. The range failure is entirely an artifact of the tool's DEFAULT 1-7 Likert bounds: the paper never states the BDI, CIA or DERS scoring range, so a mean of 15.00 or 89.26 is 'out of range' only against a scale nobody claimed. Under rulebook rule 4 an out-of-range verdict resting on an unstated bound cannot stand, so the reportable result is the granularity check, which PASSED for all three. Reporting the tool's raw `suspicious` here would be a false accusation. No GRIM-family `impossible` is claimed, so the editorial R `scrutiny` cross-chec",
+      "location": "Table 1, BDI / CIA / DERS total-score rows",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Baseline emotion dysregulation (DERS total score)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_grim_granularity",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Baseline emotion dysregulation (DERS total score)",
+      "inputs": {
+        "n": 107,
+        "decimals": 2,
+        "data_type": "count",
+        "discreteness_source": "assumed",
+        "bound_source": "assumed"
+      },
+      "reported": {
+        "BDI": "15.00 (10.00)",
+        "CIA": "23.61 (9.87)",
+        "DERS": "89.26 (26.61)",
+        "n": 107
+      },
+      "computed": {
+        "BDI_implied_sum": 1605,
+        "BDI_grim_consistent": true,
+        "CIA_rounded_sum": 2526,
+        "CIA_reconstructed_mean": 23.607477,
+        "CIA_grim_consistent": true,
+        "DERS_rounded_sum": 9551,
+        "DERS_reconstructed_mean": 89.261682,
+        "DERS_grim_consistent": true,
+        "granularity": 0.009345794392523364
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The three integer-scored baseline totals are all GRIM-consistent at n = 107; no granularity anomaly in the baseline table."
+      },
+      "notes": "IMPORTANT - DELIBERATE DOWNGRADE. check_table returned `suspicious` for all three rows, but with `grim_consistent: true` and `failure_mode: out_of_range`. The range failure is entirely an artifact of the tool's DEFAULT 1-7 Likert bounds: the paper never states the BDI, CIA or DERS scoring range, so a mean of 15.00 or 89.26 is 'out of range' only against a scale nobody claimed. Under rulebook rule 4 an out-of-range verdict resting on an unstated bound cannot stand, so the reportable result is the granularity check, which PASSED for all three. Reporting the tool's raw `suspicious` here would be a false accusation. No GRIM-family `impossible` is claimed, so the editorial R `scrutiny` cross-check is not load-bearing for this finding.",
+      "reproduction": "metascience grim --mean 89.26 --n 107 --decimals 2 --data-type count --discreteness-source assumed",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_febfe1a5720ae373",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_coefficient_p_consistency",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "Table2 coefficient p consistency",
+      "description": "TOOL ACTUALLY CALLED: check_regression_batch (one call, 68 rows). 68 of 68 consistent. DF ASSUMPTION STATED: the paper reports no degrees of freedom, so df = 100000 was passed to make the t reference numerically equal to the normal (Wald z), which is what maximum-likelihood SEM reports and which the paper's stated estimator implies ('all models were estimated using maximum likelihood estimation'). CAVEAT ON POWER: b and SE are printed to only 2 dp, so the reachable p-interval is wide for small coefficients (b = -0.02, SE = 0.01 admits p from 6e-07 to 0.317) and the check would catch only gross errors there. It is genuinely informative for the larger coefficients, where the intervals are tigh",
+      "location": "Table 2, all 68 coefficient rows carrying an exact p-value",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_coefficient_p_consistency",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2",
+      "inputs": {
+        "df": 100000,
+        "decimals_b": "2 (3 where printed to 3)",
+        "decimals_se": "2 (3 where printed to 3)",
+        "decimals_p": 3
+      },
+      "reported": {
+        "rows_with_exact_p": 68,
+        "models": 6,
+        "levels": [
+          "within-person",
+          "between-person"
+        ]
+      },
+      "computed": {
+        "n_evaluated": 68,
+        "n_inconsistent": 0,
+        "n_indeterminate": 0,
+        "examples": {
+          "M6_B_indirect_NA": {
+            "b": 0.95,
+            "se": 0.4,
+            "t": 2.375,
+            "p_interval": [
+              0.0156,
+              0.0196
+            ],
+            "reported_p": 0.017
+          },
+          "M1_B_ED_to_LOC": {
+            "b": 0.82,
+            "se": 0.41,
+            "t": 2,
+            "p_interval": [
+              0.0416,
+              0.0495
+            ],
+            "reported_p": 0.048
+          },
+          "M6_B_PA_to_LOC": {
+            "b": -0.32,
+            "se": 0.11,
+            "t": -2.9091,
+            "p_interval": [
+              0.00197,
+              0.00616
+            ],
+            "reported_p": 0.002
+          }
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every reported p-value in Table 2 is reproducible from its own printed b and SE; the table shows no sign of hand-computed or transcribed statistics."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_regression_batch (one call, 68 rows). 68 of 68 consistent. DF ASSUMPTION STATED: the paper reports no degrees of freedom, so df = 100000 was passed to make the t reference numerically equal to the normal (Wald z), which is what maximum-likelihood SEM reports and which the paper's stated estimator implies ('all models were estimated using maximum likelihood estimation'). CAVEAT ON POWER: b and SE are printed to only 2 dp, so the reachable p-interval is wide for small coefficients (b = -0.02, SE = 0.01 admits p from 6e-07 to 0.317) and the check would catch only gross errors there. It is genuinely informative for the larger coefficients, where the intervals are tight - and those pass too.",
+      "reproduction": "metascience regression-batch --rows table2_coefficients.json",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience regression-batch [OPTIONS] {json_path}\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05; momentary observations at level 1 were nested within participants at level 2",
+        "source_locator": "Table 2, all coefficient rows with exact p-values",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_9d50af56fd0ce7ad",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_row_label_xml_vs_pdf",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Table2 row label xml vs pdf",
+      "description": "NOT AN ACCUSATION AGAINST THE AUTHORS. Every number is identical in the two sources; only the row LABEL differs, and the PDF's label is the correct one - corroborated by the paper's own prose, which describes beta = 0.13-0.14 within-person and 0.68-0.77 between-person as the emotion dysregulation -> LOC eating direct effect, exactly matching these rows in Models 1 and 6. In the XML this row instead carries the label of the indirect-effects row below it, the signature of a duplicated label in the markup. Per the rulebook an XML/PDF disagreement is an extraction or versioning problem and is reported as indeterminate. It matters for anyone consuming the XML or publisher HTML rather than the PDF",
+      "location": "Table 2, third 'Direct effects' row of every model (Models 1-6)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Emotion Dysregulation \u2192 LOC Eating 0.28 (0.07) <.001 0.13 0.82 (0.41) .048 0.68"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_row_label_xml_vs_pdf",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Emotion Dysregulation \u2192 LOC Eating 0.28 (0.07) <.001 0.13 0.82 (0.41) .048 0.68",
+      "inputs": {
+        "xml_source": "10.1002--eat.24415.xml (pmc-set)",
+        "pdf_source": "10.1002--eat.24415.pdf pages 22-24",
+        "table": "Table 2"
+      },
+      "reported": {
+        "pdf_label": "Emotion Dysregulation \u2192 LOC Eating",
+        "xml_label": "Positive affect \u2794 Emotion dysregulation \u2794 LOC eating",
+        "values_in_both": "0.28 (0.07), <.001, 0.13, 0.82 (0.41), .048, 0.68 (Model 1)"
+      },
+      "computed": {
+        "rows_affected": 6,
+        "numeric_cells_affected": 0,
+        "numbers_agree_across_sources": true,
+        "xml_label_duplicates": "the label of the indirect-effects row in the same model block"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "In the XML rendering only, the paper appears to report a significant positive-affect mediation path (p < .001), contradicting its own conclusion that all positive-affect pathways were non-significant; the PDF carries the correct label and no numeric claim changes."
+      },
+      "notes": "NOT AN ACCUSATION AGAINST THE AUTHORS. Every number is identical in the two sources; only the row LABEL differs, and the PDF's label is the correct one - corroborated by the paper's own prose, which describes beta = 0.13-0.14 within-person and 0.68-0.77 between-person as the emotion dysregulation -> LOC eating direct effect, exactly matching these rows in Models 1 and 6. In the XML this row instead carries the label of the indirect-effects row below it, the signature of a duplicated label in the markup. Per the rulebook an XML/PDF disagreement is an extraction or versioning problem and is reported as indeterminate. It matters for anyone consuming the XML or publisher HTML rather than the PDF: taken at face value the XML makes the paper look self-contradictory on its headline positive-affect null. Worth a correction request to the publisher.",
+      "reproduction": "metascience get-table --xml-path 10.1002--eat.24415.xml --table-num 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      },
+      "finding_id": "f_c5d54a9673dd24fc",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_within_person_mediation",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity within person mediation",
+      "description": "Twelve mediation tests on the same 107 participants, testing one hypothesis across six correlated outcomes, with no correction stated anywhere. Uncorrected testing is ordinary practice, not misconduct - but the arithmetic is that the family-wise error rate reaches 46% and about 0.6 false positives are expected by chance. Three of the four uncorrected claims are robust (all p = .001, surviving even Bonferroni); the fourth, difficulties resisting eating at p = .026, exceeds every threshold (Bonferroni .0042, BH .0125, BY .0040). Surviving-claims interval is 3 to 3 - all four methods agree. The six LOC outcomes are measured on the same subjects and are plainly correlated, so Benjamini-Yekutieli",
+      "location": "Table 2, within-person Indirect effects rows across Models 1-6",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_within_person_mediation",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05",
+      "inputs": {
+        "family_label": "Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors, same 107 participants, no correction stated",
+        "alpha": 0.05
+      },
+      "reported": {
+        "n_tests": 12,
+        "correction_stated": "none",
+        "significant_uncorrected": 4,
+        "p_values": [
+          0.001,
+          0.07,
+          0.026,
+          0.122,
+          0.154,
+          0.233,
+          0.001,
+          0.067,
+          0.858,
+          0.859,
+          0.001,
+          0.065
+        ]
+      },
+      "computed": {
+        "fwer_if_independent": 0.4596,
+        "expected_false_positives": 0.6,
+        "bonferroni_threshold": 0.004167,
+        "bh_threshold": 0.0125,
+        "by_threshold": 0.004028,
+        "n_surviving_floor": 3,
+        "n_surviving_ceiling": 3,
+        "n_claims_lost_to_correction": 1
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The mediation effect for 'difficulties resisting eating' (p = .026) does not survive any of the four corrections, yet it is named in the abstract and conclusions as one of the dimensions emotion dysregulation was found to mediate. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "Twelve mediation tests on the same 107 participants, testing one hypothesis across six correlated outcomes, with no correction stated anywhere. Uncorrected testing is ordinary practice, not misconduct - but the arithmetic is that the family-wise error rate reaches 46% and about 0.6 false positives are expected by chance. Three of the four uncorrected claims are robust (all p = .001, surviving even Bonferroni); the fourth, difficulties resisting eating at p = .026, exceeds every threshold (Bonferroni .0042, BH .0125, BY .0040). Surviving-claims interval is 3 to 3 - all four methods agree. The six LOC outcomes are measured on the same subjects and are plainly correlated, so Benjamini-Yekutieli is the appropriate FDR method here, and it too keeps only 3.",
+      "reproduction": "metascience multiplicity --tests within_indirect.json --family-label \"Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05",
+        "source_locator": "Table 2, Indirect effects rows across Models 1-6",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_770b2d9d1d9133c0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_between_person_mediation",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity between person mediation",
+      "description": "Weaker than the within-person family. Exactly one of twelve between-person mediation tests reached p < .05, and 0.6 false positives are expected by chance across a family of this size - so a single hit at p = .017 is close to what chance alone would deliver. Zero claims survive under all four correction methods. The paper states this between-person result in the Results and returns to it in the Discussion without noting that it is one significant test among twelve.",
+      "location": "Table 2, between-person Indirect effects rows across Models 1-6",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_between_person_mediation",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05",
+      "inputs": {
+        "family_label": "Between-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors, same 107 participants, no correction stated",
+        "alpha": 0.05
+      },
+      "reported": {
+        "n_tests": 12,
+        "correction_stated": "none",
+        "significant_uncorrected": 1,
+        "p_values": [
+          0.052,
+          0.728,
+          0.21,
+          0.74,
+          0.06,
+          0.733,
+          0.164,
+          0.727,
+          0.38,
+          0.689,
+          0.017,
+          0.725
+        ]
+      },
+      "computed": {
+        "fwer_if_independent": 0.4596,
+        "expected_false_positives": 0.6,
+        "bonferroni_threshold": 0.004167,
+        "n_significant_bonferroni": 0,
+        "n_significant_holm": 0,
+        "n_significant_bh": 0,
+        "n_significant_by": 0,
+        "n_surviving_floor": 0,
+        "n_surviving_ceiling": 0,
+        "n_claims_lost_to_correction": 1
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The sole between-person mediation claim - that participants with generally greater negative affect reported greater emotion dysregulation and in turn felt more disconnected while eating - rests on p = .017 among 12 tests and survives none of the four corrections. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "Weaker than the within-person family. Exactly one of twelve between-person mediation tests reached p < .05, and 0.6 false positives are expected by chance across a family of this size - so a single hit at p = .017 is close to what chance alone would deliver. Zero claims survive under all four correction methods. The paper states this between-person result in the Results and returns to it in the Discussion without noting that it is one significant test among twelve.",
+      "reproduction": "metascience multiplicity --tests between_indirect.json --family-label \"Between-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05",
+        "source_locator": "Table 2, Indirect effects rows across Models 1-6",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      },
+      "finding_id": "f_1e8bbfc569e9df2c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "absence_of_evidence_model3_null",
+      "producer": "legacy_sweep",
+      "technique": "absence_of_evidence",
+      "title": "Absence of evidence model3 null",
+      "description": "This is the paper's key dimensional-variation claim and the weakest of its null results. The 95% interval derived from the printed b and SE runs to 0.099, LARGER than the mediation effects reported as significant for general LOC eating (b = 0.10), driven/compelled to eat (b = 0.09) and felt disconnected (b = 0.09). The data therefore do not distinguish this dimension from those; the paper is contrasting significant with non-significant rather than testing the difference between them. No SESOI is stated, so equivalence cannot be assessed and no 'no effect' conclusion is licensed. The interval is DERIVED, not printed - the paper reports no confidence intervals anywhere - and inherits the 2 dp ",
+      "location": "Table 2, Model 3 (Difficulties Stopping Eating After Starting), within-person indirect effect",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The emotion dysregulation factors did not mediate associations between the negative affect factors and either the difficulties stopping eating after starting or the not paying attention to one's eating factors"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:absence_of_evidence_model3_null",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The emotion dysregulation factors did not mediate associations between the negative affect factors and either the difficulties stopping eating after starting or the not paying attention to one's eating factors",
+      "inputs": {
+        "b": 0.04,
+        "se": 0.03,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "reported": {
+        "b": 0.04,
+        "se": 0.03,
+        "p": 0.154,
+        "beta": 0.01,
+        "paper_claim": "emotion dysregulation did NOT mediate for this dimension"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.018799,
+          0.098799
+        ],
+        "includes_null": true,
+        "largest_compatible_effect": 0.0988,
+        "sesoi_provided": false,
+        "interval_source": "derived"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's claim that this LOC dimension is NOT mediated rests on an interval reaching 0.099 - larger than the b = 0.09-0.10 effects it calls significant for other dimensions - so the qualitative contrast between dimensions is not established by these data."
+      },
+      "notes": "This is the paper's key dimensional-variation claim and the weakest of its null results. The 95% interval derived from the printed b and SE runs to 0.099, LARGER than the mediation effects reported as significant for general LOC eating (b = 0.10), driven/compelled to eat (b = 0.09) and felt disconnected (b = 0.09). The data therefore do not distinguish this dimension from those; the paper is contrasting significant with non-significant rather than testing the difference between them. No SESOI is stated, so equivalence cannot be assessed and no 'no effect' conclusion is licensed. The interval is DERIVED, not printed - the paper reports no confidence intervals anywhere - and inherits the 2 dp rounding of b and SE.",
+      "reproduction": "metascience absence-of-evidence --b 0.04 --se 0.03 --measure difference --claim-of-no-effect",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.04 (0.03) .154 0.01 0.85 (0.45) .060 0.61",
+        "source_locator": "Table 2, Model 3 (Difficulties Stopping Eating After Starting), within-person indirect effect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_096f6a9cbc3b0d96",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "absence_of_evidence_model5_null",
+      "producer": "legacy_sweep",
+      "technique": "absence_of_evidence",
+      "title": "Absence of evidence model5 null",
+      "description": "Recorded alongside the Model 3 result deliberately, because the two null claims are NOT equally supported and the paper treats them as interchangeable. Here the interval [-0.043, 0.035] is tight around zero and excludes the b = 0.09-0.10 effects seen for the mediated dimensions, so the contrast is real for this dimension. Still formally indeterminate: without a stated SESOI, equivalence cannot be tested and 'no effect' is not licensed - only 'no effect of the size seen elsewhere in this table'. Interval is derived from printed b and SE, not reported by the paper.",
+      "location": "Table 2, Model 5 (Not Paying Attention to One's Eating), within-person indirect effect",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:absence_of_evidence_model5_null",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27",
+      "inputs": {
+        "b": -0.004,
+        "se": 0.02,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "reported": {
+        "b": -0.004,
+        "se": 0.02,
+        "p": 0.858,
+        "beta": -0.001,
+        "paper_claim": "emotion dysregulation did NOT mediate for this dimension"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.043199,
+          0.035199
+        ],
+        "includes_null": true,
+        "largest_compatible_effect": 0.0432,
+        "sesoi_provided": false,
+        "interval_source": "derived"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Unlike Model 3, this null is comparatively well supported: the interval excludes the 0.09-0.10 effects found for the mediated dimensions, so the dimensional contrast the paper draws does hold here."
+      },
+      "notes": "Recorded alongside the Model 3 result deliberately, because the two null claims are NOT equally supported and the paper treats them as interchangeable. Here the interval [-0.043, 0.035] is tight around zero and excludes the b = 0.09-0.10 effects seen for the mediated dimensions, so the contrast is real for this dimension. Still formally indeterminate: without a stated SESOI, equivalence cannot be tested and 'no effect' is not licensed - only 'no effect of the size seen elsewhere in this table'. Interval is derived from printed b and SE, not reported by the paper.",
+      "reproduction": "metascience absence-of-evidence --b -0.004 --se 0.02 --measure difference --claim-of-no-effect",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27",
+        "source_locator": "Table 2, Model 5 (Not Paying Attention to One's Eating), within-person indirect effect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_18963219a3849ca4",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "absence_of_evidence_positive_affect_null",
+      "producer": "legacy_sweep",
+      "technique": "absence_of_evidence",
+      "title": "Absence of evidence positive affect null",
+      "description": "READ THE CAVEAT BEFORE USING THIS. The derived interval excludes zero, which superficially contradicts the reported p = .065 - but that is a ROUNDING ARTIFACT, not a defect in the paper. b and SE are printed to 2 dp, so b = -0.02, SE = 0.01 taken at their midpoints gives z = -2.0; the true unrounded values (e.g. b = -0.018, SE = 0.0098) reconcile with p = .065 comfortably. check_regression_batch confirmed this row consistent, with a reachable p-interval of [6e-07, 0.317]. There is therefore NO internal contradiction, and none should be reported. The reportable observation is softer: three of the six within-person positive-affect mediation paths sit at p = .065-.070, all just above threshold,",
+      "location": "Table 2, Model 6 (Felt Disconnected While Eating), within-person indirect effect for positive affect",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "absence_of_evidence",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:absence_of_evidence_positive_affect_null",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02",
+      "inputs": {
+        "b": -0.02,
+        "se": 0.01,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "reported": {
+        "b": -0.02,
+        "se": 0.01,
+        "p": 0.065,
+        "beta": -0.01,
+        "paper_claim": "all momentary mediational pathways involving positive affect were not significant"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.0396,
+          -0.0004
+        ],
+        "includes_null": false,
+        "interval_source": "derived",
+        "companion_p_values_across_models": [
+          0.07,
+          0.122,
+          0.233,
+          0.067,
+          0.859,
+          0.065
+        ]
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The headline conclusion that positive-affect mediation was uniformly absent is carried by three marginal results (p = .065, .067, .070), not by clearly null ones - a weaker basis than the flat statement suggests."
+      },
+      "notes": "READ THE CAVEAT BEFORE USING THIS. The derived interval excludes zero, which superficially contradicts the reported p = .065 - but that is a ROUNDING ARTIFACT, not a defect in the paper. b and SE are printed to 2 dp, so b = -0.02, SE = 0.01 taken at their midpoints gives z = -2.0; the true unrounded values (e.g. b = -0.018, SE = 0.0098) reconcile with p = .065 comfortably. check_regression_batch confirmed this row consistent, with a reachable p-interval of [6e-07, 0.317]. There is therefore NO internal contradiction, and none should be reported. The reportable observation is softer: three of the six within-person positive-affect mediation paths sit at p = .065-.070, all just above threshold, so the flat conclusion that positive-affect pathways 'were not significant' rests on marginal rather than clearly null evidence - and no confidence intervals are printed anywhere that would let a reader see this.",
+      "reproduction": "metascience absence-of-evidence --b -0.02 --se 0.01 --measure difference --claim-of-no-effect",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02",
+        "source_locator": "Table 2, Model 6 (Felt Disconnected While Eating), within-person indirect effect for positive affect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_85cdeb115536f6c3",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_no_duplication",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Table2 no duplication (Table 2, Models 1-6 direct-effect coefficients)",
+      "description": "Zero improbable overlaps. All 15 repeat groups carry `same_sample_caveat: true` - they are the affect -> emotion dysregulation paths, the same submodel estimated on the same 107 participants in every model, which SHOULD recur. Positive evidence AGAINST copy-paste: the between-person NA -> emotion dysregulation coefficient is 0.96 in Models 1-3 and 0.95 in Models 4-6, and the within-person PA -> emotion dysregulation p-value varies .038/.039/.040/.040/.042/.038 across models. That small, patternless variation is the signature of six genuinely separate re-estimations, which a duplicated block would not show.",
+      "location": "Table 2, Models 1-6 direct-effect coefficients",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_no_duplication",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2",
+      "inputs": {
+        "sample_id": "bed_ema_107 (shared across all six blocks)",
+        "independent": false,
+        "decimals_mean": 2,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "blocks": 6,
+        "cells_total": 48
+      },
+      "computed": {
+        "n_comparisons": 960,
+        "max_identical_pairs_independent": 0,
+        "duplicate_groups_all_same_sample": 15,
+        "chance_probability": null
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No improbable cross-sample repetition; the repeated coefficients are the shared affect-to-emotion-dysregulation submodel, which is expected to recur."
+      },
+      "notes": "Zero improbable overlaps. All 15 repeat groups carry `same_sample_caveat: true` - they are the affect -> emotion dysregulation paths, the same submodel estimated on the same 107 participants in every model, which SHOULD recur. Positive evidence AGAINST copy-paste: the between-person NA -> emotion dysregulation coefficient is 0.96 in Models 1-3 and 0.95 in Models 4-6, and the within-person PA -> emotion dysregulation p-value varies .038/.039/.040/.040/.042/.038 across models. That small, patternless variation is the signature of six genuinely separate re-estimations, which a duplicated block would not show.",
+      "reproduction": "metascience duplication-detect --blocks table2_models.json --decimals-mean 2 --decimals-sd 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05; momentary observations at level 1 were nested within participants at level 2",
+        "source_locator": "Table 2, Models 1-6 direct-effect coefficients",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper",
+        "source_matched_by": "locator"
+      },
+      "finding_id": "f_6fef8c538204f02c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "prose_to_table_beta_reconciliation",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Prose to table beta reconciliation",
+      "description": "Checked every beta and beta-range stated in the Results prose against Table 2: all reconcile. The reported ranges are exact (0.13-0.14 = Models 1 and 6; 0.68-0.77 = Models 1 and 6 between-person; 0.08-0.14 = Models 2 and 4; 0.02-0.03 = Models 1, 2 and 4). The paper is also scrupulous at the significance boundary: Model 1's between-person direct effect (p = .048) is described as significant while its between-person indirect effect (p = .052) is described as not, which is correct. This is a reading-level reconciliation, not arithmetic; no CLI command computes it, and the command given simply re-fetches the table.",
+      "location": "Results, 'Affect (X) -> Emotion Dysregulation (M)', 'Emotion Dysregulation (M) -> LOC Eating (Y)' and 'Indirect Effects' paragraphs, against Table 2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "indeterminate",
+        "tool": "parse_table",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "there were significant positive associations between the negative affect and emotion dysregulation latent factors at the within"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:prose_to_table_beta_reconciliation",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "there were significant positive associations between the negative affect and emotion dysregulation latent factors at the within",
+      "inputs": {
+        "source_a": "Results prose",
+        "source_b": "Table 2"
+      },
+      "reported": {
+        "prose_betas": {
+          "NA_to_ED_within": 0.24,
+          "NA_to_ED_between": 0.9,
+          "PA_to_ED_within": -0.08,
+          "ED_to_LOC_within_range": "0.13-0.14",
+          "ED_to_LOC_between_range": "0.68-0.77",
+          "ED_to_LOC_resisting_driven_within_range": "0.08-0.14",
+          "indirect_disconnected_within": 0.03,
+          "indirect_disconnected_between": 0.69,
+          "indirect_others_within_range": "0.02-0.03"
+        }
+      },
+      "computed": {
+        "all_prose_values_located_in_table2": true,
+        "mismatches": 0,
+        "boundary_cases_correctly_described": {
+          "M1_between_ED_to_LOC_p": 0.048,
+          "M1_between_indirect_p": 0.052
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every standardised coefficient quoted in the Results narrative is traceable to the corresponding Table 2 cell, with no rounding drift or misquotation."
+      },
+      "notes": "Checked every beta and beta-range stated in the Results prose against Table 2: all reconcile. The reported ranges are exact (0.13-0.14 = Models 1 and 6; 0.68-0.77 = Models 1 and 6 between-person; 0.08-0.14 = Models 2 and 4; 0.02-0.03 = Models 1, 2 and 4). The paper is also scrupulous at the significance boundary: Model 1's between-person direct effect (p = .048) is described as significant while its between-person indirect effect (p = .052) is described as not, which is correct. This is a reading-level reconciliation, not arithmetic; no CLI command computes it, and the command given simply re-fetches the table.",
+      "reproduction": "metascience get-table --xml-path 10.1002--eat.24415.xml --table-num 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      },
+      "finding_id": "f_9fa45269712f4814",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_nhst_in_prose",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no nhst in prose (Full body text (Results and Discussion))",
+      "description": "A genuine zero, not a tool failure (statcheck returned success: true). The paper reports no t, F, chi-squared or z statistics with degrees of freedom in its narrative - all inference is presented as b (SE) and p in Table 2, which statcheck cannot see. This is why check_regression_batch carried the inferential verification for this paper. Recorded so the absence is not mistaken for 'nothing was checked'.",
+      "location": "Full body text (Results and Discussion)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Characteristics for the present sample (N = 107) are reported in Table 1. Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_nhst_in_prose",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Characteristics for the present sample (N = 107) are reported in Table 1. Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+      "inputs": {
+        "text": "Results section prose including all reported descriptive statistics, betas and the r = .948 correlation"
+      },
+      "reported": {
+        "apa_style_test_statistics_in_prose": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "success": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No APA-format test statistics appear in prose, so statcheck's p-recalculation could not apply anywhere; all inferential verification had to come from Table 2 instead."
+      },
+      "notes": "A genuine zero, not a tool failure (statcheck returned success: true). The paper reports no t, F, chi-squared or z statistics with degrees of freedom in its narrative - all inference is presented as b (SE) and p in Table 2, which statcheck cannot see. This is why check_regression_batch carried the inferential verification for this paper. Recorded so the absence is not mistaken for 'nothing was checked'.",
+      "reproduction": "metascience statcheck --text \"Characteristics for the present sample (N = 107) are reported in Table 1.\"",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Characteristics for the present sample (N = 107) are reported in Table 1. Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+        "source_locator": "Results section, full prose",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_32c5626460567fd8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "nct_identifier_malformed",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Nct identifier malformed (Participants and Procedures, second paragraph, first sentence)",
+      "description": "ClinicalTrials.gov identifiers are 'NCT' followed by exactly eight digits; the printed 'NCT0204349' has seven and does not resolve. The same malformed string appears in BOTH the XML and the PDF, so it is the paper's, not an extraction artifact. This is a typo in a load-bearing sentence - the registration is a reader's only route to the parent trial's protocol - which is why it is recorded rather than passed over. No claim is made about which digit is missing or what the correct identifier is; establishing that requires a registry lookup, outside this sweep. Recorded as `manual` because no forensic tool covers identifier format, and capped at `suspicious` accordingly.",
+      "location": "Participants and Procedures, second paragraph, first sentence",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "randomized controlled trial (NCT0204349)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:nct_identifier_malformed",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "randomized controlled trial (NCT0204349)",
+      "inputs": {
+        "identifier": "NCT0204349"
+      },
+      "reported": {
+        "registry_id_as_printed": "NCT0204349",
+        "digits_after_NCT": 7
+      },
+      "computed": {
+        "required_digits": 8,
+        "resolvable": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The trial registration cannot be looked up as printed, so a reader cannot check the parent trial's registered design or outcomes against this secondary analysis."
+      },
+      "notes": "ClinicalTrials.gov identifiers are 'NCT' followed by exactly eight digits; the printed 'NCT0204349' has seven and does not resolve. The same malformed string appears in BOTH the XML and the PDF, so it is the paper's, not an extraction artifact. This is a typo in a load-bearing sentence - the registration is a reader's only route to the parent trial's protocol - which is why it is recorded rather than passed over. No claim is made about which digit is missing or what the correct identifier is; establishing that requires a registry lookup, outside this sweep. Recorded as `manual` because no forensic tool covers identifier format, and capped at `suspicious` accordingly.",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0a77780f2b2b38eb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "loc_outcome_descriptives_no_denominator",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Loc outcome descriptives no denominator",
+      "description": "These are the ideal targets for GRIM/GRIMMER/SPRITE - single items on a STATED 1-5 integer scale - and all three are blocked for one reason: no denominator. The LOC items were shown only after a participant reported eating, so the relevant n is an unreported subset of the 3131 completed surveys, and neither the paper nor the available text gives it. Substituting 3131 would be inventing the denominator and could manufacture an impossibility, so nothing was run. Reported as a REPORTING gap: an EMA paper should state the number of eating-episode observations underlying its outcome descriptives. All six SDs (1.18-1.42) sit comfortably below the 2.0 half-range ceiling for a 1-5 scale, so nothing ",
+      "location": "Results, paragraph 1 (LOC eating severity descriptives)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "(1) general feeling of losing control while eating (M = 2.26, SD = 1.32); (2) difficulties resisting eating (M = 2.79, SD = 1.42)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:loc_outcome_descriptives_no_denominator",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "(1) general feeling of losing control while eating (M = 2.26, SD = 1.32); (2) difficulties resisting eating (M = 2.79, SD = 1.42)",
+      "inputs": {
+        "scale_min": 1,
+        "scale_max": 5,
+        "n": null
+      },
+      "reported": {
+        "means_sds": [
+          [
+            2.26,
+            1.32
+          ],
+          [
+            2.79,
+            1.42
+          ],
+          [
+            2.54,
+            1.41
+          ],
+          [
+            2.88,
+            1.38
+          ],
+          [
+            3.45,
+            1.18
+          ],
+          [
+            2.19,
+            1.26
+          ]
+        ],
+        "stated_range": "1-5",
+        "observation_n": "not reported"
+      },
+      "computed": {
+        "grim_applicable": false,
+        "grimmer_applicable": false,
+        "sprite_applicable": false,
+        "reason": "no observation-level denominator"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The six outcome variables' descriptive statistics cannot be granularity-checked at all, leaving the paper's only distributional summary of its outcomes unverifiable."
+      },
+      "notes": "These are the ideal targets for GRIM/GRIMMER/SPRITE - single items on a STATED 1-5 integer scale - and all three are blocked for one reason: no denominator. The LOC items were shown only after a participant reported eating, so the relevant n is an unreported subset of the 3131 completed surveys, and neither the paper nor the available text gives it. Substituting 3131 would be inventing the denominator and could manufacture an impossibility, so nothing was run. Reported as a REPORTING gap: an EMA paper should state the number of eating-episode observations underlying its outcome descriptives. All six SDs (1.18-1.42) sit comfortably below the 2.0 half-range ceiling for a 1-5 scale, so nothing looks wrong; it simply cannot be checked.",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_ed4cf725ca7470b0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "near_collinear_construct_overlap",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Near collinear construct overlap (Study Purpose, final paragraph)",
+      "description": "Not an arithmetic anomaly - r = .948 is well within bounds and no tool flags it. Recorded because the paper cites it in passing as evidence of 'overlap' when it in fact indicates the two constructs are barely distinguishable in this sample. The prior publication on this same dataset (Wonderlich et al. 2024) tested negative urgency as the mediator of the negative-affect-to-binge-eating path; the present paper tests emotion dysregulation. At this correlation those are close to the same analysis on the same participants, which is relevant to how independent the two sets of findings should be treated as being. No shared-variance figure is computed here, as that would be unaided arithmetic. Flagg",
+      "location": "Study Purpose, final paragraph",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "overlaps with emotion dysregulation (r = .948 in the present study)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:near_collinear_construct_overlap",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "overlaps with emotion dysregulation (r = .948 in the present study)",
+      "inputs": {
+        "r": 0.948
+      },
+      "reported": {
+        "r": 0.948,
+        "constructs": [
+          "negative urgency",
+          "emotion dysregulation"
+        ]
+      },
+      "computed": {
+        "within_mathematical_bounds": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Bears on the paper's novelty claim relative to Wonderlich et al. (2024), which analysed the same sample using negative urgency as the mediator: at r = .948 the two mediators are close to interchangeable."
+      },
+      "notes": "Not an arithmetic anomaly - r = .948 is well within bounds and no tool flags it. Recorded because the paper cites it in passing as evidence of 'overlap' when it in fact indicates the two constructs are barely distinguishable in this sample. The prior publication on this same dataset (Wonderlich et al. 2024) tested negative urgency as the mediator of the negative-affect-to-binge-eating path; the present paper tests emotion dysregulation. At this correlation those are close to the same analysis on the same participants, which is relevant to how independent the two sets of findings should be treated as being. No shared-variance figure is computed here, as that would be unaided arithmetic. Flagged for editorial judgement, not as a defect.",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_7de6817804cc2948",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "citation_year_discrepancy_pdf_vs_xml",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Citation year discrepancy pdf vs xml",
+      "description": "The PDF is the PMC author manuscript and the XML the publisher version, so these are different versions of the same text and a copy-editing correction between them is the ordinary explanation. The XML uses 'Stefano et al. [2016]' consistently, including elsewhere on the same page; the PDF's single '2014' at this location appears to be the pre-correction reading. Recorded only so a reader working from the PDF is not confused. No accusation is implied.",
+      "location": "Study Purpose, final paragraph (Stefano et al. citation)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "(Latner et al., 2014; Stefano et al., 2014)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:citation_year_discrepancy_pdf_vs_xml",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "(Latner et al., 2014; Stefano et al., 2014)",
+      "inputs": {
+        "source_a": "PDF page 5",
+        "source_b": "XML Study Purpose section"
+      },
+      "reported": {
+        "pdf": "Stefano et al., 2014",
+        "xml": "Stefano et al. [2016]"
+      },
+      "computed": {
+        "occurrences_in_xml_as_2016": "consistent throughout",
+        "occurrences_in_pdf_page5_as_2014": 1
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A citation-year difference between the author manuscript and the version of record; no numeric or inferential claim depends on it."
+      },
+      "notes": "The PDF is the PMC author manuscript and the XML the publisher version, so these are different versions of the same text and a copy-editing correction between them is the ordinary explanation. The XML uses 'Stefano et al. [2016]' consistently, including elsewhere on the same page; the PDF's single '2014' at this location appears to be the pre-correction reading. Recorded only so a reader working from the PDF is not confused. No accusation is implied.",
+      "reproduction": "metascience extract --pdf-path 10.1002--eat.24415.pdf --first-page 5 --last-page 5",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-pa",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      },
+      "finding_id": "f_ffc77c94fd404bb6",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "4f8d7b5b6a46c342dd024d6709bab4bcb20dd96af9c663615d8a31ac336ec814",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-11 20:50 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

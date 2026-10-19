@@ -1,0 +1,1113 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.3390--healthcare11101497",
+  "run_id": "r_0e06c51bf00d24ee",
+  "findings": [
+    {
+      "slug": "placebo_median_incompatible_with_mean_sd",
+      "producer": "legacy_sweep",
+      "technique": "check_proportion_from_normal",
+      "title": "Placebo median incompatible with mean sd",
+      "description": "This is the strongest finding in the paper. A median of 1767 requires at least half the sample to sit at or above 1767, i.e. at or above 7.10 standard deviations above the reported mean of 1050. Cantelli's inequality caps the achievable share at 0.0195, so no distribution whatsoever -- not merely no normal one -- can carry mean 1050, SD 101 and median 1767 simultaneously; the tool reports distribution_free_violation = true, so the verdict does NOT rest on a normality assumption about skewed cost data. Inputs were re-read from the get_table grid before flagging. The remaining Table 1 statistics are mutually coherent (see cerebrolysin_median_consistent, ci_consistency_both_arms), which isolate",
+      "location": "Table 1, Standard Treatment column (Median row against Mean, Standard deviation and Sample size rows)",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "severity": 4,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Median\t1466 EUR\t1767 EUR"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:placebo_median_incompatible_with_mean_sd",
+        "original_severity": "highly_suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Median\t1466 EUR\t1767 EUR",
+      "inputs": {
+        "reported_proportion": 0.5,
+        "mean": 1050,
+        "sd": 101,
+        "n": 93,
+        "threshold": 1767,
+        "direction": "below"
+      },
+      "reported": {
+        "median_standard_treatment_eur": 1767,
+        "mean_standard_treatment_eur": 1050,
+        "sd_standard_treatment_eur": 101,
+        "n_standard_treatment": 93,
+        "lower_threshold_95_eur": 1029,
+        "upper_threshold_95_eur": 1070
+      },
+      "computed": {
+        "theoretical_proportion_below_threshold": 0.9999999999993717,
+        "distribution_free_bound_95": [
+          0.9805432108184402,
+          1
+        ],
+        "distribution_free_violation": true,
+        "binomial_p_two_sided": 0,
+        "z_score": 7.099009900990099,
+        "observed_count_implied": 46
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The reported placebo median (1767 EUR) exceeds the reported Cerebrolysin median (1466 EUR), reversing the direction of the paper's central cost comparison -- that Cerebrolysin costs 408 EUR more per patient than standard care -- which is the numerator of every ICER reported."
+      },
+      "notes": "This is the strongest finding in the paper. A median of 1767 requires at least half the sample to sit at or above 1767, i.e. at or above 7.10 standard deviations above the reported mean of 1050. Cantelli's inequality caps the achievable share at 0.0195, so no distribution whatsoever -- not merely no normal one -- can carry mean 1050, SD 101 and median 1767 simultaneously; the tool reports distribution_free_violation = true, so the verdict does NOT rest on a normality assumption about skewed cost data. Inputs were re-read from the get_table grid before flagging. The remaining Table 1 statistics are mutually coherent (see cerebrolysin_median_consistent, ci_consistency_both_arms), which isolates this single cell: SD 101 with n = 93 reproduces the printed 95% bounds almost exactly, so the mean, SD and interval agree and only the median dissents. The most economical explanation is a transcription error (e.g. 1067 mis-set as 1767), but as printed the row is not internally satisfiable. I have recorded the tool's own severity of highly_suspicious rather than escalating to impossible: the Cantelli contradiction is exact arithmetic, and the editorial stage may reasonably treat it as such. The supplementary Cost worksheet contains the per-patient costs that would settle this immediately.",
+      "reproduction": "metascience prop-from-normal --reported-proportion 0.5 --mean 1050 --sd 101 --n 93 --threshold 1767 --direction below",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience prop-from-normal [OPTIONS] {reported_proportion} {mean}\n                                    {sd} {n}\nTry 'metascience prop-from-normal --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Median 1466 EUR 1767 EUR",
+        "source_locator": "Table 1, Standard Treatment column (Median, Mean, Standard deviation, Sample size)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_523b49dec687cc0a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "cerebrolysin_median_consistent",
+      "producer": "legacy_sweep",
+      "technique": "check_proportion_from_normal",
+      "title": "Cerebrolysin median consistent",
+      "description": "Deliberate control for the placebo-median finding. The identical check on the other arm of the same table returns p = 0.55 and no distribution-free violation, which demonstrates that the method is not simply rejecting skewed cost data and that the anomaly is specific to the Standard Treatment median cell.",
+      "location": "Table 1, Cerebrolysin column (Median row against Mean, Standard deviation and Sample size rows)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Standard deviation\t106 EUR\t101 EUR"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:cerebrolysin_median_consistent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Standard deviation\t106 EUR\t101 EUR",
+      "inputs": {
+        "reported_proportion": 0.5,
+        "mean": 1458,
+        "sd": 106,
+        "n": 100,
+        "threshold": 1466,
+        "direction": "below"
+      },
+      "reported": {
+        "median_cerebrolysin_eur": 1466,
+        "mean_cerebrolysin_eur": 1458,
+        "sd_cerebrolysin_eur": 106,
+        "n_cerebrolysin": 100
+      },
+      "computed": {
+        "theoretical_proportion_below_threshold": 0.5300802925340248,
+        "binomial_p_two_sided": 0.5497216869790649,
+        "distribution_free_violation": false,
+        "z_score": 0.07547169811320754
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this is the control that establishes the check behaves correctly on this table."
+      },
+      "notes": "Deliberate control for the placebo-median finding. The identical check on the other arm of the same table returns p = 0.55 and no distribution-free violation, which demonstrates that the method is not simply rejecting skewed cost data and that the anomaly is specific to the Standard Treatment median cell.",
+      "reproduction": "metascience prop-from-normal --reported-proportion 0.5 --mean 1458 --sd 106 --n 100 --threshold 1466 --direction below",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience prop-from-normal [OPTIONS] {reported_proportion} {mean}\n                                    {sd} {n}\nTry 'metascience prop-from-normal --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Standard deviation 106 EUR 101 EUR",
+        "source_locator": "Table 1, Cerebrolysin column (Median, Mean, Standard deviation, Sample size)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_420cea46b56451c9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ci_consistency_cerebrolysin",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Ci consistency cerebrolysin",
+      "description": "The recovered SE of 10.46 is consistent with the printed SD of 106 over n = 100, so mean, SD and interval cohere in this arm. The first attempt returned a TypeError when decimals was passed as the string \"0\"; re-run without decimals, which widens the tolerance and is therefore conservative.",
+      "location": "Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Mean\t1458 EUR\t1050 EUR"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ci_consistency_cerebrolysin",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Mean\t1458 EUR\t1050 EUR",
+      "inputs": {
+        "estimate": 1458,
+        "ci_low": 1437,
+        "ci_high": 1478
+      },
+      "reported": {
+        "mean_eur": 1458,
+        "ci_low_eur": 1437,
+        "ci_high_eur": 1478
+      },
+      "computed": {
+        "implied_centre": 1457.5,
+        "recovered_se": 10.459375866955407,
+        "scale": "linear"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the interval reconciles with its own point estimate."
+      },
+      "notes": "The recovered SE of 10.46 is consistent with the printed SD of 106 over n = 100, so mean, SD and interval cohere in this arm. The first attempt returned a TypeError when decimals was passed as the string \"0\"; re-run without decimals, which widens the tolerance and is therefore conservative.",
+      "reproduction": "metascience check-ci --estimate 1458 --ci-low 1437 --ci-high 1478",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Mean 1458 EUR 1050 EUR",
+        "source_locator": "Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_b2ecda81104283f5",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ci_consistency_standard_treatment",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Ci consistency standard treatment",
+      "description": "Materially important as corroboration: the recovered SE of 10.46 matches the printed SD of 101 over n = 93, so the mean, SD and 95% bounds of the placebo arm form a coherent set. The median is the only Table 1 value in that column that does not fit, which narrows the anomaly to one cell.",
+      "location": "Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Lower threshold (95%)\t1437 EUR\t1029 EUR"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ci_consistency_standard_treatment",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Lower threshold (95%)\t1437 EUR\t1029 EUR",
+      "inputs": {
+        "estimate": 1050,
+        "ci_low": 1029,
+        "ci_high": 1070
+      },
+      "reported": {
+        "mean_eur": 1050,
+        "ci_low_eur": 1029,
+        "ci_high_eur": 1070
+      },
+      "computed": {
+        "implied_centre": 1049.5,
+        "recovered_se": 10.459375866955407,
+        "scale": "linear"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected, but this is what pins the placebo-median anomaly on the median rather than on the mean or SD."
+      },
+      "notes": "Materially important as corroboration: the recovered SE of 10.46 matches the printed SD of 101 over n = 93, so the mean, SD and 95% bounds of the placebo arm form a coherent set. The median is the only Table 1 value in that column that does not fit, which narrows the anomaly to one cell.",
+      "reproduction": "metascience check-ci --estimate 1050 --ci-low 1029 --ci-high 1070",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Lower threshold (95%) 1437 EUR 1029 EUR",
+        "source_locator": "Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      },
+      "finding_id": "f_1d35ae543ada6b06",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_flow_and_cost_arithmetic",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Sample flow and cost arithmetic",
+      "description": "All 7 sums reconcile with zero difference. The participant flow is fully auditable (208 - 10 = 198, 198 - 5 = 193, 100 + 93 = 193) and the group sizes in Table 1 match the text. Cost arithmetic reconciles in both currencies. The last two rows verify the Results sentence 'a mean increment in QALYs between 0.01-0.015' against Table 2 using only printed values: the Bayesian row's increment is exactly 0.01 and the standard gamble row's exactly 0.015, so the stated range correctly describes the table's endpoints. This is what makes the separate 0.051 claim in the Discussion contradictory (see qaly_increment_contradiction).",
+      "location": "Methods 2.1 (sample derivation), Results paragraph 2 (costs), Table 1 and Table 2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_flow_and_cost_arithmetic",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+      "inputs": {
+        "rows": [
+          {
+            "values": [
+              198,
+              10
+            ],
+            "expected_sum": 208,
+            "tolerance": 0
+          },
+          {
+            "values": [
+              193,
+              5
+            ],
+            "expected_sum": 198,
+            "tolerance": 0
+          },
+          {
+            "values": [
+              100,
+              93
+            ],
+            "expected_sum": 193,
+            "tolerance": 0
+          },
+          {
+            "values": [
+              5197,
+              2017
+            ],
+            "expected_sum": 7214,
+            "tolerance": 0
+          },
+          {
+            "values": [
+              1050,
+              408
+            ],
+            "expected_sum": 1458,
+            "tolerance": 0
+          },
+          {
+            "values": [
+              0.156,
+              0.01
+            ],
+            "expected_sum": 0.166,
+            "decimals": [
+              3,
+              2
+            ]
+          },
+          {
+            "values": [
+              0.171,
+              0.015
+            ],
+            "expected_sum": 0.186,
+            "decimals": [
+              3,
+              3
+            ]
+          }
+        ]
+      },
+      "reported": {
+        "n_transferred": 208,
+        "n_after_subscale_exclusion": 198,
+        "n_final": 193,
+        "n_cerebrolysin": 100,
+        "n_placebo": 93,
+        "cost_ron": [
+          7214,
+          5197,
+          2017
+        ],
+        "cost_eur": [
+          1458,
+          1050,
+          408
+        ],
+        "stated_qaly_increment_range": "0.01-0.015"
+      },
+      "computed": {
+        "n_rows": 7,
+        "n_evaluated": 7,
+        "n_inconsistent": 0,
+        "n_indeterminate": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is undermined; the participant flow and the cost arithmetic that forms the ICER numerator reconcile exactly."
+      },
+      "notes": "All 7 sums reconcile with zero difference. The participant flow is fully auditable (208 - 10 = 198, 198 - 5 = 193, 100 + 93 = 193) and the group sizes in Table 1 match the text. Cost arithmetic reconciles in both currencies. The last two rows verify the Results sentence 'a mean increment in QALYs between 0.01-0.015' against Table 2 using only printed values: the Bayesian row's increment is exactly 0.01 and the standard gamble row's exactly 0.015, so the stated range correctly describes the table's endpoints. This is what makes the separate 0.051 claim in the Discussion contradictory (see qaly_increment_contradiction).",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[198,10],\"expected_sum\":208,\"decimals\":0,\"tolerance\":0},{\"values\":[193,5],\"expected_sum\":198,\"decimals\":0,\"tolerance\":0},{\"values\":[100,93],\"expected_sum\":193,\"decimals\":0,\"tolerance\":0},{\"values\":[5197,2017],\"expected_sum\":7214,\"decimals\":0,\"tolerance\":0},{\"values\":[1050,408],\"expected_sum\":1458,\"decimals\":0,\"tolerance\":0},{\"values\":[0.156,0.01],\"expected_sum\":0.166,\"decimals\":[3,2]},{\"values\":[0.171,0.015],\"expected_sum\":0.186,\"decimals\":[3,3]}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+        "source_locator": "Methods 2.1, Results paragraphs 1-2, Table 1 and Table 2",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_c5abc14938165938",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "supplement_duplicated_participant_rows",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Supplement duplicated participant rows",
+      "description": "Recorded at suspicious although the tool returned highly_suspicious, and the reason is specific. The aggregate count is inflated by two classes of legitimate repetition that rulebook rule 11 requires me to discount first: (a) design constants -- the value 207.9 recurs 93 times in a single contiguous run in Cost column K, and 93 is exactly the placebo arm size, so this is an arm-level constant I should have passed in exclude_columns; and (b) finite-lookup ties -- SF-6D utilities come from a discrete converter, so single values recur heavily by construction (0.6166 appears 27 times in one column, 0.6228 and 0.7476 four times each). What those guards do NOT explain is the row-pair signal, which",
+      "location": "Supplementary dataverse workbook, QALY worksheet, rows 119 and 120 (patient_ID P-2-29 and P-2-32)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "P-2-29\tPlacebo\t0.751\t0.637\t0.17381666666666667\t0.747599999999999\t0.618499999999999\t0.17112111111111086\t0.6228\t0.6242\t0.1558711111111111"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:supplement_duplicated_participant_rows",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "P-2-29\tPlacebo\t0.751\t0.637\t0.17381666666666667\t0.747599999999999\t0.618499999999999\t0.17112111111111086\t0.6228\t0.6242\t0.1558711111111111",
+      "inputs": {
+        "path": "10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx",
+        "data_context": "raw_participant_level",
+        "exclude_columns": "none supplied"
+      },
+      "reported": {
+        "n_tables": 2,
+        "sheets": [
+          "QALY",
+          "Cost"
+        ],
+        "n_numeric_cells": 4053
+      },
+      "computed": {
+        "tool_severity": "highly_suspicious",
+        "n_duplicate_groups": 149,
+        "duplicated_row_pairs": 75,
+        "repeated_column_sequences": 1,
+        "repeated_high_precision_values": 73,
+        "verified_pair_shared_columns": 9,
+        "verified_pair_distinct_values": 9,
+        "row_pair_coverage": "partial (comparison budget of 5000 pairs exhausted)",
+        "columns_auto_excluded": [
+          "Discount/year (constant column)"
+        ]
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "If duplicated records are genuine rather than tied health states, the placebo-arm QALY mean of 0.156-0.171 that forms every ICER denominator rests on a sample containing repeated observations."
+      },
+      "notes": "Recorded at suspicious although the tool returned highly_suspicious, and the reason is specific. The aggregate count is inflated by two classes of legitimate repetition that rulebook rule 11 requires me to discount first: (a) design constants -- the value 207.9 recurs 93 times in a single contiguous run in Cost column K, and 93 is exactly the placebo arm size, so this is an arm-level constant I should have passed in exclude_columns; and (b) finite-lookup ties -- SF-6D utilities come from a discrete converter, so single values recur heavily by construction (0.6166 appears 27 times in one column, 0.6228 and 0.7476 four times each). What those guards do NOT explain is the row-pair signal, which I verified directly against the raw grid rather than trusting the aggregate: patients P-2-29 and P-2-32, two distinct placebo IDs, carry identical values in all nine numeric columns -- six independent utility lookups at two separate visits plus three derived QALYs agreeing to 17 significant figures. That is possible innocently only if both patients returned the same SF-6D health state at BOTH visit 2 and visit 7. 75 such pairs were flagged and row-pair coverage is PARTIAL, so 75 is a floor, not a count. Adjudicating this needs the underlying SF-36 item responses, which are not in the workbook. Only one pair was individually verified; the other 74 are asserted by the tool and unexamined.",
+      "reproduction": "metascience raw-duplication-detect --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx --data-context raw_participant_level",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_89d04641334c6616",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "abstract_icer_upper_bound_mismatch",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Abstract icer upper bound mismatch",
+      "description": "Textual comparison of printed values only; no arithmetic performed. The abstract's lower bound (18.8 thousand) matches Table 2's ordinal ICER of 18,788 EUR exactly, so the range is clearly meant to span the three tabulated ICERs -- but the upper bound of 29.9 thousand corresponds to no value anywhere in the paper. The Results text and Table 2 both give 26,981 EUR as the maximum. Recorded as a descriptive reporting flag per rulebook section 7, capped at suspicious.",
+      "location": "Abstract, versus Results paragraph 3 and Table 2 (Deterministic ICER column)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Deterministic analysis based on sample mean values indicates Cerebrolysin would be cost-effective at a threshold between roughly 18.8 and 29.9 thousand EUR, depending on valuation techniques."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:abstract_icer_upper_bound_mismatch",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Deterministic analysis based on sample mean values indicates Cerebrolysin would be cost-effective at a threshold between roughly 18.8 and 29.9 thousand EUR, depending on valuation techniques.",
+      "inputs": {
+        "abstract_range_thousand_eur": [
+          18.8,
+          29.9
+        ],
+        "table2_icer_values_eur": [
+          18788,
+          20618,
+          26981
+        ]
+      },
+      "reported": {
+        "abstract_upper_bound": "29.9 thousand EUR",
+        "results_and_table2_maximum": "26,981 EUR/QALY"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The abstract overstates the upper cost-effectiveness threshold by roughly 2,900 EUR/QALY, and the abstract is the only part of the paper most readers will see."
+      },
+      "notes": "Textual comparison of printed values only; no arithmetic performed. The abstract's lower bound (18.8 thousand) matches Table 2's ordinal ICER of 18,788 EUR exactly, so the range is clearly meant to span the three tabulated ICERs -- but the upper bound of 29.9 thousand corresponds to no value anywhere in the paper. The Results text and Table 2 both give 26,981 EUR as the maximum. Recorded as a descriptive reporting flag per rulebook section 7, capped at suspicious.",
+      "reproduction": "metascience get-table /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml 2",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_2172b653b96602b7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "qaly_values_text_versus_table2",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Qaly values text versus table2",
+      "description": "Textual comparison of printed values only. Both the Results sentence and the Table 2 caption describe QALYs aggregated by health state valuation model, but they report values differing by roughly a factor of four in the same rank order. The text figures are on the scale of raw SF-6D utilities and the table figures on the scale of a 90-day QALY (the stated formula multiplies by 0.25), so the text has most likely printed utilities under a QALY label. This is not merely cosmetic: it is the proximate cause of the contradictory increment claims recorded in qaly_increment_contradiction.",
+      "location": "Results paragraph 2, versus Table 2 (QALYs Derived from CARS columns)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The QALYs calculated using the utilities resulting from SF-36 to SF-6D conversion were aggregated by health state valuation model: standard gamble (0.698 Cerebrolysin vs. 0.643 placebo), ordinal (0.704 Cerebrolysin vs. 0.647 placebo) and Bayesian posterior mean (0.653 Cerebrolysin vs. 0.613 placebo)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:qaly_values_text_versus_table2",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The QALYs calculated using the utilities resulting from SF-36 to SF-6D conversion were aggregated by health state valuation model: standard gamble (0.698 Cerebrolysin vs. 0.643 placebo), ordinal (0.704 Cerebrolysin vs. 0.647 placebo) and Bayesian posterior mean (0.653 Cerebrolysin vs. 0.613 placebo).",
+      "inputs": {
+        "results_text_values": {
+          "standard_gamble": [
+            0.698,
+            0.643
+          ],
+          "ordinal": [
+            0.704,
+            0.647
+          ],
+          "bayesian": [
+            0.653,
+            0.613
+          ]
+        },
+        "table2_values": {
+          "standard_gamble": [
+            0.186,
+            0.171
+          ],
+          "ordinal": [
+            0.182,
+            0.168
+          ],
+          "bayesian": [
+            0.166,
+            0.156
+          ]
+        }
+      },
+      "reported": {
+        "text_label": "QALYs ... aggregated by health state valuation model",
+        "table_label": "Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The paper presents two different sets of numbers under the same label (QALYs by valuation model), and the reader cannot tell which set the ICERs were computed from."
+      },
+      "notes": "Textual comparison of printed values only. Both the Results sentence and the Table 2 caption describe QALYs aggregated by health state valuation model, but they report values differing by roughly a factor of four in the same rank order. The text figures are on the scale of raw SF-6D utilities and the table figures on the scale of a 90-day QALY (the stated formula multiplies by 0.25), so the text has most likely printed utilities under a QALY label. This is not merely cosmetic: it is the proximate cause of the contradictory increment claims recorded in qaly_increment_contradiction.",
+      "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:389 in extract_xml_cmd           ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_7ed0cac9ddd69427",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "qaly_increment_contradiction",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Qaly increment contradiction (Results paragraph 2 versus Discussion paragraph 4)",
+      "description": "Textual comparison only; 0.051 simply lies outside the interval [0.01, 0.015] the paper itself states, so no arithmetic is needed to see the contradiction. The separate summation check confirmed the Results range is the one that correctly describes Table 2 (Bayesian increment exactly 0.01, standard gamble exactly 0.015). The Discussion's 0.051 is consistent instead with the differences between the utility-scale figures printed in the Results text, which is what ties this finding to qaly_values_text_versus_table2: the paper appears to have carried its narrative forward on the utility scale while tabulating on the QALY scale.",
+      "location": "Results paragraph 2 versus Discussion paragraph 4",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Aggregated QALYs for the Cerebrolysin group were higher than those for the placebo group (0.051 average difference across the three health state valuation models), indicating that the Cerebrolysin add-on scheme has a beneficial impact on quality of life of ischemic stroke patients."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:qaly_increment_contradiction",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Aggregated QALYs for the Cerebrolysin group were higher than those for the placebo group (0.051 average difference across the three health state valuation models), indicating that the Cerebrolysin add-on scheme has a beneficial impact on quality of life of ischemic stroke patients.",
+      "inputs": {
+        "results_stated_increment_range": [
+          0.01,
+          0.015
+        ],
+        "discussion_stated_average_difference": 0.051
+      },
+      "reported": {
+        "results_claim": "a mean increment in QALYs between 0.01\u20130.015, depending on the valuation technique (Table 2)",
+        "discussion_claim": "0.051 average difference across the three health state valuation models"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's headline effect -- how many QALYs Cerebrolysin actually gains -- is stated at two values differing more than threefold, and that quantity is the denominator of every ICER."
+      },
+      "notes": "Textual comparison only; 0.051 simply lies outside the interval [0.01, 0.015] the paper itself states, so no arithmetic is needed to see the contradiction. The separate summation check confirmed the Results range is the one that correctly describes Table 2 (Bayesian increment exactly 0.01, standard gamble exactly 0.015). The Discussion's 0.051 is consistent instead with the differences between the utility-scale figures printed in the Results text, which is what ties this finding to qaly_values_text_versus_table2: the paper appears to have carried its narrative forward on the utility scale while tabulating on the QALY scale.",
+      "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:389 in extract_xml_cmd           ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_74b75b73b8368736",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_inferential_statistics_reported",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "No inferential statistics reported",
+      "description": "statcheck recovered zero NHST statistics from the entire body text, which is consistent with this being an economic evaluation rather than a hypothesis-testing paper -- the absence is not itself misconduct. It is recorded because of what it makes uncheckable. The paper asserts baseline equivalence between the 100 Cerebrolysin and 93 placebo patients of its re-derived subsample but presents no baseline table, no test statistics, no p-values and no confidence intervals, so absence_of_evidence cannot be run and the Carlisle/CSF and Table-1 dispersion checks have nothing to operate on. Note that this subsample (193 of the original CARS participants, after 15 exclusions) is not the randomised pop",
+      "location": "Whole body text; Results paragraph 1 (baseline comparability claim)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "We compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_inferential_statistics_reported",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "We compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.",
+      "inputs": {
+        "text": "Results and Discussion body text as returned by extract_xml"
+      },
+      "reported": {
+        "baseline_comparison_claim": "No major differences were found",
+        "baseline_table_presented": false,
+        "test_statistics_reported": 0,
+        "p_values_reported": 0
+      },
+      "computed": {
+        "stats_found": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The baseline-comparability claim that licenses comparing the two arms is unsupported by any reported statistic, and cannot be checked by any tool."
+      },
+      "notes": "statcheck recovered zero NHST statistics from the entire body text, which is consistent with this being an economic evaluation rather than a hypothesis-testing paper -- the absence is not itself misconduct. It is recorded because of what it makes uncheckable. The paper asserts baseline equivalence between the 100 Cerebrolysin and 93 placebo patients of its re-derived subsample but presents no baseline table, no test statistics, no p-values and no confidence intervals, so absence_of_evidence cannot be run and the Carlisle/CSF and Table-1 dispersion checks have nothing to operate on. Note that this subsample (193 of the original CARS participants, after 15 exclusions) is not the randomised population, so baseline balance does not follow from the parent trial's randomisation and genuinely needed demonstrating here.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.pdf",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [input_path]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.",
+        "source_locator": "Results and Discussion body text",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_1ee6629da8bf12ca",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "check_table_coverage_refusal",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Check table coverage refusal (Table 1 (12 cells) and Table 2 (9 cells))",
+      "description": "Reported so the denominator is visible: 0 of 21 automated per-cell checks ran. Both tables are transposed relative to the usual layout -- each statistic (mean, median, SD, bounds) occupies its own ROW rather than being packed into a mean (SD) cell -- so no cell carries an estimate together with its dispersion and the per-cell dispatcher has nothing to bind. This is a limitation of the table shape, not evidence about the paper. The statistics were therefore checked by reassembling them across rows by hand into check_estimate_ci and check_proportion_from_normal calls, which is what produced the placebo-median finding. Separately, parse_cells_typed initially refused 10 of 12 Table 1 cells and 3",
+      "location": "Table 1 (12 cells) and Table 2 (9 cells)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Descriptive values of total medical cost (EUR) used in the analysis."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:check_table_coverage_refusal",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Descriptive values of total medical cost (EUR) used in the analysis.",
+      "inputs": {
+        "table1_cells": 12,
+        "table2_cells": 9,
+        "variables_declared": [
+          "cost_eur",
+          "n_group",
+          "qaly",
+          "icer_eur"
+        ]
+      },
+      "reported": {
+        "table1_footnotes": 0,
+        "table2_footnotes": 0,
+        "alignment_uncertain": false,
+        "image_only": false
+      },
+      "computed": {
+        "table1_checks_run": 0,
+        "table1_checks_refused": 12,
+        "table2_checks_run": 0,
+        "table2_checks_refused": 9,
+        "refusal_reason_table1": "a bare count contributes to table-level checks only",
+        "refusal_reason_table2": "a bare number carries no dispersion or denominator to check"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this records how much of the two tables the automated per-cell sweep could reach, which is none of it."
+      },
+      "notes": "Reported so the denominator is visible: 0 of 21 automated per-cell checks ran. Both tables are transposed relative to the usual layout -- each statistic (mean, median, SD, bounds) occupies its own ROW rather than being packed into a mean (SD) cell -- so no cell carries an estimate together with its dispersion and the per-cell dispatcher has nothing to bind. This is a limitation of the table shape, not evidence about the paper. The statistics were therefore checked by reassembling them across rows by hand into check_estimate_ci and check_proportion_from_normal calls, which is what produced the placebo-median finding. Separately, parse_cells_typed initially refused 10 of 12 Table 1 cells and 3 of 9 Table 2 cells as non_numeric because of the trailing 'EUR' token and leading euro sign; since the caption states the unit, I passed unit-stripped values with declared variables, which is a normalisation rather than a re-typing.",
+      "reproduction": "metascience check-table --cells '[{\"raw\":\"1458\",\"row_label\":\"Mean\",\"col_label\":\"Cerebrolysin\"},{\"raw\":\"1050\",\"row_label\":\"Mean\",\"col_label\":\"Standard Treatment\"}]' --variables '[{\"id\":\"cost_eur\",\"name\":\"Total medical cost\",\"measurement_level\":\"ratio\",\"discreteness\":\"continuous\",\"family\":\"continuous\",\"confidence\":\"high\"}]' --bindings '{\"Mean\":\"cost_eur\"}'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d2602135d8f2ff1e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "main_table_duplication_clean",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Main table duplication clean (Table 1 and Table 2)",
+      "description": "Run for completeness per rulebook rule 11 because the paper has two tables, but with low expected yield and this should be read accordingly: the two tables report different quantities in different units (EUR versus QALYs), only Table 1 carries SDs at all, and both describe the SAME 193 participants, so they were given a shared sample_id and 0 cross-source comparisons were performed. This result is close to vacuous and is not evidence that the paper is clean.",
+      "location": "Table 1 and Table 2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Descriptive values of total medical cost (EUR) used in the analysis."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:main_table_duplication_clean",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Descriptive values of total medical cost (EUR) used in the analysis.",
+      "inputs": {
+        "blocks": [
+          {
+            "label": "Table 1 - total medical cost (EUR)",
+            "sample_id": "CARS-193",
+            "cells": [
+              {
+                "value": 1458,
+                "sd": 106
+              },
+              {
+                "value": 1050,
+                "sd": 101
+              }
+            ]
+          },
+          {
+            "label": "Table 2 - mean QALYs by valuation technique",
+            "sample_id": "CARS-193",
+            "cells": [
+              {
+                "value": 0.166
+              },
+              {
+                "value": 0.156
+              },
+              {
+                "value": 0.182
+              },
+              {
+                "value": 0.168
+              },
+              {
+                "value": 0.186
+              },
+              {
+                "value": 0.171
+              }
+            ]
+          }
+        ]
+      },
+      "reported": {
+        "n_blocks": 2,
+        "n_cells_total": 8
+      },
+      "computed": {
+        "n_comparisons": 0,
+        "max_identical_pairs": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; no duplicated summary statistics were found between the paper's two tables."
+      },
+      "notes": "Run for completeness per rulebook rule 11 because the paper has two tables, but with low expected yield and this should be read accordingly: the two tables report different quantities in different units (EUR versus QALYs), only Table 1 carries SDs at all, and both describe the SAME 193 participants, so they were given a shared sample_id and 0 cross-source comparisons were performed. This result is close to vacuous and is not evidence that the paper is clean.",
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Table 1\",\"sample_id\":\"CARS-193\",\"independent\":false,\"cells\":[{\"label\":\"Cerebrolysin mean cost\",\"value\":1458,\"sd\":106},{\"label\":\"Standard treatment mean cost\",\"value\":1050,\"sd\":101}]},{\"label\":\"Table 2\",\"sample_id\":\"CARS-193\",\"independent\":false,\"cells\":[{\"label\":\"Bayesian Cerebrolysin\",\"value\":0.166},{\"label\":\"Bayesian Standard\",\"value\":0.156},{\"label\":\"Ordinal Cerebrolysin\",\"value\":0.182},{\"label\":\"Ordinal Standard\",\"value\":0.168},{\"label\":\"SG Cerebrolysin\",\"value\":0.186},{\"label\":\"SG Standard\",\"value\":0.171}]}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience duplication-detect [OPTIONS] {json_path}\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Descriptive values of total medical cost (EUR) used in the analysis.",
+        "source_locator": "Table 1 and Table 2",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_102dc6c033f90d26",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sample_sizes_not_round",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Sample sizes not round (Methods 2.1, sample derivation)",
+      "description": "No round-N flag. Only the Cerebrolysin arm's n = 100 is round, and it arises from a documented exclusion sequence rather than being asserted, so it carries no weight on its own (rulebook rule 8).",
+      "location": "Methods 2.1, sample derivation",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sample_sizes_not_round",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+      "inputs": {
+        "ns": [
+          208,
+          198,
+          193,
+          100,
+          93
+        ]
+      },
+      "reported": {
+        "n_values": [
+          208,
+          198,
+          193,
+          100,
+          93
+        ]
+      },
+      "computed": {
+        "n_unique": 5,
+        "all_divisible_by_moderate": false,
+        "all_divisible_by_strong": false
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the reported sample sizes show ordinary non-round variation."
+      },
+      "notes": "No round-N flag. Only the Cerebrolysin arm's n = 100 is round, and it arises from a documented exclusion sequence rather than being asserted, so it carries no weight on its own (rulebook rule 8).",
+      "reproduction": "metascience flag-round-n --ns 208 --ns 198 --ns 193 --ns 100 --ns 93",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+        "source_locator": "Methods 2.1, sample derivation",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_aa7c5248103f3ccf",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "overreaching_claim_about_valuation_models",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Overreaching claim about valuation models",
+      "description": "Recorded as a textual flag in a load-bearing sentence (rulebook section 7), not as an arithmetic finding. Running three valuation models cannot establish that no variation in preferences exists; at most it shows the direction of the conclusion is stable. The paper's own results contradict the sentence directly, since the three models produce the range the abstract reports as 18.8 to 29.9 thousand EUR. The preceding sentence in the same paragraph states the opposite intent ('can offer valuable insights into the robustness and sensitivity of the derived utility scores'), which suggests a drafting inversion rather than a substantive claim. Two smaller errors sit nearby and are noted only becaus",
+      "location": "Discussion, paragraph 4 (final sentence of the health-state valuation passage)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "By doing so, we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:overreaching_claim_about_valuation_models",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "By doing so, we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis.",
+      "inputs": {
+        "claim": "no potential variations in preferences and risk attitudes",
+        "observed_icer_spread_eur": [
+          18788,
+          20618,
+          26981
+        ]
+      },
+      "reported": {
+        "sentence_as_printed": "we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The sentence claims the choice of valuation model does not matter, when the paper's own three ICERs span roughly 8,200 EUR/QALY and the abstract presents that spread as its headline range."
+      },
+      "notes": "Recorded as a textual flag in a load-bearing sentence (rulebook section 7), not as an arithmetic finding. Running three valuation models cannot establish that no variation in preferences exists; at most it shows the direction of the conclusion is stable. The paper's own results contradict the sentence directly, since the three models produce the range the abstract reports as 18.8 to 29.9 thousand EUR. The preceding sentence in the same paragraph states the opposite intent ('can offer valuable insights into the robustness and sensitivity of the derived utility scores'), which suggests a drafting inversion rather than a substantive claim. Two smaller errors sit nearby and are noted only because they co-occur: 'we argue the threshold itself if not relevant' (Discussion, for 'is not relevant'), and the incident-stroke count written as 'n = 37.225' with a decimal point used as a thousands separator in an otherwise English-convention paper.",
+      "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:389 in extract_xml_cmd           ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_3b4b73c5ad5333ee",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "romanian_reperfusion_denominator_tension",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Romanian reperfusion denominator tension",
+      "description": "Recorded as indeterminate rather than as an inconsistency, because establishing that the two denominators genuinely conflict requires dividing 3242 by 0.078 and comparing that against 80% of 37,225 -- arithmetic no validated tool in this toolkit performs, and which I have deliberately not carried out. Both statements are quoted so a reader can check them directly. These figures are contextual background rather than inputs to the ICER, but they do feed the budget-impact estimate, which is separately unchecked. Note also that 'n = 37.225' uses a decimal point where the paper elsewhere uses it as a decimal separator, so even the intended magnitude is ambiguous as printed.",
+      "location": "Discussion, paragraphs 5 and 6 (Romanian stroke care statistics)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:romanian_reperfusion_denominator_tension",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients.",
+      "inputs": {
+        "statement_a": "incident strokes reported by the Romanian Society of Neurology in 2022 (n = 37.225), around 80% of cases would fit the ischemic indication",
+        "statement_b": "By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients"
+      },
+      "reported": {
+        "incident_strokes_2022": "37.225",
+        "assumed_ischemic_share": "around 80%",
+        "reperfusion_patients_2022": 3242,
+        "reperfusion_share_of_ischemic": "7.8%"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The two statements imply different national ischemic-stroke denominators for the same year, which feeds the budget-impact estimate of roughly 8.5 million EUR."
+      },
+      "notes": "Recorded as indeterminate rather than as an inconsistency, because establishing that the two denominators genuinely conflict requires dividing 3242 by 0.078 and comparing that against 80% of 37,225 -- arithmetic no validated tool in this toolkit performs, and which I have deliberately not carried out. Both statements are quoted so a reader can check them directly. These figures are contextual background rather than inputs to the ICER, but they do feed the budget-impact estimate, which is separately unchecked. Note also that 'n = 37.225' uses a decimal point where the paper elsewhere uses it as a decimal separator, so even the intended magnitude is ambiguous as printed.",
+      "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:389 in extract_xml_cmd           ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_bf5ad175f3989793",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "a1759c5350b2926ed1ba323cb8e4e7300a3ea5a77683d4ea05b3a2f3b898285f",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-10 10:15 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

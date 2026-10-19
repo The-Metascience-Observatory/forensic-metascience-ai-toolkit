@@ -10,7 +10,7 @@ even then you could not tell a fix from a re-roll.
 But the model is only half the pipeline. Once it has chosen a tool and its
 arguments, EVERYTHING DOWNSTREAM IS A PURE FUNCTION of those arguments: the
 checks, the clamps, the severity ladder, the rendering. And every archived run
-records the arguments -- `toolcalls.stage1.json` stores each call's `input`
+records the arguments -- `toolcalls.tool_agent.json` stores each call's `input`
 alongside the `result` it produced at the time.
 
 So the deterministic half can be replayed exactly. Feed the archived inputs to
@@ -97,7 +97,7 @@ def _archived_payload(call: dict) -> Any:
         return None
 
 
-def replay_run(run_dir: str | Path, stage: str = "stage1") -> dict:
+def replay_run(run_dir: str | Path, stage: str = "tool_agent") -> dict:
     """Re-invoke every replayable tool call of an archived run at HEAD.
 
     Returns a record per call plus totals. `changed` is the list that matters:
@@ -180,7 +180,7 @@ def replay_run(run_dir: str | Path, stage: str = "stage1") -> dict:
     }
 
 
-def replay_corpus(root: str | Path, stage: str = "stage1") -> dict:
+def replay_corpus(root: str | Path, stage: str = "tool_agent") -> dict:
     """`replay_run` over every archived run under `root`."""
     # A bundle carries a COPY of the run's ledger under `analysis/`, so a naive
     # walk replays every run twice and doubles every count. Matched on the path

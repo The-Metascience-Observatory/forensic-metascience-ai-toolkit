@@ -1774,7 +1774,7 @@ def anatomy_cmd(
 @app.command("replay")
 def replay_cmd(
     target: Path = typer.Argument(..., help="An archived run directory, or a corpus root"),
-    stage: str = typer.Option("stage1", "--stage", help="stage1 or stage2"),
+    stage: str = typer.Option("tool_agent", "--stage", help="Which ledger: tool_agent, science_agent or adjudicator"),
     json_out: bool = typer.Option(False, "--json", help="Emit the full record as JSON"),
 ):
     """Re-run an archived run's tool calls at HEAD and diff the verdicts.

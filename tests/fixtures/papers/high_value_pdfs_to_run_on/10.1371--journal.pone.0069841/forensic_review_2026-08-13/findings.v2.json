@@ -1,0 +1,2048 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1371--journal.pone.0069841",
+  "run_id": "r_b3b55a7a82966f7b",
+  "findings": [
+    {
+      "slug": "ethnicity_percentages_imply_n81_not_n82",
+      "producer": "legacy_sweep",
+      "technique": "grim_sweep",
+      "title": "Ethnicity percentages imply n81 not n82 (Methods, Participants)",
+      "description": "The sentence states 82 participants, but only one of the four race/ethnicity percentages (4.9%) is attainable as a share of 82. All four are simultaneously attainable at exactly one denominator in the searched range: 81. The most likely innocent explanation is straightforward and should be stated first -- one participant did not report race/ethnicity, so the percentages were computed over the 81 who did. The paper does not say so, and no missing-data note appears anywhere. A second candidate is that the recruited total was 81 and '82' is a slip. This rests on the paper's OWN stated n as the search ceiling, so the exclusion of n=82 is a fact about the paper rather than about a range I chose; ",
+      "location": "Methods, Participants",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "grim_sweep",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females; 60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other) were recruited for a study on Facebook"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ethnicity_percentages_imply_n81_not_n82",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females; 60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other) were recruited for a study on Facebook",
+      "inputs": {
+        "values": [
+          60.5,
+          28.4,
+          6.2,
+          4.9
+        ],
+        "n_min": 2,
+        "n_max": 82,
+        "decimals": 1,
+        "value_type": "percentage",
+        "n_max_source": "stated"
+      },
+      "reported": {
+        "stated_sample_size": 82,
+        "percentages": [
+          60.5,
+          28.4,
+          6.2,
+          4.9
+        ]
+      },
+      "computed": {
+        "joint_viable_ns_from_tool": [
+          81
+        ],
+        "viable_ns_for_60_5_pct_from_tool": [
+          38,
+          43,
+          76,
+          81
+        ],
+        "viable_ns_for_28_4_pct_from_tool": [
+          67,
+          74,
+          81
+        ],
+        "viable_ns_for_6_2_pct_from_tool": [
+          16,
+          32,
+          48,
+          64,
+          65,
+          80,
+          81
+        ],
+        "viable_ns_for_4_9_pct_from_tool": [
+          41,
+          61,
+          81,
+          82
+        ],
+        "n_of_the_four_percentages_attainable_at_the_stated_n_82": 1,
+        "implied_counts_at_joint_n_81_from_tool_k_values": "49 + 23 + 5 + 4 = 81"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Sample-composition reporting only; no inferential claim in the paper depends on the race/ethnicity breakdown."
+      },
+      "notes": "The sentence states 82 participants, but only one of the four race/ethnicity percentages (4.9%) is attainable as a share of 82. All four are simultaneously attainable at exactly one denominator in the searched range: 81. The most likely innocent explanation is straightforward and should be stated first -- one participant did not report race/ethnicity, so the percentages were computed over the 81 who did. The paper does not say so, and no missing-data note appears anywhere. A second candidate is that the recruited total was 81 and '82' is a slip. This rests on the paper's OWN stated n as the search ceiling, so the exclusion of n=82 is a fact about the paper rather than about a range I chose; but because a missing-response denominator fully explains it, this is recorded as suspicious and never as impossible. The tool itself returned 'consistent' because a joint denominator exists at all; the finding recorded here is the narrower and different fact that the stated denominator is not that joint one.",
+      "reproduction": "metascience grim-sweep --values 60.5,28.4,6.2,4.9 --n-min 2 --n-max 82 --decimals 1 --value-type percentage --n-max-source stated",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females; 60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other) were recruited for a study on Facebook",
+        "source_locator": "Methods, Participants",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_01ce55a7e89a914b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ethnicity_percentages_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Ethnicity percentages sum (Methods, Participants)",
+      "description": "The four categories are exhaustive and sum exactly to 100. This is consistent with the n=81 reading above and does not by itself distinguish the two candidate denominators.",
+      "location": "Methods, Participants",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ethnicity_percentages_sum",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other",
+      "inputs": {
+        "values": [
+          60.5,
+          28.4,
+          6.2,
+          4.9
+        ],
+        "expected_sum": 100,
+        "decimals": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "decimals_total": 0
+      },
+      "reported": {
+        "category_percentages": [
+          60.5,
+          28.4,
+          6.2,
+          4.9
+        ],
+        "expected_total": 100
+      },
+      "computed": {
+        "actual_sum_from_tool": 100,
+        "tolerance_window_from_printed_precision_from_tool": 0.7,
+        "is_consistent_from_tool": true
+      },
+      "notes": "The four categories are exhaustive and sum exactly to 100. This is consistent with the n=81 reading above and does not by itself distinguish the two candidate denominators.",
+      "reproduction": "metascience summation --values 60.5,28.4,6.2,4.9 --expected-sum 100 --decimals 1,1,1,1 --decimals-total 0",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other",
+        "source_locator": "Methods, Participants",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_9049927f06341d2b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "age_mean_grim",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Age mean grim (Methods, Participants)",
+      "description": "Passes GRIM at the stated n=82 under an assumed integer-age reading. The discreteness is ASSUMED, not stated: the paper never says whether age was collected in whole years or computed from a birth date. Had this failed, that assumed premise would have capped the verdict at suspicious. It passes, so the assumption is not load-bearing. The 17-30 range is also mine and plays no part in the verdict. Note this mean IS attainable at 82, unlike three of the four ethnicity percentages.",
+      "location": "Methods, Participants",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:age_mean_grim",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females",
+      "inputs": {
+        "mean": 19.52,
+        "n": 82,
+        "decimals": 2,
+        "data_type": "integer",
+        "discreteness_source": "assumed",
+        "bound_source": "assumed",
+        "scale_min": 17,
+        "scale_max": 30
+      },
+      "reported": {
+        "mean_age": 19.52,
+        "sd_age": 2.17,
+        "n": 82
+      },
+      "computed": {
+        "nearest_candidate_integer_sum_from_tool": 1601,
+        "sum_over_n_from_tool": 19.52439,
+        "rounds_back_to_reported_mean_from_tool": true
+      },
+      "notes": "Passes GRIM at the stated n=82 under an assumed integer-age reading. The discreteness is ASSUMED, not stated: the paper never says whether age was collected in whole years or computed from a birth date. Had this failed, that assumed premise would have capped the verdict at suspicious. It passes, so the assumption is not load-bearing. The 17-30 range is also mine and plays no part in the verdict. Note this mean IS attainable at 82, unlike three of the four ethnicity percentages.",
+      "reproduction": "metascience grim --mean 19.52 --n 82 --decimals 2 --data-type integer --discreteness-source assumed --bound-source assumed --scale-min 17 --scale-max 30",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females",
+        "source_locator": "Methods, Participants",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_3464df6f4d258284",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "bdi_mean_grim",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Bdi mean grim (Methods, Phase 1)",
+      "description": "The BDI-II total is an integer sum of integer item scores bounded 0-63, so GRIM applies cleanly. Consistent at the stated n=82, which is further mild counter-evidence to reading the ethnicity result as a wrong overall sample size.",
+      "location": "Methods, Phase 1",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Beck Depression Inventory [20] ( M =9.02, SD =7.20)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:bdi_mean_grim",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Beck Depression Inventory [20] ( M =9.02, SD =7.20)",
+      "inputs": {
+        "mean": 9.02,
+        "n": 82,
+        "decimals": 2,
+        "data_type": "integer",
+        "discreteness_source": "stated",
+        "bound_source": "stated",
+        "scale_min": 0,
+        "scale_max": 63
+      },
+      "reported": {
+        "bdi_mean": 9.02,
+        "bdi_sd": 7.2,
+        "n": 82
+      },
+      "computed": {
+        "nearest_candidate_integer_sum_from_tool": 740,
+        "sum_over_n_from_tool": 9.02439,
+        "rounds_back_to_reported_mean_from_tool": true
+      },
+      "notes": "The BDI-II total is an integer sum of integer item scores bounded 0-63, so GRIM applies cleanly. Consistent at the stated n=82, which is further mild counter-evidence to reading the ethnicity result as a wrong overall sample size.",
+      "reproduction": "metascience grim --mean 9.02 --n 82 --decimals 2 --data-type integer --discreteness-source stated --bound-source stated --scale-min 0 --scale-max 63",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Beck Depression Inventory [20] ( M =9.02, SD =7.20)",
+        "source_locator": "Methods, Phase 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_f653759e3fb8b7d7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "rses_mean_grim",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Rses mean grim (Methods, Phase 1)",
+      "description": "The Rosenberg scale total is an integer sum bounded 10-40. Consistent at n=82.",
+      "location": "Methods, Phase 1",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "the Rosenberg Self-Esteem Scale [21] ( M =30.40, SD =4.96)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:rses_mean_grim",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "the Rosenberg Self-Esteem Scale [21] ( M =30.40, SD =4.96)",
+      "inputs": {
+        "mean": 30.4,
+        "n": 82,
+        "decimals": 2,
+        "data_type": "integer",
+        "discreteness_source": "stated",
+        "bound_source": "stated",
+        "scale_min": 10,
+        "scale_max": 40
+      },
+      "reported": {
+        "rses_mean": 30.4,
+        "rses_sd": 4.96,
+        "n": 82
+      },
+      "computed": {
+        "nearest_candidate_integer_sum_from_tool": 2493,
+        "sum_over_n_from_tool": 30.402439,
+        "rounds_back_to_reported_mean_from_tool": true
+      },
+      "notes": "The Rosenberg scale total is an integer sum bounded 10-40. Consistent at n=82.",
+      "reproduction": "metascience grim --mean 30.40 --n 82 --decimals 2 --data-type integer --discreteness-source stated --bound-source stated --scale-min 10 --scale-max 40",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "the Rosenberg Self-Esteem Scale [21] ( M =30.40, SD =4.96)",
+        "source_locator": "Methods, Phase 1",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_1cd3df09d3a10634",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "facebook_friends_mean_grim",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Facebook friends mean grim (Methods, Phase 3)",
+      "description": "The tool REFUSED rather than flagging, and that refusal is the result: at n=82 with a 2-decimal mean, a truncating reporter would produce this value, so a round-half failure carries no information here. Two further reasons not to read anything into it: the friend count was recorded in Phase 3, which only completers attended, so the denominator is almost certainly 79 or 77 rather than 82 -- and the paper never states which. The 5000-friend ceiling is mine, not the paper's, and plays no part in the verdict.",
+      "location": "Methods, Phase 3",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Participants' number of Facebook friends ( M =664.25, SD =383.64) was also recorded during this session from participants' Facebook accounts (Text S2)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:facebook_friends_mean_grim",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Participants' number of Facebook friends ( M =664.25, SD =383.64) was also recorded during this session from participants' Facebook accounts (Text S2).",
+      "inputs": {
+        "mean": 664.25,
+        "n": 82,
+        "decimals": 2,
+        "data_type": "count",
+        "discreteness_source": "logically_necessary",
+        "bound_source": "assumed",
+        "scale_min": 0,
+        "scale_max": 5000
+      },
+      "reported": {
+        "friends_mean": 664.25,
+        "friends_sd": 383.64,
+        "n_assumed_for_this_check": 82
+      },
+      "computed": {
+        "tool_verdict": "indeterminate",
+        "failure_mode_from_tool": "no_discriminating_power",
+        "nearest_candidate_sum_from_tool": 54468,
+        "sum_over_n_from_tool": 664.243902,
+        "rounds_back_under_round_half_from_tool": false,
+        "tool_explanation": "At n = 82 and 2 dp, EVERY printable value that fails round-half passes under truncation, so neither reading can be ruled out"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted"
+      },
+      "notes": "The tool REFUSED rather than flagging, and that refusal is the result: at n=82 with a 2-decimal mean, a truncating reporter would produce this value, so a round-half failure carries no information here. Two further reasons not to read anything into it: the friend count was recorded in Phase 3, which only completers attended, so the denominator is almost certainly 79 or 77 rather than 82 -- and the paper never states which. The 5000-friend ceiling is mine, not the paper's, and plays no part in the verdict.",
+      "reproduction": "metascience grim --mean 664.25 --n 82 --decimals 2 --data-type count --discreteness-source logically_necessary --bound-source assumed --scale-min 0 --scale-max 5000",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Participants' number of Facebook friends ( M =664.25, SD =383.64) was also recorded during this session",
+        "source_locator": "Methods, Phase 3",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_3b5daa7aa580fc01",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t1_affect_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T1 affect chi2 to p (Results, Affective well-being)",
+      "description": "The paper's PRIMARY affective well-being result. The printed chi-square supports a p far below the stated .0001 bound, so the threshold claim holds. SCHEMA NOTE, applying to this and the next sixteen findings: the tool that ran was recalc_stat_to_p (CLI 'metascience stat-to-p'), which is absent from this schema's technique enum; recalc_chi_squared is recorded as the nearest registered label naming the correct distribution family, and the reproduction command names the tool that actually ran.",
+      "location": "Results, Affective well-being",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B =.08, x 2 =28.90, p , .0001, (see Figure 1, top)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t1_affect_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B =.08, x 2 =28.90, p , .0001, (see Figure 1, top)",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 28.9,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 28.9,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 7.62129129638297e-08,
+        "achievable_p_interval_from_tool": [
+          7.582046411041866e-08,
+          7.640990000632875e-08
+        ]
+      },
+      "notes": "The paper's PRIMARY affective well-being result. The printed chi-square supports a p far below the stated .0001 bound, so the threshold claim holds. SCHEMA NOTE, applying to this and the next sixteen findings: the tool that ran was recalc_stat_to_p (CLI 'metascience stat-to-p'), which is absent from this schema's technique enum; recalc_chi_squared is recorded as the nearest registered label naming the correct distribution family, and the reproduction command names the tool that actually ran.",
+      "reproduction": "metascience stat-to-p --statistic 28.90 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_9c088fe98a48f254",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_reverse_pathway_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T2 reverse pathway chi2 to p (Results, Affective well-being (reverse pathway))",
+      "description": "Supports the paper's directional argument that affect does not drive Facebook use. The reported p sits inside the interval the printed statistic permits.",
+      "location": "Results, Affective well-being (reverse pathway)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = 2 .005, x 2 =.05, p =.82"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_reverse_pathway_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = 2 .005, x 2 =.05, p =.82",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 0.05,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.82,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 0.05,
+        "df": 1,
+        "p": 0.82
+      },
+      "computed": {
+        "computed_p_from_tool": 0.8230632737581214,
+        "achievable_p_interval_from_tool": [
+          0.8064959405073401,
+          0.8320040285726364
+        ]
+      },
+      "notes": "Supports the paper's directional argument that affect does not drive Facebook use. The reported p sits inside the interval the printed statistic permits.",
+      "reproduction": "metascience stat-to-p --statistic 0.05 --kind chi2 --df 1 --reported-p 0.82 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0f201545504ee287",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_cognitive_t_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_independent_t",
+      "title": "T3 cognitive t to p (Results, Cognitive well-being)",
+      "description": "The paper's SECOND headline claim and the one the abstract makes about life satisfaction declining. The t-to-p conversion is exact. This is also the result most exposed to the multiplicity issue recorded separately below. Technique label is the nearest enum entry for a t-distribution recalculation; the tool that ran was recalc_stat_to_p, not a two-group t-test.",
+      "location": "Results, Cognitive well-being",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = 2 .012, b = 2 .124, t (73) = 2 2.39, p =.02"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_cognitive_t_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = 2 .012, b = 2 .124, t (73) = 2 2.39, p =.02",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 2.39,
+        "kind": "t",
+        "df": 73,
+        "reported_p": 0.02,
+        "decimals_stat": 2,
+        "decimals_p": 2,
+        "tails": 2
+      },
+      "reported": {
+        "t": -2.39,
+        "df": 73,
+        "p": 0.02,
+        "B": -0.012,
+        "beta": -0.124
+      },
+      "computed": {
+        "computed_p_from_tool": 0.01943070333196425,
+        "achievable_p_interval_from_tool": [
+          0.01894654504306428,
+          0.019676895108816143
+        ]
+      },
+      "notes": "The paper's SECOND headline claim and the one the abstract makes about life satisfaction declining. The t-to-p conversion is exact. This is also the result most exposed to the multiplicity issue recorded separately below. Technique label is the nearest enum entry for a t-distribution recalculation; the tool that ran was recalc_stat_to_p, not a two-group t-test.",
+      "reproduction": "metascience stat-to-p --statistic 2.39 --kind t --df 73 --reported-p 0.02 --decimals-stat 2 --decimals-p 2 --tails 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_985276c5f1f11b01",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t4_direct_contact_cognitive_t_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_independent_t",
+      "title": "T4 direct contact cognitive t to p (Results, Alternative explanations)",
+      "description": "Arithmetically consistent. See the separate sign-notation finding: the t is printed positive while both coefficients on the same line are negative.",
+      "location": "Results, Alternative explanations",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = 2 .006, b = 2 .059, t (73) = 1.04, p =.30"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t4_direct_contact_cognitive_t_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = 2 .006, b = 2 .059, t (73) = 1.04, p =.30",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 1.04,
+        "kind": "t",
+        "df": 73,
+        "reported_p": 0.3,
+        "decimals_stat": 2,
+        "decimals_p": 2,
+        "tails": 2
+      },
+      "reported": {
+        "t": 1.04,
+        "df": 73,
+        "p": 0.3
+      },
+      "computed": {
+        "computed_p_from_tool": 0.3017722493549908,
+        "achievable_p_interval_from_tool": [
+          0.2971818058194151,
+          0.30408544410099486
+        ]
+      },
+      "notes": "Arithmetically consistent. See the separate sign-notation finding: the t is printed positive while both coefficients on the same line are negative.",
+      "reproduction": "metascience stat-to-p --statistic 1.04 --kind t --df 73 --reported-p 0.30 --decimals-stat 2 --decimals-p 2 --tails 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_dd4d4aa3cb887244",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t5_direct_contact_affect_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T5 direct contact affect chi2 to p (Results, Alternative explanations)",
+      "description": "Supports the abstract's claim that direct interaction did not produce the negative outcome -- in fact it predicted improvement. Consistent.",
+      "location": "Results, Alternative explanations",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = 2 .15, x 2 =65.30, p , .0001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t5_direct_contact_affect_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = 2 .15, x 2 =65.30, p , .0001",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 65.3,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 65.3,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 6.432134512006082e-16,
+        "achievable_p_interval_from_tool": [
+          6.399578084314583e-16,
+          6.44847480892166e-16
+        ]
+      },
+      "notes": "Supports the abstract's claim that direct interaction did not produce the negative outcome -- in fact it predicted improvement. Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 65.30 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_e18dbe4f51ead930",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t6_fb_controlling_direct_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T6 fb controlling direct chi2 to p (Results, Alternative explanations)",
+      "description": "Worth recording as good practice in the direction opposite to the usual finding: the true p (.00103) sits just ABOVE .001, and the authors correctly reported the weaker bound 'p < .01' rather than rounding down to 'p < .001'.",
+      "location": "Results, Alternative explanations",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B =.05, x 2 =10.78, p , .01"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t6_fb_controlling_direct_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B =.05, x 2 =10.78, p , .01",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 10.78,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.01,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 10.78,
+        "df": 1,
+        "p": "< .01"
+      },
+      "computed": {
+        "computed_p_from_tool": 0.001026026815417956,
+        "achievable_p_interval_from_tool": [
+          0.0010204988216419963,
+          0.0010288021592968987
+        ]
+      },
+      "notes": "Worth recording as good practice in the direction opposite to the usual finding: the true p (.00103) sits just ABOVE .001, and the authors correctly reported the weaker bound 'p < .01' rather than rounding down to 'p < .001'.",
+      "reproduction": "metascience stat-to-p --statistic 10.78 --kind chi2 --df 1 --reported-p 0.01 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_aeb0d89fcf6b2715",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t7_worry_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T7 worry chi2 to p (Results, Alternative explanations (worry))",
+      "description": "Legacy recalc_chi_squared check at Results, Alternative explanations (worry). Reported: {\"chi2\": 2.37, \"df\": 1, \"p\": 0.12}. Computed: {\"computed_p_from_tool\": 0.12368705147570487, \"achievable_p_interval_from_tool\": [0.12289754692879619, 0.12408391323431804]}.",
+      "location": "Results, Alternative explanations (worry)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B =.04, x 2 =2.37, p =.12"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t7_worry_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B =.04, x 2 =2.37, p =.12",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 2.37,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.12,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 2.37,
+        "df": 1,
+        "p": 0.12
+      },
+      "computed": {
+        "computed_p_from_tool": 0.12368705147570487,
+        "achievable_p_interval_from_tool": [
+          0.12289754692879619,
+          0.12408391323431804
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 2.37 --kind chi2 --df 1 --reported-p 0.12 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_179ef06afae93633",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t8_loneliness_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T8 loneliness chi2 to p (Results, Alternative explanations (loneliness))",
+      "description": "Legacy recalc_chi_squared check at Results, Alternative explanations (loneliness). Reported: {\"chi2\": 8.54, \"df\": 1, \"p\": \"< .01\"}. Computed: {\"computed_p_from_tool\": 0.003474256327577461, \"achievable_p_interval_from_tool\": [0.003455222267523017, 0.003483813298979327]}.",
+      "location": "Results, Alternative explanations (loneliness)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "but loneliness did, B =.07, x 2 =8.54, p , .01"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t8_loneliness_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "but loneliness did, B =.07, x 2 =8.54, p , .01",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 8.54,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.01,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 8.54,
+        "df": 1,
+        "p": "< .01"
+      },
+      "computed": {
+        "computed_p_from_tool": 0.003474256327577461,
+        "achievable_p_interval_from_tool": [
+          0.003455222267523017,
+          0.003483813298979327
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 8.54 --kind chi2 --df 1 --reported-p 0.01 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_8cfd1c274946368a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t9_fb_affect_controlling_loneliness_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T9 fb affect controlling loneliness chi2 to p",
+      "description": "Legacy recalc_chi_squared check at Results, Alternative explanations (controlling loneliness). Reported: {\"chi2\": 27.87, \"df\": 1, \"p\": \"< .0001\"}. Computed: {\"computed_p_from_tool\": 1.2974594676105298e-07, \"achievable_p_interval_from_tool\": [1.2907710439758344e-07, 1.3008166926198579e-07]}.",
+      "location": "Results, Alternative explanations (controlling loneliness)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Facebook use continued to predict declines in affective well-being, B =.08, x 2 =27.87, p , .0001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t9_fb_affect_controlling_loneliness_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Facebook use continued to predict declines in affective well-being, B =.08, x 2 =27.87, p , .0001",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 27.87,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 27.87,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 1.2974594676105298e-07,
+        "achievable_p_interval_from_tool": [
+          1.2907710439758344e-07,
+          1.3008166926198579e-07
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 27.87 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d369e45d6715a5a0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t10_fb_cognitive_controlling_loneliness_t_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_independent_t",
+      "title": "T10 fb cognitive controlling loneliness t to p",
+      "description": "Consistent; the computed p (.0221) rounds to the printed .02.",
+      "location": "Results, Alternative explanations (cognitive, loneliness controlled)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "and cognitive well-being, B = 2 .012, b = 2 .126, t (72) = 2.34, p =.02"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t10_fb_cognitive_controlling_loneliness_t_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "and cognitive well-being, B = 2 .012, b = 2 .126, t (72) = 2.34, p =.02",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 2.34,
+        "kind": "t",
+        "df": 72,
+        "reported_p": 0.02,
+        "decimals_stat": 2,
+        "decimals_p": 2,
+        "tails": 2
+      },
+      "reported": {
+        "t": 2.34,
+        "df": 72,
+        "p": 0.02
+      },
+      "computed": {
+        "computed_p_from_tool": 0.02205954536508728,
+        "achievable_p_interval_from_tool": [
+          0.021517840277925734,
+          0.022334912586664157
+        ]
+      },
+      "notes": "Consistent; the computed p (.0221) rounds to the printed .02.",
+      "reproduction": "metascience stat-to-p --statistic 2.34 --kind t --df 72 --reported-p 0.02 --decimals-stat 2 --decimals-p 2 --tails 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_963ac6a1d51b8307",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t11_interaction_affect_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T11 interaction affect chi2 to p (Results, Exploratory analyses)",
+      "description": "Consistent. This interaction is explicitly exploratory and the paper says so in as many words, which is good practice.",
+      "location": "Results, Exploratory analyses",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "in affective well-being, B =.002, x 2 =19.55, p , .0001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t11_interaction_affect_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "in affective well-being, B =.002, x 2 =19.55, p , .0001",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 19.55,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 19.55,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 9.800073672118117e-06,
+        "achievable_p_interval_from_tool": [
+          9.74890933390821e-06,
+          9.82575685784188e-06
+        ]
+      },
+      "notes": "Consistent. This interaction is explicitly exploratory and the paper says so in as many words, which is good practice.",
+      "reproduction": "metascience stat-to-p --statistic 19.55 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_e990b9380769ea29",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t12_interaction_cognitive_t_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_independent_t",
+      "title": "T12 interaction cognitive t to p (Results, Exploratory analyses)",
+      "description": "The t-to-p conversion is consistent. See the separate finding on this row's standardized coefficient, which is larger in magnitude than the paper's significant headline beta yet carries a much smaller t.",
+      "location": "Results, Exploratory analyses",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "changes in cognitive well-being, B =.000, b =.129, t (71) = .39, p =.70"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t12_interaction_cognitive_t_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "changes in cognitive well-being, B =.000, b =.129, t (71) = .39, p =.70",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 0.39,
+        "kind": "t",
+        "df": 71,
+        "reported_p": 0.7,
+        "decimals_stat": 2,
+        "decimals_p": 2,
+        "tails": 2
+      },
+      "reported": {
+        "t": 0.39,
+        "df": 71,
+        "p": 0.7,
+        "B": 0,
+        "beta": 0.129
+      },
+      "computed": {
+        "computed_p_from_tool": 0.6977040829525742,
+        "achievable_p_interval_from_tool": [
+          0.6903574307401652,
+          0.7013883422176428
+        ]
+      },
+      "notes": "The t-to-p conversion is consistent. See the separate finding on this row's standardized coefficient, which is larger in magnitude than the paper's significant headline beta yet carries a much smaller t.",
+      "reproduction": "metascience stat-to-p --statistic 0.39 --kind t --df 71 --reported-p 0.70 --decimals-stat 2 --decimals-p 2 --tails 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_c7c8647020bdc107",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t13_simple_slope_low_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T13 simple slope low chi2 to p (Results, Exploratory analyses (low direct contact))",
+      "description": "Legacy recalc_chi_squared check at Results, Exploratory analyses (low direct contact). Reported: {\"chi2\": 0.04, \"df\": 1, \"p\": 0.84}. Computed: {\"computed_p_from_tool\": 0.841480581121794, \"achievable_p_interval_from_tool\": [0.8230632737581214, 0.8515956593128358]}.",
+      "location": "Results, Exploratory analyses (low direct contact)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B=.00, x 2 =.04, p = .84"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t13_simple_slope_low_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B=.00, x 2 =.04, p = .84",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 0.04,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.84,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 0.04,
+        "df": 1,
+        "p": 0.84
+      },
+      "computed": {
+        "computed_p_from_tool": 0.841480581121794,
+        "achievable_p_interval_from_tool": [
+          0.8230632737581214,
+          0.8515956593128358
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 0.04 --kind chi2 --df 1 --reported-p 0.84 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_6583fb207a8b67ba",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t14_simple_slope_mean_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T14 simple slope mean chi2 to p (Results, Exploratory analyses (mean direct contact))",
+      "description": "Consistent, and a close call correctly reported: the true p is .00081, genuinely below the .001 bound claimed.",
+      "location": "Results, Exploratory analyses (mean direct contact)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = .05, x 2 =11.21, p , .001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t14_simple_slope_mean_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = .05, x 2 =11.21, p , .001",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 11.21,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.001,
+        "decimals_stat": 2,
+        "decimals_p": 3
+      },
+      "reported": {
+        "chi2": 11.21,
+        "df": 1,
+        "p": "< .001"
+      },
+      "computed": {
+        "computed_p_from_tool": 0.000813577196899885,
+        "achievable_p_interval_from_tool": [
+          0.0008092049501514694,
+          0.0008157722656621239
+        ]
+      },
+      "notes": "Consistent, and a close call correctly reported: the true p is .00081, genuinely below the .001 bound claimed.",
+      "reproduction": "metascience stat-to-p --statistic 11.21 --kind chi2 --df 1 --reported-p 0.001 --decimals-stat 2 --decimals-p 3",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_268604276770531f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t15_simple_slope_high_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T15 simple slope high chi2 to p (Results, Exploratory analyses (high direct contact))",
+      "description": "Legacy recalc_chi_squared check at Results, Exploratory analyses (high direct contact). Reported: {\"chi2\": 28.82, \"df\": 1, \"p\": \"< .0001\"}. Computed: {\"computed_p_from_tool\": 7.942667398364113e-08, \"achievable_p_interval_from_tool\": [7.901764256087884e-08, 7.96319846083625e-08]}.",
+      "location": "Results, Exploratory analyses (high direct contact)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "above the sample mean for direct social contact; B=.10, x 2 =28.82, p , .0001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t15_simple_slope_high_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "above the sample mean for direct social contact; B=.10, x 2 =28.82, p , .0001",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 28.82,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 28.82,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 7.942667398364113e-08,
+        "achievable_p_interval_from_tool": [
+          7.901764256087884e-08,
+          7.96319846083625e-08
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 28.82 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_35c86af7080873f0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t16_supplement_s4_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T16 supplement s4 chi2 to p (Text S4 (supplement))",
+      "description": "Consistent. This is an additional lag specification reported only in the supplement; it is an extra comparison not counted in the main-text multiplicity family, so the true test count is higher than that family records.",
+      "location": "Text S4 (supplement)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Nested time-lagged analyses indicated that this was also true, B = .03, \u03c72 = 4.67, p = .03."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t16_supplement_s4_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Nested time-lagged analyses indicated that this was also true, B = .03, \u03c72 = 4.67, p = .03.",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 4.67,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.03,
+        "decimals_stat": 2,
+        "decimals_p": 2
+      },
+      "reported": {
+        "chi2": 4.67,
+        "df": 1,
+        "p": 0.03
+      },
+      "computed": {
+        "computed_p_from_tool": 0.03069392749044769,
+        "achievable_p_interval_from_tool": [
+          0.030515748450409174,
+          0.030783423431050432
+        ]
+      },
+      "notes": "Consistent. This is an additional lag specification reported only in the supplement; it is an extra comparison not counted in the main-text multiplicity family, so the true test count is higher than that family records.",
+      "reproduction": "metascience stat-to-p --statistic 4.67 --kind chi2 --df 1 --reported-p 0.03 --decimals-stat 2 --decimals-p 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_1481c05a87fe0b29",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t17_supplement_s5_chi2_to_p",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "T17 supplement s5 chi2 to p (Text S5 (supplement))",
+      "description": "Legacy recalc_chi_squared check at Text S5 (supplement). Reported: {\"chi2\": 21.49, \"df\": 1, \"p\": \"< .0001\"}. Computed: {\"computed_p_from_tool\": 3.556786211759847e-06, \"achievable_p_interval_from_tool\": [3.538286630668225e-06, 3.5660723663599237e-06]}.",
+      "location": "Text S5 (supplement)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "people reported feeling better as the day progressed (B = -1.06, \u03c72 = 21.49, p < .0001)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t17_supplement_s5_chi2_to_p",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "people reported feeling better as the day progressed (B = -1.06, \u03c72 = 21.49, p < .0001)",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 21.49,
+        "kind": "chi2",
+        "df": 1,
+        "reported_p": 0.0001,
+        "decimals_stat": 2,
+        "decimals_p": 4
+      },
+      "reported": {
+        "chi2": 21.49,
+        "df": 1,
+        "p": "< .0001"
+      },
+      "computed": {
+        "computed_p_from_tool": 3.556786211759847e-06,
+        "achievable_p_interval_from_tool": [
+          3.538286630668225e-06,
+          3.5660723663599237e-06
+        ]
+      },
+      "notes": "Consistent.",
+      "reproduction": "metascience stat-to-p --statistic 21.49 --kind chi2 --df 1 --reported-p 0.0001 --decimals-stat 2 --decimals-p 4",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_975575c05acc135c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_borderline_correlation_star",
+      "producer": "legacy_sweep",
+      "technique": "no_tool_exists",
+      "title": "Table1 borderline correlation star",
+      "description": "This is the one Table 1 asterisk close enough to the threshold to be worth testing, and it SURVIVES. Because r is printed to two decimals the true correlation lies in [.215, .225), and the p that implies spans .044 to .060 -- straddling .05, so the asterisk cannot be contradicted. Two caveats both point toward making no accusation here: the n of 77 is my inference from the paper's own residual df chain, since Table 1 states no sample size anywhere; and at any larger n (79, 81) the star is comfortably correct. Recorded as consistent. The missing table n is recorded separately as a coverage gap.",
+      "location": "Table 1, Facebook Use row / Loneliness column (between-person)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "| Facebook Use             | .07                            | .13                            | .22 *"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_borderline_correlation_star",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "| Facebook Use             | .07                            | .13                            | .22 *",
+      "inputs": {
+        "tool_actually_called": "recalc_stat_to_p",
+        "statistic": 0.22,
+        "kind": "r",
+        "n": 77,
+        "reported_p": 0.05,
+        "decimals_stat": 2,
+        "decimals_p": 2,
+        "tails": 2
+      },
+      "reported": {
+        "r": 0.22,
+        "significance_marker": "* p < .05",
+        "n_stated_in_table": "none"
+      },
+      "computed": {
+        "method": "recalc_stat_to_p (CLI 'metascience stat-to-p') converted r to p at an assumed n; the technique enum has no entry for an r-to-p conversion, hence no_tool_exists, but a registered tool did produce this.",
+        "computed_p_at_assumed_n_77_from_tool": 0.05453758374681342,
+        "achievable_p_interval_from_tool": [
+          0.044188786641239076,
+          0.060410809057253434
+        ],
+        "tool_verdict": "consistent -- the achievable interval spans .05"
+      },
+      "notes": "This is the one Table 1 asterisk close enough to the threshold to be worth testing, and it SURVIVES. Because r is printed to two decimals the true correlation lies in [.215, .225), and the p that implies spans .044 to .060 -- straddling .05, so the asterisk cannot be contradicted. Two caveats both point toward making no accusation here: the n of 77 is my inference from the paper's own residual df chain, since Table 1 states no sample size anywhere; and at any larger n (79, 81) the star is comfortably correct. Recorded as consistent. The missing table n is recorded separately as a coverage gap.",
+      "reproduction": "metascience stat-to-p --statistic 0.22 --kind r --n 77 --reported-p 0.05 --decimals-stat 2 --decimals-p 2 --tails 2",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_73f060e617e43631",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "stalt_thresholded_p_not_concealing",
+      "producer": "legacy_sweep",
+      "technique": "stalt_check",
+      "title": "Stalt thresholded p not concealing",
+      "description": "Rulebook rule 2 asks whether a thresholded p conceals an extreme value. It does not here, for a reason worth stating plainly: the paper PRINTS the chi-square statistic beside every thresholded p, so nothing is hidden -- the exact p is recoverable by any reader, as this check just did. An eleven-order-of-magnitude gap is simply what a chi-square of 65 on 4,589 observations produces, and style rules require reporting it as a floor. The same reasoning covers the other seven thresholded p-values in the paper. Correct reporting, not a finding.",
+      "location": "Results, Alternative explanations (direct social interaction on affect)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "B = 2 .15, x 2 =65.30, p , .0001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:stalt_thresholded_p_not_concealing",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "B = 2 .15, x 2 =65.30, p , .0001",
+      "inputs": {
+        "calculated_p": 6.432134512006082e-16,
+        "reported_threshold": "p<0.0001"
+      },
+      "reported": {
+        "p_as_printed": "< .0001",
+        "chi2": 65.3
+      },
+      "computed": {
+        "bound_satisfied_from_tool": true,
+        "orders_of_magnitude_below_threshold_from_tool": 11.191644881981752,
+        "tool_verdict": "consistent"
+      },
+      "notes": "Rulebook rule 2 asks whether a thresholded p conceals an extreme value. It does not here, for a reason worth stating plainly: the paper PRINTS the chi-square statistic beside every thresholded p, so nothing is hidden -- the exact p is recoverable by any reader, as this check just did. An eleven-order-of-magnitude gap is simply what a chi-square of 65 on 4,589 observations produces, and style rules require reporting it as a floor. The same reasoning covers the other seven thresholded p-values in the paper. Correct reporting, not a finding.",
+      "reproduction": "metascience stalt --calculated-p 6.432134512006082e-16 --reported-threshold \"p<0.0001\"",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "B = 2 .15, x 2 =65.30, p , .0001",
+        "source_locator": "Results, Alternative explanations (direct social interaction on affect)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      },
+      "finding_id": "f_4b32c835e856ca95",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncorrected_family",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity uncorrected family (Results, throughout)",
+      "description": "FAMILY DEFINITION IS DOING A LOT OF WORK HERE AND THE CAVEAT MUST TRAVEL WITH THE NUMBER. The family I supplied is broad -- every significance test in the Results -- and under it both results significant at exact p (.02 and .02, the two life-satisfaction models) fall below every correction threshold. But those two are not independent claims: they are the SAME cognitive well-being outcome fitted with and without a loneliness covariate, so counting them as two is already generous. Under the narrower and quite defensible family of two primary outcomes, Bonferroni alpha is .025 and the cognitive result at p=.02 survives. The affective result is untouched under any reading: at chi-square 28.90 it",
+      "location": "Results, throughout",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Significance testing of fixed effects was performed using chisquared distributed (df = 1) Wald-tests."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncorrected_family",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Significance testing of fixed effects was performed using chisquared distributed (df = 1) Wald-tests.",
+      "inputs": {
+        "family_label": "All significance tests reported in the Results section (Facebook use, direct contact, worry and loneliness predicting affective and cognitive well-being)",
+        "n_tests_supplied": 15,
+        "alpha": 0.05
+      },
+      "reported": {
+        "correction_stated_anywhere_in_the_paper": "none",
+        "n_significance_tests_enumerated_in_results": 15
+      },
+      "computed": {
+        "n_tests_evaluable_after_dropping_threshold_p_from_tool": 7,
+        "n_dropped_because_p_reported_as_threshold_from_tool": 8,
+        "fwer_if_independent_from_tool": 0.3017,
+        "expected_false_positives_from_tool": 0.35,
+        "bonferroni_threshold_from_tool": 0.0071428571428571435,
+        "n_significant_uncorrected_from_tool": 2,
+        "n_surviving_floor_bonferroni_from_tool": 0,
+        "n_surviving_ceiling_benjamini_hochberg_from_tool": 0,
+        "n_claims_lost_to_correction_from_tool": 2
+      },
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Under the broad family, the abstract's second claim -- that the more people used Facebook over two weeks, the more their life satisfaction declined (t(73) = -2.39, p = .02) -- does not survive Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli correction; under a two-outcome family it does."
+      },
+      "notes": "FAMILY DEFINITION IS DOING A LOT OF WORK HERE AND THE CAVEAT MUST TRAVEL WITH THE NUMBER. The family I supplied is broad -- every significance test in the Results -- and under it both results significant at exact p (.02 and .02, the two life-satisfaction models) fall below every correction threshold. But those two are not independent claims: they are the SAME cognitive well-being outcome fitted with and without a loneliness covariate, so counting them as two is already generous. Under the narrower and quite defensible family of two primary outcomes, Bonferroni alpha is .025 and the cognitive result at p=.02 survives. The affective result is untouched under any reading: at chi-square 28.90 its true p is around 8e-08, orders of magnitude below any threshold. The honest statement is that the paper's FIRST headline claim is robust to multiplicity and its SECOND is fragile to it, and that the paper applies and mentions no correction anywhere. One further, unquantifiable factor: at least twelve moderation tests and two interaction tests are reported only as 'ps > .16' and 'ps > .44', and two more sit in the supplements, so the true comparison count exceeds the fifteen counted here. This is a FLOOR on the multiplicity problem.",
+      "reproduction": "metascience multiplicity --family-label \"All significance tests reported in the Results section\" --alpha 0.05 --tests-json '[{\"id\":\"t1\",\"p_value\":0.0001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t2\",\"p_value\":0.82,\"correction_applied\":\"none\"},{\"id\":\"t3\",\"p_value\":0.02,\"correction_applied\":\"none\"},{\"id\":\"t4\",\"p_value\":0.30,\"correction_applied\":\"none\"},{\"id\":\"t5\",\"p_value\":0.0001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t6\",\"p_value\":0.01,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t7\",\"p_value\":0.12,\"correction_applied\":\"none\"},{\"id\":\"t8\",\"p_value\":0.01,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t9\",\"p_value\":0.0001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t10\",\"p_value\":0.02,\"correction_applied\":\"none\"},{\"id\":\"t11\",\"p_value\":0.0001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t12\",\"p_value\":0.70,\"correction_applied\":\"none\"},{\"id\":\"t13\",\"p_value\":0.84,\"correction_applied\":\"none\"},{\"id\":\"t14\",\"p_value\":0.001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"t15\",\"p_value\":0.0001,\"p_is_threshold\":true,\"correction_applied\":\"none\"}]'",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests-jso",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_60964204eb7365b1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_s3_cited_for_regressions_contains_only_data_statement",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Text s3 cited for regressions contains only data statement",
+      "description": "Two distinct problems in one place. FIRST, a broken cross-reference: the sentence directs the reader to Text S3 for the OLS regression coefficients, and Text S3 contains no regression output at all -- it is a single sentence about data availability. The models behind the paper's life-satisfaction claim (which predictors, entered how, with what standard errors and R-squared) are therefore documented NOWHERE, in the article or in any of the six supplements. SECOND, the sentence that is there is a textbook state-but-withhold declaration under rulebook rule 7: 'available upon request' is not availability. Neither observation involves any calculation. An innocent explanation for the first is a la",
+      "location": "Methods, Analyses overview; and Text S3 (supplement)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Both unstandardized ( B ) and standardized ( b ) OLS regression coefficients are reported (see Text S3)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_s3_cited_for_regressions_contains_only_data_statement",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Both unstandardized ( B ) and standardized ( b ) OLS regression coefficients are reported (see Text S3).",
+      "inputs": {
+        "supplement_path": "10.1371--journal.pone.0069841.s003_Text_S3.docx"
+      },
+      "reported": {
+        "what_the_paper_says_text_s3_contains": "the unstandardized and standardized OLS regression coefficients",
+        "what_text_s3_actually_contains": "Text S3: Raw data are available upon request for replication purposes."
+      },
+      "computed": {
+        "method": "Cross-reference check: extract_supplement was run on the cited file and its entire contents compared against what the citing sentence promises. No arithmetic involved.",
+        "n_tables_in_text_s3_from_tool": 0,
+        "full_length_of_text_s3": "one sentence"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The two life-satisfaction claims (t(73) = -2.39 and t(72) = 2.34) cannot be independently reconstructed, because neither the model specification nor the data is obtainable from the published record."
+      },
+      "notes": "Two distinct problems in one place. FIRST, a broken cross-reference: the sentence directs the reader to Text S3 for the OLS regression coefficients, and Text S3 contains no regression output at all -- it is a single sentence about data availability. The models behind the paper's life-satisfaction claim (which predictors, entered how, with what standard errors and R-squared) are therefore documented NOWHERE, in the article or in any of the six supplements. SECOND, the sentence that is there is a textbook state-but-withhold declaration under rulebook rule 7: 'available upon request' is not availability. Neither observation involves any calculation. An innocent explanation for the first is a late renumbering of the six supplementary files -- but I read all six, and none contains the regression output, so the material appears never to have been supplied.",
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1371--journal.pone.0069841/10.1371--journal.pone.0069841.s003_Text_S3.docx",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_60463587ca82e6ed",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_s6_cited_for_moderation_contains_no_moderation_results",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Text s6 cited for moderation contains no moderation results",
+      "description": "Text S6 is cited at the point where roughly twelve moderation tests are summarised, and it contains one sentence explaining why ONE motivation item was not tested. Not a single moderation coefficient, standard error, test statistic or exact p-value appears in the article or in any of the six supplements, all of which I read. The abstract nonetheless states these effects 'were also not moderated by' seven named variables. That is a null claim resting on an unreported minimum p-value. Recorded as a reporting finding, not an arithmetic one; no tool applies and none is missing. The innocent explanation -- that PLOS ONE in 2013 did not require exhaustive null reporting -- is real and should be st",
+      "location": "Results, Moderation; and Text S6 (supplement)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "using Facebook (e.g., to find new friends, to share good or bad things, to obtain new information) interacted with Facebook use to predict changes in affective or cognitive well-being (Text S6). In no case did we observe any significant interactions ( p s . .16)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_s6_cited_for_moderation_contains_no_moderation_results",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "using Facebook (e.g., to find new friends, to share good or bad things, to obtain new information) interacted with Facebook use to predict changes in affective or cognitive well-being (Text S6). In no case did we observe any significant interactions ( p s . .16).",
+      "inputs": {
+        "supplement_path": "10.1371--journal.pone.0069841.s006_Text_S6.docx"
+      },
+      "reported": {
+        "moderators_named_in_the_sentence": [
+          "number of Facebook Friends",
+          "perceived Facebook network support",
+          "depressive symptoms",
+          "loneliness",
+          "gender",
+          "self-esteem",
+          "time of study participation",
+          "motivation: find new friends",
+          "motivation: share good things",
+          "motivation: share bad things",
+          "motivation: obtain new information",
+          "motivation: other"
+        ],
+        "statistics_given_for_them_in_the_article": "ps > .16 only",
+        "what_text_s6_actually_contains": "Text S6: 98% of participants reported using Facebook to \u201ckeep in touch with friends.\u201d Therefore, we did not test for moderation with this variable."
+      },
+      "computed": {
+        "method": "Cross-reference check: extract_supplement was run on the cited file and its contents compared against the claim the citation is offered in support of. No arithmetic involved.",
+        "n_moderation_test_statistics_reported_anywhere_in_article_or_supplements": 0,
+        "n_moderators_named": 12
+      },
+      "notes": "Text S6 is cited at the point where roughly twelve moderation tests are summarised, and it contains one sentence explaining why ONE motivation item was not tested. Not a single moderation coefficient, standard error, test statistic or exact p-value appears in the article or in any of the six supplements, all of which I read. The abstract nonetheless states these effects 'were also not moderated by' seven named variables. That is a null claim resting on an unreported minimum p-value. Recorded as a reporting finding, not an arithmetic one; no tool applies and none is missing. The innocent explanation -- that PLOS ONE in 2013 did not require exhaustive null reporting -- is real and should be stated, but it does not restore a reader's ability to check the claim.",
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1371--journal.pone.0069841/10.1371--journal.pone.0069841.s006_Text_S6.docx",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_0f3bca87ce2a7745",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "abstract_null_moderation_claims_unbounded",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Abstract null moderation claims unbounded (Abstract; Results, Moderation)",
+      "description": "'Not significant' is not 'no effect'. With an analytic n around 77 and between-person moderators, the study has low power to detect moderation, so a minimum p of .16 is entirely compatible with moderating effects large enough to matter. Because no interval is printed, the largest moderating effect still consistent with these data cannot be computed -- by me or by any reader. The abstract states the null as a positive finding, which is the strongest form the claim can take and the one least supported by what is reported. A reporting-practice finding with no arithmetic in it, so nothing is missing from the toolkit here.",
+      "location": "Abstract; Results, Moderation",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "They were also not moderated by the size of people's Facebook networks, their perceived supportiveness, motivation for using Facebook, gender, loneliness, self-esteem, or depression."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:abstract_null_moderation_claims_unbounded",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "They were also not moderated by the size of people's Facebook networks, their perceived supportiveness, motivation for using Facebook, gender, loneliness, self-esteem, or depression.",
+      "inputs": {
+        "claim_type": "null / no-moderation",
+        "interval_reported": "none",
+        "sesoi_stated": "none"
+      },
+      "reported": {
+        "support_offered_for_the_claim": "ps > .16",
+        "effect_sizes_reported": "none",
+        "confidence_intervals_reported": "none",
+        "equivalence_bounds_reported": "none",
+        "analytic_n_inferred": 77
+      },
+      "computed": {
+        "method": "absence_of_evidence was the appropriate check and could NOT be run: it requires either a confidence interval or a coefficient with its standard error, and the paper prints neither for any moderation test. Recorded as a refusal rather than a substituted calculation. Deriving a standard error myself from b and t would have been unguarded arithmetic and was not done.",
+        "n_moderation_tests_with_a_reportable_interval": 0
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "One of the four sentences in the abstract's results summary asserts an absence of moderation that the published statistics cannot bound."
+      },
+      "notes": "'Not significant' is not 'no effect'. With an analytic n around 77 and between-person moderators, the study has low power to detect moderation, so a minimum p of .16 is entirely compatible with moderating effects large enough to matter. Because no interval is printed, the largest moderating effect still consistent with these data cannot be computed -- by me or by any reader. The abstract states the null as a positive finding, which is the strongest form the claim can take and the one least supported by what is reported. A reporting-practice finding with no arithmetic in it, so nothing is missing from the toolkit here.",
+      "reproduction": "no command applies -- absence-of-evidence requires an interval or a b/se pair, and the paper prints neither for any moderation test; this finding is a reading of the reporting, not an arithmetic result",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_cfc3bcf2f5891d1d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "direct_contact_t_sign_notation",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Direct contact t sign notation (Results, Alternative explanations)",
+      "description": "A t statistic carries the sign of the coefficient it tests. Both coefficients on this line are negative and the t is printed positive. Almost certainly a typesetting or transcription slip rather than anything substantive: the p-value is .30 either way, and I verified separately that |t| = 1.04 at df = 73 reproduces p = .30 exactly. Recorded only because the sentence supports an abstract-level claim, so the passage is load-bearing. One provenance caution: this PDF's font encoding renders minus as '2' throughout, which is why the neighbouring '2 2.39' reads oddly -- but the asymmetry between the two lines is in the source, not introduced by extraction.",
+      "location": "Results, Alternative explanations",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "''direct'' social interaction did not predict changes in cognitive well-being, B = 2 .006, b = 2 .059, t (73) = 1.04, p =.30"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:direct_contact_t_sign_notation",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "''direct'' social interaction did not predict changes in cognitive well-being, B = 2 .006, b = 2 .059, t (73) = 1.04, p =.30",
+      "inputs": {
+        "B": -0.006,
+        "beta": -0.059,
+        "t_as_printed": 1.04
+      },
+      "reported": {
+        "B": "-.006",
+        "beta": "-.059",
+        "t": "1.04 (printed positive)",
+        "p": 0.3
+      },
+      "computed": {
+        "method": "Sign comparison across the three statistics printed on one line; no arithmetic. In this PDF's text layer the minus sign renders as the digit 2, and it is present before .006 and .059 but absent before 1.04. The parallel sentence on the preceding page prints the sign consistently: 'B = 2 .012, b = 2 .124, t (73) = 2 2.39'.",
+        "expected_sign_of_t_given_the_coefficients": "negative"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The sign of the t does not change the p-value or the null conclusion drawn from it."
+      },
+      "notes": "A t statistic carries the sign of the coefficient it tests. Both coefficients on this line are negative and the t is printed positive. Almost certainly a typesetting or transcription slip rather than anything substantive: the p-value is .30 either way, and I verified separately that |t| = 1.04 at df = 73 reproduces p = .30 exactly. Recorded only because the sentence supports an abstract-level claim, so the passage is load-bearing. One provenance caution: this PDF's font encoding renders minus as '2' throughout, which is why the neighbouring '2 2.39' reads oddly -- but the asymmetry between the two lines is in the source, not introduced by extraction.",
+      "reproduction": "no command applies -- this is a notation and sign reading of one printed line, not an arithmetic result",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_1bf9edcc3bf18a20",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "interaction_beta_larger_than_headline_beta",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Interaction beta larger than headline beta",
+      "description": "Two standardized coefficients of near-equal magnitude are reported with markedly different t statistics, in models fitted to the same participants. There is a completely ordinary explanation and it is probably the right one: the second model adds an apparently uncentred Facebook-use x direct-contact product term, and the resulting collinearity inflates the standard error of every term involving it, which is exactly how a sizeable beta ends up with a small t. I record this as INDETERMINATE rather than as a flag because I cannot distinguish that from a transcription error in the beta without the standard errors -- and the standard errors are precisely what Text S3 was cited to provide and does",
+      "location": "Results, Exploratory analyses vs Results, Cognitive well-being",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "changes in cognitive well-being, B =.000, b =.129, t (71) = .39, p =.70"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:interaction_beta_larger_than_headline_beta",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "changes in cognitive well-being, B =.000, b =.129, t (71) = .39, p =.70",
+      "inputs": {
+        "beta_interaction_model": 0.129,
+        "t_interaction_model": 0.39,
+        "df_interaction_model": 71,
+        "beta_primary_model": -0.124,
+        "t_primary_model": -2.39,
+        "df_primary_model": 73
+      },
+      "reported": {
+        "exploratory_cognitive": "B = .000, beta = .129, t(71) = .39, p = .70",
+        "primary_cognitive": "B = -.012, beta = -.124, t(73) = -2.39, p = .02"
+      },
+      "computed": {
+        "method": "Direct comparison of two printed standardized coefficients against their printed t statistics. Nothing was recomputed: the observation is simply that beta = .129 and beta = -.124 are of near-equal magnitude while their t statistics, 0.39 and -2.39, are not.",
+        "verdict": "cannot be adjudicated from what the paper prints"
+      },
+      "notes": "Two standardized coefficients of near-equal magnitude are reported with markedly different t statistics, in models fitted to the same participants. There is a completely ordinary explanation and it is probably the right one: the second model adds an apparently uncentred Facebook-use x direct-contact product term, and the resulting collinearity inflates the standard error of every term involving it, which is exactly how a sizeable beta ends up with a small t. I record this as INDETERMINATE rather than as a flag because I cannot distinguish that from a transcription error in the beta without the standard errors -- and the standard errors are precisely what Text S3 was cited to provide and does not. Deriving them myself from b and t would be unguarded arithmetic and I have not done it. This is where the missing supplement has its most concrete cost.",
+      "reproduction": "no command applies -- this is a comparison of printed coefficients across two models, not an arithmetic result",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_f6cd83ecc3485960",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "analytic_n_never_stated",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "Analytic n never stated",
+      "description": "The paper reports the observation count (4,589) but never the participant count entering the OLS life-satisfaction models; a reader must infer it from the degrees of freedom. The df chain is at least self-consistent, stepping down by one per added covariate exactly as it should, which is a point in the paper's favour -- and I used that chain as my working n elsewhere in this sweep, labelling it an inference every time. Recorded as indeterminate because the figure is genuinely absent rather than wrong. It matters because Table 1's correlations, the twelve moderation tests and all three OLS models depend on an n the reader is never told.",
+      "location": "Results, Attrition and compliance; Results, Cognitive well-being",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "we pruned the data by excluding all of the data from two participants who responded to , 33% of the texts, resulting in 4,589 total observations."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:analytic_n_never_stated",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "we pruned the data by excluding all of the data from two participants who responded to , 33% of the texts, resulting in 4,589 total observations.",
+      "inputs": {
+        "stated_recruited": 82,
+        "stated_non_completers": 3,
+        "stated_pruned": 2,
+        "stated_observations": 4589,
+        "stated_participant_level_analytic_n": "never printed"
+      },
+      "reported": {
+        "recruited": 82,
+        "did_not_complete": 3,
+        "excluded_for_low_compliance": 2,
+        "total_observations": 4589,
+        "residual_df_across_the_three_ols_models": [
+          73,
+          72,
+          71
+        ]
+      },
+      "computed": {
+        "method": "A reading of what the paper does and does not print. The participant-level analytic n is never stated; the only trace of it is the residual df chain, which steps down by exactly one as each additional covariate is added (73 with 3 predictors, 72 with 4, 71 with 5) -- an internally coherent pattern. No sample size was computed from it here.",
+        "n_places_the_participant_level_analytic_n_is_printed": 0
+      },
+      "notes": "The paper reports the observation count (4,589) but never the participant count entering the OLS life-satisfaction models; a reader must infer it from the degrees of freedom. The df chain is at least self-consistent, stepping down by one per added covariate exactly as it should, which is a point in the paper's favour -- and I used that chain as my working n elsewhere in this sweep, labelling it an inference every time. Recorded as indeterminate because the figure is genuinely absent rather than wrong. It matters because Table 1's correlations, the twelve moderation tests and all three OLS models depend on an n the reader is never told.",
+      "reproduction": "no command applies -- this records a value the paper never prints, not an arithmetic result",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_da496a92fd81334e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_power_analysis_reported",
+      "producer": "legacy_sweep",
+      "technique": "not_computational",
+      "title": "No power analysis reported (Methods, Participants)",
+      "description": "No a-priori power analysis and no sample-size justification appear anywhere. This is unremarkable for a 2013 experience-sampling paper and is NOT offered as a criticism of the authors' conduct; it is recorded because it bears directly on the moderation nulls above. The participant-level tests run on roughly 77 people and the paper itself describes its effects as 'small', so the twelve null moderation tests are where an unstated power assumption does the most work.",
+      "location": "Methods, Participants",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females; 60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other) were recruited for a study on Facebook through flyers posted around Ann Arbor, Michigan."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_power_analysis_reported",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Eighty-two people ( M age =19.52, SD age =2.17; 53 females; 60.5% European American, 28.4% Asian, 6.2% African American, and 4.9% other) were recruited for a study on Facebook through flyers posted around Ann Arbor, Michigan.",
+      "inputs": {
+        "stated_target_n": "none",
+        "stated_alpha": "none",
+        "stated_target_power": "none",
+        "stated_expected_effect_size": "none"
+      },
+      "reported": {
+        "recruited_n": 82,
+        "sample_size_justification": "none given"
+      },
+      "computed": {
+        "method": "verify_power_analysis was the appropriate check and could not be run: it requires a stated effect size, alpha and target power, and the paper states none of the three. Recorded as a refusal rather than a substituted calculation.",
+        "n_power_inputs_stated_of_the_3_required": 0
+      },
+      "notes": "No a-priori power analysis and no sample-size justification appear anywhere. This is unremarkable for a 2013 experience-sampling paper and is NOT offered as a criticism of the authors' conduct; it is recorded because it bears directly on the moderation nulls above. The participant-level tests run on roughly 77 people and the paper itself describes its effects as 'small', so the twelve null moderation tests are where an unstated power assumption does the most work.",
+      "reproduction": "no command applies -- power-check requires a stated effect size, alpha and target power, and the paper states none of them",
+      "reproduction_kind": "no_command_applies",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_85e8878f487d67df",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "3b0ff25c9cad36110ef4679e4dfddd2424ee755a84ff5eea12ade5635c9ce9ac",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-14 02:37 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

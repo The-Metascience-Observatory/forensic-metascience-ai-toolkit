@@ -22,7 +22,7 @@ import pytest
 
 from forensic_metascience_ai_toolkit import tripwire
 from forensic_metascience_ai_toolkit.tripwire import (
-    Trip, TripwireError, check_preflight, check_report, enforce, summarise,
+    Trip, TripwireError, check_preflight, enforce, summarise,
 )
 
 
@@ -58,29 +58,6 @@ class TestXmlPresentButNoText:
         assert t.fired is False and "no publisher XML" in t.expected
 
 
-class TestStage2CarriedNothing:
-    def test_it_fires_when_the_report_carries_none(self):
-        t = check_report([{"id": "1"}, {"id": "2"}], {"findings": []})[0]
-        assert t.fired is True
-        assert "2 sweep finding" in t.expected
-
-    def test_it_is_silent_when_the_report_carries_some(self):
-        t = check_report([{"id": "1"}], {"findings": [{"title": "x"}]})[0]
-        assert t.fired is False
-
-    def test_no_sweep_findings_is_not_a_trip(self):
-        """A clean paper produces no findings and must not be killed for it."""
-        assert check_report([], {"findings": []})[0].fired is False
-
-    def test_a_missing_report_is_NOT_MEASURED_rather_than_fired(self):
-        """The exact mistake the first replay made: two archived runs had a
-        working stage 2 and no report.json because they predate the schema.
-        Scoring that as a trip invented a 4% false-positive rate."""
-        t = check_report([{"id": "1"}], None)[0]
-        assert t.fired is False
-        assert t.not_measured is True
-
-
 class TestNotMeasuredIsNeverAPass:
     def test_the_summary_counts_it_separately(self):
         trips = [Trip("a", False), Trip("b", False, not_measured=True)]
@@ -101,7 +78,7 @@ class TestEveryTripCarriesItsPositiveEvidence:
     def test_a_fired_trip_names_what_should_have_arrived(self, tmp_path):
         d = tmp_path / "paper"; d.mkdir()
         (d / "article.xml").write_text("<article></article>", encoding="utf-8")
-        for t in check_preflight(d) + check_report([{"id": "1"}], {"findings": []}):
+        for t in check_preflight(d):
             if t.fired:
                 assert t.expected, f"{t.id} fired with no stated evidence"
                 assert t.got, f"{t.id} fired without saying what arrived"
@@ -131,63 +108,6 @@ class TestTheModes:
         """A tripped run must be diagnosable, so `fired` is populated in every
         mode rather than only in the one that lets the run continue."""
         assert enforce(self.FIRED, mode="off")["fired"][0]["id"] == "x"
-
-
-class TestTheArchiveRemainsQuiet:
-    """The false-positive half, kept executable rather than only recorded."""
-
-    #: Two depths, resolved from the REPO ROOT and not the working directory:
-    #: dated run dirs sit at `<corpus>/<paper>/forensic_review*`, and since the
-    #: corpus consolidation every fixture paper lives under `tests/fixtures/papers/`. The
-    #: single fixed-depth `Path(".").glob("*/*/...")` this replaced matched 0
-    #: of 22 archived runs after the move and the replay below skipped green
-    #: -- a guard that had stopped guarding (LESSONS.md, entry 4).
-    _REVIEW_GLOBS = ("*/*/forensic_review*/findings.json",
-                     "tests/fixtures/papers/*/*/forensic_review*/findings.json")
-
-    @classmethod
-    def _archived_runs(cls):
-        from pathlib import Path
-        root = Path(__file__).resolve().parents[1]
-        found = []
-        for pattern in cls._REVIEW_GLOBS:
-            found.extend(p for p in root.glob(pattern)
-                         if "scratchpad" not in p.parts)
-        return sorted(set(found))
-
-    def test_the_replay_can_see_the_archive(self):
-        """The known positive for the test below: in a checkout that carries
-        `tests/fixtures/papers/`, the globs must find runs. A replay that finds nothing
-        and skips is indistinguishable from one that found nothing wrong."""
-        from pathlib import Path
-        if not (Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "papers").is_dir():
-            pytest.skip("no tests/fixtures/papers/ corpus in this checkout")
-        assert self._archived_runs(), (
-            "tests/fixtures/papers/ is present but no forensic_review*/findings.json was "
-            "found -- the archive globs no longer match the corpus layout")
-
-    def test_no_archived_run_would_have_been_killed(self):
-        runs = self._archived_runs()
-        measurable = killed = 0
-        for fj in runs:
-            rep = fj.parent / "report.json"
-            if not rep.is_file():
-                continue          # pre-schema: not measurable, not a pass
-            try:
-                f = json.loads(fj.read_text(encoding="utf-8"))
-                r = json.loads(rep.read_text(encoding="utf-8"))
-            except Exception:
-                continue
-            sweep = f if isinstance(f, list) else (f.get("findings") or [])
-            measurable += 1
-            if check_report(sweep, r)[0].fired:
-                killed += 1
-        if not measurable:
-            pytest.skip("no archived runs present")
-        assert killed == 0, (
-            f"{killed} of {measurable} archived runs would have been killed; "
-            "a tripwire that fires on healthy runs gets disabled and is then "
-            "worse than nothing")
 
 
 class TestAStageThatReportsItsOwnError:
@@ -286,4 +206,4 @@ class TestASecondaryModelWritingContent:
 
     def test_the_message_says_what_to_do(self):
         t = self._trip(self._meta(3000))
-        assert "messages.stage" in t.message
+        assert "messages.*.json" in t.message

@@ -1,0 +1,2180 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1002--ajcp.70049",
+  "run_id": "r_533a83cecb15ebd0",
+  "findings": [
+    {
+      "slug": "pdf_markdown_agreement",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Pdf markdown agreement (Whole paper (body.md vs PDF pages 4-8))",
+      "description": "Cross-check performed before any value was flagged, per rulebook rule 10. Every coefficient, SE, p-value and Table 1 cell used below was confirmed identical in both extractions, so no finding here rests on a transcription artifact.",
+      "location": "Whole paper (body.md vs PDF pages 4-8)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Table 1 / Table 2 / Table 3 / Table 4 as printed on PDF pages 6-8"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:pdf_markdown_agreement",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Table 1 / Table 2 / Table 3 / Table 4 as printed on PDF pages 6-8",
+      "inputs": {
+        "pdf_path": "10.1002--ajcp.70049.pdf",
+        "first_page": 4,
+        "last_page": 8
+      },
+      "reported": {
+        "source_a": "body.md markdown extraction",
+        "source_b": "pdfplumber extraction of PDF pages 4-8"
+      },
+      "computed": {
+        "agreement": "exact on all four tables and all Results-section numbers"
+      },
+      "notes": "Cross-check performed before any value was flagged, per rulebook rule 10. Every coefficient, SE, p-value and Table 1 cell used below was confirmed identical in both extractions, so no finding here rests on a transcription artifact.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 4 --last-page 8",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ae7b9a0f7d01c3eb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_inline_nhst",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no inline nhst (Results and Discussion body text)",
+      "description": "Zero APA-style test statistics is the expected result for this paper: it reports coefficient tables and bare p-values, never a t/F/chi-squared with degrees of freedom inline. statcheck therefore contributes no coverage here, and all NHST verification had to be done from the coefficient/SE pairs instead. This is a limitation of the paper's reporting style, not a statcheck failure.",
+      "location": "Results and Discussion body text",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "engaging communication and inclusive decision making showed significant associations (p<.05) with the number of EBPs a year later"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_inline_nhst",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "engaging communication and inclusive decision making showed significant associations (p<.05) with the number of EBPs a year later",
+      "inputs": {
+        "text": "Results and Discussion paragraphs including all reported p-values, alphas, correlations and ICC"
+      },
+      "reported": {
+        "inline_apa_statistics": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "notes": "Zero APA-style test statistics is the expected result for this paper: it reports coefficient tables and bare p-values, never a t/F/chi-squared with degrees of freedom inline. statcheck therefore contributes no coverage here, and all NHST verification had to be done from the coefficient/SE pairs instead. This is a limitation of the paper's reporting style, not a statcheck failure.",
+      "reproduction": "metascience statcheck --text \"<Results and Discussion body text of 10.1002/ajcp.70049>\"",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_0a418f4d74d43adb",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_shared_denominator",
+      "producer": "legacy_sweep",
+      "technique": "grim_sweep",
+      "title": "Table1 shared denominator (Table 1, all categorical rows)",
+      "description": "The seven 2-decimal percentages jointly admit n=64, and every recovered count matches the count actually printed alongside it. This is a strong internal-consistency pass: percentages reported to 2 dp against n=64 are highly constraining, and all seven agree.",
+      "location": "Table 1, all categorical rows",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Pennsylvania 55 (85.94%); Missouri 9 (14.06%); Communities That Care 26 (40.63%); Externally funded 41 (64.06%); TA None 23 (35.94%); TA 1 21 (32.81%); TA 2 or 3 20 (31.25%)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_shared_denominator",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Pennsylvania 55 (85.94%); Missouri 9 (14.06%); Communities That Care 26 (40.63%); Externally funded 41 (64.06%); TA None 23 (35.94%); TA 1 21 (32.81%); TA 2 or 3 20 (31.25%)",
+      "inputs": {
+        "values": [
+          85.94,
+          14.06,
+          40.63,
+          64.06,
+          35.94,
+          32.81,
+          31.25
+        ],
+        "n_min": 2,
+        "n_max": 200,
+        "decimals": 2,
+        "value_type": "percentage"
+      },
+      "reported": {
+        "percentages": [
+          85.94,
+          14.06,
+          40.63,
+          64.06,
+          35.94,
+          32.81,
+          31.25
+        ],
+        "claimed_n": 64
+      },
+      "computed": {
+        "joint_viable_ns": [
+          64,
+          128,
+          192
+        ],
+        "recovered_counts_at_n64": {
+          "85.94": 55,
+          "14.06": 9,
+          "40.63": 26,
+          "64.06": 41,
+          "35.94": 23,
+          "32.81": 21,
+          "31.25": 20
+        }
+      },
+      "notes": "The seven 2-decimal percentages jointly admit n=64, and every recovered count matches the count actually printed alongside it. This is a strong internal-consistency pass: percentages reported to 2 dp against n=64 are highly constraining, and all seven agree.",
+      "reproduction": "metascience grim-sweep --values 85.94,14.06,40.63,64.06,35.94,32.81,31.25 --n-min 2 --n-max 200 --decimals 2 --value-type percentage",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_66a35b8a98d504d2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_ta_counts_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 ta counts sum (Table 1, Level of technical assistance received)",
+      "description": "TA categories partition the full sample exactly.",
+      "location": "Table 1, Level of technical assistance received",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "None 23 (35.94%); 1 21 (32.81%); 2 or 3 20 (31.25%)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_ta_counts_sum",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "None 23 (35.94%); 1 21 (32.81%); 2 or 3 20 (31.25%)",
+      "inputs": {
+        "values": [
+          23,
+          21,
+          20
+        ],
+        "expected_sum": 64,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "values": [
+          23,
+          21,
+          20
+        ],
+        "expected": 64
+      },
+      "computed": {
+        "actual_sum": 64,
+        "difference": 0
+      },
+      "notes": "TA categories partition the full sample exactly.",
+      "reproduction": "metascience summation --values 23,21,20 --expected-sum 64 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_8a3a383f4e8bf154",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_ta_pct_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 ta pct sum (Table 1, Level of technical assistance received)",
+      "description": "Sums to exactly 100.00 with no rounding drift.",
+      "location": "Table 1, Level of technical assistance received",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "35.94% / 32.81% / 31.25%"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_ta_pct_sum",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "35.94% / 32.81% / 31.25%",
+      "inputs": {
+        "values": [
+          35.94,
+          32.81,
+          31.25
+        ],
+        "expected_sum": 100,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "values": [
+          35.94,
+          32.81,
+          31.25
+        ],
+        "expected": 100
+      },
+      "computed": {
+        "actual_sum": 100,
+        "difference": 0
+      },
+      "notes": "Sums to exactly 100.00 with no rounding drift.",
+      "reproduction": "metascience summation --values 35.94,32.81,31.25 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_657354ccc5ca5fb1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_state_counts_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 state counts sum (Table 1, State)",
+      "description": "State categories partition the sample exactly.",
+      "location": "Table 1, State",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Pennsylvania (n, %) 55 (85.94%); Missouri (n, %) 9 (14.06%)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_state_counts_sum",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Pennsylvania (n, %) 55 (85.94%); Missouri (n, %) 9 (14.06%)",
+      "inputs": {
+        "values": [
+          55,
+          9
+        ],
+        "expected_sum": 64,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "values": [
+          55,
+          9
+        ],
+        "expected": 64
+      },
+      "computed": {
+        "actual_sum": 64,
+        "difference": 0
+      },
+      "notes": "State categories partition the sample exactly.",
+      "reproduction": "metascience summation --values 55,9 --expected-sum 64 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_038a71f7f676929b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_state_pct_sum",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 state pct sum (Table 1, State)",
+      "description": "Sums to exactly 100.00.",
+      "location": "Table 1, State",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "85.94% / 14.06%"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_state_pct_sum",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "85.94% / 14.06%",
+      "inputs": {
+        "values": [
+          85.94,
+          14.06
+        ],
+        "expected_sum": 100,
+        "tolerance": 0.5
+      },
+      "reported": {
+        "values": [
+          85.94,
+          14.06
+        ],
+        "expected": 100
+      },
+      "computed": {
+        "actual_sum": 100,
+        "difference": 0
+      },
+      "notes": "Sums to exactly 100.00.",
+      "reproduction": "metascience summation --values 85.94,14.06 --expected-sum 100 --tolerance 0.5",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_21399a45ce1ab747",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_whole_table_sweep",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table1 whole table sweep (Table 1 (all 15 usable cells))",
+      "description": "Produced by the check_table tool (technique recorded as `manual` only because `check_table` is not a value in the findings schema enum). DENOMINATOR: 21 checks run across Table 1, 0 refused. Three non-consistent verdicts were returned, and all three are artifacts of MY OWN under-specification, not of the paper: for 'Number of coalition members' I omitted upper_bound, so GRIMMER and SPRITE fell back to a default 1-7 Likert scale and declared a member count of 35.78 out of range. The tool's own output exposes this (grim_consistent: true, failure_mode: out_of_range, bound_source: assumed). Re-run with a bound appropriate to a headcount, the row passes cleanly (see members_grim_corrected and mem",
+      "location": "Table 1 (all 15 usable cells)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Table 1 Coalition evidence-based practices, inclusive leadership, and other attributes (n = 64)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_whole_table_sweep",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Table 1 Coalition evidence-based practices, inclusive leadership, and other attributes (n = 64)",
+      "inputs": {
+        "provenance": "text",
+        "n_variables_declared": 15,
+        "n_cells": 15
+      },
+      "reported": {
+        "cells": 15,
+        "typed_kinds": {
+          "n_percent": 8,
+          "mean_sd": 6,
+          "ambiguous": 1
+        }
+      },
+      "computed": {
+        "n_checks_run": 21,
+        "n_not_run": 0,
+        "consistent": 13,
+        "indeterminate": 5,
+        "flagged_before_correction": 3,
+        "flagged_after_correcting_my_own_bound_error": 0
+      },
+      "notes": "Produced by the check_table tool (technique recorded as `manual` only because `check_table` is not a value in the findings schema enum). DENOMINATOR: 21 checks run across Table 1, 0 refused. Three non-consistent verdicts were returned, and all three are artifacts of MY OWN under-specification, not of the paper: for 'Number of coalition members' I omitted upper_bound, so GRIMMER and SPRITE fell back to a default 1-7 Likert scale and declared a member count of 35.78 out of range. The tool's own output exposes this (grim_consistent: true, failure_mode: out_of_range, bound_source: assumed). Re-run with a bound appropriate to a headcount, the row passes cleanly (see members_grim_corrected and members_grimmer_corrected). No Table 1 anomaly survives correct specification. This entry is recorded so the editorial stage does not resurrect the retracted flags.",
+      "reproduction": "metascience check-table --cells <Table 1 cells> --variables <15 declared variables> --bindings <row-label to variable-id map> --provenance text",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ee31b8f9a3c5abbe",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "n_ebp_grim_grimmer_sprite",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "N ebp grim grimmer sprite (Table 1, Number of evidence-based programs)",
+      "description": "This is the paper's primary outcome and one of the few genuinely GRIM-eligible cells: a count of whole programs over 64 coalitions, with bounds 0-9 STATED by the paper ('The number of EBPs reported ranged from 0 to 9'). Mean, SD and a reconstructible integer distribution all check out.",
+      "location": "Table 1, Number of evidence-based programs",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Number of evidence-based programs (mean, SD) 1.67 (2.15)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:n_ebp_grim_grimmer_sprite",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Number of evidence-based programs (mean, SD) 1.67 (2.15)",
+      "inputs": {
+        "mean": 1.67,
+        "sd": 2.15,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 9,
+        "data_type": "count",
+        "decimals": 2,
+        "decimals_sd": 2
+      },
+      "reported": {
+        "mean": 1.67,
+        "sd": 2.15,
+        "n": 64
+      },
+      "computed": {
+        "grim": "consistent",
+        "grimmer": "consistent",
+        "sprite": "found"
+      },
+      "notes": "This is the paper's primary outcome and one of the few genuinely GRIM-eligible cells: a count of whole programs over 64 coalitions, with bounds 0-9 STATED by the paper ('The number of EBPs reported ranged from 0 to 9'). Mean, SD and a reconstructible integer distribution all check out.",
+      "reproduction": "metascience grimmer --mean 1.67 --sd 2.15 --n 64 --scale-min 0 --scale-max 9 --decimals 2 --decimals-sd 2 --data-type count",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_f6fa6a9436105f37",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ebp_reach_grim_grimmer",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Ebp reach grim grimmer (Table 1, EBP reach)",
+      "description": "GRIM and GRIMMER pass. SPRITE returned 'search_exhausted', which per the tool's own wording is NOT proof that no distribution exists and must not be read as an anomaly; over a 0-5370 range the search space is simply too large. Note also that at n=64 the GRIM granularity is 1/64, so a 1-decimal mean is only weakly constrained here -- this pass is real but carries little diagnostic weight.",
+      "location": "Table 1, EBP reach",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "EBP reach (mean, SD) 223.5 (410.75)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ebp_reach_grim_grimmer",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "EBP reach (mean, SD) 223.5 (410.75)",
+      "inputs": {
+        "mean": 223.5,
+        "sd": 410.75,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 5370,
+        "data_type": "count"
+      },
+      "reported": {
+        "mean": 223.5,
+        "sd": 410.75,
+        "n": 64
+      },
+      "computed": {
+        "grim": "consistent",
+        "grimmer": "consistent",
+        "sprite": "search_exhausted"
+      },
+      "notes": "GRIM and GRIMMER pass. SPRITE returned 'search_exhausted', which per the tool's own wording is NOT proof that no distribution exists and must not be read as an anomaly; over a 0-5370 range the search space is simply too large. Note also that at n=64 the GRIM granularity is 1/64, so a 1-decimal mean is only weakly constrained here -- this pass is real but carries little diagnostic weight.",
+      "reproduction": "metascience grimmer --mean 223.5 --sd 410.75 --n 64 --scale-min 0 --scale-max 5370 --decimals 1 --decimals-sd 2 --data-type count",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_d4f40857d2443458",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "members_grim_corrected",
+      "producer": "legacy_sweep",
+      "technique": "grim_check",
+      "title": "Members grim corrected (Table 1, Number of coalition members)",
+      "description": "2290/64 = 35.78125, which rounds back to the printed 35.78. The upper bound of 500 is MINE, not the paper's, and is flagged bound_source=assumed; it is deliberately generous and does not drive the verdict, since the granularity test passes independently of it. This supersedes the spurious out-of-range flag produced when the tool defaulted to a 1-7 scale.",
+      "location": "Table 1, Number of coalition members",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Number of coalition members (mean, SD) 35.78 (33.74)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:members_grim_corrected",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Number of coalition members (mean, SD) 35.78 (33.74)",
+      "inputs": {
+        "mean": 35.78,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 500,
+        "decimals": 2,
+        "data_type": "count",
+        "bound_source": "assumed"
+      },
+      "reported": {
+        "mean": 35.78,
+        "n": 64
+      },
+      "computed": {
+        "grim_consistent": true,
+        "implied_sum": 2289.92,
+        "rounded_sum": 2290,
+        "exact_mean": 35.78125,
+        "sum_in_range": true
+      },
+      "notes": "2290/64 = 35.78125, which rounds back to the printed 35.78. The upper bound of 500 is MINE, not the paper's, and is flagged bound_source=assumed; it is deliberately generous and does not drive the verdict, since the granularity test passes independently of it. This supersedes the spurious out-of-range flag produced when the tool defaulted to a 1-7 scale.",
+      "reproduction": "metascience grim --mean 35.78 --n 64 --scale-min 0 --scale-max 500 --decimals 2 --data-type count --bound-source assumed",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_6965ff68f6bda738",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "members_grimmer_corrected",
+      "producer": "legacy_sweep",
+      "technique": "grimmer_check",
+      "title": "Members grimmer corrected (Table 1, Number of coalition members)",
+      "description": "Five valid (sum, sum-of-squares) pairs found. The earlier 'impossible' verdict was entirely an artifact of the default 1-7 scale bound and is retracted.",
+      "location": "Table 1, Number of coalition members",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Number of coalition members (mean, SD) 35.78 (33.74)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:members_grimmer_corrected",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Number of coalition members (mean, SD) 35.78 (33.74)",
+      "inputs": {
+        "mean": 35.78,
+        "sd": 33.74,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 500,
+        "decimals": 2,
+        "decimals_sd": 2,
+        "data_type": "count"
+      },
+      "reported": {
+        "mean": 35.78,
+        "sd": 33.74,
+        "n": 64
+      },
+      "computed": {
+        "found_valid_combination": true,
+        "candidate_sums": [
+          2290
+        ],
+        "example_working_combination": {
+          "sum": 2290,
+          "sum_squares": 153638,
+          "exact_mean": 35.78125,
+          "exact_sd": 33.735417
+        }
+      },
+      "notes": "Five valid (sum, sum-of-squares) pairs found. The earlier 'impossible' verdict was entirely an artifact of the default 1-7 scale bound and is retracted.",
+      "reproduction": "metascience grimmer --mean 35.78 --sd 33.74 --n 64 --scale-min 0 --scale-max 500 --decimals 2 --decimals-sd 2 --data-type count",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_c2882bcdce65d276",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "sd_range_all_bounded_measures",
+      "producer": "legacy_sweep",
+      "technique": "check_sd_range",
+      "title": "Sd range all bounded measures (Table 1, six mean/SD rows)",
+      "description": "Six separate calls, all consistent; every range used is STATED by the paper (a reported data range or an instrument response scale), so none of these rests on an invented bound. No SD approaches its ceiling.",
+      "location": "Table 1, six mean/SD rows",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1.67 (2.15); 223.5 (410.75); 3.83 (0.42); 5.23 (1.13); 4.06 (0.29); 4.01 (0.32)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:sd_range_all_bounded_measures",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1.67 (2.15); 223.5 (410.75); 3.83 (0.42); 5.23 (1.13); 4.06 (0.29); 4.01 (0.32)",
+      "inputs": {
+        "ranges_used": {
+          "n_ebp": "0-9 (stated)",
+          "ebp_reach": "0-5370 (stated)",
+          "communication": "1.25-5 (stated in Results)",
+          "ebp_adherence": "1-7 (stated item options)",
+          "idm": "1-5 (stated)",
+          "icr": "1-5 (stated)"
+        },
+        "n": 64
+      },
+      "reported": {
+        "sds": [
+          2.15,
+          410.75,
+          0.42,
+          1.13,
+          0.29,
+          0.32
+        ]
+      },
+      "computed": {
+        "n_ebp": {
+          "max_possible_sd": 4.5356,
+          "fraction_of_max": 0.474
+        },
+        "ebp_reach": {
+          "max_possible_sd": 2706.23,
+          "fraction_of_max": 0.152
+        },
+        "communication": {
+          "max_possible_sd": 1.8898,
+          "fraction_of_max": 0.222
+        },
+        "ebp_adherence": {
+          "max_possible_sd": 3.0237,
+          "fraction_of_max": 0.374
+        },
+        "idm": {
+          "max_possible_sd": 2.0158,
+          "fraction_of_max": 0.144
+        },
+        "icr": {
+          "max_possible_sd": 2.0158,
+          "fraction_of_max": 0.159
+        },
+        "all_plausible": true
+      },
+      "notes": "Six separate calls, all consistent; every range used is STATED by the paper (a reported data range or an instrument response scale), so none of these rests on an invented bound. No SD approaches its ceiling.",
+      "reproduction": "metascience sd-range --sd 2.15 --min-val 0 --max-val 9 --n 64",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_7703f169a7d62efc",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "communication_scale_contradiction",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Communication scale contradiction",
+      "description": "Both constraints are STATED by the paper, which under rulebook rule 4 makes this a legitimate strong finding rather than an assumed-bound artifact. The direction of the error is undetermined: either the response options are misdescribed, or the '5' is a typo for '4'. Two details favour the latter -- the lower limit 1.25 is exactly 5/4, the value a four-item mean of (1,1,1,2) produces, which fits a 4-item/4-point instrument; and the neighbouring sentence describes a DIFFERENT pair of measures as being 'on a 1-5 scale', so the '5' may have been carried across. Related but weaker: 3.83 is glossed as corresponding to 'good', yet on the paper's own labels 3 = Good and 4 = Outstanding, so 3.83 sit",
+      "location": "Results paragraph 1 vs Measures, Engaging communication",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Results: 'the mean level of engaging communication was 3.83 on a 1.25-5 scale, corresponding to \"good\" for such facets as frequency.' Measures: 'calculated as the mean of member responses to four items ... (response options 1 = Needs a lot of work, 2 = Needs a little work, 3 = Good, 4 = Outstanding; Cronbach's alpha = 0.93).'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:communication_scale_contradiction",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Results: 'the mean level of engaging communication was 3.83 on a 1.25-5 scale, corresponding to \"good\" for such facets as frequency.' Measures: 'calculated as the mean of member responses to four items ... (response options 1 = Needs a lot of work, 2 = Needs a little work, 3 = Good, 4 = Outstanding; Cronbach's alpha = 0.93).'",
+      "inputs": {
+        "constraint_a": "engaging communication = mean of four items each scored 1-4, so the composite cannot exceed 4",
+        "constraint_b": "Results states the observed scale/range runs to 5"
+      },
+      "reported": {
+        "results_stated_range": "1.25 to 5",
+        "measures_stated_item_options": "1 to 4 (4 items, averaged)"
+      },
+      "computed": {
+        "attainable_range_of_the_composite": "1 to 4",
+        "reported_upper_limit": 5,
+        "exceeds_instrument_maximum_by": 1
+      },
+      "notes": "Both constraints are STATED by the paper, which under rulebook rule 4 makes this a legitimate strong finding rather than an assumed-bound artifact. The direction of the error is undetermined: either the response options are misdescribed, or the '5' is a typo for '4'. Two details favour the latter -- the lower limit 1.25 is exactly 5/4, the value a four-item mean of (1,1,1,2) produces, which fits a 4-item/4-point instrument; and the neighbouring sentence describes a DIFFERENT pair of measures as being 'on a 1-5 scale', so the '5' may have been carried across. Related but weaker: 3.83 is glossed as corresponding to 'good', yet on the paper's own labels 3 = Good and 4 = Outstanding, so 3.83 sits much nearer Outstanding. This affects interpretation of the headline predictor but not the arithmetic of any model.",
+      "reproduction": "Not tool-derived. This is a contradiction between two statements the paper itself makes; no forensic tool takes 'reported observed maximum' and 'instrument maximum' as joint inputs. Verified by reading both passages in the PDF (pages 5 and 6) and the markdown.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_0607255dfb7abef7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_constant_p_below_attainable",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T2 constant p below attainable (Table 2, Constant, model 1 (communication))",
+      "description": "The entire rounding interval implied by the printed coefficient and SE gives p between .0025 and .0028 -- roughly 2.5 to 2.8 times the claimed threshold, and nowhere near <.001. The mismatch survives a sensitivity check on the reference distribution: under a small-sample t with df=57 the p rises further to .0039, so no choice of reference distribution rescues '<.001'. Kept at `suspicious` rather than `impossible` because this is a p-threshold LABEL on a model intercept, not a substantive claim; a mis-mapped significance marker is the most economical explanation. df=100000 was used as a numerically exact stand-in for the normal reference distribution Stata uses for Poisson models.",
+      "location": "Table 2, Constant, model 1 (communication)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Constant -4.51 (1.50) <.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_constant_p_below_attainable",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Constant -4.51 (1.50) <.001",
+      "inputs": {
+        "b": -4.51,
+        "se": 1.5,
+        "reported_p": 0.001,
+        "df": 100000,
+        "endpoints_tested": [
+          {
+            "b": -4.515,
+            "se": 1.495
+          },
+          {
+            "b": -4.505,
+            "se": 1.505
+          }
+        ]
+      },
+      "reported": {
+        "b": -4.51,
+        "se": 1.5,
+        "p": "<.001"
+      },
+      "computed": {
+        "t_at_printed_values": -3.0067,
+        "p_at_printed_values": 0.002642,
+        "p_at_max_abs_t_endpoint": 0.002528,
+        "p_at_min_abs_t_endpoint": 0.00276,
+        "attainable_p_interval": [
+          0.002528,
+          0.00276
+        ],
+        "p_under_t_df57": 0.003924
+      },
+      "notes": "The entire rounding interval implied by the printed coefficient and SE gives p between .0025 and .0028 -- roughly 2.5 to 2.8 times the claimed threshold, and nowhere near <.001. The mismatch survives a sensitivity check on the reference distribution: under a small-sample t with df=57 the p rises further to .0039, so no choice of reference distribution rescues '<.001'. Kept at `suspicious` rather than `impossible` because this is a p-threshold LABEL on a model intercept, not a substantive claim; a mis-mapped significance marker is the most economical explanation. df=100000 was used as a numerically exact stand-in for the normal reference distribution Stata uses for Poisson models.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only and has no `metascience` verb. Inputs to reproduce via the MCP tool: b=-4.51, se=1.50, df=100000; then endpoints b=-4.515/se=1.495 and b=-4.505/se=1.505.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_bc0add68ff01e4f8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_ctc_p_below_attainable",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T3 ctc p below attainable (Table 3, Communities That Care, model 1 (communication))",
+      "description": "The whole attainable interval [.00117, .00136] lies above .001, so '<.001' is not reachable from the printed inputs under any rounding; under t(df=57) it rises to .0021. Importantly the paper's own Results text gives the correct value for this same coefficient -- 'following the CTC model was significant (p<.01)' -- so the TEXT and the TABLE disagree and the text is the one consistent with the arithmetic. See ctc_text_vs_table_discrepancy.",
+      "location": "Table 3, Communities That Care, model 1 (communication)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Communities That Care 3.16 (0.98) <.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_ctc_p_below_attainable",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Communities That Care 3.16 (0.98) <.001",
+      "inputs": {
+        "b": 3.16,
+        "se": 0.98,
+        "reported_p": 0.001,
+        "df": 100000,
+        "endpoints_tested": [
+          {
+            "b": 3.165,
+            "se": 0.975
+          },
+          {
+            "b": 3.155,
+            "se": 0.985
+          }
+        ]
+      },
+      "reported": {
+        "b": 3.16,
+        "se": 0.98,
+        "p": "<.001"
+      },
+      "computed": {
+        "t_at_printed_values": 3.2245,
+        "p_at_printed_values": 0.0012624,
+        "p_at_max_t_endpoint": 0.0011701,
+        "p_at_min_t_endpoint": 0.0013602,
+        "attainable_p_interval": [
+          0.0011701,
+          0.0013602
+        ],
+        "p_under_t_df57": 0.0020905
+      },
+      "notes": "The whole attainable interval [.00117, .00136] lies above .001, so '<.001' is not reachable from the printed inputs under any rounding; under t(df=57) it rises to .0021. Importantly the paper's own Results text gives the correct value for this same coefficient -- 'following the CTC model was significant (p<.01)' -- so the TEXT and the TABLE disagree and the text is the one consistent with the arithmetic. See ctc_text_vs_table_discrepancy.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only and has no `metascience` verb. Inputs to reproduce via the MCP tool: b=3.16, se=0.98, df=100000; then endpoints b=3.165/se=0.975 and b=3.155/se=0.985.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_236a82d1aadc4213",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ctc_text_vs_table_discrepancy",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Ctc text vs table discrepancy (Results paragraph 4 vs Table 3, Communities That Care)",
+      "description": "Per rulebook rule 10, the discrepancy itself is the finding. Recomputation from the most primitive numbers available (the coefficient and SE) adjudicates in favour of the text: p is about .0013, which satisfies p<.01 but not p<.001. So the Table 3 entry is the erroneous one. Low substantive impact -- CTC is a covariate, not a study hypothesis -- but it is a second instance of the same failure mode as t2_constant_p_below_attainable, and the co-occurrence is what makes the pattern worth reporting.",
+      "location": "Results paragraph 4 vs Table 3, Communities That Care",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Results text: 'in the models for EBP reach, following the CTC model was significant (p<.01) when the predictor was engaging in communication or inclusive decision making.' Table 3: 'Communities That Care 3.16 (0.98) <.001'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ctc_text_vs_table_discrepancy",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Results text: 'in the models for EBP reach, following the CTC model was significant (p<.01) when the predictor was engaging in communication or inclusive decision making.' Table 3: 'Communities That Care 3.16 (0.98) <.001'",
+      "inputs": {
+        "b": 3.16,
+        "se": 0.98,
+        "df": 100000
+      },
+      "reported": {
+        "text_threshold": "p<.01",
+        "table_threshold": "p<.001"
+      },
+      "computed": {
+        "p_recomputed_from_b_and_se": 0.0012624,
+        "consistent_with_text": true,
+        "consistent_with_table": false
+      },
+      "notes": "Per rulebook rule 10, the discrepancy itself is the finding. Recomputation from the most primitive numbers available (the coefficient and SE) adjudicates in favour of the text: p is about .0013, which satisfies p<.01 but not p<.001. So the Table 3 entry is the erroneous one. Low substantive impact -- CTC is a covariate, not a study hypothesis -- but it is a second instance of the same failure mode as t2_constant_p_below_attainable, and the co-occurrence is what makes the pattern worth reporting.",
+      "reproduction": "Not reproducible via the CLI: rests on the MCP-only check_regression (b=3.16, se=0.98, df=100000) compared against the two thresholds printed in the paper.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_eda275c1c3c9d29c",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_p_reported_as_zero",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T3 p reported as zero",
+      "description": "A p-value of exactly 0 is not attainable -- p is strictly positive for any finite test statistic. Every other cell in these tables uses the '<.001' convention, so this is almost certainly a truncation/formatting slip rather than a substantive claim, and the severity reflects that. Worth noting alongside the two threshold errors above as evidence that the p-value column of Tables 2-3 was assembled with less care than the coefficients, which all reproduce.",
+      "location": "Table 3, Number of EBP at baseline, model 2 (inclusive decision making)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Number of EBP at baseline 0.01 (0.001) 0"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_p_reported_as_zero",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Number of EBP at baseline 0.01 (0.001) 0",
+      "inputs": {
+        "b": 0.01,
+        "se": 0.001,
+        "reported_p": 0,
+        "df": 100000
+      },
+      "reported": {
+        "b": 0.01,
+        "se": 0.001,
+        "p": "0"
+      },
+      "computed": {
+        "t_at_printed_values": 10,
+        "p_at_printed_values": 1.5633e-23
+      },
+      "notes": "A p-value of exactly 0 is not attainable -- p is strictly positive for any finite test statistic. Every other cell in these tables uses the '<.001' convention, so this is almost certainly a truncation/formatting slip rather than a substantive claim, and the severity reflects that. Worth noting alongside the two threshold errors above as evidence that the p-value column of Tables 2-3 was assembled with less care than the coefficients, which all reproduce.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: b=0.01, se=0.001, reported_p=0, df=100000.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f43bb0fb68a7a1d1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_identical_inputs_different_p",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T3 identical inputs different p (Table 3, Number of EBP at baseline, models 1 and 3)",
+      "description": "Two cells print an IDENTICAL coefficient and standard error but carry p-values differing by more than four orders of magnitude (.01 vs <.001). Taken at face value the printed values give p = 5.7e-7, which contradicts the .01 in model 1. IMPORTANT CAVEAT AGAINST OVER-READING: the coefficient is rounded to 2 decimals while the SE is given to 3, so the true ratio is very poorly pinned -- a coefficient anywhere in [.005, .015] against SE .002 spans t from 2.5 to 7.5, which covers both reported p-values. This is therefore primarily an insufficient-precision problem (the printed values cannot adjudicate their own p) rather than demonstrable error. The row would be unverifiable to any reader trying",
+      "location": "Table 3, Number of EBP at baseline, models 1 and 3",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "model 1: 'Number of EBP at baseline 0.01 (0.002) .01'; model 3: 'Number of EBP at baseline 0.01 (0.002) <.001'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_identical_inputs_different_p",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "model 1: 'Number of EBP at baseline 0.01 (0.002) .01'; model 3: 'Number of EBP at baseline 0.01 (0.002) <.001'",
+      "inputs": {
+        "b": 0.01,
+        "se": 0.002,
+        "reported_p": 0.01,
+        "df": 100000
+      },
+      "reported": {
+        "model_1": {
+          "b": 0.01,
+          "se": 0.002,
+          "p": 0.01
+        },
+        "model_3": {
+          "b": 0.01,
+          "se": 0.002,
+          "p": "<.001"
+        }
+      },
+      "computed": {
+        "t_from_printed_values": 5,
+        "p_from_printed_values": 5.7427e-07,
+        "p_matches_reported_01": false,
+        "tool_severity": "suspicious"
+      },
+      "notes": "Two cells print an IDENTICAL coefficient and standard error but carry p-values differing by more than four orders of magnitude (.01 vs <.001). Taken at face value the printed values give p = 5.7e-7, which contradicts the .01 in model 1. IMPORTANT CAVEAT AGAINST OVER-READING: the coefficient is rounded to 2 decimals while the SE is given to 3, so the true ratio is very poorly pinned -- a coefficient anywhere in [.005, .015] against SE .002 spans t from 2.5 to 7.5, which covers both reported p-values. This is therefore primarily an insufficient-precision problem (the printed values cannot adjudicate their own p) rather than demonstrable error. The row would be unverifiable to any reader trying to check it.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: b=0.01, se=0.002, reported_p=0.01, df=100000.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_48870c5d6c059e17",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_ta_identical_inputs_two_ps",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T2 ta identical inputs two ps (Table 2, Level of technical assistance, models 1 and 2)",
+      "description": "Checked because identical printed inputs carrying different p-values is a duplication/copy-paste signature worth ruling out. It is not one here: both .97 and .98 sit inside the rounding envelope of the printed values (which give .953), and the two models are genuinely different regressions whose unrounded coefficients differ below the second decimal. Recorded as consistent so the editorial stage does not mistake it for the Table 3 case above, which is materially different.",
+      "location": "Table 2, Level of technical assistance, models 1 and 2",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "model 1: 'Level of technical assistance -0.01 (0.17) .97'; model 2: 'Level of technical assistance -0.01 (0.17) .98'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_ta_identical_inputs_two_ps",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "model 1: 'Level of technical assistance -0.01 (0.17) .97'; model 2: 'Level of technical assistance -0.01 (0.17) .98'",
+      "inputs": {
+        "b": -0.01,
+        "se": 0.17,
+        "df": 100000,
+        "reported_p_tested": [
+          0.97,
+          0.98
+        ]
+      },
+      "reported": {
+        "model_1_p": 0.97,
+        "model_2_p": 0.98
+      },
+      "computed": {
+        "t_from_printed_values": -0.0588,
+        "p_from_printed_values": 0.9531,
+        "verdict_vs_0_97": "consistent",
+        "verdict_vs_0_98": "consistent"
+      },
+      "notes": "Checked because identical printed inputs carrying different p-values is a duplication/copy-paste signature worth ruling out. It is not one here: both .97 and .98 sit inside the rounding envelope of the printed values (which give .953), and the two models are genuinely different regressions whose unrounded coefficients differ below the second decimal. Recorded as consistent so the editorial stage does not mistake it for the Table 3 case above, which is materially different.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: b=-0.01, se=0.17, df=100000, tested against reported_p 0.97 and 0.98.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_ff2995fb0624b988",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_headline_predictors_reproduce",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T2 headline predictors reproduce (Table 2, three inclusive-leadership coefficients)",
+      "description": "All three of the paper's primary number-of-EBPs claims reproduce from their own coefficients and standard errors. The abstract-level claim that communication and inclusive decision making are significant at p<.05, and that inclusion of residents is marginal at .07, is arithmetically sound.",
+      "location": "Table 2, three inclusive-leadership coefficients",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Communication 1.01 (0.38) .01; Inclusive decision making 1.34 (0.60) .03; Inclusion of community residents 0.85 (0.47) .07"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_headline_predictors_reproduce",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Communication 1.01 (0.38) .01; Inclusive decision making 1.34 (0.60) .03; Inclusion of community residents 0.85 (0.47) .07",
+      "inputs": {
+        "df": 100000,
+        "coefficients": [
+          {
+            "b": 1.01,
+            "se": 0.38,
+            "p": 0.01
+          },
+          {
+            "b": 1.34,
+            "se": 0.6,
+            "p": 0.03
+          },
+          {
+            "b": 0.85,
+            "se": 0.47,
+            "p": 0.07
+          }
+        ]
+      },
+      "reported": {
+        "communication_p": 0.01,
+        "idm_p": 0.03,
+        "icr_p": 0.07
+      },
+      "computed": {
+        "communication": {
+          "t": 2.6579,
+          "p": 0.007864
+        },
+        "idm": {
+          "t": 2.2333,
+          "p_reported_matches": true
+        },
+        "icr": {
+          "t": 1.8085,
+          "p_reported_matches": true
+        }
+      },
+      "notes": "All three of the paper's primary number-of-EBPs claims reproduce from their own coefficients and standard errors. The abstract-level claim that communication and inclusive decision making are significant at p<.05, and that inclusion of residents is marginal at .07, is arithmetically sound.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: (b=1.01,se=0.38), (b=1.34,se=0.60), (b=0.85,se=0.47), each with df=100000.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_6be3b7e7e52b978e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t3_headline_predictors_reproduce",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T3 headline predictors reproduce (Table 3, three inclusive-leadership coefficients)",
+      "description": "All three EBP-reach claims reproduce. The inclusive-decision-making coefficient gives p about .005, which the paper rounds up to .01 -- conservative, not inflationary.",
+      "location": "Table 3, three inclusive-leadership coefficients",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Communication 3.91 (1.78) .03; Inclusive decision making 8.57 (3.03) .01; Inclusion of community residents 4.53 (2.05) .03"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t3_headline_predictors_reproduce",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Communication 3.91 (1.78) .03; Inclusive decision making 8.57 (3.03) .01; Inclusion of community residents 4.53 (2.05) .03",
+      "inputs": {
+        "df": 100000,
+        "coefficients": [
+          {
+            "b": 3.91,
+            "se": 1.78,
+            "p": 0.03
+          },
+          {
+            "b": 8.57,
+            "se": 3.03,
+            "p": 0.01
+          },
+          {
+            "b": 4.53,
+            "se": 2.05,
+            "p": 0.03
+          }
+        ]
+      },
+      "reported": {
+        "communication_p": 0.03,
+        "idm_p": 0.01,
+        "icr_p": 0.03
+      },
+      "computed": {
+        "communication": {
+          "t": 2.1966
+        },
+        "idm": {
+          "t": 2.8284
+        },
+        "icr": {
+          "t": 2.2098
+        },
+        "all_within_rounding": true
+      },
+      "notes": "All three EBP-reach claims reproduce. The inclusive-decision-making coefficient gives p about .005, which the paper rounds up to .01 -- conservative, not inflationary.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: (b=3.91,se=1.78), (b=8.57,se=3.03), (b=4.53,se=2.05), each with df=100000.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_a73733a093e01632",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t4_headline_nulls_reproduce",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "T4 headline nulls reproduce (Table 4, three inclusive-leadership coefficients)",
+      "description": "The three null fidelity results reproduce arithmetically. Whether they license the paper's 'no association' conclusion is a separate question -- see fidelity_null_claim_uninterpretable.",
+      "location": "Table 4, three inclusive-leadership coefficients",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Communication 0.53 (0.60) .38; Inclusive decision making -0.05 (0.98) .96; Inclusion of community residents -0.10 (0.72) .89"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t4_headline_nulls_reproduce",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Communication 0.53 (0.60) .38; Inclusive decision making -0.05 (0.98) .96; Inclusion of community residents -0.10 (0.72) .89",
+      "inputs": {
+        "df": 100000,
+        "coefficients": [
+          {
+            "b": 0.53,
+            "se": 0.6,
+            "p": 0.38
+          },
+          {
+            "b": -0.05,
+            "se": 0.98,
+            "p": 0.96
+          },
+          {
+            "b": -0.1,
+            "se": 0.72,
+            "p": 0.89
+          }
+        ]
+      },
+      "reported": {
+        "communication_p": 0.38,
+        "idm_p": 0.96,
+        "icr_p": 0.89
+      },
+      "computed": {
+        "communication": {
+          "t": 0.8833,
+          "p": 0.3776
+        },
+        "idm": {
+          "t": -0.051
+        },
+        "icr": {
+          "t": -0.1389
+        },
+        "all_within_rounding": true
+      },
+      "notes": "The three null fidelity results reproduce arithmetically. Whether they license the paper's 'no association' conclusion is a separate question -- see fidelity_null_claim_uninterpretable.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Inputs: (b=0.53,se=0.60), (b=-0.05,se=0.98), (b=-0.10,se=0.72), each with df=100000.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_2ee22cbb8056e2b6",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "all_covariates_reproduce",
+      "producer": "legacy_sweep",
+      "technique": "check_regression",
+      "title": "All covariates reproduce (Tables 2, 3 and 4, all covariate and constant rows)",
+      "description": "DENOMINATOR FOR THE WHOLE PAPER: 63 coefficient/p pairs were checked across the three regression tables (9 headline predictors plus 54 covariates and constants). 59 reproduce within the rounding envelope of their printed inputs; 4 do not, and all 4 are in the p-value column, all 4 in Tables 2-3, and none touches a study hypothesis. Table 4 reproduces perfectly across all 21 cells. This is a numerically well-assembled paper: the anomalies are clustered in threshold labelling, not in the estimates.",
+      "location": "Tables 2, 3 and 4, all covariate and constant rows",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "All covariate rows across the three tables (Number of EBP/Quality of EBP at baseline, Communities That Care, Externally funded, Level of technical assistance, Number of members, Constant), each estimated in three models"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:all_covariates_reproduce",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "All covariate rows across the three tables (Number of EBP/Quality of EBP at baseline, Communities That Care, Externally funded, Level of technical assistance, Number of members, Constant), each estimated in three models",
+      "inputs": {
+        "df": 100000,
+        "tables": [
+          "Table 2",
+          "Table 3",
+          "Table 4"
+        ]
+      },
+      "reported": {
+        "n_coefficients_checked": 54
+      },
+      "computed": {
+        "n_reproducing_within_rounding": 50,
+        "n_flagged": 4,
+        "flagged": [
+          "Table 2 Constant model 1 (p<.001 unattainable)",
+          "Table 3 CTC model 1 (p<.001 unattainable)",
+          "Table 3 EBP baseline model 2 (p printed as 0)",
+          "Table 3 EBP baseline models 1 vs 3 (identical inputs, p .01 vs <.001)"
+        ]
+      },
+      "notes": "DENOMINATOR FOR THE WHOLE PAPER: 63 coefficient/p pairs were checked across the three regression tables (9 headline predictors plus 54 covariates and constants). 59 reproduce within the rounding envelope of their printed inputs; 4 do not, and all 4 are in the p-value column, all 4 in Tables 2-3, and none touches a study hypothesis. Table 4 reproduces perfectly across all 21 cells. This is a numerically well-assembled paper: the anomalies are clustered in threshold labelling, not in the estimates.",
+      "reproduction": "Not reproducible via the CLI: check_regression is MCP-only. Each of the 54 covariate/constant cells was passed as (b, se, reported_p, df=100000).",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_c729a0bf7ced705e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "t2_baseline_ebp_stalt",
+      "producer": "legacy_sweep",
+      "technique": "stalt_check",
+      "title": "T2 baseline ebp stalt (Table 2, Number of EBP at baseline, model 1)",
+      "description": "DOWNGRADED FROM THE TOOL'S VERDICT, deliberately. STALT returns highly_suspicious because the recovered p is about 11 orders of magnitude below the stated threshold. But rulebook rule 2's concern is a surprisingly strong effect being concealed behind a threshold, and that reading does not fit here: this coefficient is the lagged autoregressive adjustment term -- number of EBPs at baseline predicting number of EBPs one year later -- where a very large t is exactly what a stable count measured twice 12 months apart should produce. The same pattern recurs benignly across all three models in Table 2 (t = 7.75, 8.75, 7.20). Recorded so the signal is visible and auditable, but it should not be esc",
+      "location": "Table 2, Number of EBP at baseline, model 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Number of EBP at baseline 0.31 (0.04) <.001"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:t2_baseline_ebp_stalt",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Number of EBP at baseline 0.31 (0.04) <.001",
+      "inputs": {
+        "calculated_p": 9.275235694308838e-15,
+        "reported_threshold": "p<0.001"
+      },
+      "reported": {
+        "threshold": "p<0.001"
+      },
+      "computed": {
+        "calculated_p": 9.2752e-15,
+        "orders_of_magnitude_smaller": 11.03,
+        "tool_severity": "highly_suspicious"
+      },
+      "notes": "DOWNGRADED FROM THE TOOL'S VERDICT, deliberately. STALT returns highly_suspicious because the recovered p is about 11 orders of magnitude below the stated threshold. But rulebook rule 2's concern is a surprisingly strong effect being concealed behind a threshold, and that reading does not fit here: this coefficient is the lagged autoregressive adjustment term -- number of EBPs at baseline predicting number of EBPs one year later -- where a very large t is exactly what a stable count measured twice 12 months apart should produce. The same pattern recurs benignly across all three models in Table 2 (t = 7.75, 8.75, 7.20). Recorded so the signal is visible and auditable, but it should not be escalated; the substantive explanation is mundane. The p was recovered from the MCP-only check_regression (b=0.31, se=0.04, df=100000).",
+      "reproduction": "metascience stalt --calculated-p 9.275235694308838e-15 --reported-threshold \"p<0.001\"",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_4a1bdab0ddfc8098",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "regression_table_headers_mislabelled",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Regression table headers mislabelled",
+      "description": "All three coefficient tables label their estimate columns 'M (SD)' and the footnote glosses SD as 'standard deviation', but the cells contain regression coefficients with standard errors. The tables are headed 'Coefficient', so the intent is clear, and the recomputation confirms the parenthesised values are standard errors. Reported because a reader taking the labels at face value would misread every effect in the paper, and because the paper elsewhere states it deliberately omits effect sizes, leaving these columns as the sole quantitative description of its findings.",
+      "location": "Tables 2, 3 and 4, column headers and abbreviation footnotes",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Header row: 'Coefficient | Variable M (SD) p'. Footnote: 'Abbreviations: EBP, evidence-based programs; SD, standard deviation.'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:regression_table_headers_mislabelled",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Header row: 'Coefficient | Variable M (SD) p'. Footnote: 'Abbreviations: EBP, evidence-based programs; SD, standard deviation.'",
+      "inputs": {
+        "tables": [
+          "Table 2",
+          "Table 3",
+          "Table 4"
+        ]
+      },
+      "reported": {
+        "header_label": "M (SD)",
+        "footnote_expansion": "SD, standard deviation"
+      },
+      "computed": {
+        "actual_content": "regression coefficient and its standard error",
+        "evidence": "the parenthesised values behave as standard errors under t = b/SE, reproducing 59 of 63 reported p-values; read as standard deviations they would be meaningless in a coefficient table"
+      },
+      "notes": "All three coefficient tables label their estimate columns 'M (SD)' and the footnote glosses SD as 'standard deviation', but the cells contain regression coefficients with standard errors. The tables are headed 'Coefficient', so the intent is clear, and the recomputation confirms the parenthesised values are standard errors. Reported because a reader taking the labels at face value would misread every effect in the paper, and because the paper elsewhere states it deliberately omits effect sizes, leaving these columns as the sole quantitative description of its findings.",
+      "reproduction": "Not tool-derived: this is a labelling error identified by reading the tables, then corroborated by the fact that treating the parenthesised value as a standard error reproduces 59 of 63 p-values (via MCP-only check_regression).",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_c7849803a7699857",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "duplication_across_coefficient_tables",
+      "producer": "legacy_sweep",
+      "technique": "detect_duplication",
+      "title": "Duplication across coefficient tables (Tables 2, 3 and 4 (54 coefficient/SE cells))",
+      "description": "No evidence of copy-paste. Zero identical (value, SD) pairs across independent sources. The 5 'near matches' flagged are digit transpositions among tiny coefficients (0.35 vs 0.53; -0.01 vs -0.10; 0.10 vs 0.01) and are exactly the chance collisions expected when dozens of two-decimal values cluster near zero -- rulebook rule 11(b) says to discount matches on round/small values. Guard 11(a) was applied: sample_id was set so Tables 2 and 3 (same 64 coalitions) are not treated as independent. Repeated covariate estimates within a table (e.g. Table 4 models 1 and 3 both showing 0.02 (0.06)) are EXPECTED, since those models differ only in which leadership predictor is included and are fitted to t",
+      "location": "Tables 2, 3 and 4 (54 coefficient/SE cells)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "All coefficient (SE) cells from the three regression tables"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:duplication_across_coefficient_tables",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "All coefficient (SE) cells from the three regression tables",
+      "inputs": {
+        "blocks": [
+          "Table 2 (sample_id coalitions_64)",
+          "Table 3 (sample_id coalitions_64)",
+          "Table 4 (sample_id programs_101)"
+        ],
+        "decimals_mean": 2,
+        "decimals_sd": 3,
+        "near_match": true
+      },
+      "reported": {
+        "n_blocks": 3,
+        "n_cells": 54
+      },
+      "computed": {
+        "n_comparisons": 833,
+        "max_identical_pairs": 0,
+        "near_matches": 5,
+        "near_match_relation": "digit_transposition",
+        "example_near_matches": [
+          [
+            0.35,
+            0.53
+          ],
+          [
+            -0.01,
+            -0.1
+          ],
+          [
+            0.1,
+            0.01
+          ]
+        ]
+      },
+      "notes": "No evidence of copy-paste. Zero identical (value, SD) pairs across independent sources. The 5 'near matches' flagged are digit transpositions among tiny coefficients (0.35 vs 0.53; -0.01 vs -0.10; 0.10 vs 0.01) and are exactly the chance collisions expected when dozens of two-decimal values cluster near zero -- rulebook rule 11(b) says to discount matches on round/small values. Guard 11(a) was applied: sample_id was set so Tables 2 and 3 (same 64 coalitions) are not treated as independent. Repeated covariate estimates within a table (e.g. Table 4 models 1 and 3 both showing 0.02 (0.06)) are EXPECTED, since those models differ only in which leadership predictor is included and are fitted to the same data.",
+      "reproduction": "metascience duplication-detect --blocks <Table 2, Table 3, Table 4 coefficient/SE cells with sample_id coalitions_64 / coalitions_64 / programs_101> --decimals-mean 2 --decimals-sd 3",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_1012e156cdbb8ab8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "round_n_heuristic",
+      "producer": "legacy_sweep",
+      "technique": "flag_round_n",
+      "title": "Round n heuristic (Methods and all table headers)",
+      "description": "Sample sizes show natural non-round variation, consistent with genuine recruitment and attrition. The reported attrition (4 of 68 coalitions between waves) and the participation rates (60% and 56%) are unremarkable rather than implausibly clean, so rulebook rule 7's dropout concern does not apply.",
+      "location": "Methods and all table headers",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "68 coalitions; 64 coalitions at Wave 2; 101 programs in 35 coalitions; 1108/1851; 945/1695"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:round_n_heuristic",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "68 coalitions; 64 coalitions at Wave 2; 101 programs in 35 coalitions; 1108/1851; 945/1695",
+      "inputs": {
+        "ns": [
+          68,
+          64,
+          101,
+          35,
+          1851,
+          1695,
+          1108,
+          945
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reported": {
+        "ns": [
+          68,
+          64,
+          101,
+          35,
+          1851,
+          1695,
+          1108,
+          945
+        ]
+      },
+      "computed": {
+        "all_divisible_by_50": false,
+        "all_divisible_by_100": false,
+        "verdict": "no round-N flag"
+      },
+      "notes": "Sample sizes show natural non-round variation, consistent with genuine recruitment and attrition. The reported attrition (4 of 68 coalitions between waves) and the participation rates (60% and 56%) are unremarkable rather than implausibly clean, so rulebook rule 7's dropout concern does not apply.",
+      "reproduction": "metascience flag-round-n --ns 68,64,101,35,1851,1695,1108,945 --moderate-modulus 50 --strong-modulus 100",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_3d5eb6117c6eba55",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "fidelity_null_claim_uninterpretable",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Fidelity null claim uninterpretable",
+      "description": "Technique recorded as `manual` because `absence_of_evidence` is not a value in the findings schema enum; the intended tool was absence_of_evidence. This is a REPORTING finding and, in coverage terms, the most consequential gap in the paper. A null result is asserted prominently -- in the Highlights, the Results, the Discussion and the Conclusion -- yet Tables 2-4 report only coefficient, SE and p, with no interval anywhere, and the paper explicitly declines to report effect sizes ('Results in Tables 2-4 are shown as coefficients, and do not include effect sizes'). Consequently the largest fidelity effect still compatible with these data cannot be bounded from the printed numbers, and 'not si",
+      "location": "Results paragraph 4, Discussion, Conclusion and Highlights; Table 4",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'In contrast, none of the inclusive leadership practices that we examined was associated with subsequent EBP fidelity (Table 4).' / 'Contrary to expectation, no facet of inclusive leadership was associated with EBP intervention fidelity.'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:fidelity_null_claim_uninterpretable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'In contrast, none of the inclusive leadership practices that we examined was associated with subsequent EBP fidelity (Table 4).' / 'Contrary to expectation, no facet of inclusive leadership was associated with EBP intervention fidelity.'",
+      "inputs": {
+        "note": "absence_of_evidence requires ci_low and ci_high; the paper supplies neither."
+      },
+      "reported": {
+        "communication": "0.53 (0.60), p=.38",
+        "idm": "-0.05 (0.98), p=.96",
+        "icr": "-0.10 (0.72), p=.89",
+        "confidence_intervals_reported": "none",
+        "sesoi_stated": "none"
+      },
+      "computed": {
+        "check_status": "cannot be run on the paper's own numbers",
+        "reason": "no confidence interval is printed anywhere in the paper, and deriving one from the coefficient and SE would require hand arithmetic rather than a validated tool"
+      },
+      "notes": "Technique recorded as `manual` because `absence_of_evidence` is not a value in the findings schema enum; the intended tool was absence_of_evidence. This is a REPORTING finding and, in coverage terms, the most consequential gap in the paper. A null result is asserted prominently -- in the Highlights, the Results, the Discussion and the Conclusion -- yet Tables 2-4 report only coefficient, SE and p, with no interval anywhere, and the paper explicitly declines to report effect sizes ('Results in Tables 2-4 are shown as coefficients, and do not include effect sizes'). Consequently the largest fidelity effect still compatible with these data cannot be bounded from the printed numbers, and 'not significant' cannot be distinguished from 'no effect'. No SESOI is stated either, so even with intervals an equivalence claim would not be licensed. I ran the tool once on an interval I derived myself from the coefficient and SE purely to confirm the tool's behaviour; that output is NOT reported as a finding here, because the interval was not the paper's.",
+      "reproduction": "metascience absence-of-evidence --ci-low <not reported> --ci-high <not reported> --measure difference --claim-of-no-effect true",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_5982f1baa6c7056f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncorrected",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Multiplicity uncorrected (Analyses section; Tables 2, 3 and 4)",
+      "description": "Nine primary tests are reported with no correction mentioned anywhere. Five reach p<.05, and four of those sit in the .01-.03 band, which is where an uncorrected family of nine would be most vulnerable. Compounding this, covariates were selected by pre-screening bivariate associations at p<0.10 on the same data, a data-dependent model-building step whose effect on the reported p-values is not accounted for. Neither practice is unusual in this literature and neither makes any individual number wrong; the point is that the nominal p-values understate the false-positive risk across the family, and the paper offers no adjustment or acknowledgement.",
+      "location": "Analyses section; Tables 2, 3 and 4",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'Variables were retained in the final models as covariates only if bivariate associations had p values under 0.10.' / 'we examined lagged associations of each of the three measures of inclusive leadership at baseline ... with EBP measures at Time 2'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncorrected",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'Variables were retained in the final models as covariates only if bivariate associations had p values under 0.10.' / 'we examined lagged associations of each of the three measures of inclusive leadership at baseline ... with EBP measures at Time 2'",
+      "inputs": {
+        "tables": [
+          "Table 2",
+          "Table 3",
+          "Table 4"
+        ]
+      },
+      "reported": {
+        "primary_tests": 9,
+        "correction_applied": "none stated",
+        "covariate_screening_threshold": 0.1
+      },
+      "computed": {
+        "structure": "3 leadership predictors x 3 outcomes = 9 primary hypothesis tests, each in a separate model",
+        "significant_at_05": 5,
+        "p_values_in_the_02_to_03_band": 4
+      },
+      "notes": "Nine primary tests are reported with no correction mentioned anywhere. Five reach p<.05, and four of those sit in the .01-.03 band, which is where an uncorrected family of nine would be most vulnerable. Compounding this, covariates were selected by pre-screening bivariate associations at p<0.10 on the same data, a data-dependent model-building step whose effect on the reported p-values is not accounted for. Neither practice is unusual in this literature and neither makes any individual number wrong; the point is that the nominal p-values understate the false-positive risk across the family, and the paper offers no adjustment or acknowledgement.",
+      "reproduction": "Not tool-derived: a count of the reported hypothesis tests and a reading of the stated analysis strategy. No multiplicity-correction tool is available in this toolset.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_990ac7d68128750d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "no_power_analysis_reported",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "No power analysis reported (Methods / Analyses section)",
+      "description": "verify_power_analysis could not be run at all: the paper states no target effect size, no alpha and no power target, so there is nothing to reproduce. That absence is itself the finding. For context only, a two-tailed correlation test would need about 85 observations to reach 80% power at r=0.30, against the 64 coalitions actually analysed. This benchmark is APPROXIMATE and must not be read as a power calculation for the paper's actual Poisson/negative-binomial/hierarchical models, which it does not match; it is offered only to indicate the scale of the coalition-level sample. The Table 4 fidelity models are weaker still in the relevant respect -- see level2_units_for_fidelity.",
+      "location": "Methods / Analyses section",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'For descriptive analyses, baseline means and standard deviations ... In covariate-adjusted analyses, we examined lagged associations ...' (no power or sample-size justification appears anywhere in the paper)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:no_power_analysis_reported",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'For descriptive analyses, baseline means and standard deviations ... In covariate-adjusted analyses, we examined lagged associations ...' (no power or sample-size justification appears anywhere in the paper)",
+      "inputs": {
+        "test_type": "correlation",
+        "effect_size": 0.3,
+        "alpha": 0.05,
+        "power": 0.8,
+        "tails": 2
+      },
+      "reported": {
+        "power_analysis": "none stated",
+        "effect_size_target": "none stated",
+        "alpha": "not stated",
+        "achieved_n": "64 coalitions; 101 programs in 35 coalitions"
+      },
+      "computed": {
+        "benchmark_required_n_for_r_0_3_at_80_percent_power": 85,
+        "achieved_power_at_that_n": 0.8003,
+        "coalition_level_n": 64
+      },
+      "notes": "verify_power_analysis could not be run at all: the paper states no target effect size, no alpha and no power target, so there is nothing to reproduce. That absence is itself the finding. For context only, a two-tailed correlation test would need about 85 observations to reach 80% power at r=0.30, against the 64 coalitions actually analysed. This benchmark is APPROXIMATE and must not be read as a power calculation for the paper's actual Poisson/negative-binomial/hierarchical models, which it does not match; it is offered only to indicate the scale of the coalition-level sample. The Table 4 fidelity models are weaker still in the relevant respect -- see level2_units_for_fidelity.",
+      "reproduction": "metascience required-n --test-type correlation --effect-size 0.3 --alpha 0.05 --power 0.8 --tails 2",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_450a242b8bdb082e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "level2_units_for_fidelity",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Level2 units for fidelity (Table 4 header and Analyses section)",
+      "description": "The clustering is handled CORRECTLY -- programs are nested within coalitions with a coalition random intercept, which is the right specification and is explicitly justified by the reported ICC of 0.10. The observation is about interpretation: because every predictor tested in Table 4 is measured at the coalition level, the information available to estimate those coefficients comes from 35 coalitions, not 101 programs, and the standard errors in Table 4 are correspondingly the largest in the paper. The paper's null fidelity finding is therefore its least well-powered result while being stated as confidently as its positive ones. Note also that 35 coalitions contribute fidelity data although T",
+      "location": "Table 4 header and Analyses section",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'TABLE 4 Associations between initial measures of inclusive leadership and subsequent evidence-based practice fidelity (n = 101 programs in 35 coalitions).' / 'An unconditional intraclass correlation coefficient of 0.10 for fidelity at Time 2 warranted using hierarchical linear models with programs nested within coalitions, and coalition specified as a random intercept.'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:level2_units_for_fidelity",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'TABLE 4 Associations between initial measures of inclusive leadership and subsequent evidence-based practice fidelity (n = 101 programs in 35 coalitions).' / 'An unconditional intraclass correlation coefficient of 0.10 for fidelity at Time 2 warranted using hierarchical linear models with programs nested within coalitions, and coalition specified as a random intercept.'",
+      "inputs": {
+        "table": "Table 4"
+      },
+      "reported": {
+        "level_1_n": 101,
+        "level_2_n": 35,
+        "icc": 0.1,
+        "random_effect": "coalition intercept"
+      },
+      "computed": {
+        "predictor_level": "all three inclusive-leadership measures are coalition-level (level 2), as are all five covariates",
+        "effective_units_for_the_tested_predictors": 35
+      },
+      "notes": "The clustering is handled CORRECTLY -- programs are nested within coalitions with a coalition random intercept, which is the right specification and is explicitly justified by the reported ICC of 0.10. The observation is about interpretation: because every predictor tested in Table 4 is measured at the coalition level, the information available to estimate those coefficients comes from 35 coalitions, not 101 programs, and the standard errors in Table 4 are correspondingly the largest in the paper. The paper's null fidelity finding is therefore its least well-powered result while being stated as confidently as its positive ones. Note also that 35 coalitions contribute fidelity data although Table 1 records 38 coalitions using at least one EBP; the paper does not reconcile this.",
+      "reproduction": "Not tool-derived: a design observation from the stated nesting structure and the level at which the predictors are measured. No tool in this set evaluates level-2 power in a two-level model.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_98c172e582520287",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ebp_adherence_row_denominator_unknown",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Ebp adherence row denominator unknown (Table 1, EBP adherence row)",
+      "description": "This was the one Table 1 cell the typed parser refused: alone among the summary rows it carries no '(mean, SD)' suffix, so its meaning is not fixed by syntax or label. Two separate problems follow. First, the denominator is wrong or at least unstated: fidelity/adherence is a PROGRAM-level measure (Table 4 puts it at 101 programs in 35 coalitions) and the Methods say descriptives were examined 'at the coalition and program level, respectively', yet the row sits under a column headed n=64. Second, the paper uses three different names for what appears to be one construct -- 'EBP adherence' (Table 1), 'EBP fidelity' (Methods, Results, Table 4 title) and 'Quality of EBP at baseline' (Table 4 cova",
+      "location": "Table 1, EBP adherence row",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'EBP adherence 5.23 (1.13)' under the column heading 'All coalitions n = 64'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ebp_adherence_row_denominator_unknown",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'EBP adherence 5.23 (1.13)' under the column heading 'All coalitions n = 64'",
+      "inputs": {
+        "raw": "5.23 (1.13)",
+        "row_label": "EBP adherence",
+        "col_label": "All coalitions n=64"
+      },
+      "reported": {
+        "value": 5.23,
+        "parenthesised": 1.13,
+        "column_n": 64
+      },
+      "computed": {
+        "typed_kind": "ambiguous",
+        "candidates": [
+          "mean_sd",
+          "n_percent",
+          "estimate_ci"
+        ],
+        "coverage_of_table": 0.938
+      },
+      "notes": "This was the one Table 1 cell the typed parser refused: alone among the summary rows it carries no '(mean, SD)' suffix, so its meaning is not fixed by syntax or label. Two separate problems follow. First, the denominator is wrong or at least unstated: fidelity/adherence is a PROGRAM-level measure (Table 4 puts it at 101 programs in 35 coalitions) and the Methods say descriptives were examined 'at the coalition and program level, respectively', yet the row sits under a column headed n=64. Second, the paper uses three different names for what appears to be one construct -- 'EBP adherence' (Table 1), 'EBP fidelity' (Methods, Results, Table 4 title) and 'Quality of EBP at baseline' (Table 4 covariate row). Because the n is unknown, no GRIM-family check can be run on this cell; only the SD-range check was possible and it passes. Recorded as indeterminate rather than as an error.",
+      "reproduction": "metascience parse-cells --cells '[{\"raw\": \"5.23 (1.13)\", \"row_label\": \"EBP adherence\", \"col_label\": \"All coalitions n=64\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_2a895ffadbe52bc2",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "ta_coding_contradicts_design",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Ta coding contradicts design",
+      "description": "The arithmetic is fine -- 41 is exactly 64 minus the 23 coded 'None', so the Results sentence follows from Table 1. The inconsistency is in the labelling: the design states that ALL coalitions, including controls, received TA as usual (regional training, group-based training, phone TA), so no coalition should fall in a genuinely zero-TA category. The covariate is in fact defined as '0 = Little to no TA', which is compatible; Table 1 shortens this to 'None', which is not, and the Results sentence then implies 23 coalitions received none. Most likely a labelling shorthand rather than a data error, but as printed the paper asserts that a third of coalitions received no technical assistance in a",
+      "location": "Methods (sample description and covariate definition) vs Table 1 and Results",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Methods: 'The remaining coalitions received TA as usual, that is, access to regional training, group-based training, and TA by phone.' Covariate definition: '0 = Little to no TA'. Table 1: 'Level of technical assistance received: None 23 (35.94%)'. Results: 'Forty-one (64%) of the coalitions received TA.'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:ta_coding_contradicts_design",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Methods: 'The remaining coalitions received TA as usual, that is, access to regional training, group-based training, and TA by phone.' Covariate definition: '0 = Little to no TA'. Table 1: 'Level of technical assistance received: None 23 (35.94%)'. Results: 'Forty-one (64%) of the coalitions received TA.'",
+      "inputs": {
+        "sections": [
+          "Methods sample description",
+          "Covariates",
+          "Table 1",
+          "Results paragraph 3"
+        ]
+      },
+      "reported": {
+        "table1_category_label": "None",
+        "covariate_definition_label": "Little to no TA",
+        "coalitions_in_that_category": 23,
+        "results_text": "Forty-one (64%) of the coalitions received TA"
+      },
+      "computed": {
+        "design_implication": "every coalition received at least TA as usual by design, so a true zero-TA category should be empty",
+        "arithmetic_check": "64 - 23 = 41, so the Results sentence is internally consistent with Table 1"
+      },
+      "notes": "The arithmetic is fine -- 41 is exactly 64 minus the 23 coded 'None', so the Results sentence follows from Table 1. The inconsistency is in the labelling: the design states that ALL coalitions, including controls, received TA as usual (regional training, group-based training, phone TA), so no coalition should fall in a genuinely zero-TA category. The covariate is in fact defined as '0 = Little to no TA', which is compatible; Table 1 shortens this to 'None', which is not, and the Results sentence then implies 23 coalitions received none. Most likely a labelling shorthand rather than a data error, but as printed the paper asserts that a third of coalitions received no technical assistance in a study where all of them did. Kept indeterminate because the underlying data may well be correctly coded.",
+      "reproduction": "Not tool-derived: a contradiction between the stated trial design and the coding of a covariate, established by reading the four passages quoted.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_42290834f202acc1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "data_availability_on_request",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Data availability on request (Data Availability Statement)",
+      "description": "Checked against rulebook rule 7 and found NOT to match the red-flag pattern: the paper does not claim data are included or already available while withholding them -- it makes a plain on-request statement, which is common and not in itself suspicious. Recorded only to document that the check was performed. Worth noting neutrally that the work is NIH-funded (R01DA045815) and that on-request access is weaker than deposit, but nothing here is evasive.",
+      "location": "Data Availability Statement",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'The datasets analyzed for the current study are available from Drs. Brown and Chilenski upon reasonable request.'"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:data_availability_on_request",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'The datasets analyzed for the current study are available from Drs. Brown and Chilenski upon reasonable request.'",
+      "inputs": {
+        "section": "Data Availability Statement"
+      },
+      "reported": {
+        "statement": "available on reasonable request",
+        "data_deposited": false
+      },
+      "computed": {
+        "assessment": "no state-but-withhold contradiction present"
+      },
+      "notes": "Checked against rulebook rule 7 and found NOT to match the red-flag pattern: the paper does not claim data are included or already available while withholding them -- it makes a plain on-request statement, which is common and not in itself suspicious. Recorded only to document that the check was performed. Worth noting neutrally that the work is NIH-funded (R01DA045815) and that on-request access is weaker than deposit, but nothing here is evasive.",
+      "reproduction": "Not tool-derived: a reading of the data availability statement against rulebook rule 7.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this.",
+      "finding_id": "f_d1ca95b352a71637",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "randomisation_baseline_not_reportable",
+      "producer": "legacy_sweep",
+      "technique": "csf_test",
+      "title": "Randomisation baseline not reportable (Methods, sample description; Table 1)",
+      "description": "Recorded explicitly because the baseline-similarity checks are normally the highest-yield tests on a randomised design, and their absence here would otherwise read as a silent gap. Randomisation was by COALITION (a cluster), which means csf_test and bayesian_table1_dispersion would in any case refuse or be capped -- cluster allocation breaks the independence both methods assume. So there is no baseline-uniformity finding in this paper, in either direction, and none should be inferred. Table 1 pools all 64 coalitions into a single column, so the trial's allocation is not verifiable from what is printed.",
+      "location": "Methods, sample description; Table 1",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "'Half of these coalitions were randomly assigned to participate in the Coalition Check-Up technical assistance (TA).' Table 1 reports a single 'All coalitions n = 64' column only."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:randomisation_baseline_not_reportable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "'Half of these coalitions were randomly assigned to participate in the Coalition Check-Up technical assistance (TA).' Table 1 reports a single 'All coalitions n = 64' column only.",
+      "inputs": {
+        "note": "csf_test requires a list of baseline p-values; bayesian_table1_dispersion requires per-arm means/SDs/ns. Neither is available."
+      },
+      "reported": {
+        "randomised": true,
+        "arms": 2,
+        "baseline_table_by_arm": "not reported",
+        "baseline_p_values": "none reported"
+      },
+      "computed": {
+        "csf_test": "cannot be run",
+        "table1_dispersion": "cannot be run",
+        "reason": "no arm-wise baseline statistics and no baseline p-values exist in the paper"
+      },
+      "notes": "Recorded explicitly because the baseline-similarity checks are normally the highest-yield tests on a randomised design, and their absence here would otherwise read as a silent gap. Randomisation was by COALITION (a cluster), which means csf_test and bayesian_table1_dispersion would in any case refuse or be capped -- cluster allocation breaks the independence both methods assume. So there is no baseline-uniformity finding in this paper, in either direction, and none should be inferred. Table 1 pools all 64 coalitions into a single column, so the trial's allocation is not verifiable from what is printed.",
+      "reproduction": "metascience csf --p-values <none reported> --design cluster_randomized",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f7f45d774712dc0b",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "9268adc21ef1abb0f843a48de9bdb439d861fa521d071ea7384e9f14120184a7",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.0.1",
+    "analysed_at": "2026-10-19T20:18:26Z",
+    "analysed_at_source": "file_mtime"
+  }
+}

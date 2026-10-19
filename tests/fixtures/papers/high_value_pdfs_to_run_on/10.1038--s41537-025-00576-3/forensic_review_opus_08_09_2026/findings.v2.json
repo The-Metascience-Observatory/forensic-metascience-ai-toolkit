@@ -1,0 +1,1894 @@
+{
+  "schema_version": "2.0",
+  "paper_id": "10.1038--s41537-025-00576-3",
+  "run_id": "r_3a10096fd44c178f",
+  "findings": [
+    {
+      "slug": "table1_diagnosis_counts_exceed_n",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 diagnosis counts exceed n",
+      "description": "The seven ICD-10 psychiatric diagnostic categories are presented as a partition of the 2830-patient sample, but the counts total 2840 - ten patients more than the stated N. The accompanying percentages are each individually consistent with a denominator of 2830 (80.32 = 2273/2830, 11.45 = 324/2830, and so on), so the percentage column and the count column were computed against the same N; the excess sits in the counts themselves. The likeliest innocent explanation is that ten patients carry two SSD diagnoses and are counted in two rows, but the paper's inclusion criteria state a single ICD-10 F20-F29 category per patient, so this warrants clarification. Rests only on figures the paper prints",
+      "location": "Table 1, 'Schizophrenia, schizotypal and delusional disorders' block (7 diagnostic-category rows)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Schizophrenia (F20)\t2273\t80.32"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_diagnosis_counts_exceed_n",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Schizophrenia (F20)\t2273\t80.32",
+      "inputs": {
+        "values": [
+          2273,
+          324,
+          191,
+          26,
+          17,
+          5,
+          4
+        ],
+        "expected_sum": 2830,
+        "decimals": 0,
+        "tolerance": 0
+      },
+      "reported": {
+        "stated_total_N": 2830,
+        "row_counts": [
+          2273,
+          324,
+          191,
+          26,
+          17,
+          5,
+          4
+        ]
+      },
+      "computed": {
+        "actual_sum": 2840,
+        "difference": 10,
+        "tolerance": 0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects only the descriptive statement that Schizophrenia (F20) accounted for 80.32% of the sample; no inferential result in Table 2 or Table 3 depends on this partition."
+      },
+      "notes": "The seven ICD-10 psychiatric diagnostic categories are presented as a partition of the 2830-patient sample, but the counts total 2840 - ten patients more than the stated N. The accompanying percentages are each individually consistent with a denominator of 2830 (80.32 = 2273/2830, 11.45 = 324/2830, and so on), so the percentage column and the count column were computed against the same N; the excess sits in the counts themselves. The likeliest innocent explanation is that ten patients carry two SSD diagnoses and are counted in two rows, but the paper's inclusion criteria state a single ICD-10 F20-F29 category per patient, so this warrants clarification. Rests only on figures the paper prints.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[2273,324,191,26,17,5,4],\"expected_sum\":2830,\"decimals\":0,\"tolerance\":0,\"description\":\"Table 1 SSD diagnostic categories vs N=2830\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_59395cdf149908b0",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_binary_comorbidity_exceeds_stated_total",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 binary comorbidity exceeds stated total",
+      "description": "Only the TOP TEN binary combinations are listed, so their subtotal must be at most the stated number of patients with exactly two CVD comorbidities. It is 1147 against a stated 470 - more than double. The first three rows alone (190 + 188 + 158 = 536) already exceed 470. Under the 'exactly two comorbidities' reading printed in the text this is arithmetically impossible; under the alternative reading, that these rows count every patient carrying that PAIR regardless of how many other CVDs they have, the numbers reconcile but are then inconsistent with the 'Single comorbidity' block, whose top-ten subtotal (1734) does sit below its stated total of 1893. The two blocks cannot both use the same ",
+      "location": "Table 1, 'Binary comorbidity (Top 10)' block, against the Results text",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "There were 470 cases with two CVD comorbidities (16.60%), with the most common combination being primary hypertension and sequelae of cerebrovascular disease (6.71%)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_binary_comorbidity_exceeds_stated_total",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "There were 470 cases with two CVD comorbidities (16.60%), with the most common combination being primary hypertension and sequelae of cerebrovascular disease (6.71%)",
+      "inputs": {
+        "values": [
+          190,
+          188,
+          158,
+          123,
+          103,
+          93,
+          92,
+          74,
+          70,
+          56
+        ],
+        "expected_sum": 470,
+        "decimals": 0,
+        "tolerance": 0
+      },
+      "reported": {
+        "stated_patients_with_two_CVDs": 470,
+        "top10_binary_counts": [
+          190,
+          188,
+          158,
+          123,
+          103,
+          93,
+          92,
+          74,
+          70,
+          56
+        ]
+      },
+      "computed": {
+        "actual_sum": 1147,
+        "difference": 677
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Affects the Results claims that 470 patients (16.60%) had two comorbidities and that primary hypertension + sequelae of cerebrovascular disease was the commonest pair at 6.71%; the LCA and regression results do not use these counts."
+      },
+      "notes": "Only the TOP TEN binary combinations are listed, so their subtotal must be at most the stated number of patients with exactly two CVD comorbidities. It is 1147 against a stated 470 - more than double. The first three rows alone (190 + 188 + 158 = 536) already exceed 470. Under the 'exactly two comorbidities' reading printed in the text this is arithmetically impossible; under the alternative reading, that these rows count every patient carrying that PAIR regardless of how many other CVDs they have, the numbers reconcile but are then inconsistent with the 'Single comorbidity' block, whose top-ten subtotal (1734) does sit below its stated total of 1893. The two blocks cannot both use the same definition. Severity held at suspicious rather than impossible because the ambiguity is definitional and either block could be the one mislabelled.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[190,188,158,123,103,93,92,74,70,56],\"expected_sum\":470,\"decimals\":0,\"tolerance\":0,\"description\":\"Table 1 top-10 binary comorbidity counts vs stated 470\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_ff1f1c3f562d630a",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_ternary_comorbidity_exceeds_stated_total",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 ternary comorbidity exceeds stated total",
+      "description": "Same structural problem as the binary block, and it corroborates it. The paper states 8.66% of 2830 patients had three CVD comorbidities; the top ten triple combinations alone total 341 cases, well above that. The expected_sum of 245 was derived from the paper's own 8.66% applied to its own N = 2830, so this comparison depends on one derivation rather than being read off the page - noted for transparency, though the direction of the discrepancy is not sensitive to rounding.",
+      "location": "Table 1, 'Ternary comorbidity (Top 10)' block, against the Results text",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "8.66% had three conditions (eTable 4 in Supplement 2), and 7.84% had four or higher number of comorbidities."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_ternary_comorbidity_exceeds_stated_total",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "8.66% had three conditions (eTable 4 in Supplement 2), and 7.84% had four or higher number of comorbidities.",
+      "inputs": {
+        "values": [
+          58,
+          43,
+          41,
+          37,
+          33,
+          31,
+          26,
+          26,
+          23,
+          23
+        ],
+        "expected_sum": 245,
+        "decimals": 0,
+        "tolerance": 0
+      },
+      "reported": {
+        "stated_percentage_with_three_CVDs": 8.66,
+        "implied_patients": 245,
+        "top10_ternary_counts": [
+          58,
+          43,
+          41,
+          37,
+          33,
+          31,
+          26,
+          26,
+          23,
+          23
+        ]
+      },
+      "computed": {
+        "actual_sum": 341,
+        "difference": 96
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects the descriptive claim that 8.66% of patients carried exactly three CVD comorbidities."
+      },
+      "notes": "Same structural problem as the binary block, and it corroborates it. The paper states 8.66% of 2830 patients had three CVD comorbidities; the top ten triple combinations alone total 341 cases, well above that. The expected_sum of 245 was derived from the paper's own 8.66% applied to its own N = 2830, so this comparison depends on one derivation rather than being read off the page - noted for transparency, though the direction of the discrepancy is not sensitive to rounding.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[58,43,41,37,33,31,26,26,23,23],\"expected_sum\":245,\"decimals\":0,\"tolerance\":0,\"description\":\"Table 1 top-10 ternary comorbidity counts vs 8.66% of 2830\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_d87efcf936c123f7",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table1_single_comorbidity_subset_ok",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table1 single comorbidity subset ok (Table 1, 'Single comorbidity (Top 10)' block)",
+      "description": "Recorded as CONSISTENT despite the tool reporting a mismatch: the check was framed as an equality, but these are the top ten of a longer list, so the correct test is subtotal <= total. 1734 <= 1893 passes, leaving 159 patients across the remaining single-CVD categories. This block therefore behaves exactly as a top-ten subset should - which is what makes the binary and ternary blocks above anomalous by comparison.",
+      "location": "Table 1, 'Single comorbidity (Top 10)' block",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "suspicious",
+        "tool": "check_summation",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The majority of SSD patients (1893 cases, 66.90%) had a single CVD comorbidity"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table1_single_comorbidity_subset_ok",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The majority of SSD patients (1893 cases, 66.90%) had a single CVD comorbidity",
+      "inputs": {
+        "values": [
+          706,
+          357,
+          161,
+          156,
+          114,
+          69,
+          52,
+          48,
+          48,
+          23
+        ],
+        "expected_sum": 1893,
+        "decimals": 0,
+        "tolerance": 0
+      },
+      "reported": {
+        "stated_patients_with_one_CVD": 1893
+      },
+      "computed": {
+        "actual_sum": 1734,
+        "difference": -159
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this row is the internal control that shows the binary/ternary excess is not simply how the authors format top-ten blocks."
+      },
+      "notes": "Recorded as CONSISTENT despite the tool reporting a mismatch: the check was framed as an equality, but these are the top ten of a longer list, so the correct test is subtotal <= total. 1734 <= 1893 passes, leaving 159 patients across the remaining single-CVD categories. This block therefore behaves exactly as a top-ten subset should - which is what makes the binary and ternary blocks above anomalous by comparison.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[706,357,161,156,114,69,52,48,48,23],\"expected_sum\":1893,\"decimals\":0,\"tolerance\":0,\"description\":\"Table 1 top-10 single comorbidity counts vs stated 1893\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_2068036c30ca1015",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_all_count_sums_reconcile",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table2 all count sums reconcile",
+      "description": "Every demographic block in Table 2 was checked in both directions: the Overall column against N = 2830 (7 blocks) and each of the four class columns against its own header n (28 blocks). All 35 sums reconcile exactly with tolerance 0, and the four class sizes themselves total 2830. This is a strong internal-consistency result and it is the reason the Table 1 discrepancies stand out rather than reading as pervasive sloppiness.",
+      "location": "Table 2, all seven demographic blocks x five count columns (Overall plus four latent classes)",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Female\t1254 (44.31)\t646 (49.96)\t450 (48.03)\t46 (12.27)\t112 (49.78)\t180.74**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_all_count_sums_reconcile",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Female\t1254 (44.31)\t646 (49.96)\t450 (48.03)\t46 (12.27)\t112 (49.78)\t180.74**",
+      "inputs": {
+        "n_sum_rows_checked": 35,
+        "expected_totals": [
+          2830,
+          1293,
+          937,
+          375,
+          225
+        ]
+      },
+      "reported": {
+        "class_sizes": [
+          1293,
+          937,
+          375,
+          225
+        ],
+        "stated_N": 2830
+      },
+      "computed": {
+        "n_rows_consistent": 35,
+        "n_rows_inconsistent": 0,
+        "class_n_sum": 2830
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms the contingency tables underlying every univariate test are internally coherent."
+      },
+      "notes": "Every demographic block in Table 2 was checked in both directions: the Overall column against N = 2830 (7 blocks) and each of the four class columns against its own header n (28 blocks). All 35 sums reconcile exactly with tolerance 0, and the four class sizes themselves total 2830. This is a strong internal-consistency result and it is the reason the Table 1 discrepancies stand out rather than reading as pervasive sloppiness.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[1293,937,375,225],\"expected_sum\":2830,\"decimals\":0,\"tolerance\":0,\"description\":\"class n vs N\"},{\"values\":[1254,1576],\"expected_sum\":2830,\"decimals\":0,\"tolerance\":0,\"description\":\"Gender Overall\"},{\"values\":[646,647],\"expected_sum\":1293,\"decimals\":0,\"tolerance\":0,\"description\":\"Gender low-risk\"},{\"values\":[128,140,82,25,0],\"expected_sum\":375,\"decimals\":0,\"tolerance\":0,\"description\":\"Age heart failure\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "finding_id": "f_0b531f3cf4fa1083",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table2_medication_percent_columns_sum_to_100",
+      "producer": "legacy_sweep",
+      "technique": "check_summation",
+      "title": "Table2 medication percent columns sum to 100",
+      "description": "All five medication blocks' percentage columns total 100. Worth flagging for the reader as a REPORTING issue rather than an error: these percentages are NOT shares of the 2830 patients. The atypical block's 'No' row reads 207 (5.00), but 207/2830 is about 7.3%; the percentages are shares of a larger denominator of drug records, because a patient may appear under several drugs. The column header reads simply 'Overall, n (%)', identical to the demographic blocks where the denominator IS 2830, so the same header carries two different denominators within one table.",
+      "location": "Table 2, five psychotropic medication blocks, Overall % column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "No\t2045 (70.25)\tHaloperidol (injection)\t671 (23.05)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table2_medication_percent_columns_sum_to_100",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "No\t2045 (70.25)\tHaloperidol (injection)\t671 (23.05)",
+      "inputs": {
+        "blocks": [
+          "typical antipsychotics",
+          "atypical antipsychotics",
+          "anxiolytics and sedatives",
+          "antidepressants",
+          "mood stabilizers"
+        ],
+        "expected_sum": 100,
+        "decimals": 2
+      },
+      "reported": {
+        "typical": [
+          70.25,
+          23.05,
+          2.68,
+          1.65,
+          1.48,
+          0.89
+        ],
+        "atypical": [
+          5,
+          26.42,
+          24.9,
+          12.46,
+          9.8,
+          9.2,
+          6.23,
+          3.31,
+          1.86,
+          0.82
+        ],
+        "anxiolytic": [
+          22.8,
+          21.25,
+          14.46,
+          10.77,
+          8.77,
+          6.39,
+          4.28,
+          3.1,
+          2.99,
+          2.84,
+          1.67,
+          0.68
+        ],
+        "antidepressant": [
+          93.58,
+          3.77,
+          2.64
+        ],
+        "mood": [
+          75.34,
+          12.5,
+          7.7,
+          4.46
+        ]
+      },
+      "computed": {
+        "sums": [
+          100,
+          100,
+          100,
+          99.99,
+          100
+        ],
+        "n_consistent": 5
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No inferential claim depends on these percentages, but a reader comparing drug prevalence to demographic prevalence across the table would be misled by the shared header."
+      },
+      "notes": "All five medication blocks' percentage columns total 100. Worth flagging for the reader as a REPORTING issue rather than an error: these percentages are NOT shares of the 2830 patients. The atypical block's 'No' row reads 207 (5.00), but 207/2830 is about 7.3%; the percentages are shares of a larger denominator of drug records, because a patient may appear under several drugs. The column header reads simply 'Overall, n (%)', identical to the demographic blocks where the denominator IS 2830, so the same header carries two different denominators within one table.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[70.25,23.05,2.68,1.65,1.48,0.89],\"expected_sum\":100,\"decimals\":2,\"description\":\"typical\"},{\"values\":[5.00,26.42,24.90,12.46,9.80,9.20,6.23,3.31,1.86,0.82],\"expected_sum\":100,\"decimals\":2,\"description\":\"atypical\"},{\"values\":[22.80,21.25,14.46,10.77,8.77,6.39,4.28,3.10,2.99,2.84,1.67,0.68],\"expected_sum\":100,\"decimals\":2,\"description\":\"anxiolytic\"},{\"values\":[93.58,3.77,2.64],\"expected_sum\":100,\"decimals\":2,\"description\":\"antidepressant\"},{\"values\":[75.34,12.50,7.70,4.46],\"expected_sum\":100,\"decimals\":2,\"description\":\"mood\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "finding_id": "f_f3bbd81394515d5f",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_gender",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 gender (Table 2, Gender block, \u03c72/Fisher column)",
+      "description": "Legacy recalc_chi_squared check at Table 2, Gender block, \u03c72/Fisher column. Reported: {\"chi2\": 180.74, \"p_marker\": \"** (P < 0.001)\"}. Computed: {\"chi2\": 180.7393437270027, \"df\": 3, \"p\": 6.106605106758945e-39, \"matches\": true}.",
+      "location": "Table 2, Gender block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "180.74**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_gender",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "180.74**",
+      "inputs": {
+        "observed": [
+          [
+            646,
+            450,
+            46,
+            112
+          ],
+          [
+            647,
+            487,
+            329,
+            113
+          ]
+        ],
+        "reported_chi2": 180.74
+      },
+      "reported": {
+        "chi2": 180.74,
+        "p_marker": "** (P < 0.001)"
+      },
+      "computed": {
+        "chi2": 180.7393437270027,
+        "df": 3,
+        "p": 6.106605106758945e-39,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces to the printed precision from the cell counts in the same table."
+      },
+      "reproduction": "metascience chi2 --observed '[[646,450,46,112],[647,487,329,113]]' --reported-chi2 180.74",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_a711b9c62517864d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_age_group",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 age group (Table 2, Age group block, \u03c72/Fisher column)",
+      "description": "Note the structural zero: no patient aged 70+ falls in the heart failure class. This is the source of the degenerate odds ratio recorded separately under table3_degenerate_odds_ratios.",
+      "location": "Table 2, Age group block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "900.21**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_age_group",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "900.21**",
+      "inputs": {
+        "observed": [
+          [
+            90,
+            9,
+            128,
+            2
+          ],
+          [
+            185,
+            103,
+            140,
+            13
+          ],
+          [
+            238,
+            376,
+            82,
+            40
+          ],
+          [
+            530,
+            378,
+            25,
+            101
+          ],
+          [
+            250,
+            71,
+            0,
+            69
+          ]
+        ],
+        "reported_chi2": 900.21
+      },
+      "reported": {
+        "chi2": 900.21,
+        "p_marker": "** (P < 0.001)"
+      },
+      "computed": {
+        "chi2": 900.2143685928497,
+        "df": 12,
+        "p": 5.166215326788553e-185,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly."
+      },
+      "notes": "Note the structural zero: no patient aged 70+ falls in the heart failure class. This is the source of the degenerate odds ratio recorded separately under table3_degenerate_odds_ratios.",
+      "reproduction": "metascience chi2 --observed '[[90,9,128,2],[185,103,140,13],[238,376,82,40],[530,378,25,101],[250,71,0,69]]' --reported-chi2 900.21",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_e730be153b21748b",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_ethnic_group",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 ethnic group (Table 2, Ethnic group block, \u03c72/Fisher column)",
+      "description": "Legacy recalc_chi_squared check at Table 2, Ethnic group block, \u03c72/Fisher column. Reported: {\"chi2\": 65.69}. Computed: {\"chi2\": 65.68910014726957, \"df\": 3, \"p\": 3.5722880671598e-14, \"matches\": true}.",
+      "location": "Table 2, Ethnic group block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "65.69**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_ethnic_group",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "65.69**",
+      "inputs": {
+        "observed": [
+          [
+            1238,
+            865,
+            320,
+            223
+          ],
+          [
+            55,
+            72,
+            55,
+            2
+          ]
+        ],
+        "reported_chi2": 65.69
+      },
+      "reported": {
+        "chi2": 65.69
+      },
+      "computed": {
+        "chi2": 65.68910014726957,
+        "df": 3,
+        "p": 3.5722880671598e-14,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly."
+      },
+      "reproduction": "metascience chi2 --observed '[[1238,865,320,223],[55,72,55,2]]' --reported-chi2 65.69",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_014cb3237568931e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_marital_status",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 marital status (Table 2, Marital status block, \u03c72/Fisher column)",
+      "description": "Contains a structural zero (no widowed patient in the heart failure class), which drives the OR = 0.00 reported for that cell in Table 3.",
+      "location": "Table 2, Marital status block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "274.90**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_marital_status",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "274.90**",
+      "inputs": {
+        "observed": [
+          [
+            385,
+            180,
+            225,
+            58
+          ],
+          [
+            479,
+            459,
+            131,
+            85
+          ],
+          [
+            180,
+            103,
+            17,
+            34
+          ],
+          [
+            72,
+            40,
+            0,
+            12
+          ],
+          [
+            177,
+            155,
+            2,
+            36
+          ]
+        ],
+        "reported_chi2": 274.9
+      },
+      "reported": {
+        "chi2": 274.9
+      },
+      "computed": {
+        "chi2": 274.903848479002,
+        "df": 12,
+        "p": 8.569023565357653e-52,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly."
+      },
+      "notes": "Contains a structural zero (no widowed patient in the heart failure class), which drives the OR = 0.00 reported for that cell in Table 3.",
+      "reproduction": "metascience chi2 --observed '[[385,180,225,58],[479,459,131,85],[180,103,17,34],[72,40,0,12],[177,155,2,36]]' --reported-chi2 274.90",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_c725fe3a1ea3a679",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_educational",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 educational (Table 2, Educational block, \u03c72/Fisher column)",
+      "description": "Reproduces exactly, and the recomputed p = 2.95e-05 is correctly below the 0.001 threshold its ** marker claims.",
+      "location": "Table 2, Educational block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "36.72**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_educational",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "36.72**",
+      "inputs": {
+        "observed": [
+          [
+            110,
+            83,
+            35,
+            12
+          ],
+          [
+            377,
+            242,
+            71,
+            65
+          ],
+          [
+            229,
+            151,
+            45,
+            30
+          ],
+          [
+            577,
+            461,
+            224,
+            118
+          ]
+        ],
+        "reported_chi2": 36.72
+      },
+      "reported": {
+        "chi2": 36.72,
+        "p_marker": "** (P < 0.001)"
+      },
+      "computed": {
+        "chi2": 36.71934279312766,
+        "df": 9,
+        "p": 2.9532550875438023e-05,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly and the significance marker is correct."
+      },
+      "notes": "Reproduces exactly, and the recomputed p = 2.95e-05 is correctly below the 0.001 threshold its ** marker claims.",
+      "reproduction": "metascience chi2 --observed '[[110,83,35,12],[377,242,71,65],[229,151,45,30],[577,461,224,118]]' --reported-chi2 36.72",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_77b0cc19df7df34d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_work_status",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 work status (Table 2, Work status block, \u03c72/Fisher column)",
+      "description": "Legacy recalc_chi_squared check at Table 2, Work status block, \u03c72/Fisher column. Reported: {\"chi2\": 473.19}. Computed: {\"chi2\": 473.1873932094128, \"df\": 15, \"p\": 2.62782539284552e-91, \"matches\": true}.",
+      "location": "Table 2, Work status block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "473.19**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_work_status",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "473.19**",
+      "inputs": {
+        "observed": [
+          [
+            191,
+            136,
+            175,
+            19
+          ],
+          [
+            310,
+            201,
+            10,
+            60
+          ],
+          [
+            127,
+            80,
+            82,
+            14
+          ],
+          [
+            58,
+            87,
+            42,
+            15
+          ],
+          [
+            460,
+            254,
+            36,
+            103
+          ],
+          [
+            147,
+            179,
+            30,
+            14
+          ]
+        ],
+        "reported_chi2": 473.19
+      },
+      "reported": {
+        "chi2": 473.19
+      },
+      "computed": {
+        "chi2": 473.1873932094128,
+        "df": 15,
+        "p": 2.62782539284552e-91,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly."
+      },
+      "reproduction": "metascience chi2 --observed '[[191,136,175,19],[310,201,10,60],[127,80,82,14],[58,87,42,15],[460,254,36,103],[147,179,30,14]]' --reported-chi2 473.19",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_731e0d47c1b882e1",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_region",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 region (Table 2, Region block, \u03c72/Fisher column)",
+      "description": "Reproduces exactly. This is the most extreme association in the table and it reflects near-total confounding of latent class with study site: 369 of 375 heart-failure-class patients are from Southwest China, and 224 of 225 cardiac-valve-class patients are from Northern China. The resulting Table 3 odds ratios for region (0.00 and 62.52) are the arithmetic consequence.",
+      "location": "Table 2, Region block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "1140.6**"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_region",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "1140.6**",
+      "inputs": {
+        "observed": [
+          [
+            162,
+            285,
+            369,
+            1
+          ],
+          [
+            1131,
+            652,
+            6,
+            224
+          ]
+        ],
+        "reported_chi2": 1140.6
+      },
+      "reported": {
+        "chi2": 1140.6
+      },
+      "computed": {
+        "chi2": 1140.60270510115,
+        "df": 3,
+        "p": 5.651413500140453e-247,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly; the size of the statistic is a real feature of the data, not a reporting error."
+      },
+      "notes": "Reproduces exactly. This is the most extreme association in the table and it reflects near-total confounding of latent class with study site: 369 of 375 heart-failure-class patients are from Southwest China, and 224 of 225 cardiac-valve-class patients are from Northern China. The resulting Table 3 odds ratios for region (0.00 and 62.52) are the arithmetic consequence.",
+      "reproduction": "metascience chi2 --observed '[[162,285,369,1],[1131,652,6,224]]' --reported-chi2 1140.6",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_8e6b97b3a50567d9",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "chi2_antidepressants",
+      "producer": "legacy_sweep",
+      "technique": "recalc_chi_squared",
+      "title": "Chi2 antidepressants (Table 2, Antidepressants block, \u03c72/Fisher column)",
+      "description": "The only numeric \u03c72 in the four medication blocks (the other four are marked 'Fisher**' with no statistic). It reproduces exactly, and the recomputed p = 0.0026 correctly sits between 0.001 and 0.01, matching its single-asterisk marker rather than the double asterisk used elsewhere.",
+      "location": "Table 2, Antidepressants block, \u03c72/Fisher column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "20.14*"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:chi2_antidepressants",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "20.14*",
+      "inputs": {
+        "observed": [
+          [
+            1216,
+            860,
+            365,
+            214
+          ],
+          [
+            42,
+            50,
+            8,
+            7
+          ],
+          [
+            37,
+            32,
+            2,
+            4
+          ]
+        ],
+        "reported_chi2": 20.14
+      },
+      "reported": {
+        "chi2": 20.14,
+        "p_marker": "* (P < 0.01)"
+      },
+      "computed": {
+        "chi2": 20.143400841856234,
+        "df": 6,
+        "p": 0.002611218662936679,
+        "matches": true
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Reproduces exactly and the significance marker is correctly assigned."
+      },
+      "notes": "The only numeric \u03c72 in the four medication blocks (the other four are marked 'Fisher**' with no statistic). It reproduces exactly, and the recomputed p = 0.0026 correctly sits between 0.001 and 0.01, matching its single-asterisk marker rather than the double asterisk used elsewhere.",
+      "reproduction": "metascience chi2 --observed '[[1216,860,365,214],[42,50,8,7],[37,32,2,4]]' --reported-chi2 20.14",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1205 in chi2                     ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_e5a5cedb80bfbcf8",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "text_percentages_trailing_zero_padding",
+      "producer": "legacy_sweep",
+      "technique": "grim_percentage",
+      "title": "Text percentages trailing zero padding",
+      "description": "At their printed two-decimal precision neither value is expressible as an integer count over 2830: 1893/2830 rounds to 66.89 and 470/2830 rounds to 16.61. Both become consistent at one decimal, so the parsimonious reading is that the authors computed to one decimal and padded a trailing zero to match the two-decimal style used elsewhere. I have recorded this as SUSPICIOUS rather than the tool's IMPOSSIBLE verdict because the discrepancy is one unit in the last printed digit and is fully explained by that padding; it is a presentation defect, not an unreproducible number. Both counts (1893, 470) and the denominator (2830) are stated by the paper, so the check rests on no assumed bound.",
+      "location": "Results, 'Proportion of diseases and comorbidity patterns', first sentence and third sentence",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": {
+        "severity": "impossible",
+        "tool": "grim_percentage",
+        "validated": true
+      },
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The majority of SSD patients (1893 cases, 66.90%) had a single CVD comorbidity"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:text_percentages_trailing_zero_padding",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The majority of SSD patients (1893 cases, 66.90%) had a single CVD comorbidity",
+      "inputs": {
+        "percentage": 66.9,
+        "n": 2830,
+        "decimals": 2,
+        "data_type": "proportion",
+        "second_value": {
+          "percentage": 16.6,
+          "n": 2830,
+          "decimals": 2
+        }
+      },
+      "reported": {
+        "printed": [
+          "66.90%",
+          "16.60%"
+        ],
+        "counts": [
+          1893,
+          470
+        ],
+        "N": 2830
+      },
+      "computed": {
+        "at_2_decimals": {
+          "66.90": "impossible - implies count 1893.27; nearest achievable 66.89 or 66.93",
+          "16.60": "impossible - implies count 469.78; nearest achievable 16.57 or 16.61"
+        },
+        "at_1_decimal": {
+          "66.9": "consistent",
+          "16.6": "consistent"
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim changes; the underlying counts are correct and the error is confined to the second decimal place of two descriptive percentages."
+      },
+      "notes": "At their printed two-decimal precision neither value is expressible as an integer count over 2830: 1893/2830 rounds to 66.89 and 470/2830 rounds to 16.61. Both become consistent at one decimal, so the parsimonious reading is that the authors computed to one decimal and padded a trailing zero to match the two-decimal style used elsewhere. I have recorded this as SUSPICIOUS rather than the tool's IMPOSSIBLE verdict because the discrepancy is one unit in the last printed digit and is fully explained by that padding; it is a presentation defect, not an unreproducible number. Both counts (1893, 470) and the denominator (2830) are stated by the paper, so the check rests on no assumed bound.",
+      "reproduction": "MCP-only tool, no CLI verb exists: grim_percentage(percentage=66.90, n=2830, decimals=2, data_type='proportion') and grim_percentage(percentage=16.60, n=2830, decimals=2, data_type='proportion'); repeat both with decimals=1",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'MCP-only'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_8d36a666123df7df",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_or_ci_p_triples_coherent",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Table3 or ci p triples coherent",
+      "description": "Each odds ratio sits at the log-scale midpoint of its own interval, and where an exact p is printed the p recovered from the interval width agrees with it. 21 of the 153 OR/CI cells were tested, chosen to cover every headline claim in the abstract (male/hypertension 1.15, male/heart failure 5.36, perphenazine 22.06, chlorpromazine 7.09) plus a spread of borderline results near alpha. All 21 passed. Note this is a per-cell check with the p-value supplied from the adjacent column, which is why it was run directly rather than through check_table - check_table types each cell in isolation and cannot pair an estimate with a p-value held in a different column.",
+      "location": "Table 3, 21 coefficient cells spanning all three outcome classes and all twelve predictor blocks",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "5.36 (3.84, 7.48)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_or_ci_p_triples_coherent",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "5.36 (3.84, 7.48)",
+      "inputs": {
+        "measure": "OR",
+        "n_cells_checked": 21,
+        "examples": [
+          {
+            "estimate": 1.15,
+            "ci_low": 1.01,
+            "ci_high": 1.31,
+            "reported_p": 0.038
+          },
+          {
+            "estimate": 22.06,
+            "ci_low": 5.56,
+            "ci_high": 87.49
+          },
+          {
+            "estimate": 62.52,
+            "ci_low": 8.97,
+            "ci_high": 435.6
+          },
+          {
+            "estimate": 0.12,
+            "ci_low": 0.03,
+            "ci_high": 0.5,
+            "reported_p": 0.003
+          }
+        ]
+      },
+      "reported": {
+        "n_or_ci_cells_in_table": 153,
+        "n_checked": 21
+      },
+      "computed": {
+        "n_consistent": 21,
+        "n_inconsistent": 0,
+        "example_recovered": {
+          "OR_1.15": {
+            "implied_centre": 1.1502608399836969,
+            "recovered_p": 0.03515929016773778,
+            "reported_p": 0.038
+          },
+          "OR_22.06": {
+            "implied_centre": 22.055484578671123,
+            "recovered_p": 1.080223489413612e-05
+          },
+          "OR_62.52": {
+            "implied_centre": 62.508655400672325,
+            "recovered_p": 2.9800035322047336e-05
+          }
+        }
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The Wald intervals and p-values in Table 3 are mutually reproducible; no headline effect estimate is contradicted by its own interval."
+      },
+      "notes": "Each odds ratio sits at the log-scale midpoint of its own interval, and where an exact p is printed the p recovered from the interval width agrees with it. 21 of the 153 OR/CI cells were tested, chosen to cover every headline claim in the abstract (male/hypertension 1.15, male/heart failure 5.36, perphenazine 22.06, chlorpromazine 7.09) plus a spread of borderline results near alpha. All 21 passed. Note this is a per-cell check with the p-value supplied from the adjacent column, which is why it was run directly rather than through check_table - check_table types each cell in isolation and cannot pair an estimate with a p-value held in a different column.",
+      "reproduction": "metascience check-ci --estimate 5.36 --ci-low 3.84 --ci-high 7.48 --measure OR ; metascience check-ci --estimate 1.15 --ci-low 1.01 --ci-high 1.31 --measure OR --reported-p 0.038 ; metascience check-ci --estimate 62.52 --ci-low 8.97 --ci-high 435.6 --measure OR",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_3f46d0bb085c4e65",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_degenerate_odds_ratios",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Table3 degenerate odds ratios",
+      "description": "These five cells cannot be evaluated at all: an odds ratio of exactly zero, or an interval whose lower bound is zero, has no logarithm, and check_estimate_ci correctly refuses rather than returning a verdict. The refusal is itself the finding. Table 2 supplies the cause and it is not a transcription error - these are structural zeros. No patient aged 70+ and no widowed patient falls in the heart failure class (both cells print 0 (0.00)); only 6 of 375 heart-failure patients are from Northern China. This is (quasi-)complete separation, under which the maximum-likelihood estimate diverges and the Wald interval is meaningless. The interval '1.88 (0, 31465.17)' spanning five orders of magnitude,",
+      "location": "Table 3, Heart failure column: Northern region, Widowed, 70+, Other atypical antipsychotic, Other anxiolytic rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "0.00 (0.00, 0.00)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_degenerate_odds_ratios",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "0.00 (0.00, 0.00)",
+      "inputs": {
+        "measure": "OR",
+        "cells": [
+          {
+            "label": "Northern region",
+            "estimate": 0,
+            "ci_low": 0,
+            "ci_high": 0,
+            "p": "<0.001"
+          },
+          {
+            "label": "Widowed",
+            "estimate": 0,
+            "ci_low": 0,
+            "ci_high": 0.32,
+            "p": 0.02
+          },
+          {
+            "label": "Age 70+",
+            "estimate": 0.01,
+            "ci_low": 0,
+            "ci_high": 0.76,
+            "p": 0.037
+          },
+          {
+            "label": "Other atypical",
+            "estimate": 0.01,
+            "ci_low": 0,
+            "ci_high": 32.53,
+            "p": 0.253
+          },
+          {
+            "label": "Other anxiolytic",
+            "estimate": 1.88,
+            "ci_low": 0,
+            "ci_high": 31465.17,
+            "p": 0.899
+          }
+        ]
+      },
+      "reported": {
+        "as_printed": [
+          "0.00 (0.00, 0.00)",
+          "0.00 (0.00, 0.32)",
+          "0.01 (0.00, 0.76)",
+          "0.01 (0.00, 32.53)",
+          "1.88 (0, 31465.17)"
+        ]
+      },
+      "computed": {
+        "tool_verdict": "indeterminate",
+        "tool_explanation": "Measure 'OR' is a ratio but the estimate or lower bound is non-positive, so the log scale is undefined. Cannot evaluate."
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Supports the Results claim that patients over 26 and in other marital statuses were 'less likely to have comorbidities associated with the Heart Failure group' (OR < 1.00), which rests partly on estimates that are numerically degenerate rather than estimated."
+      },
+      "notes": "These five cells cannot be evaluated at all: an odds ratio of exactly zero, or an interval whose lower bound is zero, has no logarithm, and check_estimate_ci correctly refuses rather than returning a verdict. The refusal is itself the finding. Table 2 supplies the cause and it is not a transcription error - these are structural zeros. No patient aged 70+ and no widowed patient falls in the heart failure class (both cells print 0 (0.00)); only 6 of 375 heart-failure patients are from Northern China. This is (quasi-)complete separation, under which the maximum-likelihood estimate diverges and the Wald interval is meaningless. The interval '1.88 (0, 31465.17)' spanning five orders of magnitude, and '0.00 (0.00, 0.00)' carrying p < 0.001, are the visible symptoms. The paper reports these alongside well-identified estimates with no caveat and no penalised-likelihood alternative.",
+      "reproduction": "metascience check-ci --estimate 0.00 --ci-low 0.00 --ci-high 0.00 --measure OR ; metascience check-ci --estimate 0.00 --ci-low 0.00 --ci-high 0.32 --measure OR --reported-p 0.020 ; metascience check-ci --estimate 0.01 --ci-low 0.00 --ci-high 0.76 --measure OR --reported-p 0.037",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_7309390174e04e60",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_malformed_ci_cells",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Table3 malformed ci cells",
+      "description": "Two of the 153 OR cells are printed in a form no parser can read. '0.7 0(0.45, 1.12)' has a stray space splitting the point estimate from its final digit; '0.21 (0,.00 522.40)' has the comma and decimal point transposed and the separator between the bounds missing, so the interval could be (0.00, 522.40) but this cannot be confirmed from the page. I checked these against both the XML and the printed grid and the corruption is in the source, not the extraction. Recorded as suspicious because it is a copy-editing failure in a published table rather than a numerical inconsistency; the intended values are probably recoverable but are not stated.",
+      "location": "Table 3, Educational Unknown row (Heart failure column) and Haloperidol Decanoate row (Heart failure column)",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "severity": 3,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "0.7 0(0.45, 1.12)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_malformed_ci_cells",
+        "original_severity": "suspicious",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "0.7 0(0.45, 1.12)",
+      "inputs": {
+        "cells_as_printed": [
+          "0.7 0(0.45, 1.12)",
+          "0.21 (0,.00 522.40)",
+          "1.88 (0, 31465.17)"
+        ]
+      },
+      "reported": {
+        "raw_xml_cell_1": "0.7 0(0.45, 1.12)",
+        "raw_xml_cell_2": "0.21 (0,.00 522.40)"
+      },
+      "computed": {
+        "parseable": false,
+        "n_cells_affected": 2,
+        "denominator": 153
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Neither cell is cited in the abstract or discussion; both are non-significant (p = 0.135 and p = 0.696), so no claim rests on them."
+      },
+      "notes": "Two of the 153 OR cells are printed in a form no parser can read. '0.7 0(0.45, 1.12)' has a stray space splitting the point estimate from its final digit; '0.21 (0,.00 522.40)' has the comma and decimal point transposed and the separator between the bounds missing, so the interval could be (0.00, 522.40) but this cannot be confirmed from the page. I checked these against both the XML and the printed grid and the corruption is in the source, not the extraction. Recorded as suspicious because it is a copy-editing failure in a published table rather than a numerical inconsistency; the intended values are probably recoverable but are not stated.",
+      "reproduction": "No forensic tool applies: these cells are typographically corrupt and cannot be parsed into (estimate, ci_low, ci_high), so every numeric check refuses them. Verified by direct inspection of get_table(xml_path=..., table_num=3) raw cell values.",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '...' -- not runnable as written; must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_d7bf10e580578d5d",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "table3_risperidone_ci_touches_null",
+      "producer": "legacy_sweep",
+      "technique": "check_estimate_ci",
+      "title": "Table3 risperidone ci touches null",
+      "description": "Recorded as consistent, but worth the reader's attention: the interval as printed reaches exactly 1.00 and so does not exclude the null, while the reported p = 0.049 declares significance. The p recovered from the interval is 0.051. The tool accepts this because 1.00 is a rounded bound - the true upper limit is just below 1 - so there is no arithmetic contradiction. It is a rounding artefact at the alpha boundary, not an error, and it is the only cell among the 21 checked where the printed interval and the printed p point to opposite sides of 0.05.",
+      "location": "Table 3, Risperidone row, Cardiac valve and vascular disorders column",
+      "outcome": "pass",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "0.54 (0.29, 1.00)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:table3_risperidone_ci_touches_null",
+        "original_severity": "consistent",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "0.54 (0.29, 1.00)",
+      "inputs": {
+        "estimate": 0.54,
+        "ci_low": 0.29,
+        "ci_high": 1,
+        "measure": "OR",
+        "reported_p": 0.049
+      },
+      "reported": {
+        "OR": 0.54,
+        "CI": "0.29, 1.00",
+        "p": 0.049
+      },
+      "computed": {
+        "recovered_p": 0.051027030883166624,
+        "recovered_z": -1.9512523790288125,
+        "ci_excludes_null": false,
+        "verdict": "consistent"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The result is significant at alpha = 0.05 on the unrounded figures; only the two-decimal display makes it appear otherwise."
+      },
+      "notes": "Recorded as consistent, but worth the reader's attention: the interval as printed reaches exactly 1.00 and so does not exclude the null, while the reported p = 0.049 declares significance. The p recovered from the interval is 0.051. The tool accepts this because 1.00 is a rounded bound - the true upper limit is just below 1 - so there is no arithmetic contradiction. It is a rounding artefact at the alpha boundary, not an error, and it is the only cell among the 21 checked where the printed interval and the printed p point to opposite sides of 0.05.",
+      "reproduction": "metascience check-ci --estimate 0.54 --ci-low 0.29 --ci-high 1.00 --measure OR --reported-p 0.049",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ci [OPTIONS] {estimate} {ci_low} {ci_high}\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "finding_id": "f_125f442b59b78741",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "lca_class_proportions_vs_modal_counts",
+      "producer": "legacy_sweep",
+      "technique": "parse_table",
+      "title": "Lca class proportions vs modal counts",
+      "description": "Two different partitions of the same 2830 patients are presented without being reconciled. Each is internally sound - the percentages total 100 and the counts total 2830, both verified - but they are not the same partition, and the largest class differs by roughly two percentage points. This is very likely the ordinary and legitimate distinction between a latent class model's estimated mixing proportions and the counts obtained by assigning each patient to their most probable class; those two quantities do differ in any LCA. The paper never says which figure is which, and the abstract's percentages are the ones a reader will carry away. Left INDETERMINATE deliberately: I did not compute the ",
+      "location": "Abstract and Results 'Proportion of diseases and comorbidity patterns', against the Table 2 column headers",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "four distinct comorbidity patterns were identified based on their dominant characteristics: low-risk CVDs (47.86%), primary hypertension (30.15%), heart failure (12.99%), and cardiac valve and vascular disorders (8.99%)"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:lca_class_proportions_vs_modal_counts",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "four distinct comorbidity patterns were identified based on their dominant characteristics: low-risk CVDs (47.86%), primary hypertension (30.15%), heart failure (12.99%), and cardiac valve and vascular disorders (8.99%)",
+      "inputs": {
+        "abstract_percentages": [
+          47.86,
+          30.15,
+          12.99,
+          8.99
+        ],
+        "table2_class_counts": [
+          1293,
+          937,
+          375,
+          225
+        ],
+        "N": 2830
+      },
+      "reported": {
+        "abstract": "47.86 / 30.15 / 12.99 / 8.99 percent",
+        "table2_headers": "n = 1293 / 937 / 375 / 225"
+      },
+      "computed": {
+        "abstract_percentages_sum": 99.99,
+        "abstract_sum_consistent_with_100": true,
+        "class_counts_sum": 2830,
+        "class_counts_sum_consistent": true,
+        "correspondence_between_the_two": "not established"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects the abstract's headline prevalence figures for the four comorbidity patterns, which do not correspond to the class sizes used in every subsequent analysis."
+      },
+      "notes": "Two different partitions of the same 2830 patients are presented without being reconciled. Each is internally sound - the percentages total 100 and the counts total 2830, both verified - but they are not the same partition, and the largest class differs by roughly two percentage points. This is very likely the ordinary and legitimate distinction between a latent class model's estimated mixing proportions and the counts obtained by assigning each patient to their most probable class; those two quantities do differ in any LCA. The paper never says which figure is which, and the abstract's percentages are the ones a reader will carry away. Left INDETERMINATE deliberately: I did not compute the ratio of the Table 2 counts to N, so I am not asserting a specific size for the gap, only that the two sets are presented as though interchangeable and are not.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[47.86,30.15,12.99,8.99],\"expected_sum\":100,\"decimals\":2,\"description\":\"abstract LCA class percentages\"},{\"values\":[1293,937,375,225],\"expected_sum\":2830,\"decimals\":0,\"tolerance\":0,\"description\":\"Table 2 class n\"}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_e529e4d7a187b01e",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "statcheck_no_nhst_in_prose",
+      "producer": "legacy_sweep",
+      "technique": "statcheck",
+      "title": "Statcheck no nhst in prose (Full body text (Results and Discussion))",
+      "description": "statcheck ran successfully and found nothing to verify. This is a property of the paper's reporting style, not a tool failure: the \u03c72 values in Table 2 are printed without degrees of freedom and with asterisk markers instead of p-values, and the regression results are given as bare odds ratios without any test statistic. None of this matches the APA grammar statcheck parses. The consequence is that statcheck provides no independent corroboration here - the \u03c72 verification in this review came instead from recomputing each statistic from its own contingency table, which is a stronger check.",
+      "location": "Full body text (Results and Discussion)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "All tests were 2-sided, with a significance level set at 0.05."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:statcheck_no_nhst_in_prose",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "All tests were 2-sided, with a significance level set at 0.05.",
+      "inputs": {
+        "text": "Results and Discussion sections, including the eight Table 2 chi-squared values and the odds ratios quoted in prose"
+      },
+      "reported": {
+        "nhst_statistics_in_apa_format": 0
+      },
+      "computed": {
+        "success": true,
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; the check simply had no applicable input."
+      },
+      "notes": "statcheck ran successfully and found nothing to verify. This is a property of the paper's reporting style, not a tool failure: the \u03c72 values in Table 2 are printed without degrees of freedom and with asterisk markers instead of p-values, and the regression results are given as bare odds ratios without any test statistic. None of this matches the APA grammar statcheck parses. The consequence is that statcheck provides no independent corroboration here - the \u03c72 verification in this review came instead from recomputing each statistic from its own contingency table, which is a stronger check.",
+      "reproduction": "metascience statcheck --text \"<Results and Discussion body text>\"",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_eeb9cf0026751023",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "multiplicity_uncorrected_family",
+      "producer": "legacy_sweep",
+      "technique": "multiplicity_report",
+      "title": "Multiplicity uncorrected family (Table 3, whole table; and Statistical analysis section)",
+      "description": "INDETERMINATE on tooling grounds, not on the paper. multiplicity_report returned n_tests = 0 with the note 'no uncorrected tests' on two separate attempts - once with correction_applied and p_is_threshold supplied per test, once with a plain list of exact p-values only - so its `tests` argument was evidently not parsed into the list the tool expects. No corrected thresholds or surviving-claim counts were produced and I am therefore asserting none. What can be stated without the tool, from the paper alone: Table 3 contains 51 predictor rows x 3 outcome classes = 153 Wald tests, Table 2 contains 8 univariate tests, the Statistical analysis section declares alpha = 0.05 and states no correction",
+      "location": "Table 3, whole table; and Statistical analysis section",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "registry_tool",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "All tests were 2-sided, with a significance level set at 0.05."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:multiplicity_uncorrected_family",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "All tests were 2-sided, with a significance level set at 0.05.",
+      "inputs": {
+        "family_label": "Table 3: psychotropic medication coefficients for the Heart failure class",
+        "n_tests_submitted": 30
+      },
+      "reported": {
+        "stated_correction": "none",
+        "n_coefficient_tests_in_table3": 153,
+        "n_univariate_tests_in_table2": 8
+      },
+      "computed": {
+        "tool_output": {
+          "n_tests": 0,
+          "note": "no uncorrected tests"
+        },
+        "verdict": "tool did not accept the submitted tests"
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Cannot be determined without a successful multiplicity run; flagged so the editorial stage can re-attempt rather than treat the family as corrected."
+      },
+      "notes": "INDETERMINATE on tooling grounds, not on the paper. multiplicity_report returned n_tests = 0 with the note 'no uncorrected tests' on two separate attempts - once with correction_applied and p_is_threshold supplied per test, once with a plain list of exact p-values only - so its `tests` argument was evidently not parsed into the list the tool expects. No corrected thresholds or surviving-claim counts were produced and I am therefore asserting none. What can be stated without the tool, from the paper alone: Table 3 contains 51 predictor rows x 3 outcome classes = 153 Wald tests, Table 2 contains 8 univariate tests, the Statistical analysis section declares alpha = 0.05 and states no correction of any kind, and several claims that reach the abstract and discussion rest on coefficients with p between 0.01 and 0.05 (amisulpride 0.029, clozapine 0.037, dexzopiclone 0.022, lorazepam 0.019, risperidone 0.049). Quantifying how many survive correction requires a working run of this tool.",
+      "reproduction": "metascience multiplicity --family-label 'Table 3 psychotropic medication coefficients, Heart failure class' --tests '[{\"id\":\"halo_inj\",\"p_value\":0.001},{\"id\":\"risperidone\",\"p_value\":0.002},{\"id\":\"olanzapine\",\"p_value\":0.011},{\"id\":\"clozapine\",\"p_value\":0.037},{\"id\":\"aripiprazole\",\"p_value\":0.007},{\"id\":\"amisulpride\",\"p_value\":0.016},{\"id\":\"dexzopiclone\",\"p_value\":0.022}]'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_39e67cb694afdfef",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "supplement2_unreadable",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Supplement2 unreadable",
+      "description": "PRESENT BUT UNREADABLE, which is different from absent. The file extracted successfully but returned 1,114,127 characters across 33,652 lines, exceeding what the harness can deliver in one result; it was spilled to a temporary file. Reading it back by line offset would mean sampling rows rather than extracting the tables, and a check built on a sampled table is worse than no check, so I did not do so. This is the single largest coverage gap in this review and it is a consequential one: eTable 5 holds the LCA model-selection statistics (BIC and the other fit indices) that justify the four-class solution, and eTables 2-4 hold the full single/binary/ternary comorbidity distributions that would ",
+      "location": "Supplementary Information 2 (eTables 1-6), file 41537_2025_576_MOESM2_ESM.xlsx",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "Patients with SSD had comorbidities with 50 CVD diagnoses, among which Primary Hypertension (I10) was the most common (46.15%), followed by Chronic Ischemic Heart Disease (I25) (17.31%) and Heart Failure (I50) (14.49%) (eTable 1 in Supplement 2)."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:supplement2_unreadable",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "Patients with SSD had comorbidities with 50 CVD diagnoses, among which Primary Hypertension (I10) was the most common (46.15%), followed by Chronic Ischemic Heart Disease (I25) (17.31%) and Heart Failure (I50) (14.49%) (eTable 1 in Supplement 2).",
+      "inputs": {
+        "path": "41537_2025_576_MOESM2_ESM.xlsx"
+      },
+      "reported": {
+        "contents_per_supplement3_captions": [
+          "eTable 1 Proportion of Various Circulatory System Disorders",
+          "eTable 2 Single Comorbidities",
+          "eTable 3 Binary Comorbidities",
+          "eTable 4 Ternary Comorbidities",
+          "eTable 5 LCA model selection without covariates",
+          "eTable 6 Types of Psychiatric Medications Used"
+        ]
+      },
+      "computed": {
+        "extraction_result": "present but not deliverable",
+        "size_characters": 1114127,
+        "size_lines": 33652
+      },
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "The four-class LCA solution and the comorbidity-count distributions are unverified; eTables 2-4 would likely resolve whether the Table 1 binary/ternary blocks count exclusive or overlapping combinations."
+      },
+      "notes": "PRESENT BUT UNREADABLE, which is different from absent. The file extracted successfully but returned 1,114,127 characters across 33,652 lines, exceeding what the harness can deliver in one result; it was spilled to a temporary file. Reading it back by line offset would mean sampling rows rather than extracting the tables, and a check built on a sampled table is worse than no check, so I did not do so. This is the single largest coverage gap in this review and it is a consequential one: eTable 5 holds the LCA model-selection statistics (BIC and the other fit indices) that justify the four-class solution, and eTables 2-4 hold the full single/binary/ternary comorbidity distributions that would settle the Table 1 binary-and-ternary discrepancy recorded above. Re-running this extraction with paging enabled at the tool level, or converting the workbook to CSV per sheet, would close it.",
+      "reproduction": "metascience extract-supplement --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1038--s41537-025-00576-3/10.1038--s41537-025-00576-3_supplementary_info_2_41537_2025_576_MOESM2_ESM.xlsx'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_344b0a44d8082e23",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "supplements_1_and_3_caption_only",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Supplements 1 and 3 caption only (Supplementary Information 1 and 3 (.docx))",
+      "description": "Both files read cleanly and contain no tables and no numbers - Supplement 1 is the two eFigure captions with the figures themselves embedded as images (there is no OCR, so their content is unreadable), and Supplement 3 is a plain caption index for Supplements 1 and 2. eFigure 1 is the sample-selection flow chart, which is where the breakdown from 16,344 screened to 2830 analysed would be found; that flow therefore could not be verified, and the exclusion count of 13,514 recorded in the anatomy is a derived complement, not a printed figure.",
+      "location": "Supplementary Information 1 and 3 (.docx)",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "eFigure 1. Flow chart of sample selection\n\neFigure 2. Number of comorbid diagnoses in patients with schizophrenia-population distribution"
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:supplements_1_and_3_caption_only",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "eFigure 1. Flow chart of sample selection\n\neFigure 2. Number of comorbid diagnoses in patients with schizophrenia-population distribution",
+      "inputs": {
+        "paths": [
+          "41537_2025_576_MOESM1_ESM.docx",
+          "41537_2025_576_MOESM3_ESM.docx"
+        ]
+      },
+      "reported": {
+        "supplement_1": "eFigure 1 and eFigure 2 captions",
+        "supplement_3": "caption list for Supplements 1 and 2"
+      },
+      "computed": {
+        "n_tables_supplement_1": 0,
+        "n_tables_supplement_3": 0,
+        "numeric_content": "none"
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The sample-selection flow from 16,344 to 2830 cannot be checked stage by stage."
+      },
+      "notes": "Both files read cleanly and contain no tables and no numbers - Supplement 1 is the two eFigure captions with the figures themselves embedded as images (there is no OCR, so their content is unreadable), and Supplement 3 is a plain caption index for Supplements 1 and 2. eFigure 1 is the sample-selection flow chart, which is where the breakdown from 16,344 screened to 2830 analysed would be found; that flow therefore could not be verified, and the exclusion count of 13,514 recorded in the anatomy is a derived complement, not a printed figure.",
+      "reproduction": "metascience extract-supplement --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1038--s41537-025-00576-3/10.1038--s41537-025-00576-3_supplementary_info_1_41537_2025_576_MOESM1_ESM.docx'",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "a supplement",
+      "finding_id": "f_7c04c0af3d2dc8ac",
+      "finding_id_hasher": "1"
+    },
+    {
+      "slug": "data_availability_on_request",
+      "producer": "legacy_sweep",
+      "technique": "legacy_unattributed",
+      "title": "Data availability on request (Data availability statement)",
+      "description": "Recorded for completeness rather than as a red flag. The paper does not claim the data are included or openly deposited, so this is not the 'state-but-withhold' pattern; identifiable psychiatric inpatient records from three named hospitals carry a genuine ethical constraint, and an ethics approval number is given. The practical consequence for this review is only that the Table 1 count discrepancy and the degenerate Table 3 estimates cannot be resolved against the underlying records.",
+      "location": "Data availability statement",
+      "outcome": "undecided",
+      "provisional_severity": null,
+      "severity": null,
+      "severity_is_provisional": true,
+      "impossible": false,
+      "tool_verdict": null,
+      "computed_by": "model_reading",
+      "quarantined": false,
+      "anchors": [
+        {
+          "kind": "quote",
+          "quote": "The datasets analyzed during the current study are available from the corresponding author on reasonable request due to ethical limitations."
+        }
+      ],
+      "legacy": {
+        "from_schema": "findings-1.x",
+        "original_id": "numeric:data_availability_on_request",
+        "original_severity": "indeterminate",
+        "migrated_at": "2026-10-19T20:18:27Z"
+      },
+      "quote": "The datasets analyzed during the current study are available from the corresponding author on reasonable request due to ethical limitations.",
+      "inputs": {
+        "statement_type": "available on request"
+      },
+      "reported": {
+        "data_availability": "on request from corresponding author",
+        "reason_given": "ethical limitations"
+      },
+      "computed": {
+        "data_actually_deposited": false
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; noted because it bounds what any external check can resolve."
+      },
+      "notes": "Recorded for completeness rather than as a red flag. The paper does not claim the data are included or openly deposited, so this is not the 'state-but-withhold' pattern; identifiable psychiatric inpatient records from three named hospitals carry a genuine ethical constraint, and an ethics approval number is given. The practical consequence for this review is only that the Table 1 count discrepancy and the degenerate Table 3 estimates cannot be resolved against the underlying records.",
+      "reproduction": "No tool applies; recorded by direct reading of the Data availability statement.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "finding_id": "f_71db7027e68739fa",
+      "finding_id_hasher": "1"
+    }
+  ],
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": "migrated: the v1 numeric sweep"
+    },
+    "science_error": {
+      "state": "did_not_run",
+      "detail": "the science agent did not exist for this run"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    },
+    "tortured_phrases": {
+      "state": "did_not_run",
+      "detail": "no stage record in run_meta"
+    }
+  },
+  "adjudication": {
+    "ran": false,
+    "skipped_reason": "migrated legacy run; the adjudicator never existed for it"
+  },
+  "legacy": {
+    "from_schema": "findings-1.x",
+    "source_file": "findings.json",
+    "source_sha256": "6b4b067a4d31dacc7ca944377195083752e4ac66098bc309f0b5926166a82219",
+    "migrated_at": "2026-10-19T20:18:27Z",
+    "pipeline_version": "0.1.0",
+    "analysed_at": "2026-08-09 18:17 UTC",
+    "analysed_at_source": "recorded"
+  }
+}

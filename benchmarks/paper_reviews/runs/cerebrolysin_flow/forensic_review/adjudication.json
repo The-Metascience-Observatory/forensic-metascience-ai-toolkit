@@ -1,0 +1,105 @@
+{
+  "verdicts": [
+    {
+      "finding_id": "f_65cc497e79a98b16",
+      "action": "upgraded",
+      "severity": 5,
+      "category": "consequence_reassessed",
+      "rationale": "The Combined interval (0.5456 to 0.5766, width 0.031) is about 21-fold narrower than the component intervals at n=10/3 (NNTXDIAM width 0.659). Eight independent endpoints would shrink a Wald interval only ~2.8-fold, and the eight MW values are mixed around 0.5. This row is the paper's only p<0.0001 result and the stated statistical proof of histometric superiority; the printed components cannot produce it.",
+      "title": "Combined Wei-Lachin CI is far narrower than every component",
+      "description": "Table 2 prints eight component 95% CIs at n=10/3 with widths of about 0.66 (NNTXDIAM 0.0704 to 0.7296). The Combined (Wei-Lachin) interval at the same n is 0.5456 to 0.5766, width 0.031, and is the sole significant result (p<0.0001). All eight components are non-significant and mixed in direction (MW 0.4000 to 0.8000). Independent averaging of eight endpoints would shrink a Wald interval only about 2.8-fold, not 21-fold. check_estimate_ci finds the Combined CI and p internally consistent with each other, so the defect is that this Combined row cannot come from the printed components at n=10/3."
+    },
+    {
+      "finding_id": "f_7931f5b108f6ebeb",
+      "action": "kept",
+      "severity": 4,
+      "category": "merged_pattern",
+      "rationale": "Table 3 reprints Table 2's Combined statistics in full, including N1/N2=10/3, which matches neither Muscle Marlene (16/5) nor Muscle Catoi (11/2). The caption repeats MW=0.5611. Muscle Marlene p=0.4146 and Muscle Catoi p=0.4936 duplicate Table 2's first two p-values, which is why Catoi's CI excludes 0.5 while p stays 0.4936.",
+      "title": "Table 3 Combined row and p-values are copied from Table 2",
+      "description": "Table 3 reprints Table 2's Combined Wei-Lachin row in full (MW=0.5611, CI 0.5456-0.5766, N1/N2=10/3, p<0.0001), and the caption repeats those figures. Table 3's own rows are Muscle Marlene (n=16/5) and Muscle Catoi (n=11/2), so 10/3 belongs to neither. Muscle Marlene p=0.4146 and Muscle Catoi p=0.4936 are identical to Table 2 NNTXDIAM and NNTXAREA. Muscle Catoi's CI (0.5578-1.0000) excludes the MW null of 0.5, so the copied p=0.4936 is also discordant with its own interval (Wald p from the CI about 0.0048)."
+    },
+    {
+      "finding_id": "f_05233b798c791963",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "rationale": "Muscle Catoi's p=0.4936 is the Table 2 NNTXAREA p sitting beside a different MW and CI; the CI-versus-p discordance is the same Table 3 fill-down already captured in the Combined-row copy.",
+      "merged_into": "f_7931f5b108f6ebeb"
+    },
+    {
+      "finding_id": "f_0daa7cc9d2581556",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "rationale": "Table 3's p=0.4146 and p=0.4936 are the same numerals as Table 2 NNTXDIAM and NNTXAREA and belong to the same copy from Table 2 as the Combined row.",
+      "merged_into": "f_7931f5b108f6ebeb"
+    },
+    {
+      "finding_id": "f_3b8760ac4ed4a041",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "NNTXDIAM and NNTXAREA share MW=0.4000 and CI (0.0704 to 0.7296) at n=10/3, which can occur if area is monotone in diameter, but they print p=0.4146 versus p=0.4936. Those p-values cannot both belong to the same MW, CI and n. check_estimate_ci recovered Wald p=0.5521 from the shared interval."
+    },
+    {
+      "finding_id": "f_45885edd6e0ff8a5",
+      "action": "discarded",
+      "severity": null,
+      "category": "misapplication",
+      "rationale": "The paper attributes these p-values to the Wei-Lachin procedure, a large-sample multivariate generalization of Wilcoxon-Mann-Whitney, not to an exact univariate U. A Wald or other Wei-Lachin variance estimator will miss the untied lattice, so GRIM-U does not license a U-lattice accusation. Component p-versus-CI discordances are kept separately.",
+      "evidence_quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test."
+    },
+    {
+      "finding_id": "f_d9cb49e5289e5402",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "NNTXMAX CI 0.5362 to 1.0000 excludes the MW null of 0.5 even with the upper bound censored at 1, yet p=0.9017 is non-significant. check_estimate_ci recovered p=0.0112 from the interval. MW=0.8000 at n=10/3 is U=24 (null 15), which cannot yield p approximately 0.90."
+    },
+    {
+      "finding_id": "f_8040765dc16fe21b",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "The caption's EMG-positive angiogenesis mean 2.57 equals 18/7 (four 3s and three 2s). Table 4 lists ang scores 2, 1, 3, 3, 2, 3 for six of seven EMG-positive cases and omits ang for case 28; case 6 is scored 1, which the caption's scores of 2 and 3 exclude. The EMG-negative mean 1.3 matches the ten Table 4 scores."
+    },
+    {
+      "finding_id": "f_91a1aa8e465f31c5",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "Results and the attrition ledger give 8 CMAP-positive of 21 rats at the 2nd operation; Table 4 lists seven EMG-positive cases and omits No. 29, who was CMAP-positive and received Vecuronium. Abstract and Figure 4 still say 8 of 16, and Discussion says 7 of 14 surviving animals. Denominators 16 and 14 are not the printed 21 or 15."
+    },
+    {
+      "finding_id": "f_23ad2d7d735b5b26",
+      "action": "discarded",
+      "severity": null,
+      "category": "misapplication",
+      "rationale": "GRIM-U's U=0 floor of p approximately 0.007 applies only to a single Mann-Whitney test. The paper assigns the combined p<0.0001 to the Wei-Lachin multivariate procedure, so the lattice check is not applicable. The implausible Combined interval is kept as a separate finding.",
+      "evidence_quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test."
+    },
+    {
+      "finding_id": "f_8b12f2549336534b",
+      "action": "discarded",
+      "severity": null,
+      "category": "insufficient_evidence",
+      "rationale": "The CERE contrast is already reported as not statistically significant. absence_of_evidence was indeterminate without a SESOI, and the Muscle Marlene interval is a stimulus-yes versus no contrast, not CERE versus control. No arithmetical defect is shown.",
+      "evidence_quote": "Although not statistically significant, compared with the two other groups, the CERE rats showed a clear tendency toward larger muscle fiber diameters"
+    },
+    {
+      "finding_id": "f_9fce41893d829d6e",
+      "action": "discarded",
+      "severity": null,
+      "category": "insufficient_evidence",
+      "rationale": "statcheck scans APA-format t/F/r/chi-squared/z statistics. This paper reports Mann-Whitney MW, CIs and p without APA degrees of freedom, so a zero-hit scan is a coverage limit, not a defect of the paper.",
+      "evidence_quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test."
+    }
+  ],
+  "paper": {
+    "verdict": "does_not_reconcile",
+    "paper_severity": 5,
+    "confidence": "medium",
+    "summary": "The paper's only statistically significant result, the Table 2 Combined Wei-Lachin Mann-Whitney of 0.5611 (95% CI 0.5456 to 0.5766, n=10/3, p<0.0001), cannot be produced from the eight component intervals printed above it, which are about twenty-fold wider and mixed in direction. That same Combined row, including the 10/3 denominator, is reprinted as Table 3's combined muscle result beside rows whose n are 16/5 and 11/2, and Table 3's p-values 0.4146 and 0.4936 match Table 2's first two rows. Table 2 also pairs one MW and CI with two different p-values and reports NNTXMAX CI 0.5362-1.0000 against p=0.9017. Count-percent, ratio, bounds, summation and the Results attrition cascade 30 to 21 to 15 reconcile. A corrigendum should withdraw or recompute the Wei-Lachin combined tests, align Table 3, and correct the CMAP-positive counts (8 of 21 versus 8 of 16 versus 7 of 14) and the Figure 9 angiogenesis mean 2.57 versus Table 4. This review did not establish intent, did not re-analyse raw histometric files, and did not treat GRIM-U lattice misses as accusations because the paper attributes p-values to Wei-Lachin rather than exact univariate U.",
+    "headline_finding_id": "f_65cc497e79a98b16"
+  }
+}

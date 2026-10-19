@@ -1,0 +1,1557 @@
+{
+  "$comment": "findings schema v2 -- the unified findings data contract, normative in docs/specs/findings_v2.md (approved 2026-08-21). ADDITIVE: the live two_stage pipeline stays on findings.schema.json (v1) until cutover. Load through prompts.findings_schema_v2(), which replaces the technique placeholder with the registry-derived enum; the raw file is not a usable schema on its own, deliberately, so a stale hand-maintained tool list cannot exist.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "paper_id",
+    "run_id",
+    "findings",
+    "channels"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0"
+    },
+    "paper_id": {
+      "type": "string"
+    },
+    "paper_title": {
+      "type": "string"
+    },
+    "pipeline": {
+      "type": "object",
+      "description": "PIPELINE-WRITTEN, never by a producer. The resolved pipeline configuration that produced this run (pipeline_config.PipelineConfig.record()): name, modules with resolved tools and options, backend, digest, and `complete_review` -- true only when both analysts, the whole tools-agent toolset and the adjudicator ran. Absent on runs that predate pipelines, which are complete reviews by construction. discovery.run_kind reads `complete_review` so a partial run never stands as a paper's review."
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^r_",
+      "description": "PIPELINE-WRITTEN, minted once per run (screens mint their own). Joins to run_meta and the DB `runs.run_uid`; with `finding_id` it is the DB natural key."
+    },
+    "paper_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "authors": {
+          "type": "string"
+        },
+        "journal": {
+          "type": "string"
+        },
+        "year": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "description": "v1 wrote the year as a string; metadata 1.1 records an integer. Both validate."
+        },
+        "doi": {
+          "type": "string"
+        },
+        "study_design": {
+          "type": "string"
+        },
+        "corresponding_author": {
+          "type": "string",
+          "description": "EXTRACTOR-WRITTEN, not model-written: `extraction/jats.py` reads it from the publisher XML's `contrib[corresp=yes]`. Named here because the report renders a 'Corresponding author' line above the author questions from it, and a field that drives a visible section should not reach the schema only through `additionalProperties`. Do not invent it -- an empty string means the XML did not say."
+        },
+        "corresponding_email": {
+          "type": "string",
+          "description": "EXTRACTOR-WRITTEN, as `corresponding_author`. The address the author questions would be sent to; empty when the XML carried none."
+        },
+        "journal_normalized": {
+          "type": "string",
+          "description": "The normalized journal name from metadata 1.1 (webapp_db's `journal_full`)."
+        },
+        "authors_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "given": {
+                "type": "string"
+              },
+              "family": {
+                "type": "string"
+              },
+              "full": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Structured authors from metadata 1.1. The v1 `authors` string survives beside it."
+        },
+        "metadata_status": {
+          "type": "string",
+          "description": "metadata 1.1's fetch status -- whether the record was resolved, and how."
+        }
+      },
+      "description": "PIPELINE-WRITTEN projection of `metadata.json` (schema 1.1): the v1 keys plus `journal_normalized`, `authors_list`, `year`, `metadata_status`. The model never invents metadata."
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding_id",
+          "finding_id_hasher",
+          "slug",
+          "producer",
+          "technique",
+          "title",
+          "description",
+          "location",
+          "outcome",
+          "severity_is_provisional",
+          "impossible",
+          "quarantined",
+          "computed_by"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "pattern": "^f_[0-9a-f]{16}(-[0-9]+)?$",
+            "description": "ANNOTATOR-WRITTEN content hash (spec section 5): paper_id, producer, technique, anchor_key and the scalar inputs, canonicalized and sha256'd. The DB natural key together with run_id. Never model-chosen -- the producer-facing subset omits it entirely, which is what stops a producer minting ids that collide with or impersonate other findings."
+          },
+          "finding_id_hasher": {
+            "type": "string",
+            "description": "ANNOTATOR-WRITTEN. The FINDING_ID_HASHER_VERSION that minted `finding_id`. Existing ids are never recomputed in place; a hasher change bumps this and drift is handled by the DB alias table, not by rewriting ids."
+          },
+          "slug": {
+            "type": "string",
+            "description": "The old human-readable id (`table2_bdi_grim`). Display only; NEVER a join key -- joins use `finding_id`."
+          },
+          "producer": {
+            "type": "string",
+            "enum": [
+              "tool_expert",
+              "science_error",
+              "image_track",
+              "text_track",
+              "raw_data_track",
+              "harness",
+              "fast_screen",
+              "legacy_sweep",
+              "legacy_editorial"
+            ],
+            "description": "Stamped by the harness per agent/track, never model-chosen (the producer-facing subset omits it). `fast_screen` is in the enum from day one so the screen agent's arrival is not a schema break; its rows are structurally capped (provisional <= 4, never impossible, always provisional) because a screen is a funnel, not evidence."
+          },
+          "technique": {
+            "type": "string",
+            "enum": [
+              "__TECHNIQUE_ENUM_INJECTED_AT_LOAD__"
+            ],
+            "description": "Which check produced this finding. The enum here is a PLACEHOLDER replaced at load time by `prompts.findings_schema_v2()`: every `registry.SPECS` name (exact tool names -- this is what ends the `grim` vs `grim_check` drift and makes fire-rate joins to the toolcall ledger equality joins) plus the six fixed non-tool values `not_computational`, `no_tool_exists`, `tool_existed_unused`, `legacy_unattributed`, `factual_claim`, `internal_contradiction`. v1's `manual` is retired: the converter maps it per the 2026-08-13 split, new rows may never use it."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 90,
+            "description": "One clause, place + discrepancy, numbers as printed: 'Table 2: BDI-II mean 23.47 is impossible for n=28'. No filler, no trailing period. Inconsistency, never intent: 'fabricated', 'fraud', 'manipulated' and kin are banned. The adjudicator may rewrite it; the original is kept in `adjudication.title_was`."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 700,
+            "description": "Plain English, 1-4 sentences: what the paper prints (verbatim values), what the check computed or expected, why it matters, and the leading innocent explanation when one exists. No markdown, no preamble, no first person, no intent language. Rewrites preserved in `adjudication.description_was`."
+          },
+          "location": {
+            "type": "string",
+            "description": "Reader's terms: 'Table 2, BDI row'."
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "problem",
+              "pass",
+              "undecided"
+            ],
+            "description": "Replaces v1's `consistent` bool. `pass` = the check RAN and found nothing; `undecided` = refusal/indeterminate -- the check could not decide, which is different from deciding the paper is fine. Do not report `pass` for a check that was skipped or never run: an unexamined value reported as clean is a false all-clear."
+          },
+          "provisional_severity": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 9,
+            "description": "The producer's estimate on the 1-9 correction-outcome ladder (severity9.py): 'if this one finding were confirmed, and it were the only problem in the paper, what would the journal have to do about it?'. Null unless `outcome=problem`. The pipeline clamps it under the evidence-CHANNEL caps only (agent_code 4, fast_screen 4, model_knowledge 3, model_reading on a tool technique 3, quarantined 3); there is no ceiling keyed on the technique and no pipeline maximum."
+          },
+          "severity": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 9,
+            "description": "ADJUDICATOR-WRITTEN final 1-9 severity. Null unless `outcome=problem` and `adjudication.action` is not `discarded`. When the adjudicator did not run, the annotator copies the provisional here and sets `severity_is_provisional`."
+          },
+          "severity_is_provisional": {
+            "type": "boolean",
+            "description": "ANNOTATOR-WRITTEN. True whenever `severity` was not adjudicator-assigned. Always true for `fast_screen` and converted legacy rows."
+          },
+          "impossible": {
+            "type": "boolean",
+            "description": "ANNOTATOR-DERIVED, default false. True iff a VALIDATED call of a tool whose registry evidence class is `absolute` returned `impossible` and survived reconciliation (spec section 1.5). Neither the model nor the adjudicator can set it, and it is unreachable from `agent_code`, `model_reading`, quarantined rows, `fast_screen`, and any probabilistic or descriptive tool -- code can't mint impossible, which is what makes per-tool impossible-fire counts trustworthy. Orthogonal to `severity`: a GRIM-impossible digit in a descriptive row is a 2-3 with `impossible: true`."
+          },
+          "tool_verdict": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "ANNOTATOR-WRITTEN by the tool-verdict reconciliation join against the validated toolcall ledger -- never trusted from prose. Null when no tool call backs the row (`not_computational`, factual claims). Per-tool impossible/fire statistics count on THIS field.",
+            "additionalProperties": false,
+            "required": [
+              "severity",
+              "tool",
+              "validated"
+            ],
+            "properties": {
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "impossible",
+                  "highly_suspicious",
+                  "suspicious",
+                  "indeterminate",
+                  "consistent"
+                ],
+                "description": "The tool-layer 5-enum, verbatim from the validated call. This axis is an epistemic verdict about a number; it is not derivable from the 1-9 severity and neither replaces the other."
+              },
+              "tool": {
+                "type": "string",
+                "description": "Registry name of the call joined to."
+              },
+              "validated": {
+                "type": "boolean",
+                "description": "Whether the call passed the registry validation gate."
+              },
+              "quarantined_raw": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "impossible",
+                  "highly_suspicious",
+                  "suspicious",
+                  "indeterminate",
+                  "consistent",
+                  null
+                ],
+                "description": "The 5-enum a quarantined detector WOULD have returned (v1's `severity_before_quarantine`). Calibration is scored against this, so losing it makes a quarantine permanent."
+              }
+            }
+          },
+          "severity_source": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "ANNOTATOR-WRITTEN by `severity_reconcile.annotate_v2`. Present only when a finding's published rung DEPARTS from the verdict its backing tool returned. Absent means agreement, no comparable tool verdict, or a tool verdict (`indeterminate`/`consistent`) that has no rung on the 1-9 ladder -- those are different facts and are counted separately in `run_meta.severity_reconciliation`. Pipeline-written, never from prose: a producer able to write this could assert its own agreement with a tool.",
+            "additionalProperties": false,
+            "required": [
+              "model",
+              "tool",
+              "tool_rung",
+              "direction",
+              "explained"
+            ],
+            "properties": {
+              "model": {
+                "type": "integer",
+                "description": "The rung this finding was actually published at."
+              },
+              "tool": {
+                "type": "string",
+                "enum": [
+                  "impossible",
+                  "highly_suspicious",
+                  "suspicious",
+                  "indeterminate",
+                  "consistent"
+                ],
+                "description": "The tool-layer 5-enum verdict, verbatim."
+              },
+              "tool_rung": {
+                "type": "integer",
+                "description": "`tool` mapped onto the 1-9 ladder via `severity9.FIVE_TO_NINE`."
+              },
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "upgraded",
+                  "downgraded"
+                ],
+                "description": "Published rung relative to the tool's."
+              },
+              "explained": {
+                "type": "boolean",
+                "description": "Whether the adjudication records a rationale for the departure. An UNEXPLAINED downgrade makes a tool result disappear from the output."
+              },
+              "joined_by": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "tool_verdict",
+                  "ledger",
+                  null
+                ],
+                "description": "Which route established the tool's verdict: the annotator-written `tool_verdict` block (preferred), or this module's own ledger join (fallback)."
+              },
+              "note": {
+                "type": "string",
+                "description": "Reader-facing sentence naming both rungs and whether a reason was given."
+              }
+            }
+          },
+          "computed_by": {
+            "type": "string",
+            "enum": [
+              "registry_tool",
+              "agent_code",
+              "model_reading",
+              "deterministic_track"
+            ],
+            "description": "Evidence-weight dimension, annotator-derived from the ledger where possible (tracks stamp `deterministic_track` in code). `agent_code` is legal ONLY with `producer: science_error`, ranks below `registry_tool`, caps provisional at 4 and can never yield `impossible`. A `computed` number citing a script with no matching Bash call in the ledger is flagged `code_unbacked`."
+          },
+          "quarantined": {
+            "type": "boolean",
+            "description": "Default false. Quarantined rows stay `problem`, cap at QUARANTINE_CAP=3, and never headline. Written by the track code or the annotator, never by a model producer."
+          },
+          "quarantine_reason": {
+            "type": "string",
+            "description": "Why this detector may not accuse yet, in the detector's own words. Required whenever `quarantined` is true -- a bare cap with no reason is forbidden, because a reader would otherwise have to infer the quarantine from the cap."
+          },
+          "quote": {
+            "type": "string",
+            "description": "ONE CONTIGUOUS VERBATIM SPAN copied from the paper -- the sentence, or the table row, that prints the numbers this check used. Copy it; do not compose it. Prefer a SHORTER exact quote over a longer assembled one, and use an explicit ellipsis (...) if you must skip. This string is CHECKED against the paper by the pipeline and the reader is told the result, so a sentence you built from values found in different places will be labelled as assembled rather than quoted."
+          },
+          "quote_verified": {
+            "type": "string",
+            "enum": [
+              "verbatim",
+              "elided",
+              "stitched",
+              "unverified",
+              "absent"
+            ],
+            "description": "Set by the pipeline, not the model. Whether `quote` could be located in the paper: verbatim (one contiguous span), elided (ellipsis, every fragment found), stitched (every number is in the paper but this sentence is not), unverified (our search did not find it), absent (no quote given)."
+          },
+          "quote_source": {
+            "type": "string",
+            "description": "Set by the pipeline, not the model. WHERE the quote was located -- e.g. 'the paper's text', 'a table', 'a figure caption', 'the PDF text layer', 'a supplement' -- so a reader knows where to go and look."
+          },
+          "quote_problem": {
+            "type": "string",
+            "description": "Set by the pipeline, not the model. Present only when the quote is stitched or unverified. Says what is wrong with it as a quotation, phrased as a fact about OUR search rather than about the paper."
+          },
+          "source": {
+            "type": "object",
+            "description": "Set by the pipeline, not the model. The passage the CHECKED NUMBERS were read from, taken from the validated tool call that produced this finding rather than from anything written here -- so it is where the arithmetic's inputs came from, not the model's choice of what to quote about the finding. Present only when exactly one call could be identified AND every candidate call quoted the same passage: attaching the wrong row's evidence to this row's accusation is worse than attaching none, because a quote is what a reader trusts INSTEAD of checking.",
+            "additionalProperties": false,
+            "properties": {
+              "source_quote": {
+                "type": "string",
+                "description": "The contiguous span the tool call reported its values were copied from."
+              },
+              "source_locator": {
+                "type": "string",
+                "description": "Where the call said that span lives, in a reader's terms -- 'Table 1, Age row'. NOT verified: only the quote text is searched for, so this is the caller's label for the place, never a located fact."
+              },
+              "source_quote_verified": {
+                "type": "string",
+                "enum": [
+                  "verbatim",
+                  "elided",
+                  "stitched",
+                  "unverified"
+                ],
+                "description": "Whether the span could be located in the paper. Only verbatim and elided may be presented as 'as printed'; stitched and unverified are OUR search failing and must be rendered as such. Absent when the paper could not be read at all, in which case no claim is made either way."
+              },
+              "source_quote_source": {
+                "type": "string",
+                "description": "Which body of text the span was located in -- 'the paper's text', 'a table', 'a figure caption', 'a supplement'."
+              },
+              "source_matched_by": {
+                "type": "string",
+                "description": "Written by an interim v1 pipeline generation; carried verbatim by the converter."
+              }
+            }
+          },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Arguments passed to the tool. The SCALAR entries here feed the `finding_id` content hash (spec section 5), so they must be the values actually checked, as printed."
+          },
+          "reported": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "value(s) as printed in the paper"
+          },
+          "computed": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The values this check produced, AND how. Every figure here is checked against the paper's own text (article and supplements) by the run's computation audit, so put it beyond doubt: a value you COPIED from the paper belongs in `reported` with a `source_quote`, not retyped here; a value you DERIVED should carry its derivation in the key beside it. `{\"bonferroni_alpha_for_9_tests\": 0.00556}` says where it came from and `{\"difference\": 10576}` does not, and only the first can be checked without re-deriving it."
+          },
+          "consequence": {
+            "type": "object",
+            "description": "WHAT THIS FINDING CHANGES, as distinct from how wrong it is. Severity says whether the numbers can be right; consequence says whether anything the paper claims depends on it. A p-value typo'd from .043 to .034 and a discrepancy that turns a significant result non-significant are both `suspicious`, and without this field they are indistinguishable. Leave a field null when it is genuinely unknown -- an unknown consequence and no consequence are different, and guessing here is exactly the failure this field exists to stop.",
+            "additionalProperties": false,
+            "required": [
+              "basis"
+            ],
+            "properties": {
+              "flips_significance": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Does a result the paper reports cross the alpha it used, once this finding is taken into account? null when not determined."
+              },
+              "claims_affected": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "description": "How many claims the paper STATES depend on this. null when not counted."
+              },
+              "basis": {
+                "type": "string",
+                "enum": [
+                  "computed",
+                  "asserted"
+                ],
+                "description": "`computed` means a TOOL produced this -- statcheck's decision_error, multiplicity_report's n_claims_lost_to_correction. `asserted` means you judged it. Set by the pipeline where a tool produced it; a computed consequence always replaces an asserted one, and the two are rendered differently, so do not label a judgement `computed`."
+              },
+              "explanation": {
+                "type": "string",
+                "description": "One sentence naming the specific claim affected. Required in practice for `asserted`, since nothing else substantiates it."
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "description": "Anything a reader needs to judge this finding that the structured fields cannot carry: which assumption is doing the work, what would innocently explain it, what you could not resolve. Prefer naming the innocent explanation over omitting it -- a finding whose caveat is missing reads as more damning than the evidence supports."
+          },
+          "artefacts": {
+            "type": "array",
+            "description": "Set by the pipeline, not the model. Paper-relative files this finding was computed from (a supplement spreadsheet, an SI PDF). Paths are POSIX and relative to the paper directory so a moved root or another OS can still resolve them. Absent on older reviews that never recorded a file.",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "web_sources": {
+            "type": "array",
+            "description": "Legal only with `basis: web_lookup` on a web-enabled producer (`science_error` today). A row citing web_sources with zero ledger web calls is flagged `web_unbacked` by the annotator -- the citation must be backed by a recorded lookup, not by memory.",
+            "items": {
+              "type": "object",
+              "required": [
+                "url"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string",
+                  "description": "Verbatim span from the cited page that supports the claim."
+                },
+                "accessed": {
+                  "type": "string",
+                  "description": "ISO date the page was read."
+                }
+              }
+            }
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "tool",
+              "web_lookup",
+              "model_knowledge"
+            ],
+            "description": "For science-agent factual findings: what the claim rests on. `model_knowledge` -- a memory-based claim without a recorded lookup -- caps provisional at MODEL_KNOWLEDGE_CAP=3."
+          },
+          "reproduction": {
+            "type": "string",
+            "description": "Written by the PIPELINE for a finding a forensic tool produced: it replays the call behind the finding (`metascience tool run <tool> --json ...`), so leave it out there. Write it only for a `run_python_script` finding (the persisted `analysis_code/...` path) or a reading of the paper (`NO COMMAND APPLIES` and why)."
+          },
+          "reproduction_kind": {
+            "type": "string",
+            "enum": [
+              "command",
+              "script",
+              "no_command_applies"
+            ],
+            "description": "ANNOTATOR-WRITTEN. `script` points at a persisted `analysis_code/` file with a matching Bash call in the ledger. `no_command_applies` marks a reading of the paper that nothing reproduces and that must not be counted as an unreproducible finding (`reproduction_valid` is null in that case)."
+          },
+          "reproduction_valid": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Set by the pipeline, not the model: does `reproduction` name a real CLI command that runs as written? Null when `reproduction_kind` is `no_command_applies`: a judgement has no command, so there is nothing for this to be true or false about."
+          },
+          "reproduction_problem": {
+            "type": "string",
+            "description": "Why `reproduction` does not run. Present only when reproduction_valid is false."
+          },
+          "reproduction_source": {
+            "type": "string",
+            "enum": ["generated_from_tool_call", "generated_from_registry", "model_written"],
+            "description": "ANNOTATOR-WRITTEN. Where `reproduction` came from: replayed from the one ledger call behind this finding (`reproduction_call` is its seq), built from the finding's own `inputs`, or kept as the producer wrote it because neither could be generated."
+          },
+          "reproduction_call": {
+            "type": ["integer", "null"],
+            "description": "ANNOTATOR-WRITTEN. The ledger `seq` of the tool call `reproduction` replays, when `reproduction_source` is `generated_from_tool_call`."
+          },
+          "reproduction_not_generatable": {
+            "type": "string",
+            "description": "ANNOTATOR-WRITTEN. Why no command could be generated, when `reproduction_source` is `model_written`."
+          },
+          "reproduction_not_executed": {
+            "type": "string",
+            "description": "ANNOTATOR-WRITTEN. Present only when the reproduction was deliberately NOT executed, with the reason -- today only \"tool not enabled in this pipeline\": a restricted pipeline does not run, after the fact, a check its toolset excluded. The static verdict in `reproduction_valid` stands."
+          },
+          "anchors": {
+            "type": "array",
+            "description": "Producers emit MINIMAL records (spec section 3); `anchors.annotate_findings` enriches them IN PLACE post-adjudication, which is why extra properties are tolerated here (the enriched shape is owned by anchors.md) but NOT in the producer-facing subset. A quote anchor is mandatory for every text/numeric `problem` finding: one contiguous verbatim span, >=8 words or >=40 chars, containing the load-bearing numbers, no ellipses. Image findings carry `page_bbox` placements VERBATIM from panels/panel_index.json, never re-derived; sheet findings carry `table_cell`.",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": true,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "quote",
+                    "page_bbox",
+                    "table_cell"
+                  ]
+                },
+                "quote": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "said",
+                    "against",
+                    "source"
+                  ]
+                },
+                "file": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "integer"
+                },
+                "bbox": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "description": "[x0, y0, x1, y1]. Never part of the finding_id anchor_key -- coordinates jitter across PyMuPDF versions; the page is the stable part."
+                },
+                "table": {
+                  "type": "string"
+                },
+                "cells": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "sheet": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "anchor_summary": {
+            "type": "object",
+            "description": "ANNOTATOR-WRITTEN summary of the enrichment: `{pdf, xml, primary_anchor_id, page}`. Shape owned by anchors.md.",
+            "additionalProperties": true,
+            "properties": {
+              "pdf": {},
+              "xml": {},
+              "primary_anchor_id": {
+                "type": "string"
+              },
+              "page": {
+                "type": "integer"
+              }
+            }
+          },
+          "anchor_problem": {
+            "type": "string",
+            "description": "Named-absence escape hatch, PRODUCER-writable: when you cannot supply a verbatim passage or placement for this finding, say WHY here instead of leaving anchors empty silently. The anchor annotator may also write it. Absence is a statement, never a silent gap."
+          },
+          "adjudication": {
+            "type": "object",
+            "description": "ADJUDICATOR-WRITTEN via `adjudicate.apply()`. ABSENT means the adjudicator never saw the row -- distinct from `kept`. Discarded rows are RETAINED with `severity: null`: 'ran and discarded' must stay distinguishable from 'did not run'.",
+            "additionalProperties": false,
+            "required": [
+              "action"
+            ],
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "kept",
+                  "merged",
+                  "downgraded",
+                  "upgraded",
+                  "discarded"
+                ]
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "description": "Category vocabulary owned by adjudicator.md; a plain string here so that enum has exactly one home."
+              },
+              "merged_into": {
+                "type": "string",
+                "description": "finding_id of the surviving merged row."
+              },
+              "merged_from": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "severity_from": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "description": "The provisional severity the adjudicator moved from, when it moved."
+              },
+              "title_was": {
+                "type": "string"
+              },
+              "description_was": {
+                "type": "string"
+              }
+            }
+          },
+          "legacy": {
+            "type": "object",
+            "description": "CONVERTER-WRITTEN (migrate_v2.py), present only on converted rows. `original_id` stores the PREFIXED review key exactly as written (e.g. `image:IMGDUP-3`) so review.json verdicts -- which are never rewritten -- join against it. Descriptions on such rows come from deterministic templates: fluent prose is never synthesized for a finding the model of record did not write.",
+            "additionalProperties": false,
+            "required": [
+              "from_schema",
+              "original_id"
+            ],
+            "properties": {
+              "from_schema": {
+                "type": "string"
+              },
+              "original_id": {
+                "type": "string"
+              },
+              "original_severity": {
+                "type": "string"
+              },
+              "source_file": {
+                "type": "string"
+              },
+              "migrated_at": {
+                "type": "string"
+              }
+            }
+          },
+          "provisional_severity_from": {
+            "type": "integer",
+            "description": "PIPELINE-SET, never written by a producer. The severity this row claimed BEFORE `clamp_provisionals` applied an evidence-channel cap (MODEL_READING_CAP, AGENT_CODE_CAP, MODEL_KNOWLEDGE_CAP, FAST_SCREEN_CAP or QUARANTINE_CAP). Present only when a clamp actually happened, so that a ceiling is visible rather than silent -- the same rule `severity_from` follows one stage later."
+          }
+        }
+      }
+    },
+    "channels": {
+      "type": "object",
+      "description": "PIPELINE-WRITTEN, one entry per producer/track channel. NORMATIVE denominator rule: 'ran' means state in {ran, ran_result_discarded} -- a channel that demonstrably ran and retained nothing STILL RAN (counting only `ran` drops ~369 of the 370 measured image-channel papers, 2026-08-17, and inflates that fire rate by orders of magnitude). `refused`/`did_not_run`/`unknown` are always printed separately, never folded into 'did not fire'. The five-state vocabulary is shared verbatim with webapp_index.CHANNEL_STATES -- one vocabulary, and a test pins the two homes together.",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "ran",
+              "ran_result_discarded",
+              "refused",
+              "did_not_run",
+              "unknown"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "adjudication": {
+      "type": "object",
+      "description": "PIPELINE-WRITTEN document summary of the adjudication pass. `summary` is the adjudicator's bounded narrative -- it replaces v1's report_markdown. Total adjudicator failure fails OPEN: findings ship provisional and `failure` says why, so a crashed adjudicator never loses findings.",
+      "additionalProperties": false,
+      "required": [
+        "ran"
+      ],
+      "properties": {
+        "ran": {
+          "type": "boolean"
+        },
+        "verdict": {
+          "type": "string"
+        },
+        "paper_severity": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 9
+        },
+        "headline_finding_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Must reference a non-quarantined, non-discarded row."
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "n_kept": {
+          "type": "integer"
+        },
+        "n_merged": {
+          "type": "integer"
+        },
+        "n_discarded": {
+          "type": "integer"
+        },
+        "n_downgraded": {
+          "type": "integer"
+        },
+        "n_upgraded": {
+          "type": "integer"
+        },
+        "failure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "skipped_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Why the adjudicator never ran (budget floor, zero findings, migrated legacy run). Present only with ran=false."
+        },
+        "n_not_adjudicated": {
+          "type": "integer",
+          "description": "Docket-cap overflow rows, shipped at provisional severity -- a capped docket must announce itself."
+        },
+        "n_unknown_ids": {
+          "type": "integer"
+        },
+        "n_invalid_merges": {
+          "type": "integer"
+        },
+        "n_demoted_clears": {
+          "type": "integer",
+          "description": "Clears whose evidence_quote could not be located; demoted to kept."
+        },
+        "n_headline_fallback": {
+          "type": "integer"
+        },
+        "n_readonly_flip_attempts": {
+          "type": "integer"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "stats_found",
+        "tools_run"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "stats_found": {
+          "type": "integer"
+        },
+        "tools_run": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tables_checked": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stats_checked": {
+          "type": "integer",
+          "description": "How many of `stats_found` actually reached a check. `report.schema.json` REQUIRES the editorial stage to report this, and this schema gave the sweep no way to say it -- so the number a reader sees was reconstructed downstream from a stage that had not been told. Optional, because a sweep that cannot count them must leave it out rather than guess: the gap between found and checked is the single most load-bearing coverage number in the document."
+        }
+      }
+    },
+    "anatomy": {
+      "type": "object",
+      "description": "REQUIRED. Every variable the paper measured, with its type. This is not documentation -- it is what decides which checks may run. GRIM, GRIMMER and SPRITE assume INTEGER observations on a bounded scale; measured on a 95-paper corpus, at most 0.31% of numeric cells qualify. Applying them to a continuous variable (age, kg, mmHg, a percentage) manufactures impossibilities out of ordinary numbers. Declaring the variables is how that is prevented, and printing them is how a reader can check it.",
+      "required": [
+        "studies",
+        "variables",
+        "tests"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "studies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "design"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "design": {
+                "type": "string",
+                "description": "rct|cluster_rct|cohort|case_control|cross_sectional|secondary_analysis|meta_analysis|unknown"
+              },
+              "n": {
+                "type": "integer"
+              },
+              "unit_of_analysis": {
+                "type": "string"
+              },
+              "clustered": {
+                "type": "boolean",
+                "description": "true if randomisation/sampling was by cluster -- independence is then violated BY DESIGN"
+              },
+              "preregistered": {
+                "type": "boolean"
+              },
+              "registry_id": {
+                "type": "string"
+              },
+              "n_per_group": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "n": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "description": "Sample size PER ARM OR GROUP -- the units the paper COMPARES WITH EACH OTHER, e.g. [{\"label\":\"veteran\",\"n\":18034},{\"label\":\"nonveteran\",\"n\":213065}]. A total alone hides imbalance and is not enough to judge whether a comparison is powered.\nTHREE THINGS THAT DO NOT BELONG HERE, all observed in real runs:\n(1) The sample FLOW -- enrolled, analysed, excluded. That is `sample_flow`. Putting it here makes a study appear to have three arms and no comparison.\n(2) ANALYSIS SPLITS -- training / validation / held-out test. Nothing is compared between them; they are stages of one modelling procedure.\n(3) TWO DIFFERENT PARTITIONS in one list. If a paper splits by diagnosis AND by train/test, those are two partitions of the same people, and listing both here makes the sample appear twice its real size to anything that sums the column.\nIf a study compares nothing -- one pooled sample -- omit this field."
+              },
+              "sample_flow": {
+                "type": "array",
+                "description": "How the sample was arrived at: enrolled, randomised, analysed, excluded and why, e.g. [{\"stage\":\"enrolled in parent trial\",\"n\":112},{\"stage\":\"analytic sample\",\"n\":107},{\"stage\":\"excluded, insufficient EMA data\",\"n\":5,\"reason\":\"...\"}]. Distinct from `n_per_group`, which is the comparison arms: the flow says who was dropped, the arms say who was compared, and a reader needs both.\nONE UNIT PER LIST. Do not mix participant-level stages with observation-level ones; if the paper reports both, use `unit` to say which this list counts.\nNEVER use 0 to mean 'not reported'. Zero is a valid count. Omit the stage, or record it with `n` absent and say so in `reason`.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "stage"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "stage": {
+                      "type": "string"
+                    },
+                    "n": {
+                      "type": "integer"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "Why, for an exclusion stage."
+                    },
+                    "unit": {
+                      "type": "string",
+                      "description": "What is being counted at this stage: participants, observations, surveys, sites. Required whenever the paper reports flow at more than one level."
+                    },
+                    "inferred": {
+                      "type": "boolean",
+                      "description": "True if this count was DERIVED rather than printed -- e.g. computed as the complement of another figure. A derived number that looks printed is worse than a blank, because nothing downstream can tell them apart."
+                    }
+                  }
+                }
+              },
+              "alpha": {
+                "type": "number",
+                "description": "The significance threshold this study DECLARED, and only if it declared one -- quote where. Leave it out when the paper does not say. Do NOT fill in .05 because it is conventional: a paper that pre-registered .01, or used .10 for an exploratory analysis, would then be accused of contradicting itself for reporting exactly what it committed to."
+              }
+            }
+          }
+        },
+        "variables": {
+          "type": "array",
+          "description": "Every variable entering a reported test. The bounds and family here are what let the forensic tools run correctly instead of assuming a 1-7 Likert scale.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "measurement_level",
+              "discreteness",
+              "family",
+              "confidence"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "measurement_level": {
+                "type": "string",
+                "description": "nominal|ordinal|interval|ratio|unknown"
+              },
+              "discreteness": {
+                "type": "string",
+                "description": "discrete|continuous|unknown"
+              },
+              "family": {
+                "type": "string",
+                "description": "binary|count|likert_item|likert_composite|proportion|continuous|time_to_event|rate|ordinal_category|nominal_category|unknown"
+              },
+              "lower_bound": {
+                "type": "number",
+                "description": "The scale bound as the paper PRINTS the numeral (instrument range, inclusion criterion, '0-100 scale'). Fill it only when the paper prints it, and include that numeral in `provenance_quote`: the pipeline treats bounds whose numerals do not appear digit-for-digit in the quote as ASSUMED, and assumed bounds license nothing. 'A Likert scale' does not establish 1-7; 'adults' does not establish 18-90. A bound left empty is a stated gap; a bound guessed here is a false premise."
+              },
+              "upper_bound": {
+                "type": "number",
+                "description": "The scale bound as the paper PRINTS the numeral (instrument range, inclusion criterion, '0-100 scale'). Fill it only when the paper prints it, and include that numeral in `provenance_quote`: the pipeline treats bounds whose numerals do not appear digit-for-digit in the quote as ASSUMED, and assumed bounds license nothing. 'A Likert scale' does not establish 1-7; 'adults' does not establish 18-90. A bound left empty is a stated gap; a bound guessed here is a false premise."
+              },
+              "units": {
+                "type": "string"
+              },
+              "n_categories": {
+                "type": "integer"
+              },
+              "n_items": {
+                "type": "integer"
+              },
+              "provenance_quote": {
+                "type": "string",
+                "description": "Verbatim sentence establishing this typing. REQUIRED for confidence=high."
+              },
+              "confidence": {
+                "type": "string",
+                "description": "low|medium|high"
+              },
+              "levels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The actual values a categorical variable can take, in the paper's own words, e.g. [\"none\",\"ideation only\",\"planning without attempt\",\"attempt\"]. Give these for any nominal or ordinal variable. Do NOT bury them in `name`."
+              },
+              "derivation": {
+                "type": "string",
+                "description": "How this variable was COMPUTED, if it was: measured|mean_of_items|sum_of_items|percentage|proportion|ratio|difference|change_score|standardized|log_transformed|recoded|other. This changes what checks are valid: a mean of k items moves in steps of 1/(k*n), not 1/n, so GRIM on it with 1/n manufactures impossibilities; a z-score has no natural bounds and admits no granularity check at all."
+              },
+              "derived_from": {
+                "type": "string",
+                "description": "What it was computed FROM, in the paper's words -- the items, the numerator and denominator, or the two timepoints."
+              }
+            }
+          }
+        },
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "statement",
+              "status"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "statement": {
+                "type": "string"
+              },
+              "study_id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "description": "How the paper positioned this hypothesis, which decides whether a 'significant' result means anything. `preregistered_confirmatory` -- the paper cites a registration or protocol naming THIS hypothesis before data collection; quote it. `confirmatory` -- stated in advance in the paper as a primary hypothesis, but with no registration. `exploratory` -- generated from the data, or a secondary/post-hoc analysis. `unstated` -- the paper never says, which is itself a finding. MEASURED 2026-08-13 over 98 archived hypotheses: 48 exploratory, 45 confirmatory, 5 unstated, and `preregistered_confirmatory` has NEVER been used -- so before choosing `confirmatory`, check whether the paper actually registered it.",
+                "enum": [
+                  "preregistered_confirmatory",
+                  "confirmatory",
+                  "exploratory",
+                  "unstated"
+                ]
+              },
+              "appears_in_abstract": {
+                "type": "boolean"
+              },
+              "provenance_quote": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "tests": {
+          "type": "array",
+          "description": "EVERY reported statistical test. Be exhaustive for primary/secondary tiers; for large families of incidental tests (e.g. 100+ bivariate table cells) you may give one row per cell with only id/test_type/location/n/p_value -- the count and p-values are what multiplicity needs.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "test_type",
+              "location",
+              "confidence"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "test_type": {
+                "type": "string",
+                "description": "independent_t|paired_t|one_way_anova|repeated_measures_anova|ancova|pearson_correlation|linear_regression|logistic_regression|cox_regression|chi_squared|fishers_exact|mann_whitney|wilcoxon_signed_rank|kruskal_wallis|mixed_model|mcnemar|log_rank|other"
+              },
+              "location": {
+                "type": "string"
+              },
+              "study_id": {
+                "type": "string"
+              },
+              "hypothesis_id": {
+                "type": "string"
+              },
+              "outcome_var": {
+                "type": "string"
+              },
+              "predictor_vars": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "grouping_var": {
+                "type": "string"
+              },
+              "n": {
+                "type": "integer",
+                "description": "The n THIS TEST analysed, as the paper states it -- the analysed n, not the enrolled n, where they differ. Leave empty if unstated; do NOT reconstruct it from group sizes, percentages or a flow diagram. n feeds the granularity checks, where a wrong n manufactures impossibility against an honest paper."
+              },
+              "df": {
+                "type": "string",
+                "description": "Degrees of freedom AS THE PAPER PRINTS THEM ('24', '1, 118'). Leave empty if the paper prints none -- do NOT derive one from the design (n-2, n-k-1, a large-sample value). A df you inferred, sitting here, is indistinguishable from one the authors printed, and the rulebook records the false accusation that produces: the same numbers return `suspicious` at df 10 and `consistent` at df 30, which is why the consistency tools re-probe an assumed df across a range."
+              },
+              "statistic_value": {
+                "type": "number",
+                "description": "The test statistic AS THE PAPER PRINTED IT (the t, F, chi-square, z or Wald the authors reported). Leave it empty if the paper prints none -- do NOT compute one yourself from a coefficient and its standard error. A statistic we derived, sitting in this field, is indistinguishable from one the authors published, and a consistency tool would then check OUR arithmetic against THEIR p-value and report the result as a fact about their paper. The pipeline checks whether this number appears in the article and records the answer; a number it cannot find is treated as ours, not theirs."
+              },
+              "p_value": {
+                "type": "number",
+                "description": "The p-value AS PRINTED. If the paper prints a bound (p < .05, p < .001) set `p_is_threshold` true -- this float cannot carry the '<', and an undeclared bound is checked as an exact value. Do NOT put a p you computed from the test statistic here: a derived p is our arithmetic wearing the paper's byline, and a consistency tool would then check us against us and report the answer as a fact about them."
+              },
+              "p_is_threshold": {
+                "type": "boolean",
+                "description": "true if reported as p<x rather than an exact value"
+              },
+              "effect_size": {
+                "type": "string",
+                "description": "The effect size AS THE PAPER PRINTED IT, verbatim including its type (\"d = 0.38\", \"OR 1.71\", \"eta2 = .06\"). Leave empty if the paper prints none -- do NOT put your own computation here; that goes in `effect_size_estimated`, and merging the two would make a number we derived indistinguishable from one the authors published."
+              },
+              "ci": {
+                "type": "string",
+                "description": "The interval AS PRINTED, e.g. \"95% CI 0.32-0.94\". Empty if none is printed."
+              },
+              "correction_applied": {
+                "type": "string",
+                "description": "bonferroni|holm|fdr|none"
+              },
+              "assumption_checks_reported": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Assumption checks the AUTHORS state they performed. Empty is the norm and is NOT itself a finding."
+              },
+              "appears_in_abstract": {
+                "type": "boolean"
+              },
+              "appears_in_conclusions": {
+                "type": "boolean"
+              },
+              "is_stated_primary_outcome": {
+                "type": "boolean"
+              },
+              "provenance_quote": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "string"
+              },
+              "effect_size_estimated": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "AN EFFECT SIZE YOU COMPUTED, for the 69% of rows where the paper prints none. MEASURED 2026-08-16 over 2,091 archived anatomy rows: p-values are recorded 95% of the time and n 84%, but a printed effect size only 31% and an interval only 22% -- so most comparisons in the literature arrive without the one quantity a reader needs to judge whether they matter. Compute one whenever the inputs allow: from group means/SDs/ns, or from a test statistic with its df and n. Use `check_effect_plausibility`; do not do the arithmetic yourself.",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "cohens_d | hedges_g | odds_ratio | r | eta2"
+                  },
+                  "ci95": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "[low, high]. An ESTIMATE, and the tool labels it as one."
+                  },
+                  "computed_from": {
+                    "type": "string",
+                    "description": "Which printed values it was derived from, so a reader can redo it."
+                  },
+                  "tool": {
+                    "type": "string",
+                    "description": "The registered tool that produced it. A value with no tool named is one nobody can audit."
+                  },
+                  "ci_spans_null": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Does the interval include the null value -- 0 for a difference or a standardised effect, 1 for a ratio? GREG, 2026-08-16: the underpowered question 'is communicated better using the effect size and CI (and whether CI spans 0)'. This is that, stated once so a reader does not have to compare bounds by eye across dozens of rows. It is DESCRIPTIVE: an interval spanning the null beside a claimed significant result is worth seeing and is not by itself an error -- the two can differ legitimately when our estimate and the paper's test use different models."
+                  }
+                }
+              },
+              "mde_80": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "DESIGN SENSITIVITY: the smallest effect this comparison had 80% power to detect, given its own n and alpha. A property of the DESIGN, computable without the observed result and carrying no assumption about what counts as a large effect. Report it for every comparison with a known n. NOT observed power -- power computed from the observed effect is a monotone transformation of the p-value and tells a reader nothing the p did not (Hoenig & Heisey 2001). The informative comparison is whether the reported effect is SMALLER than this value: if it is, the design could not reliably detect an effect of that size, and a significant result sits where selection inflates estimates.",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "The metric, e.g. cohens_d."
+                  },
+                  "alpha": {
+                    "type": "number"
+                  },
+                  "observed_clears_it": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Is the reported effect at or above the MDE? null when no effect size is available."
+                  },
+                  "tool": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "interpretations": {
+          "type": "array",
+          "description": "What the paper SAYS its results mean, in its own words, kept separate from what the results ARE. Extract the sentences that tell a reader what to conclude -- from the abstract, the results, and the discussion. The point is to hold the authors' words beside their numbers, so quote, never paraphrase: a paraphrase is our reading of their reading. Most fields here are recorded for a reviewer and generate no finding; only `asserts` and `hedged`, read against a printed p and a stated alpha, are checked.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "claim",
+              "asserts"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "claim": {
+                "type": "string",
+                "description": "The paper's OWN sentence, verbatim. If you cannot quote it, do not record it."
+              },
+              "location": {
+                "type": "string",
+                "description": "Where the sentence appears. An abstract claim carries the most weight because it is what most readers will read, and it is where a null result is most often described as a positive one.",
+                "enum": [
+                  "abstract",
+                  "title",
+                  "results",
+                  "discussion",
+                  "conclusion"
+                ]
+              },
+              "test_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The test ids this sentence is about. Be exact: a sentence covering several tests is NOT checkable, because a hypothesis supported by three of four tests is legitimately described as supported, and reading that sentence against the one failing test invents a contradiction the paper never made."
+              },
+              "hypothesis_id": {
+                "type": "string"
+              },
+              "asserts": {
+                "type": "string",
+                "description": "What the sentence asserts about the evidence. `supported` -- it says the effect was found. `not_supported` -- it says it was not. `mixed` -- some outcomes and not others. `none` -- the sentence describes without concluding. Choose `supported` only when the sentence really does claim the effect exists.",
+                "enum": [
+                  "supported",
+                  "not_supported",
+                  "mixed",
+                  "none"
+                ]
+              },
+              "hedged": {
+                "type": "boolean",
+                "description": "Does the sentence soften the claim AT ALL -- 'suggests', 'may', 'appears', 'trend', 'warrants further study'? A hedge is the authors telling the reader not to over-read the result, which is the honest behaviour, so mark it true whenever there is any doubt. A hedged claim never becomes a finding."
+              },
+              "causal_language": {
+                "type": "boolean",
+                "description": "Does the sentence assert causation ('increases', 'leads to', 'causes')? RECORDED ONLY -- it generates no finding. Causal wording on an observational design is a real criticism and a terrible automated accusation: 'predicts' is causal in one field's register and ordinary usage in another's."
+              },
+              "provenance_quote": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "generalization": {
+                "type": "string",
+                "description": "The population the sentence generalises to, if it names one beyond the sample. Recorded only."
+              }
+            }
+          }
+        }
+      }
+    },
+    "unchecked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "location",
+          "reason"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "n_cells": {
+            "type": "integer",
+            "description": "How many cells this one entry stands for, so a single line can represent 34 identically-refused rows instead of 34 lines or -- worse -- one line that reads as a single cell."
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "dispatcher"
+            ],
+            "description": "Present when the pipeline recorded the refusal rather than the model noticing it. A model-authored omission depends on the model noticing; a dispatcher one does not, and a reader has no other way to tell which they are looking at."
+          }
+        }
+      }
+    },
+    "statistics_register": {
+      "type": "array",
+      "description": "EVERY reported statistic you located, one row each, BEFORE any decision about whether a tool applies. Checkability is a COLUMN here, never a filter: a statistic no tool can check is a row carrying a reason, not an absence. This is the coverage DENOMINATOR, so a row you omit is a statistic nobody will ever know went unchecked. Optional only so that archived runs still parse; a run without it can state no coverage figure.",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "kind",
+          "values",
+          "quote",
+          "checkable"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "prose",
+              "table",
+              "supplement",
+              "figure",
+              "abstract"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "description": "mean_sd | percentage | count | estimate_ci | test_statistic | p_value | coefficient | other"
+          },
+          "values": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The numbers AS PRINTED, named. e.g. {\"M\": 2.26, \"SD\": 1.32}."
+          },
+          "quote": {
+            "type": "string",
+            "description": "A contiguous verbatim span containing every value in this row. Verified against the paper automatically; a composed span is published as composed."
+          },
+          "location": {
+            "type": "string"
+          },
+          "checkable": {
+            "type": "object",
+            "required": [],
+            "additionalProperties": false,
+            "properties": {
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Registered tools that could check this row."
+              },
+              "reason": {
+                "type": "string",
+                "description": "Why NO tool applies. Required when `tools` is empty -- silence here is the failure this field exists to prevent."
+              }
+            }
+          },
+          "duplicate_of": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The id of the row this repeats, when the same statistic is printed in both a table and the text."
+          }
+        }
+      }
+    },
+    "figures": {
+      "type": "array",
+      "description": "One entry per figure in the paper, whether or not figure extraction ran. You are reading the paper and have its captions and the text around them, which is more context than the figure extractor has. The point is to record what a check WOULD need if it could see the plot, and to make the reader's blind spot explicit: a figure carrying numbers that appear nowhere in the text is a hole in this review, and it should be visible as one.",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "is_data_figure"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "As printed: 'Figure 2'."
+          },
+          "page": {
+            "type": "integer"
+          },
+          "caption": {
+            "type": "string",
+            "description": "The caption as printed."
+          },
+          "is_data_figure": {
+            "type": "boolean",
+            "description": "True if numeric values could in principle be read off it -- a plot with axes. False for a diagram, a flow chart, a photograph, a schematic, a CONSORT diagram."
+          },
+          "n_panels": {
+            "type": "integer",
+            "description": "Sub-panels (A, B, C...). 1 if undivided."
+          },
+          "panels": {
+            "type": "array",
+            "description": "One per panel, in reading order.",
+            "items": {
+              "type": "object",
+              "required": [
+                "chart_type"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "panel": {
+                  "type": "string",
+                  "description": "'A', 'B', ..."
+                },
+                "chart_type": {
+                  "type": "string",
+                  "description": "bar | line | scatter | box | violin | forest | kaplan_meier | histogram | heatmap | pie | flow_diagram | schematic | photograph | other"
+                },
+                "shows": {
+                  "type": "string",
+                  "description": "One sentence on what this panel plots, in your own words from the caption and surrounding text."
+                }
+              }
+            }
+          },
+          "carries_unique_values": {
+            "type": "boolean",
+            "description": "True if the figure appears to carry numbers that are NOT also printed in the text or a table. This is the one that matters: it converts 'we could not see the figures' from a generic caveat into a specific, locatable gap."
+          },
+          "error_bars": {
+            "type": "string",
+            "description": "What the error bars represent, IF the caption says: SD, SEM, CI, IQR, range. Omit if unstated -- do not infer it. Unlabelled error bars mean no dispersion can be read off the figure at all."
+          }
+        }
+      }
+    },
+    "checks_tally": {
+      "type": "object",
+      "description": "PIPELINE-WRITTEN merged denominator block (`agent.checks_tally`): severity histogram plus the passes `check_table` collapses plus the convention-rescue counts, handed to the adjudicator so the verdict has a denominator. A paper with 24 passes behind its 8 flags is a different object from one with 3.",
+      "additionalProperties": true,
+      "properties": {
+        "checks_passed": {
+          "type": "integer"
+        },
+        "of_which_collapsed_by_check_table": {
+          "type": "integer"
+        },
+        "checks_refused_indeterminate": {
+          "type": "integer"
+        },
+        "checks_flagged": {
+          "type": "integer"
+        },
+        "checks_total": {
+          "type": "integer"
+        },
+        "by_severity": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "rounding_convention": {
+          "type": "object"
+        },
+        "sd_convention": {
+          "type": "object"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "PIPELINE- or CONVERTER-WRITTEN. `analysed_at_source: \"file_mtime\"` is MANDATORY when the converter backdated from a file mtime -- a file date is never presented as a run date; that substitution is the one this toolkit exists to catch.",
+      "additionalProperties": true,
+      "properties": {
+        "pipeline_version": {
+          "type": "string"
+        },
+        "git_sha": {
+          "type": "string"
+        },
+        "prompt_sha256": {
+          "type": "string"
+        },
+        "registry_sha256": {
+          "type": "string"
+        },
+        "analysed_at": {
+          "type": "string"
+        },
+        "analysed_at_source": {
+          "type": "string"
+        },
+        "backend": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        }
+      }
+    },
+    "legacy": {
+      "type": "object",
+      "description": "CONVERTER-WRITTEN document provenance (docs/specs/findings_v2.md section 12): which v1 source produced this document, its hash (idempotency key), and the run-identity backdating rules -- pipeline_version 0.0.1 when the run recorded none; analysed_at_source 'file_mtime' when the date is a file date, which the rendered surface must keep saying.",
+      "additionalProperties": false,
+      "properties": {
+        "from_schema": {
+          "type": "string"
+        },
+        "source_file": {
+          "type": "string"
+        },
+        "source_sha256": {
+          "type": "string"
+        },
+        "migrated_at": {
+          "type": "string"
+        },
+        "pipeline_version": {
+          "type": "string"
+        },
+        "analysed_at": {
+          "type": "string"
+        },
+        "analysed_at_source": {
+          "enum": [
+            "recorded",
+            "file_mtime"
+          ]
+        }
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "description": "PIPELINE-WRITTEN. The coverage census: how many of the paper's own table cells a check could have consumed, beside how many were checked. Ported to the parallel pipeline in v1.23.0 per docs/specs/pipeline.md, which says the enrichment block attaches to the adjudicated object. The model never writes this; the producer schema is a strict subset that excludes it.",
+      "additionalProperties": true
+    }
+  }
+}

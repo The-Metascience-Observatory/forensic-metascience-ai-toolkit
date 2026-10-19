@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {boxCorners, flipArrow, matchDirection} from '../lib/flipArrow.ts';
+import {imagePdfBoxes} from '../lib/imagePdfBoxes.ts';
+const corners=boxCorners([0,10,100,50]);
+assert.ok(flipArrow(corners,1)[0][0]>50);
+assert.ok(flipArrow(corners,-1)[0][0]<50);
+for (const v of [false,undefined,null,'true']) assert.equal(matchDirection({flip:v},0),undefined);
+assert.equal(matchDirection({flip:true},0,true),1);
+// A flip marks BOTH sides, in opposing directions.
+assert.equal(matchDirection({flip:true,rotation_deg:0},0),1);
+assert.equal(matchDirection({flip:true,rotation_deg:0},1),-1);
+// Pure rotations are not reflections: no arrow.
+assert.equal(matchDirection({rotation_deg:179.9,flip:false},1),undefined);
+assert.equal(matchDirection({rotation_deg:179.9,flip:false},0),undefined);
+assert.equal(matchDirection({rotation_deg:90},1),undefined);
+assert.equal(matchDirection({rotation_deg:90,flip:true},1),2);
+assert.equal(matchDirection({rotation_deg:180,flip:true},0),2);
+assert.equal(matchDirection({rotation_deg:180,flip:true},1),-2);
+assert.equal(matchDirection({rotation_deg:-90},1),undefined);
+assert.equal(matchDirection({rotation_deg:-90,flip:true},1),-2);
+assert.equal(matchDirection({affine:[[-1.001861,-.001239,76.365039],[.001239,-1.001861,51.614682]],flip:false},1),undefined);
+assert.equal(matchDirection({affine:[[1,0,0],[0,1,0]],flip:true},1),-1);
+assert.ok(flipArrow(corners,2)[0][1]>30);
+assert.ok(flipArrow(corners,-2)[0][1]<30);
+assert.deepEqual(flipArrow(corners),[]);
+assert.deepEqual(flipArrow([[0,0],[0,0]],1),[]);
+const panel={paper_dir:'p',placements:[{page:1,document_path:'a.pdf',bbox_kind:'stream_exact',parent_size:[100,100],transform:[100,0,0,100,0,0],page_size:[100,100],page_rotation:90}]};
+const item={id:'pair',panels:[panel,panel],measurements:{flip:true,inlier_box_a:[10,10,90,90],inlier_box_b:[10,10,90,90]}};
+const boxes=imagePdfBoxes(item,[[100,100],[100,100]]);
+assert.deepEqual(boxes.map(b=>b.flipDirection),[1,-1]);
+const arrows=boxes.map(b=>flipArrow(b.points,b.flipDirection));
+assert.ok(arrows[0][0][1]>50); assert.ok(arrows[1][0][1]<50);
+console.log('Flip arrows: opposing directions, rotated PDF axes, absent flags and clone support passed');

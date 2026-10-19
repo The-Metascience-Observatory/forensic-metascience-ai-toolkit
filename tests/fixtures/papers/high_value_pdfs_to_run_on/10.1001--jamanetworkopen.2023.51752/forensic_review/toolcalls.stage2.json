@@ -1,0 +1,885 @@
+[
+  {
+    "seq": 1,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_011xDV9YVenyzU42AemdFLhs",
+    "input": {
+      "file_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1001--jamanetworkopen.2023.51752/body.md"
+    },
+    "result": "1\t# Body\n2\t\n3\t## KeyPoints\n4\t\n5\tQuestion Does prenatal and infancy homevisitation by nurses reduce obesity and hypertension among mothers with very low income and their first-born offspring at 12 and 18 years following birth?\n6\t\n7\tFindings In this randomized clinical trial of 742 participants, nurse-visited female offspring had lower rates of obesity and severe obesity at age 12 and 18 years combined than their control group counterparts; nurse-visited mothers of females had lower rates of stage 1 and stage 2 hypertension at child age 12 and 18 years combined compared with their control group counterparts. No intervention effect was found for these outcomes among male offspring or mothers of males.\n8\t\n9\tMeaning These findings suggest that prenatal and infancy home visitation holds promise for reducing obesity among female offspring living in extreme poverty and reducing their mothers' hypertension.\n10\t\n11\t<!-- image -->\n12\t\n13\t## [+ Supplementalcontent](https://jama.jamanetwork.com/article.aspx?doi=10.1001/jamanetworkopen.2023.51752&utm_campaign=articlePDF%26utm_medium=articlePDFlink%26utm_source=articlePDF%26utm_content=jamanetworkopen.2023.51752)\n14\t\n15\tAuthor affiliations and article information are listed at the end of this article.\n16\t\n17\t<!-- image -->\n18\t\n19\tOpenAccess. This is an open access article distributed under the terms of the CC-BY License.\n20\t\n21\t(Reprinted)\n22\t\n23\t<!-- image -->\n24\t\n25\t## JAMANetworkOpen | Pediatrics\n26\t\n27\tAbstract (continued)\n28\t\n29\thypertension than control-group counterparts. These findings suggest that risks for chronic disease amongmothersoffemales and their female offspring who live in extreme poverty may be prevented with prenatal and infant and toddler home visitations by nurses.\n30\t\n31\tTRIAL REGISTRATION ClinicalTrials.gov Identifier: NCT00708695\n32\t\n33\tJAMANetwork Open. 2024;7(1):e2351752. doi:10.1001/jamanetworkopen.2023.51752\n34\t\n35\t## Introduction\n36\t\n37\tPoverty and adverse childhood experiences (ACEs) pose substantial risks for a range of health problems, 1-4 including obesity among female children and adolescents 5 and hypertensive disorders among adults. 6-10 These disparities are especially pronounced among females and Black individuals. 11-13 Obesity and hypertension are major public health concerns because they increase the risk for a variety of chronic health conditions, including cardiovascular disease, type 2 diabetes, and kidney failure, as well as premature mortality. 11,14,15 Addressing these conditions among people living with very low income, and especially among Black individuals, is a public health imperative. 16\n38\t\n39\tThe Nurse-Family Partnership (NFP) is a program of prenatal and infant and toddler home visiting by nurses designed to improve outcomes of (1) pregnancy, (2) child health and development, and (3) maternal health and life course (eMethods in Supplement 2). 17,18 The NFP has been tested in a series of randomized clinical trials in the US for different populations living in different contexts, with replicated benefits found in these domains in at least 2 of these trials. 17,18 Many program effects were most pronounced among families experiencing the greatest adversity. 18 The focus of the current investigation is on participants in Memphis, Tennessee, living in deep poverty and in resource-poor neighborhoods. 19 Program effects on maternal and child health in this trial have been reported for prenatal health (including pregnancy-induced hypertension), 19 child health and development, 19-23 and maternal health and life course. 19-21,24-26\n40\t\n41\tThis study examines the Memphis program's effects on maternal and offspring obesity and hypertension at offspring ages 12 and 18 years, aspects of health that were not primary or secondary outcomes in the original study design or the follow-ups at child ages 12 and 18 years. 19,22,23,25,26 We focused on directly measured obesity (including some self-reports) and blood pressure among mothers and offspring given",
+    "result_truncated": true,
+    "result_chars": 66737,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01XjdvxL7kPRbqjYV7SNUjxT",
+    "input": {
+      "estimate": 0.185,
+      "ci_low": 0.046,
+      "ci_high": 0.748,
+      "measure": "RR",
+      "reported_p": 0.001
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"the interval behaves like a 99% CI, not the stated 95% \\u2014 check the reported level\"\n  ],\n  \"recovered_se\": 0.711431843514161,\n  \"recovered_p\": 0.017699958885494693,\n  \"recovered_z\": -2.3718357131286107,\n  \"implied_centre\": 0.1854939352108311,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": 0.99,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 691,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01SVnW7BCUcJLjoGAxkff9f9",
+    "input": {
+      "estimate": 0.217,
+      "ci_low": 0.081,
+      "ci_high": 0.582,
+      "measure": "RR",
+      "reported_p": 0.001
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.5030759005303289,\n  \"recovered_p\": 0.0023891959086577153,\n  \"recovered_z\": -3.0370326303268578,\n  \"implied_centre\": 0.2171220854726668,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 597,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Sh7nD9fpf9FS6GXuUoiNSd",
+    "input": {
+      "estimate": 0.561,
+      "ci_low": 0.293,
+      "ci_high": 1.075,
+      "measure": "RR",
+      "reported_p": 0.05
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0813, but p = 0.05 is reported\",\n    \"the CI includes the null (1.0), but the reported p = 0.05 says the result is significant\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.33161408622764693,\n  \"recovered_p\": 0.08131727580502557,\n  \"recovered_z\": -1.7430935459799217,\n  \"implied_centre\": 0.561226335804014,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.0813, but p = 0.05 is reported; the CI includes the null (1.0), but the reported p = 0.05 says the result is significant\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 887,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01DunnS83UUB5U71YQQh4DBy",
+    "input": {
+      "estimate": 0.698,
+      "ci_low": 0.455,
+      "ci_high": 1.073,
+      "measure": "RR",
+      "reported_p": 0.08
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.1004, but p = 0.08 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.21886022662836727,\n  \"recovered_p\": 0.1004313222091513,\n  \"recovered_z\": -1.6427661697996425,\n  \"implied_centre\": 0.6987238367194868,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.1004, but p = 0.08 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 701,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "mcp__forensic_metascience__grim_percentage",
+    "tool_short": "grim_percentage",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01NoxDTrrztrcVR5pM11e2Z5",
+    "input": {
+      "percentage": 98.8,
+      "n": 618,
+      "decimals": 1
+    },
+    "result": "{\n  \"consistent\": false,\n  \"severity\": \"impossible\",\n  \"reported_percentage\": 98.8,\n  \"n\": 618,\n  \"implied_count\": 610.584,\n  \"rounded_count\": 611,\n  \"possible_percentages_nearby\": [\n    98.4,\n    98.5,\n    98.7,\n    98.9,\n    99.0,\n    99.2,\n    99.4\n  ],\n  \"methodology\": \"GRIM test on percentage: For n=618, percentage must be expressible as 100*X/618 where X is an integer 0 to 618. Reported 98.8% implies count = 610.5840.\"\n}",
+    "result_truncated": false,
+    "result_chars": 430,
+    "is_error": false
+  },
+  {
+    "seq": 7,
+    "tool": "mcp__forensic_metascience__check_summation",
+    "tool_short": "check_summation",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01C3VEqPMg6Xs1gcLMyzVT5p",
+    "input": {
+      "values": [
+        0.2,
+        98.8
+      ],
+      "expected_sum": 100,
+      "tolerance": 0.5,
+      "description": "Hispanic + non-Hispanic ethnicity at child age 18 y"
+    },
+    "result": "{\n  \"values\": [\n    0.2,\n    98.8\n  ],\n  \"actual_sum\": 99.0,\n  \"expected_sum\": 100,\n  \"difference\": -1.0,\n  \"is_consistent\": false,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Summation check: Hispanic + non-Hispanic ethnicity at child age 18 y sum to 99.0, expected 100, difference = -1.0\"\n}",
+    "result_truncated": false,
+    "result_chars": 294,
+    "is_error": false
+  },
+  {
+    "seq": 8,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01G8xk1jnQdbwb6nmVWg8FEV",
+    "input": {
+      "estimate": 0.493,
+      "ci_low": 0.292,
+      "ci_high": 0.833,
+      "measure": "RR",
+      "reported_p": 0.002
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"the interval behaves like a 99% CI, not the stated 95% \\u2014 check the reported level\"\n  ],\n  \"recovered_se\": 0.26742324046953375,\n  \"recovered_p\": 0.008177072548671394,\n  \"recovered_z\": -2.6446695646110836,\n  \"implied_centre\": 0.493189618706639,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": 0.99,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 692,
+    "is_error": false
+  },
+  {
+    "seq": 9,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01S5cYuk7do1qT7RGCyU2Jeq",
+    "input": {
+      "estimate": 0.449,
+      "ci_low": 0.234,
+      "ci_high": 0.858,
+      "measure": "RR",
+      "reported_p": 0.003
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"the interval behaves like a 99% CI, not the stated 95% \\u2014 check the reported level\"\n  ],\n  \"recovered_se\": 0.3314558314282403,\n  \"recovered_p\": 0.01570050138520873,\n  \"recovered_z\": -2.4158042047096706,\n  \"implied_centre\": 0.4480758864299662,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": 0.99,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 691,
+    "is_error": false
+  },
+  {
+    "seq": 10,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_012PMGuwEtimUzdGm2sDDjrk",
+    "input": {
+      "estimate": 0.396,
+      "ci_low": 0.169,
+      "ci_high": 0.931,
+      "measure": "RR",
+      "reported_p": 0.007
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"the interval behaves like a 99% CI, not the stated 95% \\u2014 check the reported level\"\n  ],\n  \"recovered_se\": 0.43530406063926386,\n  \"recovered_p\": 0.033334412041287065,\n  \"recovered_z\": -2.128032222734799,\n  \"implied_centre\": 0.39665980386220134,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": 0.99,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 693,
+    "is_error": false
+  },
+  {
+    "seq": 11,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01GLXvtbRydqDvxsJEtgnXUZ",
+    "input": {
+      "estimate": 0.815,
+      "ci_low": 0.682,
+      "ci_high": 0.975,
+      "measure": "RR",
+      "reported_p": 0.01
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0249, but p = 0.01 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.09117713794068978,\n  \"recovered_p\": 0.02485663848431008,\n  \"recovered_z\": -2.2436234604593994,\n  \"implied_centre\": 0.8154446639717499,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"the p-value recovered from the CI is 0.0249, but p = 0.01 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 701,
+    "is_error": false
+  },
+  {
+    "seq": 12,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01UUDhnQo39ff2D2VXQ5yqH2",
+    "input": {
+      "estimate": 0.695,
+      "ci_low": 0.523,
+      "ci_high": 0.925,
+      "measure": "RR",
+      "reported_p": 0.01
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.14546498760825813,\n  \"recovered_p\": 0.01237578656510463,\n  \"recovered_z\": -2.501244040917853,\n  \"implied_centre\": 0.695539359058853,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 594,
+    "is_error": false
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01RH7aM39xrahQqQGwZdgDrc",
+    "input": {
+      "estimate": 0.793,
+      "ci_low": 0.674,
+      "ci_high": 0.934,
+      "measure": "RR",
+      "reported_p": 0.003
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.08322763323457089,\n  \"recovered_p\": 0.005324456690009249,\n  \"recovered_z\": -2.7867193663143803,\n  \"implied_centre\": 0.7934204433968159,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 597,
+    "is_error": false
+  },
+  {
+    "seq": 14,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01GJhKnfdvyp2AZ5db2AAdHq",
+    "input": {
+      "estimate": 0.613,
+      "ci_low": 0.44,
+      "ci_high": 0.855,
+      "measure": "RR",
+      "reported_p": 0.001
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.1694742217878946,\n  \"recovered_p\": 0.0038807247872558737,\n  \"recovered_z\": -2.887697833234024,\n  \"implied_centre\": 0.6133514490078262,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 596,
+    "is_error": false
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01JiSYg76rGoDkqfdwyqRgbU",
+    "input": {
+      "estimate": 0.634,
+      "ci_low": 0.459,
+      "ci_high": 0.876,
+      "measure": "RR",
+      "reported_p": 0.002
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.16487952992348417,\n  \"recovered_p\": 0.00571195077612785,\n  \"recovered_z\": -2.7638744770584394,\n  \"implied_centre\": 0.6341009383371073,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 596,
+    "is_error": false
+  },
+  {
+    "seq": 16,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_019SGsfUfegESKZw2nT3p1ef",
+    "input": {
+      "estimate": 0.313,
+      "ci_low": 0.156,
+      "ci_high": 0.631,
+      "measure": "RR",
+      "reported_p": 0.001
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.35649886077361176,\n  \"recovered_p\": 0.0011211304310771997,\n  \"recovered_z\": -3.2582210386910795,\n  \"implied_centre\": 0.3137451194839531,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 598,
+    "is_error": false
+  },
+  {
+    "seq": 17,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01A5nzigwbTaMPu2p3f89rg6",
+    "input": {
+      "estimate": 0.605,
+      "ci_low": 0.4,
+      "ci_high": 0.914,
+      "measure": "RR",
+      "reported_p": 0.01
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0171, but p = 0.01 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.21081153298337058,\n  \"recovered_p\": 0.017136173302816582,\n  \"recovered_z\": -2.3837729076754846,\n  \"implied_centre\": 0.604648658313239,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"the p-value recovered from the CI is 0.0171, but p = 0.01 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 701,
+    "is_error": false
+  },
+  {
+    "seq": 18,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01T67kNmpXkipgKuabgfxxHQ",
+    "input": {
+      "estimate": 0.791,
+      "ci_low": 0.648,
+      "ci_high": 0.966,
+      "measure": "RR",
+      "reported_p": 0.01
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0213, but p = 0.01 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.1018572639624143,\n  \"recovered_p\": 0.021345201188013085,\n  \"recovered_z\": -2.301822197982843,\n  \"implied_centre\": 0.7911813951300928,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"the p-value recovered from the CI is 0.0213, but p = 0.01 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 700,
+    "is_error": false
+  },
+  {
+    "seq": 19,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_013kYmGhXDzAVh5EFKeBCjT5",
+    "input": {
+      "estimate": 0.185,
+      "ci_low": 0.046,
+      "ci_high": 0.748,
+      "measure": "RR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.711431843514161,\n  \"recovered_p\": 0.017699958885494693,\n  \"recovered_z\": -2.3718357131286107,\n  \"implied_centre\": 0.1854939352108311,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 589,
+    "is_error": false
+  },
+  {
+    "seq": 20,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01GXQQ9F8UkK2oF5eE7E5Bbp",
+    "input": {
+      "estimate": 0.613,
+      "ci_low": 0.44,
+      "ci_high": 0.855,
+      "measure": "RR",
+      "reported_p": 0.001,
+      "confidence_level": 0.99
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.1289539530257622,\n  \"recovered_p\": 0.00014759689454324487,\n  \"recovered_z\": -3.7950782551672226,\n  \"implied_centre\": 0.6133514490078262,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 598,
+    "is_error": false
+  },
+  {
+    "seq": 21,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01KHqJyAxmTsPFg1VRqiNFgc",
+    "input": {
+      "estimate": 0.217,
+      "ci_low": 0.081,
+      "ci_high": 0.582,
+      "measure": "RR",
+      "reported_p": 0.001,
+      "confidence_level": 0.99
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.3827934736090639,\n  \"recovered_p\": 6.570171533093472e-05,\n  \"recovered_z\": -3.991337446369411,\n  \"implied_centre\": 0.2171220854726668,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 596,
+    "is_error": false
+  },
+  {
+    "seq": 22,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WMsSCjkSMiES56PLCU15aB",
+    "input": {
+      "estimate": 0.881,
+      "ci_low": 0.655,
+      "ci_high": 1.186,
+      "measure": "RR",
+      "reported_p": 0.39
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.4029, but p = 0.39 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.15145848306537738,\n  \"recovered_p\": 0.40286390487220647,\n  \"recovered_z\": -0.8365173774470475,\n  \"implied_centre\": 0.8813796003992831,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.4029, but p = 0.39 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 702,
+    "is_error": false
+  },
+  {
+    "seq": 23,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Hbu5sYo2NGygMNZne23CJK",
+    "input": {
+      "estimate": 1.454,
+      "ci_low": 0.963,
+      "ci_high": 2.197,
+      "measure": "RR",
+      "reported_p": 0.09
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0752, but p = 0.09 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.21041066751541349,\n  \"recovered_p\": 0.07524147491793043,\n  \"recovered_z\": 1.7789895518672179,\n  \"implied_centre\": 1.4545483835197783,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.0752, but p = 0.09 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 701,
+    "is_error": false
+  },
+  {
+    "seq": 24,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01JjeeYrFhXonZjVVUaCh1Tq",
+    "input": {
+      "estimate": 0.784,
+      "ci_low": 0.574,
+      "ci_high": 1.068,
+      "measure": "RR",
+      "reported_p": 0.11
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.1245, but p = 0.11 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.1583992430723884,\n  \"recovered_p\": 0.12446868635973551,\n  \"recovered_z\": -1.5362842265636334,\n  \"implied_centre\": 0.7829636006865198,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.1245, but p = 0.11 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 701,
+    "is_error": false
+  },
+  {
+    "seq": 25,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Te5Bcmb35DWrRVN5DsmJZ6",
+    "input": {
+      "estimate": 1.03,
+      "ci_low": 0.616,
+      "ci_high": 1.723,
+      "measure": "RR",
+      "reported_p": 0.91
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.2623964728708487,\n  \"recovered_p\": 0.9103085277745286,\n  \"recovered_z\": 0.11264938860703834,\n  \"implied_centre\": 1.0302271594167958,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 595,
+    "is_error": false
+  },
+  {
+    "seq": 26,
+    "tool": "mcp__forensic_metascience__check_summation",
+    "tool_short": "check_summation",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01KXpRUr8SbJR2YMTYwuhk9U",
+    "input": {
+      "values": [
+        49.8,
+        50.9
+      ],
+      "expected_sum": 100,
+      "tolerance": 0.5,
+      "description": "Table 4 stage 1 HTN at 12 and 18 y: mothers of females + mothers of males"
+    },
+    "result": "{\n  \"values\": [\n    49.8,\n    50.9\n  ],\n  \"actual_sum\": 100.69999999999999,\n  \"expected_sum\": 100,\n  \"difference\": 0.6999999999999886,\n  \"is_consistent\": false,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Summation check: Table 4 stage 1 HTN at 12 and 18 y: mothers of females + mothers of males sum to 100.69999999999999, expected 100, difference = 0.6999999999999886\"\n}",
+    "result_truncated": false,
+    "result_chars": 373,
+    "is_error": false
+  },
+  {
+    "seq": 27,
+    "tool": "mcp__forensic_metascience__grim_percentage",
+    "tool_short": "grim_percentage",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_0126XkE58X8RoHiHnqsVeygc",
+    "input": {
+      "percentage": 94.1,
+      "n": 618,
+      "decimals": 1
+    },
+    "result": "{\n  \"consistent\": false,\n  \"severity\": \"impossible\",\n  \"reported_percentage\": 94.1,\n  \"n\": 618,\n  \"implied_count\": 581.538,\n  \"rounded_count\": 582,\n  \"possible_percentages_nearby\": [\n    93.7,\n    93.9,\n    94.0,\n    94.2,\n    94.3,\n    94.5,\n    94.7\n  ],\n  \"methodology\": \"GRIM test on percentage: For n=618, percentage must be expressible as 100*X/618 where X is an integer 0 to 618. Reported 94.1% implies count = 581.5380.\"\n}",
+    "result_truncated": false,
+    "result_chars": 430,
+    "is_error": false
+  },
+  {
+    "seq": 28,
+    "tool": "mcp__forensic_metascience__grim_percentage",
+    "tool_short": "grim_percentage",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_018NaZNCniuZVa3EGWVLeo4b",
+    "input": {
+      "percentage": 94.1,
+      "n": 594,
+      "decimals": 1
+    },
+    "result": "{\n  \"consistent\": true,\n  \"severity\": \"consistent\",\n  \"reported_percentage\": 94.1,\n  \"n\": 594,\n  \"implied_count\": 558.954,\n  \"rounded_count\": 559,\n  \"possible_percentages_nearby\": [\n    93.6,\n    93.8,\n    93.9,\n    94.1,\n    94.3,\n    94.4,\n    94.6\n  ],\n  \"methodology\": \"GRIM test on percentage: For n=594, percentage must be expressible as 100*X/594 where X is an integer 0 to 594. Reported 94.1% implies count = 558.9540.\"\n}",
+    "result_truncated": false,
+    "result_chars": 429,
+    "is_error": false
+  },
+  {
+    "seq": 29,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01B5gZESF4bgbyUeg8WbyFzV",
+    "input": {
+      "ci_low": 0.613,
+      "ci_high": 3.753,
+      "measure": "RR",
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 3.753,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.613, 3.753] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 3.75-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1000,
+    "is_error": false
+  },
+  {
+    "seq": 30,
+    "tool": "mcp__forensic_metascience__grim_sweep",
+    "tool_short": "grim_sweep",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WKTid28wSsMutpvRN3sAvM",
+    "input": {
+      "values": [
+        50.7,
+        49.3
+      ],
+      "n_min": 590,
+      "n_max": 620,
+      "decimals": 1,
+      "value_type": "percentage"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"23 candidate ns satisfy GRIM for all reported values: [590, 592, 594, 596, 598, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 617, 619].\",\n  \"value_type\": \"percentage\",\n  \"decimals\": 1,\n  \"n_min\": 590,\n  \"n_max\": 620,\n  \"per_value\": [\n    {\n      \"value\": 50.7,\n      \"value_as_proportion\": 0.507,\n      \"viable_ns\": [\n        590,\n        592,\n        594,\n        596,\n        598,\n        600,\n        601,\n        602,\n        603,\n        604,\n        605,\n        606,\n        607,\n        608,\n        609,\n        610,\n        611,\n        612,\n        613,\n        614,\n        615,\n        617,\n        619\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 590,\n          \"k\": 299,\n          \"exact_proportion\": 0.5067796610169492\n        },\n        {\n          \"n\": 592,\n          \"k\": 300,\n          \"exact_proportion\": 0.5067567567567568\n        },\n        {\n          \"n\": 594,\n          \"k\": 301,\n          \"exact_proportion\": 0.5067340067340067\n        },\n        {\n          \"n\": 596,\n          \"k\": 302,\n          \"exact_proportion\": 0.5067114093959731\n        },\n        {\n          \"n\": 598,\n          \"k\": 303,\n          \"exact_proportion\": 0.5066889632107023\n        },\n        {\n          \"n\": 600,\n          \"k\": 304,\n          \"exact_proportion\": 0.5066666666666667\n        },\n        {\n          \"n\": 601,\n          \"k\": 305,\n          \"exact_proportion\": 0.5074875207986689\n        },\n        {\n          \"n\": 602,\n          \"k\": 305,\n          \"exact_proportion\": 0.5066445182724253\n        },\n        {\n          \"n\": 603,\n          \"k\": 306,\n          \"exact_proportion\": 0.5074626865671642\n        },\n        {\n          \"n\": 604,\n          \"k\": 306,\n          \"exact_proportion\": 0.5066225165562914\n        },\n        {\n          \"n\": 605,\n          \"k\": 307,\n          \"exact_proportion\": 0.5074380165289256\n        },\n        {\n          \"n\": 606,\n          \"k\": 307,\n          \"exact_proportion\": 0.5066006600660066\n        },\n        {\n          \"n\": 607,\n          \"k\": 308,\n          \"exact_proportion\": 0.5074135090609555\n        },\n        {\n          \"n\": 608,\n          \"k\": 308,\n          \"exact_proportion\": 0.506578947368421\n        },\n        {\n          \"n\": 609,\n          \"k\": 309,\n          \"exact_proportion\": 0.5073891625615764\n        },\n        {\n          \"n\": 610,\n          \"k\": 309,\n          \"exact_proportion\": 0.5065573770491804\n        },\n        {\n          \"n\": 611,\n          \"k\": 310,\n          \"exact_proportion\": 0.5073649754500819\n        },\n        {\n          \"n\": 612,\n          \"k\": 310,\n          \"exact_proportion\": 0.5065359477124183\n        },\n        {\n          \"n\": 613,\n          \"k\": 311,\n          \"exact_proportion\": 0.5073409461663948\n        },\n        {\n          \"n\": 614,\n          \"k\": 311,\n          \"exact_proportion\": 0.506514657980456\n        },\n        {\n          \"n\": 615,\n          \"k\": 312,\n          \"exact_proportion\": 0.5073170731707317\n        },\n        {\n          \"n\": 617,\n          \"k\": 313,\n          \"exact_proportion\": 0.5072933549432739\n        },\n        {\n          \"n\": 619,\n          \"k\": 314,\n          \"exact_proportion\": 0.5072697899838449\n        }\n      ],\n      \"n_viable\": 23\n    },\n    {\n      \"value\": 49.3,\n      \"value_as_proportion\": 0.493,\n      \"viable_ns\": [\n        590,\n        592,\n        594,\n        596,\n        598,\n        600,\n        601,\n        602,\n        603,\n        604,\n        605,\n        606,\n        607,\n        608,\n        609,\n        610,\n        611,\n        612,\n        613,\n        614,\n        615,\n        617,\n        619\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 590,\n          \"k\": 291,\n          \"exact_proportion\": 0.49322033898305084\n        },\n        {\n          \"n\": 592,\n          \"k\": 292,\n          \"exact_proportion\": 0.49324324324324326\n        },\n        {\n          \"n\": 594,\n          \"k\": 293,\n          \"exact_proportion\": 0.49326599326599324\n        },\n        {\n          \"n\": 596,\n          \"k\": 294,\n          \"exact_proportion\": 0.49328859060402686\n        },\n        {\n          \"n\": 598,\n          \"k\": 295,\n          \"exact_proportion\": 0.49331103678929766\n        },\n        {\n          \"n\": 600,\n          \"k\": 296,\n          \"exact_proportion\": 0.49333333333333335\n        },\n        {\n          \"n\": 601,\n          \"k\": 296,\n          \"exact_proportion\": 0.4925124792013311\n        },\n        {\n          \"n\": 602,\n          \"k\": 297,\n          \"exact_proportion\": 0.49335548172757476\n        },\n        {\n          \"n\": 603,\n          \"k\": 297,\n          \"exact_proportion\": 0.4925373134328358\n        },\n        {\n          \"n\": 604,\n          \"k\": 298,\n          \"exact_proportion\": 0.49337748344370863\n        },\n        {\n          \"n\": 605,\n          \"k\": 298,\n          \"exact_proportion\": 0.4925619834710744\n        },\n        {\n          \"n\": 606,\n          \"k\": 299,\n          \"exact_proportion\": 0.4933993399339934\n        },\n        {\n          \"n\": 607,\n          \"k\": 299,\n          \"exact_proportion\": 0.4925864909390445\n        },\n        {\n          \"n\": 608,\n          \"k\": 300,\n          \"exact_proportion\": 0.4934210526315789\n        },\n        {\n          \"n\": 609,\n          \"k\": 300,\n          \"exact_proportion\": 0.49261083743842365\n        },\n        {\n          \"n\": 610,\n          \"k\": 301,\n          \"exact_proportion\": 0.4934426229508197\n        },\n        {\n          \"n\": 611,\n          \"k\": 301,\n          \"exact_proportion\": 0.49263502454991814\n        },\n        {\n          \"n\": 612,\n          \"k\": 302,\n          \"exact_proportion\": 0.4934640522875817\n        },\n        {\n          \"n\": 613,\n          \"k\": 302,\n          \"exact_proportion\": 0.4926590538336052\n        },\n        {\n          \"n\": 614,\n          \"k\": 303,\n          \"exact_proportion\": 0.49348534201954397\n        },\n        {\n          \"n\": 615,\n          \"k\": 303,\n          \"exact_proportion\": 0.4926829268292683\n        },\n        {\n          \"n\": 617,\n          \"k\": 304,\n          \"exact_proportion\": 0.49270664505672607\n        },\n        {\n          \"n\": 619,\n          \"k\": 305,\n          \"exact_proportion\": 0.4927302100161551\n        }\n      ],\n      \"n_viable\": 23\n    }\n  ],\n  \"joint_viable_ns\": [\n    590,\n    592,\n    594,\n    596,\n    598,\n    600,\n    601,\n    602,\n    603,\n    604,\n    605,\n    606,\n    607,\n    608,\n    609,\n    610,\n    611,\n    612,\n    613,\n    614,\n    615,\n    617,\n    619\n  ],\n  \"methodology\": \"GRIM sweep: for each reported percentage v, enumerate all n in [590, 620] such that round(v\\u00b7n) is an integer in [0, n] AND round(v\\u00b7n)/n rounds back to v at 3 dp. Joint viable n-set is the intersection across all values.\"\n}",
+    "result_truncated": false,
+    "result_chars": 6779,
+    "is_error": false
+  },
+  {
+    "seq": 31,
+    "tool": "mcp__forensic_metascience__grim_sweep",
+    "tool_short": "grim_sweep",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01BZW2M6SevvPJJJzv2HSqfi",
+    "input": {
+      "values": [
+        50.8,
+        49.2
+      ],
+      "n_min": 590,
+      "n_max": 620,
+      "decimals": 1,
+      "value_type": "percentage"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"21 candidate ns satisfy GRIM for all reported values: [590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 602, 604, 606, 608, 610, 612, 614, 616, 618, 620].\",\n  \"value_type\": \"percentage\",\n  \"decimals\": 1,\n  \"n_min\": 590,\n  \"n_max\": 620,\n  \"per_value\": [\n    {\n      \"value\": 50.8,\n      \"value_as_proportion\": 0.508,\n      \"viable_ns\": [\n        590,\n        591,\n        592,\n        593,\n        594,\n        595,\n        596,\n        597,\n        598,\n        599,\n        600,\n        602,\n        604,\n        606,\n        608,\n        610,\n        612,\n        614,\n        616,\n        618,\n        620\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 590,\n          \"k\": 300,\n          \"exact_proportion\": 0.5084745762711864\n        },\n        {\n          \"n\": 591,\n          \"k\": 300,\n          \"exact_proportion\": 0.5076142131979695\n        },\n        {\n          \"n\": 592,\n          \"k\": 301,\n          \"exact_proportion\": 0.5084459459459459\n        },\n        {\n          \"n\": 593,\n          \"k\": 301,\n          \"exact_proportion\": 0.5075885328836425\n        },\n        {\n          \"n\": 594,\n          \"k\": 302,\n          \"exact_proportion\": 0.5084175084175084\n        },\n        {\n          \"n\": 595,\n          \"k\": 302,\n          \"exact_proportion\": 0.507563025210084\n        },\n        {\n          \"n\": 596,\n          \"k\": 303,\n          \"exact_proportion\": 0.5083892617449665\n        },\n        {\n          \"n\": 597,\n          \"k\": 303,\n          \"exact_proportion\": 0.507537688442211\n        },\n        {\n          \"n\": 598,\n          \"k\": 304,\n          \"exact_proportion\": 0.5083612040133779\n        },\n        {\n          \"n\": 599,\n          \"k\": 304,\n          \"exact_proportion\": 0.5075125208681135\n        },\n        {\n          \"n\": 600,\n          \"k\": 305,\n          \"exact_proportion\": 0.5083333333333333\n        },\n        {\n          \"n\": 602,\n          \"k\": 306,\n          \"exact_proportion\": 0.5083056478405316\n        },\n        {\n          \"n\": 604,\n          \"k\": 307,\n          \"exact_proportion\": 0.5082781456953642\n        },\n        {\n          \"n\": 606,\n          \"k\": 308,\n          \"exact_proportion\": 0.5082508250825083\n        },\n        {\n          \"n\": 608,\n          \"k\": 309,\n          \"exact_proportion\": 0.5082236842105263\n        },\n        {\n          \"n\": 610,\n          \"k\": 310,\n          \"exact_proportion\": 0.5081967213114754\n        },\n        {\n          \"n\": 612,\n          \"k\": 311,\n          \"exact_proportion\": 0.5081699346405228\n        },\n        {\n          \"n\": 614,\n          \"k\": 312,\n          \"exact_proportion\": 0.50814332247557\n        },\n        {\n          \"n\": 616,\n          \"k\": 313,\n          \"exact_proportion\": 0.5081168831168831\n        },\n        {\n          \"n\": 618,\n          \"k\": 314,\n          \"exact_proportion\": 0.5080906148867314\n        },\n        {\n          \"n\": 620,\n          \"k\": 315,\n          \"exact_proportion\": 0.5080645161290323\n        }\n      ],\n      \"n_viable\": 21\n    },\n    {\n      \"value\": 49.2,\n      \"value_as_proportion\": 0.49200000000000005,\n      \"viable_ns\": [\n        590,\n        591,\n        592,\n        593,\n        594,\n        595,\n        596,\n        597,\n        598,\n        599,\n        600,\n        602,\n        604,\n        606,\n        608,\n        610,\n        612,\n        614,\n        616,\n        618,\n        620\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 590,\n          \"k\": 290,\n          \"exact_proportion\": 0.4915254237288136\n        },\n        {\n          \"n\": 591,\n          \"k\": 291,\n          \"exact_proportion\": 0.49238578680203043\n        },\n        {\n          \"n\": 592,\n          \"k\": 291,\n          \"exact_proportion\": 0.49155405405405406\n        },\n        {\n          \"n\": 593,\n          \"k\": 292,\n          \"exact_proportion\": 0.4924114671163575\n        },\n        {\n          \"n\": 594,\n          \"k\": 292,\n          \"exact_proportion\": 0.49158249158249157\n        },\n        {\n          \"n\": 595,\n          \"k\": 293,\n          \"exact_proportion\": 0.492436974789916\n        },\n        {\n          \"n\": 596,\n          \"k\": 293,\n          \"exact_proportion\": 0.49161073825503354\n        },\n        {\n          \"n\": 597,\n          \"k\": 294,\n          \"exact_proportion\": 0.49246231155778897\n        },\n        {\n          \"n\": 598,\n          \"k\": 294,\n          \"exact_proportion\": 0.4916387959866221\n        },\n        {\n          \"n\": 599,\n          \"k\": 295,\n          \"exact_proportion\": 0.49248747913188645\n        },\n        {\n          \"n\": 600,\n          \"k\": 295,\n          \"exact_proportion\": 0.49166666666666664\n        },\n        {\n          \"n\": 602,\n          \"k\": 296,\n          \"exact_proportion\": 0.49169435215946844\n        },\n        {\n          \"n\": 604,\n          \"k\": 297,\n          \"exact_proportion\": 0.4917218543046358\n        },\n        {\n          \"n\": 606,\n          \"k\": 298,\n          \"exact_proportion\": 0.49174917491749176\n        },\n        {\n          \"n\": 608,\n          \"k\": 299,\n          \"exact_proportion\": 0.4917763157894737\n        },\n        {\n          \"n\": 610,\n          \"k\": 300,\n          \"exact_proportion\": 0.4918032786885246\n        },\n        {\n          \"n\": 612,\n          \"k\": 301,\n          \"exact_proportion\": 0.4918300653594771\n        },\n        {\n          \"n\": 614,\n          \"k\": 302,\n          \"exact_proportion\": 0.49185667752442996\n        },\n        {\n          \"n\": 616,\n          \"k\": 303,\n          \"exact_proportion\": 0.49188311688311687\n        },\n        {\n          \"n\": 618,\n          \"k\": 304,\n          \"exact_proportion\": 0.4919093851132686\n        },\n        {\n          \"n\": 620,\n          \"k\": 305,\n          \"exact_proportion\": 0.49193548387096775\n        }\n      ],\n      \"n_viable\": 21\n    }\n  ],\n  \"joint_viable_ns\": [\n    590,\n    591,\n    592,\n    593,\n    594,\n    595,\n    596,\n    597,\n    598,\n    599,\n    600,\n    602,\n    604,\n    606,\n    608,\n    610,\n    612,\n    614,\n    616,\n    618,\n    620\n  ],\n  \"methodology\": \"GRIM sweep: for each reported percentage v, enumerate all n in [590, 620] such that round(v\\u00b7n) is an integer in [0, n] AND round(v\\u00b7n)/n rounds back to v at 3 dp. Joint viable n-set is the intersection across all values.\"\n}",
+    "result_truncated": false,
+    "result_chars": 6270,
+    "is_error": false
+  },
+  {
+    "seq": 32,
+    "tool": "mcp__forensic_metascience__grim_sweep",
+    "tool_short": "grim_sweep",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Rptxfe4ugaDJVKcKzPdn87",
+    "input": {
+      "values": [
+        49.1,
+        50.9
+      ],
+      "n_min": 580,
+      "n_max": 600,
+      "decimals": 1,
+      "value_type": "percentage"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"15 candidate ns satisfy GRIM for all reported values: [580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 591, 593, 595, 597, 599].\",\n  \"value_type\": \"percentage\",\n  \"decimals\": 1,\n  \"n_min\": 580,\n  \"n_max\": 600,\n  \"per_value\": [\n    {\n      \"value\": 49.1,\n      \"value_as_proportion\": 0.491,\n      \"viable_ns\": [\n        580,\n        581,\n        582,\n        583,\n        584,\n        585,\n        586,\n        587,\n        588,\n        589,\n        591,\n        593,\n        595,\n        597,\n        599\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 580,\n          \"k\": 285,\n          \"exact_proportion\": 0.49137931034482757\n        },\n        {\n          \"n\": 581,\n          \"k\": 285,\n          \"exact_proportion\": 0.4905335628227194\n        },\n        {\n          \"n\": 582,\n          \"k\": 286,\n          \"exact_proportion\": 0.49140893470790376\n        },\n        {\n          \"n\": 583,\n          \"k\": 286,\n          \"exact_proportion\": 0.49056603773584906\n        },\n        {\n          \"n\": 584,\n          \"k\": 287,\n          \"exact_proportion\": 0.4914383561643836\n        },\n        {\n          \"n\": 585,\n          \"k\": 287,\n          \"exact_proportion\": 0.4905982905982906\n        },\n        {\n          \"n\": 586,\n          \"k\": 288,\n          \"exact_proportion\": 0.49146757679180886\n        },\n        {\n          \"n\": 587,\n          \"k\": 288,\n          \"exact_proportion\": 0.4906303236797274\n        },\n        {\n          \"n\": 588,\n          \"k\": 289,\n          \"exact_proportion\": 0.4914965986394558\n        },\n        {\n          \"n\": 589,\n          \"k\": 289,\n          \"exact_proportion\": 0.4906621392190153\n        },\n        {\n          \"n\": 591,\n          \"k\": 290,\n          \"exact_proportion\": 0.4906937394247039\n        },\n        {\n          \"n\": 593,\n          \"k\": 291,\n          \"exact_proportion\": 0.49072512647554806\n        },\n        {\n          \"n\": 595,\n          \"k\": 292,\n          \"exact_proportion\": 0.4907563025210084\n        },\n        {\n          \"n\": 597,\n          \"k\": 293,\n          \"exact_proportion\": 0.490787269681742\n        },\n        {\n          \"n\": 599,\n          \"k\": 294,\n          \"exact_proportion\": 0.49081803005008345\n        }\n      ],\n      \"n_viable\": 15\n    },\n    {\n      \"value\": 50.9,\n      \"value_as_proportion\": 0.509,\n      \"viable_ns\": [\n        580,\n        581,\n        582,\n        583,\n        584,\n        585,\n        586,\n        587,\n        588,\n        589,\n        591,\n        593,\n        595,\n        597,\n        599\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 580,\n          \"k\": 295,\n          \"exact_proportion\": 0.5086206896551724\n        },\n        {\n          \"n\": 581,\n          \"k\": 296,\n          \"exact_proportion\": 0.5094664371772806\n        },\n        {\n          \"n\": 582,\n          \"k\": 296,\n          \"exact_proportion\": 0.5085910652920962\n        },\n        {\n          \"n\": 583,\n          \"k\": 297,\n          \"exact_proportion\": 0.5094339622641509\n        },\n        {\n          \"n\": 584,\n          \"k\": 297,\n          \"exact_proportion\": 0.5085616438356164\n        },\n        {\n          \"n\": 585,\n          \"k\": 298,\n          \"exact_proportion\": 0.5094017094017094\n        },\n        {\n          \"n\": 586,\n          \"k\": 298,\n          \"exact_proportion\": 0.5085324232081911\n        },\n        {\n          \"n\": 587,\n          \"k\": 299,\n          \"exact_proportion\": 0.5093696763202725\n        },\n        {\n          \"n\": 588,\n          \"k\": 299,\n          \"exact_proportion\": 0.5085034013605442\n        },\n        {\n          \"n\": 589,\n          \"k\": 300,\n          \"exact_proportion\": 0.5093378607809848\n        },\n        {\n          \"n\": 591,\n          \"k\": 301,\n          \"exact_proportion\": 0.5093062605752962\n        },\n        {\n          \"n\": 593,\n          \"k\": 302,\n          \"exact_proportion\": 0.5092748735244519\n        },\n        {\n          \"n\": 595,\n          \"k\": 303,\n          \"exact_proportion\": 0.5092436974789916\n        },\n        {\n          \"n\": 597,\n          \"k\": 304,\n          \"exact_proportion\": 0.509212730318258\n        },\n        {\n          \"n\": 599,\n          \"k\": 305,\n          \"exact_proportion\": 0.5091819699499165\n        }\n      ],\n      \"n_viable\": 15\n    }\n  ],\n  \"joint_viable_ns\": [\n    580,\n    581,\n    582,\n    583,\n    584,\n    585,\n    586,\n    587,\n    588,\n    589,\n    591,\n    593,\n    595,\n    597,\n    599\n  ],\n  \"methodology\": \"GRIM sweep: for each reported percentage v, enumerate all n in [580, 600] such that round(v\\u00b7n) is an integer in [0, n] AND round(v\\u00b7n)/n rounds back to v at 3 dp. Joint viable n-set is the intersection across all values.\"\n}",
+    "result_truncated": false,
+    "result_chars": 4693,
+    "is_error": false
+  },
+  {
+    "seq": 33,
+    "tool": "mcp__forensic_metascience__check_effect_plausibility",
+    "tool_short": "check_effect_plausibility",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01V9W5wZ55ERoFHGWBo1FyYu",
+    "input": {
+      "mean1": 0.27,
+      "sd1": 0.44,
+      "n1": 161,
+      "mean2": 0.05,
+      "sd2": 0.23,
+      "n2": 71,
+      "field": "medicine_rct",
+      "design": "rct"
+    },
+    "result": "{\n  \"d\": 0.5647201422126666,\n  \"abs_d\": 0.5647201422126666,\n  \"field\": \"medicine_rct\",\n  \"design\": \"rct\",\n  \"provenance\": \"printed_text\",\n  \"computed_from_group_stats\": {\n    \"d\": 0.5665696623290837,\n    \"abs_d\": 0.5665696623290837,\n    \"pooled_sd\": 0.3883017652156184,\n    \"df\": 230,\n    \"n_total\": 232,\n    \"severity\": \"consistent\",\n    \"methodology\": \"Cohen's d = (M1 - M2) / pooled SD, with pooled SD from the (n-1)-weighted variances. Hedges' g applies J = 1 - 3/(4*df - 1) = 0.9967, correcting d's upward small-sample bias.\",\n    \"hedges_g\": 0.5647201422126666,\n    \"hedges_correction_j\": 0.9967355821545157\n  },\n  \"benchmark\": {\n    \"median\": 0.3,\n    \"p75\": 0.55,\n    \"p95\": 1.0,\n    \"source\": \"Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions.\"\n  },\n  \"benchmark_source\": \"Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions.\",\n  \"severity\": \"indeterminate\",\n  \"band\": \"above the field's 75th percentile (0.55)\",\n  \"explanation\": \"|d| = 0.56 is above the field's 75th percentile (0.55) for medicine_rct. Reported for context.\",\n  \"methodology\": \"Compared |d| against empirical benchmarks for medicine_rct. Source: Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions. These are distributions of PUBLISHED effects, themselves inflated by publication bias, so an effect at the 95th percentile of the published literature is more unusual still relative to the underlying truth. Severity is capped at `suspicious`: an effect size can be improbable but never arithmetically impossible.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1845,
+    "is_error": false
+  },
+  {
+    "seq": 34,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Ms5g7rEErvFJrB6CxZqsCe",
+    "input": {
+      "ci_low": 0.22,
+      "ci_high": 2.898,
+      "measure": "RR",
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 4.545454545454546,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.22, 2.898] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 4.55-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1011,
+    "is_error": false
+  },
+  {
+    "seq": 35,
+    "tool": "StructuredOutput",
+    "tool_short": "StructuredOutput",
+    "surface": "UNVALIDATED",
+    "validated": false,
+    "tool_use_id": "toolu_01CcTcgeyXfcMvbQA54VSwN5",
+    "input": {
+      "headline": {
+        "statement": "The paper's central claim that nurse-visited female offspring were \"significantly less likely\" to have obesity and severe obesity at each time point is contradicted by its own Table 1, where two of the six female rows have 95% CIs that span the null.",
+        "severity": "suspicious",
+        "rests_on": "stated_constraint",
+        "evidence": "Results, Obesity: \"Nurse-visited female offspring were significantly less likely to have obesity and severe obesity at both ages when considering each time point in isolation and together... the intervention reduced the risk of obesity by more than half at age 12 years (ARR, 0.396; 95% CI, 0.169-0.931; P =.007) and more than 40% at age 18 years (ARR, 0.561; 95% CI, 0.293-1.075; P =.05).\" Table 1 also gives obesity at age 18 y, Female: ARR 0.698 (95% CI, 0.455-1.073), P = .08. Methods: \"A 2-sided P < .05 was set as the threshold for significance.\"",
+        "reproduction": "metascience check-ci --estimate 0.561 --ci-low 0.293 --ci-high 1.075 --measure RR --reported-p 0.05"
+      },
+      "verdict": "questionable",
+      "confidence": "medium",
+      "findings": [
+        {
+          "rank": 1,
+          "title": "Impossible ethnicity percentage, and a demographic percentage printed against the wrong denominator",
+          "severity": "impossible",
+          "confidence": "high",
+          "location": "Results, first demographic paragraph (maternal race and ethnicity at child ages 12 and 18 y)",
+          "reported": "\"One mother (0.2%) reported Hispanic ethnicity, and 617 mothers (98.8%) reported non-Hispanic ethnicity\" (n = 618). And, for the 12-year wave: \"559 (94.1%) as Black... All 618 reported non-Hispanic ethnicity.\"",
+          "computed": "98.8% of 618 implies a count of 610.58; the nearest attainable values are 98.7% and 98.9%. No integer count yields 98.8% at any denominator consistent with the numerator either: 617/618 = 99.8%. The two ethnicity percentages also sum to 99.0, not 100. Separately, 94.1% is impossible at n=618 (implies 581.54) but consistent at n=594 (559/594), and the 12-year counts 3+0+559+32 sum to exactly 594 -- so the \"618\" in that sentence is the 18-year interview total inserted into the 12-year sentence.",
+          "assumptions": "None beyond the paper's own statements. The denominator 618 is stated in the same paragraph, the counts are printed, and percentages lying in [0,100] over an integer count is logically necessary. The most economical reading of 98.8 is a transposition of 99.8; graded impossible because it is an arithmetic impossibility as printed, but it is a descriptive figure that feeds no estimate.",
+          "reproduction": "metascience grim-sweep --values 98.8 --n-min 618 --n-max 618 --decimals 1",
+          "stage1_finding_ids": [
+            "ethnicity_98_8_pct_grim_impossible",
+            "ethnicity_pct_summation",
+            "race_12y_wrong_denominator_618"
+          ]
+        },
+        {
+          "rank": 2,
+          "title": "Significance asserted for estimates whose own 95% CIs include the null",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Results, Obesity section; Table 1, Obesity and Severe obesity at age 18 y, Female rows",
+          "reported": "\"Nurse-visited female offspring were significantly less likely to have obesity and severe obesity at both ages when considering each time point in isolation and together\"; severe obesity at 18 y, Female: ARR 0.561 (0.293-1.075), P = .05; obesity at 18 y, Female: ARR 0.698 (0.455-1.073), P = .08.",
+          "computed": "For ARR 0.561: the interval includes 1.0 and implies p = 0.0813, not the printed .05. For ARR 0.698: the interval includes 1.0 and implies p = 0.1004, not the printed .08. Even taken at face value, P = .05 does not satisfy the paper's own stated threshold of \"a 2-sided P < .05\". Two of the six female rows underpinning the flagship claim therefore do not support it.",
+          "assumptions": "None beyond the paper's own statements: the CIs, p-values and significance threshold are all printed. Recovered p-values use a normal approximation with the SE taken from the CI width on the log scale, at the 95% level the paper states.",
+          "reproduction": "metascience check-ci --estimate 0.698 --ci-low 0.455 --ci-high 1.073 --measure RR --reported-p 0.08",
+          "stage1_finding_ids": [
+            "sevobesity18_female_ci_crosses_null"
+          ]
+        },
+        {
+          "rank": 3,
+          "title": "No single confidence level reconciles the paper's p-values with its own intervals; the gaps are one-signed across every significant row",
+          "severity": "suspicious",
+          "confidence": "medium",
+          "location": "Tables 1 and 4, ARR (95% CI) and P value columns (all 36 rows); contrasted against eTables 5 and 6 estimates quoted in the Results text",
+          "reported": "Every interval is labelled \"95% CI\". Examples: Table 4 Overall rows print P = .01 for ARR 0.815 (0.682-0.975), 0.791 (0.648-0.966) and 0.605 (0.400-0.914). Abstract: ARR 0.185 (0.046-0.748; P<.001) and ARR 0.217 (0.081-0.582; P<.001).",
+          "computed": "In all 15 significant ARR rows re-tested, the p recovered from the printed interval EXCEEDS the printed p; among null rows the gaps run in both directions (e.g. recovered 0.403 vs .39; recovered 0.075 vs .09). The tool flags 5 of 15 outright -- the three Table 4 Overall rows recover 0.0249, 0.0213 and 0.0171 against a printed .01. It accepts four Table 1 female rows (0.493, 0.449, 0.396, 0.185) only by inferring the interval \"behaves like a 99% CI, not the stated 95%\". That relabeling does not rescue Table 4: forced to 99%, ARR 0.613 recovers p = 0.00015 and ARR 0.217 recovers p = 0.000066, far below their printed .001 and <.001. The six continuous and ratio estimates quoted from eTables 5 and 6 reconcile exactly at 95%.",
+          "assumptions": "Recovered p-values assume a Wald/normal approximation on the log scale at the stated 95% level. A benign explanation exists and is not excluded: the ARR and its interval may come from a delta-method or bootstrap transformation to the risk-ratio scale while the p-value is a Wald test on the underlying logistic log-odds coefficient, which would push reported p's systematically lower. The paper does not say this. Downgraded from the sweep's `highly_suspicious`: the validated tool, given the reported p, accepts 10 of 15 rows.",
+          "reproduction": "metascience check-ci --estimate 0.815 --ci-low 0.682 --ci-high 0.975 --measure RR --reported-p 0.01",
+          "stage1_finding_ids": [
+            "arr_ci_p_direction_pattern",
+            "t4_overall_rows_p01_vs_ci",
+            "sevobesity_female_abstract_p_vs_ci",
+            "stage2_htn_mof_abstract_p_vs_ci",
+            "etable_lsmd_estimates_consistent",
+            "arr_null_rows_minor_p_ci_gaps"
+          ]
+        },
+        {
+          "rank": 4,
+          "title": "Percentage columns in Tables 1 and 4 are not reconcilable with their own printed counts",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Table 1 (Obesity vs Severe obesity at age 18 y); Table 4 (Stage 1 vs Stage 2 hypertension at age 18 y, and Stage 1 at age 12 and 18 y)",
+          "reported": "Table 1: Obesity at 18 y prints Female 307 (50.7), Male 297 (49.3); Severe obesity at 18 y prints the identical counts as Female 307 (50.8), Male 297 (49.2) -- both under Overall N 605. Table 4: Stage 1 at 18 y prints 293 (49.1) and 298 (50.9); Stage 2 at 18 y prints the identical counts as 293 (49.6) and 298 (50.4) -- both under Overall N 592. Table 4, Stage 1 at 12 and 18 y prints 238 (49.8) and 247 (50.9).",
+          "computed": "Identical counts under an identical total cannot produce two different percentage splits, so at most one row of each pair is right. A GRIM sweep shows (50.8, 49.2) is attainable at n = 604 -- exactly 307 + 297, matching footnote a's dropped observation -- while (50.7, 49.3) is not attainable from those counts. Likewise (49.6, 50.4) matches 293 + 298 = 591 and (49.1, 50.9) does not. Separately, 49.8 + 50.9 = 100.7 for an exhaustive two-category split, seven times the maximum rounding error; the printed counts 238 + 247 = 485 imply 49.1% and 50.9%.",
+          "assumptions": "None beyond the paper's own statements. That mothers of females and mothers of males exhaustively partition the sample, and that a percentage must be an integer count over the stated total, are both logically necessary. Neither figure enters any effect estimate; the significance is that the same column-construction fault appears in three places across two tables.",
+          "reproduction": "metascience summation --values 49.8 --values 50.9 --expected-sum 100 --tolerance 0.5",
+          "stage1_finding_ids": [
+            "t4_stage1_1218_pct_sum_100_7",
+            "t1_obesity18_same_counts_two_percentages",
+            "t4_stage1_18_same_counts_two_percentages"
+          ]
+        },
+        {
+          "rank": 5,
+          "title": "Multiplicity-corrected p-values printed below their uncorrected counterparts, including an unattainable \".00\"",
+          "severity": "suspicious",
+          "confidence": "medium",
+          "location": "Tables 3 and 4, MHT P value column vs P value column",
+          "reported": "Six rows show a Romano-Wolf corrected p below the raw p. The clearest: Table 4, Stage 1 hypertension at age 12 y, Mothers of females -- ARR 0.695 (0.523-0.925), P value \".01\", MHT P value \".00\". Others: T4 stage 1 18 y Overall (.10 -> .07), T4 stage 1 18 y mothers of females (.003 -> .002), T4 stage 2 18 y mothers of females (.27 -> .25), T3 stage 1 18 y Overall (.84 -> .83) and Females (.61 -> .60).",
+          "computed": "A stepdown p read off a bootstrap null distribution can fall slightly below the asymptotic p, so most of these one-unit gaps are defensible. \".00\" is not: it is not an attainable p-value, and the same column prints \".002\" and \".006\" elsewhere, so the column is not restricted to two decimals. For that row the interval itself implies p = 0.0124, so a corrected value below .001 is not supportable.",
+          "assumptions": "Romano-Wolf bootstrap p-values cannot be recomputed without individual-level data, so no tool reproduces the correction; this is a reconciliation of two printed columns. The recovered 0.0124 assumes a normal approximation at the stated 95% level.",
+          "reproduction": "metascience check-ci --estimate 0.695 --ci-low 0.523 --ci-high 0.925 --measure RR --reported-p 0.01",
+          "stage1_finding_ids": [
+            "mht_p_below_raw_p"
+          ]
+        },
+        {
+          "rank": 6,
+          "title": "Headline effects rest on a handful of events, while a comparably sparse outcome was excluded after the counts were seen",
+          "severity": "suspicious",
+          "confidence": "medium",
+          "location": "Table 1 (Severe obesity at 12 and 18 y, Female); Table 4 (Stage 2 hypertension at 12 and 18 y, Mothers of females); Table 3, footnote b",
+          "reported": "Table 3 footnote b: \"There are only 3 patients with stage 2 hypertension at both age 12 and 18 years, all females (2 in the control group and 1 in the treatment group). Given the extremely low number of cases, we chose to exclude this outcome from the analysis.\" Retained: severe obesity at 12 and 18 y in females, treatment proportion 0.02 of n = 269 (ARR 0.185, P<.001); maternal stage 2 hypertension at 12 and 18 y in mothers of females, treatment proportion 0.05 of n = 232 (ARR 0.217, P<.001).",
+          "computed": "At the allocation the paper reports for the follow-up waves (NFP 187/594 and 192/618 mothers; 180/578 and 194/629 offspring, i.e. about 31% treated), the treatment arms of those two rows hold roughly 84 and 72 participants, so proportions of 0.02 and 0.05 correspond to roughly 2 and 4 events. On the standardized scale the maternal effect is Hedges' g = 0.56, above the medicine_rct 75th percentile (0.55) but inside the usual range, so the apparent drama of an ARR of 0.217 comes from ratios on low base rates rather than an implausibly large effect.",
+          "assumptions": "Per-arm sample sizes and event counts are NOT printed anywhere in the paper; the ~31% treatment share is stated for each follow-up wave and I apportioned the row totals by it. The resulting event counts are therefore approximate and could be off by one or two. Cohen's d is insensitive to the exact split. The sparsity rule the paper applied (excluding a 3-case outcome) is its own, and its inconsistent application is the finding.",
+          "reproduction": "metascience effect-size --mean1 0.27 --sd1 0.44 --n1 161 --mean2 0.05 --sd2 0.23 --n2 71 --field medicine_rct --design rct",
+          "stage1_finding_ids": [
+            "stage2_1218_offspring_outcome_dropped_post_hoc",
+            "effect_plausibility_headline_effects"
+          ]
+        },
+        {
+          "rank": 7,
+          "title": "\"No intervention effect\" in males is not licensed by intervals compatible with 3.8- to 4.5-fold effects, and the sex-moderation claim rests on no interaction test for half the outcomes",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Abstract Key Points and Results; Tables 1-4 male and mothers-of-males rows",
+          "reported": "\"No intervention effect was found for these outcomes among male offspring or mothers of males.\" Supporting rows include severe obesity at 12 and 18 y, Male: ARR 1.517 (0.613-3.753); stage 1 hypertension at 12 and 18 y, Males: ARR 0.798 (0.220-2.898); obesity at 12 y, Male: ARR 1.454 (0.963-2.197).",
+          "computed": "These intervals remain compatible with a 3.75-fold and a 4.55-fold effect respectively. The paper states no smallest effect size of interest and performs no equivalence test, so no conclusion of no effect is licensed. Three male obesity rows in fact point toward HIGHER risk in the nurse-visited arm (ARRs 1.454, 1.510, 1.517). The maternal rows are the genuine exception -- Table 2's intervals are narrow (e.g. 0.839-1.234) -- so a single undifferentiated null claim papers over a real difference in evidential strength.",
+          "assumptions": "None beyond the paper's own intervals. The equivalence verdict is withheld rather than asserted precisely because the paper states no SESOI. The related point that the paper reports interaction tests only for offspring obesity (\"significant or near significance for one-half of the offspring obesity outcomes\") and none for the maternal hypertension outcomes is read from the Results text, not computed.",
+          "reproduction": "metascience absence-of-evidence --ci-low 0.22 --ci-high 2.898 --measure RR",
+          "stage1_finding_ids": [
+            "absence_of_evidence_male_null_claims"
+          ]
+        },
+        {
+          "rank": 8,
+          "title": "A \"correlation coefficient\" of 11.3 supporting the intergenerational claim",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Results, Intergenerational Mobility (eTable 8 in Supplement 2)",
+          "reported": "\"in the control group, having a mother with severe hypertension was associated with a higher chance (11.3 correlation coefficient) of having a female child with severe hypertension. This association was absent in the treated group, with a significant 0.188 treatment difference in the intergenerational correlation coefficients.\"",
+          "computed": "A correlation coefficient cannot exceed 1 in absolute value, and a difference of 0.188 cannot abolish an association of 11.3. The two quantities given the same name in one sentence are irreconcilable. The same sentence describes eTable 8 as holding \"estimated regression coefficients\", so the likeliest reading is a regression coefficient mislabelled as a correlation, or a typesetting of 0.113.",
+          "assumptions": "|r| <= 1 is definitional and needs no assumed bound. Graded suspicious rather than impossible because the paper's own surrounding text contradicts the label, so the underlying analysis may be sound and only the prose wrong. eTable 8 sits in Supplement 2, which was not provided, so the correct reading could not be established. As printed, the Discussion claim that \"NFP broke the link between persistence in stage 2 hypertension between mothers and daughters\" cannot be evaluated.",
+          "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.51752.pdf --first-page 9 --last-page 9",
+          "stage1_finding_ids": [
+            "intergenerational_correlation_11_3"
+          ]
+        }
+      ],
+      "not_checked": [
+        {
+          "location": "eTable 2 in Supplement 2 (Balancing Tests, Baseline Covariates)",
+          "reason": "Supplement 2 was not provided. This blocks the highest-value RCT check available: csf_test and bayesian_table1_dispersion on the baseline p-values, where uniformly HIGH baseline p-values would be the red flag rather than reassurance. The paper states only that \"The balancing tests showed few baseline differences\", which is exactly the pattern those tools exist to interrogate and cannot be evaluated from the article alone. Obtaining eTable 2 should be the first follow-up step."
+        },
+        {
+          "location": "Per-arm (control vs treatment) sample sizes for every row of Tables 1-4",
+          "reason": "Not reported anywhere in the article; the \"No. (%)\" column gives only the combined row total. Without per-arm denominators, DEBIT, GRIM, GRIMMER and SPRITE cannot be run on any of the 138 binary proportion cells. Stage 1 demonstrated this empirically: substituting the row total produced three false \"impossible\" verdicts that all dissolved under a sweep of plausible arm sizes, so those verdicts are correctly NOT reported here."
+        },
+        {
+          "location": "eTable 3 in Supplement 2 (Ex-Post Power Calculations)",
+          "reason": "verify_power_analysis needs the assumed effect size, alpha, target power and per-group n. The article states only \"at least 80% power (alpha = .05) for the majority of outcomes\" -- no effect size, no per-outcome n, and \"the majority\" is unquantified. Supplying invented inputs would fabricate the check. Separately, post-hoc power computed from observed effects is circular and cannot support the claim regardless."
+        },
+        {
+          "location": "Romano-Wolf multiple-hypothesis-testing p-values (all four tables)",
+          "reason": "Bootstrap stepdown p-values cannot be recomputed without individual-level data; no tool in the suite reproduces them. Their relationship to the raw p-values was reconciled by inspection only (finding 5)."
+        },
+        {
+          "location": "Multiplicity across the full analysis",
+          "reason": "No tool quantifies it. Romano-Wolf is applied within 6 blocks of 3 outcomes per table, i.e. over 3 tests at a time, while Tables 1-4 present 69 tests and the supplement adds more. Familywise error is controlled within blocks but not across the 24 blocks, on outcomes and a moderator that were not prespecified."
+        },
+        {
+          "location": "Figure, panels A-F (quantile regression treatment effects with 90% CIs)",
+          "reason": "Vector line-work with no printed numeric values; deciles, coefficients and interval bounds exist only as chart marks. Any value read off the plot would carry figure_pixels provenance and is barred from the exact-arithmetic checks. The caption text was read and is consistent with the Results narrative."
+        },
+        {
+          "location": "eTables 5, 6, 7, 8, 9, 10, 11, 12, 13 and 14 in Supplement 2",
+          "reason": "Not provided. Eight estimates quoted verbatim in the Results text from eTables 5 and 6 were checked and reconcile; the tables themselves, the mediation percentages (27.3%, 30.3%, 75.4%, 82.6%, reported as bare point estimates with no SEs, CIs or ns), the intergenerational coefficients, and every robustness analysis the paper relies on to defend its main claims (inverse probability weighting, unbalanced-covariate adjustment, exclusion of self-reported BMI, sex-by-treatment interaction tests) could not be examined."
+        },
+        {
+          "location": "Data Sharing Statement (Supplement 3)",
+          "reason": "Not provided, so whether the stated data-sharing arrangement matches reality could not be assessed. This is the one place a state-but-withhold pattern would show, and it was not checkable."
+        },
+        {
+          "location": "Maternal age at randomization, mean (SD) 18.1 (3.2), n = 742",
+          "reason": "GRIM and GRIMMER apply to integer-valued observations on a bounded scale. Age in years is continuous and the paper states no age range (inclusion criteria specify gestation under 29 weeks, no previous live births, and 2 sociodemographic risk factors -- none of which bound age). check_sd_range would require an invented bound, which rulebook rule 4 forbids."
+        },
+        {
+          "location": "Tables 2 and 3: 29 of 33 ARR/CI/p triples not individually reconciled",
+          "reason": "Deliberate sampling, carried over from Stage 1. All 36 rows of Tables 1 and 4 were checked exhaustively because every significance claim lives there; Tables 2 and 3 contain no row with p <= .05. Four representative rows were checked and behaved like the other null rows, with small bidirectional gaps."
+        },
+        {
+          "location": "Table 2, Overall ARR outside the range of its own subgroup estimates (obesity at 18 y and at 12 and 18 y)",
+          "reason": "Deprioritized rather than unchecked. Post-double-selection lasso chooses a different covariate set per stratum, the strata are different samples, and adjusted relative risks are non-collapsible, so a benign explanation is readily available and no arithmetic violation exists. Noted only as evidence that Overall and subgroup rows are not a decomposition."
+        }
+      ],
+      "limitations": [
+        "This agent reads text and tables only. It does not see figures: the Figure's six quantile-regression panels were assessed from their caption alone, and no value was read off the plot.",
+        "Only the 15-page main article was available. Supplements 1, 2 and 3 -- including all 14 eTables, the trial protocol, the CONSORT table, the analytic plan and the data-sharing statement -- were not provided, which blocks the single highest-value check on a randomized trial (baseline balance, eTable 2).",
+        "Per-arm sample sizes are not printed, so the exact-arithmetic family (GRIM, GRIMMER, DEBIT, SPRITE) could not be applied to any of the 138 proportion cells. The paper's most checkable surface is therefore outside scrutiny for structural reasons, not because it passed.",
+        "All recovered p-values use a Wald/normal approximation with the standard error taken from the CI width on the log scale, at the 95% level the paper states. If the authors used a different variance estimator for the interval than for the test -- which post-double-selection lasso inference can produce -- the recovered values would differ legitimately, and the paper does not say which was used.",
+        "Romano-Wolf stepdown p-values are bootstrap quantities and cannot be recomputed from published summaries by any tool in this suite.",
+        "Event counts underlying the two headline effects were apportioned from the treatment share stated for each follow-up wave, not read from the paper, and are approximate.",
+        "No judgment is offered on whether any inconsistency is deliberate. Every finding here is reported as an anomaly or inconsistency warranting clarification."
+      ],
+      "coverage_summary": {
+        "stats_found": 477,
+        "stats_checked": 216,
+        "tools_run": [
+          "extract_pdf",
+          "parse_table",
+          "parse_cells_typed",
+          "check_estimate_ci",
+          "grim_percentage",
+          "grim_sweep",
+          "check_summation",
+          "debit_check_batch",
+          "detect_duplication",
+          "absence_of_evidence",
+          "check_effect_plausibility",
+          "stalt_check",
+          "statcheck",
+          "flag_round_n"
+        ],
+        "tables_checked": [
+          "Table 1 (offspring obesity and severe obesity) -- all 18 ARR/CI/p triples checked; percentage column reconciled against counts",
+          "Table 2 (maternal obesity and severe obesity) -- 2 ARR rows checked, all 36 proportion cells typed and entered into duplication",
+          "Table 3 (offspring stage 1 and stage 2 hypertension) -- 2 ARR rows checked, all 30 proportion cells typed; footnote b exclusion assessed",
+          "Table 4 (maternal stage 1 and stage 2 hypertension) -- all 18 ARR/CI/p triples checked; percentage column and MHT column reconciled",
+          "Results demographic paragraph (race and ethnicity at child ages 12 and 18 y)",
+          "Results, Other Offspring and Maternal Outcomes (8 estimates quoted from eTables 5 and 6)",
+          "Figure (quantile regression panels A-F) -- caption text only; no numeric values printed"
+        ]
+      },
+      "report_markdown": "## What the paper claims\n\nThis is an 18-year follow-up of the Memphis Nurse-Family Partnership trial: 742 low-income pregnant women randomized in 1990-91, 228 to prenatal and infant-toddler nurse home visiting and 514 to control. The authors report that nurse-visited *female* offspring had lower rates of obesity and severe obesity at child ages 12 and 18 years, and that nurse-visited *mothers of females* had lower rates of stage 1 and stage 2 hypertension, with no effect in males or their mothers. The paper is admirably candid that none of these outcomes -- and not the offspring-sex moderation on which the entire conclusion turns -- was prespecified in the original protocol.\n\n## Why the headline is an interpretive problem rather than an impossible number\n\nThe one arithmetic impossibility in this paper (98.8% of 618 mothers, where the printed numerator 617 gives 99.8%) is a single-character slip in a demographic sentence that feeds no estimate. It is ranked first below because impossibility outranks implausibility, but it would be misleading to lead a reader with it. What actually undermines trust is that the Results narrative asserts significance for estimates whose intervals, printed on the same page, include 1.0. Two of the six female offspring rows behind the flagship claim -- obesity at 18 years (0.455-1.073) and severe obesity at 18 years (0.293-1.075) -- do not support \"significantly less likely\" under the paper's own stated threshold. That requires no tooling to see and no assumption to state.\n\n## Triage: what I dropped from the numeric sweep, and why\n\nThe sweep's headline was a systematic p-versus-CI divergence across all 17 significant ARR rows, graded `highly_suspicious`. I have downgraded it to `suspicious`. Re-running `check_estimate_ci` **with the reported p supplied** -- which the sweep appears not to have done -- the validated tool accepts 10 of the 15 rows I re-tested and flags 5. The sweep's two most dramatic claims (the abstract's ARR 0.185 and ARR 0.217) both return `consistent`.\n\nWhat survives re-testing is narrower but still worth an editor's attention. First, the direction is uniform: in 15 of 15 significant rows the recovered p exceeds the printed p, while null rows scatter both ways. Second, and more concretely, the four Table 1 female rows reconcile *only* if the tool infers a 99% interval where the paper prints \"95% CI\" -- and that relabeling makes Table 4 worse, not better (ARR 0.613 would then imply p = 0.00015 against a printed .001). So no single reading of the intervals reconciles the paper with itself. A benign mechanism exists and should be stated plainly: a Wald test on the logistic log-odds coefficient paired with a delta-method interval on the risk-ratio scale would push reported p's one way. The paper does not say this, and as printed a reader cannot reproduce most reported p's from the accompanying interval.\n\nI also discarded the sweep's three DEBIT \"impossible\" verdicts, which it had correctly self-refuted -- they were artifacts of substituting row totals for the unprinted per-arm ns. Duplication, round-N, effect-size plausibility, statcheck and text-to-table transcription all came back clean and are not itemized.\n\n## Design issues the arithmetic cannot reach\n\nThree things concern me more than any individual number.\n\nThe sex-moderation claim is built by contrasting significant results in females with non-significant results in males, which is not a test of moderation. The paper reports interaction tests only for offspring obesity, and describes them as \"significant or near significance for one-half\" of those outcomes -- meaning half were not. For the maternal hypertension outcomes, the other headline claim, no interaction test is mentioned at all.\n\nMultiplicity control is thin for what this analysis is. Romano-Wolf is applied within blocks of three outcomes, so correction operates over three tests at a time across 69 main-table tests, on non-prespecified outcomes, with a non-prespecified moderator, and with covariates chosen by lasso from a pool of 130.\n\nFinally, the sparsity rule is applied inconsistently. The authors excluded offspring stage 2 hypertension at both ages because it had only 3 cases -- transparently, and reasonably. But the two effects in the abstract rest on roughly 2 and 4 events in their treatment arms, and those were retained. The excluded cells happened to lean 2 control to 1 treatment, the same direction as the paper's thesis.\n\n## What I could not check\n\nThe decisive missing item is eTable 2, the baseline balancing tests. The paper says only that they \"showed few baseline differences\" -- precisely the phrasing that omnibus baseline-similarity testing exists to interrogate, since uniformly high baseline p-values are a red flag and not reassurance. That the paper simultaneously asserts balance and then uses lasso \"to correct estimates for baseline imbalances\", with a further robustness check \"controlling directly for imbalanced baseline covariates\", is a tension I could not resolve from the article alone.\n\nNothing here suggests fabrication. Sample sizes reconcile exactly, the narrative matches the tables, there is no duplication signature, and on the standardized scale the effects are ordinary (g = 0.35 and 0.56) rather than extraordinary. The problems are of overstatement, inconsistent table construction, and inference that outruns the intervals. The two abstract-level effects should be treated as hypothesis-generating and, given how few events they rest on, as fragile; the significance claims for the age-18 female outcomes should be corrected. I would not rely on the sex-specific conclusions without eTable 2 and the per-arm cell counts."
+    },
+    "result": "Structured output provided successfully",
+    "result_truncated": false,
+    "result_chars": 39,
+    "is_error": false
+  }
+]

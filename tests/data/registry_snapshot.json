@@ -1,0 +1,1460 @@
+{
+  "absence_of_evidence": {
+    "cli": "absence-of-evidence",
+    "desc_sha": "774b119f4587f8ad",
+    "guards": [
+      "measure"
+    ],
+    "schema": {
+      "b": "float",
+      "ci_high": "float",
+      "ci_low": "float",
+      "claim_of_no_effect": "bool",
+      "confidence_level": "float",
+      "df": "int",
+      "measure": "str",
+      "null_value": "float",
+      "se": "float",
+      "sesoi": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "analyze_paper_images": {
+    "cli": "image-analysis",
+    "desc_sha": "a2683598d016d358",
+    "guards": [
+      "stated_reuse"
+    ],
+    "schema": {
+      "captions": "list :: Figure captions; scanned for stated-reuse phrases (representative / re-shown / as in Fig ...), which drop one severity tier with a named caveat.",
+      "out_dir": "str :: Where panel PNGs and panels.json land (default: <paper_dir>/panels/).",
+      "paper_dir": "str :: Paper directory; enables the supplement-container media harvest (.docx/.epub zips, loose images).",
+      "pdf_path": "str",
+      "si_pdfs": "list :: Supplement PDFs to harvest into the same pool.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "stated_reuse": "bool :: The paper states these panels re-show earlier ones; the result is then capped at indeterminate."
+    },
+    "stages": [],
+    "withheld": [
+      "max_panels"
+    ]
+  },
+  "bayesian_table1_dispersion": {
+    "cli": "table1-dispersion",
+    "desc_sha": "ae56f9792545d961",
+    "guards": [
+      "design"
+    ],
+    "schema": {
+      "correlation": "float",
+      "design": "str",
+      "num_bootstrap": "int",
+      "rows": "list",
+      "seed": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": [
+      "ci_level",
+      "rho_grid"
+    ]
+  },
+  "check_count_percent": {
+    "cli": "check-count-percent",
+    "desc_sha": "5310d35deaf57bb4",
+    "guards": [],
+    "schema": {
+      "count": "int",
+      "decimals": "int",
+      "n": "int",
+      "percentage": "float",
+      "source_locator": "str",
+      "source_quote": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_effect_plausibility": {
+    "cli": "effect-size",
+    "desc_sha": "7c2966ee98108661",
+    "guards": [
+      "field",
+      "provenance"
+    ],
+    "schema": {
+      "d": "float",
+      "design": "str",
+      "field": "str",
+      "mean1": "float",
+      "mean2": "float",
+      "n1": "int",
+      "n2": "int",
+      "provenance": "str",
+      "reported_d": "float",
+      "sd1": "float",
+      "sd2": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_estimate_ci": {
+    "cli": "check-ci",
+    "desc_sha": "ff7c5b6481ecbbac",
+    "guards": [
+      "measure",
+      "sampling"
+    ],
+    "schema": {
+      "ci_high": "float",
+      "ci_low": "float",
+      "confidence_level": "float :: The level the paper STATES for this interval (0.95, 0.8). Omit when it states none: 95% is then assumed and a p that reconciles only at another common level is noted. A stated level is never overridden -- reconciling only at a different one is `suspicious`.",
+      "decimals": "int :: Printed decimals of the coarsest of estimate, ci_low, ci_high.",
+      "estimate": "float",
+      "interval_method": "str :: How the interval was CONSTRUCTED, if the paper says -- \"bootstrap\", \"BCa\", \"exact\", \"Clopper-Pearson\", \"profile likelihood\", \"Fieller\", \"Wilson\", \"Bayesian credible\". The midpoint test assumes a WALD interval (estimate +/- z*SE), which is the only method symmetric about its estimate. Bootstrap intervals are mandatory practice for skewed cost data and exact intervals are routine in epidemiology; both fail a midpoint test innocently. Leave it out when the paper does not say -- the test then still runs and names the ambiguity rather than asserting an inconsistency.",
+      "measure": "str",
+      "null_value": "float",
+      "reported_p": "float",
+      "reported_p_operator": "str :: Comparison the paper printed with the p: '=', '<', '<=', '>' or '>='. Pass '<' for 'P < .001'.",
+      "sampling": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_flow_arithmetic": {
+    "cli": "flow-check",
+    "desc_sha": "3589887630492dec",
+    "guards": [],
+    "schema": {
+      "description": "str",
+      "randomized_label": "str :: Which stage the analyzed<=randomized check anchors on, when no stage label contains 'random'.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "stages": "list :: Ordered cascade, top-down: [{\"label\", \"n\", \"excluded\": [{\"reason\", \"n\"}], \"arms\": [{\"label\", \"n\"}], \"also_reported\": [{\"n\", \"source\"}]}]. Transcribe every n as printed; the tool refuses rather than assumes. `also_reported` carries the SAME stage's count as printed elsewhere (abstract, figure, another table)."
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent"
+    ],
+    "withheld": []
+  },
+  "check_proportion_from_normal": {
+    "cli": "prop-from-normal",
+    "desc_sha": "01d44f5e2b804fd7",
+    "guards": [],
+    "schema": {
+      "direction": "str",
+      "mean": "float",
+      "n": "int",
+      "num_simulations": "int",
+      "reported_proportion": "float",
+      "sd": "float",
+      "seed": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "summary": "str :: Whether `mean` and `sd` are ARITHMETIC or GEOMETRIC. Pass \"geometric\" when the paper reports a geometric mean with a geometric SD -- the convention for right-skewed quantities like biomarkers, titers, concentrations, exposures and costs, which are printed as \"mean\" and \"SD\" on the page like any other. The test is then run on the LOG scale, where a lognormal variable is normal, and the verdict is capped because that lognormal model is ours. Getting this wrong is not cosmetic: an honest GM 10.0 (GSD 3.0) reporting 15.9% above 30 reads as `highly_suspicious` when passed as arithmetic, and `consistent` when declared.",
+      "threshold": "float",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator"
+    ],
+    "withheld": []
+  },
+  "check_ratio": {
+    "cli": "check-ratio",
+    "desc_sha": "1a1318a2acb299da",
+    "guards": [
+      "decimals_denominator",
+      "decimals_numerator",
+      "decimals_ratio",
+      "provenance"
+    ],
+    "schema": {
+      "decimals_denominator": "int :: Printed decimals of the denominator, read from the literal. Without it the check refuses.",
+      "decimals_numerator": "int :: Printed decimals of the numerator, read from the literal. Without it the check refuses.",
+      "decimals_ratio": "int :: Printed decimals of the reported ratio, read from the literal. Without it the check refuses.",
+      "denominator": "float",
+      "description": "str",
+      "numerator": "float",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_ratio": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_regression": {
+    "cli": null,
+    "desc_sha": "b50989f645e108d1",
+    "guards": [
+      "p_adjustment",
+      "p_is_threshold",
+      "p_relation"
+    ],
+    "schema": {
+      "b": "float",
+      "decimals_b": "int :: Printed decimals of b, read from the literal.",
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "decimals_se": "int :: Printed decimals of se, read from the literal.",
+      "decimals_t": "int :: Printed decimals of reported_t, read from the literal.",
+      "df": "int",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_is_threshold": "bool :: TRUE when the paper printed a BOUND ('P < .001') rather than an exact p. The float cannot carry the difference.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "reported_p": "float",
+      "reported_t": "float",
+      "se": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_regression_batch": {
+    "cli": "regression-batch",
+    "desc_sha": "78b31936bf759689",
+    "guards": [],
+    "schema": {
+      "rows": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_sd_or_se": {
+    "cli": "sd-or-se",
+    "desc_sha": "57483ee8b25b1ecf",
+    "guards": [
+      "bound_source"
+    ],
+    "schema": {
+      "bound_source": "str",
+      "decimals": "int :: Printed decimals of reported_value, read from the literal.",
+      "n": "int",
+      "plausible_sd_max": "float",
+      "reported_as": "str",
+      "reported_value": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it.",
+      "variable_range_max": "float",
+      "variable_range_min": "float"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_sd_range": {
+    "cli": "sd-range",
+    "desc_sha": "4d3e649943c5d527",
+    "guards": [
+      "bound_source"
+    ],
+    "schema": {
+      "bound_source": "str :: stated | logically_necessary | assumed. The ceiling is derived ENTIRELY from [min_val, max_val], so a violation of ASSUMED bounds caps at highly_suspicious; only a range the paper states licenses `impossible`.",
+      "decimals_sd": "int :: Printed decimals of sd, read from the literal.",
+      "max_val": "float",
+      "min_val": "float",
+      "n": "int",
+      "sd": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_statistic_bounds": {
+    "cli": "check-bounds",
+    "desc_sha": "439a84eec7722337",
+    "guards": [
+      "extraction_verified"
+    ],
+    "schema": {
+      "extraction_verified": "bool :: Set true ONLY after re-reading the value in the paper itself and confirming both the digits and the column. This is what lifts the refusal to `impossible`.",
+      "measure": "str :: What the value is meant to be. Only measures with a bound that follows from their DEFINITION are known; anything else is refused rather than guessed at.",
+      "source_quote": "str :: The passage the value was confirmed against.",
+      "value": "float"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_summation": {
+    "cli": "summation",
+    "desc_sha": "2043c0d620bc9219",
+    "guards": [
+      "decimals"
+    ],
+    "schema": {
+      "decimals": "list :: Printed decimals per addend, read from the literals. Without it the check refuses.",
+      "decimals_total": "int :: Printed decimals of expected_sum.",
+      "description": "str",
+      "expected_sum": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "tolerance": "float",
+      "values": "list"
+    },
+    "stages": [
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_summation_batch": {
+    "cli": "summation-batch",
+    "desc_sha": "e9fe5dcc4608fae0",
+    "guards": [],
+    "schema": {
+      "rows": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "tolerance": "float"
+    },
+    "stages": [
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_table": {
+    "cli": "check-table",
+    "desc_sha": "28478570909b4ebf",
+    "guards": [
+      "bindings",
+      "provenance",
+      "variables"
+    ],
+    "schema": {
+      "bindings": "dict",
+      "cells": "list",
+      "provenance": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "variables": "list"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "check_variance_dispersion": {
+    "cli": "variance-dispersion",
+    "desc_sha": "40d8a78ba128df0f",
+    "guards": [
+      "design",
+      "homogeneous_variances"
+    ],
+    "schema": {
+      "design": "str",
+      "homogeneous_variances": "bool",
+      "ns": "list",
+      "sd_texts": "list",
+      "sds": "list",
+      "seed": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": [
+      "iterations"
+    ]
+  },
+  "csf_test": {
+    "cli": "csf",
+    "desc_sha": "63712a372af3eff7",
+    "guards": [
+      "design"
+    ],
+    "schema": {
+      "correlation": "float",
+      "design": "str",
+      "method": "str",
+      "p_values": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": [
+      "rho_grid"
+    ]
+  },
+  "debit_check": {
+    "cli": "debit",
+    "desc_sha": "873e74b9029497c9",
+    "guards": [
+      "data_type",
+      "decimals_mean",
+      "decimals_sd",
+      "provenance"
+    ],
+    "schema": {
+      "data_type": "str",
+      "decimals_mean": "int :: Printed decimals of `mean`, read from the literal in the paper ('0.3' is 1, '0.30' is 2). No default: the wrong one accuses.",
+      "decimals_sd": "int :: Printed decimals of `sd`, read from the literal in the paper.",
+      "mean": "float",
+      "n": "int",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "sd": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "debit_check_batch": {
+    "cli": null,
+    "desc_sha": "19e1c7edeaa6f9e6",
+    "guards": [
+      "data_type",
+      "provenance"
+    ],
+    "schema": {
+      "data_type": "str :: REQUIRED in practice: DEBIT is defined only for 0/1-coded data, so pass 'binary' (or 'proportion'). Any other value -- including omitting it -- refuses the batch rather than judging it.",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "rows": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "declare_table": {
+    "cli": null,
+    "desc_sha": "9dce319b79ef1d39",
+    "guards": [],
+    "schema": {
+      "columns": "list",
+      "default_variable_id": "str",
+      "paper_dir": "str",
+      "percent_of_units": "bool",
+      "rows": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "table": "str",
+      "variables": "list"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "detect_duplication": {
+    "cli": "duplication-detect",
+    "desc_sha": "34f67f0f5ca94434",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "blocks": "list",
+      "decimals_mean": "int",
+      "decimals_sd": "int",
+      "near_match": "bool",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "detect_raw_duplication": {
+    "cli": "raw-duplication-detect",
+    "desc_sha": "93d57c7ba85f3923",
+    "guards": [
+      "data_context"
+    ],
+    "schema": {
+      "data_context": "str :: raw_participant_level | pooled_or_meta_analysis | unknown. Pooled/meta-analytic files duplicate rows by construction; findings are then capped at indeterminate.",
+      "exclude_columns": "list :: Column names shared BY DESIGN (IDs, coordinates, site-level covariates); they are excluded from every comparison.",
+      "path": "str",
+      "sheet": "str :: Restrict to one worksheet (default: all, capped and announced).",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": [
+      "max_row_pairs"
+    ]
+  },
+  "detect_tortured_phrases": {
+    "cli": "tortured-phrases",
+    "desc_sha": "802346b456192a5f",
+    "guards": [],
+    "schema": {
+      "paper_dir": "str :: Paper directory; text is read via paper_text's fallback chain (body.md > XML > HTML > PDF layer).",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "text": "str :: Raw text to screen instead of a paper_dir."
+    },
+    "stages": [],
+    "withheld": [
+      "data_dir"
+    ]
+  },
+  "effect_size_from_f": {
+    "cli": "effect-size-from-f",
+    "desc_sha": "6cb26d47532bdd90",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "decimals_effect_size": "int",
+      "decimals_f": "int",
+      "df1": "int",
+      "df2": "int",
+      "f_value": "float",
+      "measure": "str :: What the paper called it. partial_eta_squared | cohens_f are recoverable; eta_squared, generalized_eta_squared, omega_squared and r_squared are refused by name.",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_effect_size": "float",
+      "source_locator": "str",
+      "source_quote": "str",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "extract_figures": {
+    "cli": "extract-figures",
+    "desc_sha": "8dc8469e91597317",
+    "guards": [],
+    "schema": {
+      "dpi": "int",
+      "out_dir": "str",
+      "pdf_path": "str",
+      "render_pages": "bool"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "extract_html": {
+    "cli": "extract-html",
+    "desc_sha": "0d4e8f2bbf25cd8f",
+    "guards": [],
+    "schema": {
+      "first_section": "int",
+      "html_path": "str",
+      "last_section": "int",
+      "max_chars": "int"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "extract_pdf": {
+    "cli": "extract",
+    "desc_sha": "53730bd9fe87e5a6",
+    "guards": [],
+    "schema": {
+      "first_page": "int",
+      "last_page": "int",
+      "max_chars": "int",
+      "pdf_path": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "extract_supplement": {
+    "cli": "extract-supplement",
+    "desc_sha": "d2fefe0eb7fda949",
+    "guards": [],
+    "schema": {
+      "path": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "extract_xml": {
+    "cli": "extract-xml",
+    "desc_sha": "7c6197a12ab1b9f3",
+    "guards": [],
+    "schema": {
+      "first_section": "int",
+      "last_section": "int",
+      "max_chars": "int",
+      "xml_path": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "flag_round_n": {
+    "cli": "flag-round-n",
+    "desc_sha": "2b60f6dec3fc81b2",
+    "guards": [],
+    "schema": {
+      "moderate_modulus": "int",
+      "ns": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "strong_modulus": "int"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "flag_uninformative_stat": {
+    "cli": "flag-uninformative",
+    "desc_sha": "0fa8e01e6ddd043c",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "decimals_mean": "int",
+      "decimals_p": "int",
+      "decimals_sd": "int",
+      "means": "list",
+      "ns": "list",
+      "num_samples": "int",
+      "p_range_warn": "float",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_p": "float",
+      "sds": "list",
+      "seed": "int",
+      "significance_threshold": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "get_supplement_table": {
+    "cli": "get-supplement-table",
+    "desc_sha": "d33cc57355fd0868",
+    "guards": [],
+    "schema": {
+      "first_row": "int",
+      "last_row": "int",
+      "path": "str",
+      "table": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "get_table": {
+    "cli": "get-table",
+    "desc_sha": "f9b1626f4f56537f",
+    "guards": [],
+    "schema": {
+      "first_row": "int",
+      "last_row": "int",
+      "table_num": "int",
+      "xml_path": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grim_check": {
+    "cli": "grim",
+    "desc_sha": "fcba5c47a93fd72f",
+    "guards": [
+      "bound_source",
+      "data_type",
+      "decimals",
+      "discreteness_source",
+      "provenance"
+    ],
+    "schema": {
+      "bound_source": "str",
+      "data_type": "str",
+      "decimals": "int :: Printed decimals of `mean`, read from the literal in the paper ('5.9' is 1, '5.90' is 2). No default: the wrong one accuses.",
+      "discreteness_source": "str :: stated | logically_necessary | assumed (default). WHO says each subject contributed a WHOLE NUMBER. 'stated' only if the PAPER establishes it -- a quoted scale definition, an item count with its response options, 'number of falls'. 'logically_necessary' if it cannot be otherwise whatever the paper says. Otherwise leave it: a GRANULARITY verdict resting on an assumed discreteness caps at `suspicious` rather than `impossible`, because the arithmetic is airtight only if the premise holds, and a continuous measure or a mean of k items produces the identical arithmetic from honest data.",
+      "mean": "float",
+      "n": "int",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "scale_max": "int",
+      "scale_min": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grim_percentage": {
+    "cli": null,
+    "desc_sha": "7f553ba8f12f4314",
+    "guards": [
+      "data_type",
+      "decimals",
+      "provenance"
+    ],
+    "schema": {
+      "data_type": "str",
+      "decimals": "int :: Printed decimals OF THIS PERCENTAGE, read off the literal: '23' is 0, '23.7' is 1, '23.70' is 2. No default -- the wrong one accuses.",
+      "n": "int",
+      "percentage": "float",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grim_sweep": {
+    "cli": "grim-sweep",
+    "desc_sha": "8f0a8485d08f89c9",
+    "guards": [
+      "decimals",
+      "n_max_source",
+      "provenance"
+    ],
+    "schema": {
+      "decimals": "int :: The COARSEST printed precision among `values`. If the paper prints 45.2%, 33% and 21.7%, pass 0, not 1: one rounding window covers every value here, and the finest precision present shrinks it for all of them. No default -- the wrong one accuses.",
+      "n_max": "int",
+      "n_max_source": "str :: stated | logically_necessary | assumed. Say 'stated' ONLY when n_max is the paper's own total N. An empty intersection inside a range WE chose is a fact about the search, not the paper, so it refuses with `indeterminate` unless the range is the paper's.",
+      "n_min": "int",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "value_type": "str",
+      "values": "list"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grimmer_check": {
+    "cli": "grimmer",
+    "desc_sha": "3e1843d6cf486026",
+    "guards": [
+      "data_type",
+      "decimals",
+      "decimals_sd",
+      "discreteness_source",
+      "provenance"
+    ],
+    "schema": {
+      "data_type": "str",
+      "decimals": "int",
+      "decimals_sd": "int",
+      "discreteness_source": "str :: stated | logically_necessary | assumed (default). WHO says each subject contributed a WHOLE NUMBER. 'stated' only if the PAPER establishes it -- a quoted scale definition, an item count with its response options, 'number of falls'. 'logically_necessary' if it cannot be otherwise whatever the paper says. Otherwise leave it: a GRANULARITY verdict resting on an assumed discreteness caps at `suspicious` rather than `impossible`, because the arithmetic is airtight only if the premise holds, and a continuous measure or a mean of k items produces the identical arithmetic from honest data.",
+      "mean": "float",
+      "n": "int",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "scale_max": "int",
+      "scale_min": "int",
+      "sd": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grimu_check": {
+    "cli": "grimu",
+    "desc_sha": "9e14cc197b9bbb57",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "continuity_correction": "str",
+      "decimals": "int",
+      "method": "str",
+      "n1": "int",
+      "n2": "int",
+      "one_sided": "bool",
+      "p_source": "str :: 'u_statistic' | 'normal_z' | 'unspecified'. 'normal_z' refuses without needing the Z itself.",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_p": "str",
+      "reported_z": "float :: The normal-approximation Z printed beside the p, if the paper printed one. If it reproduces the p at its printed precision the check refuses: the p is the Z's rounding, not U's granularity.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "test_type": "str :: What test the paper attributed this p to. mann_whitney / wilcoxon only; t, F, chi-squared, ANOVA are refused (indeterminate), not scored.",
+      "ties_possible": "bool :: True for a small-integer or ordinal outcome. Ranks tie, the tie correction shrinks sdU, and the untied lattice no longer describes the achievable p's.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "grimu_coexistence": {
+    "cli": "grimu-coexist",
+    "desc_sha": "cc4ed29233ce51c8",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "continuity_correction": "str",
+      "decimals": "int",
+      "method": "str",
+      "n1": "int",
+      "n2": "int",
+      "one_sided": "bool",
+      "p_source": "str :: 'u_statistic' | 'normal_z' | 'unspecified'. 'normal_z' refuses: a p rendered from a rounded Z does not sit on the U lattice.",
+      "p_values": "list",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "test_type": "str :: What test the paper attributed these p-values to. mann_whitney / wilcoxon only.",
+      "ties_possible": "bool :: True for a small-integer or ordinal outcome; the tie correction moves every achievable p.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "list_tables": {
+    "cli": null,
+    "desc_sha": "519d66a1fb2a4a90",
+    "guards": [],
+    "schema": {
+      "paper_dir": "str"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "multiplicity_report": {
+    "cli": "multiplicity",
+    "desc_sha": "aabed52dcc164465",
+    "guards": [
+      "family_label"
+    ],
+    "schema": {
+      "alpha": "float",
+      "family_label": "str :: Describe the family you chose. Family definition is a judgement the tool cannot make for you, so there is no default -- an omitted label is refused, not filled in.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "tests": "list :: One dict per test in the family; p_value and correction_applied are the load-bearing fields."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "paired_d_interval": {
+    "cli": "paired-d-interval",
+    "desc_sha": "ef07b1acb19f354e",
+    "guards": [],
+    "schema": {
+      "dz": "float",
+      "n": "int",
+      "r": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "t": "float"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "parse_cells_as_declared": {
+    "cli": "parse-cells-as",
+    "desc_sha": "0d7d11f4a3f21571",
+    "guards": [],
+    "schema": {
+      "cells": "list",
+      "declared": "str",
+      "min_fit": "float"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "parse_cells_typed": {
+    "cli": "parse-cells",
+    "desc_sha": "a44dfc3e7f57104b",
+    "guards": [],
+    "schema": {
+      "cells": "list"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "parse_table": {
+    "cli": "parse-table",
+    "desc_sha": "3efe075603dc4d3e",
+    "guards": [],
+    "schema": {
+      "cross_check": "str",
+      "cross_check_format": "str",
+      "header_row": "int",
+      "label_col": "int",
+      "source": "str",
+      "source_format": "str",
+      "source_label": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "r_grim_ground_truth": {
+    "cli": null,
+    "desc_sha": "68eec04ba9f55821",
+    "guards": [],
+    "schema": {
+      "decimals": "int",
+      "items": "int",
+      "mean": "float",
+      "n": "int",
+      "percentage": "bool :: `mean` is a percentage share (100*k/n), not a mean. Set this when cross-checking grim_percentage.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator"
+    ],
+    "withheld": []
+  },
+  "r_sprite_ground_truth": {
+    "cli": null,
+    "desc_sha": "232f4050e2f0b545",
+    "guards": [],
+    "schema": {
+      "decimals": "int",
+      "mean": "float",
+      "n": "int",
+      "num_samples": "int",
+      "scale_max": "int",
+      "scale_min": "int",
+      "sd": "float",
+      "seed": "int :: RNG seed passed to R as set.seed(). Vary it to test whether a no-solution result is robust.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_anova": {
+    "cli": "anova",
+    "desc_sha": "9c71bcd15588d828",
+    "guards": [
+      "p_adjustment",
+      "p_relation",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_mean": "int :: Printed decimals of the group means, read from the table.",
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "decimals_sd": "int :: Printed decimals of the group SDs, read from the table.",
+      "means": "list",
+      "ns": "list",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "reported_f": "float",
+      "reported_p": "float",
+      "sampling": "str",
+      "sds": "list",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "test_confirmed": "bool :: True only when the paper states the printed p comes from THIS test on these summary statistics (quote it). Otherwise (default) a printed p LARGER than these means/SDs imply is indeterminate: an ANCOVA, mixed model, Welch or nonparametric p legitimately exceeds the simple test's. A printed p SMALLER than the summary statistics allow is still a finding."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_chi_squared": {
+    "cli": "chi2",
+    "desc_sha": "f3c5128cb7855c9d",
+    "guards": [
+      "p_adjustment",
+      "p_relation",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "observed": "list",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "paired": "bool :: The 2x2 is a PAIRED agreement table (McNemar), not an independence table. Makes McNemar the headline test; it is computed and matched against either way.",
+      "reported_chi2": "float",
+      "reported_p": "float",
+      "sampling": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "use_yates": "bool"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_f_to_p": {
+    "cli": "f-to-p",
+    "desc_sha": "ff24d9a1e49729cf",
+    "guards": [
+      "p_adjustment",
+      "p_relation"
+    ],
+    "schema": {
+      "decimals_f": "int :: Printed decimals of the reported F, read from the literal.",
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "df1": "int",
+      "df2": "int :: ONLY if the paper prints it; omit when unstated and the tool sweeps every df2 instead. An inferred df2 is an assumed bound and has produced a false positive.",
+      "f_value": "float",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "reported_p": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_independent_t": {
+    "cli": "ttest",
+    "desc_sha": "a2162238070f204b",
+    "guards": [
+      "p_adjustment",
+      "p_relation",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_mean": "int :: Printed decimals of the means, read from the table.",
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "decimals_sd": "int :: Printed decimals of the SDs, read from the table.",
+      "mean1": "float",
+      "mean2": "float",
+      "n1": "int",
+      "n2": "int",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "p_tail": "str :: 'two'|'one'|'unknown': tail convention of reported_p. Omit when the paper does not say.",
+      "reported_p": "float",
+      "reported_t": "float",
+      "sampling": "str",
+      "sd1": "float",
+      "sd2": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "test_confirmed": "bool :: True only when the paper states the printed p comes from THIS test on these summary statistics (quote it). Otherwise (default) a printed p LARGER than these means/SDs imply is indeterminate: an ANCOVA, mixed model, Welch or nonparametric p legitimately exceeds the simple test's. A printed p SMALLER than the summary statistics allow is still a finding.",
+      "use_welch": "bool :: True=Welch, False=Student (pooled). Omit when the paper does not say; both standard tests are then accepted."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_stat_to_p": {
+    "cli": "stat-to-p",
+    "desc_sha": "c8c6fb105606b9dc",
+    "guards": [
+      "p_adjustment",
+      "p_relation",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_p": "int",
+      "decimals_stat": "int",
+      "df": "float",
+      "df2": "float",
+      "df_max": "float",
+      "df_min": "float",
+      "kind": "str",
+      "n": "int",
+      "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
+      "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
+      "reported_p": "float",
+      "sampling": "str",
+      "source_locator": "str",
+      "source_quote": "str",
+      "statistic": "float",
+      "tails": "int"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "recalc_within_subjects_t": {
+    "cli": null,
+    "desc_sha": "1beb38197542fec3",
+    "guards": [
+      "sampling"
+    ],
+    "schema": {
+      "decimals_mean": "int :: Printed decimals of the means, read from the table.",
+      "decimals_p": "int :: Printed decimals of reported_p, read from the literal.",
+      "decimals_sd": "int :: Printed decimals of the SDs, read from the table.",
+      "mean_post": "float",
+      "mean_pre": "float",
+      "n": "int",
+      "p_is_threshold": "bool",
+      "p_tail": "str",
+      "reported_p": "str",
+      "sampling": "str",
+      "sd_post": "float",
+      "sd_pre": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "reconstruct_2x2": {
+    "cli": "reconstruct-2x2",
+    "desc_sha": "3572f473446c60f0",
+    "guards": [
+      "decimals",
+      "provenance"
+    ],
+    "schema": {
+      "balance_ratio_max": "float",
+      "chi2_tolerance": "float",
+      "decimals": "int :: The COARSEST printed precision among the percentages given. One window covers both columns, so the finest precision present would shrink it for both. No default -- the wrong one accuses.",
+      "n_total": "int",
+      "pct_col1": "float",
+      "pct_col2": "float",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_chi2": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "value_type": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "science_agent",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "required_n": {
+    "cli": "required-n",
+    "desc_sha": "c2adb903505e5d40",
+    "guards": [],
+    "schema": {
+      "actual_n": "int :: The sample size the study ACTUALLY used, if you know it. Supplying it adds the `design_sensitivity` comparison; omitting it leaves the answer a bare sample-size calculation.",
+      "alpha": "float",
+      "df": "int",
+      "effect_size": "float",
+      "groups": "int",
+      "power": "float",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "tails": "int",
+      "test_type": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "rivets_anova": {
+    "cli": "rivets-anova",
+    "desc_sha": "ba9530e77d37d172",
+    "guards": [
+      "p_is_threshold",
+      "provenance",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_f": "int",
+      "decimals_mean": "int",
+      "decimals_p": "int",
+      "decimals_sd": "int",
+      "means": "list",
+      "ns": "list",
+      "num_samples": "int",
+      "p_is_threshold": "bool :: TRUE when the paper printed a BOUND ('p < .001') rather than an exact value. A bound is a one-sided claim, refuted only if even the smallest achievable p exceeds it; read as exact it is, in this module's own words, 'a large false-accusation class rather than a detection'. The literal cannot carry this -- `reported_p` is a float here -- so if the paper printed a bound you must say so.",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_f": "float",
+      "reported_p": "float",
+      "sampling": "str",
+      "sds": "list",
+      "seed": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "rivets_independent_t": {
+    "cli": "rivets-t",
+    "desc_sha": "102bb999f1c07fbd",
+    "guards": [
+      "p_is_threshold",
+      "provenance",
+      "sampling"
+    ],
+    "schema": {
+      "decimals_mean": "int",
+      "decimals_p": "int",
+      "decimals_sd": "int",
+      "decimals_t": "int",
+      "mean1": "float",
+      "mean2": "float",
+      "n1": "int",
+      "n2": "int",
+      "num_samples": "int",
+      "p_is_threshold": "bool :: TRUE when the paper printed a BOUND ('p < .001') rather than an exact value. A bound is a one-sided claim, refuted only if even the smallest achievable p exceeds it; read as exact it is, in this module's own words, 'a large false-accusation class rather than a detection'. The literal cannot carry this -- `reported_p` is a float here -- so if the paper printed a bound you must say so.",
+      "p_tail": "str :: 'two'|'one'|'unknown': tail convention of reported_p. Omit when the paper does not say.",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_p": "float",
+      "reported_t": "float",
+      "sampling": "str",
+      "sd1": "float",
+      "sd2": "float",
+      "seed": "int",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "use_welch": "bool :: True=Welch, False=Student (pooled). Omit when the paper does not say; both standard tests are then accepted."
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "run_python_script": {
+    "cli": null,
+    "desc_sha": "4b72822f1090f811",
+    "guards": [],
+    "schema": {
+      "code": "str :: The Python script. stdout is your result -- print what you need. No network; filesystem read-only outside the scripts directory.",
+      "label": "str :: Short slug naming what the script checks; becomes part of the persisted filename.",
+      "timeout_seconds": "int"
+    },
+    "stages": [
+      "science_agent"
+    ],
+    "withheld": []
+  },
+  "sprite_reconstruct": {
+    "cli": "sprite",
+    "desc_sha": "987177ad85259529",
+    "guards": [
+      "data_type",
+      "discreteness_source",
+      "provenance"
+    ],
+    "schema": {
+      "data_type": "str",
+      "decimals_mean": "int",
+      "decimals_sd": "int",
+      "discreteness_source": "str :: stated | logically_necessary | assumed (default). WHO says each subject contributed a WHOLE NUMBER. 'stated' only if the PAPER establishes it -- a quoted scale definition, an item count with its response options, 'number of falls'. 'logically_necessary' if it cannot be otherwise whatever the paper says. Otherwise leave it: a GRANULARITY verdict resting on an assumed discreteness caps at `suspicious` rather than `impossible`, because the arithmetic is airtight only if the premise holds, and a continuous measure or a mean of k items produces the identical arithmetic from honest data.",
+      "mean": "float",
+      "n": "int",
+      "num_samples": "int",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "scale_max": "int",
+      "scale_min": "int",
+      "sd": "float",
+      "seed": "int :: RNG seed for the reconstruction search. Vary it to test whether a `no solution` result is robust; the analytic parity screen that PROVES infeasibility does not use it.",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict",
+      "variable_id": "str :: The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it."
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": [
+      "max_iterations"
+    ]
+  },
+  "stalt_check": {
+    "cli": "stalt",
+    "desc_sha": "a7f4bdae35ad100d",
+    "guards": [
+      "provenance"
+    ],
+    "schema": {
+      "calculated_p": "float",
+      "provenance": "str :: Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.",
+      "reported_threshold": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "uncertainty": "dict"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "statcheck": {
+    "cli": "statcheck",
+    "desc_sha": "7e86020d2a54e367",
+    "guards": [],
+    "schema": {
+      "pdf_path": "str",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "text": "str"
+    },
+    "stages": [
+      "adjudicator",
+      "tool_agent"
+    ],
+    "withheld": []
+  },
+  "verify_power_analysis": {
+    "cli": "power-check",
+    "desc_sha": "ea3ebcd1db96199e",
+    "guards": [
+      "allocation_ratio",
+      "tails",
+      "test_type"
+    ],
+    "schema": {
+      "allocation_ratio": "float :: Arm allocation ratio. Anything other than 1.0 is REFUSED: the recomputation is 1:1, and grading a k:1 design against it can accuse a correct calculation.",
+      "allows_attrition_inflation": "bool",
+      "alpha": "float",
+      "df": "int",
+      "effect_size": "float",
+      "groups": "int",
+      "n_reported": "int",
+      "n_reported_is_per_group": "bool",
+      "source_locator": "str :: Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.",
+      "source_quote": "str :: VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.",
+      "tails": "int :: 1 or 2 AS STATED BY THE PAPER. Leave unset when the paper does not state its tail convention: the check then tries both and refuses to accuse when the one-tailed reading reconciles. Stating it restores full sensitivity.",
+      "target_power": "float",
+      "test_type": "str"
+    },
+    "stages": [
+      "tool_agent"
+    ],
+    "withheld": []
+  }
+}

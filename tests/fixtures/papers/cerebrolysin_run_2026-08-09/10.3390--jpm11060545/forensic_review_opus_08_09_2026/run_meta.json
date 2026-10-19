@@ -1,0 +1,157 @@
+{
+  "paper_id": "10.3390--jpm11060545",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-10 01:58 UTC",
+  "version": "0.1.0",
+  "effort": "max",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 8.5822705,
+      "input_tokens": 26,
+      "output_tokens": 143194,
+      "cache_creation_input_tokens": 415089,
+      "cache_read_input_tokens": 1700085,
+      "wall_seconds": 1386.63,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001358
+        },
+        "claude-opus-5": {
+          "costUSD": 8.5809125
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 27
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.706473,
+      "input_tokens": 12,
+      "output_tokens": 36457,
+      "cache_creation_input_tokens": 144880,
+      "cache_read_input_tokens": 620942,
+      "wall_seconds": 448.4,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.035717
+        },
+        "claude-opus-5": {
+          "costUSD": 2.670756
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 11.288743499999999,
+  "total_wall_seconds": 1835.03,
+  "title_quality": {
+    "pass": false,
+    "n": 10,
+    "n_sentence_shaped": 0,
+    "n_joined": 0,
+    "n_overlong": 5,
+    "examples": [],
+    "problems": [
+      "5 title(s) exceed 90 characters"
+    ],
+    "detail": "5 title(s) exceed 90 characters"
+  },
+  "reproducibility": {
+    "n_findings": 38,
+    "n_valid": 6,
+    "n_invalid": 32,
+    "executed": true,
+    "n_ran_ok": 6,
+    "n_ran_failed": 27,
+    "problems": [
+      "finding[mep_pct_placebo_t2_denominator]: must invoke `metascience`, got 'grim_percentage'",
+      "finding[consort_screening_sum]: exited 2: Usage: metascience summation [OPTIONS]\nTry 'metascience summation --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --expected-sum (P",
+      "finding[table2_asterisk_asymmetry]: exited 2: Usage: metascience ttest [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience ttest --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "finding[table1_lesion_volume_p]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[table1_age_p]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[table1_nihss_p]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[lesion_volume_normality_cerebrolysin]: exited 2: Usage: metascience prop-from-normal [OPTIONS] {reported_proportion} {mean}\n                                    {sd} {n}\nTry 'metascience prop-from-normal --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[lesion_volume_normality_placebo]: exited 2: Usage: metascience prop-from-normal [OPTIONS] {reported_proportion} {mean}\n                                    {sd} {n}\nTry 'metascience prop-from-normal --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[table3_interhemispheric_identical_sds]: must invoke `metascience`, got 'No'",
+      "finding[duplicate_trial_registration_number]: must invoke `metascience`, got 'No'",
+      "finding[duplicated_data_availability_section]: must invoke `metascience`, got 'No'",
+      "finding[rmanova_fmat_interaction_f_to_p]: exited 2: Usage: metascience f-to-p [OPTIONS] {f_value} {df1} {df2}\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "finding[rmanova_fmaul_interaction_f_to_p]: exited 2: Usage: metascience f-to-p [OPTIONS] {f_value} {df1} {df2}\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "finding[rmanova_fmall_interaction_f_to_p]: exited 2: Usage: metascience f-to-p [OPTIONS] {f_value} {df1} {df2}\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "finding[table3_rsfmri_paired_correlations]: must invoke `metascience`, got 'recalc_within_subjects_t'",
+      "finding[table1_categorical_p_values]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extra argument(s) (metascien",
+      "finding[table1_continuous_p_values_consistent]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[tables_duplication_scan]: exited 2: Usage: metascience duplication-detect [OPTIONS] {json_path}\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got",
+      "finding[participant_flow_and_table_sums]: exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexp",
+      "finding[table1_baseline_similarity_refused]: exited 1: ",
+      "finding[table1_granularity_refused]: exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected ex",
+      "finding[multiplicity_tool_failed]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[xml_pdf_reconciliation]: exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "finding[headline]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[2]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[3]: exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "finding[4]: exited 2: Usage: metascience rivets-t [OPTIONS] {mean1} {sd1} {n1} {mean2} {sd2} {n2}\nTry 'metascience rivets-t --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+      "finding[5]: exited 2: Usage: metascience summation [OPTIONS]\nTry 'metascience summation --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --expected-sum (P",
+      "finding[6]: exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "finding[7]: exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "finding[8]: exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "finding[9]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+    ]
+  },
+  "consequence": {
+    "n_sweep": 27,
+    "n_report": 10,
+    "n_computed": 0,
+    "n_asserted": 37,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 15,
+    "n_diverged": 6,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 83,
+    "n_unjoined": 9,
+    "n_manual": 3,
+    "divergences": [
+      "table2_asterisk_asymmetry: tool=indeterminate model=suspicious (upgraded, explained)",
+      "table1_lesion_volume_p: tool=highly_suspicious model=suspicious (downgraded, explained)",
+      "table1_age_p: tool=highly_suspicious model=suspicious (downgraded, explained)",
+      "table1_nihss_p: tool=highly_suspicious model=suspicious (downgraded, explained)",
+      "tables_duplication_scan: tool=indeterminate model=consistent (downgraded, explained)",
+      "xml_pdf_reconciliation: tool=indeterminate model=consistent (downgraded, explained)"
+    ]
+  },
+  "sourcing": {
+    "findings": 27,
+    "joinable": 24,
+    "traced_to_a_passage": 17
+  }
+}

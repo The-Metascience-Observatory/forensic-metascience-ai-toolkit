@@ -1,0 +1,184 @@
+{
+  "paper_id": "10.1002--eat.24415",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-11 20:50 UTC",
+  "version": "0.1.0",
+  "effort": "max",
+  "git_sha": "f3b67ba10411",
+  "git_dirty": true,
+  "prompt_sha256": "178039047c119e9b",
+  "registry_sha256": "dfdcaff43b7503d4",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 5.870981500000001,
+      "input_tokens": 26,
+      "output_tokens": 108851,
+      "cache_creation_input_tokens": 212446,
+      "cache_read_input_tokens": 2047521,
+      "wall_seconds": 1112.26,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001356
+        },
+        "claude-opus-5": {
+          "costUSD": 5.8696255000000015
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 18
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 3.097995,
+      "input_tokens": 14,
+      "output_tokens": 36877,
+      "cache_creation_input_tokens": 171492,
+      "cache_read_input_tokens": 864330,
+      "wall_seconds": 477.29,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.028915
+        },
+        "claude-opus-5": {
+          "costUSD": 3.0690799999999996
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 8.9689765,
+  "total_wall_seconds": 1589.55,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 0
+  },
+  "title_quality": {
+    "pass": false,
+    "n": 10,
+    "n_sentence_shaped": 2,
+    "sentence_shape_enforced": false,
+    "n_joined": 0,
+    "n_overlong": 4,
+    "examples": [
+      "One of four claimed mediated eating dimensions does not survive correction for its own test family",
+      "Dimension-to-dimension contrast asserted without any test of the difference between dimensions",
+      "Sole between-person mediation claim survives none of four corrections for its twelve-test family"
+    ],
+    "problems": [
+      "4 title(s) exceed 90 characters"
+    ],
+    "detail": "4 title(s) exceed 90 characters"
+  },
+  "reproducibility": {
+    "n_findings": 29,
+    "n_valid": 5,
+    "n_invalid": 24,
+    "n_no_command_applies": 0,
+    "n_command_expected": 29,
+    "n_unparseable": 0,
+    "executed": true,
+    "n_ran_ok": 5,
+    "n_ran_failed": 24,
+    "problems": [
+      "finding[table1_counts_and_percentages]: exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "finding[table1_category_sums]: exited 1: ",
+      "finding[table2_coefficient_p_consistency]: exited 2: Usage: metascience regression-batch [OPTIONS] {json_path}\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such",
+      "finding[table2_row_label_xml_vs_pdf]: exited 1: ",
+      "finding[multiplicity_within_person_mediation]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[multiplicity_between_person_mediation]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[absence_of_evidence_model3_null]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[absence_of_evidence_model5_null]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[absence_of_evidence_positive_affect_null]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[table2_no_duplication]: exited 1: ",
+      "finding[prose_to_table_beta_reconciliation]: exited 1: ",
+      "finding[nct_identifier_malformed]: exited 1: ",
+      "finding[loc_outcome_descriptives_no_denominator]: exited 1: ",
+      "finding[near_collinear_construct_overlap]: exited 1: ",
+      "finding[citation_year_discrepancy_pdf_vs_xml]: exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-pa",
+      "finding[headline]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[0]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[1]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[2]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[3]: exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           ",
+      "finding[5]: exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           ",
+      "finding[7]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "finding[8]: exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           ",
+      "finding[9]: exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           "
+    ]
+  },
+  "consequence": {
+    "n_sweep": 18,
+    "n_report": 10,
+    "n_computed": 4,
+    "n_asserted": 24,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 7,
+    "n_diverged": 2,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 102,
+    "n_unjoined": 8,
+    "n_manual": 3,
+    "divergences": [
+      "absence_of_evidence_positive_affect_null: tool=consistent model=indeterminate (upgraded, explained)",
+      "prose_to_table_beta_reconciliation: tool=indeterminate model=consistent (downgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 10,
+    "n_uncomputed": 4,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 10,
+    "n_supplied": 6,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "paper_commitment": 2,
+      "field_norm": 6,
+      "logical": 2
+    }
+  },
+  "sourcing": {
+    "findings": 18,
+    "joinable": 15,
+    "traced_to_a_passage": 12
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 3 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "n_unvalidated": 0
+  }
+}

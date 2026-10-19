@@ -1,0 +1,82 @@
+{
+  "paper_id": "10.1002--ajcp.70049",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 5.818348499999999,
+      "input_tokens": 22,
+      "output_tokens": 77955,
+      "wall_seconds": 901.51,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.00089
+        },
+        "claude-opus-5": {
+          "costUSD": 5.817458499999999
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 24
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.3731224999999996,
+      "input_tokens": 10,
+      "output_tokens": 27749,
+      "wall_seconds": 342.15,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.024218
+        },
+        "claude-opus-5": {
+          "costUSD": 2.3489044999999997
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "medium"
+    }
+  },
+  "total_cost_usd": 8.191470999999998,
+  "total_wall_seconds": 1243.66,
+  "reproducibility": {
+    "n_findings": 32,
+    "n_valid": 23,
+    "n_invalid": 9,
+    "problems": [
+      "finding[1] (table2_constant_p_below_threshold_unreachable): contains placeholder '<' -- not runnable as written",
+      "finding[5] (table3_ebp_baseline_uninformative_precision): contains placeholder '<' -- not runnable as written",
+      "finding[6] (table3_ctc_p_threshold_rounding_explained): contains placeholder '<' -- not runnable as written",
+      "finding[11] (multiplicity_uncorrected): must invoke `metascience`, got 'Not'",
+      "finding[17] (duplication_across_tables): contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "finding[20] (ebp_adherence_cell_ambiguous): contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "finding[1] (1): contains placeholder '<' -- not runnable as written",
+      "finding[4] (4): contains placeholder '<' -- not runnable as written",
+      "finding[7] (7): contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written"
+    ]
+  }
+}

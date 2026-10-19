@@ -1,0 +1,217 @@
+{
+  "paper_id": "10.3349--ymj.2009.50.1.55",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-18 04:49 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_dirty": false,
+  "git_sha": "66b62fbecb1d",
+  "prompt_sha256": "6c57afcbac14716f",
+  "registry_sha256": "95687062d36d7532",
+  "text_provenance": {
+    "by_file": {
+      "10.3349--ymj.2009.50.1.55.pdf": {
+        "extractor": "docling",
+        "n_chars": 20011
+      }
+    },
+    "docling_version": "2.119.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  },
+  "stages": {
+    "sweep": {
+      "model": "sonnet",
+      "cost_usd": 1.4000219999999999,
+      "input_tokens": 20,
+      "output_tokens": 37367,
+      "cache_creation_input_tokens": 75590,
+      "cache_read_input_tokens": 1280350,
+      "wall_seconds": 352.9,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001812
+        },
+        "claude-sonnet-5": {
+          "costUSD": 1.3982099999999997
+        }
+      },
+      "primary_billed_model": "claude-sonnet-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 10
+    },
+    "editorial": {
+      "model": "sonnet",
+      "cost_usd": 1.0308268999999999,
+      "input_tokens": 6,
+      "output_tokens": 9631,
+      "cache_creation_input_tokens": 134107,
+      "cache_read_input_tokens": 237173,
+      "wall_seconds": 134.66,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.01055
+        },
+        "claude-sonnet-5": {
+          "costUSD": 1.0202769
+        }
+      },
+      "primary_billed_model": "claude-sonnet-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "reconciles",
+      "confidence": "medium"
+    }
+  },
+  "total_cost_usd": 2.4308489,
+  "total_wall_seconds": 487.56,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 0
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Kang et al. 2009",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 1,
+    "n_sentence_shaped": 1,
+    "sentence_shape_enforced": false,
+    "n_joined": 0,
+    "joined_enforced": false,
+    "n_overlong": 0,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [],
+    "n_examples_omitted": 0,
+    "problems": [],
+    "detail": "all 1 title(s) name a defect rather than a method. 0 run past 120 characters and 0 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 11,
+    "n_headline": 1,
+    "n_targets": 12,
+    "n_valid": 6,
+    "n_invalid": 6,
+    "n_no_command_applies": 0,
+    "n_command_expected": 12,
+    "n_unparseable": 1,
+    "executed": true,
+    "n_ran_ok": 7,
+    "n_ran_failed": 4,
+    "problems": [
+      "finding[chi2_infection_recalc]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "finding[sex_ratio_sums]: THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `consistent`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[statcheck_no_apa_stats]: exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "finding[infection_case_narrative_ambiguity]: empty reproduction command",
+      "finding[headline]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               ",
+      "finding[0]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-p               "
+    ],
+    "n_disagreed": 1
+  },
+  "exhaustive_checks": {
+    "n_tables": 1,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 0,
+      "n_blocks": 0,
+      "ran": false,
+      "severity": "indeterminate",
+      "why_not": "The paper prints no (mean, SD) pair in any table, so there was nothing to compare. This is a refusal, not a clean result."
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 0,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 0,
+      "results": [],
+      "worst": null
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_sweep": 10,
+    "n_report": 1,
+    "n_computed": 0,
+    "n_asserted": 1,
+    "n_absent": 10,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 6,
+    "n_diverged": 0,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 14,
+    "n_unjoined": 4,
+    "n_manual": 0,
+    "divergences": []
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 1,
+    "n_uncomputed": 0,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 1,
+    "n_supplied": 0,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "logical": 1
+    }
+  },
+  "sourcing": {
+    "findings": 10,
+    "joinable": 10,
+    "traced_to_a_passage": 7
+  },
+  "delivery": {
+    "ok": true,
+    "n_calls": 18,
+    "n_undelivered": 0,
+    "n_extraction": 0,
+    "n_unrecovered": 0,
+    "lost": [],
+    "note": "every tool call returned a usable payload."
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 2 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 2,
+    "n_off_allowlist": 1
+  }
+}

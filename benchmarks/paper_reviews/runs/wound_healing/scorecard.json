@@ -1,0 +1,104 @@
+{
+  "paper": "wound_healing",
+  "pipeline_version": "v1.15.0 (g4a7971102983, uncommitted changes)",
+  "mode": "parallel",
+  "backend": "grok",
+  "model": "grok-4.6",
+  "verdict": "unresolved",
+  "verdict_expected": "does_not_reconcile",
+  "verdict_match": false,
+  "deterministic": {
+    "findings_json": {
+      "passed": true,
+      "problems": [],
+      "num_findings": 8,
+      "schema": "2.0"
+    },
+    "no_preamble": {
+      "passed": true,
+      "first_line": "Forensic review \u2014 paper",
+      "matched_patterns": []
+    },
+    "must_not_say": {
+      "passed": true,
+      "hits": []
+    },
+    "verdict": {
+      "passed": false,
+      "verdict": "unresolved",
+      "expected": "does_not_reconcile",
+      "valid_value": true
+    },
+    "tortured_track": {
+      "ran": true,
+      "k": 0,
+      "refusal_subtype": null,
+      "expected": "none",
+      "passed": true
+    },
+    "passed": false
+  },
+  "judge": {
+    "per_finding": [
+      {
+        "id": "bmi_inclusion_contradiction",
+        "weight": "critical",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "Table 2 BMI range 23.0-45.0 contradicts BMI>30 inclusion\n\nInclusion required BMI>30 and Methods state there is no group with BMI below 30 because the study was restricted to obese women. Table 2 prints BMI range 23.0-45.0 (mean 34.5, SD 3.6). Those two statements cannot both be true: either non-obese women were enrolled, or the reported range is wrong."
+      },
+      {
+        "id": "hidden_extreme_p",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "registration_incoherence",
+        "weight": "major",
+        "reachable": false,
+        "covered": true,
+        "evidence_quote": "NCT03354078 was first submitted 19 November 2017 after a stated 18 June 2017 start, so registration is retrospective."
+      },
+      {
+        "id": "implausible_followup",
+        "weight": "minor",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "author_integrity_context",
+        "weight": "minor",
+        "reachable": false,
+        "covered": false,
+        "evidence_quote": ""
+      }
+    ],
+    "false_positives": [],
+    "recall_weighted": 0.556,
+    "recall_weighted_reachable": 0.5,
+    "num_false_positives": 0,
+    "no_findings_produced": false,
+    "severity_calibration": {
+      "n_scored": 0,
+      "n_in_interval": 0,
+      "n_over_severity": 0,
+      "n_under_severity": 0,
+      "severity_bias": 0.0,
+      "n_excluded_low_confidence": 0,
+      "n_covered_but_unmatched": 0
+    },
+    "judge_notes": "BMI contradiction is the headline Level 4 finding in prose (findings.json was truncated before any matching structured id). Registration is covered only on the retrospective-after-start point, not the 220\u2192400 / date-backdating version history; the review even says it did not re-fetch ClinicalTrials.gov. Hidden extreme p-values were listed as unchecked (stalt_check/t-recalc handed off, results lost). Three lost to follow-up is treated as reconciling CONSORT arithmetic, not as implausible retention. Extra findings (counts printed as %, CONSORT omissions, citation mismatch, suture-row n) are additional and not invented severe claims.",
+    "judge_parse_path": "json_schema",
+    "cost_usd": 0.0298877
+  },
+  "recall_weighted": 0.556,
+  "recall_weighted_reachable": 0.5,
+  "num_false_positives": 0,
+  "cost_usd": {
+    "analysis": 1.150692,
+    "judge": 0.0298877
+  }
+}

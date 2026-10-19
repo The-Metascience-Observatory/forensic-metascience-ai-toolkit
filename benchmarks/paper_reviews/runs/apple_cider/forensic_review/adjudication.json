@@ -1,0 +1,179 @@
+{
+  "verdicts": [
+    {
+      "finding_id": "f_3b213d597e3b6533",
+      "action": "kept",
+      "severity": 4,
+      "category": "merged_pattern",
+      "title": "Baseline biochemical values disagree between Table 1 and Table 3 across four cells",
+      "description": "Table 1's baseline (week 0) values for FBS (Groups 3 and 4), TC (Group 2) and TG (Group 4) do not match the identical measurement printed as the Week 0 column of Table 3 -- means and/or SDs differ in every case (e.g. FBS Group 3: 119.9\u00b17.2 vs 119.9\u00b112.2; FBS Group 4: 113.6\u00b112.5 vs 118.6\u00b112.5; TC Group 2: 173.6\u00b116.3 vs 175.6\u00b112.9; TG Group 4: 168.1\u00b118.2 vs 166.1\u00b118.2). This is a plain, verified internal contradiction spanning three variables and three groups, not a single arithmetic slip.",
+      "rationale": "Four independent model-read cell comparisons describe the same defect: the baseline table and the Week-0 outcome column disagree on values that should be identical. Merged into one pattern finding; each table's own within-table trend stays self-consistent, so this is a data-provenance/reporting problem, not one that overturns a specific claim."
+    },
+    {
+      "finding_id": "f_332408d83d42a15d",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_3b213d597e3b6533",
+      "rationale": "Same Table 1 vs Table 3 TC/Group 2 discrepancy already covered in the merged pattern finding."
+    },
+    {
+      "finding_id": "f_f8da056b67e0b51e",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "The Methods name only an independent t-test, but the '*' baseline-vs-follow-up markers in Tables 2 and 3 are necessarily within-subject repeated measures on the same 30 people. This is a genuine design/reporting mismatch, but as the finding itself notes an independent test on paired data is typically conservative (inflates SE), so it is unlikely to have inflated the reported significant effects -- a localized methods-reporting correction rather than a result-altering flaw."
+    },
+    {
+      "finding_id": "f_560ba7b66e510a7c",
+      "action": "kept",
+      "severity": 4,
+      "category": "none",
+      "rationale": "Cross-checked with csf_test (rho=0.5, p=0.0061) and check_variance_dispersion (Weight, p=0.0078); both confirmed as printed. Baseline Age/Weight/Height are far more similar than randomisation predicts, even after adjusting for correlation. Per rule 1, uniform high baseline p-values are the red flag, not reassurance -- consistent with a randomisation or data-integrity problem, but capped at 'suspicious', not proof."
+    },
+    {
+      "finding_id": "f_d6633f134967cd3c",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "The Discussion's claimed 6-8 kg / 2.7-3.0 BMI-point reduction range is not supported by Table 2's own week-0-to-week-12 changes; Group 1 shows only 5.1 kg / 1.8 points, both below the claimed range. This overstates the study's own results and should be corrected in the text, though it does not change the direction of the finding or any abstract-level claim."
+    },
+    {
+      "finding_id": "f_eeea930918c6818f",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_3b213d597e3b6533",
+      "rationale": "Same Table 1 vs Table 3 FBS/Group 3 SD discrepancy already covered in the merged pattern finding."
+    },
+    {
+      "finding_id": "f_492278fa506a51f8",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "A valid design limitation -- pooling ages 12-25 without stratification, using adult BMI cut-points and an adult-marketed bioimpedance device -- but this is a scope/generalisability limitation of an otherwise-described method, not an error in a reported number."
+    },
+    {
+      "finding_id": "f_eeea930918c6818f-2",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_3b213d597e3b6533",
+      "rationale": "Same Table 1 vs Table 3 FBS/Group 4 mean discrepancy already covered in the merged pattern finding."
+    },
+    {
+      "finding_id": "f_7ef256175dfe066a",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "Zero attrition across 120 participants over 12 weeks with repeated venous blood draws is unusually clean and worth flagging per rulebook rule 7, but by itself it is a plausibility concern about reporting completeness, not a demonstrated error; kept at its provisional minor severity and named in the paper summary as part of the broader too-clean pattern."
+    },
+    {
+      "finding_id": "f_f1c349f876a22033",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "Confirmed by re-running check_variance_dispersion (p=0.0078, matches the reported figure exactly). The four baseline Weight SDs are more uniform than sampling error predicts; this corroborates the CSF baseline-similarity finding on the same rows but remains capped at 'suspicious' as a relative screening signal, not proof."
+    },
+    {
+      "finding_id": "f_2b248813e814c6a3",
+      "action": "kept",
+      "severity": 1,
+      "category": "none",
+      "rationale": "An undefined '#' and doubled asterisk in two Table 3 cells is a self-evident typesetting artifact; no reader would misread the underlying value, and no formal correction is warranted beyond a copyediting note."
+    },
+    {
+      "finding_id": "f_1940365da8c3fce7",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_3b213d597e3b6533",
+      "rationale": "Same Table 1 vs Table 3 TG/Group 4 mean discrepancy already covered in the merged pattern finding."
+    },
+    {
+      "finding_id": "f_481c4f1e806097ee",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "A prospective RCT with no registry identifier is a genuine reporting-standards gap worth naming, but it is a transparency omission rather than an error in any reported result."
+    },
+    {
+      "finding_id": "f_5d9bb1a945704e45",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_d6633f134967cd3c",
+      "rationale": "Same Discussion-vs-Table-2 weight/BMI overstatement already covered by the science analyst's version of this finding."
+    },
+    {
+      "finding_id": "f_88d5f25ba358bcd1",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_f8da056b67e0b51e",
+      "rationale": "Same independent-t-test-on-repeated-measures design issue already covered by the science analyst's version of this finding."
+    },
+    {
+      "finding_id": "f_f05b0569d8065e42",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "Confirmed by re-running check_count_percent: 19/30=63.33%, printed as 63.4%, just outside the rounding interval [63.35, 63.50). The paired male figure (36.6%) is consistent under truncation and the two figures still sum to 100%, so this reads as an isolated rounding/typo slip rather than a wrong headcount -- an erratum-level issue."
+    },
+    {
+      "finding_id": "f_89cfa57e927b602d",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "merged_into": "f_2b248813e814c6a3",
+      "rationale": "Same undefined '#' symbol in Table 3 already covered by the science analyst's version of this finding."
+    },
+    {
+      "finding_id": "f_1835358965bb4560",
+      "action": "merged",
+      "severity": null,
+      "category": "merged_pattern",
+      "merged_into": "f_560ba7b66e510a7c",
+      "rationale": "The whole-table dispersion result is itself indeterminate (tau-hat CI spans 1), but its own upper-tail Simes signal (p=0.057) points at the same Age/Weight/Height rows already flagged by the CSF test; it adds marginal corroboration to that finding rather than standing as an independent one."
+    },
+    {
+      "finding_id": "f_2fe455c58e777c04",
+      "action": "merged",
+      "severity": null,
+      "category": "merged_pattern",
+      "merged_into": "f_560ba7b66e510a7c",
+      "rationale": "Height's borderline under-dispersion (p=0.049) is explicitly described by the tool as not enough to report alone, and it concerns the same anthropometric cluster (Age/Weight/Height) already carried by the CSF finding; folded in as corroboration rather than a separate row."
+    },
+    {
+      "finding_id": "f_34cf6d99dfa6a3c7",
+      "action": "discarded",
+      "severity": null,
+      "category": "insufficient_evidence",
+      "evidence_quote": "89% of them reported having a high eating frequency, with more than four meals per day",
+      "rationale": "At n=120 with 0 printed decimals every integer percentage is GRIM-attainable, so this check has no discriminating power by construction; it is a null result correctly labeled indeterminate by the tool, not a finding."
+    },
+    {
+      "finding_id": "f_7f69c27dd9e1161a",
+      "action": "discarded",
+      "severity": null,
+      "category": "insufficient_evidence",
+      "evidence_quote": "Group 1 79.0\u00b127.1 78.1\u00b126.5*\u2021 77.3\u00b126.0*\u2021 73.9\u00b123.7*\u2021",
+      "rationale": "Recovering the implied pre/post correlation from a thresholded 'p<0.05' gives only a lower bound that is compatible with [-1,1] in every case tested, so no inconsistency is established; correctly indeterminate, not a finding."
+    },
+    {
+      "finding_id": "f_900979ef3700a863",
+      "action": "discarded",
+      "severity": null,
+      "category": "insufficient_evidence",
+      "evidence_quote": "Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7",
+      "rationale": "The 7-row anthropometric block's excess-similarity signal does not survive a realistic rho=0.5 correlation adjustment (p=0.11); it neither adds to nor contradicts the narrower, still-significant Age/Weight/Height finding, so it is dropped rather than reported as its own row."
+    }
+  ],
+  "paper": {
+    "verdict": "does_not_reconcile",
+    "paper_severity": 5,
+    "headline_finding_id": "f_560ba7b66e510a7c",
+    "confidence": "medium",
+    "summary": "The most serious concern is that Table 1's baseline Age, Weight and Height are statistically far too similar across the four randomised arms (Carlisle-Stouffer-Fisher similarity p=0.006, confirmed on re-run and surviving a conservative rho=0.5 adjustment for these correlated measures), reinforced by Weight's own SDs (27.1/28.5/27.2/28.6) being more uniform than sampling error predicts (p=0.008, also confirmed). This pattern is associated with fabricated or non-randomly-allocated data in the literature, though it remains a statistical improbability rather than proof of manipulation. Independently, Table 1's baseline FBS, TC and TG values for several groups do not match the same measurements printed as Table 3's own Week-0 column -- a plain internal contradiction of supposedly identical data. The Discussion also overstates Table 2's own weight/BMI reductions, and the Methods name only an independent t-test for what are mostly within-subject comparisons. Table 2's internal week-by-week trends, most percentages, and the effect-size/summation checks were internally consistent. A journal would need at minimum a corrigendum reconciling Table 1 against Table 3 and correcting the Discussion's overstated range, plus an editorial query about the baseline-similarity signal and randomisation records. This review did not have access to raw participant-level data and cannot establish whether the discrepancies reflect data fabrication, transcription error, or an unreported protocol detail."
+  }
+}

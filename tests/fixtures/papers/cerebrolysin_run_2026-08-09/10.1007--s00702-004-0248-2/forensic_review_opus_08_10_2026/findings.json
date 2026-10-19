@@ -1,0 +1,1707 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "1.0",
+  "paper_id": "10.1007--s00702-004-0248-2",
+  "paper_title": "Neuroprotective treatment with Cerebrolysin in patients with acute stroke: a randomised controlled trial",
+  "paper_metadata": {
+    "authors": "G. Ladurner, P. Kalvach, H. Moessler, and the Cerebrolysin Study Group",
+    "year": "2004",
+    "journal": "Journal of Neural Transmission",
+    "doi": "10.1007/s00702-004-0248-2",
+    "study_design": "Multicentre, randomised, double-blind, placebo-controlled, parallel-group exploratory trial; 8 sites in Austria, Czech Republic and Hungary; randomisation in blocks of 12 stratified by study centre; ITT with LOCF. Sponsor EBEWE Pharma supplied medication, generated the randomisation code, and employs the third author."
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "s1",
+        "label": "Cerebrolysin 50 mL vs placebo in acute ischaemic stroke, 21 days treatment, 90 days follow-up",
+        "design": "rct",
+        "n": 146,
+        "n_per_group": [
+          {
+            "label": "Cerebrolysin 50 mL",
+            "n": 78
+          },
+          {
+            "label": "Placebo",
+            "n": 68
+          }
+        ],
+        "clustered": false,
+        "preregistered": false,
+        "unit_of_analysis": "individual patient",
+        "sample_flow": [
+          {
+            "stage": "randomised, constituting the ITT population",
+            "n": 146,
+            "unit": "patients"
+          },
+          {
+            "stage": "completed the study",
+            "n": 119,
+            "unit": "patients",
+            "reason": "67 Cerebrolysin + 52 placebo"
+          },
+          {
+            "stage": "discontinued, as enumerated by the paper",
+            "n": 25,
+            "unit": "patients",
+            "reason": "death (6 Cerebrolysin, 6 placebo), serious adverse event (1 placebo), consent withdrawn (3 Cerebrolysin, 9 placebo)"
+          },
+          {
+            "stage": "discontinued, as implied by 146 randomised minus 119 completers",
+            "n": 27,
+            "unit": "patients",
+            "inferred": true,
+            "reason": "DERIVED as the complement of the completer count; exceeds the 25 the paper enumerates by 2, and the shortfall sits entirely in the Cerebrolysin arm"
+          },
+          {
+            "stage": "available for day-90 analysis",
+            "n": 119,
+            "unit": "patients",
+            "reason": "stated in the Efficacy section, although the declared analysis population is ITT with last-observation-carried-forward (n=146), under which no day-90 attrition should occur"
+          }
+        ]
+      }
+    ],
+    "variables": [
+      {
+        "id": "age",
+        "name": "Age",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "years",
+        "lower_bound": 45,
+        "upper_bound": 85,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "were between 45 and 85 years of age at study entry",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "sex",
+        "name": "Gender",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "Male",
+          "Female"
+        ],
+        "n_categories": 2,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Gender (%)\nMale 47(60.3) 38(55.9)",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "hand",
+        "name": "Handedness",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "Left",
+          "Right"
+        ],
+        "n_categories": 2,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Handedness (%)\nLeft 1(1.3) 0(0)",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "side",
+        "name": "Side of stroke",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "Left hemisphere",
+          "Right hemisphere"
+        ],
+        "n_categories": 2,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Side of Stroke (%)\nLeft hemisphere 41(52.6) 31(45.6)",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "dur",
+        "name": "Duration of symptoms at study entry",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "hours",
+        "lower_bound": 0,
+        "upper_bound": 24,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Patients were eligible if they were admitted to the hospital and received the first dose of study medication within 24 h of the onset of the stroke",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "cns",
+        "name": "Canadian Neurological Scale total score",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "lower_bound": 4.5,
+        "upper_bound": 8,
+        "derivation": "sum_of_items",
+        "derived_from": "CNS section scores; the instrument advances in HALF-point steps, so a group mean moves in steps of 0.5/n and NOT 1/n -- GRIM run with 1/n granularity would be invalid on this row",
+        "confidence": "high",
+        "provenance_quote": "Patients were also required to have a GCS score of greater than 10 and a CNS score between 4.5 to 8.0 at baseline.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "cns_a1",
+        "name": "CNS section A1 (Motor Functions) subscore, change from baseline",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "change_score",
+        "derived_from": "CNS A1 subscore at each visit minus baseline; no range, mean or dispersion is printed anywhere in the text or tables",
+        "confidence": "low"
+      },
+      {
+        "id": "gcs",
+        "name": "Glasgow Coma Scale total score",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 11,
+        "upper_bound": 15,
+        "derivation": "sum_of_items",
+        "derived_from": "GCS eye/verbal/motor components; integer-valued. Lower bound 11 follows from the stated entry criterion 'greater than 10' on an integer scale; upper bound 15 is stated as the instrument maximum",
+        "confidence": "high",
+        "provenance_quote": "The baseline scores for both groups (14.1 for Cerebrolysin and 14.4 for placebo) were very close to the maximum score for the GCS (15.0)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "barthel",
+        "name": "Barthel Index",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "derivation": "sum_of_items",
+        "derived_from": "Barthel ADL items; the paper's own day-90 categories (0-50, 55-90, 95-100) imply 5-point steps, but no scale range is stated in the text",
+        "confidence": "medium",
+        "provenance_quote": "Percentageofpatientsineachoffourcategories(death,0\u201350points,55\u201390points,and95\u2013100 points)ofBarthelIndexoutcome atday90.",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "mmse",
+        "name": "Mini-Mental State Examination",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "lower_bound": 0,
+        "upper_bound": 30,
+        "derivation": "sum_of_items",
+        "confidence": "high",
+        "provenance_quote": "The MMSE is certainly more sensitive to speech problems and in addition with a maximum score of 30 also suffers from a pronounced ceiling effect.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "sst",
+        "name": "Syndrome Short Test (SKT) cognitive score",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "derived_from": "SKT subtests; the paper states no scale range, direction of scoring, mean or dispersion for this instrument anywhere, although it carries the paper's headline efficacy claim",
+        "confidence": "low"
+      },
+      {
+        "id": "cgi",
+        "name": "Clinical Global Impression",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "derivation": "measured",
+        "derived_from": "no category labels or range are given in the paper",
+        "confidence": "low"
+      },
+      {
+        "id": "hamd",
+        "name": "Hamilton Rating Scale for Depression",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "confidence": "low"
+      },
+      {
+        "id": "vonzerssen",
+        "name": "Von Zerssen Self Assessment Scale",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "confidence": "low"
+      },
+      {
+        "id": "any_ae",
+        "name": "Experienced at least one adverse event",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "at least one AE",
+          "no AE"
+        ],
+        "derivation": "percentage",
+        "derived_from": "count of patients with >=1 AE divided by the stated safety-population arm size (78 Cerebrolysin, 68 placebo); granularity is therefore 1/78 and 1/68",
+        "confidence": "high",
+        "provenance_quote": "146 patients constituted the safety population with 78 patients receiving Cerebrolysin and 68 receiving placebo. All patients who were randomised were included in the safety analysis set.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "sae",
+        "name": "Experienced a serious adverse event",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "SAE",
+          "no SAE"
+        ],
+        "derivation": "percentage",
+        "derived_from": "count of SAE patients per arm divided by arm size",
+        "confidence": "high",
+        "provenance_quote": "Thirteen patients (Table 2) reported a serious adverse event (SAE), 6 in the Cerebrolysin group (7.69%) and 7 in the placebo group (8.82%).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "death",
+        "name": "Death during the study",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "died",
+          "survived"
+        ],
+        "derivation": "percentage",
+        "derived_from": "count of deaths per arm divided by arm size",
+        "confidence": "high",
+        "provenance_quote": "Twelve patients died during the study: 6 in the Cerebrolysin group (7.69%) and 6 in placebo group (8.83%).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "conmed",
+        "name": "Use of a given class of concomitant medication",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "used",
+          "not used"
+        ],
+        "derivation": "percentage",
+        "derived_from": "share of patients per arm, reported to whole percentage points only",
+        "confidence": "medium",
+        "provenance_quote": "Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h1",
+        "study_id": "s1",
+        "statement": "Cerebrolysin improves neurological outcome (Canadian Neurological Scale) relative to placebo in acute ischaemic stroke",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Patients in the Cerebrolysin group had no significant improvement in the CNS score, the Barthel Index and the Clinical Global Impressions when compared to the placebo group.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h2",
+        "study_id": "s1",
+        "statement": "Cerebrolysin improves cognitive function (Syndrome Short Test and MMSE) relative to placebo",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "A significant improvement of cognitive function of the patients on Cerebrolysin was observed in the Syndrome Short Test when compared to the placebo group.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h3",
+        "study_id": "s1",
+        "statement": "Cerebrolysin improves activities of daily living (Barthel Index) relative to placebo",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Patients in the Cerebrolysin group had no significant improvement in the CNS score, the Barthel Index and the Clinical Global Impressions when compared to the placebo group.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h4",
+        "study_id": "s1",
+        "statement": "Cerebrolysin is safe and well tolerated, with adverse events occurring at a similar frequency to placebo",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Cerebrolysin was well tolerated and safe. Adverse events occurred with a similar frequency in both groups.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h5",
+        "study_id": "s1",
+        "statement": "The treatment effect is larger in the subgroup of patients with right-hemisphere stroke",
+        "status": "exploratory",
+        "appears_in_abstract": false,
+        "confidence": "high",
+        "provenance_quote": "Subgroup analyses of patients with right-sided stroke, left-sided stroke, and patients who received the first dose of study medication within 6h were also performed.",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "h6",
+        "study_id": "s1",
+        "statement": "The treatment effect is larger in the subgroup receiving the first dose within 6 hours of stroke onset",
+        "status": "exploratory",
+        "appears_in_abstract": false,
+        "confidence": "high",
+        "provenance_quote": "Subgroup analyses of patients with right-sided stroke, left-sided stroke, and patients who received the first dose of study medication within 6h were also performed.",
+        "provenance_verdict": "stitched"
+      }
+    ],
+    "tests": [
+      {
+        "id": "t_cns_overall",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 1 (Fig. 1)",
+        "outcome_var": "cns",
+        "predictor_vars": [
+          "treatment group"
+        ],
+        "grouping_var": "treatment group",
+        "n": 146,
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "The neurological outcome was assessed using the CNS score. Overall, no significant differences between the two groups were observed (Fig. 1).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_cns_a1_full",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 1",
+        "outcome_var": "cns_a1",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "p_value": 0.1,
+        "p_is_threshold": true,
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "In the CNS subscore A1-Motor Functions, a strong tendency towards a significant Cerebrolysin effect in comparison to placebo was seen in the full patient sample (p<0.1).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_cns_a1_within_d1_d21",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "paired_t",
+        "location": "Results, Efficacy, paragraph 1",
+        "outcome_var": "cns_a1",
+        "n": 146,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "the improvement from baseline to the efficacy assessment visits revealed a significant benefit of the Cerebrolysin group at day 1, 3, 7, 14, and 21 (p<0.05)",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_cns_a1_d90",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "paired_t",
+        "location": "Results, Efficacy, paragraph 1",
+        "outcome_var": "cns_a1",
+        "n": 119,
+        "p_value": 0.1,
+        "p_is_threshold": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "and a trend for improvement at the 3 months follow-up investigation (p<0.10) for the CNS section A1",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_gcs_overall",
+        "study_id": "s1",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 2",
+        "outcome_var": "gcs",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "No significant treatment differences have been picked up with the Glasgow Coma Scale.",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_sst_mh",
+        "study_id": "s1",
+        "hypothesis_id": "h2",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 3 and Fig. 2 caption",
+        "outcome_var": "sst",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "SST scores showed a significant improvement of Cerebrolysin treated patients versus placebo (p<0.05; Mantel-Haenszel test; n\u00bc146).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "t_sst_ttest_visits",
+        "study_id": "s1",
+        "hypothesis_id": "h2",
+        "test_type": "independent_t",
+        "location": "Results, Efficacy, paragraph 3",
+        "outcome_var": "sst",
+        "grouping_var": "treatment group",
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "with a significant treatment effect in favour of Cerebrolysin for all study visits, including the day 90 follow-up visit (p<0.05; t-test)",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_sst_right_subgroup",
+        "study_id": "s1",
+        "hypothesis_id": "h5",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 3",
+        "outcome_var": "sst",
+        "grouping_var": "treatment group within right-hemisphere stroke subgroup",
+        "n": 74,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "correction_applied": "none",
+        "confidence": "medium",
+        "provenance_quote": "The drug=placebo difference was most pronounced in the sub-group of patients with a stroke in the right brain hemisphere (p<0.001; Mantel-Haenszel test).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_mmse_overall",
+        "study_id": "s1",
+        "hypothesis_id": "h2",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 3",
+        "outcome_var": "mmse",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "The difference in the MMSE score did not reach statistical significance",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_mmse_right_subgroup",
+        "study_id": "s1",
+        "hypothesis_id": "h5",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 3",
+        "outcome_var": "mmse",
+        "grouping_var": "treatment group within right-hemisphere stroke subgroup",
+        "n": 74,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "medium",
+        "provenance_quote": "a highly significant effect of Cerebrolysin versus placebo was observed for the right-sided stroke subgroup (p<0.001, Mantel-Haenszel test) for this instrument",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_mmse_ttest_d1_d3_d14",
+        "study_id": "s1",
+        "hypothesis_id": "h5",
+        "test_type": "independent_t",
+        "location": "Results, Efficacy, paragraph 3",
+        "outcome_var": "mmse",
+        "grouping_var": "treatment group within right-hemisphere stroke subgroup",
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "medium",
+        "provenance_quote": "This has been confirmed by significant t-test results in favour of Cerebrolysin for days 1, 3, and 14 after onset of the stroke",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_barthel_overall",
+        "study_id": "s1",
+        "hypothesis_id": "h3",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 4",
+        "outcome_var": "barthel",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Activities of daily living were assessed with the Barthel Index. Cerebrolysin treatment versus placebo did not reach the level of statistical significance.",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_barthel_stool",
+        "study_id": "s1",
+        "hypothesis_id": "h3",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 4",
+        "outcome_var": "barthel",
+        "grouping_var": "treatment group",
+        "p_value": 0.01,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "The items stool incontinence and feeding of the Barthel Index, however, showed significant superiority of Cerebrolysin versus Placebo (p<0.01 and p<0.05, respectively).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_barthel_feeding",
+        "study_id": "s1",
+        "hypothesis_id": "h3",
+        "test_type": "other",
+        "location": "Results, Efficacy, paragraph 4",
+        "outcome_var": "barthel",
+        "grouping_var": "treatment group",
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "The items stool incontinence and feeding of the Barthel Index, however, showed significant superiority of Cerebrolysin versus Placebo (p<0.01 and p<0.05, respectively).",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_cgi_6h_subgroup",
+        "study_id": "s1",
+        "hypothesis_id": "h6",
+        "test_type": "other",
+        "location": "Results, paragraph following Table 2",
+        "outcome_var": "cgi",
+        "grouping_var": "treatment group within <6h subgroup",
+        "p_value": 0.015,
+        "p_is_threshold": true,
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "a significant treatment effect of Cerebrolysin was observed in the subgroup of patients treated within six hours after the onset of stoke (p<0.015; Mantel-Haenszel test)",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_baseline_comparability",
+        "study_id": "s1",
+        "test_type": "other",
+        "location": "Table 1 footnote and Results, Demographic data",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "appears_in_abstract": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1Values are means(cid:2)SEM. No significant group differences were observed at baseline",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_ae_frequency",
+        "study_id": "s1",
+        "hypothesis_id": "h4",
+        "test_type": "other",
+        "location": "Results, Safety, paragraph 3",
+        "outcome_var": "any_ae",
+        "grouping_var": "treatment group",
+        "n": 146,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Overall, there was no significant difference between the groups as regards the frequency or nature of adverse events.",
+        "assumption_checks_reported": [],
+        "provenance_verdict": "verbatim"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "ae_incidence_cerebrolysin_grim_impossible",
+      "location": "Results, Safety, paragraph 2",
+      "technique": "grim_percentage",
+      "consistent": false,
+      "severity": "impossible",
+      "quote": "The overall incidence of AEs was similar in both treatment groups, 16.4% of Cerebrolysin patients as compared to 10.3% of placebo patients experienced at least one AE.",
+      "reported": {
+        "percentage": 16.4,
+        "n": 78,
+        "denominator_stated_as": "78 patients receiving Cerebrolysin in the safety population"
+      },
+      "computed": {
+        "implied_count": 12.792,
+        "nearest_achievable_percentages": [
+          15.4,
+          16.7
+        ],
+        "achievable_counts_bracketing": [
+          12,
+          13
+        ],
+        "r_scrutiny_consistent": false
+      },
+      "inputs": {
+        "percentage": 16.4,
+        "n": 78,
+        "decimals": 1,
+        "data_type": "proportion"
+      },
+      "reproduction": "metascience grim-sweep --values 16.4 --n-min 78 --n-max 78 --decimals 1 --value-type percentage --n-max-source stated",
+      "notes": "The paper states the safety population explicitly ('146 patients constituted the safety population with 78 patients receiving Cerebrolysin and 68 receiving placebo. All patients who were randomised were included in the safety analysis set'), so the denominator is not in doubt. 16.4% of 78 implies 12.79 patients; the achievable neighbours are 12/78 = 15.4% and 13/78 = 16.7%. CROSS-CHECKED against R `scrutiny` via r_grim_ground_truth (16.4% expressed as the proportion 0.164 at 3 dp, n=78): scrutiny also returns inconsistent, so both engines agree and the severity stands. Context that sharpens this: the other seven percentages in the same two paragraphs (10.3, 8.82, 7.69, 5.1, 5.9, 3.8, 4.4) were each tested individually and ALL pass, each recovering exactly the count the paper prints. 16.4% is the sole exception. `grim_percentage` and `r_grim_ground_truth` are MCP-only tools with no CLI verb; the reproduction line above puts the identical question to the CLI-reachable grim-sweep (is n=78 viable for 16.4%).",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "This figure is the only quantitative support offered for the abstract's claim that 'Adverse events occurred with a similar frequency in both groups'; the overall AE rate in the treatment arm cannot be reproduced from any integer number of the 78 patients."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The overall incidence of AEs was similar in both treatment groups, 16.4% of Cerebrolysin patients as compared to 10.3% of placebo patients experienced at least one AE.",
+        "source_locator": "Results, Safety, paragraph 2",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "death_pct_placebo_grim_impossible",
+      "location": "Results, Safety, paragraph 2",
+      "technique": "grim_percentage",
+      "consistent": false,
+      "severity": "impossible",
+      "quote": "Twelve patients died during the study: 6 in the Cerebrolysin group (7.69%) and 6 in placebo group (8.83%).",
+      "reported": {
+        "percentage": 8.83,
+        "n": 68,
+        "stated_count": 6
+      },
+      "computed": {
+        "implied_count": 6.0044,
+        "nearest_achievable_percentage": 8.82,
+        "r_scrutiny_consistent": false
+      },
+      "inputs": {
+        "percentage": 8.83,
+        "n": 68,
+        "decimals": 2,
+        "data_type": "proportion"
+      },
+      "reproduction": "metascience grim-sweep --values 8.83 --n-min 68 --n-max 68 --decimals 2 --value-type percentage --n-max-source stated",
+      "notes": "6/68 = 8.8235%, which rounds to 8.82, not 8.83. Cross-checked against R `scrutiny` (0.0883 at 4 dp, n=68): also inconsistent, engines agree. Arithmetically impossible but of negligible substantive consequence -- a single last-digit error. It is recorded because it is exact, not because it matters. Note the same arm's SAE sentence prints 8.82% for a count of 7, which is the value 6/68 actually produces; the two sentences appear to have exchanged the correct and incorrect renderings of the same fraction.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim depends on the third significant figure of the placebo mortality rate; the count (6 deaths) is stated alongside and is unambiguous."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Twelve patients died during the study: 6 in the Cerebrolysin group (7.69%) and 6 in placebo group (8.83%).",
+        "source_locator": "Results, Safety, paragraph 2 (deaths)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "sae_placebo_pct_count_mismatch",
+      "location": "Results, Safety, paragraph 2; Table 2, All SAEs row",
+      "technique": "grim_percentage",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Thirteen patients (Table 2) reported a serious adverse event (SAE), 6 in the Cerebrolysin group (7.69%) and 7 in the placebo group (8.82%).",
+      "reported": {
+        "percentage": 8.82,
+        "n": 68,
+        "stated_count": 7
+      },
+      "computed": {
+        "implied_count": 5.9976,
+        "rounded_count": 6,
+        "percentage_that_7_of_68_would_give": 10.29
+      },
+      "inputs": {
+        "percentage": 8.82,
+        "n": 68,
+        "decimals": 2,
+        "data_type": "proportion"
+      },
+      "reproduction": "metascience grim-sweep --values 8.82 --n-min 68 --n-max 68 --decimals 2 --value-type percentage --n-max-source stated",
+      "notes": "8.82% is a perfectly achievable share of 68 -- GRIM passes -- but the count it recovers is 6, while the sentence and Table 2 both state 7 placebo patients with an SAE. 7/68 is 10.29%. So the percentage and its own count contradict each other by one patient. This is not a GRIM failure; it is the tool's recovered `rounded_count` disagreeing with the printed count, which is why it is graded suspicious rather than impossible. The most economical explanation is that the placebo DEATH percentage (6/68) was carried into the SAE sentence, which would also explain the neighbouring 8.83% error.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The placebo serious-adverse-event rate is stated as either 8.82% or 10.29% depending on which of the paper's own numbers is believed; both readings leave the abstract's 'similar frequency in both groups' claim intact, since the Cerebrolysin rate is 7.69%."
+      },
+      "reproduction_valid": true,
+      "severity_source": {
+        "model": "suspicious",
+        "tool": "consistent",
+        "direction": "upgraded",
+        "explained": true,
+        "note": "The tool returned `consistent`; this finding records `suspicious`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Thirteen patients (Table 2) reported a serious adverse event (SAE), 6 in the Cerebrolysin group (7.69%) and 7 in the placebo group (8.82%).",
+        "source_locator": "Results, Safety, paragraph 2 (SAEs)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "cerebrolysin_arm_disposition_shortfall",
+      "location": "Results, Patient disposition",
+      "technique": "check_summation",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Of these patients, 67 of the Cerebrolysin group and 52 of the placebo group completed the study. Reasons for the 25 cases of study discontinuation were death (6 Cerebrolysin, 6 placebo), serious adverse event (1 placebo), and consent withdrawn (3 Cerebrolysin; 9 placebo).",
+      "reported": {
+        "randomised_total": 146,
+        "cerebrolysin_randomised": 78,
+        "cerebrolysin_completers": 67,
+        "cerebrolysin_deaths": 6,
+        "cerebrolysin_consent_withdrawn": 3,
+        "stated_discontinuations": 25
+      },
+      "computed": {
+        "cerebrolysin_accounted_for": 76,
+        "cerebrolysin_shortfall": 2,
+        "completers_plus_stated_discontinuations": 144,
+        "total_shortfall": 2,
+        "placebo_arm_reconciles_exactly": true,
+        "n_sums_evaluated": 23,
+        "n_sums_inconsistent": 2
+      },
+      "inputs": {
+        "rows": "23 sums covering randomisation, completion, discontinuation reasons per arm, Table 1 count and percentage columns, and Table 2 SAE/death columns"
+      },
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[67,6,3],\"expected_sum\":78,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Cerebrolysin arm accounting\"},{\"values\":[52,6,1,9],\"expected_sum\":68,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Placebo arm accounting\"},{\"values\":[67,52,25],\"expected_sum\":146,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Completers plus stated discontinuations vs randomised\"}]'",
+      "notes": "Both failing sums are the same two patients seen twice. The placebo arm reconciles EXACTLY (52 + 6 + 1 + 9 = 68), which localises the discrepancy entirely to the Cerebrolysin arm: 78 randomised minus 67 completers is 11 discontinuations, but only 9 are enumerated (6 deaths + 3 consent withdrawn). The enumerated reasons do sum correctly to the '25 cases' the paper claims -- the internal arithmetic of that sentence is sound -- so the error is that 25 is itself two short of the 27 the completer counts require. 21 of the 23 sums checked reconcile exactly, including every Table 1 count and percentage column and every Table 2 column.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Two of 78 Cerebrolysin patients have no recorded disposition, so the CONSORT accounting for the treatment arm is incomplete; no reported effect estimate changes, but the fate of two treated patients is unstated."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Of these patients, 67 of the Cerebrolysin group and 52 of the placebo group completed the study. Reasons for the 25 cases of study discontinuation were death (6 Cerebrolysin, 6 placebo), serious adverse event (1 placebo), and consent withdrawn (3 Cerebrolysin; 9 placebo).",
+        "source_locator": "Results, Patient disposition; Table 1; Table 2",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "itt_locf_vs_day90_n_contradiction",
+      "location": "Methods, Statistical analysis; Results, Efficacy, paragraph 1",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The lack of a significant effect at month 3 is most probably caused by the reduced number of patients available for analysis at this timepoint (119 patients; 67 Cerebrolysin vs 52 Placebo).",
+      "reported": {
+        "declared_analysis_population": "ITT with last-observation-carried-forward, n=146",
+        "n_used_for_day90_explanation": 119,
+        "n_stated_in_fig2_caption": 146
+      },
+      "computed": {
+        "contradiction": "LOCF carries the last available observation forward, so a declared ITT-LOCF analysis has n=146 at every timepoint including day 90"
+      },
+      "inputs": {
+        "observation": "cross-reading of Methods statistical analysis paragraph against the Results day-90 explanation and the Fig. 2 caption"
+      },
+      "reproduction": "No forensic tool applies: this is a contradiction between two prose statements, not an arithmetic check. Verified by reading Methods ('An exploratory statistical analysis according to the intention-to-treat (ITT) principle with last-observation-carried-forward (LOCF) was performed') against the Results sentence quoted above.",
+      "notes": "The paper declares ITT with LOCF, and the Fig. 2 caption duly reports n=146 for the SST analysis. But the loss of significance for the CNS A1 subscore at day 90 is explained by attrition to 119 patients -- which cannot happen under LOCF, where the day-21 value is carried forward for the 27 non-completers. Either the day-90 analysis was in fact a completers-only analysis (contradicting the declared method), or the stated explanation for the null day-90 result is wrong. Recorded as a design/reporting inconsistency under rulebook rule 5; no arithmetic is violated.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's explanation for why its neurological-outcome benefit disappeared at day 90 -- reduced sample size -- is unavailable under the analysis method it says it used."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "conmed_cerebrolysin_no_shared_denominator",
+      "location": "Results, Demographic data and baseline disease characteristics, paragraph 2 (Cerebrolysin percentages)",
+      "technique": "grim_sweep",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).",
+      "reported": {
+        "percentages": [
+          15,
+          11,
+          13,
+          9,
+          10
+        ],
+        "stated_arm_n": 78
+      },
+      "computed": {
+        "joint_viable_ns_round_half": [],
+        "joint_viable_ns_truncation": [
+          76
+        ],
+        "stated_n_78_in_joint_set": false,
+        "failure_mode": "rounding_convention"
+      },
+      "inputs": {
+        "values": [
+          15,
+          11,
+          13,
+          9,
+          10
+        ],
+        "n_min": 2,
+        "n_max": 78,
+        "decimals": 0,
+        "value_type": "percentage",
+        "n_max_source": "stated"
+      },
+      "reproduction": "metascience grim-sweep --values 15,11,13,9,10 --n-min 2 --n-max 78 --decimals 0 --value-type percentage --n-max-source stated",
+      "notes": "No n in [2, 78] lets all five percentages pass GRIM under round-half; the paper's own arm size of 78 is not viable (11% requires n in a set that excludes 78 -- 8/78 rounds to 10 and 9/78 to 12). The tool found n=76 viable under the TRUNCATION convention, which SPSS and several journals use, and correctly capped the verdict at suspicious rather than impossible for exactly that reason. At whole-percentage precision this check has little power and the finding is weak on its own; it is recorded because it concerns the same arm whose disposition is two patients short and whose AE rate is GRIM-impossible, not because whole-number percentages are individually alarming.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The five concomitant-medication rates cannot all be shares of the 78 patients in the Cerebrolysin arm under standard rounding; nothing the paper concludes rests on them, as they support only the qualitative claim of homogeneous distribution."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).",
+        "source_locator": "Results, Demographic data, concomitant medications (Cerebrolysin column)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "conmed_placebo_stated_n_not_viable",
+      "location": "Results, Demographic data and baseline disease characteristics, paragraph 2 (placebo percentages)",
+      "technique": "grim_sweep",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).",
+      "reported": {
+        "percentages": [
+          10,
+          10,
+          8,
+          10,
+          6
+        ],
+        "stated_arm_n": 68
+      },
+      "computed": {
+        "joint_viable_ns": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          62,
+          63
+        ],
+        "stated_n_68_in_joint_set": false,
+        "viable_ns_for_8_percent_max": 66
+      },
+      "inputs": {
+        "values": [
+          10,
+          10,
+          8,
+          10,
+          6
+        ],
+        "n_min": 2,
+        "n_max": 68,
+        "decimals": 0,
+        "value_type": "percentage",
+        "n_max_source": "stated"
+      },
+      "reproduction": "metascience grim-sweep --values 10,10,8,10,6 --n-min 2 --n-max 68 --decimals 0 --value-type percentage --n-max-source stated",
+      "notes": "SEVERITY DIVERGES FROM THE TOOL DELIBERATELY, and the divergence is the point. grim_sweep returned `consistent` because SOME shared denominator exists in range (48-52, 62, 63). But the tool's own instruction is to read `per_value` before concluding, and doing so answers the question that actually matters: the paper's stated placebo arm size of 68 is NOT in the joint viable set, because 8% is unreachable at n=68 (5/68 rounds to 7, 6/68 to 9). So the five placebo rates cannot all be shares of 68. I have graded this suspicious rather than passing along the aggregate `consistent`, because the aggregate answers a different and less relevant question. Same low-power caveat as the Cerebrolysin row: whole-percentage precision, and a truncation convention could explain it.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "As with the Cerebrolysin column, these rates support only the qualitative claim that concomitant medication was homogeneously distributed; no reported estimate depends on them."
+      },
+      "reproduction_valid": true,
+      "severity_source": {
+        "model": "suspicious",
+        "tool": "consistent",
+        "direction": "upgraded",
+        "explained": true,
+        "note": "The tool returned `consistent`; this finding records `suspicious`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).",
+        "source_locator": "Results, Demographic data, concomitant medications (placebo column)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "efficacy_p_values_all_thresholded",
+      "location": "Results, Efficacy (all reported p-values); Methods, Statistical analysis",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Efficacy variables were analyzed using two-tailed statistics. Analyses were considered significant if a p &lt; 0.05 level was achieved.",
+      "reported": {
+        "n_efficacy_tests_identified": 17,
+        "n_with_exact_p": 0,
+        "n_with_a_reported_test_statistic": 0,
+        "correction_stated": "none"
+      },
+      "computed": {
+        "n_tests_evaluable": 0,
+        "n_dropped_as_threshold": 17,
+        "multiplicity_quantifiable": false
+      },
+      "inputs": {
+        "family_label": "Cerebrolysin vs placebo efficacy comparisons (all instruments, timepoints and subgroups)",
+        "tests": "17 tests spanning CNS A1 (7), SST (3), MMSE (4), Barthel (2), CGI (1), all p_is_threshold=true, correction_applied=none"
+      },
+      "reproduction": "metascience multiplicity --family-label 'Cerebrolysin vs placebo efficacy comparisons (all instruments, timepoints and subgroups)' --tests '[{\"id\":\"cns_a1_full\",\"p_value\":0.1,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"sst_mh_full\",\"p_value\":0.05,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"sst_right_hemisphere\",\"p_value\":0.001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"mmse_right_hemisphere\",\"p_value\":0.001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"cgi_6h_subgroup\",\"p_value\":0.015,\"p_is_threshold\":true,\"correction_applied\":\"none\"}]'",
+      "notes": "The tool returned n_tests = 0 of 17 submitted: every single efficacy p-value in this paper is a threshold ('p<0.05', 'p<0.001', 'p<0.015'), so all were dropped rather than coerced, and the multiplicity burden CANNOT BE QUANTIFIED. This is the substantive result, not a tool failure. Independently, statcheck over the full Results text returned 0 statistics -- the paper reports no t, F, chi-squared or U value anywhere, and no degrees of freedom, so not one of its 17 efficacy comparisons is independently verifiable. Eight instruments were administered at seven timepoints in three subgroups with no stated correction; the paper describes itself as exploratory, which makes uncorrected testing defensible, but it then describes the SST result as demonstrating a treatment effect and calls the results 'truly promising'.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 17,
+        "basis": "asserted",
+        "explanation": "The headline cognitive claim (SST, p<0.05) sits in a family of at least 17 uncorrected comparisons whose surviving-claims interval cannot be computed at all, because no exact p-value is printed anywhere in the paper."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Efficacy variables were analyzed using two-tailed statistics. Analyses were considered significant if a p &lt; 0.05 level was achieved.",
+        "source_locator": "Results, Efficacy section (all reported p-values)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "subgroup_p_smaller_than_full_sample",
+      "location": "Results, Efficacy, paragraph 3",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The drug=placebo difference was most pronounced in the sub-group of patients with a stroke in the right brain hemisphere (p<0.001; Mantel-Haenszel test). The difference in the MMSE score did not reach statistical significance, however, a highly significant effect of Cerebrolysin versus placebo was observed for the right-sided stroke subgroup (p<0.001, Mantel-Haenszel test) for this instrument.",
+      "reported": {
+        "sst_full_sample_p": "<0.05 at n=146",
+        "sst_right_hemisphere_p": "<0.001 at n=74",
+        "mmse_full_sample": "not significant at n=146",
+        "mmse_right_hemisphere_p": "<0.001 at n=74"
+      },
+      "computed": {
+        "subgroup_n": 74,
+        "subgroup_share_of_total": "roughly half"
+      },
+      "inputs": {
+        "observation": "comparison of reported significance thresholds between the full sample and the right-hemisphere subgroup for two cognitive instruments"
+      },
+      "reproduction": "No forensic tool applies: with no exact p-values, no test statistics and no subgroup means or dispersions printed, no interaction test can be recomputed and no recalculation tool has inputs to work from.",
+      "notes": "For both cognitive instruments the right-hemisphere subgroup (37 + 37 = 74 patients) yields a p-value at least two orders of magnitude smaller than the full sample of 146 -- and for the MMSE the full sample is null while half of it reaches p<0.001. That pattern requires the left-hemisphere subgroup to be null or reversed, which is what the authors argue (aphasia in left-hemisphere stroke). The argument is clinically reasonable and the subgroups WERE pre-specified in the Methods, which counts in the paper's favour. What is missing is any interaction test, any subgroup effect estimate, and any exact p; the claim is therefore not checkable. Recorded as a design observation under rulebook rule 5, not as an arithmetic anomaly.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The MMSE subgroup result is presented in the Discussion as evidence of benefit ('there was significant benefit of Cerebrolysin in the MMSE score in the right-sided sub-group') although the instrument was null overall, and no interaction test supports treating the subgroups as different."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_percentages_all_grim_consistent",
+      "location": "Table 1, all n (%) rows (gender, handedness, side of stroke)",
+      "technique": "grim_percentage",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "1Values are means(cid:2)SEM. No significant group differences were observed at baseline",
+      "reported": {
+        "cells": [
+          "47 (60.3)",
+          "38 (55.9)",
+          "31 (39.7)",
+          "30 (44.1)",
+          "1 (1.3)",
+          "0 (0)",
+          "77 (98.7)",
+          "68 (100)",
+          "41 (52.6)",
+          "31 (45.6)",
+          "37 (47.4)",
+          "37 (54.4)"
+        ]
+      },
+      "computed": {
+        "n_checks_run": 16,
+        "n_grim_percentage_consistent": 12,
+        "n_indeterminate": 4,
+        "n_refused": 0,
+        "parse_coverage": 0.25
+      },
+      "inputs": {
+        "cells": "16 Table 1 cells with explicit per-cell n (78 or 68)",
+        "variables": "age (continuous, 45-85), sex/handedness/side (binary), duration (continuous, 0-24)",
+        "bindings": "row label to variable id"
+      },
+      "reproduction": "metascience check-table --cells '[{\"raw\":\"47 (60.3)\",\"row_label\":\"Male\",\"col_label\":\"Cerebrolysin\",\"n\":78},{\"raw\":\"38 (55.9)\",\"row_label\":\"Male\",\"col_label\":\"Placebo\",\"n\":68}]' --variables '[{\"id\":\"sex\",\"name\":\"Gender\",\"measurement_level\":\"nominal\",\"discreteness\":\"discrete\",\"family\":\"binary\",\"confidence\":\"high\"}]' --bindings '{\"Male\":\"sex\"}'",
+      "notes": "Run as a single check_table call over the whole table; the technique is recorded as grim_percentage because that is the check which actually evaluated these twelve cells. DENOMINATOR: 16 checks run on 16 cells, 0 refused. All 12 count/percentage cells pass GRIM against their own arm size -- every percentage in Table 1 is a possible share of 78 or 68. The 4 mean-with-dispersion cells returned indeterminate on this pass for want of a plausibility ceiling and were re-run individually (see the SD/SE finding). Worth noting for the reader: parse coverage was only 0.25 because the typer flags 'n (%)' cells as ambiguous on syntax alone; supplying the declared binary variables is what resolved them, and the Table 1 footnote confirms which rows are means and which are counts.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every baseline count and percentage in Table 1 is internally consistent with its stated arm size."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "safety_percentages_grim_consistent",
+      "location": "Results, Safety, paragraphs 2 and 3",
+      "technique": "grim_percentage",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "hypertension, with 4 (5.1%) cases in the Cerebrolysin group, and 4 (5.9%) cases in the placebo group, and constipation with 3 cases in each group (3.8% vs 4.4% respectively)",
+      "reported": {
+        "percentages_checked": [
+          10.3,
+          8.82,
+          7.69,
+          5.1,
+          5.9,
+          3.8,
+          4.4
+        ],
+        "with_ns": [
+          68,
+          68,
+          78,
+          78,
+          68,
+          78,
+          68
+        ]
+      },
+      "computed": {
+        "recovered_counts": [
+          7,
+          6,
+          6,
+          4,
+          4,
+          3,
+          3
+        ],
+        "all_consistent": true
+      },
+      "inputs": {
+        "percentage": "each of 10.3/68, 8.82/68, 7.69/78, 5.1/78, 5.9/68, 3.8/78, 4.4/68",
+        "data_type": "proportion"
+      },
+      "reproduction": "metascience grim-sweep --values 5.1,3.8 --n-min 78 --n-max 78 --decimals 1 --value-type percentage --n-max-source stated",
+      "notes": "Each of these seven percentages is an achievable share of its stated denominator, and each recovers exactly the count the paper prints alongside it (4 hypertension, 3 constipation, 6 Cerebrolysin SAEs, 7 placebo any-AE). This is the control group for the 16.4% finding: the safety section's arithmetic is otherwise clean, which is why the single failure stands out rather than reading as sloppy rounding throughout. The one caveat is 8.82%, which passes GRIM but recovers 6 where the text says 7 -- recorded separately.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Six of the seven adverse-event percentages reproduce their printed counts exactly; the safety table is not systematically miscalculated."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "gcs_baseline_means_grim_consistent",
+      "location": "Table 1, GCS row",
+      "technique": "grim",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "GCS1 14.1(cid:2)0.20 14.4(cid:2)0.16",
+      "reported": {
+        "cerebrolysin_mean": 14.1,
+        "cerebrolysin_n": 78,
+        "placebo_mean": 14.4,
+        "placebo_n": 68,
+        "decimals": 1
+      },
+      "computed": {
+        "cerebrolysin_grim_consistent": true,
+        "placebo_grim_consistent": true,
+        "engine": "R scrutiny"
+      },
+      "inputs": {
+        "mean": "14.1 (n=78) and 14.4 (n=68)",
+        "decimals": 1,
+        "items": 1
+      },
+      "reproduction": "metascience grim --mean 14.1 --n 78 --decimals 1 --data-type integer --scale-min 11 --scale-max 15 --bound-source stated",
+      "notes": "The GCS is the one genuinely integer-valued outcome in Table 1, so GRIM legitimately applies to it. Both group means pass. Run via r_grim_ground_truth (R `scrutiny`) because the MCP `grim_check` wrapper crashes on a string-typed `decimals` argument -- a defect in this toolkit, not in the paper; the R engine answers the identical question and required no assumption about precision, since decimals was passed explicitly as 1. The CNS row was deliberately NOT GRIM-tested: the Canadian Neurological Scale advances in half-point steps, so its group mean moves in steps of 0.5/n and a 1/n granularity test would manufacture a false impossibility.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Both baseline GCS means are attainable from integer scores in samples of the stated sizes."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience grim [OPTIONS] {mean} {n}\nTry 'metascience grim --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --mean          ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "baseline_comparability_corroborated",
+      "location": "Table 1 footnote; Results, Demographic data",
+      "technique": "recalc_chi_squared",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "1Values are means(cid:2)SEM. No significant group differences were observed at baseline",
+      "reported": {
+        "claim": "No significant group differences were observed at baseline",
+        "p_values_printed": "none"
+      },
+      "computed": {
+        "gender_chi2": 0.2857,
+        "gender_p": 0.593,
+        "side_of_stroke_chi2": 0.7073,
+        "side_of_stroke_p": 0.4,
+        "handedness_chi2": 0.8778,
+        "handedness_p": 0.3488,
+        "handedness_fisher_p": 1
+      },
+      "inputs": {
+        "observed": "[[47,31],[38,30]] gender; [[41,37],[31,37]] side of stroke; [[1,77],[0,68]] handedness"
+      },
+      "reproduction": "metascience chi2 --observed '[[47,31],[38,30]]'",
+      "notes": "The paper asserts baseline comparability but prints no p-values, so the claim was tested from the printed counts. All three categorical rows are comfortably non-significant, corroborating the authors. Two caveats a reader should have. First, the handedness row has expected counts of 0.53 and 0.47, far below 5, so Pearson chi-squared is invalid there and Fisher's exact (p = 1.0) is the correct reading -- reported here for completeness, not as a meaningful test. Second, and more important: under rulebook rule 1 uniformly HIGH baseline p-values would be the red flag, not reassurance. These (0.59, 0.40, 0.35) are unremarkable and spread across the middle of the range, which is what honest randomisation looks like. Three rows is far too few to support any omnibus similarity test in any case.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's unsupported claim of baseline comparability is confirmed for every categorical row it prints counts for."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1396 in chi2                     ",
+      "severity_source": {
+        "model": "consistent",
+        "tool": "indeterminate",
+        "direction": "downgraded",
+        "explained": true,
+        "note": "The tool returned `indeterminate`; this finding records `consistent`. A reason is stated in the finding."
+      },
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "safety_null_claims_corroborated",
+      "location": "Results, Safety, paragraphs 2-3",
+      "technique": "recalc_chi_squared",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Overall, there was no significant difference between the groups as regards the frequency or nature of adverse events.",
+      "reported": {
+        "sae_cerebrolysin": 6,
+        "sae_placebo": 7,
+        "deaths_cerebrolysin": 6,
+        "deaths_placebo": 6
+      },
+      "computed": {
+        "sae_chi2": 0.3032,
+        "sae_p": 0.5819,
+        "sae_fisher_p": 0.7721,
+        "deaths_chi2": 0.0616,
+        "deaths_p": 0.8039,
+        "deaths_fisher_p": 1
+      },
+      "inputs": {
+        "observed": "[[6,72],[7,61]] SAEs; [[6,72],[6,62]] deaths"
+      },
+      "reproduction": "metascience chi2 --observed '[[6,72],[7,61]]'",
+      "notes": "Serious adverse events and mortality do not differ significantly between arms, supporting the safety conclusion. Note this is 'not significant', NOT 'equivalent': with 6 and 7 events the study has almost no power to exclude a clinically important difference, and the paper reports no confidence interval for any safety comparison, so absence_of_evidence could not be run to say how large a harm the data still permit. The overall any-AE comparison could not be tested at all, because the Cerebrolysin numerator is unrecoverable from the impossible 16.4%.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The mortality and serious-adverse-event comparisons behind the 'safe and well tolerated' conclusion are non-significant, though non-significance here reflects very low event counts rather than demonstrated equivalence."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:1396 in chi2                     ",
+      "severity_source": {
+        "model": "consistent",
+        "tool": "indeterminate",
+        "direction": "downgraded",
+        "explained": true,
+        "note": "The tool returned `indeterminate`; this finding records `consistent`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "table1_dispersion_refused_stratified",
+      "location": "Table 1, categorical baseline rows; Methods, Treatment and randomization",
+      "technique": "bayesian_table1_dispersion",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "The randomisation was carried out in blocks of 12 patients, stratified by study centre.",
+      "reported": {
+        "design": "block randomisation in blocks of 12, stratified by study centre, 8 sites"
+      },
+      "computed": {
+        "applicable": false,
+        "reason": "stratified design forces baseline balance by construction"
+      },
+      "inputs": {
+        "rows": "gender [[47,31],[38,30]], handedness [[1,77],[0,68]], side of stroke [[41,37],[31,37]]",
+        "design": "stratified"
+      },
+      "reproduction": "metascience table1-dispersion --rows '[{\"label\":\"Gender\",\"counts\":[[47,31],[38,30]]},{\"label\":\"Handedness\",\"counts\":[[1,77],[0,68]]},{\"label\":\"Side of stroke\",\"counts\":[[41,37],[31,37]]}]' --design stratified",
+      "notes": "The tool REFUSED, and the refusal is the correct result rather than a gap. Stratified allocation forces baseline balance by construction, which an under-dispersion test would read as suspicious uniformity -- so the Carlisle/Fujii-style check cannot be applied to this trial at all, in either direction. The csf_test was likewise not run: Table 1 prints no baseline p-values, so there is nothing to combine. Even had the design permitted it, only three categorical rows carry counts and the four continuous rows report SEM rather than SD, which is far too thin a basis for an omnibus test.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No conclusion about baseline similarity can be drawn by omnibus methods for this trial; the individual row tests above are the available evidence."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience table1-dispersion [OPTIONS] {json_path}\nTry 'metascience table1-dispersion --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No su",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The randomisation was carried out in blocks of 12 patients, stratified by study centre.",
+        "source_locator": "Table 1, categorical baseline rows",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "table1_dispersion_sd_se_reading",
+      "location": "Table 1, Age / CNS / GCS / Duration of Symptoms rows",
+      "technique": "check_sd_or_se",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "1Values are means(cid:2)SEM. No significant group differences were observed at baseline",
+      "reported": {
+        "age_cerebrolysin": 1.17,
+        "cns_cerebrolysin": 0.09,
+        "cns_placebo": 0.14,
+        "gcs_cerebrolysin": 0.2,
+        "gcs_placebo": 0.16,
+        "duration_placebo": 1.16,
+        "labelled_as": "SEM"
+      },
+      "computed": {
+        "age_implied_sd_under_sem": 10.33,
+        "cns_c_implied_sd_under_sem": 0.795,
+        "cns_p_implied_sd_under_sem": 1.154,
+        "gcs_c_implied_sd_under_sem": 1.766,
+        "gcs_p_implied_sd_under_sem": 1.319,
+        "duration_p_implied_sd_under_sem": 9.566,
+        "both_readings_within_range_ceiling": true,
+        "gcs_c_pct_of_max_possible_sd": 87.7
+      },
+      "inputs": {
+        "reported_value": "each of 1.17/78, 0.09/78, 0.14/68, 0.20/78, 0.16/68, 1.16/68",
+        "reported_as": "SE",
+        "variable_range": "45-85 age; 4.5-8.0 CNS; 11-15 GCS; 0-24 duration, all stated by the paper",
+        "bound_source": "stated"
+      },
+      "reproduction": "metascience sd-or-se --reported-value 0.20 --n 78 --reported-as SE --variable-range-min 11 --variable-range-max 15 --bound-source stated",
+      "notes": "SEVERITY DELIBERATELY BELOW THE TOOL'S. check_sd_or_se returned `suspicious` on all six rows with likely_interpretation 'SD', but that verdict must not be passed on. Its heuristic prefers whichever reading sits further below the ceiling, and BOTH readings clear the ceiling on every row (sd_plausible true in both branches), so there is no arithmetic violation anywhere here. The heuristic is also contradicted by the domain: an SD of 1.17 years across a population restricted to ages 45-85 is not credible, whereas the paper's stated SEM reading implies SD = 10.33 years, which is exactly right for a stroke cohort. The footnote says SEM, the SEM reading is the sensible one, and I am not reporting mislabeling. One genuine loose end: under the SEM reading the Cerebrolysin GCS implies SD = 1.77, which is 87.7% of the maximum possible for the stated 11-15 range -- and the mean sits at 14.1, only 0.9 below the ceiling. The range/2 bound the tool uses ignores the mean, and the tighter mean-conditional bound is what would settle whether that SD is attainable. No available tool computes it, so this is recorded as unresolved rather than estimated by hand. Tolerances here are degraded: the `decimals` argument crashes this MCP wrapper (same string-coercion defect as grim_check), so the checks ran with a flat 1% margin instead of the printed precision.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No baseline dispersion value is shown to be impossible; the one open question is whether the Cerebrolysin GCS SD implied by its SEM is attainable given a mean of 14.1 on an 11-15 scale."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience sd-or-se [OPTIONS] {reported_value} {n}\nTry 'metascience sd-or-se --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "no_duplication_detected",
+      "location": "Table 1, continuous rows across both arms",
+      "technique": "duplication",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Age (years)1 65(cid:2)1.17 65(cid:2)1.32",
+      "reported": {
+        "cerebrolysin_cells": 4,
+        "placebo_cells": 4
+      },
+      "computed": {
+        "n_comparisons": 16,
+        "max_identical_pairs": 0,
+        "duplicate_groups": []
+      },
+      "inputs": {
+        "blocks": "Cerebrolysin arm (age 65/1.17, duration 12.3/0.73, CNS 6.88/0.09, GCS 14.1/0.20) vs placebo arm (65/1.32, 13.5/1.16, 6.68/0.14, 14.4/0.16), marked independent with distinct sample_ids"
+      },
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Cerebrolysin arm\",\"sample_id\":\"cerebrolysin_arm\",\"independent\":true,\"cells\":[{\"label\":\"Age\",\"value\":65,\"sd\":1.17},{\"label\":\"Duration\",\"value\":12.3,\"sd\":0.73},{\"label\":\"CNS\",\"value\":6.88,\"sd\":0.09},{\"label\":\"GCS\",\"value\":14.1,\"sd\":0.2}]},{\"label\":\"Placebo arm\",\"sample_id\":\"placebo_arm\",\"independent\":true,\"cells\":[{\"label\":\"Age\",\"value\":65,\"sd\":1.32},{\"label\":\"Duration\",\"value\":13.5,\"sd\":1.16},{\"label\":\"CNS\",\"value\":6.68,\"sd\":0.14},{\"label\":\"GCS\",\"value\":14.4,\"sd\":0.16}]}]'",
+      "notes": "No duplicated (mean, dispersion) pairs across the two arms. The age means are both 65, but the dispersions differ (1.17 vs 1.32) so this is not a duplicated pair, and at zero decimals two stroke cohorts sharing a mean age of 65 is entirely ordinary. This is a thin test: only 8 continuous cells exist in the whole paper, because every efficacy outcome appears solely in a figure. There is no second table of summary statistics to cross-compare, and no supplementary data file was provided.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No evidence of copy-paste between the two treatment arms in the only table carrying summary statistics."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience duplication-detect [OPTIONS] {json_path}\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "Age (years)1 65(cid:2)1.17 65(cid:2)1.32",
+        "source_locator": "Table 1, continuous rows across both arms",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "sample_sizes_not_round",
+      "location": "Results, Patient disposition",
+      "technique": "flag_round_n",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "146 patients were randomised to two treatment groups and constituted the ITT population: 78 patients to the Cerebrolysin group and 68 patients to the placebo group.",
+      "reported": {
+        "ns": [
+          146,
+          78,
+          68,
+          119,
+          67,
+          52
+        ]
+      },
+      "computed": {
+        "all_divisible_by_50": false,
+        "all_divisible_by_100": false,
+        "n_unique": 6
+      },
+      "inputs": {
+        "ns": [
+          146,
+          78,
+          68,
+          119,
+          67,
+          52
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reproduction": "metascience flag-round-n --ns 146,78,68,119,67,52",
+      "notes": "No round-N signature. The arm sizes are also unequal (78 vs 68) despite 1:1 allocation in blocks of 12 stratified across 8 centres, which is the expected consequence of incomplete blocks at multiple sites rather than an anomaly.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Sample sizes show ordinary non-round variation."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "146 patients were randomised to two treatment groups and constituted the ITT population: 78 patients to the Cerebrolysin group and 68 patients to the placebo group.",
+        "source_locator": "Results, Patient disposition",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "text_incidence_greater_than_4_percent",
+      "location": "Results, Safety, paragraph 3",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "AEs with an incidence rate of greater 4% were hypertension, with 4 (5.1%) cases in the Cerebrolysin group, and 4 (5.9%) cases in the placebo group, and constipation with 3 cases in each group (3.8% vs 4.4% respectively).",
+      "reported": {
+        "stated_criterion": "incidence rate of greater 4%",
+        "constipation_cerebrolysin": 3.8
+      },
+      "computed": {
+        "3.8_exceeds_4": false
+      },
+      "inputs": {
+        "observation": "the sentence's own stated inclusion criterion applied to the values it then lists"
+      },
+      "reproduction": "No forensic tool applies: this is an internal contradiction between a stated threshold and a value listed under it, verifiable by reading the sentence.",
+      "notes": "Constipation is listed as an adverse event with an incidence 'greater 4%', but its Cerebrolysin incidence is given in the same sentence as 3.8%. Trivial in isolation, and recorded descriptively rather than as an arithmetic finding -- but it sits in the same paragraph as the impossible 16.4% and is consistent with that paragraph not having been checked carefully. The sentence also contains a grammatical slip ('greater 4%'), and the CGI subgroup sentence a few lines earlier misspells 'stroke' as 'stoke' while reporting a result the Discussion relies on.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The adverse-event listing does not satisfy its own stated inclusion threshold; nothing downstream depends on it."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "nonstandard_alpha_threshold",
+      "location": "Results, paragraph following Table 2",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "a significant treatment effect of Cerebrolysin was observed in the subgroup of patients treated within six hours after the onset of stoke (p&lt;0.015; Mantel-Haenszel test)",
+      "reported": {
+        "threshold_used": "p<0.015",
+        "stated_significance_criterion": "p<0.05"
+      },
+      "computed": {
+        "threshold_is_nonstandard": true
+      },
+      "inputs": {
+        "observation": "reported p-value bound compared against the significance criterion the Methods declares"
+      },
+      "reproduction": "No forensic tool applies: stalt_check requires a recoverable exact p, and this paper reports no test statistic, no group means and no dispersions for the CGI, so no exact p can be recovered to compare against the bound.",
+      "notes": "The Methods declare a single criterion, p<0.05. Every other result in the paper is reported against a conventional bound (0.05, 0.01, 0.001, or 0.1 for trends). This one result is reported against 0.015, a threshold that appears nowhere else and corresponds to no standard convention. A bound of that shape is what you get by rounding an exact p upward to the next tidy value (an exact p of, say, 0.014 reported as '<0.015'), which if so means an exact p was available and not printed. This cannot be resolved: with no test statistic and no CGI summary data, stalt_check has nothing to work from. Recorded as a reporting irregularity, not an arithmetic anomaly.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Discussion cites this subgroup result as 'descriptive evidence for increased efficacy especially in the global clinical outcome'; the significance threshold it is judged against is not the one the Methods declare."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "no_intervals_for_any_null_claim",
+      "location": "Throughout Results and Abstract",
+      "technique": "absence_of_evidence",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "Patients in the Cerebrolysin group had no significant improvement in the CNS score, the Barthel Index and the Clinical Global Impressions when compared to the placebo group.",
+      "reported": {
+        "null_claims_identified": [
+          "CNS score overall",
+          "Barthel Index overall",
+          "Clinical Global Impressions overall",
+          "Glasgow Coma Scale",
+          "MMSE overall",
+          "adverse event frequency",
+          "baseline comparability",
+          "laboratory tests and vital signs"
+        ],
+        "confidence_intervals_reported": 0
+      },
+      "computed": {
+        "largest_effect_still_permitted": "not computable",
+        "reason": "no confidence interval, standard error of a difference, or effect estimate is reported for any comparison in the paper"
+      },
+      "inputs": {
+        "attempted": "absence_of_evidence requires ci_low and ci_high; the paper supplies neither for any comparison"
+      },
+      "reproduction": "No runnable command: metascience absence-of-evidence requires --ci-low and --ci-high, and this paper reports no confidence interval for any of its eight null claims.",
+      "notes": "The paper asserts 'no significant difference' or 'no clinically important difference' at least eight times, including for its own primary neurological outcome and for its entire safety profile, and reports not one confidence interval, effect estimate, or standard error of a difference anywhere. Every null claim is therefore an unqualified absence of evidence: the data cannot exclude even a large benefit or a large harm, and the paper offers no way to bound either. This is the single largest gap in what could be checked, and it is a property of the reporting rather than a defect found in it. It also bears directly on the safety conclusion, since 'well tolerated and safe' rests on non-significance across 12 deaths and 13 serious adverse events.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 8,
+        "basis": "asserted",
+        "explanation": "The abstract's conclusions that Cerebrolysin is 'safe and well tolerated' and produced 'no significant improvement' in the primary outcome are both unfalsifiable as reported, since no interval bounds how large the true effect or harm could be."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    }
+  ],
+  "coverage": {
+    "stats_found": 78,
+    "tools_run": [
+      "extract_pdf",
+      "statcheck",
+      "check_summation_batch",
+      "check_table",
+      "grim_percentage",
+      "grim_sweep",
+      "r_grim_ground_truth",
+      "check_sd_or_se",
+      "recalc_chi_squared",
+      "bayesian_table1_dispersion",
+      "flag_round_n",
+      "multiplicity_report",
+      "detect_duplication",
+      "grim_check (errored: string-typed decimals, rerouted to r_grim_ground_truth)"
+    ],
+    "tables_checked": [
+      "Table 1 (Selected demographic data and baseline disease characteristics)",
+      "Table 2 (Patients with serious adverse events)"
+    ]
+  },
+  "figures": [
+    {
+      "label": "Figure 1",
+      "page": 7,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "caption": "Time course of CNS section A1 score. Mean change from baseline in the CNS score of the Cerebrolysin and placebo groups. Higher score differences correspond to better outcome. The score difference in favour of Cerebrolysin did not reach the level significance. Most pronounced effects were seen in the first 14 days after stroke onset",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "line",
+          "shows": "Mean change from baseline in the CNS section A1 (motor functions) subscore over the seven study visits, one line per treatment group."
+        }
+      ]
+    },
+    {
+      "label": "Figure 2",
+      "page": 7,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "caption": "Outcome and time course of the cognitive scores. Mean score difference between Cerebrolysin and placebo groups in favour of Cerebrolysin-treated patients for the MMSE and SST scores. SST scores showed a significant improvement of Cerebrolysin treated patients versus placebo (p<0.05; Mantel-Haenszel test; n=146). MMSE scores also favoured Cerebrolysin treatment but were not significant. Note that greatest score differences in favour Cerebrolysin were seen in the first days after the onset of the stroke for both scales, indicating an accelerated recovery pattern for Cerebrolysin treated patients",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "line",
+          "shows": "Between-group mean score difference over time for the MMSE and the SST; this figure carries the paper's headline cognitive efficacy result, whose underlying means and dispersions appear nowhere in the text or tables."
+        }
+      ]
+    },
+    {
+      "label": "Figure 3",
+      "page": 8,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "caption": "Outcome of the Barthel score at day 90 - comparison to the NINDS r-TPA study. Percentage of patients in each of four categories (death, 0-50 points, 55-90 points, and 95-100 points) of Barthel Index outcome at day 90. The data is compared to the results of the NINDS r-TPA study and indicates that patients in this study on average suffered from milder ischaemic strokes. This is indicated by the lower number of patient deaths and the higher number of patients with full recovery in our study as compared to the NINDS study population. Evidently, a higher percentage of patients on Cerebrolysin achieved a full recovery compared to the placebo group, but this difference did not reach statistical significance",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Percentage of patients in each of four Barthel Index outcome categories at day 90, for Cerebrolysin, placebo, and the historical NINDS r-TPA comparison groups."
+        }
+      ]
+    }
+  ],
+  "unchecked": [
+    {
+      "location": "Figures 1, 2 and 3 - all efficacy outcome data",
+      "reason": "EVERY efficacy outcome value in this paper exists only as marks on a chart. No mean, SD, SEM, median or effect estimate for the CNS, CNS A1, SST, MMSE, Barthel, CGI, HAMD or Von Zerssen appears in any table or in the prose. Figure extraction was not run because it would not have helped: values read off a plot carry figure_pixels provenance and are barred from GRIM, GRIMMER, SPRITE and DEBIT, and no caption states what the error bars represent, so no dispersion could be recovered even approximately. check_effect_plausibility, which does accept figure-derived input, needs a dispersion it could not obtain. This is the largest single blind spot in this review: the paper's headline claim is not checkable by any arithmetic means."
+    },
+    {
+      "location": "All 17 efficacy p-values",
+      "reason": "Every p-value is reported as a threshold (p<0.05, p<0.001, p<0.015) with no exact value, no test statistic and no degrees of freedom. statcheck over the full Results text returned 0 statistics. No NHST result in this paper can be recalculated or verified, and multiplicity_report could evaluate 0 of 17 submitted tests."
+    },
+    {
+      "location": "Canadian Neurological Scale mean (Table 1, CNS row)",
+      "reason": "Deliberately not GRIM-tested. The CNS advances in HALF-point steps, so a group mean moves in steps of 0.5/n rather than 1/n; applying GRIM with 1/n granularity to 6.88 (n=78) or 6.68 (n=68) would manufacture a false impossibility. No available tool accepts a half-integer granularity parameter."
+    },
+    {
+      "location": "Table 1, CNS and GCS SEM values - mean-conditional SD bound",
+      "reason": "check_sd_or_se tests the implied SD against range/2, which ignores the mean. For the Cerebrolysin GCS the SEM implies SD = 1.766 against a range/2 ceiling of 2.013 (87.7% of maximum) while the mean sits at 14.1 on an 11-15 scale; the tighter bound conditional on that mean is what would decide whether the value is attainable. No tool in the available set computes a mean-conditional SD bound, and computing one by hand is not permitted."
+    },
+    {
+      "location": "Mann-Whitney/Wilcoxon results (Methods declare the U-test and the signed-rank test were used)",
+      "reason": "GRIM-U cannot be applied. The paper attributes no specific p-value to a rank-sum test, reports no U or W statistic, and gives thresholds rather than exact p-values; grimu_check requires an exact p at known group sizes attributed to a rank-sum test."
+    },
+    {
+      "location": "A priori power analysis",
+      "reason": "verify_power_analysis is inapplicable by the paper's own statement: 'Since this was an exploratory study no sample size calculations have been performed. The sample size has been chosen according to the clinical experience with Cerebrolysin in previous studies.' There is no stated effect size, alpha or target power to reproduce. This is a disclosed limitation, not a concealed one."
+    },
+    {
+      "location": "Baseline similarity omnibus tests (csf_test)",
+      "reason": "Table 1 prints no baseline p-values, so there is nothing to combine. bayesian_table1_dispersion was run and correctly REFUSED on design grounds (block randomisation stratified by study centre forces baseline balance by construction). Neither omnibus method can be applied to this trial in either direction."
+    },
+    {
+      "location": "SST, CGI, HAMD and Von Zerssen scale ranges",
+      "reason": "The paper states no range, scoring direction or item count for the Syndrome Short Test (which carries its headline claim), the CGI, the HAMD or the Von Zerssen scale. Without stated bounds, GRIMMER and SPRITE cannot be applied without inventing constraints, which rulebook rule 4 forbids. Only the MMSE (max 30) and GCS (max 15) have ranges the paper actually states."
+    },
+    {
+      "location": "Supplementary materials",
+      "reason": "None provided. This is a 2004 print-era article with no supplementary files, no data-availability statement, and no trial registration number; detect_raw_duplication and extract_supplement had no input. Recorded as genuinely absent rather than unreadable."
+    },
+    {
+      "location": "Overall adverse-event rate comparison between arms",
+      "reason": "Could not be tested. The placebo numerator is recoverable (10.3% of 68 = 7 patients) but the Cerebrolysin numerator is not, because 16.4% of 78 corresponds to no integer count; the comparison chi-squared therefore has no valid input."
+    },
+    {
+      "location": "MCP wrapper defects encountered (toolkit, not paper)",
+      "reason": "grim_check and check_sd_or_se both raise TypeError on a string-typed `decimals` argument, so the intended calls failed. The GCS GRIM checks were rerouted through r_grim_ground_truth (R scrutiny) with decimals pinned explicitly, which answers the identical question. The six check_sd_or_se calls were re-run without `decimals`, which succeeded but fell back to a flat 1% tolerance instead of the printed precision - a degraded, wider tolerance, noted in the relevant finding."
+    }
+  ]
+}

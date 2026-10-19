@@ -1,0 +1,112 @@
+{
+  "paper_id": "10.3389--fpsyg.2019.02949",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-07 19:39 UTC",
+  "version": "0.1.0",
+  "effort": "max",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 4.300558,
+      "input_tokens": 22,
+      "output_tokens": 79659,
+      "wall_seconds": 847.6,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001371
+        },
+        "claude-opus-5": {
+          "costUSD": 4.299187
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 21
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 3.0168,
+      "input_tokens": 14,
+      "output_tokens": 44022,
+      "wall_seconds": 540.95,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.028286
+        },
+        "claude-opus-5": {
+          "costUSD": 2.988514
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 7.317358,
+  "total_wall_seconds": 1388.55,
+  "title_quality": {
+    "pass": false,
+    "n": 7,
+    "n_sentence_shaped": 1,
+    "n_joined": 0,
+    "n_overlong": 4,
+    "examples": [
+      "Experiment 5 erratum sentence that names an error but omits both the wrong and the corrected value"
+    ],
+    "problems": [
+      "1 of 7 titles read as sentences, not noun phrases",
+      "4 title(s) exceed 90 characters"
+    ],
+    "detail": "1 of 7 titles read as sentences, not noun phrases; 4 title(s) exceed 90 characters"
+  },
+  "reproducibility": {
+    "n_findings": 28,
+    "n_valid": 27,
+    "n_invalid": 1,
+    "problems": [
+      "finding[20] (cohens_d_internal_coherence): must invoke `metascience`, got 'No'"
+    ]
+  },
+  "consequence": {
+    "n_sweep": 21,
+    "n_report": 7,
+    "n_computed": 5,
+    "n_asserted": 23,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 6,
+    "n_diverged": 1,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 54,
+    "n_unjoined": 10,
+    "n_manual": 5,
+    "divergences": [
+      "duplication_six_independent_samples: tool=indeterminate model=consistent (downgraded, explained)"
+    ]
+  }
+}

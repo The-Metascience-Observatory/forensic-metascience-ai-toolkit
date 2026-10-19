@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { workbench } from '../lib/workbench.ts';
+const status=await workbench('status');
+assert.equal(typeof status.pending_writes,'number');
+const all=await Promise.all(Array.from({length:20},()=>workbench('status')));
+assert.equal(all.length,20);
+const projects=await workbench('projects');
+assert.ok(Array.isArray(projects.projects));
+console.log('persistent multiplexed service: 20 concurrent status requests and project response passed');
+process.exit(0);

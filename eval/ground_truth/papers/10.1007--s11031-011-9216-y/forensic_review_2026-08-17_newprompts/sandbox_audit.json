@@ -1,0 +1,474 @@
+{
+  "level": "unbacked",
+  "verdict": "BREACH (unbacked): 8 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+  "n_unbacked_findings": 8,
+  "unbacked_finding_ids": [
+    "authors_disclose_two_contrasts_fail_correction",
+    "data_availability_state_but_withhold",
+    "exp3_design_sensitivity",
+    "exp4_neutral_load_means_contradict_prose",
+    "load_bearing_text_errors",
+    "malformed_p_values",
+    "table1_caption_promises_absent_measures",
+    "table2_selfeval_grimmer_sprite_failures"
+  ],
+  "n_unvalidated_total": 0,
+  "n_severe_total": 0,
+  "n_off_allowlist_total": 3,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_sd_range",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__check_regression_batch",
+        "mcp__forensic_metascience__check_summation_batch",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__flag_round_n",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__reconstruct_2x2",
+        "mcp__forensic_metascience__required_n",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 32,
+      "by_surface": {
+        "builtin_allowed": 2,
+        "forensic_mcp": 28,
+        "harness": 2
+      },
+      "n_validated": 28,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 0,
+      "off_allowlist_calls": [],
+      "n_unbacked_findings": 8,
+      "unbacked_findings": [
+        {
+          "id": "exp4_neutral_load_means_contradict_prose",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Experiment 4, Cognitive load conditions"
+        },
+        {
+          "id": "table2_selfeval_grimmer_sprite_failures",
+          "technique": "grimmer",
+          "severity": "suspicious",
+          "location": "Table 2, Self-evaluation row, Positive/Unambiguous columns"
+        },
+        {
+          "id": "malformed_p_values",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Experiment 1 Self-evaluations; Experiment 4 Self-evaluations"
+        },
+        {
+          "id": "table1_caption_promises_absent_measures",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Table 1 caption versus Table 1 body"
+        },
+        {
+          "id": "data_availability_state_but_withhold",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Experiment 3, footnote 4 (PDF page 12)"
+        },
+        {
+          "id": "load_bearing_text_errors",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Experiment 3 Procedure; Experiment 4 Manipulation check; General discussion; Current studies"
+        },
+        {
+          "id": "authors_disclose_two_contrasts_fail_correction",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Experiment 2 footnote 2 and Experiment 4 footnote 5 (PDF pages 8 and 13)"
+        },
+        {
+          "id": "exp3_design_sensitivity",
+          "technique": "verify_power_analysis",
+          "severity": "consistent",
+          "location": "Experiment 3, Participants"
+        }
+      ],
+      "level": "unbacked",
+      "calls_by_tool": {
+        "extract_xml": 2,
+        "Read": 2,
+        "get_table": 2,
+        "parse_cells_typed": 2,
+        "check_table": 1,
+        "statcheck": 1,
+        "r_sprite_ground_truth": 2,
+        "grim_check": 1,
+        "recalc_f_to_p": 2,
+        "rivets_anova": 3,
+        "check_summation_batch": 2,
+        "check_sd_or_se": 1,
+        "check_effect_plausibility": 3,
+        "detect_duplication": 2,
+        "required_n": 1,
+        "extract_pdf": 2,
+        "multiplicity_report": 1,
+        "StructuredOutput": 2
+      },
+      "unvalidated_calls": [],
+      "verdict": "BREACH (unbacked): 8 finding(s) name a check that never ran. No forbidden tool was called -- the arithmetic was asserted rather than performed, which is the likelier failure and the one a tool-surface check cannot see. Treat those findings as unverified.",
+      "findings_scored": "the sweep's own findings (findings.schema.json), which is the only schema carrying a `technique` to check a tool against",
+      "guards": {
+        "n_guarded_calls": 12,
+        "n_guard_slots": 17,
+        "n_supplied": 10,
+        "n_defaulted": 7,
+        "supplied_rate": 0.5882,
+        "per_tool": {
+          "check_table": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 1
+          },
+          "grim_check": {
+            "supplied": 4,
+            "defaulted": 0,
+            "excused": 1
+          },
+          "rivets_anova": {
+            "supplied": 2,
+            "defaulted": 1,
+            "excused": 3
+          },
+          "check_sd_or_se": {
+            "supplied": 1,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "check_effect_plausibility": {
+            "supplied": 0,
+            "defaulted": 6,
+            "excused": 0
+          },
+          "detect_duplication": {
+            "supplied": 0,
+            "defaulted": 0,
+            "excused": 2
+          },
+          "multiplicity_report": {
+            "supplied": 1,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [
+          {
+            "seq": 16,
+            "tool": "rivets_anova",
+            "guard": "p_is_threshold",
+            "consequence": "the tool ran on its default for this precondition"
+          },
+          {
+            "seq": 20,
+            "tool": "check_effect_plausibility",
+            "guard": "field",
+            "consequence": "an effect size was judged large or small with no stated comparison class."
+          },
+          {
+            "seq": 20,
+            "tool": "check_effect_plausibility",
+            "guard": "provenance",
+            "consequence": "a value's origin was unrecorded, so figure-measured and printed numbers were treated alike."
+          },
+          {
+            "seq": 23,
+            "tool": "check_effect_plausibility",
+            "guard": "field",
+            "consequence": "an effect size was judged large or small with no stated comparison class."
+          },
+          {
+            "seq": 23,
+            "tool": "check_effect_plausibility",
+            "guard": "provenance",
+            "consequence": "a value's origin was unrecorded, so figure-measured and printed numbers were treated alike."
+          },
+          {
+            "seq": 24,
+            "tool": "check_effect_plausibility",
+            "guard": "field",
+            "consequence": "an effect size was judged large or small with no stated comparison class."
+          },
+          {
+            "seq": 24,
+            "tool": "check_effect_plausibility",
+            "guard": "provenance",
+            "consequence": "a value's origin was unrecorded, so figure-measured and printed numbers were treated alike."
+          }
+        ],
+        "n_excused": 7,
+        "excused_calls": [
+          {
+            "seq": 8,
+            "tool": "check_table",
+            "guard": "provenance",
+            "default": "printed_table",
+            "why_sound": "`cells` is a table of printed literals, so `printed_table` is the correct reading; the only thing this guard changes is whether the exact-arithmetic checks are refused, and on printed values they should run."
+          },
+          {
+            "seq": 12,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 15,
+            "tool": "rivets_anova",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 16,
+            "tool": "rivets_anova",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 18,
+            "tool": "rivets_anova",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 21,
+            "tool": "detect_duplication",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 29,
+            "tool": "detect_duplication",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "10/17 guard slots were supplied (59%); a further 7 took a default that is correct for the input and is not counted against the run. A defaulted guard is the most likely cause of a false accusation: a misspecified scale bound inverts a check rather than weakening it."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__reconstruct_2x2",
+        "mcp__forensic_metascience__required_n",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 16,
+      "by_surface": {
+        "builtin_allowed": 1,
+        "forensic_mcp": 11,
+        "forensic_mcp_offlist": 3,
+        "harness": 1
+      },
+      "n_validated": 14,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 3,
+      "off_allowlist_calls": [
+        {
+          "seq": 5,
+          "tool": "rivets_anova",
+          "input_preview": "{'means': [7.2, 6.15, 4.98], 'sds': [0.93, 0.52, 0.98], 'ns': [15, 15, 15], 'reported_f': 18.44, 'reported_p': 0.001, 'p_is_threshold': True, 'decimals_mean': 2, 'decimals_sd': 2, 'decimals_f': 2, 'so"
+        },
+        {
+          "seq": 7,
+          "tool": "rivets_anova",
+          "input_preview": "{'means': [7.2, 6.15, 4.98], 'sds': [0.93, 0.52, 0.98], 'ns': [9, 27, 9], 'reported_f': 18.44, 'decimals_mean': 2, 'decimals_sd': 2, 'decimals_f': 2, 'source_locator': 'Pilot study, Results', 'source_"
+        },
+        {
+          "seq": 13,
+          "tool": "check_summation_batch",
+          "input_preview": "{'rows': [{'values': [118, 15], 'expected_sum': 193, 'decimals': [0, 0], 'tolerance': 0, 'description': 'Experiment 4: factorial participants implied by error df 110 plus control implied by contrast d"
+        }
+      ],
+      "n_unbacked_findings": 0,
+      "unbacked_findings": [],
+      "level": "off_allowlist",
+      "calls_by_tool": {
+        "extract_xml": 2,
+        "r_grim_ground_truth": 1,
+        "Read": 1,
+        "rivets_anova": 2,
+        "recalc_independent_t": 1,
+        "get_table": 1,
+        "grimmer_check": 2,
+        "r_sprite_ground_truth": 2,
+        "check_summation_batch": 1,
+        "recalc_f_to_p": 2,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "OFF-LIST: 3 call(s) used a forensic tool this stage did not declare (check_summation_batch, rivets_anova). The arithmetic is still ours and still tested, so no finding is in doubt -- but the allowlist printed beside this verdict is not what the stage ran.",
+      "findings_scored": "the editorial report's own findings (report.schema.json). That schema has no `technique` field, so a stage-2 finding names no check and none can be scored unbacked; the count is 0 by construction, not by verification",
+      "guards": {
+        "n_guarded_calls": 4,
+        "n_guard_slots": 10,
+        "n_supplied": 9,
+        "n_defaulted": 1,
+        "supplied_rate": 0.9,
+        "per_tool": {
+          "rivets_anova": {
+            "supplied": 1,
+            "defaulted": 1,
+            "excused": 2
+          },
+          "grimmer_check": {
+            "supplied": 8,
+            "defaulted": 0,
+            "excused": 2
+          }
+        },
+        "defaulted_calls": [
+          {
+            "seq": 7,
+            "tool": "rivets_anova",
+            "guard": "p_is_threshold",
+            "consequence": "the tool ran on its default for this precondition"
+          }
+        ],
+        "n_excused": 4,
+        "excused_calls": [
+          {
+            "seq": 5,
+            "tool": "rivets_anova",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 7,
+            "tool": "rivets_anova",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 9,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 11,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "9/10 guard slots were supplied (90%); a further 4 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    }
+  }
+}

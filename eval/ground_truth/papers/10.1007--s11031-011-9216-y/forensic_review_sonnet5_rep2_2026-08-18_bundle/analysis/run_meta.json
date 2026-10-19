@@ -1,0 +1,164 @@
+{
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-18 07:15 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_dirty": false,
+  "git_sha": "76ffcd996dc7",
+  "prompt_sha256": "6c57afcbac14716f",
+  "registry_sha256": "95687062d36d7532",
+  "text_provenance": {
+    "by_file": {
+      "10.1007--s11031-011-9216-y.pdf": {
+        "extractor": "docling",
+        "n_chars": 78483
+      }
+    },
+    "docling_version": "2.119.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  },
+  "stages": {
+    "sweep": {
+      "model": "sonnet",
+      "cost_usd": 3.2858532,
+      "input_tokens": 34,
+      "output_tokens": 89404,
+      "cache_creation_input_tokens": 182519,
+      "cache_read_input_tokens": 2825884,
+      "wall_seconds": 2163.83,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001812
+        },
+        "claude-sonnet-5": {
+          "costUSD": 3.2840412
+        }
+      },
+      "primary_billed_model": "claude-sonnet-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 14
+    },
+    "editorial": {
+      "model": "sonnet",
+      "cost_usd": 1.8911609,
+      "input_tokens": 20,
+      "output_tokens": 27234,
+      "cache_creation_input_tokens": 139642,
+      "cache_read_input_tokens": 1480293,
+      "wall_seconds": 4775.68,
+      "return_code": 1,
+      "is_error": true,
+      "error_subtype": "api_error",
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.022274000000000002
+        },
+        "claude-sonnet-5": {
+          "costUSD": 1.8688869
+        }
+      },
+      "primary_billed_model": "claude-sonnet-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "failed",
+      "verdict": null,
+      "confidence": null
+    }
+  },
+  "total_cost_usd": 5.1770141,
+  "total_wall_seconds": 6939.51,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 0
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Johnson et al. 2011",
+    "reason": ""
+  },
+  "reproducibility": {
+    "n_findings": 14,
+    "n_headline": 0,
+    "n_targets": 14,
+    "n_valid": 2,
+    "n_invalid": 6,
+    "n_no_command_applies": 6,
+    "n_command_expected": 8,
+    "n_unparseable": 2,
+    "executed": true,
+    "n_ran_ok": 3,
+    "n_ran_failed": 3,
+    "problems": [
+      "finding[pilot_selfeval_df1_notation_error]: exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --f    ",
+      "finding[exp3_f194_p_mismatch]: exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --f    ",
+      "finding[table2_grimmer_selfeval_suspicious_2of8]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[pilot_anova_recalc_assumed_equal_n]: exited 2: Usage: metascience anova [OPTIONS]\nTry 'metascience anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-mean          ",
+      "finding[tables_no_duplication]: contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[exp2_control_contrasts_multiplicity]: contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written"
+    ],
+    "n_disagreed": 1
+  },
+  "consequence": {
+    "n_sweep": 14,
+    "n_report": 0,
+    "n_computed": 1,
+    "n_asserted": 0,
+    "n_absent": 13,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 1,
+    "n_diverged": 1,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 24,
+    "n_unjoined": 13,
+    "n_manual": 0,
+    "divergences": [
+      "pilot_anova_recalc_assumed_equal_n: tool=suspicious model=indeterminate (downgraded, explained)"
+    ]
+  },
+  "sourcing": {
+    "findings": 14,
+    "joinable": 14,
+    "traced_to_a_passage": 2
+  },
+  "delivery": {
+    "ok": true,
+    "n_calls": 35,
+    "n_undelivered": 0,
+    "n_extraction": 0,
+    "n_unrecovered": 0,
+    "lost": [],
+    "note": "every tool call returned a usable payload."
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 6 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 6,
+    "n_off_allowlist": 0
+  }
+}

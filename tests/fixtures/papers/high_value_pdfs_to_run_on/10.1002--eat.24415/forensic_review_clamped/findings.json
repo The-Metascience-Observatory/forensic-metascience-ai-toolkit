@@ -1,0 +1,2315 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "1.0",
+  "paper_id": "10.1002--eat.24415",
+  "paper_title": "Momentary Mediational Associations Among Affect, Emotion Dysregulation, and Different Types of Loss of Control Eating Among Adults With Binge Eating Disorder",
+  "paper_metadata": {
+    "authors": "Kelly A. Romano, Carol B. Peterson, Glen Forester, Joseph A. Wonderlich, Stephen A. Wonderlich, Scott E. Engel, Ross D. Crosby",
+    "journal": "The International Journal of Eating Disorders",
+    "year": "2025",
+    "doi": "10.1002/eat.24415",
+    "study_design": "Secondary analysis of baseline ecological momentary assessment (EMA) data from a multisite RCT; six two-level multilevel structural equation models (MSEM), 1-1-1 mediation structure"
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "s1",
+        "label": "Baseline EMA sub-study of the ICAT-BED vs CBTgsh multisite RCT (NCT0204349 as printed)",
+        "design": "secondary_analysis",
+        "n": 107,
+        "clustered": true,
+        "unit_of_analysis": "Momentary EMA observation (level 1) nested within participant (level 2); 3131 completed surveys across 107 participants",
+        "preregistered": false,
+        "registry_id": "NCT0204349 (as printed; malformed - see finding nct_identifier_malformed)",
+        "sample_flow": [
+          {
+            "stage": "enrolled in parent RCT",
+            "n": 112,
+            "unit": "participants"
+          },
+          {
+            "stage": "excluded, insufficient EMA data on measures of interest",
+            "n": 5,
+            "unit": "participants",
+            "reason": "no data on the lagged affect or emotion dysregulation variables in relation to LOC eating events"
+          },
+          {
+            "stage": "analytic sample",
+            "n": 107,
+            "unit": "participants"
+          },
+          {
+            "stage": "possible surveys (6 per day x 7 days x 107 participants)",
+            "n": 4494,
+            "unit": "surveys"
+          },
+          {
+            "stage": "surveys completed",
+            "n": 3131,
+            "unit": "surveys"
+          },
+          {
+            "stage": "surveys not completed",
+            "n": 1363,
+            "unit": "surveys",
+            "inferred": true,
+            "reason": "DERIVED as 4494 - 3131; the paper does not print this figure"
+          }
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h1",
+        "study_id": "s1",
+        "statement": "Momentary emotion dysregulation mediates momentary associations between negative affect and loss-of-control (LOC) eating.",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "The present study aimed to address these research gaps by examining: (1) whether emotion dysregulation mediated associations between negative and positive affect relative to LOC eating at the momentary level",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h2",
+        "study_id": "s1",
+        "statement": "Momentary emotion dysregulation mediates momentary associations between positive affect and LOC eating. (Reported as null throughout.)",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Also, all momentary mediational pathways involving positive affect as a predictor were not significant.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h3",
+        "study_id": "s1",
+        "statement": "These mediational associations vary across six distinct LOC eating dimensions.",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "(2) variations in these associations across different LOC eating dimensions",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h4",
+        "study_id": "s1",
+        "statement": "Reverse pathway: affect mediates associations between emotion dysregulation and LOC eating dimensions.",
+        "status": "exploratory",
+        "appears_in_abstract": false,
+        "confidence": "high",
+        "provenance_quote": "Given this, we also ran exploratory analyses to assess these alternative pathways and gauge their comparative significance relative to varied LOC eating dimensions.",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "variables": [
+      {
+        "id": "v_age",
+        "name": "Baseline age",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "years",
+        "derivation": "measured",
+        "confidence": "medium",
+        "provenance_quote": "On average, participants were 39.87 (SD = 13.35) years old",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_bmi",
+        "name": "Baseline BMI",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "kg/m2",
+        "derivation": "ratio",
+        "derived_from": "weight and height",
+        "confidence": "high",
+        "provenance_quote": "had a BMI of 35.10 (SD = 8.67)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_bdi",
+        "name": "Baseline depressive symptoms (BDI total score)",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "sum_of_items",
+        "derived_from": "Beck's Depression Inventory items",
+        "confidence": "low",
+        "provenance_quote": "Baseline depressive symptoms (BDI total score)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_cia",
+        "name": "Baseline ED-related clinical impairment (CIA total score)",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "sum_of_items",
+        "derived_from": "Clinical Impairment Assessment items",
+        "confidence": "low",
+        "provenance_quote": "Baseline eating disorder\u2010related clinical impairment (CIA total score)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_ders",
+        "name": "Baseline trait emotion dysregulation (DERS total score)",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "sum_of_items",
+        "derived_from": "Difficulties in Emotion Regulation Scale items",
+        "confidence": "low",
+        "provenance_quote": "Baseline emotion dysregulation (DERS total score)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_ede",
+        "name": "Baseline ED pathology (EDE global score)",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "mean_of_items",
+        "derived_from": "mean of four EDE subscale scores, each itself a mean of 0-6 items",
+        "confidence": "medium",
+        "provenance_quote": "Baseline eating disorder pathology (EDE global score)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_gender",
+        "name": "Gender identity",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "n_categories": 5,
+        "levels": [
+          "Men",
+          "Women",
+          "Transgender women",
+          "Transgender men",
+          "Other gender identity"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Most participants identified as women (n = 88, 82.24%) and White (n = 99, 92.52%).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_edu",
+        "name": "Highest level of education",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "n_categories": 9,
+        "levels": [
+          "8th grade education or less",
+          "Some high school",
+          "Completed high school",
+          "Some college",
+          "Associate's degree",
+          "Bachelor's degree",
+          "Some graduate school",
+          "Graduate level degree",
+          "Not reported"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Highest level of education",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_race",
+        "name": "Race/ethnicity",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "n_categories": 6,
+        "levels": [
+          "White",
+          "Hispanic",
+          "Asian",
+          "Black",
+          "American Indian or Alaska Native",
+          "Not reported"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Race/ethnicity",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_na",
+        "name": "Momentary negative affect (latent factor)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "n_items": 5,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "other",
+        "derived_from": "latent factor from 5 PANAS/POMS negative affect items (afraid, nervous, ashamed, sad, hostile), each 1-5; indicators lagged twice (t-2)",
+        "confidence": "high",
+        "provenance_quote": "assessed participants' affect since their last EMA surveys (1 = Not at all, 5 = Extremely)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_pa",
+        "name": "Momentary positive affect (latent factor)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "n_items": 4,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "other",
+        "derived_from": "latent factor from 4 PANAS positive affect items (determined, attentive, inspired, active), each 1-5; indicators lagged twice (t-2)",
+        "confidence": "high",
+        "provenance_quote": "Positive (determined, attentive, inspired, active) and negative (afraid, nervous, ashamed, sad, hostile) affect items",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_ed",
+        "name": "Momentary emotion dysregulation (S-DERS Modulate subscale, latent factor)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "other",
+        "derived_from": "latent factor from S-DERS Modulate subscale items, each 1-5; indicators lagged once (t-1)",
+        "confidence": "high",
+        "provenance_quote": "Modulate subscale assessed emotion dysregulation since participants' last EMA surveys (1 = Not at all, 5 = Completely)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc1",
+        "name": "LOC eating: general feeling of losing control while eating",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Participants endorsed the extent to which they engaged in each behavior since their last survey (1 = Not at all, 5 = Very much).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc2",
+        "name": "LOC eating: difficulties resisting eating",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(2) difficulties resisting eating (M = 2.79, SD = 1.42)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc3",
+        "name": "LOC eating: difficulties stopping eating after starting",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(3) difficulties stopping eating after starting (M = 2.54, SD = 1.41)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc4",
+        "name": "LOC eating: feeling driven or compelled to eat",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(4) feeling driven or compelled to eat (M = 2.88, SD = 1.38)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc5",
+        "name": "LOC eating: not paying attention to one's eating",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(5) not paying attention to one's eating (M = 3.45, SD = 1.18)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_loc6",
+        "name": "LOC eating: feeling disconnected while eating",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "n_items": 1,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(6) feeling disconnected while eating (M = 2.19, SD = 1.26)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_survey_num",
+        "name": "Survey number of the day (statistical control)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "n_categories": 6,
+        "lower_bound": 1,
+        "upper_bound": 6,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "all models controlled for survey number of the day (1\u20136) due to results of missing data analyses",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_compliance",
+        "name": "EMA survey compliance",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "proportion",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "units": "percent",
+        "derivation": "percentage",
+        "derived_from": "3131 completed surveys / 4494 possible surveys",
+        "confidence": "high",
+        "provenance_quote": "Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "v_r_urgency",
+        "name": "Correlation between negative urgency and emotion dysregulation",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "lower_bound": -1,
+        "upper_bound": 1,
+        "derivation": "other",
+        "derived_from": "Pearson correlation in the present sample",
+        "confidence": "high",
+        "provenance_quote": "overlaps with emotion dysregulation (r = .948 in the present study)",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "tests": [
+      {
+        "id": "t_m1_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, within-person indirect effect (NA)",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.1,
+        "p_value": 0.001,
+        "effect_size": "b = 0.10 (SE 0.03), beta = 0.03",
+        "correction_applied": "none",
+        "n": 107,
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.10 (0.03) .001 0.03 0.78 (0.40) .052 0.61",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m1_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, between-person indirect effect (NA)",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.78,
+        "p_value": 0.052,
+        "effect_size": "b = 0.78 (SE 0.40), beta = 0.61",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.10 (0.03) .001 0.03 0.78 (0.40) .052 0.61",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m1_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, within-person indirect effect (PA)",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "statistic_value": -0.02,
+        "p_value": 0.07,
+        "effect_size": "b = -0.02 (SE 0.01), beta = -0.01",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h2",
+        "confidence": "high",
+        "provenance_quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .070 \u22120.01 \u22120.02 (0.05) .728 \u22120.02",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m1_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, between-person indirect effect (PA)",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.728,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, within-person indirect effect (NA)",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.06,
+        "p_value": 0.026,
+        "effect_size": "b = 0.06 (SE 0.03), beta = 0.02",
+        "correction_applied": "none",
+        "n": 107,
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.06 (0.03) .026 0.02 0.59 (0.47) .210 0.40",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m2_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, between-person indirect effect (NA)",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "p_value": 0.21,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h1",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, within-person indirect effect (PA)",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.122,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, between-person indirect effect (PA)",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.74,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, within-person indirect effect (NA)",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.04,
+        "p_value": 0.154,
+        "effect_size": "b = 0.04 (SE 0.03), beta = 0.01",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h3",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.04 (0.03) .154 0.01 0.85 (0.45) .060 0.61",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m3_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, between-person indirect effect (NA)",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "p_value": 0.06,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h1",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, within-person indirect effect (PA)",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.233,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, between-person indirect effect (PA)",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.733,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, within-person indirect effect (NA)",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.09,
+        "p_value": 0.001,
+        "effect_size": "b = 0.09 (SE 0.03), beta = 0.03",
+        "correction_applied": "none",
+        "n": 107,
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.09 (0.03) .001 0.03 0.66 (0.47) .164 0.43",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m4_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, between-person indirect effect (NA)",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "p_value": 0.164,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h1",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, within-person indirect effect (PA)",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.067,
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, between-person indirect effect (PA)",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.727,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, within-person indirect effect (NA)",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": -0.004,
+        "p_value": 0.858,
+        "effect_size": "b = -0.004 (SE 0.02), beta = -0.001",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h3",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m5_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, between-person indirect effect (NA)",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "p_value": 0.38,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h1",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, within-person indirect effect (PA)",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.859,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, between-person indirect effect (PA)",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.689,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_w_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, within-person indirect effect (NA)",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.09,
+        "p_value": 0.001,
+        "effect_size": "b = 0.09 (SE 0.03), beta = 0.03",
+        "correction_applied": "none",
+        "n": 107,
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.09 (0.03) .001 0.03 0.95 (0.40) .017 0.69",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m6_b_ind_na",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, between-person indirect effect (NA)",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_na",
+          "v_ed"
+        ],
+        "statistic_value": 0.95,
+        "p_value": 0.017,
+        "effect_size": "b = 0.95 (SE 0.40), beta = 0.69",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h1",
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.09 (0.03) .001 0.03 0.95 (0.40) .017 0.69",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m6_w_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, within-person indirect effect (PA)",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "statistic_value": -0.02,
+        "p_value": 0.065,
+        "effect_size": "b = -0.02 (SE 0.01), beta = -0.01",
+        "correction_applied": "none",
+        "n": 107,
+        "appears_in_conclusions": true,
+        "hypothesis_id": "h2",
+        "confidence": "high",
+        "provenance_quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m6_b_ind_pa",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, between-person indirect effect (PA)",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_pa",
+          "v_ed"
+        ],
+        "p_value": 0.725,
+        "correction_applied": "none",
+        "n": 107,
+        "hypothesis_id": "h2",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m1_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 0.28,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "effect_size": "b = 0.28 (SE 0.07), beta = 0.13",
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "Emotion Dysregulation \u2192 LOC Eating 0.28 (0.07) <.001 0.13 0.82 (0.41) .048 0.68",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m1_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc1",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 0.82,
+        "p_value": 0.048,
+        "effect_size": "b = 0.82 (SE 0.41), beta = 0.68",
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "Emotion Dysregulation \u2192 LOC Eating 0.28 (0.07) <.001 0.13 0.82 (0.41) .048 0.68",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_m2_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 0.16,
+        "p_value": 0.017,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc2",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.208,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.143,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc3",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.055,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 0.27,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc4",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.161,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.858,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc5",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "p_value": 0.378,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_w_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, within-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 0.25,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_b_ed_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, between-person direct effect Emotion Dysregulation -> LOC eating",
+        "outcome_var": "v_loc6",
+        "predictor_vars": [
+          "v_ed"
+        ],
+        "statistic_value": 1,
+        "p_value": 0.014,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_w_na_ed",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Models 1-6, within-person direct effect Negative Affect -> Emotion Dysregulation (identical across all six models)",
+        "outcome_var": "v_ed",
+        "predictor_vars": [
+          "v_na"
+        ],
+        "statistic_value": 0.35,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "effect_size": "b = 0.35 (SE 0.06), beta = 0.24",
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "Negative Affect \u2192 Emotion Dysregulation 0.35 (0.06) <.001 0.24 0.96 (0.10) <.001 0.90",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_b_na_ed",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Models 1-6, between-person direct effect Negative Affect -> Emotion Dysregulation",
+        "outcome_var": "v_ed",
+        "predictor_vars": [
+          "v_na"
+        ],
+        "statistic_value": 0.96,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "effect_size": "b = 0.96 (Models 1-3) / 0.95 (Models 4-6), SE 0.10, beta = 0.90",
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_w_pa_ed",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Models 1-6, within-person direct effect Positive Affect -> Emotion Dysregulation",
+        "outcome_var": "v_ed",
+        "predictor_vars": [
+          "v_pa"
+        ],
+        "statistic_value": -0.07,
+        "p_value": 0.04,
+        "effect_size": "b = -0.07 (SE 0.03), beta = -0.08; p ranges .038-.042 across the six models",
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_b_pa_ed",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Models 1-6, between-person direct effect Positive Affect -> Emotion Dysregulation",
+        "outcome_var": "v_ed",
+        "predictor_vars": [
+          "v_pa"
+        ],
+        "p_value": 0.725,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m1_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, within-person direct NA -> LOC",
+        "p_value": 0.676,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m1_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, between-person direct NA -> LOC",
+        "p_value": 0.749,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m1_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, within-person direct PA -> LOC",
+        "p_value": 0.35,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m1_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 1, between-person direct PA -> LOC",
+        "p_value": 0.871,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, within-person direct NA -> LOC",
+        "p_value": 0.629,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, between-person direct NA -> LOC",
+        "p_value": 0.992,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, within-person direct PA -> LOC",
+        "p_value": 0.022,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m2_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 2, between-person direct PA -> LOC",
+        "p_value": 0.445,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, within-person direct NA -> LOC",
+        "p_value": 0.671,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, between-person direct NA -> LOC",
+        "p_value": 0.619,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, within-person direct PA -> LOC",
+        "p_value": 0.655,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m3_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 3, between-person direct PA -> LOC",
+        "p_value": 0.631,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, within-person direct NA -> LOC",
+        "p_value": 0.565,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, between-person direct NA -> LOC",
+        "p_value": 0.979,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, within-person direct PA -> LOC",
+        "p_value": 0.918,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m4_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 4, between-person direct PA -> LOC",
+        "p_value": 0.558,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, within-person direct NA -> LOC",
+        "p_value": 0.569,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, between-person direct NA -> LOC",
+        "p_value": 0.289,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, within-person direct PA -> LOC",
+        "p_value": 0.196,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m5_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 5, between-person direct PA -> LOC",
+        "statistic_value": -0.5,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "effect_size": "b = -0.50 (SE 0.12), beta = -0.48",
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_w_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, within-person direct NA -> LOC",
+        "p_value": 0.786,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_b_na_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, between-person direct NA -> LOC",
+        "p_value": 0.497,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_w_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, within-person direct PA -> LOC",
+        "p_value": 0.614,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_m6_b_pa_loc",
+        "study_id": "s1",
+        "test_type": "mixed_model",
+        "location": "Table 2, Model 6, between-person direct PA -> LOC",
+        "statistic_value": -0.32,
+        "p_value": 0.002,
+        "effect_size": "b = -0.32 (SE 0.11), beta = -0.29",
+        "correction_applied": "none",
+        "confidence": "high"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "compliance_percentage_mismatch",
+      "location": "Results, paragraph 1 (EMA compliance)",
+      "technique": "grim_percentage",
+      "consistent": false,
+      "severity": "suspicious",
+      "reported": {
+        "count": 3131,
+        "denominator": 4494,
+        "percentage": "70.00%"
+      },
+      "computed": {
+        "computed_percentage": 69.670672,
+        "rounding_interval": [
+          69.995,
+          70.01
+        ],
+        "implied_denominator": 4472.8571,
+        "difference": -0.329328
+      },
+      "inputs": {
+        "count": 3131,
+        "n": 4494,
+        "percentage": 70,
+        "decimals": 2
+      },
+      "quote": "Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+      "reproduction": "metascience check-count-percent --count 3131 --n 4494 --percentage 70.00 --decimals 2",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Overstates EMA compliance by 0.33 percentage points; affects only the descriptive characterisation of compliance as 'good', not any inferential result."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_count_percent (the `technique` enum has no entry for it; grim_percentage is the nearest registered percentage-check family, and check_count_percent is the strictly stronger version of it where the count is printed). The two counts are mutually consistent and independently verifiable: 6 surveys/day x 7 days x 107 participants = 4494, so the denominator is right. 3131/4494 = 69.67%, which the paper prints as 70.00% - rounded to a whole number but then formatted to two decimals, asserting a precision it does not have. Printing '69.67%' or '70%' would both have been accurate. Presentational defect, not a data-integrity one; nothing inferential depends on it.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "table1_counts_and_percentages",
+      "location": "Table 1, all n (%) rows",
+      "technique": "grim_percentage",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "cells_checked": 15,
+        "denominator": 107
+      },
+      "computed": {
+        "n_checks_run": 36,
+        "n_count_percent_consistent": 15,
+        "n_indeterminate": 18,
+        "n_not_run": 3,
+        "parse_coverage": 1
+      },
+      "inputs": {
+        "table": "Table 1",
+        "n": 107,
+        "cells": 21,
+        "kinds": {
+          "mean_sd": 6,
+          "n_percent": 15
+        }
+      },
+      "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+      "reproduction": "metascience check-table --cells table1_cells.json --variables table1_vars.json --bindings table1_bindings.json",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every printed count reproduces its printed percentage at N = 107; the demographic description of the sample is internally sound."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_table, which dispatched check_count_percent to each n (%) cell; the `technique` enum has no entry for either, so the nearest registered percentage family is named. All 15 count/percentage pairs reconcile exactly against N = 107 (88/107 = 82.24%, 99/107 = 92.52%, 29/107 = 27.10%). Denominator: 15 of 15 checkable n (%) cells passed. The 18 `indeterminate` results are grim_percentage correctly REFUSING on nominal/ordinal category variables - the applicability guard working as designed, not a problem with the paper.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table1_category_sums",
+      "location": "Table 1, gender / education / race-ethnicity blocks, and sample flow",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "gender_counts": [
+          18,
+          88,
+          1,
+          0,
+          0
+        ],
+        "education_counts": [
+          0,
+          1,
+          6,
+          21,
+          6,
+          29,
+          14,
+          25,
+          5
+        ],
+        "race_counts": [
+          99,
+          1,
+          1,
+          0,
+          0,
+          6
+        ],
+        "sample_flow": [
+          107,
+          5
+        ]
+      },
+      "computed": {
+        "n_rows": 7,
+        "n_evaluated": 7,
+        "n_inconsistent": 0,
+        "gender_sum": 107,
+        "education_sum": 107,
+        "race_sum": 107,
+        "flow_sum": 112,
+        "percentage_sums": 99.99
+      },
+      "inputs": {
+        "expected_sum_counts": 107,
+        "expected_sum_percentages": 100,
+        "expected_sum_flow": 112,
+        "tolerance_counts": 0
+      },
+      "quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+      "reproduction": "metascience summation-batch --rows table1_sums.json",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "All three categorical blocks are exhaustive and sum exactly to N = 107, and the sample flow 107 + 5 = 112 reconciles."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_summation_batch (one call, 7 rows). All seven sums reconcile. Each percentage column sums to 99.99 rather than 100.00, which is ordinary rounding: at 2 dp with 3-8 addends the permitted window is +/-0.52 to +/-0.54, so a 0.01 shortfall is expected, not an anomaly.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      }
+    },
+    {
+      "id": "table1_grim_granularity",
+      "location": "Table 1, BDI / CIA / DERS total-score rows",
+      "technique": "grim",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "BDI": "15.00 (10.00)",
+        "CIA": "23.61 (9.87)",
+        "DERS": "89.26 (26.61)",
+        "n": 107
+      },
+      "computed": {
+        "BDI_implied_sum": 1605,
+        "BDI_grim_consistent": true,
+        "CIA_rounded_sum": 2526,
+        "CIA_reconstructed_mean": 23.607477,
+        "CIA_grim_consistent": true,
+        "DERS_rounded_sum": 9551,
+        "DERS_reconstructed_mean": 89.261682,
+        "DERS_grim_consistent": true,
+        "granularity": 0.009345794392523364
+      },
+      "inputs": {
+        "n": 107,
+        "decimals": 2,
+        "data_type": "count",
+        "discreteness_source": "assumed",
+        "bound_source": "assumed"
+      },
+      "quote": "Baseline emotion dysregulation (DERS total score)",
+      "reproduction": "metascience grim --mean 89.26 --n 107 --decimals 2 --data-type count --discreteness-source assumed",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The three integer-scored baseline totals are all GRIM-consistent at n = 107; no granularity anomaly in the baseline table."
+      },
+      "notes": "IMPORTANT - DELIBERATE DOWNGRADE. check_table returned `suspicious` for all three rows, but with `grim_consistent: true` and `failure_mode: out_of_range`. The range failure is entirely an artifact of the tool's DEFAULT 1-7 Likert bounds: the paper never states the BDI, CIA or DERS scoring range, so a mean of 15.00 or 89.26 is 'out of range' only against a scale nobody claimed. Under rulebook rule 4 an out-of-range verdict resting on an unstated bound cannot stand, so the reportable result is the granularity check, which PASSED for all three. Reporting the tool's raw `suspicious` here would be a false accusation. No GRIM-family `impossible` is claimed, so the editorial R `scrutiny` cross-check is not load-bearing for this finding.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table2_coefficient_p_consistency",
+      "location": "Table 2, all 68 coefficient rows carrying an exact p-value",
+      "technique": "check_regression",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "rows_with_exact_p": 68,
+        "models": 6,
+        "levels": [
+          "within-person",
+          "between-person"
+        ]
+      },
+      "computed": {
+        "n_evaluated": 68,
+        "n_inconsistent": 0,
+        "n_indeterminate": 0,
+        "examples": {
+          "M6_B_indirect_NA": {
+            "b": 0.95,
+            "se": 0.4,
+            "t": 2.375,
+            "p_interval": [
+              0.0156,
+              0.0196
+            ],
+            "reported_p": 0.017
+          },
+          "M1_B_ED_to_LOC": {
+            "b": 0.82,
+            "se": 0.41,
+            "t": 2,
+            "p_interval": [
+              0.0416,
+              0.0495
+            ],
+            "reported_p": 0.048
+          },
+          "M6_B_PA_to_LOC": {
+            "b": -0.32,
+            "se": 0.11,
+            "t": -2.9091,
+            "p_interval": [
+              0.00197,
+              0.00616
+            ],
+            "reported_p": 0.002
+          }
+        }
+      },
+      "inputs": {
+        "df": 100000,
+        "decimals_b": "2 (3 where printed to 3)",
+        "decimals_se": "2 (3 where printed to 3)",
+        "decimals_p": 3
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2",
+      "reproduction": "metascience regression-batch --rows table2_coefficients.json",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every reported p-value in Table 2 is reproducible from its own printed b and SE; the table shows no sign of hand-computed or transcribed statistics."
+      },
+      "notes": "TOOL ACTUALLY CALLED: check_regression_batch (one call, 68 rows). 68 of 68 consistent. DF ASSUMPTION STATED: the paper reports no degrees of freedom, so df = 100000 was passed to make the t reference numerically equal to the normal (Wald z), which is what maximum-likelihood SEM reports and which the paper's stated estimator implies ('all models were estimated using maximum likelihood estimation'). CAVEAT ON POWER: b and SE are printed to only 2 dp, so the reachable p-interval is wide for small coefficients (b = -0.02, SE = 0.01 admits p from 6e-07 to 0.317) and the check would catch only gross errors there. It is genuinely informative for the larger coefficients, where the intervals are tight - and those pass too.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience regression-batch [OPTIONS] {json_path}\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05; momentary observations at level 1 were nested within participants at level 2",
+        "source_locator": "Table 2, all coefficient rows with exact p-values",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "table2_row_label_xml_vs_pdf",
+      "location": "Table 2, third 'Direct effects' row of every model (Models 1-6)",
+      "technique": "reconcile",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "pdf_label": "Emotion Dysregulation \u2192 LOC Eating",
+        "xml_label": "Positive affect \u2794 Emotion dysregulation \u2794 LOC eating",
+        "values_in_both": "0.28 (0.07), <.001, 0.13, 0.82 (0.41), .048, 0.68 (Model 1)"
+      },
+      "computed": {
+        "rows_affected": 6,
+        "numeric_cells_affected": 0,
+        "numbers_agree_across_sources": true,
+        "xml_label_duplicates": "the label of the indirect-effects row in the same model block"
+      },
+      "inputs": {
+        "xml_source": "10.1002--eat.24415.xml (pmc-set)",
+        "pdf_source": "10.1002--eat.24415.pdf pages 22-24",
+        "table": "Table 2"
+      },
+      "quote": "Emotion Dysregulation \u2192 LOC Eating 0.28 (0.07) <.001 0.13 0.82 (0.41) .048 0.68",
+      "reproduction": "metascience get-table --xml-path 10.1002--eat.24415.xml --table-num 2",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "In the XML rendering only, the paper appears to report a significant positive-affect mediation path (p < .001), contradicting its own conclusion that all positive-affect pathways were non-significant; the PDF carries the correct label and no numeric claim changes."
+      },
+      "notes": "NOT AN ACCUSATION AGAINST THE AUTHORS. Every number is identical in the two sources; only the row LABEL differs, and the PDF's label is the correct one - corroborated by the paper's own prose, which describes beta = 0.13-0.14 within-person and 0.68-0.77 between-person as the emotion dysregulation -> LOC eating direct effect, exactly matching these rows in Models 1 and 6. In the XML this row instead carries the label of the indirect-effects row below it, the signature of a duplicated label in the markup. Per the rulebook an XML/PDF disagreement is an extraction or versioning problem and is reported as indeterminate. It matters for anyone consuming the XML or publisher HTML rather than the PDF: taken at face value the XML makes the paper look self-contradictory on its headline positive-affect null. Worth a correction request to the publisher.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      }
+    },
+    {
+      "id": "multiplicity_within_person_mediation",
+      "location": "Table 2, within-person Indirect effects rows across Models 1-6",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "suspicious",
+      "reported": {
+        "n_tests": 12,
+        "correction_stated": "none",
+        "significant_uncorrected": 4,
+        "p_values": [
+          0.001,
+          0.07,
+          0.026,
+          0.122,
+          0.154,
+          0.233,
+          0.001,
+          0.067,
+          0.858,
+          0.859,
+          0.001,
+          0.065
+        ]
+      },
+      "computed": {
+        "fwer_if_independent": 0.4596,
+        "expected_false_positives": 0.6,
+        "bonferroni_threshold": 0.004167,
+        "bh_threshold": 0.0125,
+        "by_threshold": 0.004028,
+        "n_surviving_floor": 3,
+        "n_surviving_ceiling": 3,
+        "n_claims_lost_to_correction": 1
+      },
+      "inputs": {
+        "family_label": "Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors, same 107 participants, no correction stated",
+        "alpha": 0.05
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05",
+      "reproduction": "metascience multiplicity --tests within_indirect.json --family-label \"Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The mediation effect for 'difficulties resisting eating' (p = .026) does not survive any of the four corrections, yet it is named in the abstract and conclusions as one of the dimensions emotion dysregulation was found to mediate. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "Twelve mediation tests on the same 107 participants, testing one hypothesis across six correlated outcomes, with no correction stated anywhere. Uncorrected testing is ordinary practice, not misconduct - but the arithmetic is that the family-wise error rate reaches 46% and about 0.6 false positives are expected by chance. Three of the four uncorrected claims are robust (all p = .001, surviving even Bonferroni); the fourth, difficulties resisting eating at p = .026, exceeds every threshold (Bonferroni .0042, BH .0125, BY .0040). Surviving-claims interval is 3 to 3 - all four methods agree. The six LOC outcomes are measured on the same subjects and are plainly correlated, so Benjamini-Yekutieli is the appropriate FDR method here, and it too keeps only 3.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05",
+        "source_locator": "Table 2, Indirect effects rows across Models 1-6",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "multiplicity_between_person_mediation",
+      "location": "Table 2, between-person Indirect effects rows across Models 1-6",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "suspicious",
+      "reported": {
+        "n_tests": 12,
+        "correction_stated": "none",
+        "significant_uncorrected": 1,
+        "p_values": [
+          0.052,
+          0.728,
+          0.21,
+          0.74,
+          0.06,
+          0.733,
+          0.164,
+          0.727,
+          0.38,
+          0.689,
+          0.017,
+          0.725
+        ]
+      },
+      "computed": {
+        "fwer_if_independent": 0.4596,
+        "expected_false_positives": 0.6,
+        "bonferroni_threshold": 0.004167,
+        "n_significant_bonferroni": 0,
+        "n_significant_holm": 0,
+        "n_significant_bh": 0,
+        "n_significant_by": 0,
+        "n_surviving_floor": 0,
+        "n_surviving_ceiling": 0,
+        "n_claims_lost_to_correction": 1
+      },
+      "inputs": {
+        "family_label": "Between-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors, same 107 participants, no correction stated",
+        "alpha": 0.05
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05",
+      "reproduction": "metascience multiplicity --tests between_indirect.json --family-label \"Between-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The sole between-person mediation claim - that participants with generally greater negative affect reported greater emotion dysregulation and in turn felt more disconnected while eating - rests on p = .017 among 12 tests and survives none of the four corrections. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "notes": "Weaker than the within-person family. Exactly one of twelve between-person mediation tests reached p < .05, and 0.6 false positives are expected by chance across a family of this size - so a single hit at p = .017 is close to what chance alone would deliver. Zero claims survive under all four correction methods. The paper states this between-person result in the Results and returns to it in the Discussion without noting that it is one significant test among twelve.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05",
+        "source_locator": "Table 2, Indirect effects rows across Models 1-6",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "absence_of_evidence_model3_null",
+      "location": "Table 2, Model 3 (Difficulties Stopping Eating After Starting), within-person indirect effect",
+      "technique": "absence_of_evidence",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "b": 0.04,
+        "se": 0.03,
+        "p": 0.154,
+        "beta": 0.01,
+        "paper_claim": "emotion dysregulation did NOT mediate for this dimension"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.018799,
+          0.098799
+        ],
+        "includes_null": true,
+        "largest_compatible_effect": 0.0988,
+        "sesoi_provided": false,
+        "interval_source": "derived"
+      },
+      "inputs": {
+        "b": 0.04,
+        "se": 0.03,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "quote": "The emotion dysregulation factors did not mediate associations between the negative affect factors and either the difficulties stopping eating after starting or the not paying attention to one's eating factors",
+      "reproduction": "metascience absence-of-evidence --b 0.04 --se 0.03 --measure difference --claim-of-no-effect",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's claim that this LOC dimension is NOT mediated rests on an interval reaching 0.099 - larger than the b = 0.09-0.10 effects it calls significant for other dimensions - so the qualitative contrast between dimensions is not established by these data."
+      },
+      "notes": "This is the paper's key dimensional-variation claim and the weakest of its null results. The 95% interval derived from the printed b and SE runs to 0.099, LARGER than the mediation effects reported as significant for general LOC eating (b = 0.10), driven/compelled to eat (b = 0.09) and felt disconnected (b = 0.09). The data therefore do not distinguish this dimension from those; the paper is contrasting significant with non-significant rather than testing the difference between them. No SESOI is stated, so equivalence cannot be assessed and no 'no effect' conclusion is licensed. The interval is DERIVED, not printed - the paper reports no confidence intervals anywhere - and inherits the 2 dp rounding of b and SE.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating 0.04 (0.03) .154 0.01 0.85 (0.45) .060 0.61",
+        "source_locator": "Table 2, Model 3 (Difficulties Stopping Eating After Starting), within-person indirect effect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      }
+    },
+    {
+      "id": "absence_of_evidence_model5_null",
+      "location": "Table 2, Model 5 (Not Paying Attention to One's Eating), within-person indirect effect",
+      "technique": "absence_of_evidence",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "b": -0.004,
+        "se": 0.02,
+        "p": 0.858,
+        "beta": -0.001,
+        "paper_claim": "emotion dysregulation did NOT mediate for this dimension"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.043199,
+          0.035199
+        ],
+        "includes_null": true,
+        "largest_compatible_effect": 0.0432,
+        "sesoi_provided": false,
+        "interval_source": "derived"
+      },
+      "inputs": {
+        "b": -0.004,
+        "se": 0.02,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27",
+      "reproduction": "metascience absence-of-evidence --b -0.004 --se 0.02 --measure difference --claim-of-no-effect",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Unlike Model 3, this null is comparatively well supported: the interval excludes the 0.09-0.10 effects found for the mediated dimensions, so the dimensional contrast the paper draws does hold here."
+      },
+      "notes": "Recorded alongside the Model 3 result deliberately, because the two null claims are NOT equally supported and the paper treats them as interchangeable. Here the interval [-0.043, 0.035] is tight around zero and excludes the b = 0.09-0.10 effects seen for the mediated dimensions, so the contrast is real for this dimension. Still formally indeterminate: without a stated SESOI, equivalence cannot be tested and 'no effect' is not licensed - only 'no effect of the size seen elsewhere in this table'. Interval is derived from printed b and SE, not reported by the paper.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Negative Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.004 (0.02) .858 \u22120.001 0.34 (0.38) .380 0.27",
+        "source_locator": "Table 2, Model 5 (Not Paying Attention to One's Eating), within-person indirect effect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      }
+    },
+    {
+      "id": "absence_of_evidence_positive_affect_null",
+      "location": "Table 2, Model 6 (Felt Disconnected While Eating), within-person indirect effect for positive affect",
+      "technique": "absence_of_evidence",
+      "consistent": true,
+      "severity": "indeterminate",
+      "reported": {
+        "b": -0.02,
+        "se": 0.01,
+        "p": 0.065,
+        "beta": -0.01,
+        "paper_claim": "all momentary mediational pathways involving positive affect were not significant"
+      },
+      "computed": {
+        "derived_ci": [
+          -0.0396,
+          -0.0004
+        ],
+        "includes_null": false,
+        "interval_source": "derived",
+        "companion_p_values_across_models": [
+          0.07,
+          0.122,
+          0.233,
+          0.067,
+          0.859,
+          0.065
+        ]
+      },
+      "inputs": {
+        "b": -0.02,
+        "se": 0.01,
+        "measure": "difference",
+        "claim_of_no_effect": true
+      },
+      "quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02",
+      "reproduction": "metascience absence-of-evidence --b -0.02 --se 0.01 --measure difference --claim-of-no-effect",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The headline conclusion that positive-affect mediation was uniformly absent is carried by three marginal results (p = .065, .067, .070), not by clearly null ones - a weaker basis than the flat statement suggests."
+      },
+      "notes": "READ THE CAVEAT BEFORE USING THIS. The derived interval excludes zero, which superficially contradicts the reported p = .065 - but that is a ROUNDING ARTIFACT, not a defect in the paper. b and SE are printed to 2 dp, so b = -0.02, SE = 0.01 taken at their midpoints gives z = -2.0; the true unrounded values (e.g. b = -0.018, SE = 0.0098) reconcile with p = .065 comfortably. check_regression_batch confirmed this row consistent, with a reachable p-interval of [6e-07, 0.317]. There is therefore NO internal contradiction, and none should be reported. The reportable observation is softer: three of the six within-person positive-affect mediation paths sit at p = .065-.070, all just above threshold, so the flat conclusion that positive-affect pathways 'were not significant' rests on marginal rather than clearly null evidence - and no confidence intervals are printed anywhere that would let a reader see this.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "severity_source": {
+        "model": "indeterminate",
+        "tool": "consistent",
+        "direction": "upgraded",
+        "explained": true,
+        "note": "The tool returned `consistent`; this finding records `indeterminate`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Positive Affect \u2192 Emotion Dysregulation \u2192 LOC Eating \u22120.02 (0.01) .065 \u22120.01 \u22120.02 (0.06) .725 \u22120.02",
+        "source_locator": "Table 2, Model 6 (Felt Disconnected While Eating), within-person indirect effect for positive affect",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      }
+    },
+    {
+      "id": "table2_no_duplication",
+      "location": "Table 2, Models 1-6 direct-effect coefficients",
+      "technique": "duplication",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "blocks": 6,
+        "cells_total": 48
+      },
+      "computed": {
+        "n_comparisons": 960,
+        "max_identical_pairs_independent": 0,
+        "duplicate_groups_all_same_sample": 15,
+        "chance_probability": null
+      },
+      "inputs": {
+        "sample_id": "bed_ema_107 (shared across all six blocks)",
+        "independent": false,
+        "decimals_mean": 2,
+        "decimals_sd": 2
+      },
+      "quote": "Note: Bold text is used to reflect significant effects, defined as p < 0.05; momentary observations at level 1 were nested within participants at level 2",
+      "reproduction": "metascience duplication-detect --blocks table2_models.json --decimals-mean 2 --decimals-sd 2",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No improbable cross-sample repetition; the repeated coefficients are the shared affect-to-emotion-dysregulation submodel, which is expected to recur."
+      },
+      "notes": "Zero improbable overlaps. All 15 repeat groups carry `same_sample_caveat: true` - they are the affect -> emotion dysregulation paths, the same submodel estimated on the same 107 participants in every model, which SHOULD recur. Positive evidence AGAINST copy-paste: the between-person NA -> emotion dysregulation coefficient is 0.96 in Models 1-3 and 0.95 in Models 4-6, and the within-person PA -> emotion dysregulation p-value varies .038/.039/.040/.040/.042/.038 across models. That small, patternless variation is the signature of six genuinely separate re-estimations, which a duplicated block would not show.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "Note: Bold text is used to reflect significant effects, defined as p &lt; 0.05; momentary observations at level 1 were nested within participants at level 2",
+        "source_locator": "Table 2, Models 1-6 direct-effect coefficients",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper",
+        "source_matched_by": "locator"
+      }
+    },
+    {
+      "id": "prose_to_table_beta_reconciliation",
+      "location": "Results, 'Affect (X) -> Emotion Dysregulation (M)', 'Emotion Dysregulation (M) -> LOC Eating (Y)' and 'Indirect Effects' paragraphs, against Table 2",
+      "technique": "reconcile",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "prose_betas": {
+          "NA_to_ED_within": 0.24,
+          "NA_to_ED_between": 0.9,
+          "PA_to_ED_within": -0.08,
+          "ED_to_LOC_within_range": "0.13-0.14",
+          "ED_to_LOC_between_range": "0.68-0.77",
+          "ED_to_LOC_resisting_driven_within_range": "0.08-0.14",
+          "indirect_disconnected_within": 0.03,
+          "indirect_disconnected_between": 0.69,
+          "indirect_others_within_range": "0.02-0.03"
+        }
+      },
+      "computed": {
+        "all_prose_values_located_in_table2": true,
+        "mismatches": 0,
+        "boundary_cases_correctly_described": {
+          "M1_between_ED_to_LOC_p": 0.048,
+          "M1_between_indirect_p": 0.052
+        }
+      },
+      "inputs": {
+        "source_a": "Results prose",
+        "source_b": "Table 2"
+      },
+      "quote": "there were significant positive associations between the negative affect and emotion dysregulation latent factors at the within",
+      "reproduction": "metascience get-table --xml-path 10.1002--eat.24415.xml --table-num 2",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Every standardised coefficient quoted in the Results narrative is traceable to the corresponding Table 2 cell, with no rounding drift or misquotation."
+      },
+      "notes": "Checked every beta and beta-range stated in the Results prose against Table 2: all reconcile. The reported ranges are exact (0.13-0.14 = Models 1 and 6; 0.68-0.77 = Models 1 and 6 between-person; 0.08-0.14 = Models 2 and 4; 0.02-0.03 = Models 1, 2 and 4). The paper is also scrupulous at the significance boundary: Model 1's between-person direct effect (p = .048) is described as significant while its between-person indirect effect (p = .052) is described as not, which is correct. This is a reading-level reconciliation, not arithmetic; no CLI command computes it, and the command given simply re-fetches the table.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "severity_source": {
+        "model": "consistent",
+        "tool": "indeterminate",
+        "direction": "downgraded",
+        "explained": true,
+        "note": "The tool returned `indeterminate`; this finding records `consistent`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      }
+    },
+    {
+      "id": "statcheck_no_nhst_in_prose",
+      "location": "Full body text (Results and Discussion)",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "consistent",
+      "reported": {
+        "apa_style_test_statistics_in_prose": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "success": true
+      },
+      "inputs": {
+        "text": "Results section prose including all reported descriptive statistics, betas and the r = .948 correlation"
+      },
+      "quote": "Characteristics for the present sample (N = 107) are reported in Table 1. Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+      "reproduction": "metascience statcheck --text \"Characteristics for the present sample (N = 107) are reported in Table 1.\"",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No APA-format test statistics appear in prose, so statcheck's p-recalculation could not apply anywhere; all inferential verification had to come from Table 2 instead."
+      },
+      "notes": "A genuine zero, not a tool failure (statcheck returned success: true). The paper reports no t, F, chi-squared or z statistics with degrees of freedom in its narrative - all inference is presented as b (SE) and p in Table 2, which statcheck cannot see. This is why check_regression_batch carried the inferential verification for this paper. Recorded so the absence is not mistaken for 'nothing was checked'.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Characteristics for the present sample (N = 107) are reported in Table 1. Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).",
+        "source_locator": "Results section, full prose",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "nct_identifier_malformed",
+      "location": "Participants and Procedures, second paragraph, first sentence",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "reported": {
+        "registry_id_as_printed": "NCT0204349",
+        "digits_after_NCT": 7
+      },
+      "computed": {
+        "required_digits": 8,
+        "resolvable": false
+      },
+      "inputs": {
+        "identifier": "NCT0204349"
+      },
+      "quote": "randomized controlled trial (NCT0204349)",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The trial registration cannot be looked up as printed, so a reader cannot check the parent trial's registered design or outcomes against this secondary analysis."
+      },
+      "notes": "ClinicalTrials.gov identifiers are 'NCT' followed by exactly eight digits; the printed 'NCT0204349' has seven and does not resolve. The same malformed string appears in BOTH the XML and the PDF, so it is the paper's, not an extraction artifact. This is a typo in a load-bearing sentence - the registration is a reader's only route to the parent trial's protocol - which is why it is recorded rather than passed over. No claim is made about which digit is missing or what the correct identifier is; establishing that requires a registry lookup, outside this sweep. Recorded as `manual` because no forensic tool covers identifier format, and capped at `suspicious` accordingly.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "loc_outcome_descriptives_no_denominator",
+      "location": "Results, paragraph 1 (LOC eating severity descriptives)",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "means_sds": [
+          [
+            2.26,
+            1.32
+          ],
+          [
+            2.79,
+            1.42
+          ],
+          [
+            2.54,
+            1.41
+          ],
+          [
+            2.88,
+            1.38
+          ],
+          [
+            3.45,
+            1.18
+          ],
+          [
+            2.19,
+            1.26
+          ]
+        ],
+        "stated_range": "1-5",
+        "observation_n": "not reported"
+      },
+      "computed": {
+        "grim_applicable": false,
+        "grimmer_applicable": false,
+        "sprite_applicable": false,
+        "reason": "no observation-level denominator"
+      },
+      "inputs": {
+        "scale_min": 1,
+        "scale_max": 5,
+        "n": null
+      },
+      "quote": "(1) general feeling of losing control while eating (M = 2.26, SD = 1.32); (2) difficulties resisting eating (M = 2.79, SD = 1.42)",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The six outcome variables' descriptive statistics cannot be granularity-checked at all, leaving the paper's only distributional summary of its outcomes unverifiable."
+      },
+      "notes": "These are the ideal targets for GRIM/GRIMMER/SPRITE - single items on a STATED 1-5 integer scale - and all three are blocked for one reason: no denominator. The LOC items were shown only after a participant reported eating, so the relevant n is an unreported subset of the 3131 completed surveys, and neither the paper nor the available text gives it. Substituting 3131 would be inventing the denominator and could manufacture an impossibility, so nothing was run. Reported as a REPORTING gap: an EMA paper should state the number of eating-episode observations underlying its outcome descriptives. All six SDs (1.18-1.42) sit comfortably below the 2.0 half-range ceiling for a 1-5 scale, so nothing looks wrong; it simply cannot be checked.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "near_collinear_construct_overlap",
+      "location": "Study Purpose, final paragraph",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "r": 0.948,
+        "constructs": [
+          "negative urgency",
+          "emotion dysregulation"
+        ]
+      },
+      "computed": {
+        "within_mathematical_bounds": true
+      },
+      "inputs": {
+        "r": 0.948
+      },
+      "quote": "overlaps with emotion dysregulation (r = .948 in the present study)",
+      "reproduction": "metascience extract-xml --xml-path 10.1002--eat.24415.xml",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Bears on the paper's novelty claim relative to Wonderlich et al. (2024), which analysed the same sample using negative urgency as the mediator: at r = .948 the two mediators are close to interchangeable."
+      },
+      "notes": "Not an arithmetic anomaly - r = .948 is well within bounds and no tool flags it. Recorded because the paper cites it in passing as evidence of 'overlap' when it in fact indicates the two constructs are barely distinguishable in this sample. The prior publication on this same dataset (Wonderlich et al. 2024) tested negative urgency as the mediator of the negative-affect-to-binge-eating path; the present paper tests emotion dysregulation. At this correlation those are close to the same analysis on the same participants, which is relevant to how independent the two sets of findings should be treated as being. No shared-variance figure is computed here, as that would be unaided arithmetic. Flagged for editorial judgement, not as a defect.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: ",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "citation_year_discrepancy_pdf_vs_xml",
+      "location": "Study Purpose, final paragraph (Stefano et al. citation)",
+      "technique": "reconcile",
+      "consistent": false,
+      "severity": "indeterminate",
+      "reported": {
+        "pdf": "Stefano et al., 2014",
+        "xml": "Stefano et al. [2016]"
+      },
+      "computed": {
+        "occurrences_in_xml_as_2016": "consistent throughout",
+        "occurrences_in_pdf_page5_as_2014": 1
+      },
+      "inputs": {
+        "source_a": "PDF page 5",
+        "source_b": "XML Study Purpose section"
+      },
+      "quote": "(Latner et al., 2014; Stefano et al., 2014)",
+      "reproduction": "metascience extract --pdf-path 10.1002--eat.24415.pdf --first-page 5 --last-page 5",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A citation-year difference between the author manuscript and the version of record; no numeric or inferential claim depends on it."
+      },
+      "notes": "The PDF is the PMC author manuscript and the XML the publisher version, so these are different versions of the same text and a copy-editing correction between them is the ordinary explanation. The XML uses 'Stefano et al. [2016]' consistently, including elsewhere on the same page; the PDF's single '2014' at this location appears to be the pre-correction reading. Recorded only so a reader working from the PDF is not confused. No accusation is implied.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-pa",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "Note: N = 107; additional participant characteristics are reported in Peterson et al. ([2020]).",
+        "source_locator": "Table 1, Participant characteristics",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      }
+    }
+  ],
+  "figures": [
+    {
+      "label": "Figure 1",
+      "page": 7,
+      "is_data_figure": false,
+      "n_panels": 1,
+      "carries_unique_values": false,
+      "caption": "Conceptual model depicting the associations of interest that were examined in the assessed multilevel structural equation models. i = individual; ED = emotion dysregulation; LOC = loss of control eating; NA = negative affect; PA = positive affect; t = time; negative affect and positive affect were predictors, the emotion dysregulation factors were mediators, and (in separate models) each LOC eating behavior was the outcome; to capture the temporal sequencing of the targeted associations and establish temporal precedence that is helpful to examine when mediational associations are assessed, indicators for the latent factors were lagged twice for the predictors (affect) and once for the mediators (emotion dysregulation).",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "schematic",
+          "shows": "Path diagram of the 1-1-1 mediation structure (affect at t-2 -> emotion dysregulation at t-1 -> LOC eating at t), showing which variables were lagged and at which level; it carries no estimated values."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "stats_found": 136,
+    "tables_checked": [
+      "Table 1 (Participant characteristics, 29 rows x 3 cols, 26 cells, 100% typed, 0 ambiguous)",
+      "Table 2 (MSEM results, 60 rows x 7 cols, 84 tests, 68 with exact p checked)"
+    ],
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "parse_cells_typed",
+      "check_table",
+      "check_count_percent",
+      "check_summation_batch",
+      "grim_check",
+      "statcheck",
+      "check_regression_batch",
+      "multiplicity_report",
+      "detect_duplication",
+      "absence_of_evidence",
+      "extract_pdf"
+    ]
+  },
+  "unchecked": [
+    {
+      "location": "Data S1 (Supporting Information) - multilevel CFA factor structures, all model fit indices, missing-data analyses, exploratory reverse-pathway MSEMs, and the comparison of excluded vs analytic participants",
+      "reason": "No supplementary file was among the inputs provided to this sweep (only the .xml and .pdf were supplied), so its contents could not be read. This is a substantial coverage gap, not a clean result: the supplement is where ALL model fit statistics live ('model fit statistics were good and are reported in Data S1'), where the entire exploratory analysis set is reported, and where the claim that the 5 excluded participants did not differ from the 107 analysed is substantiated. None of that could be verified. 'Present but not supplied to this review' is not the same as 'not provided by the authors'."
+    },
+    {
+      "location": "Results, six LOC eating means and SDs (M = 2.26/2.79/2.54/2.88/3.45/2.19)",
+      "reason": "GRIM, GRIMMER and SPRITE all require an observation-level denominator and none is reported: the LOC items were administered only after a participant reported eating, so the relevant n is an unstated subset of the 3131 completed surveys. Substituting the survey total would be inventing the denominator. Recorded as finding loc_outcome_descriptives_no_denominator."
+    },
+    {
+      "location": "Table 1, BDI / CIA / DERS total-score SDs (10.00, 9.87, 26.61)",
+      "reason": "check_table refused GRIMMER and SPRITE on these three rows because the paper states no scoring range for any of the three instruments. The tools would otherwise fall back to a default 1-7 Likert maximum, which for an unbounded total score manufactures an impossibility out of an ordinary value. The refusal is correct; a stated instrument range would make these checkable."
+    },
+    {
+      "location": "Table 1, baseline age (39.87) and BMI (35.10) rows",
+      "reason": "Declared continuous, so the exact-arithmetic family (GRIM/GRIMMER/SPRITE) correctly does not apply. Age could in principle be integer-valued in whole years, but the paper does not say so; asserting it would be an assumed discreteness and could reach only `suspicious` in any case. check_sd_or_se ran on both and returned indeterminate, as no plausibility ceiling is stated for either variable."
+    },
+    {
+      "location": "Table 2, the 16 coefficient rows whose p is printed as '< .001'",
+      "reason": "A thresholded p is a bound, not a value, and check_regression_batch's reported_p argument takes a float; passing 0.001 as though it were exact would test a claim the paper did not make. These rows were excluded from the 68-row batch. Their coefficients are large relative to their SEs (0.35/0.06, 0.96/0.10), so the threshold is not in doubt, but no exact verification was performed. stalt_check was not run because recovering an exact p requires the unrounded b and SE, which are not printed."
+    },
+    {
+      "location": "A-priori power / sample-size justification",
+      "reason": "The paper reports none, so verify_power_analysis had no inputs to reproduce and was not run. This is expected for a secondary analysis of an existing trial's baseline data, where N is fixed by the parent study, but it means the adequacy of 107 participants for six multilevel SEMs with latent variable decomposition is not established anywhere in the paper."
+    },
+    {
+      "location": "Exploratory reverse-pathway MSEMs (emotion dysregulation -> affect -> LOC eating)",
+      "reason": "Reported in the Results narrative as significant for four of six LOC dimensions, but all numeric results are in Data S1, which was not available. No coefficient, SE or p-value for these models appears in the main text or either table, so none could be checked. These analyses add a further 24 or more untested comparisons to the multiplicity picture, which the two multiplicity_report findings therefore UNDERSTATE."
+    },
+    {
+      "location": "csf_test / bayesian_table1_dispersion on Table 1",
+      "reason": "Deliberately not run. Both test for baseline similarity BETWEEN randomised arms; this paper reports a single pooled sample with no arm-wise breakdown and performs no baseline comparison, so there are no baseline p-values and no group contrast to test. Running either would require inventing a grouping the paper does not report."
+    },
+    {
+      "location": "check_effect_plausibility on the headline mediation effects",
+      "reason": "Not run. The tool benchmarks standardised mean differences (Cohen's d) against field norms; this paper's effects are within-person standardised mediation path coefficients (beta = 0.02-0.03 for indirect effects), which are not on the d scale and have no corresponding empirical benchmark in the tool's reference set. Passing them would compare incommensurable quantities."
+    },
+    {
+      "location": "grimu_check / grimu_coexistence",
+      "reason": "Not applicable. GRIM-U applies only to Mann-Whitney U / Wilcoxon rank-sum p-values with stated group sizes; every p-value in this paper comes from Wald tests of multilevel SEM coefficients. Applying it here is the single most likely route to a false accusation with this tool, so it was gated out."
+    }
+  ]
+}

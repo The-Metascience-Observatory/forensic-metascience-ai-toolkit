@@ -1,0 +1,1011 @@
+{
+  "engineering": {
+    "seed": 20260910,
+    "created_at": "2026-09-10T12:58:12.486416+00:00",
+    "code_sha256": "a95a2ede7bd74cbc2fcfa2f90753d6946d7a070f1d104800623f3fe5771f7b57",
+    "synthetic_papers": 16,
+    "scheduling": [
+      {
+        "workers": 1,
+        "wall_seconds": 6.947337065997999,
+        "peak_overlap": 1,
+        "equal_to_serial": true,
+        "reused": 16
+      },
+      {
+        "workers": 2,
+        "wall_seconds": 3.679088706005132,
+        "peak_overlap": 2,
+        "equal_to_serial": true,
+        "reused": 16
+      },
+      {
+        "workers": 4,
+        "wall_seconds": 2.085960841999622,
+        "peak_overlap": 4,
+        "equal_to_serial": true,
+        "reused": 16
+      },
+      {
+        "workers": 8,
+        "wall_seconds": 1.534677208008361,
+        "peak_overlap": 8,
+        "equal_to_serial": true,
+        "reused": 16
+      }
+    ],
+    "baseline": {
+      "wall_seconds": 1.1539034349989379,
+      "code_sha256": "50f371bdd8b05d8865d871ca621a1f8e6d0618e7f6ce61be790cf881344c7f8f"
+    }
+  },
+  "baseline_scorecard": {
+    "labels_sha256": "38c05beaf03da0a877f7d9f5a270248859c8d799813c1e0c377a878ac32b4fd1",
+    "run_index_sha256": "bd235b8a36d2c4372ea8771304362a4e9b6c2f5210eab78731915c6f5d77f1e6",
+    "seed": 20260910,
+    "papers_requested": 16,
+    "papers_evaluable": 16,
+    "verified_issues": 11,
+    "verified_issues_with_available_sources": 11,
+    "candidate_recall_all_verified": {
+      "numerator": 9,
+      "denominator": 11,
+      "value": 0.8181818181818182
+    },
+    "candidate_recall_available_supported": {
+      "numerator": 9,
+      "denominator": 11,
+      "value": 0.8181818181818182
+    },
+    "retained_recall_all_verified": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "ai_requested_papers": 0,
+    "ai_retention_of_definite_candidates": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "acquisition_file_states": {},
+    "reviewed_candidate_precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "reviewed_retained_precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "specificity_complete_verified_negatives": {
+      "numerator": 4,
+      "denominator": 5,
+      "value": 0.8
+    },
+    "verified_negative_papers_requested": 5,
+    "flag_rate_evaluable_papers": {
+      "numerator": 10,
+      "denominator": 16,
+      "value": 0.625
+    },
+    "candidate_review_burden": 16,
+    "unflagged_review_sample": [
+      {
+        "paper_id": "fixture-08",
+        "run_id": "fixture-08",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-10",
+        "run_id": "fixture-10",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-14",
+        "run_id": "fixture-14",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-11",
+        "run_id": "fixture-11",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-09",
+        "run_id": "fixture-09",
+        "reason": "unflagged_sample"
+      }
+    ],
+    "papers": [
+      {
+        "paper_id": "fixture-00",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-0",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-c86297345f307c3ddf81"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-01",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-1",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-3a66bb3ef863c2e741dc"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-02",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-2",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-99e1f99a280f42b86d86"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-03",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-3",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-047ba86509c3e0e6bbac"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-04",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-4",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-f22d2c1055229c0b93fc"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-05",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-5",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-957b12544e0a9f25d81e"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-06",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-6",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-fa53c065ba0160a1c498"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-07",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-7",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-a7b8cb61aaf68a52850e"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-08",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-09",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-10",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-11",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-12",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-12",
+            "kind": "row_pair",
+            "state": "missed",
+            "candidate_ids": [],
+            "retained_ids": []
+          }
+        ],
+        "status": "partial"
+      },
+      {
+        "paper_id": "fixture-13",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-13",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "BASE-b84bcf6f832e63c9e115"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-14",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-14",
+            "kind": "row_pair",
+            "state": "missed",
+            "candidate_ids": [],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-15",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      }
+    ]
+  },
+  "engineering_scorecard": {
+    "labels_sha256": "38c05beaf03da0a877f7d9f5a270248859c8d799813c1e0c377a878ac32b4fd1",
+    "run_index_sha256": "4691948bc4a3311c06b41dc46649552b611ef1ff214262881e41aed51a99cede",
+    "seed": 20260910,
+    "papers_requested": 16,
+    "papers_evaluable": 16,
+    "verified_issues": 11,
+    "verified_issues_with_available_sources": 11,
+    "candidate_recall_all_verified": {
+      "numerator": 11,
+      "denominator": 11,
+      "value": 1.0
+    },
+    "candidate_recall_available_supported": {
+      "numerator": 11,
+      "denominator": 11,
+      "value": 1.0
+    },
+    "retained_recall_all_verified": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "ai_requested_papers": 0,
+    "ai_retention_of_definite_candidates": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "acquisition_file_states": {
+      "complete": 17
+    },
+    "reviewed_candidate_precision": {
+      "numerator": 17,
+      "denominator": 18,
+      "value": 0.9444444444444444
+    },
+    "reviewed_retained_precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "specificity_complete_verified_negatives": {
+      "numerator": 4,
+      "denominator": 5,
+      "value": 0.8
+    },
+    "verified_negative_papers_requested": 5,
+    "flag_rate_evaluable_papers": {
+      "numerator": 12,
+      "denominator": 16,
+      "value": 0.75
+    },
+    "candidate_review_burden": 18,
+    "unflagged_review_sample": [
+      {
+        "paper_id": "fixture-08",
+        "run_id": "cp_8877fd9bfcd74066b78778a21f7f8cd0",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-09",
+        "run_id": "cp_e7b2a50af4cf4a56888a415a16d1cdfd",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-11",
+        "run_id": "cp_a83e835f9f1a493fbe60eb15e5b3feb5",
+        "reason": "unflagged_sample"
+      },
+      {
+        "paper_id": "fixture-10",
+        "run_id": "cp_e186a85b6ec446b2bf8260a93284858a",
+        "reason": "unflagged_sample"
+      }
+    ],
+    "papers": [
+      {
+        "paper_id": "fixture-00",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-0",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-ad78f13883deca661a883e4c"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-01",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-1",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-c32efff544effe4041910936"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-02",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-2",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-fd2d4616ccae9b1c441543b9"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-03",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-3",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-72379b9e8bcce7dd6f276539"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-04",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-4",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-99bb36d15d0520279932e615"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-05",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-5",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-25e408bb6050783cf7e58e71"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-06",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-6",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-a7174429dcf39f824558c770"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-07",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-7",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-01ceed7d33c7a49c7214d1a8"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-08",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-09",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-10",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-11",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-12",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-12",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-70cb4bd2c21db8f1d997c96e"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-13",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-13",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-c67dba72b97086e6688b4876"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-14",
+        "split": "synthetic_development",
+        "issues": [
+          {
+            "id": "planted-14",
+            "kind": "row_pair",
+            "state": "candidate_only",
+            "candidate_ids": [
+              "CP-26413deedc24d1b3f2721a55"
+            ],
+            "retained_ids": []
+          }
+        ],
+        "status": "complete"
+      },
+      {
+        "paper_id": "fixture-15",
+        "split": "synthetic_development",
+        "issues": [],
+        "status": "complete"
+      }
+    ]
+  },
+  "grok": {
+    "papers": 16,
+    "statuses": {
+      "completed": 16
+    },
+    "attempted_calls": 18,
+    "decisions": {
+      "retain": 17,
+      "exclude": 1
+    },
+    "peak_ai_overlap": 2,
+    "reported_cost_usd": 0.06691744000000001,
+    "observed_tool_events": 0,
+    "wall_seconds": 184.3141808520013,
+    "scorecard": {
+      "labels_sha256": "38c05beaf03da0a877f7d9f5a270248859c8d799813c1e0c377a878ac32b4fd1",
+      "run_index_sha256": "3f9a06ceeb66035723536f1f7c2e82a304083c4f61b5e2d2af3b5e189335ebcf",
+      "seed": 20260910,
+      "papers_requested": 16,
+      "papers_evaluable": 16,
+      "verified_issues": 11,
+      "verified_issues_with_available_sources": 11,
+      "candidate_recall_all_verified": {
+        "numerator": 11,
+        "denominator": 11,
+        "value": 1.0
+      },
+      "candidate_recall_available_supported": {
+        "numerator": 11,
+        "denominator": 11,
+        "value": 1.0
+      },
+      "retained_recall_all_verified": {
+        "numerator": 11,
+        "denominator": 11,
+        "value": 1.0
+      },
+      "ai_requested_papers": 16,
+      "ai_retention_of_definite_candidates": {
+        "numerator": 17,
+        "denominator": 18,
+        "value": 0.9444444444444444
+      },
+      "acquisition_file_states": {
+        "complete": 17
+      },
+      "reviewed_candidate_precision": {
+        "numerator": 17,
+        "denominator": 18,
+        "value": 0.9444444444444444
+      },
+      "reviewed_retained_precision": {
+        "numerator": 17,
+        "denominator": 17,
+        "value": 1.0
+      },
+      "specificity_complete_verified_negatives": {
+        "numerator": 4,
+        "denominator": 5,
+        "value": 0.8
+      },
+      "verified_negative_papers_requested": 5,
+      "flag_rate_evaluable_papers": {
+        "numerator": 12,
+        "denominator": 16,
+        "value": 0.75
+      },
+      "candidate_review_burden": 18,
+      "unflagged_review_sample": [
+        {
+          "paper_id": "fixture-08",
+          "run_id": "cp_1b0caa3f7c504682988ee2f1baed303b",
+          "reason": "unflagged_sample"
+        },
+        {
+          "paper_id": "fixture-09",
+          "run_id": "cp_fa5ad00387b54c0892ef07b8721b7deb",
+          "reason": "unflagged_sample"
+        },
+        {
+          "paper_id": "fixture-11",
+          "run_id": "cp_f5f7fc769f2f4d5da0418ebd9164098b",
+          "reason": "unflagged_sample"
+        },
+        {
+          "paper_id": "fixture-10",
+          "run_id": "cp_a26b8423a6684bc7a987b3e19452baf5",
+          "reason": "unflagged_sample"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "fixture-00",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-0",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-ad78f13883deca661a883e4c"
+              ],
+              "retained_ids": [
+                "CP-ad78f13883deca661a883e4c"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-01",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-1",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-c32efff544effe4041910936"
+              ],
+              "retained_ids": [
+                "CP-c32efff544effe4041910936"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-02",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-2",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-fd2d4616ccae9b1c441543b9"
+              ],
+              "retained_ids": [
+                "CP-fd2d4616ccae9b1c441543b9"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-03",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-3",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-72379b9e8bcce7dd6f276539"
+              ],
+              "retained_ids": [
+                "CP-72379b9e8bcce7dd6f276539"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-04",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-4",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-99bb36d15d0520279932e615"
+              ],
+              "retained_ids": [
+                "CP-99bb36d15d0520279932e615"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-05",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-5",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-25e408bb6050783cf7e58e71"
+              ],
+              "retained_ids": [
+                "CP-25e408bb6050783cf7e58e71"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-06",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-6",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-a7174429dcf39f824558c770"
+              ],
+              "retained_ids": [
+                "CP-a7174429dcf39f824558c770"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-07",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-7",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-01ceed7d33c7a49c7214d1a8"
+              ],
+              "retained_ids": [
+                "CP-01ceed7d33c7a49c7214d1a8"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-08",
+          "split": "synthetic_development",
+          "issues": [],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-09",
+          "split": "synthetic_development",
+          "issues": [],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-10",
+          "split": "synthetic_development",
+          "issues": [],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-11",
+          "split": "synthetic_development",
+          "issues": [],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-12",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-12",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-70cb4bd2c21db8f1d997c96e"
+              ],
+              "retained_ids": [
+                "CP-70cb4bd2c21db8f1d997c96e"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-13",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-13",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-c67dba72b97086e6688b4876"
+              ],
+              "retained_ids": [
+                "CP-c67dba72b97086e6688b4876"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-14",
+          "split": "synthetic_development",
+          "issues": [
+            {
+              "id": "planted-14",
+              "kind": "row_pair",
+              "state": "retained",
+              "candidate_ids": [
+                "CP-26413deedc24d1b3f2721a55"
+              ],
+              "retained_ids": [
+                "CP-26413deedc24d1b3f2721a55"
+              ]
+            }
+          ],
+          "status": "complete"
+        },
+        {
+          "paper_id": "fixture-15",
+          "split": "synthetic_development",
+          "issues": [],
+          "status": "complete"
+        }
+      ]
+    }
+  },
+  "grok_variability": {
+    "calls_attempted": 6,
+    "wall_seconds": 82.0669191400084,
+    "peak_overlap": 2,
+    "jobs": {
+      "legitimate-0": {
+        "status": "completed",
+        "decisions": [
+          "exclude"
+        ]
+      },
+      "legitimate-1": {
+        "status": "completed",
+        "decisions": [
+          "exclude"
+        ]
+      },
+      "missing_context-0": {
+        "status": "completed",
+        "decisions": [
+          "uncertain"
+        ]
+      },
+      "missing_context-1": {
+        "status": "completed",
+        "decisions": [
+          "uncertain"
+        ]
+      },
+      "positive-0": {
+        "status": "completed",
+        "decisions": [
+          "retain"
+        ]
+      },
+      "positive-1": {
+        "status": "partial",
+        "decisions": []
+      }
+    },
+    "variability": {
+      "positive": false,
+      "legitimate": true,
+      "missing_context": true
+    }
+  },
+  "source_audit": {
+    "cells_recomputed": 84,
+    "groups_reviewed": 18,
+    "precision": {
+      "numerator": 17,
+      "denominator": 18,
+      "value": 0.9444444444444444
+    }
+  },
+  "baseline_git_sha": "df8be724703c5d0d2c519a2de4aa1136a1a2c201",
+  "baseline_bytes_verified_against_git": true,
+  "sampling": {
+    "frame_sha256": "76fbb8691f01e67189856365dd28f6e75e3df1e48fa99cba893363352818b23e",
+    "sample_sha256": "187d4b287861e555d5fa2250ca6e420c6e3e15526d66d79e07d64be03081c7a6"
+  },
+  "real_paper_accuracy": "unavailable: source files and issue-level labels not acquired",
+  "validation_code_sha256": "9b63a1b173cce929b2fcff482ac554b2c7c6aa0fbcd2267e1f4b1e247ab3705d",
+  "wheel_sha256": "d6915a9af15ce07a77e24d82dc46173961a05452161e479a11cb86c4257adcd3",
+  "notes": [
+    "Timing and model experiments retain their original code hashes; later preview, metadata-freeze, scoring-accounting and process-start cancellation fixes are covered by final validation."
+  ],
+  "validation": {
+    "standalone_wheel_passed": 159,
+    "repository_passed": 10387,
+    "repository_skipped": 166,
+    "repository_xfailed": 1,
+    "repository_log": ".copy_paste_evaluation/repository-tests-delivery.log",
+    "lint_inert_certain": 46,
+    "typescript": "passed",
+    "ruff": "passed",
+    "diff_check": "passed"
+  }
+}

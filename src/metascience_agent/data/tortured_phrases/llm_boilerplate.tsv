@@ -1,0 +1,22 @@
+# LLM-boilerplate leakage: chat-interface or assistant-voice strings with no
+# business in a scientific manuscript. Curated IN THIS REPO (source `curated`);
+# calibration prunes it. Subclasses (the severity ladder keys on them):
+# first_person_disclaimer -- the assistant speaking in its own voice;
+# chat_artifact -- UI furniture pasted along with the text; knowledge_cutoff --
+# the model describing its own training horizon.
+# flags=cs => the match must reproduce the canonical casing exactly.
+tortured	expected	family	subclass	sources	flags	ambiguity	acronym	note
+as an AI language model		llm_boilerplate	first_person_disclaimer	curated
+as a large language model		llm_boilerplate	first_person_disclaimer	curated		high		legitimate opener in NLP prose ('as a large language model, GPT-4 ...')
+as an AI developed by		llm_boilerplate	first_person_disclaimer	curated
+as an AI assistant		llm_boilerplate	first_person_disclaimer	curated		high		legitimate in HCI/assistant papers
+I cannot fulfill this request		llm_boilerplate	first_person_disclaimer	curated
+I cannot browse the internet		llm_boilerplate	first_person_disclaimer	curated
+I do not have access to real-time		llm_boilerplate	first_person_disclaimer	curated
+I don't have access to real-time		llm_boilerplate	first_person_disclaimer	curated
+as of my last knowledge update		llm_boilerplate	knowledge_cutoff	curated
+as of my knowledge cutoff		llm_boilerplate	knowledge_cutoff	curated
+my training data only goes up		llm_boilerplate	knowledge_cutoff	curated
+Regenerate response		llm_boilerplate	chat_artifact	curated	cs			ChatGPT UI button caption; casing is the fingerprint
+Certainly, here is		llm_boilerplate	chat_artifact	curated	cs	high		punctuation is invisible to the matcher; 'Certainly, here is where...' is human prose
+I hope this helps		llm_boilerplate	chat_artifact	curated		high		occurs in acknowledgments and correspondence

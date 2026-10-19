@@ -1,0 +1,9 @@
+# The tools agent with one check (plus the readers and check_table, which
+# every toolset includes). For single-tool experiments.
+schema_version: 1
+name: tools_grim
+description: Tools agent with GRIM only (readers and check_table always included), no adjudication.
+modules:
+  - use: tools_agent
+    # declare_table/list_tables: the tables' premises for the harness GRIM sweep.
+    tools: [grim_check, list_tables, declare_table]

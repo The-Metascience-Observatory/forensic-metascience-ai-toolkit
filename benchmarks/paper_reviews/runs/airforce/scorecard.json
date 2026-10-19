@@ -1,0 +1,106 @@
+{
+  "paper": "airforce",
+  "pipeline_version": "v1.15.0 (g4a7971102983, uncommitted changes)",
+  "mode": "parallel",
+  "backend": "grok",
+  "model": "grok-4.6",
+  "verdict": "does_not_reconcile",
+  "verdict_expected": "does_not_reconcile",
+  "verdict_match": true,
+  "deterministic": {
+    "findings_json": {
+      "passed": true,
+      "problems": [],
+      "num_findings": 12,
+      "schema": "2.0"
+    },
+    "no_preamble": {
+      "passed": true,
+      "first_line": "Forensic review \u2014 paper",
+      "matched_patterns": []
+    },
+    "must_not_say": {
+      "passed": true,
+      "hits": []
+    },
+    "verdict": {
+      "passed": true,
+      "verdict": "does_not_reconcile",
+      "expected": "does_not_reconcile",
+      "valid_value": true
+    },
+    "tortured_track": {
+      "ran": true,
+      "k": 0,
+      "refusal_subtype": null,
+      "expected": "none",
+      "passed": true
+    },
+    "passed": true
+  },
+  "judge": {
+    "per_finding": [
+      {
+        "id": "grim_failures",
+        "weight": "critical",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "Table III headers are n=80 and n=79 (total 159), but reconstruct_2x2 finds no column split summing to 159 that produces the paired survey percentages (daily MVI 14.86 vs 34.25, most days 37.84 vs 63.01, never 20.27 vs 8.22, found-brief-effective 95.89 vs 98.63). R GRIM agrees 14.86% is impossible at n=80.",
+        "severity_expected": [
+          4,
+          6
+        ],
+        "confidence": "high",
+        "matched_finding_id": "f_95a86369714ce8ef",
+        "matched_severity": 3,
+        "severity_in_interval": false,
+        "severity_direction": "under"
+      },
+      {
+        "id": "zero_cell_chi2",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "percentage_sum",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "single_item_multiplicity",
+        "weight": "minor",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      }
+    ],
+    "false_positives": [],
+    "recall_weighted": 0.375,
+    "recall_weighted_reachable": 0.375,
+    "num_false_positives": 0,
+    "no_findings_produced": false,
+    "severity_calibration": {
+      "n_scored": 1,
+      "n_in_interval": 0,
+      "n_over_severity": 0,
+      "n_under_severity": 1,
+      "severity_bias": -2.0,
+      "n_excluded_low_confidence": 0,
+      "n_covered_but_unmatched": 0
+    },
+    "judge_notes": "GRIM/impossible survey percentages at the printed n=80/n=79 are covered (including an explicit GRIM call on 14.86%), though not as 'nine of ten' cells. The review never flags a 100%/zero-cell chi-square, never says the compliance percentages fail to sum to 100%, and never argues for one 2x3 test instead of three single-item tests. Extra findings (clustered randomization, title/causal language, ages, power, citation, vitamin C units) are methodological or bookkeeping observations, not invented severe claims.",
+    "judge_parse_path": "json_schema",
+    "cost_usd": 0.03358928
+  },
+  "recall_weighted": 0.375,
+  "recall_weighted_reachable": 0.375,
+  "num_false_positives": 0,
+  "cost_usd": {
+    "analysis": 0.37365,
+    "judge": 0.03358928
+  }
+}

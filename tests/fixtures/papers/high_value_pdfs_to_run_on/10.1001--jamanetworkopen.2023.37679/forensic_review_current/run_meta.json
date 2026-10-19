@@ -1,0 +1,75 @@
+{
+  "paper_id": "10.1001--jamanetworkopen.2023.37679",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 12.8754995,
+      "input_tokens": 24,
+      "output_tokens": 120427,
+      "wall_seconds": 1210.78,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.000915
+        },
+        "claude-opus-5": {
+          "costUSD": 12.874584500000001
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 26
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.2141824999999997,
+      "input_tokens": 10,
+      "output_tokens": 25150,
+      "wall_seconds": 317.36,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.031304
+        },
+        "claude-opus-5": {
+          "costUSD": 2.1828785
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 15.089682,
+  "total_wall_seconds": 1528.15,
+  "reproducibility": {
+    "n_findings": 32,
+    "n_valid": 30,
+    "n_invalid": 2,
+    "problems": [
+      "finding[17] (threshold_p_recovery): contains placeholder '<' -- not runnable as written",
+      "finding[20] (statcheck_nhst_sweep): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written"
+    ]
+  }
+}

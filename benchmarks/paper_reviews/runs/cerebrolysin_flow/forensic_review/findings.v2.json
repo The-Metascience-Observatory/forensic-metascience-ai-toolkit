@@ -1,0 +1,4697 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "2.0",
+  "paper_id": "paper",
+  "run_id": "r_0049688599592e2c",
+  "paper_metadata": {
+    "metadata_status": "failed"
+  },
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": ""
+    },
+    "science_error": {
+      "state": "refused",
+      "detail": "error_stalled"
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "image track disabled"
+    },
+    "tortured_phrases": {
+      "state": "ran",
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 14206 words"
+    }
+  },
+  "findings": [
+    {
+      "slug": "table3_combined_copied_from_table2",
+      "technique": "detect_duplication",
+      "title": "Table 3 Combined row and p-values are copied from Table 2",
+      "description": "Table 3 reprints Table 2's Combined Wei-Lachin row in full (MW=0.5611, CI 0.5456-0.5766, N1/N2=10/3, p<0.0001), and the caption repeats those figures. Table 3's own rows are Muscle Marlene (n=16/5) and Muscle Catoi (n=11/2), so 10/3 belongs to neither. Muscle Marlene p=0.4146 and Muscle Catoi p=0.4936 are identical to Table 2 NNTXDIAM and NNTXAREA. Muscle Catoi's CI (0.5578-1.0000) excludes the MW null of 0.5, so the copied p=0.4936 is also discordant with its own interval (Wald p from the CI about 0.0048).",
+      "location": "Table 3, Combined (Wei-Lachin) row",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "anchors": [
+        {
+          "anchor_id": "f_7931f5b108f6ebeb:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_7931f5b108f6ebeb:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "the combined result of the two histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766",
+          "quote_folded_sha1": "16a70b38e2b15ed27293a802fa54f215fbf6ec7f",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 199.3282928466797,
+              "y0": 226.46348571777344,
+              "x1": 208.8623046875,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 210.5766143798828,
+              "y0": 226.46348571777344,
+              "x1": 240.23562622070312,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 241.94993591308594,
+              "y0": 226.46348571777344,
+              "x1": 258.574951171875,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 260.2892150878906,
+              "y0": 226.46348571777344,
+              "x1": 266.02923583984375,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 267.7434997558594,
+              "y0": 226.46348571777344,
+              "x1": 277.2774963378906,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 278.9917907714844,
+              "y0": 226.46348571777344,
+              "x1": 289.6877746582031,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 291.4020690917969,
+              "y0": 226.46348571777344,
+              "x1": 324.9460754394531,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 326.66107177734375,
+              "y0": 226.46348571777344,
+              "x1": 366.526123046875,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 368.24041748046875,
+              "y0": 226.46348571777344,
+              "x1": 387.6864318847656,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 389.4007263183594,
+              "y0": 226.46348571777344,
+              "x1": 419.6407775878906,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 421.35504150390625,
+              "y0": 226.46348571777344,
+              "x1": 452.6590576171875,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 454.37335205078125,
+              "y0": 226.46348571777344,
+              "x1": 460.1133728027344,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 461.82763671875,
+              "y0": 226.46348571777344,
+              "x1": 471.36163330078125,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 473.0766296386719,
+              "y0": 226.46348571777344,
+              "x1": 500.2926330566406,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 502.0069274902344,
+              "y0": 226.46348571777344,
+              "x1": 514.9359130859375,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 516.6502075195312,
+              "y0": 226.46348571777344,
+              "x1": 534.1572265625,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 535.8715209960938,
+              "y0": 226.46348571777344,
+              "x1": 541.6115112304688,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 543.3258666992188,
+              "y0": 226.46348571777344,
+              "x1": 566.8528442382812,
+              "y1": 235.78048706054688,
+              "page": 5
+            },
+            {
+              "x0": 42.52471923828125,
+              "y0": 234.86351013183594,
+              "x1": 62.64971923828125,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 64.69021606445312,
+              "y0": 234.86351013183594,
+              "x1": 74.22421264648438,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 76.26541137695312,
+              "y0": 234.86351013183594,
+              "x1": 103.48141479492188,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 105.52261352539062,
+              "y0": 234.86351013183594,
+              "x1": 115.44161224365234,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 117.4828109741211,
+              "y0": 234.86351013183594,
+              "x1": 134.98980712890625,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 137.03102111816406,
+              "y0": 234.86351013183594,
+              "x1": 177.7423553466797,
+              "y1": 244.18051147460938,
+              "page": 5
+            },
+            {
+              "x0": 179.7835693359375,
+              "y0": 234.86351013183594,
+              "x1": 200.39857482910156,
+              "y1": 244.18051147460938,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 42.52471923828125,
+            "y0": 226.46348571777344,
+            "x1": 566.8528442382812,
+            "y1": 244.18051147460938,
+            "page": 5
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "Table 3 combined row is identical to Table 2 combined; both pipe rows are in the markdown extraction.  0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "suspicious",
+        "tool": "detect_duplication",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_7931f5b108f6ebeb",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 4,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Table 3 reprints Table 2's Combined statistics in full, including N1/N2=10/3, which matches neither Muscle Marlene (16/5) nor Muscle Catoi (11/2). The caption repeats MW=0.5611. Muscle Marlene p=0.4146 and Muscle Catoi p=0.4936 duplicate Table 2's first two p-values, which is why Catoi's CI excludes 0.5 while p stays 0.4936.",
+        "category": "merged_pattern",
+        "title_was": "Table 3 Combined row copies Table 2 MW, CI, n and p",
+        "description_was": "Table 3's Combined (Wei-Lachin) row reprints Table 2's combined statistics in full: MW=0.5611, 95% CI 0.5456-0.5766, N1/N2=10/3, p<0.0001. Table 3's own rows are Muscle Marlene (n=16/5, MW=0.6250) and Muscle Catoi (n=11/2, MW=0.8182). The pasted 10/3 denominator does not match either muscle comparison. The Table 3 caption also repeats Table 2's MW=0.5611 claim. detect_duplication flagged the identical combined pair across the two blocks (coincidence probability about 7.3e-07).",
+        "merged_from": [
+          "f_05233b798c791963",
+          "f_0daa7cc9d2581556"
+        ]
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_7931f5b108f6ebeb:a:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "table3_pvalues_copied_from_table2",
+      "technique": "not_computational",
+      "title": "Table 3 p-values 0.4146 and 0.4936 match Table 2",
+      "description": "Table 3 reports Muscle Marlene p=0.4146 (n=16/5, MW=0.6250) and Muscle Catoi p=0.4936 (n=11/2, MW=0.8182). Those two p-values are identical to Table 2 NNTXDIAM p=0.4146 and NNTXAREA p=0.4936 (both n=10/3, MW=0.4000). Different Mann-Whitney sample sizes and effect sizes cannot share the same p. The match sits with the copied Combined row and is the expected signature of a fill-down from Table 2.",
+      "location": "Table 3, Muscle Marlene and Muscle Catoi P column",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "Muscle Marlene | 0,6250 | (0,3993 to 0,8507) | 16 / 5 | 0,4146",
+      "anchors": [
+        {
+          "anchor_id": "f_0daa7cc9d2581556:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_0daa7cc9d2581556:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| Muscle Marlene        |                                   | 0,6250 | (0,3993 to 0,8507) | 16 / 5  | 0,4146  |",
+          "quote_folded_sha1": "7cfdbb86c72bba75a94a75ea47979d155b93c855",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 46.818939208984375,
+              "y0": 124.78282928466797,
+              "x1": 68.9879379272461,
+              "y1": 134.09982299804688,
+              "page": 5
+            },
+            {
+              "x0": 70.9339370727539,
+              "y0": 124.78282928466797,
+              "x1": 96.21793365478516,
+              "y1": 134.09982299804688,
+              "page": 5
+            },
+            {
+              "x0": 376.8146057128906,
+              "y0": 124.78142547607422,
+              "x1": 398.2206115722656,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 417.689697265625,
+              "y0": 124.78142547607422,
+              "x1": 441.42669677734375,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 443.3727111816406,
+              "y0": 124.78142547607422,
+              "x1": 449.2107238769531,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 451.15673828125,
+              "y0": 124.78142547607422,
+              "x1": 474.89373779296875,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 498.7777099609375,
+              "y0": 124.78142547607422,
+              "x1": 506.56170654296875,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 508.5077209472656,
+              "y0": 124.78142547607422,
+              "x1": 510.4537353515625,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 512.3997192382812,
+              "y0": 124.78142547607422,
+              "x1": 516.291748046875,
+              "y1": 134.09841918945312,
+              "page": 5
+            },
+            {
+              "x0": 536.4097290039062,
+              "y0": 124.78142547607422,
+              "x1": 557.8158569335938,
+              "y1": 134.09841918945312,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 46.818939208984375,
+            "y0": 124.78142547607422,
+            "x1": 557.8158569335938,
+            "y1": 134.09982299804688,
+            "page": 5
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_0daa7cc9d2581556:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_0daa7cc9d2581556:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+          "quote_folded_sha1": "d21712ec63045e5b50f85a642c831f6aef53c824",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 46.81103515625,
+              "y0": 477.56671142578125,
+              "x1": 83.36503601074219,
+              "y1": 486.8836975097656,
+              "page": 4
+            },
+            {
+              "x0": 369.35430908203125,
+              "y0": 477.5639343261719,
+              "x1": 390.76031494140625,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 406.904296875,
+              "y0": 477.5639343261719,
+              "x1": 430.64129638671875,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 432.5873107910156,
+              "y0": 477.5639343261719,
+              "x1": 438.4253234863281,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 440.371337890625,
+              "y0": 477.5639343261719,
+              "x1": 464.10833740234375,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 493.4523010253906,
+              "y0": 477.5639343261719,
+              "x1": 501.2362976074219,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 503.18231201171875,
+              "y0": 477.5639343261719,
+              "x1": 505.1283264160156,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 507.0743408203125,
+              "y0": 477.5639343261719,
+              "x1": 510.9663391113281,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 528.102294921875,
+              "y0": 477.5639343261719,
+              "x1": 549.0183715820312,
+              "y1": 486.88092041015625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 46.81103515625,
+            "y0": 477.5639343261719,
+            "x1": 549.0183715820312,
+            "y1": 486.8836975097656,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_0daa7cc9d2581556",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "merged",
+        "rationale": "Table 3's p=0.4146 and p=0.4936 are the same numerals as Table 2 NNTXDIAM and NNTXAREA and belong to the same copy from Table 2 as the Combined row.",
+        "category": "duplicate",
+        "merged_into": "f_7931f5b108f6ebeb"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_0daa7cc9d2581556:a:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "nntxmax_ci_excludes_null_p_ns",
+      "technique": "check_estimate_ci",
+      "title": "Table 2 NNTXMAX CI excludes 0.5 but p=0.9017",
+      "description": "NNTXMAX reports MW=0.8000 with 95% CI 0.5362 to 1.0000 at n=10/3, which excludes the Mann-Whitney null of 0.5, but the printed p=0.9017 is non-significant. check_estimate_ci recovered p=0.0112 from the CI and flagged that the interval excludes the null while the p does not. The upper bound is censored at 1, but the lower bound 0.5362 already lies above 0.5, so the discordance does not depend on the Wald midpoint. If the CI is right the row is significant; if the p is right the CI is wrong.",
+      "location": "Table 2, NNTXMAX row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017",
+      "anchors": [
+        {
+          "anchor_id": "f_d9cb49e5289e5402:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_d9cb49e5289e5402:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| NNTXMAX                      |                                   | 0,8000 | (0,5362 to 1,0000) | 10 / 3  | 0,9017  |",
+          "quote_folded_sha1": "4d4687e643d6abe4ca1fbe25edba7ed650d34831",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 46.782470703125,
+              "y0": 534.263916015625,
+              "x1": 81.0054702758789,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 369.32147216796875,
+              "y0": 534.263916015625,
+              "x1": 390.72747802734375,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 406.8694763183594,
+              "y0": 534.263916015625,
+              "x1": 430.6064758300781,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 432.552490234375,
+              "y0": 534.263916015625,
+              "x1": 438.3905029296875,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 440.3365173339844,
+              "y0": 534.263916015625,
+              "x1": 464.0735168457031,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 493.41748046875,
+              "y0": 534.263916015625,
+              "x1": 501.20147705078125,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 503.1474914550781,
+              "y0": 534.263916015625,
+              "x1": 505.093505859375,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 507.0395202636719,
+              "y0": 534.263916015625,
+              "x1": 510.9315185546875,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 528.0675048828125,
+              "y0": 534.263916015625,
+              "x1": 549.4736328125,
+              "y1": 543.5809326171875,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 46.782470703125,
+            "y0": 534.263916015625,
+            "x1": 549.4736328125,
+            "y1": 543.5809326171875,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "Markdown Table 2 NNTXMAX pipe row.  0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017",
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_d9cb49e5289e5402",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 3,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "NNTXMAX CI 0.5362 to 1.0000 excludes the MW null of 0.5 even with the upper bound censored at 1, yet p=0.9017 is non-significant. check_estimate_ci recovered p=0.0112 from the interval. MW=0.8000 at n=10/3 is U=24 (null 15), which cannot yield p approximately 0.90.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_d9cb49e5289e5402:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "muscle_catoi_ci_excludes_null_p_ns",
+      "technique": "check_estimate_ci",
+      "title": "Table 3 Muscle Catoi CI excludes 0.5 but p=0.4936",
+      "description": "Muscle Catoi reports MW=0.8182 with 95% CI 0.5578 to 1.0000 at n=11/2. The interval excludes the null of 0.5, but p=0.4936 is non-significant. check_estimate_ci recovered p=0.0048 from the CI. That p is also identical to Table 2 NNTXAREA p=0.4936, so the discordance is the copied p sitting next to a different interval. The lower bound 0.5578 is above 0.5 even with the upper bound censored at 1.",
+      "location": "Table 3, Muscle Catoi row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "Muscle Catoi | 0,8182 | (0,5578 to 1,0000) | 11 / 2 | 0,4936",
+      "anchors": [
+        {
+          "anchor_id": "f_05233b798c791963:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_05233b798c791963:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| Muscle Catoi          |                                   | 0,8182 | (0,5578 to 1,0000) | 11 / 2  | 0,4936  |",
+          "quote_folded_sha1": "f34bc4b36e489dfd079445f1baa196b0a97e1573",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 46.81573486328125,
+              "y0": 136.12144470214844,
+              "x1": 68.98473358154297,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 70.93073272705078,
+              "y0": 136.12144470214844,
+              "x1": 87.26873016357422,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 376.8167419433594,
+              "y0": 136.12144470214844,
+              "x1": 398.2227478027344,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 417.68975830078125,
+              "y0": 136.12144470214844,
+              "x1": 441.4267578125,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 443.3727722167969,
+              "y0": 136.12144470214844,
+              "x1": 449.2107849121094,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 451.15679931640625,
+              "y0": 136.12144470214844,
+              "x1": 474.893798828125,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 499.0367431640625,
+              "y0": 136.12144470214844,
+              "x1": 506.3020324707031,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 508.248046875,
+              "y0": 136.12144470214844,
+              "x1": 510.1940612792969,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 512.1400756835938,
+              "y0": 136.12144470214844,
+              "x1": 516.0321044921875,
+              "y1": 145.43844604492188,
+              "page": 5
+            },
+            {
+              "x0": 536.4097290039062,
+              "y0": 136.12144470214844,
+              "x1": 557.8158569335938,
+              "y1": 145.43844604492188,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 46.81573486328125,
+            "y0": 136.12144470214844,
+            "x1": 557.8158569335938,
+            "y1": 145.43844604492188,
+            "page": 5
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_05233b798c791963",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "merged",
+        "rationale": "Muscle Catoi's p=0.4936 is the Table 2 NNTXAREA p sitting beside a different MW and CI; the CI-versus-p discordance is the same Table 3 fill-down already captured in the Combined-row copy.",
+        "category": "duplicate",
+        "merged_into": "f_7931f5b108f6ebeb"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_05233b798c791963:a:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "nntxdiam_nntxarea_same_ci_different_p",
+      "technique": "check_estimate_ci",
+      "title": "Table 2 NNTXDIAM and NNTXAREA share MW and CI, not p",
+      "description": "NNTXDIAM and NNTXAREA both print MW=0.4000 and 95% CI (0.0704 to 0.7296) at n=10/3, but p=0.4146 versus p=0.4936. check_estimate_ci recovered the same Wald p=0.5521 from both intervals. The same Mann-Whitney estimate, interval and sample size cannot yield two different p-values. One of the two p-values is misaligned with the printed MW and CI.",
+      "location": "Table 2, NNTXDIAM and NNTXAREA rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "NNTXDIAM | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4146",
+      "anchors": [
+        {
+          "anchor_id": "f_3b8760ac4ed4a041:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_3b8760ac4ed4a041:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+          "quote_folded_sha1": "d21712ec63045e5b50f85a642c831f6aef53c824",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 46.81103515625,
+              "y0": 477.56671142578125,
+              "x1": 83.36503601074219,
+              "y1": 486.8836975097656,
+              "page": 4
+            },
+            {
+              "x0": 369.35430908203125,
+              "y0": 477.5639343261719,
+              "x1": 390.76031494140625,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 406.904296875,
+              "y0": 477.5639343261719,
+              "x1": 430.64129638671875,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 432.5873107910156,
+              "y0": 477.5639343261719,
+              "x1": 438.4253234863281,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 440.371337890625,
+              "y0": 477.5639343261719,
+              "x1": 464.10833740234375,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 493.4523010253906,
+              "y0": 477.5639343261719,
+              "x1": 501.2362976074219,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 503.18231201171875,
+              "y0": 477.5639343261719,
+              "x1": 505.1283264160156,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 507.0743408203125,
+              "y0": 477.5639343261719,
+              "x1": 510.9663391113281,
+              "y1": 486.88092041015625,
+              "page": 4
+            },
+            {
+              "x0": 528.102294921875,
+              "y0": 477.5639343261719,
+              "x1": 549.0183715820312,
+              "y1": 486.88092041015625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 46.81103515625,
+            "y0": 477.5639343261719,
+            "x1": 549.0183715820312,
+            "y1": 486.8836975097656,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_3b8760ac4ed4a041:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_3b8760ac4ed4a041:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| NNTXAREA                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4936  |",
+          "quote_folded_sha1": "4129ec22d048e18852c201b7bc071fdef6c0bb95",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 46.810302734375,
+              "y0": 488.9039306640625,
+              "x1": 84.92530059814453,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 369.34930419921875,
+              "y0": 488.9039306640625,
+              "x1": 390.75531005859375,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 406.8973083496094,
+              "y0": 488.9039306640625,
+              "x1": 430.6343078613281,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 432.580322265625,
+              "y0": 488.9039306640625,
+              "x1": 438.4183349609375,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 440.3643493652344,
+              "y0": 488.9039306640625,
+              "x1": 464.1013488769531,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 493.4453125,
+              "y0": 488.9039306640625,
+              "x1": 501.22930908203125,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 503.1753234863281,
+              "y0": 488.9039306640625,
+              "x1": 505.121337890625,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 507.0673522949219,
+              "y0": 488.9039306640625,
+              "x1": 510.9593505859375,
+              "y1": 498.2209167480469,
+              "page": 4
+            },
+            {
+              "x0": 528.0953369140625,
+              "y0": 488.9039306640625,
+              "x1": 549.0114135742188,
+              "y1": 498.2209167480469,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 46.810302734375,
+            "y0": 488.9039306640625,
+            "x1": 549.0114135742188,
+            "y1": 498.2209167480469,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_3b8760ac4ed4a041",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 3,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "NNTXDIAM and NNTXAREA share MW=0.4000 and CI (0.0704 to 0.7296) at n=10/3, which can occur if area is monotone in diameter, but they print p=0.4146 versus p=0.4936. Those p-values cannot both belong to the same MW, CI and n. check_estimate_ci recovered Wald p=0.5521 from the shared interval.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_3b8760ac4ed4a041:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "table2_all_eight_mw_p_miss_u_lattice",
+      "technique": "grimu_check",
+      "title": "All eight Table 2 Mann-Whitney p-values miss the U lattice",
+      "description": "Each Table 2 component p at n1=10, n2=3 falls between achievable Mann-Whitney p-values (grimu_check and grimu_coexistence: 8 of 8 flagged, no co-existence pair). Nearest U for p=0.9017 is U near 14 (null is 15), while MW=0.8000 implies U=24. Rule 12 caps a granularity miss at suspicious; a different variance estimator in Wei-Lachin software could shift p off the untied lattice. The cluster of eight misses, including p-values that do not match their own MW, is the finding.",
+      "location": "Table 2, P column, n=10/3 rows",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017",
+      "anchors": [
+        {
+          "anchor_id": "f_45885edd6e0ff8a5:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_45885edd6e0ff8a5:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "| NNTXMAX                      |                                   | 0,8000 | (0,5362 to 1,0000) | 10 / 3  | 0,9017  |",
+          "quote_folded_sha1": "4d4687e643d6abe4ca1fbe25edba7ed650d34831",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 46.782470703125,
+              "y0": 534.263916015625,
+              "x1": 81.0054702758789,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 369.32147216796875,
+              "y0": 534.263916015625,
+              "x1": 390.72747802734375,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 406.8694763183594,
+              "y0": 534.263916015625,
+              "x1": 430.6064758300781,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 432.552490234375,
+              "y0": 534.263916015625,
+              "x1": 438.3905029296875,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 440.3365173339844,
+              "y0": 534.263916015625,
+              "x1": 464.0735168457031,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 493.41748046875,
+              "y0": 534.263916015625,
+              "x1": 501.20147705078125,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 503.1474914550781,
+              "y0": 534.263916015625,
+              "x1": 505.093505859375,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 507.0395202636719,
+              "y0": 534.263916015625,
+              "x1": 510.9315185546875,
+              "y1": 543.5809326171875,
+              "page": 4
+            },
+            {
+              "x0": 528.0675048828125,
+              "y0": 534.263916015625,
+              "x1": 549.4736328125,
+              "y1": 543.5809326171875,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 46.782470703125,
+            "y0": 534.263916015625,
+            "x1": 549.4736328125,
+            "y1": 543.5809326171875,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_45885edd6e0ff8a5",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "discarded",
+        "rationale": "The paper attributes these p-values to the Wei-Lachin procedure, a large-sample multivariate generalization of Wilcoxon-Mann-Whitney, not to an exact univariate U. A Wald or other Wei-Lachin variance estimator will miss the untied lattice, so GRIM-U does not license a U-lattice accusation. Component p-versus-CI discordances are kept separately.",
+        "category": "misapplication"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_45885edd6e0ff8a5:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "table2_combined_ci_narrower_than_components",
+      "technique": "not_computational",
+      "title": "Combined Wei-Lachin CI is far narrower than every component",
+      "description": "Table 2 prints eight component 95% CIs at n=10/3 with widths of about 0.66 (NNTXDIAM 0.0704 to 0.7296). The Combined (Wei-Lachin) interval at the same n is 0.5456 to 0.5766, width 0.031, and is the sole significant result (p<0.0001). All eight components are non-significant and mixed in direction (MW 0.4000 to 0.8000). Independent averaging of eight endpoints would shrink a Wald interval only about 2.8-fold, not 21-fold. check_estimate_ci finds the Combined CI and p internally consistent with each other, so the defect is that this Combined row cannot come from the printed components at n=10/3.",
+      "location": "Table 2, Combined (Wei-Lachin) versus component CIs",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "anchors": [
+        {
+          "anchor_id": "f_65cc497e79a98b16:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_65cc497e79a98b16:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "quote_folded_sha1": "7b281b186c0da681f072d2baccf83cf13f431aad",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 342.3849792480469,
+              "y0": 655.7208862304688,
+              "x1": 354.44598388671875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 357.31390380859375,
+              "y0": 655.7208862304688,
+              "x1": 387.65887451171875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 390.5323791503906,
+              "y0": 655.7208862304688,
+              "x1": 407.6473693847656,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 410.5166931152344,
+              "y0": 655.7208862304688,
+              "x1": 416.3547058105469,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 419.221923828125,
+              "y0": 655.7208862304688,
+              "x1": 428.9519348144531,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 431.8198547363281,
+              "y0": 655.7208862304688,
+              "x1": 466.4418029785156,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 469.3174133300781,
+              "y0": 655.7208862304688,
+              "x1": 510.16241455078125,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 513.0324096679688,
+              "y0": 655.7208862304688,
+              "x1": 532.8704833984375,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 535.7411499023438,
+              "y0": 655.7208862304688,
+              "x1": 566.8674926757812,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 664.120849609375,
+              "x1": 74.79664611816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 76.88054656982422,
+              "y0": 664.120849609375,
+              "x1": 82.71854400634766,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 84.796142578125,
+              "y0": 664.120849609375,
+              "x1": 94.52613830566406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 96.6058349609375,
+              "y0": 664.120849609375,
+              "x1": 124.6058349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 126.68693542480469,
+              "y0": 664.120849609375,
+              "x1": 139.90992736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 141.9896240234375,
+              "y0": 664.120849609375,
+              "x1": 159.88861083984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 161.9711151123047,
+              "y0": 664.120849609375,
+              "x1": 167.80911254882812,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 169.8874053955078,
+              "y0": 664.120849609375,
+              "x1": 194.0023956298828,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 196.08560180664062,
+              "y0": 664.120849609375,
+              "x1": 216.70059204101562,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 218.78099060058594,
+              "y0": 664.120849609375,
+              "x1": 228.510986328125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 230.58998107910156,
+              "y0": 664.120849609375,
+              "x1": 258.5899658203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 260.6717834472656,
+              "y0": 664.120849609375,
+              "x1": 270.7867736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 272.8671875,
+              "y0": 664.120849609375,
+              "x1": 290.76617431640625,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 292.84869384765625,
+              "y0": 664.120849609375,
+              "x1": 334.5414123535156,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 336.6197204589844,
+              "y0": 664.120849609375,
+              "x1": 357.626708984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 359.70782470703125,
+              "y0": 664.120849609375,
+              "x1": 408.35784912109375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 410.4438781738281,
+              "y0": 664.120849609375,
+              "x1": 445.32342529296875,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 447.4094543457031,
+              "y0": 664.120849609375,
+              "x1": 480.86944580078125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 482.953369140625,
+              "y0": 664.120849609375,
+              "x1": 514.8523559570312,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 516.9383544921875,
+              "y0": 664.120849609375,
+              "x1": 530.1683349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 532.2438354492188,
+              "y0": 664.120849609375,
+              "x1": 566.87158203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 672.5208740234375,
+              "x1": 85.31063842773438,
+              "y1": 681.837890625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 42.51263427734375,
+            "y0": 655.7208862304688,
+            "x1": 566.87158203125,
+            "y1": 681.837890625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_65cc497e79a98b16",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 5,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "upgraded",
+        "rationale": "The Combined interval (0.5456 to 0.5766, width 0.031) is about 21-fold narrower than the component intervals at n=10/3 (NNTXDIAM width 0.659). Eight independent endpoints would shrink a Wald interval only ~2.8-fold, and the eight MW values are mixed around 0.5. This row is the paper's only p<0.0001 result and the stated statistical proof of histometric superiority; the printed components cannot produce it.",
+        "category": "consequence_reassessed",
+        "title_was": "Combined Wei-Lachin CI is far narrower than every component",
+        "description_was": "Table 2 prints eight component 95% CIs at n=10/3 with widths of about 0.66 (for example NNTXDIAM 0.0704 to 0.7296). The Combined (Wei-Lachin) interval at the same n is 0.5456 to 0.5766, width 0.031, and is the sole significant result (p<0.0001). All eight components are non-significant. A Wei-Lachin average of those endpoints cannot shrink the interval twenty-fold at n=10/3, especially with mixed MW direction (0.4000 versus 0.8000). check_estimate_ci recovered SE=0.0079 for the combined row versus SE=0.168 for NNTXDIAM."
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_65cc497e79a98b16:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "cmap_positive_count_8_vs_7",
+      "technique": "internal_contradiction",
+      "title": "CMAP-positive count printed as 8, 7 and 7 of 14",
+      "description": "The abstract and Results say eight rats showed positive CMAPs, Figure 4 says 8 of 16, and Results also say stimulation in 21 rats was positive in only 8. Table 4 lists seven EMG-positive cases (5, 6, 10, 13, 19, 21, 28). Discussion later says positive EMG potentials in 7 of 14 surviving animals. The same binary outcome is given three different numerators and three different denominators.",
+      "location": "Abstract; Results; Table 4; Figure 4 caption; Discussion",
+      "outcome": "problem",
+      "provisional_severity": 2,
+      "quote": "Eight rats showed positive CMAPs. Reinnervation and neuromodulation were demonstrated by counting and comparison of the grafted muscle fibers diameter.",
+      "anchors": [
+        {
+          "anchor_id": "f_91a1aa8e465f31c5:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_91a1aa8e465f31c5:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "Eight rats showed positive CMAPs. Reinnervation and neuromodulation were demonstrated by counting and comparison of the grafted muscle fibers diameter.",
+          "quote_folded_sha1": "09be8a026e1cd1288a36a4550df07c6a5f60a1eb",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 1,
+          "boxes": [
+            {
+              "x0": 146.96450805664062,
+              "y0": 451.31060791015625,
+              "x1": 512.2127685546875,
+              "y1": 461.9586181640625,
+              "page": 1
+            },
+            {
+              "x0": 99.40130615234375,
+              "y0": 460.9106140136719,
+              "x1": 295.6397399902344,
+              "y1": 471.5586242675781,
+              "page": 1
+            }
+          ],
+          "region": {
+            "x0": 99.40130615234375,
+            "y0": 451.31060791015625,
+            "x1": 512.2127685546875,
+            "y1": 471.5586242675781,
+            "page": 1
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_91a1aa8e465f31c5:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_91a1aa8e465f31c5:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "Positive EMG potentials were observed in 7 out of the 14 surviving animals.",
+          "quote_folded_sha1": "e94e1bd07092e82083b765371efde1e8ffc8bd89",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 16,
+          "boxes": [
+            {
+              "x0": 210.322021484375,
+              "y0": 569.6176147460938,
+              "x1": 298.2403869628906,
+              "y1": 581.7586059570312,
+              "page": 16
+            },
+            {
+              "x0": 42.51969909667969,
+              "y0": 580.4176025390625,
+              "x1": 229.9789581298828,
+              "y1": 592.55859375,
+              "page": 16
+            }
+          ],
+          "region": {
+            "x0": 42.51969909667969,
+            "y0": 569.6176147460938,
+            "x1": 298.2403869628906,
+            "y1": 592.55859375,
+            "page": 16
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_91a1aa8e465f31c5",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Results and the attrition ledger give 8 CMAP-positive of 21 rats at the 2nd operation; Table 4 lists seven EMG-positive cases and omits No. 29, who was CMAP-positive and received Vecuronium. Abstract and Figure 4 still say 8 of 16, and Discussion says 7 of 14 surviving animals. Denominators 16 and 14 are not the printed 21 or 15.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_91a1aa8e465f31c5:a:pdf",
+        "page": 1
+      }
+    },
+    {
+      "slug": "angio_mean_257_vs_table4_scores",
+      "technique": "not_computational",
+      "title": "Angiogenesis mean 2.57 does not match Table 4 scores",
+      "description": "The Figure 9 caption says EMG-positive angiogenesis scores were 2 and 3 with average 2.57, which is 18/7 (four 3s and three 2s). Table 4 lists ang(2), ang(1), ang(3), ang(3), ang(2), ang(3) for six of seven EMG-positive cases and omits ang for case 28. Case 6 is scored 1, which the caption excludes. The EMG-negative average 1.3 does match the ten Table 4 scores (sum 13).",
+      "location": "Figure 9 caption versus Table 4 ang scores",
+      "outcome": "problem",
+      "provisional_severity": 2,
+      "quote": "more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+      "anchors": [
+        {
+          "anchor_id": "f_8040765dc16fe21b:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_8040765dc16fe21b:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+          "quote_folded_sha1": "294dfee62abbf276db2134f0ec46ca2f1061c3fc",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 10,
+          "boxes": [
+            {
+              "x0": 289.54840087890625,
+              "y0": 730.408935546875,
+              "x1": 557.6094360351562,
+              "y1": 739.7259521484375,
+              "page": 10
+            },
+            {
+              "x0": 53.93609619140625,
+              "y0": 738.8089599609375,
+              "x1": 326.4580383300781,
+              "y1": 748.1259765625,
+              "page": 10
+            }
+          ],
+          "region": {
+            "x0": 53.93609619140625,
+            "y0": 730.408935546875,
+            "x1": 557.6094360351562,
+            "y1": 748.1259765625,
+            "page": 10
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_8040765dc16fe21b",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "The caption's EMG-positive angiogenesis mean 2.57 equals 18/7 (four 3s and three 2s). Table 4 lists ang scores 2, 1, 3, 3, 2, 3 for six of seven EMG-positive cases and omits ang for case 28; case 6 is scored 1, which the caption's scores of 2 and 3 exclude. The EMG-negative mean 1.3 matches the ten Table 4 scores.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_8040765dc16fe21b:a:pdf",
+        "page": 10
+      }
+    },
+    {
+      "slug": "table2_combined_estimate_ci_wald_pass",
+      "technique": "check_estimate_ci",
+      "title": "Table 2 combined MW, CI and p<0.0001 are Wald-consistent",
+      "description": "The Combined (Wei-Lachin) MW=0.5611 with 95% CI 0.5456-0.5766 yields recovered SE=0.0079 and recovered p about 1.1e-14, which satisfies the printed p<0.0001 on a Wald reading. The three printed numbers agree with each other. That agreement does not show the interval is a valid Wei-Lachin combination of the eight component rows.",
+      "location": "Table 2, Combined (Wei-Lachin) row",
+      "outcome": "pass",
+      "quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "anchors": [
+        {
+          "anchor_id": "f_398bb2c36846a86b:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_398bb2c36846a86b:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "quote_folded_sha1": "7b281b186c0da681f072d2baccf83cf13f431aad",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 342.3849792480469,
+              "y0": 655.7208862304688,
+              "x1": 354.44598388671875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 357.31390380859375,
+              "y0": 655.7208862304688,
+              "x1": 387.65887451171875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 390.5323791503906,
+              "y0": 655.7208862304688,
+              "x1": 407.6473693847656,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 410.5166931152344,
+              "y0": 655.7208862304688,
+              "x1": 416.3547058105469,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 419.221923828125,
+              "y0": 655.7208862304688,
+              "x1": 428.9519348144531,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 431.8198547363281,
+              "y0": 655.7208862304688,
+              "x1": 466.4418029785156,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 469.3174133300781,
+              "y0": 655.7208862304688,
+              "x1": 510.16241455078125,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 513.0324096679688,
+              "y0": 655.7208862304688,
+              "x1": 532.8704833984375,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 535.7411499023438,
+              "y0": 655.7208862304688,
+              "x1": 566.8674926757812,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 664.120849609375,
+              "x1": 74.79664611816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 76.88054656982422,
+              "y0": 664.120849609375,
+              "x1": 82.71854400634766,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 84.796142578125,
+              "y0": 664.120849609375,
+              "x1": 94.52613830566406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 96.6058349609375,
+              "y0": 664.120849609375,
+              "x1": 124.6058349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 126.68693542480469,
+              "y0": 664.120849609375,
+              "x1": 139.90992736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 141.9896240234375,
+              "y0": 664.120849609375,
+              "x1": 159.88861083984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 161.9711151123047,
+              "y0": 664.120849609375,
+              "x1": 167.80911254882812,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 169.8874053955078,
+              "y0": 664.120849609375,
+              "x1": 194.0023956298828,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 196.08560180664062,
+              "y0": 664.120849609375,
+              "x1": 216.70059204101562,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 218.78099060058594,
+              "y0": 664.120849609375,
+              "x1": 228.510986328125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 230.58998107910156,
+              "y0": 664.120849609375,
+              "x1": 258.5899658203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 260.6717834472656,
+              "y0": 664.120849609375,
+              "x1": 270.7867736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 272.8671875,
+              "y0": 664.120849609375,
+              "x1": 290.76617431640625,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 292.84869384765625,
+              "y0": 664.120849609375,
+              "x1": 334.5414123535156,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 336.6197204589844,
+              "y0": 664.120849609375,
+              "x1": 357.626708984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 359.70782470703125,
+              "y0": 664.120849609375,
+              "x1": 408.35784912109375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 410.4438781738281,
+              "y0": 664.120849609375,
+              "x1": 445.32342529296875,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 447.4094543457031,
+              "y0": 664.120849609375,
+              "x1": 480.86944580078125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 482.953369140625,
+              "y0": 664.120849609375,
+              "x1": 514.8523559570312,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 516.9383544921875,
+              "y0": 664.120849609375,
+              "x1": 530.1683349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 532.2438354492188,
+              "y0": 664.120849609375,
+              "x1": 566.87158203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 672.5208740234375,
+              "x1": 85.31063842773438,
+              "y1": 681.837890625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 42.51263427734375,
+            "y0": 655.7208862304688,
+            "x1": 566.87158203125,
+            "y1": 681.837890625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_398bb2c36846a86b",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_398bb2c36846a86b:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "check_table_t2_estimate_inside_ci",
+      "technique": "check_table",
+      "title": "Table 2 MW values lie inside their printed CIs",
+      "description": "check_table on nine MW (95% CI) cells found all nine estimate-in-interval checks consistent (9 run, 9 refused on bare p cells). This only confirms each point estimate sits inside its own interval, not that the p-values match those intervals.",
+      "location": "Table 2, MW and 95% CI columns",
+      "outcome": "pass",
+      "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+      "anchors": [
+        {
+          "anchor_id": "f_5a22ceb6bd7cb0c5:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_5a22ceb6bd7cb0c5:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "quote_folded_sha1": "7b281b186c0da681f072d2baccf83cf13f431aad",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 342.3849792480469,
+              "y0": 655.7208862304688,
+              "x1": 354.44598388671875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 357.31390380859375,
+              "y0": 655.7208862304688,
+              "x1": 387.65887451171875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 390.5323791503906,
+              "y0": 655.7208862304688,
+              "x1": 407.6473693847656,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 410.5166931152344,
+              "y0": 655.7208862304688,
+              "x1": 416.3547058105469,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 419.221923828125,
+              "y0": 655.7208862304688,
+              "x1": 428.9519348144531,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 431.8198547363281,
+              "y0": 655.7208862304688,
+              "x1": 466.4418029785156,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 469.3174133300781,
+              "y0": 655.7208862304688,
+              "x1": 510.16241455078125,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 513.0324096679688,
+              "y0": 655.7208862304688,
+              "x1": 532.8704833984375,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 535.7411499023438,
+              "y0": 655.7208862304688,
+              "x1": 566.8674926757812,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 664.120849609375,
+              "x1": 74.79664611816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 76.88054656982422,
+              "y0": 664.120849609375,
+              "x1": 82.71854400634766,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 84.796142578125,
+              "y0": 664.120849609375,
+              "x1": 94.52613830566406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 96.6058349609375,
+              "y0": 664.120849609375,
+              "x1": 124.6058349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 126.68693542480469,
+              "y0": 664.120849609375,
+              "x1": 139.90992736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 141.9896240234375,
+              "y0": 664.120849609375,
+              "x1": 159.88861083984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 161.9711151123047,
+              "y0": 664.120849609375,
+              "x1": 167.80911254882812,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 169.8874053955078,
+              "y0": 664.120849609375,
+              "x1": 194.0023956298828,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 196.08560180664062,
+              "y0": 664.120849609375,
+              "x1": 216.70059204101562,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 218.78099060058594,
+              "y0": 664.120849609375,
+              "x1": 228.510986328125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 230.58998107910156,
+              "y0": 664.120849609375,
+              "x1": 258.5899658203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 260.6717834472656,
+              "y0": 664.120849609375,
+              "x1": 270.7867736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 272.8671875,
+              "y0": 664.120849609375,
+              "x1": 290.76617431640625,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 292.84869384765625,
+              "y0": 664.120849609375,
+              "x1": 334.5414123535156,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 336.6197204589844,
+              "y0": 664.120849609375,
+              "x1": 357.626708984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 359.70782470703125,
+              "y0": 664.120849609375,
+              "x1": 408.35784912109375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 410.4438781738281,
+              "y0": 664.120849609375,
+              "x1": 445.32342529296875,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 447.4094543457031,
+              "y0": 664.120849609375,
+              "x1": 480.86944580078125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 482.953369140625,
+              "y0": 664.120849609375,
+              "x1": 514.8523559570312,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 516.9383544921875,
+              "y0": 664.120849609375,
+              "x1": 530.1683349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 532.2438354492188,
+              "y0": 664.120849609375,
+              "x1": 566.87158203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 672.5208740234375,
+              "x1": 85.31063842773438,
+              "y1": 681.837890625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 42.51263427734375,
+            "y0": 655.7208862304688,
+            "x1": 566.87158203125,
+            "y1": 681.837890625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_table",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_5a22ceb6bd7cb0c5",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_5a22ceb6bd7cb0c5:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "arm_counts_12_11_7_sum_to_30",
+      "technique": "check_summation_batch",
+      "title": "Randomized arms 12, 11 and 7 sum to 30",
+      "description": "CERE n=12, NaCl n=11 and controls n=7 sum to the sanctioned total of 30. Completers 5+7+3=15 also reconcile. Table 4's 7 EMG-positive plus 10 EMG-negative rows sum to 17.",
+      "location": "Methods, Synopsis of the medication; Results completers; Table 4",
+      "outcome": "pass",
+      "quote": "they were 12 Cere (verum), 11 NaCl (placebo) well randomized, and 7 controls (nil)",
+      "anchors": [
+        {
+          "anchor_id": "f_e9a1352f27a94d96:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_e9a1352f27a94d96:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "they were 12 Cere (verum), 11 NaCl (placebo) well randomized, and 7 controls (nil)",
+          "quote_folded_sha1": "2c13091c4f8615fe0b8157a07b68ba9d38f61bfb",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 377.7786865234375,
+              "y0": 414.36798095703125,
+              "x1": 569.0078735351562,
+              "y1": 426.50897216796875,
+              "page": 3
+            },
+            {
+              "x0": 313.2306823730469,
+              "y0": 425.16796875,
+              "x1": 426.9727478027344,
+              "y1": 437.3089599609375,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.2306823730469,
+            "y0": 414.36798095703125,
+            "x1": 569.0078735351562,
+            "y1": 437.3089599609375,
+            "page": 3
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_e9a1352f27a94d96",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_e9a1352f27a94d96:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "mortality_50_percent_of_30",
+      "technique": "check_count_percent",
+      "title": "Overall mortality 50% matches 15 of 30",
+      "description": "15 of 30 rats completed the 100-day course, so 15 deaths is 50%. check_count_percent: 15/30=50.00%, matching the printed 50%. This does not resolve the separate prose that names 14 deaths or 16 survivors at the second operation.",
+      "location": "Results, Surgery",
+      "outcome": "pass",
+      "quote": "the overall mortality of 50% was still high",
+      "anchors": [
+        {
+          "anchor_id": "f_3c6d787da1a33ca9:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_3c6d787da1a33ca9:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "As expected, the overall mortality of 50% was still high but not as high as GB has mentioned concerning his own series in Luebeck 2011.",
+          "quote_folded_sha1": "5cfe19a6fe81ba3eb8ca2f2c227cc1cb3441b81d",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 10,
+          "boxes": [
+            {
+              "x0": 520.60986328125,
+              "y0": 211.47479248046875,
+              "x1": 531.8509521484375,
+              "y1": 223.6157989501953,
+              "page": 10
+            },
+            {
+              "x0": 533.73193359375,
+              "y0": 211.47479248046875,
+              "x1": 568.9740600585938,
+              "y1": 223.6157989501953,
+              "page": 10
+            },
+            {
+              "x0": 313.22662353515625,
+              "y0": 222.2747802734375,
+              "x1": 568.9942016601562,
+              "y1": 234.41578674316406,
+              "page": 10
+            },
+            {
+              "x0": 313.22662353515625,
+              "y0": 233.07476806640625,
+              "x1": 504.8987731933594,
+              "y1": 245.2157745361328,
+              "page": 10
+            }
+          ],
+          "region": {
+            "x0": 313.22662353515625,
+            "y0": 211.47479248046875,
+            "x1": 568.9942016601562,
+            "y1": 245.2157745361328,
+            "page": 10
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_count_percent",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_3c6d787da1a33ca9",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_3c6d787da1a33ca9:a:pdf",
+        "page": 10
+      }
+    },
+    {
+      "slug": "emg_neg_angio_mean_1_3",
+      "technique": "check_ratio",
+      "title": "EMG-negative angiogenesis average 1.3 matches Table 4",
+      "description": "The ten EMG-negative angiogenesis scores in Table 4 are 2,1,1,1,2,2,1,1,1,1. Their sum is 13 and 13/10=1.3, matching the printed average.",
+      "location": "Figure 9 caption; Table 4 ang scores, EMG-negative rows",
+      "outcome": "pass",
+      "quote": "than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+      "anchors": [
+        {
+          "anchor_id": "f_2be1284561c3ec82:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_2be1284561c3ec82:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+          "quote_folded_sha1": "96550a1f2c87e1150d375c8a258bb198413a727c",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 10,
+          "boxes": [
+            {
+              "x0": 71.875,
+              "y0": 738.8089599609375,
+              "x1": 326.4580383300781,
+              "y1": 748.1259765625,
+              "page": 10
+            }
+          ],
+          "region": {
+            "x0": 71.875,
+            "y0": 738.8089599609375,
+            "x1": 326.4580383300781,
+            "y1": 748.1259765625,
+            "page": 10
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_ratio",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_2be1284561c3ec82",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_2be1284561c3ec82:a:pdf",
+        "page": 10
+      }
+    },
+    {
+      "slug": "stalt_combined_p_threshold",
+      "technique": "stalt_check",
+      "title": "Combined p<0.0001 is a satisfied reporting floor",
+      "description": "stalt_check on the Wald p recovered from the combined CI (1.11e-14) versus the printed bound p<0.0001 found the bound satisfied. A threshold this small is the style floor, not a hidden extreme p, and the interval is printed beside it.",
+      "location": "Table 2, Combined (Wei-Lachin) p column",
+      "outcome": "pass",
+      "quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "anchors": [
+        {
+          "anchor_id": "f_f421ce3e4385ef7d:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_f421ce3e4385ef7d:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "quote_folded_sha1": "7b281b186c0da681f072d2baccf83cf13f431aad",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 342.3849792480469,
+              "y0": 655.7208862304688,
+              "x1": 354.44598388671875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 357.31390380859375,
+              "y0": 655.7208862304688,
+              "x1": 387.65887451171875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 390.5323791503906,
+              "y0": 655.7208862304688,
+              "x1": 407.6473693847656,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 410.5166931152344,
+              "y0": 655.7208862304688,
+              "x1": 416.3547058105469,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 419.221923828125,
+              "y0": 655.7208862304688,
+              "x1": 428.9519348144531,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 431.8198547363281,
+              "y0": 655.7208862304688,
+              "x1": 466.4418029785156,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 469.3174133300781,
+              "y0": 655.7208862304688,
+              "x1": 510.16241455078125,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 513.0324096679688,
+              "y0": 655.7208862304688,
+              "x1": 532.8704833984375,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 535.7411499023438,
+              "y0": 655.7208862304688,
+              "x1": 566.8674926757812,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 664.120849609375,
+              "x1": 74.79664611816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 76.88054656982422,
+              "y0": 664.120849609375,
+              "x1": 82.71854400634766,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 84.796142578125,
+              "y0": 664.120849609375,
+              "x1": 94.52613830566406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 96.6058349609375,
+              "y0": 664.120849609375,
+              "x1": 124.6058349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 126.68693542480469,
+              "y0": 664.120849609375,
+              "x1": 139.90992736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 141.9896240234375,
+              "y0": 664.120849609375,
+              "x1": 159.88861083984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 161.9711151123047,
+              "y0": 664.120849609375,
+              "x1": 167.80911254882812,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 169.8874053955078,
+              "y0": 664.120849609375,
+              "x1": 194.0023956298828,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 196.08560180664062,
+              "y0": 664.120849609375,
+              "x1": 216.70059204101562,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 218.78099060058594,
+              "y0": 664.120849609375,
+              "x1": 228.510986328125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 230.58998107910156,
+              "y0": 664.120849609375,
+              "x1": 258.5899658203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 260.6717834472656,
+              "y0": 664.120849609375,
+              "x1": 270.7867736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 272.8671875,
+              "y0": 664.120849609375,
+              "x1": 290.76617431640625,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 292.84869384765625,
+              "y0": 664.120849609375,
+              "x1": 334.5414123535156,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 336.6197204589844,
+              "y0": 664.120849609375,
+              "x1": 357.626708984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 359.70782470703125,
+              "y0": 664.120849609375,
+              "x1": 408.35784912109375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 410.4438781738281,
+              "y0": 664.120849609375,
+              "x1": 445.32342529296875,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 447.4094543457031,
+              "y0": 664.120849609375,
+              "x1": 480.86944580078125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 482.953369140625,
+              "y0": 664.120849609375,
+              "x1": 514.8523559570312,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 516.9383544921875,
+              "y0": 664.120849609375,
+              "x1": 530.1683349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 532.2438354492188,
+              "y0": 664.120849609375,
+              "x1": 566.87158203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 672.5208740234375,
+              "x1": 85.31063842773438,
+              "y1": 681.837890625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 42.51263427734375,
+            "y0": 655.7208862304688,
+            "x1": 566.87158203125,
+            "y1": 681.837890625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "stalt_check",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_f421ce3e4385ef7d",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_f421ce3e4385ef7d:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "multiplicity_eight_ns_components",
+      "technique": "multiplicity_report",
+      "title": "Eight uncorrected component tests: none survive, none lost",
+      "description": "The eight Table 2 component p-values are all >0.05. multiplicity_report on that family: 0 significant uncorrected, 0 lost to correction, FWER up to 33.7% if they had been the claims. The paper states no multiplicity adjustment because the study is exploratory. The combined p<0.0001 was a threshold and was dropped from the family count.",
+      "location": "Table 2 component P column; Statistical Methods",
+      "outcome": "pass",
+      "quote": "An adjustment for multiplicity was not performed due to the exploratory character of the study.",
+      "anchors": [
+        {
+          "anchor_id": "f_3fece50151a181d0:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_3fece50151a181d0:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "An adjustment for multiplicity was not performed due to the exploratory character of the study. It should be noted that all test results should be interpreted with care due to the very small sample sizes.",
+          "quote_folded_sha1": "898b01508b5f31597d0e40d91b99f3c8faf7aa20",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 8,
+          "boxes": [
+            {
+              "x0": 84.17800903320312,
+              "y0": 523.6441040039062,
+              "x1": 298.2735900878906,
+              "y1": 535.7850952148438,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 534.3450927734375,
+              "x1": 298.2663879394531,
+              "y1": 546.486083984375,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 545.0460815429688,
+              "x1": 190.79112243652344,
+              "y1": 557.1870727539062,
+              "page": 8
+            }
+          ],
+          "region": {
+            "x0": 42.51790237426758,
+            "y0": 523.6441040039062,
+            "x1": 298.2735900878906,
+            "y1": 557.1870727539062,
+            "page": 8
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_3fece50151a181d0",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_3fece50151a181d0:a:pdf",
+        "page": 8
+      }
+    },
+    {
+      "slug": "statcheck_no_apa_statistics",
+      "technique": "statcheck",
+      "title": "statcheck found no APA-format test statistics",
+      "description": "statcheck on the PDF found zero APA-style t/F/r/chi-squared/z statistics. The paper reports Mann-Whitney MW, CIs and p in tables without df in APA form, so the scanner has nothing to recalculate. Component checks used check_estimate_ci and grimu_check instead.",
+      "location": "Full PDF text",
+      "outcome": "undecided",
+      "quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test.",
+      "anchors": [
+        {
+          "anchor_id": "f_9fce41893d829d6e:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_9fce41893d829d6e:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test.",
+          "quote_folded_sha1": "ae6ae869d16dc2aa7145ac07a84c93ba70e0ca6b",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 8,
+          "boxes": [
+            {
+              "x0": 193.5271759033203,
+              "y0": 245.41839599609375,
+              "x1": 298.2862548828125,
+              "y1": 257.55938720703125,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 256.119384765625,
+              "x1": 298.260986328125,
+              "y1": 268.2603759765625,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 266.82037353515625,
+              "x1": 94.16799926757812,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 97.156005859375,
+              "y0": 266.82037353515625,
+              "x1": 106.16500091552734,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 109.15300750732422,
+              "y0": 266.82037353515625,
+              "x1": 122.32000732421875,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 125.30801391601562,
+              "y0": 266.82037353515625,
+              "x1": 219.8602752685547,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 222.84828186035156,
+              "y0": 266.82037353515625,
+              "x1": 237.0592803955078,
+              "y1": 278.96136474609375,
+              "page": 8
+            }
+          ],
+          "region": {
+            "x0": 42.51790237426758,
+            "y0": 245.41839599609375,
+            "x1": 298.2862548828125,
+            "y1": 278.96136474609375,
+            "page": 8
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_9fce41893d829d6e",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "discarded",
+        "rationale": "statcheck scans APA-format t/F/r/chi-squared/z statistics. This paper reports Mann-Whitney MW, CIs and p without APA degrees of freedom, so a zero-hit scan is a coverage limit, not a defect of the paper.",
+        "category": "insufficient_evidence"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_9fce41893d829d6e:a:pdf",
+        "page": 8
+      }
+    },
+    {
+      "slug": "combined_grimu_not_applicable",
+      "technique": "grimu_check",
+      "title": "Combined p<0.0001 is not a univariate Mann-Whitney p",
+      "description": "grimu_check on Combined p<0.0001 at n=10/3 returned impossible (MW floor p=0.00699). That floor applies only to a single Mann-Whitney U. The paper attributes the combined p to the Wei-Lachin multivariate procedure, so GRIM-U does not apply. The tool verdict is recorded and not treated as an accusation.",
+      "location": "Table 2, Combined (Wei-Lachin) row",
+      "outcome": "undecided",
+      "quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "anchors": [
+        {
+          "anchor_id": "f_23ad2d7d735b5b26:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_23ad2d7d735b5b26:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test.",
+          "quote_folded_sha1": "ae6ae869d16dc2aa7145ac07a84c93ba70e0ca6b",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 8,
+          "boxes": [
+            {
+              "x0": 193.5271759033203,
+              "y0": 245.41839599609375,
+              "x1": 298.2862548828125,
+              "y1": 257.55938720703125,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 256.119384765625,
+              "x1": 298.260986328125,
+              "y1": 268.2603759765625,
+              "page": 8
+            },
+            {
+              "x0": 42.51790237426758,
+              "y0": 266.82037353515625,
+              "x1": 94.16799926757812,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 97.156005859375,
+              "y0": 266.82037353515625,
+              "x1": 106.16500091552734,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 109.15300750732422,
+              "y0": 266.82037353515625,
+              "x1": 122.32000732421875,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 125.30801391601562,
+              "y0": 266.82037353515625,
+              "x1": 219.8602752685547,
+              "y1": 278.96136474609375,
+              "page": 8
+            },
+            {
+              "x0": 222.84828186035156,
+              "y0": 266.82037353515625,
+              "x1": 237.0592803955078,
+              "y1": 278.96136474609375,
+              "page": 8
+            }
+          ],
+          "region": {
+            "x0": 42.51790237426758,
+            "y0": 245.41839599609375,
+            "x1": 298.2862548828125,
+            "y1": 278.96136474609375,
+            "page": 8
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_23ad2d7d735b5b26",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "discarded",
+        "rationale": "GRIM-U's U=0 floor of p approximately 0.007 applies only to a single Mann-Whitney test. The paper assigns the combined p<0.0001 to the Wei-Lachin multivariate procedure, so the lattice check is not applicable. The implausible Combined interval is kept as a separate finding.",
+        "category": "misapplication"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_23ad2d7d735b5b26:a:pdf",
+        "page": 8
+      }
+    },
+    {
+      "slug": "absence_of_evidence_cere_no_sesoi",
+      "technique": "absence_of_evidence",
+      "title": "CERE 'tendency' has no SESOI and no dedicated CI",
+      "description": "The paper says CERE rats showed a clear but non-significant tendency toward larger muscle-fiber diameters. No CERE-versus-control CI is printed. absence_of_evidence on the Muscle Marlene interval (a stimulus-yes versus no interval, not a CERE contrast) was indeterminate without a stated SESOI.",
+      "location": "Results, Histometric examination",
+      "outcome": "undecided",
+      "quote": "Although not statistically significant, compared with the two other groups, the CERE rats showed a clear tendency toward larger muscle fiber diameters",
+      "anchors": [
+        {
+          "anchor_id": "f_8b12f2549336534b:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_8b12f2549336534b:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "Although not statistically significant, compared with the two other groups, the CERE rats showed a clear tendency toward larger muscle fiber diameters, as represented and explained herein by the positive values in the chart.",
+          "quote_folded_sha1": "9815bb128690ce381bbaecfe82410b7bf1581d5b",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 13,
+          "boxes": [
+            {
+              "x0": 396.3307800292969,
+              "y0": 648.9772338867188,
+              "x1": 568.9913940429688,
+              "y1": 661.1182250976562,
+              "page": 13
+            },
+            {
+              "x0": 313.22662353515625,
+              "y0": 659.7772216796875,
+              "x1": 568.98681640625,
+              "y1": 671.918212890625,
+              "page": 13
+            },
+            {
+              "x0": 313.22662353515625,
+              "y0": 670.5772705078125,
+              "x1": 529.4571533203125,
+              "y1": 682.71826171875,
+              "page": 13
+            }
+          ],
+          "region": {
+            "x0": 313.22662353515625,
+            "y0": 648.9772338867188,
+            "x1": 568.9913940429688,
+            "y1": 682.71826171875,
+            "page": 13
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "indeterminate",
+        "tool": "absence_of_evidence",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_8b12f2549336534b",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "discarded",
+        "rationale": "The CERE contrast is already reported as not statistically significant. absence_of_evidence was indeterminate without a SESOI, and the Muscle Marlene interval is a stimulus-yes versus no contrast, not CERE versus control. No arithmetical defect is shown.",
+        "category": "insufficient_evidence"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_8b12f2549336534b:a:pdf",
+        "page": 13
+      }
+    },
+    {
+      "slug": "flag_round_n_pass",
+      "technique": "flag_round_n",
+      "title": "Reported sample sizes are not uniformly round",
+      "description": "flag_round_n on n=30,12,11,7,16,15,21,10,3 found mixed non-round sizes. No round-N flag.",
+      "location": "Methods and Results sample sizes",
+      "outcome": "pass",
+      "quote": "when only 30 adult white female Sprague Dawley rats were sanctioned (Charles River, 220 to 280 g)",
+      "anchors": [
+        {
+          "anchor_id": "f_a22ff39b54c41296:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_a22ff39b54c41296:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "when only 30 adult white female Sprague Dawley rats were sanctioned (Charles River, 220 to 280 g)",
+          "quote_folded_sha1": "1227eb15d4e5bae3e24b8fdb6c5922b601f99558",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 90.3529052734375,
+              "y0": 556.8109130859375,
+              "x1": 298.2906494140625,
+              "y1": 568.951904296875,
+              "page": 3
+            },
+            {
+              "x0": 42.51970672607422,
+              "y0": 567.763916015625,
+              "x1": 182.18978881835938,
+              "y1": 579.9049072265625,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 42.51970672607422,
+            "y0": 556.8109130859375,
+            "x1": 298.2906494140625,
+            "y1": 579.9049072265625,
+            "page": 3
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "flag_round_n",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_a22ff39b54c41296",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_a22ff39b54c41296:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "mw_statistic_inside_unit_interval",
+      "technique": "check_statistic_bounds",
+      "title": "Combined MW=0.5611 lies in the unit interval",
+      "description": "The Mann-Whitney statistic is a probability. Combined MW=0.5611 lies in [0,1].",
+      "location": "Table 2, Combined MW",
+      "outcome": "pass",
+      "quote": "MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure",
+      "anchors": [
+        {
+          "anchor_id": "f_ac64cad86a49c370:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_ac64cad86a49c370:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "quote_folded_sha1": "7b281b186c0da681f072d2baccf83cf13f431aad",
+          "file": "cerebrolysin_rat_sci.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 342.3849792480469,
+              "y0": 655.7208862304688,
+              "x1": 354.44598388671875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 357.31390380859375,
+              "y0": 655.7208862304688,
+              "x1": 387.65887451171875,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 390.5323791503906,
+              "y0": 655.7208862304688,
+              "x1": 407.6473693847656,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 410.5166931152344,
+              "y0": 655.7208862304688,
+              "x1": 416.3547058105469,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 419.221923828125,
+              "y0": 655.7208862304688,
+              "x1": 428.9519348144531,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 431.8198547363281,
+              "y0": 655.7208862304688,
+              "x1": 466.4418029785156,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 469.3174133300781,
+              "y0": 655.7208862304688,
+              "x1": 510.16241455078125,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 513.0324096679688,
+              "y0": 655.7208862304688,
+              "x1": 532.8704833984375,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 535.7411499023438,
+              "y0": 655.7208862304688,
+              "x1": 566.8674926757812,
+              "y1": 665.0379028320312,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 664.120849609375,
+              "x1": 74.79664611816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 76.88054656982422,
+              "y0": 664.120849609375,
+              "x1": 82.71854400634766,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 84.796142578125,
+              "y0": 664.120849609375,
+              "x1": 94.52613830566406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 96.6058349609375,
+              "y0": 664.120849609375,
+              "x1": 124.6058349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 126.68693542480469,
+              "y0": 664.120849609375,
+              "x1": 139.90992736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 141.9896240234375,
+              "y0": 664.120849609375,
+              "x1": 159.88861083984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 161.9711151123047,
+              "y0": 664.120849609375,
+              "x1": 167.80911254882812,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 169.8874053955078,
+              "y0": 664.120849609375,
+              "x1": 194.0023956298828,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 196.08560180664062,
+              "y0": 664.120849609375,
+              "x1": 216.70059204101562,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 218.78099060058594,
+              "y0": 664.120849609375,
+              "x1": 228.510986328125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 230.58998107910156,
+              "y0": 664.120849609375,
+              "x1": 258.5899658203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 260.6717834472656,
+              "y0": 664.120849609375,
+              "x1": 270.7867736816406,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 272.8671875,
+              "y0": 664.120849609375,
+              "x1": 290.76617431640625,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 292.84869384765625,
+              "y0": 664.120849609375,
+              "x1": 334.5414123535156,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 336.6197204589844,
+              "y0": 664.120849609375,
+              "x1": 357.626708984375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 359.70782470703125,
+              "y0": 664.120849609375,
+              "x1": 408.35784912109375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 410.4438781738281,
+              "y0": 664.120849609375,
+              "x1": 445.32342529296875,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 447.4094543457031,
+              "y0": 664.120849609375,
+              "x1": 480.86944580078125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 482.953369140625,
+              "y0": 664.120849609375,
+              "x1": 514.8523559570312,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 516.9383544921875,
+              "y0": 664.120849609375,
+              "x1": 530.1683349609375,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 532.2438354492188,
+              "y0": 664.120849609375,
+              "x1": 566.87158203125,
+              "y1": 673.4378662109375,
+              "page": 4
+            },
+            {
+              "x0": 42.51263427734375,
+              "y0": 672.5208740234375,
+              "x1": 85.31063842773438,
+              "y1": 681.837890625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 42.51263427734375,
+            "y0": 655.7208862304688,
+            "x1": 566.87158203125,
+            "y1": 681.837890625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 595.2760009765625,
+            "h": 841.8900146484375
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+            "at": "2026-09-02T15:46:28Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "tool_expert",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_statistic_bounds",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_ac64cad86a49c370",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_ac64cad86a49c370:a:pdf",
+        "page": 4
+      }
+    }
+  ],
+  "adjudication": {
+    "ran": true,
+    "verdict": "does_not_reconcile",
+    "paper_severity": 5,
+    "headline_finding_id": "f_65cc497e79a98b16",
+    "confidence": "medium",
+    "summary": "The paper's only statistically significant result, the Table 2 Combined Wei-Lachin Mann-Whitney of 0.5611 (95% CI 0.5456 to 0.5766, n=10/3, p<0.0001), cannot be produced from the eight component intervals printed above it, which are about twenty-fold wider and mixed in direction. That same Combined row, including the 10/3 denominator, is reprinted as Table 3's combined muscle result beside rows whose n are 16/5 and 11/2, and Table 3's p-values 0.4146 and 0.4936 match Table 2's first two rows. Table 2 also pairs one MW and CI with two different p-values and reports NNTXMAX CI 0.5362-1.0000 against p=0.9017. Count-percent, ratio, bounds, summation and the Results attrition cascade 30 to 21 to 15 reconcile. A corrigendum should withdraw or recompute the Wei-Lachin combined tests, align Table 3, and correct the CMAP-positive counts (8 of 21 versus 8 of 16 versus 7 of 14) and the Figure 9 angiogenesis mean 2.57 versus Table 4. This review did not establish intent, did not re-analyse raw histometric files, and did not treat GRIM-U lattice misses as accusations because the paper attributes p-values to Wei-Lachin rather than exact univariate U.",
+    "n_kept": 14,
+    "n_merged": 2,
+    "n_discarded": 4,
+    "n_downgraded": 0,
+    "n_upgraded": 1,
+    "n_unknown_ids": 0,
+    "n_readonly_flip_attempts": 0,
+    "failure": null,
+    "n_not_adjudicated": 0
+  },
+  "coverage": {
+    "stats_found": 72,
+    "tools_run": [
+      "extract_pdf",
+      "parse_table",
+      "statcheck",
+      "check_estimate_ci",
+      "grimu_check",
+      "grimu_coexistence",
+      "check_summation_batch",
+      "check_count_percent",
+      "check_ratio",
+      "check_table",
+      "detect_duplication",
+      "multiplicity_report",
+      "stalt_check",
+      "check_statistic_bounds",
+      "absence_of_evidence",
+      "flag_round_n"
+    ],
+    "tables_checked": [
+      "Table 2",
+      "Table 3",
+      "Table 4"
+    ],
+    "stats_checked": 48
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "s1",
+        "label": "Rat T10 sural-nerve graft RCT of Cerebrolysin versus NaCl versus nil",
+        "design": "rct",
+        "n": 30,
+        "unit_of_analysis": "rat",
+        "clustered": false,
+        "preregistered": false,
+        "n_per_group": [
+          {
+            "label": "Cerebrolysin",
+            "n": 12
+          },
+          {
+            "label": "NaCl sham",
+            "n": 11
+          },
+          {
+            "label": "nil control",
+            "n": 7
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "sanctioned / randomized",
+            "n": 30
+          },
+          {
+            "stage": "underwent 2nd operation (Results count)",
+            "n": 21,
+            "reason": "Results: 21 rats underwent the 2nd Op; abstract instead says 16 surviving at day 90"
+          },
+          {
+            "stage": "completed 100 days / 3rd Op",
+            "n": 15
+          },
+          {
+            "stage": "CERE completers",
+            "n": 5
+          },
+          {
+            "stage": "NaCl completers",
+            "n": 7
+          },
+          {
+            "stage": "control completers",
+            "n": 3
+          }
+        ],
+        "alpha": 0.05
+      }
+    ],
+    "variables": [
+      {
+        "id": "cmap",
+        "name": "compound muscle action potential (reinnervation yes/no)",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "confidence": "high",
+        "n_categories": 2,
+        "levels": [
+          "stimulus yes",
+          "stimulus no"
+        ],
+        "derivation": "measured",
+        "derived_from": "intraoperative CMAP"
+      },
+      {
+        "id": "mw_stat",
+        "name": "Mann-Whitney effect-size statistic",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "proportion",
+        "confidence": "high",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "derivation": "other",
+        "derived_from": "Wilcoxon-Mann-Whitney / Wei-Lachin"
+      },
+      {
+        "id": "muscle_fiber_diameter",
+        "name": "IOAM muscle fiber diameter",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "confidence": "high",
+        "units": "micrometre, also as % of contralateral"
+      },
+      {
+        "id": "axon_diameter",
+        "name": "SNG axon diameter outside spinal cord",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "confidence": "medium",
+        "units": "micrometre"
+      },
+      {
+        "id": "axon_count",
+        "name": "myelinated axon count in SNG",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "confidence": "medium"
+      },
+      {
+        "id": "histo_score",
+        "name": "histology ordinal score (Gc, fibrosis, angiogenesis, Npres, Sc, AR)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "confidence": "high",
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "n_categories": 4,
+        "levels": [
+          "0 none",
+          "1 mild",
+          "2 moderate",
+          "3 intense"
+        ]
+      },
+      {
+        "id": "treatment",
+        "name": "postoperative medication arm",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "confidence": "high",
+        "n_categories": 3,
+        "levels": [
+          "CERE",
+          "NaCl",
+          "nil"
+        ]
+      },
+      {
+        "id": "body_weight",
+        "name": "body weight at enrolment",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "confidence": "high",
+        "units": "g",
+        "provenance_quote": "only 30 adult white female Sprague Dawley rats were sanctioned (Charles River, 220 to 280 g)",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "tests": [
+      {
+        "id": "t_nntxdiam",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXDIAM",
+        "confidence": "high",
+        "study_id": "s1",
+        "hypothesis_id": "h_reinnervation",
+        "outcome_var": "mw_stat",
+        "grouping_var": "cmap",
+        "n": 13,
+        "statistic_value": 0.4,
+        "p_value": 0.4146,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.4000",
+        "ci": "95% CI 0.0704 to 0.7296",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxarea",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXAREA",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.4,
+        "p_value": 0.4936,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.4000",
+        "ci": "95% CI 0.0704 to 0.7296",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxaxon",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXAXON",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.6667,
+        "p_value": 0.1928,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.6667",
+        "ci": "95% CI 0.3738 to 0.9596",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxmyelin",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXMYELIN",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.7333,
+        "p_value": 0.102,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.7333",
+        "ci": "95% CI 0.4660 to 1.0000",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxmin",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXMIN",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.7667,
+        "p_value": 0.7533,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.7667",
+        "ci": "95% CI 0.4988 to 1.0000",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxmax",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXMAX",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.8,
+        "p_value": 0.9017,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.8000",
+        "ci": "95% CI 0.5362 to 1.0000",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxtotal",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXTOTAL",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.5667,
+        "p_value": 0.2347,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.5667",
+        "ci": "95% CI 0.2855 to 0.8479",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_nntxcumul",
+        "test_type": "mann_whitney",
+        "location": "Table 2, NNTXCUMUL",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.6333,
+        "p_value": 0.3505,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.6333",
+        "ci": "95% CI 0.3476 to 0.9191",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_weilachin_histology",
+        "test_type": "other",
+        "location": "Table 2, Combined (Wei-Lachin)",
+        "confidence": "high",
+        "study_id": "s1",
+        "hypothesis_id": "h_reinnervation",
+        "n": 13,
+        "statistic_value": 0.5611,
+        "p_value": 0.0001,
+        "p_is_threshold": true,
+        "effect_size": "MW=0.5611",
+        "ci": "95% CI 0.5456-0.5766",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": true,
+        "provenance_quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+        "provenance_verdict": "verbatim",
+        "statistic_in_text": "present"
+      },
+      {
+        "id": "t_muscle_marlene",
+        "test_type": "mann_whitney",
+        "location": "Table 3, Muscle Marlene",
+        "confidence": "high",
+        "study_id": "s1",
+        "outcome_var": "muscle_fiber_diameter",
+        "grouping_var": "cmap",
+        "n": 21,
+        "statistic_value": 0.625,
+        "p_value": 0.4146,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.6250",
+        "ci": "95% CI 0.3993 to 0.8507",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_muscle_catoi",
+        "test_type": "mann_whitney",
+        "location": "Table 3, Muscle Catoi",
+        "confidence": "high",
+        "study_id": "s1",
+        "outcome_var": "muscle_fiber_diameter",
+        "grouping_var": "cmap",
+        "n": 13,
+        "statistic_value": 0.8182,
+        "p_value": 0.4936,
+        "p_is_threshold": false,
+        "effect_size": "MW=0.8182",
+        "ci": "95% CI 0.5578 to 1.0000",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "statistic_in_text": "absent"
+      },
+      {
+        "id": "t_weilachin_muscle",
+        "test_type": "other",
+        "location": "Table 3, Combined (Wei-Lachin)",
+        "confidence": "high",
+        "study_id": "s1",
+        "n": 13,
+        "statistic_value": 0.5611,
+        "p_value": 0.0001,
+        "p_is_threshold": true,
+        "effect_size": "MW=0.5611",
+        "ci": "95% CI 0.5456-0.5766",
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": false,
+        "provenance_quote": "the combined result of the two histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766",
+        "provenance_verdict": "verbatim",
+        "statistic_in_text": "present"
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h_reinnervation",
+        "statement": "Grafting the lateral corticospinal tract at T10 to the bisected IOAM nerve produces functional reinnervation with graft-induced glutamatergic and/or mixed neurotransmission.",
+        "status": "confirmatory",
+        "study_id": "s1",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "h_cere",
+        "statement": "Fourteen days of postoperative Cerebrolysin improves neuroprotection, neuroregeneration and muscle-fiber recovery relative to NaCl or nil.",
+        "status": "confirmatory",
+        "study_id": "s1",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "h_coexistence",
+        "statement": "Reinnervated muscle shows coexistence of cholinergic and glutamatergic transmission rather than a complete transmitter switch.",
+        "status": "exploratory",
+        "study_id": "s1",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      }
+    ],
+    "interpretations": [
+      {
+        "id": "int_abstract_coexist",
+        "claim": "The coexistence of graft-induced cholinergic and glutamatergic neurotransmission and a great capacity of lower motor neurons and other types of spinal neurons to regenerate were observed.",
+        "asserts": "supported",
+        "location": "abstract",
+        "test_ids": [
+          "t_weilachin_histology"
+        ],
+        "hypothesis_id": "h_coexistence",
+        "hedged": false,
+        "causal_language": false,
+        "confidence": "high"
+      },
+      {
+        "id": "int_abstract_cere",
+        "claim": "Because of limited animals, pharmacological neuromodulation requires further investigation.",
+        "asserts": "not_supported",
+        "location": "abstract",
+        "hypothesis_id": "h_cere",
+        "hedged": true,
+        "causal_language": false,
+        "confidence": "high"
+      },
+      {
+        "id": "int_stats_superiority",
+        "claim": "The combined results of the histological assessments revealed a significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95% CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation).",
+        "asserts": "supported",
+        "location": "results",
+        "test_ids": [
+          "t_weilachin_histology"
+        ],
+        "hypothesis_id": "h_reinnervation",
+        "hedged": true,
+        "causal_language": false,
+        "confidence": "high"
+      },
+      {
+        "id": "int_cere_tendency",
+        "claim": "Although not statistically significant, compared with the two other groups, the CERE rats showed a clear tendency toward larger muscle fiber diameters, as represented and explained herein by the positive values in the chart.",
+        "asserts": "not_supported",
+        "location": "results",
+        "hypothesis_id": "h_cere",
+        "hedged": true,
+        "causal_language": false,
+        "confidence": "high"
+      }
+    ]
+  },
+  "unchecked": [
+    {
+      "location": "Participant flow (abstract 16 survivors vs Results 21 at 2nd Op vs 15 completers; 14 deaths vs 15 deaths)",
+      "reason": "Handoff to science-error track: CONSORT/flow identities are owned by check_flow_arithmetic, not this sweep."
+    },
+    {
+      "location": "Figure 12 muscle-fiber diameter percentages",
+      "reason": "Figure carries unique group averages not printed as numbers in the text; no means/SDs available for check_effect_plausibility, required_n, or SPRITE.",
+      "n_cells": 1
+    },
+    {
+      "location": "Table 4 remaining case-level histology grades and axon (min-max) counts",
+      "reason": "Descriptive per-animal ordinal scores and continuous micrometre diameters; GRIM/SPRITE do not apply to continuous diameters, and no group mean+SD+n+range is printed for a SPRITE reconstruction.",
+      "n_cells": 34
+    },
+    {
+      "location": "CERE versus NaCl versus nil muscle-fiber comparison",
+      "reason": "No arm-level means, SDs or CI printed; absence_of_evidence and effect-size tools cannot run on the drug contrast."
+    },
+    {
+      "location": "No XML full text",
+      "reason": "Publisher XML was not in the paper bundle; tables were taken from extract_pdf and body.md."
+    },
+    {
+      "location": "Supplementary files",
+      "reason": "No supplementary spreadsheet or PDF was provided with this bundle."
+    },
+    {
+      "location": "Power analysis",
+      "reason": "No a-priori power calculation is reported; verify_power_analysis has no inputs."
+    }
+  ],
+  "statistics_register": [
+    {
+      "source": "abstract",
+      "kind": "count",
+      "values": {
+        "n": 30
+      },
+      "quote": "Randomized double blind controlled study in rat, which was limited to 30 animals (Charles River, 220 to 280 g).",
+      "checkable": {
+        "tools": [
+          "flag_round_n"
+        ]
+      },
+      "id": "r_n30",
+      "location": "Abstract, Methods"
+    },
+    {
+      "source": "abstract",
+      "kind": "count",
+      "values": {
+        "n_cere": 12,
+        "n_nacl": 11,
+        "n_control": 7
+      },
+      "quote": "Medication was administered for 14 days postoperatively-a) verum Cerebrolysin \u00ae  IP=12-b) shams NaCl 0.9% IP=11, and c) 7 controls (nil).",
+      "checkable": {
+        "tools": [
+          "check_summation"
+        ]
+      },
+      "id": "r_arms",
+      "location": "Abstract"
+    },
+    {
+      "source": "abstract",
+      "kind": "count",
+      "values": {
+        "n_day90": 16
+      },
+      "quote": "2nd Op at day 90 (16 surviving rats) for open proof of reinnervation and its type by a) CMAP, b)Vecuronium \u00ae  application.",
+      "checkable": {
+        "tools": [],
+        "reason": "survivor count that disagrees with Results n=21; flow arithmetic is the science-error track"
+      },
+      "id": "r_n16",
+      "location": "Abstract"
+    },
+    {
+      "source": "abstract",
+      "kind": "count",
+      "values": {
+        "n_op3": 15
+      },
+      "quote": "10 days later, on the 3rd Op N=15, euthanasia and organ fixation were performed.",
+      "checkable": {
+        "tools": [
+          "check_summation"
+        ]
+      },
+      "id": "r_n15",
+      "location": "Abstract"
+    },
+    {
+      "source": "abstract",
+      "kind": "count",
+      "values": {
+        "n_cmap_pos": 8
+      },
+      "quote": "Eight rats showed positive CMAPs.",
+      "checkable": {
+        "tools": [],
+        "reason": "numerator without a single stated denominator; three different denominators appear later"
+      },
+      "id": "r_cmap8",
+      "location": "Abstract, Results"
+    },
+    {
+      "source": "prose",
+      "kind": "percentage",
+      "values": {
+        "pct": 50,
+        "n": 30
+      },
+      "quote": "the overall mortality of 50% was still high but not as high as GB has mentioned",
+      "checkable": {
+        "tools": [
+          "check_count_percent"
+        ]
+      },
+      "id": "r_mort50",
+      "location": "Results, Surgery"
+    },
+    {
+      "source": "prose",
+      "kind": "count",
+      "values": {
+        "n_2nd": 21
+      },
+      "quote": "Consequently, 21 rats underwent the 2 nd Op for transplant revision",
+      "checkable": {
+        "tools": [],
+        "reason": "flow identity; science-error track"
+      },
+      "id": "r_n21",
+      "location": "Results, Surgery"
+    },
+    {
+      "source": "prose",
+      "kind": "count",
+      "values": {
+        "n_cmap_pos": 8,
+        "n_stim": 21
+      },
+      "quote": "electro-stimulation of the PNG transplant in 21 rats was positive in only 8 rats.",
+      "checkable": {
+        "tools": [
+          "check_count_percent"
+        ]
+      },
+      "id": "r_8of21",
+      "location": "Results, Direct electrical muscle stimulation"
+    },
+    {
+      "source": "prose",
+      "kind": "count",
+      "values": {
+        "n_cmap_pos": 7,
+        "n_surv": 14
+      },
+      "quote": "Positive EMG potentials were observed in 7 out of the 14 surviving animals.",
+      "checkable": {
+        "tools": [
+          "check_count_percent"
+        ]
+      },
+      "id": "r_7of14",
+      "location": "Discussion"
+    },
+    {
+      "source": "figure",
+      "kind": "count",
+      "values": {
+        "n_cmap_pos": 8,
+        "n": 16
+      },
+      "quote": "Positive amplitudes demonstrate IOAM re-innervation, as it was the case in 8 of 16 rats t3 months after the grafting procedure.",
+      "checkable": {
+        "tools": [
+          "check_count_percent"
+        ]
+      },
+      "id": "r_8of16",
+      "location": "Figure 4 caption"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.4,
+        "ci_low": 0.0704,
+        "ci_high": 0.7296,
+        "p": 0.4146,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_diam",
+      "location": "Table 2, NNTXDIAM"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.4,
+        "ci_low": 0.0704,
+        "ci_high": 0.7296,
+        "p": 0.4936,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXAREA                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4936  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_area",
+      "location": "Table 2, NNTXAREA"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.6667,
+        "ci_low": 0.3738,
+        "ci_high": 0.9596,
+        "p": 0.1928,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXAXON                     |                                   | 0,6667 | (0,3738 to 0,9596) | 10 / 3  | 0,1928  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_axon",
+      "location": "Table 2, NNTXAXON"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.7333,
+        "ci_low": 0.466,
+        "ci_high": 1.0,
+        "p": 0.102,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXMYELIN                   |                                   | 0,7333 | (0,4660 to 1,0000) | 10 / 3  | 0,1020  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_myelin",
+      "location": "Table 2, NNTXMYELIN"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.7667,
+        "ci_low": 0.4988,
+        "ci_high": 1.0,
+        "p": 0.7533,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXMIN                      |                                   | 0,7667 | (0,4988 to 1,0000) | 10 / 3  | 0,7533  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_min",
+      "location": "Table 2, NNTXMIN"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.8,
+        "ci_low": 0.5362,
+        "ci_high": 1.0,
+        "p": 0.9017,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXMAX                      |                                   | 0,8000 | (0,5362 to 1,0000) | 10 / 3  | 0,9017  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_max",
+      "location": "Table 2, NNTXMAX"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.5667,
+        "ci_low": 0.2855,
+        "ci_high": 0.8479,
+        "p": 0.2347,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXTOTAL                    |                                   | 0,5667 | (0,2855 to 0,8479) | 10 / 3  | 0,2347  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_total",
+      "location": "Table 2, NNTXTOTAL"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.6333,
+        "ci_low": 0.3476,
+        "ci_high": 0.9191,
+        "p": 0.3505,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| NNTXCUMUL                    |                                   | 0,6333 | (0,3476 to 0,9191) | 10 / 3  | 0,3505  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t2_cumul",
+      "location": "Table 2, NNTXCUMUL"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.5611,
+        "ci_low": 0.5456,
+        "ci_high": 0.5766,
+        "p": 0.0001,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| Combined (Wei-Lachin)        |                                   | 0,5611 | (0,5456 to 0,5766) | 10 / 3  | <0.0001 |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "stalt_check"
+        ]
+      },
+      "id": "r_t2_combined",
+      "location": "Table 2, Combined"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.625,
+        "ci_low": 0.3993,
+        "ci_high": 0.8507,
+        "p": 0.4146,
+        "n1": 16,
+        "n2": 5
+      },
+      "quote": "| Muscle Marlene        |                                   | 0,6250 | (0,3993 to 0,8507) | 16 / 5  | 0,4146  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t3_marlene",
+      "location": "Table 3, Muscle Marlene"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.8182,
+        "ci_low": 0.5578,
+        "ci_high": 1.0,
+        "p": 0.4936,
+        "n1": 11,
+        "n2": 2
+      },
+      "quote": "| Muscle Catoi          |                                   | 0,8182 | (0,5578 to 1,0000) | 11 / 2  | 0,4936  |",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci",
+          "grimu_check"
+        ]
+      },
+      "id": "r_t3_catoi",
+      "location": "Table 3, Muscle Catoi"
+    },
+    {
+      "source": "table",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.5611,
+        "ci_low": 0.5456,
+        "ci_high": 0.5766,
+        "p": 0.0001,
+        "n1": 10,
+        "n2": 3
+      },
+      "quote": "| Combined (Wei-Lachin) |                                   | 0,5611 | (0,5456 to 0,5766) | 10 / 3  | <0.0001 |",
+      "checkable": {
+        "tools": [
+          "detect_duplication",
+          "check_estimate_ci"
+        ]
+      },
+      "id": "r_t3_combined",
+      "location": "Table 3, Combined",
+      "duplicate_of": "r_t2_combined"
+    },
+    {
+      "source": "prose",
+      "kind": "estimate_ci",
+      "values": {
+        "MW": 0.5611,
+        "ci_low": 0.5456,
+        "ci_high": 0.5766
+      },
+      "quote": "The combined results of the histological assessments revealed a significant superiority of  the  'stimulus  yes'  group  of  animals  versus  the  'stimulus  no'  group (MW=0.5611, 95% CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation).",
+      "checkable": {
+        "tools": [
+          "check_estimate_ci"
+        ]
+      },
+      "id": "r_prose_combined",
+      "location": "Results, Statistical Evaluation",
+      "duplicate_of": "r_t2_combined"
+    },
+    {
+      "source": "prose",
+      "kind": "other",
+      "values": {
+        "mean_pos": 2.57,
+        "mean_neg": 1.3
+      },
+      "quote": "more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+      "checkable": {
+        "tools": [
+          "check_ratio"
+        ]
+      },
+      "id": "r_angio",
+      "location": "Figure 9 caption"
+    },
+    {
+      "source": "prose",
+      "kind": "count",
+      "values": {
+        "n_cere_done": 5,
+        "n_nacl_done": 7,
+        "n_ctrl_done": 3
+      },
+      "quote": "They were 5 out of 12 CERE (No 10, 11, 17, 24, 27), 7 out of 11 NaCl ( No 9,12, 13, 18, 25, 26, 29), and 3 out of 7 controls (No. 5, 6, 7).",
+      "checkable": {
+        "tools": [
+          "check_summation"
+        ]
+      },
+      "id": "r_completers",
+      "location": "Results, Surgery"
+    },
+    {
+      "source": "prose",
+      "kind": "other",
+      "values": {
+        "alpha": 0.05
+      },
+      "quote": "The level of alpha was defined as alpha=0.05, and a two-sided test was used for superiority.",
+      "checkable": {
+        "tools": [],
+        "reason": "alpha declaration, not a computed statistic"
+      },
+      "id": "r_alpha",
+      "location": "Statistical Methods"
+    },
+    {
+      "source": "table",
+      "kind": "mean_sd",
+      "values": {
+        "mean": 2.06,
+        "min": 1.04,
+        "max": 3.7,
+        "n_axons": 4376
+      },
+      "quote": "2,06 (1,04-3,70) 4376",
+      "checkable": {
+        "tools": [],
+        "reason": "continuous micrometre axon diameters; GRIM/SPRITE require integer observations"
+      },
+      "id": "r_t4_c5_axon",
+      "location": "Table 4, case 5"
+    },
+    {
+      "source": "prose",
+      "kind": "other",
+      "values": {
+        "pct_contralateral": 75
+      },
+      "quote": "the EMG-positive cases exhibited a larger average muscle fiber diameter compared with the EMG-negative cases, reaching nearly 75% of the contralateral muscle fiber diameter.",
+      "checkable": {
+        "tools": [],
+        "reason": "approximate 'nearly 75%' with no group mean or SD printed"
+      },
+      "id": "r_75pct",
+      "location": "Results, Histometric examination"
+    }
+  ],
+  "checks_tally": {
+    "checks_passed": 21,
+    "of_which_collapsed_by_check_table": 12,
+    "checks_refused_indeterminate": 3,
+    "checks_flagged": 9,
+    "checks_total": 33,
+    "by_severity": {
+      "4": 2,
+      "3": 5,
+      "2": 2,
+      "unknown": 12
+    },
+    "by_outcome": {
+      "flagged": 9,
+      "pass": 9,
+      "refused": 3
+    },
+    "rounding_convention": {
+      "n_fit_only_under_truncation": 0,
+      "n_granularity_checks": 1,
+      "note": "Values that fail the round-half convention but are consistent if the reporter TRUNCATES (SPSS's default, and several journal styles). NOT a finding and never counted as one: a single instance is a house style. The RATE is the signal -- this class of anomaly is commoner in papers with more serious problems, so a high proportion is grounds to look harder, not evidence in itself."
+    },
+    "grace": {
+      "n_items": 1,
+      "n_reconciled_strictly": 1,
+      "n_rescued": 0,
+      "by_grace": {},
+      "n_with_direction": 0,
+      "n_leaning_high": 0,
+      "n_leaning_low": 0,
+      "sign_test_p": null,
+      "reading": "Nothing needed an allowance; every item reconciled on its printed values."
+    },
+    "sd_convention": {
+      "n_fit_only_under_population_sd": 0,
+      "n_granularity_checks": 1,
+      "note": "Values that fail under the sample (Bessel, n-1) SD but are consistent under the POPULATION (n) SD -- numpy's std default and Excel's STDEVP. NOT a finding and never counted as one: choosing a convention is not fabrication. The RATE is the signal, on the same reasoning as the rounding convention above."
+    },
+    "harness_sweep": {
+      "n_tables": 4,
+      "n_accusatory": 0,
+      "accusatory": [],
+      "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets."
+    }
+  },
+  "producer_constraint_problems": [
+    {
+      "index": 0,
+      "slug": "table3_combined_copied_from_table2",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'detect_duplication' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 2,
+      "slug": "nntxmax_ci_excludes_null_p_ns",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'check_estimate_ci' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 3,
+      "slug": "muscle_catoi_ci_excludes_null_p_ns",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'check_estimate_ci' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 4,
+      "slug": "nntxdiam_nntxarea_same_ci_different_p",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'check_estimate_ci' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 5,
+      "slug": "table2_all_eight_mw_p_miss_u_lattice",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'grimu_check' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    }
+  ]
+}

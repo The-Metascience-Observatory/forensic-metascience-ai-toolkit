@@ -1,0 +1,202 @@
+{
+  "paper_id": "10.1371--journal.pone.0069841",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-14 02:37 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_dirty": false,
+  "git_sha": "ff96f1665851",
+  "prompt_sha256": "859288d1618321c7",
+  "registry_sha256": "02bd45daa648c163",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 5.072125499999999,
+      "input_tokens": 22,
+      "output_tokens": 95518,
+      "cache_creation_input_tokens": 201458,
+      "cache_read_input_tokens": 1337485,
+      "wall_seconds": 1010.06,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.000743
+        },
+        "claude-opus-5": {
+          "costUSD": 5.0713824999999995
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 33
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.6111425,
+      "input_tokens": 12,
+      "output_tokens": 27907,
+      "cache_creation_input_tokens": 153687,
+      "cache_read_input_tokens": 690853,
+      "wall_seconds": 355.59,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.031111
+        },
+        "claude-opus-5": {
+          "costUSD": 2.5800315
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 7.683268,
+  "total_wall_seconds": 1365.65,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 0
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "E et al. 2013",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 9,
+    "n_sentence_shaped": 9,
+    "sentence_shape_enforced": false,
+    "n_joined": 2,
+    "joined_enforced": false,
+    "n_overlong": 4,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [
+      "Abstract's no-moderation claim rests on twelve tests for which no statistic is reported anywhere, and the supplement cited for them contains none",
+      "No sample-size justification or power analysis is reported, and the null moderation claims are where that matters",
+      "Abstract's no-moderation claim rests on twelve tests for which no statistic is reported anywhere, and the supplement cited for them contains none"
+    ],
+    "n_examples_omitted": 3,
+    "problems": [],
+    "detail": "all 9 title(s) name a defect rather than a method. 4 run past 120 characters and 2 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 42,
+    "n_headline": 1,
+    "n_targets": 43,
+    "n_valid": 29,
+    "n_invalid": 5,
+    "n_no_command_applies": 9,
+    "n_command_expected": 34,
+    "n_unparseable": 0,
+    "executed": true,
+    "n_ran_ok": 32,
+    "n_ran_failed": 2,
+    "problems": [
+      "finding[ethnicity_percentages_imply_n81_not_n82]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[multiplicity_uncorrected_family]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests-jso",
+      "finding[2]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests-jso",
+      "finding[4]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[5]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper."
+    ],
+    "n_disagreed": 3
+  },
+  "exhaustive_checks": {
+    "n_tables": 1,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 0,
+      "n_blocks": 0,
+      "ran": false,
+      "severity": "indeterminate",
+      "why_not": "The paper prints no (mean, SD) pair in any table, so there was nothing to compare. This is a refusal, not a clean result."
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 0,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 0,
+      "results": [],
+      "worst": null
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_sweep": 33,
+    "n_report": 9,
+    "n_computed": 0,
+    "n_asserted": 15,
+    "n_absent": 27,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 6,
+    "n_diverged": 1,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 26,
+    "n_unjoined": 27,
+    "n_manual": 0,
+    "divergences": [
+      "ethnicity_percentages_imply_n81_not_n82: tool=consistent model=suspicious (upgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 9,
+    "n_uncomputed": 1,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 9,
+    "n_supplied": 2,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "paper_commitment": 2,
+      "field_norm": 2,
+      "logical": 5
+    }
+  },
+  "sourcing": {
+    "findings": 33,
+    "joinable": 33,
+    "traced_to_a_passage": 7
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 25 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 25,
+    "n_off_allowlist": 1
+  }
+}

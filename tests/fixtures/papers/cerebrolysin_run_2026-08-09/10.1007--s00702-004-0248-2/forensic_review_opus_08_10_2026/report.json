@@ -1,0 +1,428 @@
+{
+  "headline": {
+    "statement": "The adverse-event rate the paper offers as its only number for treatment-arm tolerability, 16.4%, cannot be any fraction of the 78 Cerebrolysin patients the paper itself names as the denominator.",
+    "severity": "impossible",
+    "rests_on": "stated_constraint",
+    "evidence": "\"146 patients constituted the safety population with 78 patients receiving Cerebrolysin and 68 receiving placebo. All patients who were randomised were included in the safety analysis set.\" Then: \"The overall incidence of AEs was similar in both treatment groups, 16.4% of Cerebrolysin patients as compared to 10.3% of placebo patients experienced at least one AE.\" 16.4% of 78 implies 12.79 patients. The two achievable neighbours are 12/78 = 15.4% and 13/78 = 16.7%. The placebo figure in the same sentence, 10.3%, recovers exactly 7 of 68.",
+    "reproduction": "metascience grim-sweep --values 16.4 --n-min 78 --n-max 78 --decimals 1 --value-type percentage --n-max-source stated",
+    "plain": "The paper says 16.4% of the 78 patients given the drug had at least one side effect. No whole number of patients out of 78 gives 16.4% -- 12 patients is 15.4% and 13 is 16.7%. So the figure the authors print cannot have come from counting the group they say they counted, and this is the only number they give to support their claim that side effects were equally common on drug and placebo.",
+    "reproduction_valid": true
+  },
+  "verdict": "questionable",
+  "confidence": "high",
+  "findings": [
+    {
+      "rank": 1,
+      "title": "Cerebrolysin adverse-event incidence of 16.4% irreconcilable with the stated 78-patient safety population",
+      "severity": "impossible",
+      "confidence": "high",
+      "location": "Results, Safety, paragraph 2",
+      "reported": "\"The overall incidence of AEs was similar in both treatment groups, 16.4% of Cerebrolysin patients as compared to 10.3% of placebo patients experienced at least one AE.\" The denominator is stated two sentences earlier: 78 Cerebrolysin patients, with all randomised patients included in the safety analysis set.",
+      "computed": "16.4% of 78 implies a count of 12.792. The achievable percentages bracketing it are 15.4% (12/78) and 16.7% (13/78); the nearby achievable set is 12.8, 14.1, 15.4, 16.7, 17.9, 19.2, 20.5. Our engine returns `impossible`; R `scrutiny` (via r_grim_ground_truth, 0.164 pinned at 3 decimals, n=78) independently returns inconsistent -- the two engines agree. A sweep over every denominator from 2 to the paper's own total of 146 shows 16.4% IS an achievable share of n = 55, 61, 67, 73, 110, 116, 122, 128, 134, 140 or 146, but not of 78. Notably 11/67 = 16.42% and 24/146 = 16.44%, where 67 is the number of Cerebrolysin completers and 146 the whole trial.",
+      "assumptions": "The percentage is a share of patients, which the sentence states explicitly (\"16.4% of Cerebrolysin patients ... experienced at least one AE\"). The denominator of 78 is the paper's own stated safety-population arm size, not an assumption of ours. No scale bound was supplied by us.",
+      "reproduction": "metascience grim-sweep --values 16.4 --n-min 78 --n-max 78 --decimals 1 --value-type percentage --n-max-source stated",
+      "stage1_finding_ids": [
+        "ae_incidence_cerebrolysin_grim_impossible"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "This is the sole quantitative support for the abstract's conclusion that \"Adverse events occurred with a similar frequency in both groups\"; the overall adverse-event rate in the treated arm cannot be recovered, and the between-arm comparison therefore cannot be recomputed at all."
+      },
+      "plain": "The authors report that 16.4% of the 78 patients on the drug had at least one side effect. Percentages of a group of 78 can only take certain values -- 12 people is 15.4%, 13 people is 16.7% -- and 16.4% is not one of them, so no count of patients out of 78 produces it. The same sentence's placebo figure, 10.3%, works perfectly and corresponds to exactly 7 of 68 patients. The most likely explanation is an innocent one: 16.4% is a valid share of 67 (the number who finished treatment) or of 146 (everyone in the trial), so a wrong denominator may have been used. But as printed, the one number backing the claim that side effects were equally common in both groups does not add up, and no reader can recover the count needed to check that claim.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 2,
+      "title": "Placebo mortality and serious-adverse-event percentages irreconcilable with their own stated counts",
+      "severity": "impossible",
+      "confidence": "high",
+      "location": "Results, Safety, paragraph 2 (two adjacent sentences); Table 2, All SAEs row",
+      "reported": "\"Thirteen patients (Table 2) reported a serious adverse event (SAE), 6 in the Cerebrolysin group (7.69%) and 7 in the placebo group (8.82%).\" and \"Twelve patients died during the study: 6 in the Cerebrolysin group (7.69%) and 6 in placebo group (8.83%).\"",
+      "computed": "8.83% of 68 implies 6.0044 patients but is not an achievable share of 68 at two decimals: the achievable neighbours are 8.82% (6/68) and 10.29% (7/68). Our engine returns `impossible`; R `scrutiny` (0.0883 pinned at 4 decimals, n=68) independently returns inconsistent -- the two engines agree. Separately, 8.82% IS achievable at n=68 but recovers a count of 6, while the sentence and Table 2 both state 7 placebo patients with a serious adverse event; 7/68 is 10.29%. Table 2's own sub-rows reconcile exactly in both arms (Cerebrolysin 4+2+0+0+0 = 6; placebo 2+1+2+1+1 = 7; placebo deaths 2+1+2+1+0 = 6).",
+      "assumptions": "Both percentages are shares of the paper's stated placebo arm size of 68. No bound was supplied by us. The two anomalies are treated as one defect because a single transposition explains both: 8.82% is exactly what 6/68 produces, which is the death count, not the serious-adverse-event count.",
+      "reproduction": "metascience grim-sweep --values 8.83 --n-min 68 --n-max 68 --decimals 2 --value-type percentage --n-max-source stated",
+      "stage1_finding_ids": [
+        "death_pct_placebo_grim_impossible",
+        "sae_placebo_pct_count_mismatch"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No conclusion depends on the third significant figure of the placebo mortality rate, and both readings of the serious-adverse-event rate (8.82% or 10.29%) leave the abstract's \"similar frequency in both groups\" claim intact against the Cerebrolysin rate of 7.69%; the underlying counts, 6 deaths and 7 serious events, are stated unambiguously alongside and are what Table 2 confirms."
+      },
+      "plain": "Two adjacent sentences give percentages for the placebo group that do not match the patient counts printed beside them. Six deaths out of 68 patients is 8.82%, but the paper prints 8.83%, which no count of 68 can produce. In the sentence just before, 8.82% is printed against a count of 7 -- but 7 out of 68 is 10.29%. The simplest reading is that one figure was copied into the wrong sentence and the other mis-rounded in its last digit. This is arithmetically impossible as printed, but nothing the paper concludes turns on it: the counts themselves (6 deaths, 7 serious events) are stated plainly and match the detailed table exactly.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 3,
+      "title": "Within-arm change scores presented as evidence of a between-arm treatment effect on the CNS motor subscore",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, Efficacy, paragraph 1; Methods, Statistical analysis; Discussion, paragraph 4",
+      "reported": "The between-group comparison is reported as null: \"In the CNS subscore A1-Motor Functions, a strong tendency towards a significant Cerebrolysin effect in comparison to placebo was seen in the full patient sample (p<0.1).\" The significant claim comes from within-arm change: \"In contrast to the placebo group, the improvement from baseline to the efficacy assessment visits revealed a significant benefit of the Cerebrolysin group at day 1, 3, 7, 14, and 21 (p<0.05).\" The Methods confirm these are within-group tests: \"For within group comparison of baseline versus efficacy visit data, Student's t-test for paired data and the Wilcoxon signed rank test were used.\" The Discussion then states: \"In the CNS section A1 - Motor weakness, there was a significant difference in favour of Cerebrolysin until after the end of the active treatment.\"",
+      "computed": "No recomputation was possible and none is needed: the defect is inferential, not arithmetic. A within-arm change being significant in one group and not the other is not a test of the difference between groups. The paper's own between-group test on this subscore did not reach its declared alpha of 0.05, yet the Discussion converts the within-group result into \"a significant difference in favour of Cerebrolysin\". Independently, no test statistic, degrees of freedom, effect estimate or exact p is printed for any of these comparisons, so the between-group test cannot be reconstructed from the within-group ones.",
+      "assumptions": "None beyond the paper's own statements. The reading rests entirely on the Methods' explicit description of the within-group tests and on the quoted Results and Discussion sentences.",
+      "reproduction": "No forensic tool applies: this is an inferential error identifiable only by reading the Methods description of the within-group tests against the Results and Discussion sentences quoted above. No means, dispersions or test statistics are printed for the CNS A1 subscore anywhere in the paper, so no recalculation tool has inputs to work from.",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Discussion's claim of \"a significant difference in favour of Cerebrolysin\" on the CNS motor subscore is supported only by comparing each arm to its own baseline, while the paper's own direct comparison of the two arms fell short of its declared significance level."
+      },
+      "plain": "To show a drug works better than a placebo you have to compare the two groups to each other. Here, the direct comparison of the two groups on the motor score did not reach the significance level the authors themselves set. What they report instead is that patients on the drug improved significantly from their own starting point while placebo patients did not -- and the Discussion then describes this as \"a significant difference in favour of Cerebrolysin\". That is a well-known error: one group's change being statistically significant while the other's is not does not establish that the two groups differ from each other. The paper's own direct test says they did not, at the standard it set.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 4,
+      "title": "No exact p-value or test statistic anywhere in the paper, across at least seventeen uncorrected efficacy comparisons",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, Efficacy (all reported p-values); Methods, Statistical analysis; Results, paragraph following Table 2",
+      "reported": "\"Efficacy variables were analyzed using two-tailed statistics. Analyses were considered significant if a p < 0.05 level was achieved.\" Every efficacy result is then given as a bound: p<0.1, p<0.05, p<0.01, p<0.001, and -- once -- p<0.015. No correction for multiple comparisons is stated anywhere. Eight instruments were administered at seven visits, with three prespecified subgroups.",
+      "computed": "multiplicity_report was given eleven identified efficacy comparisons and evaluated 0 of them: every p is a threshold rather than an exact value, so all were dropped rather than coerced, and the family-wise burden CANNOT be quantified -- neither the number of claims lost to correction nor the surviving-claims interval can be computed. Independently, statcheck over the full Results text returned zero statistics: the paper reports no t, F, chi-squared or U value and no degrees of freedom anywhere, so not one of its efficacy comparisons is independently verifiable. The p<0.015 threshold is the sharpest evidence that exact values existed: it appears nowhere in the Methods, corresponds to no standard convention, and has the shape of an exact value rounded upward.",
+      "assumptions": "The count of seventeen comparisons is the sweep's enumeration of distinct efficacy tests named in the Results; the true number of comparisons performed is unknown and is a floor, since eight instruments at seven visits across a full sample and three subgroups permit far more. Uncorrected testing is defensible in a study the authors label exploratory, and that is not the finding here -- the finding is that the burden cannot be assessed at all.",
+      "reproduction": "metascience multiplicity --family-label 'Cerebrolysin vs placebo efficacy comparisons (all instruments, timepoints and subgroups)' --tests '[{\"id\":\"cns_a1_full_sample\",\"p_value\":0.1,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"sst_mantel_haenszel_full\",\"p_value\":0.05,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"sst_right_hemisphere\",\"p_value\":0.001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"mmse_right_hemisphere\",\"p_value\":0.001,\"p_is_threshold\":true,\"correction_applied\":\"none\"},{\"id\":\"cgi_6h_subgroup\",\"p_value\":0.015,\"p_is_threshold\":true,\"correction_applied\":\"none\"}]'",
+      "stage1_finding_ids": [
+        "efficacy_p_values_all_thresholded",
+        "nonstandard_alpha_threshold"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 17,
+        "basis": "asserted",
+        "explanation": "The paper's headline claim -- \"A significant improvement of cognitive function ... was observed in the Syndrome Short Test\" -- sits in a family of at least seventeen uncorrected comparisons whose multiplicity burden cannot be computed, and the claim itself cannot be verified because no exact p, test statistic, group mean or dispersion is printed for the instrument anywhere."
+      },
+      "plain": "The paper never prints an exact p-value or any test statistic -- only statements like \"p less than 0.05\". That means no reader can check a single one of its statistical results, and it also means the standard adjustment for having run many tests cannot be calculated: with eight measurement scales given at seven time points in the whole sample and in three subgroups, running enough comparisons to turn up a few significant ones by chance alone is easy, and there is no way to see how much of the reported benefit that explains. One result is reported as \"p less than 0.015\", a threshold that appears nowhere in the methods and matches no convention, which suggests exact values did exist and were simply not printed.",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+    },
+    {
+      "rank": 5,
+      "title": "Two Cerebrolysin patients with no recorded study disposition",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, Patient disposition",
+      "reported": "\"146 patients were randomised ... 78 patients to the Cerebrolysin group and 68 patients to the placebo group. Of these patients, 67 of the Cerebrolysin group and 52 of the placebo group completed the study. Reasons for the 25 cases of study discontinuation were death (6 Cerebrolysin, 6 placebo), serious adverse event (1 placebo), and consent withdrawn (3 Cerebrolysin; 9 placebo).\"",
+      "computed": "Two of eleven checked sums fail, and both are the same two patients seen twice. The Cerebrolysin arm accounts for 67 + 6 + 3 = 76 of 78 randomised, a shortfall of 2. Completers plus stated discontinuations gives 67 + 52 + 25 = 144 against 146 randomised, again short by 2. The placebo arm reconciles EXACTLY (52 + 6 + 1 + 9 = 68), which localises the entire discrepancy to the treated arm. The enumerated reasons do sum correctly to the 25 the paper claims (6+6+1+3+9 = 25), so the internal arithmetic of that sentence is sound; the error is that 25 is itself two short of the 27 the completer counts require. The remaining nine sums checked -- every Table 1 count column and every Table 2 serious-adverse-event and death column -- reconcile exactly.",
+      "assumptions": "That the four listed categories (completed, died, serious adverse event, consent withdrawn) are intended to be exhaustive, which is what the sentence structure asserts and what the placebo arm satisfies exactly.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[67,6,3],\"expected_sum\":78,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Cerebrolysin arm accounting\"},{\"values\":[52,6,1,9],\"expected_sum\":68,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Placebo arm accounting\"},{\"values\":[67,52,25],\"expected_sum\":146,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Completers plus stated discontinuations vs randomised\"}]'",
+      "stage1_finding_ids": [
+        "cerebrolysin_arm_disposition_shortfall"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The participant accounting for the treatment arm is incomplete: two of 78 patients who received Cerebrolysin neither completed the study nor appear under any stated reason for discontinuation, so their fate is unrecorded."
+      },
+      "plain": "Adding up what happened to every patient should return the number randomised. For the placebo group it does, exactly. For the Cerebrolysin group it does not: 67 finished, 6 died and 3 withdrew consent, which is 76 -- but 78 were randomised. Two patients who received the drug are simply not accounted for anywhere. This does not change any reported result, but in a trial the whereabouts of every treated patient is meant to be traceable, particularly when the trial's conclusion is about safety.",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o"
+    },
+    {
+      "rank": 6,
+      "title": "Day-90 null result attributed to attrition that the declared last-observation-carried-forward analysis rules out",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Methods, Statistical analysis; Results, Efficacy, paragraph 1; Fig. 2 caption",
+      "reported": "Methods: \"An exploratory statistical analysis according to the intention-to-treat (ITT) principle with last-observation-carried-forward (LOCF) was performed.\" Results: \"The lack of a significant effect at month 3 is most probably caused by the reduced number of patients available for analysis at this timepoint (119 patients; 67 Cerebrolysin vs 52 Placebo).\" The Fig. 2 caption reports n = 146 for the same follow-up period.",
+      "computed": "The two statements cannot both hold. Carrying the last observation forward is precisely the procedure that keeps every randomised patient in the analysis at every timepoint, so a declared intention-to-treat analysis with last-observation-carried-forward has n = 146 at day 90, not 119. Either the day-90 analysis was in fact restricted to completers -- contradicting the stated method and the figure caption -- or the stated explanation for the null day-90 result is not available. No arithmetic is violated; this is a contradiction between two prose statements about the same analysis.",
+      "assumptions": "None beyond the paper's own statements. The standard meaning of last-observation-carried-forward is taken as given.",
+      "reproduction": "No forensic tool applies: this is a contradiction between the Methods statement of the analysis population and the Results explanation for the day-90 result, verified by reading the two passages against each other and against the Fig. 2 caption.",
+      "stage1_finding_ids": [
+        "itt_locf_vs_day90_n_contradiction"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's stated reason for why its neurological benefit disappeared at three months -- fewer patients available -- is unavailable under the analysis method it says it used, leaving the day-90 null unexplained and the analysis population at that timepoint ambiguous between 146 and 119."
+      },
+      "plain": "The authors say they analysed all 146 randomised patients by carrying each patient's last measurement forward if they dropped out -- a method whose whole purpose is to keep everyone in the analysis at every time point. But when the drug's apparent benefit vanished at three months, they explain it by saying only 119 patients were available at that point. Under the method they describe, that drop cannot happen. Either they actually analysed only the patients who finished, which is a different and less conservative analysis than the one stated, or the explanation offered for the disappearing benefit does not hold.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 7,
+      "title": "Subgroup p-values orders of magnitude below the full-sample result, with no interaction test reported",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Results, Efficacy, paragraph 3; Discussion, paragraph 7",
+      "reported": "\"The drug=placebo difference was most pronounced in the sub-group of patients with a stroke in the right brain hemisphere (p<0.001; Mantel-Haenszel test). The difference in the MMSE score did not reach statistical significance, however, a highly significant effect of Cerebrolysin versus placebo was observed for the right-sided stroke subgroup (p<0.001, Mantel-Haenszel test) for this instrument.\" The right-hemisphere subgroup comprises 37 + 37 = 74 patients, roughly half of 146.",
+      "computed": "For both cognitive instruments a subgroup of about half the sample yields a p-value at least two orders of magnitude smaller than the full sample, and for the MMSE the full sample is null while half of it reaches p<0.001. That pattern requires the left-hemisphere subgroup to be null or reversed, which is what the authors argue on clinical grounds (aphasia impairing verbal testing after left-hemisphere stroke). No interaction test, no subgroup effect estimate, no confidence interval and no exact p is reported, so nothing here can be recomputed. Two facts count in the paper's favour and are recorded: the subgroups were prespecified in the Methods (\"Subgroup analyses of patients with right-sided stroke, left-sided stroke, and patients who received the first dose of study medication within 6h were also performed\"), and the clinical rationale is coherent.",
+      "assumptions": "That the right-hemisphere subgroup sizes are the Table 1 counts (37 Cerebrolysin, 37 placebo). No bound was supplied by us.",
+      "reproduction": "No forensic tool applies: with no exact p-values, no test statistics and no subgroup means or dispersions printed, no interaction test can be recomputed and no recalculation tool has inputs to work from.",
+      "stage1_finding_ids": [
+        "subgroup_p_smaller_than_full_sample"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The Discussion presents the MMSE subgroup result as evidence of benefit -- \"there was significant benefit of Cerebrolysin in the MMSE score in the right-sided sub-group\" -- although the instrument was null in the full sample, and no test of whether the subgroups genuinely differ is reported."
+      },
+      "plain": "For both memory and cognition tests, the result in half the patients (those with right-side strokes) is reported as far stronger than the result in the whole group -- and for one test the whole group showed nothing while that half showed a highly significant benefit. To claim a treatment genuinely works better in one subgroup you need a test of whether the subgroups actually differ from each other, and none is reported. The authors do offer a sensible clinical reason (patients with left-side strokes often have speech difficulties that interfere with verbal testing) and they did specify these subgroups in advance, which counts in their favour. But as reported the claim cannot be checked.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 8,
+      "title": "Two of eight prespecified outcome instruments reported without a single number",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Methods, Efficacy assessments; Results, paragraph following Table 2; Results, Efficacy, paragraph 4",
+      "reported": "The Methods name eight efficacy instruments: \"the Canadian Neurological Scale (CNS), the Barthel Index (BI), the Glasgow Coma Scale (GCS), the Clinical Global Impression (CGI), the Mini-Mental State Examination (MMSE), the Syndrome Short Test (SST), the Self Assessment Scale (VonZerssen), and the Hamilton Rating Scale for Depression (HAMD)\", administered \"at Baseline and at all subsequent study visits on study days 1, 3, 7, 14, 21, and 90.\" The Hamilton and Von Zerssen scales then receive one clause in the entire Results: \"No clinically important effects have been observed in the other outcome measures used in this study, the Hamilton Depression scale, the Von-Zerssen self-assessment questionnaire and the Clinical Global Impression.\"",
+      "computed": "No mean, dispersion, effect estimate, test statistic or p-value is printed for the Hamilton scale or the Von Zerssen scale at any of the seven visits, in the text, in either table, or in any figure. The Clinical Global Impression is dismissed in the same clause and then reappears three lines later with a significant subgroup result (p<0.015). In the opposite direction, the Barthel Index is null overall but two of its ten individual items are reported as significant (\"stool incontinence and feeding ... p<0.01 and p<0.05, respectively\") with the remaining eight items unreported. The asymmetry is systematic: instruments and items that reached significance are given numbers, those that did not are given a clause.",
+      "assumptions": "That the Barthel Index has ten items, per the Mahoney and Barthel (1965) instrument the paper cites. Selective emphasis is expected in an exploratory report and is not itself an error; the finding is the complete absence of any numeric result for two instruments that were collected at seven timepoints.",
+      "reproduction": "No forensic tool applies: this is an absence of reported values, identified by reading the Methods list of instruments against every numeric result the Results section contains. There is nothing to recompute.",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Two instruments measured at all seven visits produce no reportable data at all, and the item-level Barthel results are reported only where significant, both of which enlarge the unquantifiable multiplicity problem behind the paper's cognitive-benefit claim."
+      },
+      "plain": "The authors listed eight measurement scales in their methods and collected all of them at seven separate visits. Two of them -- a depression scale and a self-assessment questionnaire -- are dismissed in a single half-sentence with no numbers at all. Meanwhile, on a scale that showed no overall benefit, two of its ten individual sub-questions are singled out as significant and the other eight go unmentioned. Measuring many things and reporting numbers only for the ones that came out favourably makes an apparent benefit look more solid than the full data would support.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 9,
+      "title": "Analysis method behind the headline cognitive result not described in reproducible terms",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Methods, Statistical analysis; Results, Efficacy, paragraph 3; Fig. 2 caption",
+      "reported": "\"The Mantel-Haenszel Test was used to assess differences between groups with respect to time x treatment interaction.\" The paper's headline efficacy claim rests on it: \"SST scores showed a significant improvement of Cerebrolysin treated patients versus placebo (p<0.05; Mantel-Haenszel test; n=146).\"",
+      "computed": "The Mantel-Haenszel procedure is a stratified test of association for categorical or ordinal data. Applying it to a time-by-treatment interaction on continuous scale scores requires the scores to have been categorised or ranked and the strata to have been defined, and the paper states neither: no categorisation rule, no strata, no test statistic, no degrees of freedom, no exact p. Stratified rank extensions of the procedure do exist and are legitimate, so this is not asserted to be an error -- it is asserted to be unspecified. Nothing in the paper permits reconstruction of what was computed.",
+      "assumptions": "None beyond the paper's own statements. We do not assume the test was misapplied; we record that the description is insufficient to determine what was done.",
+      "reproduction": "No forensic tool applies: the paper reports no test statistic, no degrees of freedom, no categorisation of the outcome and no group summary statistics for the Syndrome Short Test, so no recalculation tool has inputs to work from.",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The single result the abstract, the Discussion and the title all rest on -- the significant Syndrome Short Test improvement -- is produced by a procedure the paper describes in one sentence, with no statistic, no degrees of freedom and no exact p, and cannot be reproduced or checked by any reader."
+      },
+      "plain": "The one positive finding this paper is built on comes from a statistical test that the authors name in a single sentence but do not describe. The test they name is normally used for data grouped into categories, and applying it to continuous test scores over time requires choices -- how the scores were grouped, what the groupings were -- that the paper never states. Combined with the absence of any test statistic or exact p-value, this means the paper's central result cannot be reproduced or checked by anyone reading it.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 10,
+      "title": "Concomitant-medication percentages not shares of the stated arm sizes in either group",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Results, Demographic data and baseline disease characteristics, paragraph 2",
+      "reported": "\"Most frequently used medications were agents ACE inhibitors (Cerebrolysin 15% vs placebo 10%), cardiac therapy (11% vs 10%), anti-diabetic drugs (13% vs 8%), calcium channel blockers (9% vs 10%) and beta-blocking agents (10% vs 6%).\"",
+      "computed": "Cerebrolysin arm: no denominator in [2, 78] lets all five percentages pass under conventional rounding, and the paper's own arm size of 78 is not viable -- 11% has no achievable count at n=78 (8/78 rounds to 10, 9/78 to 12). Under the truncation convention used by SPSS and some journals, n=76 works jointly; n=78 does not, because 13% is unachievable at 78 under truncation either. Placebo arm: a shared denominator does exist in range (48-52, 62, 63), but the paper's stated arm size of 68 is NOT among them, because 8% is unreachable at n=68 under conventional rounding (5/68 rounds to 7, 6/68 to 9). Under truncation 6/68 does yield 8%, so a truncating reporter explains the placebo row entirely.",
+      "assumptions": "That these percentages are shares of the full arm (78 and 68), which the paragraph implies but does not state -- they could be shares of some other denominator, such as patients with any concomitant medication recorded. At whole-percentage precision this check has very little power, and a truncation convention is a benign and sufficient explanation for the placebo row. This is why the finding is graded suspicious and not impossible.",
+      "reproduction": "metascience grim-sweep --values 15,11,13,9,10 --n-min 2 --n-max 78 --decimals 0 --value-type percentage --n-max-source stated",
+      "stage1_finding_ids": [
+        "conmed_cerebrolysin_no_shared_denominator",
+        "conmed_placebo_stated_n_not_viable"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "These rates support only the qualitative statement that \"the use of concomitant medications was homogeneously distributed between the two groups\"; no reported effect estimate or conclusion depends on them."
+      },
+      "plain": "Five percentages are given for background medications in each group. Checked against the group sizes the paper states (78 and 68), at least one percentage in each group cannot be produced by any whole number of patients. This is weak evidence on its own: the numbers are rounded to whole percent, which leaves very little to test, and a common way of rounding down rather than to nearest would explain the placebo group entirely. Nothing the paper concludes depends on these figures. It is recorded because it concerns the same treatment arm whose patient accounting is two short and whose side-effect rate is arithmetically impossible.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 11,
+      "title": "Sponsor-generated randomisation code, unnamed proprietary analysis software, and no conflict-of-interest statement",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Methods, Treatment and randomization; Methods, Statistical analysis; author affiliations",
+      "reported": "\"The study medication was provided to the study centres by EBEWE Pharma\"; \"according to a randomisation code generated by a computer software (EBEWE Pharma, Unterach, Austria)\"; \"All statistical analyses were carried out by Neumann and Team, Vienna, Austria, using a proprietary statistical software which has been tested and validated according to current guidelines.\" The third author's affiliation is given as \"EBEWE Pharma, Unterach, Austria\", and the reprint address is the same author at EBEWE Pharma. No conflict-of-interest declaration, funding statement, trial registration number or data-availability statement appears anywhere in the article.",
+      "computed": "Not a numeric check. Three features compound: the manufacturer supplied the drug, generated the allocation sequence, and employs an author; the analysis was performed by a third party using software that is named only as \"proprietary\", so no reader can reproduce any analysis in the paper even in principle; and no conflict-of-interest statement discloses the relationship, though the affiliation itself is printed. The trial predates the 2005 ICMJE registration requirement, so the absence of a registration number is expected and is NOT counted against it here. Blinding procedures are described in reasonable detail (indistinguishable vials, sealed emergency envelopes reported to have remained sealed, personnel blind until analysis completion), which counts in the paper's favour.",
+      "assumptions": "Disclosure norms in 2004 were weaker than current practice, and printing the sponsor affiliation was a common and accepted form of disclosure at the time. This finding is a limitation on independent verification, not an assertion that the analysis was influenced.",
+      "reproduction": "No forensic tool applies: this is an assessment of the disclosure and reproducibility statements in the Methods and front matter, verifiable by reading the passages quoted above.",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No result in the paper can be independently reproduced, because the analysis software is identified only as proprietary and no data, statistic or exact p-value is published alongside it."
+      },
+      "plain": "The company that makes the drug supplied it, generated the list assigning patients to drug or placebo, and employs one of the three authors. The statistics were done by an outside firm using software described only as \"proprietary\" -- meaning it is not named and no one else can obtain it. There is no conflict-of-interest statement, though the company affiliation is printed. Sponsor involvement in trials is normal and disclosure standards were looser in 2004, so this is not an accusation. But taken with the absence of any raw statistic or exact p-value, it means nothing in this paper can be independently reproduced by anyone.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    },
+    {
+      "rank": 12,
+      "title": "Absence of any confidence interval or effect estimate behind eight separate claims of no difference",
+      "severity": "indeterminate",
+      "confidence": "high",
+      "location": "Abstract; Results, Efficacy; Results, Safety; Discussion",
+      "reported": "\"Patients in the Cerebrolysin group had no significant improvement in the CNS score, the Barthel Index and the Clinical Global Impressions when compared to the placebo group.\" \"No significant treatment differences have been picked up with the Glasgow Coma Scale.\" \"Overall, there was no significant difference between the groups as regards the frequency or nature of adverse events.\" \"No clinically important difference between the two treatment groups for any laboratory tests ... was observed.\" \"Cerebrolysin was well tolerated and safe.\"",
+      "computed": "The check could not be run. absence_of_evidence requires an interval, and the paper reports no confidence interval, standard error of a difference, or effect estimate for any comparison it makes -- efficacy or safety. The largest effect the data still permit is therefore not computable for any of the eight null claims. This bears directly on the safety conclusion: \"safe and well tolerated\" rests on non-significance across 12 deaths and 13 serious adverse events, event counts at which even a large true difference in harm would not reach significance. Recomputing the safety comparisons from the counts confirms non-significance (serious adverse events 6/78 vs 7/68, Fisher p = 0.77; deaths 6/78 vs 6/68, Fisher p = 1.0), but non-significance at these counts is not evidence of equivalence.",
+      "assumptions": "No smallest effect size of interest is stated by the paper, so no equivalence claim could be tested even if intervals had been reported. This is a property of the reporting rather than a defect found in it, which is why it is graded indeterminate rather than suspicious.",
+      "reproduction": "No runnable command: metascience absence-of-evidence requires --ci-low and --ci-high, and this paper reports no confidence interval for any of its eight claims of no difference. The safety counts themselves were checked with: metascience chi2 --observed '[[6,72],[7,61]]'",
+      "stage1_finding_ids": [
+        "no_intervals_for_any_null_claim",
+        "safety_null_claims_corroborated"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 8,
+        "basis": "asserted",
+        "explanation": "The abstract's conclusions that Cerebrolysin is \"safe and well tolerated\" and produced \"no significant improvement\" in the neurological outcome are both unfalsifiable as reported, since nothing in the paper bounds how large the true benefit or harm could be."
+      },
+      "plain": "The paper says eight separate times that it found no difference -- in the main neurological outcome, in daily-living scores, in laboratory tests, and in side effects -- and concludes the drug is safe. But it never reports a range of plausible values for any of these comparisons. \"We did not find a difference\" and \"there is no difference\" are not the same statement, and without such a range there is no way to tell which one the data support. This matters most for the safety claim: with only 12 deaths and 13 serious events across both groups, a real and clinically important increase in harm would not have shown up as statistically significant, so the data are consistent with the drug being safe and also with it not being.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'No'"
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Figures 1, 2 and 3 - every efficacy outcome value in the paper",
+      "reason": "EVERY efficacy value exists only as marks on a chart. No mean, SD, SEM, median or effect estimate for the CNS, CNS A1, SST, MMSE, Barthel, CGI, Hamilton or Von Zerssen appears in any table or in the prose. Figure extraction was not run in either stage, and would not have helped: values read off a plot carry figure-pixel provenance and are barred from GRIM, GRIMMER, SPRITE and DEBIT, and no caption states what the error bars represent, so no dispersion could be recovered even approximately. check_effect_plausibility, which does accept figure-derived input, needs a dispersion it could not obtain. This is the largest single blind spot in this review: the paper's headline claim is not checkable by any arithmetic means."
+    },
+    {
+      "location": "All seventeen efficacy p-values",
+      "reason": "Every p-value is a threshold (p<0.05, p<0.001, p<0.015) with no exact value, no test statistic and no degrees of freedom. statcheck over the full Results text returned zero statistics. No hypothesis test in this paper can be recalculated, and multiplicity_report evaluated 0 of 11 submitted tests on the re-run."
+    },
+    {
+      "location": "Canadian Neurological Scale baseline means (Table 1, CNS row: 6.88 and 6.68)",
+      "reason": "Deliberately not GRIM-tested. The Canadian Neurological Scale advances in half-point steps, so a group mean moves in steps of 0.5/n rather than 1/n; applying GRIM at 1/n granularity would manufacture a false impossibility. No available tool accepts a half-integer granularity parameter."
+    },
+    {
+      "location": "Table 1, Cerebrolysin GCS dispersion - mean-conditional SD bound",
+      "reason": "check_sd_or_se tests an implied SD against half the range, which ignores the mean. Under the paper's stated SEM reading the Cerebrolysin GCS implies SD = 1.77 against a ceiling of 2.01 (88% of maximum) while the mean sits at 14.1 on an 11-15 scale; the tighter bound conditional on that mean is what would decide whether the value is attainable. No tool in the available set computes a mean-conditional SD bound, and computing one by hand is not permitted."
+    },
+    {
+      "location": "Mann-Whitney / Wilcoxon results (Methods declare both the U-test and the signed-rank test were used)",
+      "reason": "GRIM-U cannot be applied. The paper attributes no specific p-value to a rank-sum test, reports no U or W statistic, and gives thresholds rather than exact p-values."
+    },
+    {
+      "location": "A priori power analysis",
+      "reason": "Inapplicable by the paper's own statement: \"Since this was an exploratory study no sample size calculations have been performed.\" There is no stated effect size, alpha or target power to reproduce. This is a disclosed limitation, not a concealed one."
+    },
+    {
+      "location": "Baseline similarity omnibus tests (Carlisle-Stouffer-Fisher and Table-1 dispersion)",
+      "reason": "Table 1 prints no baseline p-values, so there is nothing to combine. bayesian_table1_dispersion was run in the sweep and correctly REFUSED on design grounds: block randomisation stratified by study centre forces baseline balance by construction, and an under-dispersion test would read that as suspicious uniformity. Neither omnibus method can be applied to this trial in either direction. The individual row tests reported in the narrative are the available evidence."
+    },
+    {
+      "location": "Syndrome Short Test, CGI, Hamilton and Von Zerssen scale ranges",
+      "reason": "The paper states no range, scoring direction or item count for the Syndrome Short Test (which carries its headline claim), the CGI, the Hamilton scale or the Von Zerssen scale. Without stated bounds, GRIMMER and SPRITE cannot be applied without inventing constraints, which the rulebook forbids. Only the MMSE (max 30) and the GCS (max 15) have ranges the paper actually states."
+    },
+    {
+      "location": "Supplementary materials and raw data",
+      "reason": "None provided. This is a 2004 print-era article with no supplementary files, no data-availability statement and no trial registration number; detect_raw_duplication and extract_supplement had no input. Recorded as genuinely absent rather than unreadable. The paper makes no data-availability claim, so this is not a state-but-withhold pattern."
+    },
+    {
+      "location": "Overall adverse-event rate comparison between arms",
+      "reason": "Could not be tested. The placebo numerator is recoverable (10.3% of 68 = 7 patients) but the Cerebrolysin numerator is not, because 16.4% of 78 corresponds to no integer count; the comparison has no valid input."
+    },
+    {
+      "location": "Cross-table duplication checks",
+      "reason": "A thin test by necessity. Only eight continuous summary cells exist in the entire paper, all in Table 1, because every efficacy outcome appears solely in a figure. There is no second table of summary statistics to cross-compare and no supplementary data file. The run that was possible found no duplicated mean/dispersion pairs across the two arms."
+    },
+    {
+      "location": "MCP wrapper defects encountered during the sweep (toolkit, not paper)",
+      "reason": "grim_check and check_sd_or_se both raised a TypeError on a string-typed decimals argument during stage 1, so the intended calls failed. The GCS GRIM checks were rerouted through R scrutiny with decimals pinned explicitly, which answers the identical question. The six check_sd_or_se calls were re-run without decimals, which succeeded but fell back to a flat 1% tolerance instead of the printed precision - a degraded, wider tolerance."
+    },
+    {
+      "location": "table rows Male, Female, Handedness Left, Handedness Right, Left hemisphere, Right hemisphere",
+      "reason": "grim_percentage not run: grim_percentage needs n and this cell carries none, but its col_label prints 'n = 78'. Pass n=78 explicitly to run this check -- it is not used automatically, because an enrolled n is not always the n behind a given row, and this check accuses when n is too large.",
+      "n_cells": 6,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows Male, Female, Handedness Left, Handedness Right, Left hemisphere, Right hemisphere",
+      "reason": "grim_percentage not run: grim_percentage needs n and this cell carries none, but its col_label prints 'n = 68'. Pass n=68 explicitly to run this check -- it is not used automatically, because an enrolled n is not always the n behind a given row, and this check accuses when n is too large.",
+      "n_cells": 6,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows Age (years), Duration of Symptoms (h)",
+      "reason": "check_sd_or_se not run: check_sd_or_se needs n and this cell carries none, but its col_label prints 'n = 78'. Pass n=78 explicitly to run this check -- it is not used automatically, because an enrolled n is not always the n behind a given row, and this check accuses when n is too large.",
+      "n_cells": 2,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows Age (years), Duration of Symptoms (h)",
+      "reason": "check_sd_or_se not run: check_sd_or_se needs n and this cell carries none, but its col_label prints 'n = 68'. Pass n=68 explicitly to run this check -- it is not used automatically, because an enrolled n is not always the n behind a given row, and this check accuses when n is too large.",
+      "n_cells": 2,
+      "source": "dispatcher"
+    }
+  ],
+  "limitations": [
+    "FIGURES WERE NOT READ. This agent reads text and tables; the figure-extraction pass is opt-in and was not run in either stage. That matters more here than in most papers: all three figures are data figures, and every efficacy value in the study -- every mean, every change score, for all eight instruments at all seven visits -- exists only as marks on them. Even had they been read, values digitised from a plot are barred from the exact-arithmetic checks, and no caption states what the error bars represent, so no dispersion and hence no effect size could have been recovered.",
+    "The paper's principal claim was not checkable. The significant Syndrome Short Test result that the abstract, Discussion and title all rest on has no exact p-value, no test statistic, no degrees of freedom, no group means and no dispersions anywhere in the text or tables. This is the specific thing that could not be resolved, and it is why the verdict is `questionable` rather than either of the alternatives -- the arithmetic that could be checked largely passed, and the claim that matters could not be reached at all.",
+    "Analysis rests on a markdown extraction of the PDF. Two extraction artefacts were visible and were worked around: the plus-or-minus symbol in Table 1 renders as `/C6` and the footnote marker as `(cid:2)`, and Table 2's placebo column header is truncated mid-word (\"Placebo (n\"), losing its printed arm size. Neither affects the findings: both impossible percentages come from continuous prose sentences rather than table cells, and the arm sizes used (78 and 68) were taken from the Safety paragraph, which states them in full. No finding rests on a single ambiguous cell.",
+    "Both `impossible` findings were cross-checked against R `scrutiny` before being reported, and the two engines agreed in each case. No `impossible` here rests on one engine's word, and none rests on a range or scale bound that we supplied -- both use denominators the paper states explicitly.",
+    "This system reads one paper and reaches no network. Two questions that a reader needs in order to weigh the arithmetic anomalies are outside its reach entirely: whether similar errors appear in other papers by the same authors or the same sponsor, and how the reported effects compare with other trials of Cerebrolysin in acute stroke. The interpretation of the safety-paragraph findings is therefore partly ours and partly the reader's.",
+    "No effect size could be computed for any outcome, so no external plausibility benchmark could be applied. The paper reports no group means, dispersions, effect estimates or confidence intervals for any efficacy comparison, which rules out check_effect_plausibility entirely.",
+    "Two stage-1 findings were downgraded and are recorded here rather than in the findings list. First, the sweep flagged that constipation is listed among adverse events \"with an incidence rate of greater 4%\" while its Cerebrolysin rate is 3.8%; this is DISCARDED, because the placebo rate in the same sentence is 4.4% and listing an event that exceeds a threshold in either arm is standard practice. Second, the sweep's check_sd_or_se runs returned `suspicious` on all six Table 1 dispersion rows with a likely reading of SD; that verdict is NOT passed on, because both readings clear the arithmetic ceiling on every row, the footnote states SEM explicitly, and the SEM reading is the domain-sensible one -- an age SD of 1.17 years in a cohort restricted to 45-85 would not be credible, whereas the implied SD of about 10.3 years is right for a stroke cohort.",
+    "The baseline-similarity result was checked in the direction the rulebook requires and does NOT show the too-similar signature. Recomputed baseline p-values are 0.59 for sex and 0.40 for side of stroke, with handedness degenerate (1 versus 0 left-handed patients, Fisher exact p = 1.0 and Pearson chi-squared invalid at expected counts near 0.5). These are ordinary mid-range values, not the uniformly near-1 pattern that indicates non-random allocation. The omnibus tests could not be applied in either direction, because allocation was in blocks of 12 stratified by study centre, which forces baseline balance by construction."
+  ],
+  "coverage_summary": {
+    "stats_found": 78,
+    "stats_checked": 61,
+    "tools_run": [
+      "extract_pdf",
+      "statcheck",
+      "grim_percentage",
+      "grim_sweep",
+      "r_grim_ground_truth",
+      "check_summation_batch",
+      "check_table",
+      "recalc_chi_squared",
+      "check_sd_or_se",
+      "bayesian_table1_dispersion",
+      "detect_duplication",
+      "flag_round_n",
+      "multiplicity_report"
+    ],
+    "tables_checked": [
+      "Table 1 (Selected demographic data and baseline disease characteristics)",
+      "Table 2 (Patients with serious adverse events)"
+    ]
+  },
+  "questions_for_authors": [
+    {
+      "question": "The Safety section states that 78 patients received Cerebrolysin and that all randomised patients were included in the safety analysis set, then reports that \"16.4% of Cerebrolysin patients ... experienced at least one AE\". No whole number of patients out of 78 gives 16.4% (12/78 = 15.4%, 13/78 = 16.7%). Could you confirm the numerator and denominator behind 16.4%? For reference, 16.4% is an exact share of 67 (11/67 = 16.42%) and of 146 (24/146 = 16.44%).",
+      "why": "Settles the headline finding, and distinguishes a wrong-denominator slip from a transcription error. Also determines whether the between-arm adverse-event comparison can be reconstructed.",
+      "finding_ids": [
+        "ae_incidence_cerebrolysin_grim_impossible"
+      ]
+    },
+    {
+      "question": "The disposition paragraph reports 78 patients randomised to Cerebrolysin, 67 completers, 6 deaths and 3 consent withdrawals, which accounts for 76. The placebo arm reconciles exactly (52 + 6 + 1 + 9 = 68). What became of the remaining two Cerebrolysin patients, and should the stated total of 25 discontinuations be 27?",
+      "why": "Completes the participant accounting for the treatment arm, which is currently two patients short and cannot be reconciled from anything printed.",
+      "finding_ids": [
+        "cerebrolysin_arm_disposition_shortfall"
+      ]
+    },
+    {
+      "question": "The Methods declare an intention-to-treat analysis with last-observation-carried-forward (n = 146), and the Fig. 2 caption reports n = 146. The Results attribute the loss of the day-90 effect to \"the reduced number of patients available for analysis at this timepoint (119 patients; 67 Cerebrolysin vs 52 Placebo)\". Was the day-90 analysis run on the 146-patient carried-forward population or on the 119 completers?",
+      "why": "Resolves whether the stated explanation for the null day-90 result is available under the declared method, and which population the day-90 figures represent.",
+      "finding_ids": [
+        "itt_locf_vs_day90_n_contradiction"
+      ]
+    },
+    {
+      "question": "For the CNS section A1 motor subscore, the between-group comparison is reported at p<0.1 while the significant result (p<0.05 at days 1, 3, 7, 14 and 21) is described as \"the improvement from baseline\" in the Cerebrolysin group \"in contrast to the placebo group\", and the Methods list paired t and Wilcoxon signed-rank tests for within-group comparisons. Were the day 1-21 significance claims between-group comparisons or within-group change-from-baseline tests, and is a between-group test of the change scores available?",
+      "why": "Determines whether the Discussion's claim of \"a significant difference in favour of Cerebrolysin\" on the motor subscore is supported by a comparison of the two arms or only by each arm against its own baseline.",
+      "finding_ids": []
+    },
+    {
+      "question": "Would it be possible to provide the exact p-values, test statistics and degrees of freedom for the efficacy analyses, together with the group means and standard deviations underlying Figures 1 and 2? At present every efficacy result is reported as a threshold (including one at p<0.015, which does not correspond to the p<0.05 criterion stated in the Methods), and the Syndrome Short Test means and dispersions appear nowhere in the text or tables.",
+      "why": "Without exact values and dispersions, the paper's headline cognitive finding cannot be verified or meta-analysed by any reader, and the multiplicity burden across the seventeen reported comparisons cannot be assessed.",
+      "finding_ids": [
+        "efficacy_p_values_all_thresholded",
+        "nonstandard_alpha_threshold"
+      ]
+    }
+  ],
+  "report_markdown": "This is an exploratory, sponsor-run, multicentre randomised trial of Cerebrolysin 50 mL daily for 21 days against saline placebo in 146 patients with a first acute ischaemic middle-cerebral-artery stroke, recruited within 24 hours of onset at eight sites in Austria, the Czech Republic and Hungary. Both arms also received aspirin and pentoxifylline. Eight instruments were administered at seven visits over 90 days. The paper concludes that Cerebrolysin is safe and well tolerated, that it did not improve the neurological score, the Barthel Index or global clinical impression, and that it did improve cognition on the Syndrome Short Test.\n\n## What verifies\n\nWhere this paper prints primitive numbers, they hold up. Every count in Table 1 sums exactly to its arm size. Every percentage in Table 1 is an achievable share of 78 or 68. The Table 2 serious-adverse-event sub-rows sum exactly to their totals in both arms, and both death columns do too. Six of the seven adverse-event percentages in the Safety section recover precisely the counts printed beside them. Both baseline Glasgow Coma Scale means are attainable from integer scores at the stated sample sizes, confirmed against R. The arm sizes show no round-number signature, and the two arms' baseline summary statistics show no sign of copy-paste. Nine of the eleven participant-accounting and column sums reconcile to the unit.\n\nThat matters for how the failures should be read. The anomalies here are localised to one short paragraph and one arm's disposition, not spread through the paper. This is not an incoherent document.\n\n## On baseline balance\n\nThe paper asserts \"no significant group differences were observed at baseline\" without printing a single p-value, so the claim was tested from the counts. Sex gives p = 0.59 and side of stroke p = 0.40. Handedness is degenerate -- one left-handed patient against zero -- with expected counts near 0.5, so only Fisher's exact test is defensible there, at p = 1.0.\n\nThese are ordinary mid-range values, not the uniformly near-1 pattern that signals allocation which was not random. The authors' claim is corroborated rather than merely asserted. The omnibus similarity tests cannot be applied to this trial in either direction: allocation was in blocks of 12 stratified by study centre, which forces baseline balance by construction, and three categorical rows would be far too thin a basis in any case.\n\n## On what the paper does not print\n\nThe largest problem here is not an anomaly but a property of the reporting, and it is severe enough to change how everything else should be read.\n\nNot one exact p-value appears anywhere. Not one test statistic -- no t, no F, no chi-squared, no U -- and no degrees of freedom. Not one effect estimate, standard error of a difference, or confidence interval, for any comparison in the paper, including the eight separate assertions that something showed no significant or no clinically important difference. And every efficacy value, meaning every mean and every change score for all eight instruments at all seven visits, exists only as marks on three charts.\n\nThe consequence is exact. The finding on which the abstract, the Discussion and the title all rest -- \"A significant improvement of cognitive function of the patients on Cerebrolysin was observed in the Syndrome Short Test\" -- cannot be checked by any arithmetic means available. Nor can the null claims be bounded in the other direction: with no interval anywhere, \"well tolerated and safe\" across 12 deaths and 13 serious adverse events is equally compatible with a substantial harm the study had no power to detect. Recomputing those comparisons from the counts does confirm non-significance (Fisher p = 0.77 for serious events, p = 1.0 for deaths), but non-significance at those event counts is not evidence of equivalence, and the paper offers nothing that would distinguish the two.\n\n## On the standard-error convention\n\nTable 1 reports dispersion as the standard error of the mean rather than the standard deviation. Both readings clear the arithmetic ceiling on every row, the footnote is explicit, and the standard-error reading is the domain-sensible one: an age standard deviation of 1.17 years in a cohort restricted to 45-85 would not be credible, whereas the implied standard deviation of about 10.3 years is right for a stroke cohort. So this is not mislabelling, and it is not reported as such -- about 40% of papers reporting \"SD\" report the standard error instead, and the direction of the error here is the harmless one. It does, however, make baseline spread invisible at a glance and makes the two arms look more alike than the data warrant.\n\nOne loose end could not be closed. Under the stated standard-error reading, the Cerebrolysin Glasgow Coma Scale implies a standard deviation of 1.77, which is 88% of the maximum possible for the stated 11-15 range, while the mean sits at 14.1 -- only 0.9 below the ceiling. The bound the available tool uses ignores the mean; the tighter mean-conditional bound is what would settle whether that value is attainable, and no tool in the set computes it.\n\n## On the shape of the efficacy argument\n\nFour features compound, and none of them is individually damning in a study the authors correctly label exploratory.\n\nInstruments that were null overall are rescued at the item level -- two of the Barthel Index's ten items, with the other eight unreported -- or in a subgroup, as with the MMSE, null across 146 patients and p<0.001 in 74 of them. The between-group test on the motor subscore reached only p<0.1, and the significant claim drawn from it comes from within-arm change scores. Two of the eight prespecified instruments receive no number at all, anywhere, despite being collected at seven visits. And the one p-value not stated against a conventional bound is p<0.015, a threshold appearing nowhere in the Methods and matching no standard convention -- the shape you get by rounding an exact value upward, which implies exact values existed and were not printed.\n\nTogether these describe a reporting pattern in which the comparisons that reached significance are the ones given numbers. Because no exact p is printed anywhere, the multiplicity burden across at least seventeen comparisons cannot be quantified even approximately: the tool evaluated none of them.\n\n## Reading the arithmetic failures fairly\n\nThe two impossible percentages both sit in the same short safety paragraph, and the modal cause of an impossible percentage is a typographical or transcription slip, not fabrication. One of them is demonstrably harmless -- the underlying counts are stated plainly beside it and match Table 2 exactly. The other is not recoverable in the same way, and it is the only quantitative support the paper offers for one of its two headline conclusions.\n\nThe checkable parts of this paper largely check out; the part that carries its conclusion cannot be checked at all. I would want the exact statistics and the figure-level data before relying on the cognitive finding."
+}

@@ -1,0 +1,62 @@
+# Gold-standard fixture: cesarean wound-healing RCT (Maged et al.).
+# Source review: benchmarks/paper_reviews/papers/wound_healing.md
+paper: wound_healing
+pdf: benchmarks/paper_reviews/papers/wound_healing.pdf
+gold_review: benchmarks/paper_reviews/papers/wound_healing.md
+verdict_expected: does_not_reconcile
+# The tortured-phrases track runs locally (free) during the eval and
+# must report ran with zero guarded fingerprints on this gold paper.
+tortured_expected: none
+
+key_findings:
+  - id: bmi_inclusion_contradiction
+    weight: critical
+    description: >
+      Inclusion criteria require BMI > 30 (women with BMI < 30 explicitly
+      excluded), yet Table 2 reports BMI range 23.0-45.0 (mean 34.5 ± 3.6).
+      One of these statements must be wrong; a uniform spread would imply
+      ~121 participants below the inclusion cutoff.
+    aliases: ["BMI", "inclusion criteria", "range 23", "contradiction",
+              "exclusion"]
+    reachable: true
+
+  - id: hidden_extreme_p
+    weight: major
+    description: >
+      Results reported only as "p<0.001" conceal astronomically small exact
+      values on recalculation: BMI t=6.56 → p≈1.7e-10 (Cohen's d ≈ 1), blood
+      loss t=4.06 → p≈6e-5, subcutaneous depth t=3.68 → p≈2.7e-4, suture-type
+      χ²=15.47 → p≈8.4e-5.
+    aliases: ["p<0.001", "recalculated", "hidden p", "STALT", "1e-10"]
+    reachable: true
+
+  - id: registration_incoherence
+    weight: major
+    description: >
+      The clinicaltrials.gov registration (NCT03354078) is retrospective and
+      self-contradictory across versions: registered five months after the
+      study started; completion dates moved forward then backdated; the
+      final update retroactively adds 180 participants (220 → 400).
+    aliases: ["registration", "NCT", "clinicaltrials.gov", "retrospective"]
+    reachable: false  # requires web/registry access the agent does not have
+
+  - id: implausible_followup
+    weight: minor
+    description: >
+      400 women recruited with only 3 lost to follow-up — unlikely, though
+      technically possible.
+    aliases: ["lost to follow-up", "dropout", "397"]
+    reachable: true
+
+  - id: author_integrity_context
+    weight: minor
+    description: >
+      An independent published analysis raises data-integrity concerns across
+      22 RCTs by the same author (baseline distributions unlikely under
+      proper randomization).
+    aliases: ["Maged", "22 RCTs", "data integrity"]
+    reachable: false  # requires literature search
+
+must_not_say:
+  - "results (are|appear) (sound|trustworthy)"
+  - "no (significant|notable) (anomalies|inconsistencies) (were )?found"

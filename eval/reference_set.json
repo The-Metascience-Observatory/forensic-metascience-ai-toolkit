@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "what_this_is": "The FIXED set of papers run against every build whose stamp changes. Fixed on purpose: the same papers on every build makes this a regression instrument you can diff build against build, where a rotating set would only give you fresh examples. Chosen 2026-08-29; changing the set resets the comparison, so treat it as a versioned decision and record why.",
+  "why_it_exists": "Greg Fitzgerald, 2026-08-29: the run horizon makes stale output inaccessible but does not make current output EXIST. Measured that morning: 3 current runs in the corpus, two of them incidental gate tests. An agent asked what the system outputs gets an almost empty set, and an agent facing an empty set reaches for a stale run or reasons from nothing.",
+  "selection_rationale": "Four papers covering both extraction paths, both a suspicious and an ordinary literature, and the one reader nothing else exercises. The working corpus is fraud-enriched BY CONSTRUCTION -- the directory is named `high_value_pdfs_to_run_on` and it was assembled by ranking targets for expected yield -- so a reference set drawn only from it would tell you what the system does on suspicious papers, which is the wrong denominator for `is our output normal`. Hence the control. Conversely all 48 eval controls resolve to publisher XML and NONE of the 78 eval papers carries a supplement file, so PDF-path and supplement coverage can only come from the corpus.",
+  "papers": [
+    {
+      "id": "10.1002--eat.24415",
+      "root": "tests/fixtures/papers/high_value_pdfs_to_run_on",
+      "path_exercised": "publisher XML + a .docx SUPPLEMENT",
+      "why": "The only supplement coverage available anywhere: 0 of 78 eval papers carry a .docx or .xlsx. Also the paper whose Table 1 footnote reads `Note: N = 107` -- the table's own stated denominator, which prepass dropped for two weeks while the model received it. If that asymmetry ever returns, it returns here first.",
+      "n_tables": 9
+    },
+    {
+      "id": "10.1038--s41537-025-00576-3",
+      "root": "tests/fixtures/papers/high_value_pdfs_to_run_on",
+      "path_exercised": "publisher XML, composite tables with multi-response sections",
+      "why": "The paper that produced 119 false `suspicious` verdicts out of 244, all of them from multi-response medication sections whose counts sum ABOVE the column total. It is the regression case for the section veto (d15bd9f) and for anything that touches denominators.",
+      "n_tables": 9
+    },
+    {
+      "id": "10.1073--pnas.1211286109",
+      "root": "tests/fixtures/papers/high_value_pdfs_to_run_on",
+      "path_exercised": "PDF text layer, no publisher XML",
+      "why": "The ONLY PDF-path coverage in the whole reference set, and the path the preregistered eval cannot reach: 63 of its 78 papers skip the PDF path and every control resolves to XML. A build that breaks PDF extraction would otherwise be invisible until a real paper hit it.",
+      "n_tables": 1
+    },
+    {
+      "id": "10.3389--fpsyg.2019.02554",
+      "root": "eval/ground_truth/papers",
+      "path_exercised": "publisher XML, ordinary psychology paper",
+      "why": "The control, and the reason the set is not purely fraud-enriched. Labelled `control` in eval/ground_truth/manifest.csv, 4 XML tables, Frontiers in Psychology -- MO's target literature. What the system does to an unremarkable paper is the number that matters most, and no corpus paper can supply it.",
+      "n_tables": 4
+    }
+  ],
+  "trigger": {
+    "rule": "Run the set when the BUILD STAMP changes, not on every commit.",
+    "fields": ["schema_version", "registry_sha256", "prompt_sha256"],
+    "why": "Ten commits on 2026-08-28 left `registry_sha256` byte-identical -- the tool surface did not move -- so that was zero build changes, not ten. Triggering per commit would have cost roughly ten times what the information was worth.",
+    "refuses_on": "git_dirty. A run stamped from a dirty tree records a sha that names a commit PLUS uncommitted edits, so it does not identify a build at all and cannot serve as a reference. Observed on this session's own first run."
+  },
+  "cost": "Roughly $11-22 per paper, so $45-90 per genuine build change. Budget with --budget-usd 22; a $6 cap truncated both analysts before either emitted findings and produced nothing for $4.79."
+}

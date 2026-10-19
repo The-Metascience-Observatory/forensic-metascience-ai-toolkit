@@ -1,0 +1,299 @@
+{
+  "paper_id": "paper",
+  "mode": "parallel",
+  "schema_version": "2.0",
+  "run_id": "r_10a87ba9b98aec53",
+  "analysed_at": "2026-09-02T14:52:43Z",
+  "version": "1.15.0",
+  "llm_backend": "grok",
+  "model": "grok-4.6",
+  "effort": "high",
+  "stages": {
+    "tool_agent": {
+      "model": "grok-4.6",
+      "cost_usd": 0.53028984,
+      "input_tokens": 238556,
+      "output_tokens": 45013,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 2865152,
+      "wall_seconds": 858.57,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "check_count_percent",
+      "tool_calls": 90,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.53028984,
+          "outputTokens": 45013,
+          "inputTokens": 238556
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "internet": false
+    },
+    "science_agent": {
+      "model": "grok-4.6",
+      "cost_usd": 0.19014276,
+      "input_tokens": 157884,
+      "output_tokens": 43314,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 791552,
+      "wall_seconds": 853.81,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "check_effect_plausibility",
+      "tool_calls": 39,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.19014276,
+          "outputTokens": 43314,
+          "inputTokens": 157884
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "internet": true,
+      "n_web_calls": 3
+    },
+    "adjudicator": {
+      "model": "grok-4.6",
+      "cost_usd": 0.10786908,
+      "input_tokens": 130453,
+      "output_tokens": 18259,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 528128,
+      "wall_seconds": 318.41,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "search_tool",
+      "tool_calls": 24,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.10786908,
+          "outputTokens": 18259,
+          "inputTokens": 130453
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "internet": false
+    },
+    "tool_agent_retry": {
+      "n_attempts": 1,
+      "cost_usd": 0.32239038,
+      "wall_seconds": 580.0392748329905,
+      "input_tokens": 205817,
+      "output_tokens": 37494,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 2268672,
+      "source": "spend_ledger"
+    },
+    "text_forensics": {
+      "cost_usd": 0.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "ran": true,
+      "is_error": false,
+      "error_subtype": "ran_clean",
+      "return_code": 0,
+      "wall_seconds": 1.26,
+      "n_findings_injected": 0,
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 4452 words"
+    }
+  },
+  "limitations": [
+    "the tool_agent stage returned a TRUNCATED report (1 finding(s), no tools recorded in its coverage) (78 forensic calls on its ledger); retried once",
+    "the tool_agent retry was empty too; its coverage is unusable",
+    "the tool_agent ran 78 forensic tool call(s) but its report records no tools in `coverage`; those results did not survive into the docket and this review's coverage is understated"
+  ],
+  "total_cost_usd": 1.150692,
+  "exhaustive_checks": {
+    "n_tables": 6,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 35,
+      "n_blocks": 3,
+      "ran": true,
+      "severity": "indeterminate",
+      "max_identical_pairs": 2,
+      "n_duplicate_groups": 1,
+      "result": {
+        "severity": "indeterminate",
+        "explanation": "2 identical (mean, SD) pair(s) shared across independent blocks (coincidence probability \u2248 0.42). Confirm the sources describe different participants before treating this as a data-integrity anomaly.",
+        "n_blocks": 3,
+        "n_cells_total": 35,
+        "n_comparisons": 392,
+        "max_identical_pairs": 2,
+        "chance_probability": 0.4218461408258641,
+        "duplicate_groups": [
+          {
+            "kind": "cross_source_pair",
+            "block_a": "cref='#/texts/108'",
+            "block_b": "Table 5",
+            "same_sample_caveat": false,
+            "is_round_value": true,
+            "is_bernoulli_pair": false,
+            "k_pairs": 2,
+            "values": [
+              [
+                4.4,
+                1.0
+              ],
+              [
+                37.7,
+                1.1
+              ]
+            ],
+            "occurrences": [
+              {
+                "block": "cref='#/texts/108'",
+                "cells": [
+                  "Subcutaneous tissue depth (cm)"
+                ]
+              },
+              {
+                "block": "cref='#/texts/108'",
+                "cells": [
+                  "Gestational age at time of CS"
+                ]
+              },
+              {
+                "block": "Table 5",
+                "cells": [
+                  "Subcutaneous tissue depth (cm)"
+                ]
+              },
+              {
+                "block": "Table 5",
+                "cells": [
+                  "Gestational age at time of CS"
+                ]
+              }
+            ],
+            "severity": "indeterminate"
+          }
+        ],
+        "assumptions": {
+          "span_mean": 750.4,
+          "span_sd": 178.1,
+          "decimals": [
+            2,
+            2
+          ],
+          "p_pair": 0.0036730945821854917,
+          "note": "spans inferred from observed values; assumes independent cells and mean\u22a5SD (slightly conservative)."
+        },
+        "caveats": [
+          "Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly.",
+          "Some matched values are round (integers/halves) and recur by chance; their severity was reduced."
+        ],
+        "methodology": "Compared 392 cross-source (mean, SD) pairs across 3 blocks plus within-table rows/columns. Strongest independent overlap: 2 identical pair(s); coincidence probability \u2248 0.42 after correcting for the number of comparisons."
+      }
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 35,
+      "n_checked": 0,
+      "n_skipped_undeclared": 35,
+      "n_skipped_unstated_bounds": 0,
+      "n_skipped_model_output": 0,
+      "skipped_model_output_why": {},
+      "results": [],
+      "worst": null
+    },
+    "claims": {
+      "check": "claim_vs_printed_p",
+      "alpha": null,
+      "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+      "n_interpretations": 0,
+      "n_checked": 0,
+      "n_refused": 0,
+      "refusals": {},
+      "results": [],
+      "worst": null,
+      "why": "the paper's alpha was not stated, so no claim can be judged against it",
+      "n_contradictions": 0
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_computed": 0,
+    "n_asserted": 6,
+    "n_absent": 2,
+    "corroborated": true
+  },
+  "git_dirty": true,
+  "git_sha": "4a7971102983",
+  "prompt_sha256": "ab728557bdd0c064",
+  "registry_sha256": "0b06c178cea5ee68",
+  "backend_binary_version": "grok 1.0.13 (5e9a58528b76) [stable]",
+  "backend_default_model": "grok-4.6",
+  "sandbox_limitation": "Grok's `search_tool` cannot be denied: it is the only route to the forensic MCP tools. This run's sandbox is weaker than a Claude run's.",
+  "mode_requested": "parallel"
+}

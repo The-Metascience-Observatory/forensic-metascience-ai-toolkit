@@ -1,0 +1,2058 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "1.0",
+  "paper_id": "10.1001--jamanetworkopen.2023.37679",
+  "paper_title": "Suicide Ideation, Plans, and Attempts Among Military Veterans vs Nonveterans With Disability",
+  "paper_metadata": {
+    "authors": "Rebecca K Blais, Zhigang Xie, Anne V Kirby, Nicole M Marlow",
+    "journal": "JAMA Network Open",
+    "year": "2023",
+    "doi": "10.1001/jamanetworkopen.2023.37679",
+    "study_design": "Cross-sectional secondary analysis of the 2015-2020 National Survey on Drug Use and Health (NSDUH), complex survey design, weighted"
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "S1",
+        "label": "NSDUH 2015-2020 pooled cross-sectional survey analysis",
+        "design": "cross_sectional",
+        "n": 231099,
+        "unit_of_analysis": "individual adult respondent (survey-weighted to 236,551,727 US adults)",
+        "clustered": true,
+        "preregistered": false,
+        "n_per_group": [
+          {
+            "label": "veteran (unweighted)",
+            "n": 13859
+          },
+          {
+            "label": "nonveteran (unweighted)",
+            "n": 217240
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "NSDUH participants 2015-2020",
+            "n": 315661,
+            "unit": "respondents"
+          },
+          {
+            "stage": "aged 18 years or older",
+            "n": 241675,
+            "unit": "respondents"
+          },
+          {
+            "stage": "had disability information",
+            "n": 239631,
+            "unit": "respondents"
+          },
+          {
+            "stage": "had suicide ideation/planning/attempt information",
+            "n": 238490,
+            "unit": "respondents"
+          },
+          {
+            "stage": "had veteran status",
+            "n": 238360,
+            "unit": "respondents"
+          },
+          {
+            "stage": "analytic sample with complete covariates",
+            "n": 231099,
+            "unit": "respondents"
+          },
+          {
+            "stage": "multiple-imputation sensitivity analysis sample (eTable 3)",
+            "n": 241675,
+            "unit": "respondents"
+          }
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "study_id": "S1",
+        "statement": "Suicide ideation, planning and attempt among people with disability differ by veteran status (disability status x veteran status interaction).",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "The current study examined whether suicide ideation, planning, and attempt among those people with disability (self-reported functional difficulty in physical, mental, or emotional domains) differed by veteran status.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "H2",
+        "study_id": "S1",
+        "statement": "Within those reporting suicidal ideation, risk of progressing to planning or attempt differs by disability and veteran status (ideation-to-action subgroup analysis).",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "A subgroup analysis was performed for individuals with suicide ideation, consistent with the ideation-to-action framework,23,24,25,26 which suggests risk for suicide is truly most problematic among those with suicidal thoughts.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "H3",
+        "study_id": "S1",
+        "statement": "Findings are robust to missing data (multiple-imputation sensitivity analyses, eTables 3 and 4).",
+        "status": "exploratory",
+        "appears_in_abstract": false,
+        "confidence": "high",
+        "provenance_quote": "Sensitivity analyses were performed with multiple imputation by chained equations for all missing values to assess bias.",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "variables": [
+      {
+        "id": "V_suicide",
+        "name": "Suicide-related outcome",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "n_categories": 4,
+        "levels": [
+          "no risk for suicide (reference)",
+          "suicidal ideation only",
+          "suicide planning without attempt",
+          "suicide attempt"
+        ],
+        "derivation": "recoded",
+        "derived_from": "3 dichotomously scored past-12-month questions on thinking about killing oneself, making plans, and trying",
+        "confidence": "high",
+        "provenance_quote": "Respondents were then categorized into 4 groups: (1) no risk for suicide (reference group, if no to question 1); (2) suicidal ideation only (if yes to question 1, and no to questions 2 and 3); (3) suicide planning without attempt (if yes to questions 1 and 2, and no to question 3); and (4) suicide attempt (if yes to questions 1 and 3, and either yes or no to question 2).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_disability",
+        "name": "Number of disabling limitations",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "n_categories": 4,
+        "levels": [
+          "no disabling limitations (reference)",
+          "1 limitation",
+          "2 limitations",
+          "3 or more limitations"
+        ],
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "derivation": "sum_of_items",
+        "derived_from": "6 yes/no functional difficulty questions (hearing, seeing, concentrating, walking, dressing/bathing, errands alone)",
+        "confidence": "high",
+        "provenance_quote": "Responses were dichotomized to indicate presence of any functional disability with the following categorizations: (1) no functional disability (reference group, if no to all 6 questions) and (2) any functional disability (if yes to any of the 6 questions) and were coded by the number of disabling limitations, ranging from 0 to 3 or more.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_veteran",
+        "name": "Veteran status",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "n_categories": 2,
+        "levels": [
+          "nonveteran (reference)",
+          "veteran"
+        ],
+        "derivation": "recoded",
+        "derived_from": "single question: Have you ever been in the United States Armed Forces?",
+        "confidence": "high",
+        "provenance_quote": "Veteran status was determined using the question: \u201cHave you ever been in the United States Armed Forces?\u201d Responses were dichotomized to indicate veteran status as (1) nonveteran (reference group, if no) and (2) veteran (if yes).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_aor",
+        "name": "Adjusted odds ratio from multinomial logistic regression",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "lower_bound": 0,
+        "derivation": "other",
+        "derived_from": "exponentiated multinomial logistic regression coefficient with disability x veteran interaction, survey-weighted",
+        "confidence": "high",
+        "provenance_quote": "Multivariable adjusted multinomial logistic regression with an interaction term for disability status \u00d7 veteran status estimated adjusted odds ratios (AORs) and 95% CIs for suicide ideation, planning, and attempt by disability and veteran status.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_ame",
+        "name": "Average marginal effect",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "other",
+        "derived_from": "marginal effects computed from the fitted multinomial model",
+        "confidence": "high",
+        "provenance_quote": "Abbreviations: AME, average marginal effect; AOR, adjusted odds ratio; NA, not applicable.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_wtpct",
+        "name": "Weighted percentage of respondents in a characteristic category",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "proportion",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "units": "percent",
+        "derivation": "percentage",
+        "derived_from": "survey-weighted category count divided by survey-weighted group total",
+        "confidence": "high",
+        "provenance_quote": "Analyses utilized NSDUH\u2019s weighted data to produce nationally representative estimates.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_wtn",
+        "name": "Weighted number of US adults in a characteristic category",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "lower_bound": 0,
+        "derivation": "other",
+        "derived_from": "sum of person-level analysis survey weights",
+        "confidence": "high",
+        "provenance_quote": "Sociodemographic and Clinical Characteristics of 231099 Respondents, Representing 236551727 US Adults, by Veteran Status",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "tests": [
+      {
+        "id": "T2_vet_1lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 1 Limitation row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "outcome_var": "V_suicide",
+        "predictor_vars": [
+          "V_disability"
+        ],
+        "effect_size": "AOR 1.50",
+        "ci": "1.01 to 2.23",
+        "p_value": 0.04,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "1.50 (1.01 to 2.23)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_2lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 2 Limitations row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.60",
+        "ci": "1.59 to 4.24",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.60 (1.59 to 4.24)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_3lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / \u22653 Limitations row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.27",
+        "ci": "1.34 to 3.86",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "2.27 (1.34 to 3.86)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 1 Limitation row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 0.81",
+        "ci": "0.45 to 1.46",
+        "p_value": 0.48,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.81 (0.45 to 1.46)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 2 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 1.77",
+        "ci": "0.73 to 4.29",
+        "p_value": 0.21,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.77 (0.73 to 4.29)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / \u22653 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.14",
+        "ci": "1.13 to 4.07",
+        "p_value": 0.02,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "2.14 (1.13 to 4.07)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 1 Limitation row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.60",
+        "ci": "1.46 to 4.66",
+        "p_value": 0.001,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "2.60 (1.46 to 4.66)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / 2 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 1.39",
+        "ci": "0.64 to 2.99",
+        "p_value": 0.4,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.39 (0.64 to 2.99)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_vet_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Veteran / \u22653 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.57",
+        "ci": "1.13 to 5.82",
+        "p_value": 0.02,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "2.57 (1.13 to 5.82)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_1lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 1 Limitation row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.02",
+        "ci": "1.80 to 2.27",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.02 (1.80 to 2.27)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_2lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 2 Limitations row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.32",
+        "ci": "1.96 to 2.74",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.32 (1.96 to 2.74)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_3lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / \u22653 Limitations row, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.65",
+        "ci": "2.30 to 3.06",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.65 (2.30 to 3.06)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 1 Limitation row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.43",
+        "ci": "2.04 to 2.90",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.43 (2.04 to 2.90)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 2 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.93",
+        "ci": "2.39 to 3.61",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.93 (2.39 to 3.61)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / \u22653 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 3.20",
+        "ci": "2.28 to 4.49",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "3.20 (2.28 to 4.49)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 1 Limitation row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.13",
+        "ci": "1.78 to 2.55",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.13 (1.78 to 2.55)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / 2 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 2.93",
+        "ci": "2.40 to 3.57",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "2.93 (2.40 to 3.57)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_nv_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, Nonveteran / \u22653 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "effect_size": "AOR 3.68",
+        "ci": "2.69 to 5.05",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "3.68 (2.69 to 5.05)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_nolim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, No limitations / Veteran vs Nonveteran, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.12",
+        "ci": "0.88 to 1.42",
+        "p_value": 0.35,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.12 (0.88 to 1.42)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_nolim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, No limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.71",
+        "ci": "1.17 to 2.49",
+        "p_value": 0.006,
+        "n": 231099,
+        "correction_applied": "none",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "veterans were 71% more likely to report planning relative to nonveterans (AOR, 1.71; 95% CI, 1.17-2.49)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_nolim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, No limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.98",
+        "ci": "0.60 to 1.59",
+        "p_value": 0.92,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.98 (0.60 to 1.59)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_1lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 1 Limitation / Veteran vs Nonveteran, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.83",
+        "ci": "0.59 to 1.18",
+        "p_value": 0.3,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.83 (0.59 to 1.18)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 1 Limitation / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.57",
+        "ci": "0.34 to 0.95",
+        "p_value": 0.03,
+        "n": 231099,
+        "correction_applied": "none",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "VWD had 43% lower odds of planning compared with nonveterans (AOR, 0.57; 95% CI, 0.34-0.95)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 1 Limitation / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.19",
+        "ci": "0.70 to 2.04",
+        "p_value": 0.52,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.19 (0.70 to 2.04)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_2lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 2 Limitations / Veteran vs Nonveteran, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.25",
+        "ci": "0.81 to 1.95",
+        "p_value": 0.32,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.25 (0.81 to 1.95)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 2 Limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.03",
+        "ci": "0.45 to 2.38",
+        "p_value": 0.95,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.03 (0.45 to 2.38)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, 2 Limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.46",
+        "ci": "0.24 to 0.88",
+        "p_value": 0.02,
+        "n": 231099,
+        "correction_applied": "none",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "VWD had 54% lower odds of attempt compared with nonveterans (AOR, 0.46; 95% CI, 0.24-0.88)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_3lim_ide",
+        "test_type": "logistic_regression",
+        "location": "Table 2, \u22653 Limitations / Veteran vs Nonveteran, Suicidal ideation",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.96",
+        "ci": "0.58 to 1.58",
+        "p_value": 0.87,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.96 (0.58 to 1.58)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 2, \u22653 Limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.14",
+        "ci": "0.65 to 2.03",
+        "p_value": 0.65,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.14 (0.65 to 2.03)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_c_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 2, \u22653 Limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H1",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.68",
+        "ci": "0.32 to 1.45",
+        "p_value": 0.32,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "0.68 (0.32 to 1.45)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / 1 Limitation row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 0.49",
+        "ci": "0.24 to 0.97",
+        "p_value": 0.04,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "0.49 (0.24 to 0.97)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / 2 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 0.70",
+        "ci": "0.27 to 1.85",
+        "p_value": 0.48,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.70 (0.27 to 1.85)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / \u22653 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 0.93",
+        "ci": "0.44 to 1.94",
+        "p_value": 0.84,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.93 (0.44 to 1.94)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / 1 Limitation row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.42",
+        "ci": "0.68 to 2.97",
+        "p_value": 0.35,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.42 (0.68 to 2.97)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / 2 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 0.44",
+        "ci": "0.18 to 1.07",
+        "p_value": 0.07,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.44 (0.18 to 1.07)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_vet_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Veteran / \u22653 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.14",
+        "ci": "0.43 to 3.00",
+        "p_value": 0.8,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.14 (0.43 to 3.00)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / 1 Limitation row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.29",
+        "ci": "1.05 to 1.57",
+        "p_value": 0.01,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "1.29 (1.05 to 1.57)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / 2 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.31",
+        "ci": "1.04 to 1.64",
+        "p_value": 0.02,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "1.31 (1.04 to 1.64)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / \u22653 Limitations row, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.30",
+        "ci": "0.92 to 1.86",
+        "p_value": 0.14,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.30 (0.92 to 1.86)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / 1 Limitation row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.09",
+        "ci": "0.90 to 1.31",
+        "p_value": 0.38,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.09 (0.90 to 1.31)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / 2 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.28",
+        "ci": "1.04 to 1.58",
+        "p_value": 0.02,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "1.28 (1.04 to 1.58)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_nv_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, Nonveteran / \u22653 Limitations row, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "effect_size": "AOR 1.36",
+        "ci": "0.98 to 1.89",
+        "p_value": 0.07,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.36 (0.98 to 1.89)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_nolim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, No limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.61",
+        "ci": "1.03 to 2.49",
+        "p_value": 0.04,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "1.61(1.03 to 2.49)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_nolim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, No limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.90",
+        "ci": "0.53 to 1.53",
+        "p_value": 0.69,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.90 (0.53 to 1.53)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_1lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, 1 Limitation / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.61",
+        "ci": "0.35 to 1.05",
+        "p_value": 0.07,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "0.61 (0.35 to 1.05)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_1lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, 1 Limitation / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.17",
+        "ci": "0.63 to 2.18",
+        "p_value": 0.62,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.17 (0.63 to 2.18)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_2lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, 2 Limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.87",
+        "ci": "0.37 to 2.04",
+        "p_value": 0.74,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.87 (0.37 to 2.04)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_2lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, 2 Limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.31",
+        "ci": "0.14 to 0.66",
+        "p_value": 0.002,
+        "n": 231099,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "0.31 (0.14 to 0.66)c",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_3lim_plan",
+        "test_type": "logistic_regression",
+        "location": "Table 3, \u22653 Limitations / Veteran vs Nonveteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 1.14",
+        "ci": "0.58 to 2.25",
+        "p_value": 0.7,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "1.14 (0.58 to 2.25)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T3_c_3lim_att",
+        "test_type": "logistic_regression",
+        "location": "Table 3, \u22653 Limitations / Veteran vs Nonveteran, Suicide attempt",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.75",
+        "ci": "0.31 to 1.81",
+        "p_value": 0.52,
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "0.75 (0.31 to 1.81)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T1_bivariate_block",
+        "test_type": "chi_squared",
+        "location": "Table 1, P value column (18 bivariate association tests of each characteristic against veteran status)",
+        "study_id": "S1",
+        "grouping_var": "V_veteran",
+        "n": 231099,
+        "correction_applied": "none",
+        "confidence": "medium",
+        "provenance_quote": "All evaluated covariates had significant bivariate associations (eTables 1 and 2 in Supplement 1) and were included in adjusted analyses.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "eT3_family",
+        "test_type": "logistic_regression",
+        "location": "eTable 3 (Supplement 1), 30 AOR tests, multiple-imputation sensitivity analysis",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "n": 241675,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "eTable 3. Multiple Imputation Sensitivity Analysis for Adjusteda Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Status (N = 241 675)",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "eT4_family",
+        "test_type": "logistic_regression",
+        "location": "eTable 4 (Supplement 1), 20 AOR tests, imputation sensitivity in the ideation subgroup",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "eTable 4. Multiple Imputation Sensitivity Analysis For Adjusteda Multinomial Logistic Regression Models of Suicide-Related Outcomes Among Those With Suicidal Ideation",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "eT4_1lim_vet_plan",
+        "test_type": "logistic_regression",
+        "location": "eTable 4 (Supplement 1), 1 limitation / Veteran, Suicide planning",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "predictor_vars": [
+          "V_veteran"
+        ],
+        "effect_size": "AOR 0.55",
+        "ci": "0.32 to 0.94",
+        "p_value": 0.028,
+        "correction_applied": "none",
+        "appears_in_conclusions": true,
+        "confidence": "high",
+        "provenance_quote": "0.55 0.028 1.35 0.305",
+        "provenance_verdict": "stitched"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "t2_vet3lim_ideation_p_threshold",
+      "location": "Table 2, Veteran / \u22653 Limitations row, Suicidal ideation columns",
+      "technique": "check_estimate_ci",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "2.27 (1.34 to 3.86)c",
+      "reported": {
+        "aor": 2.27,
+        "ci": "1.34 to 3.86",
+        "printed_p": "<.001"
+      },
+      "computed": {
+        "recovered_se_log_scale": 0.2699022986797894,
+        "recovered_z": 3.037320673085092,
+        "recovered_p_from_printed_ci": 0.0023869138074426033,
+        "implied_centre": 2.274291098342514,
+        "tool": "check_estimate_ci called without reported_p; recovered_p is the tool's own return value"
+      },
+      "inputs": {
+        "estimate": 2.27,
+        "ci_low": 1.34,
+        "ci_high": 3.86,
+        "measure": "OR",
+        "decimals": 2
+      },
+      "reproduction": "metascience check-ci --estimate 2.27 --ci-low 1.34 --ci-high 3.86 --measure OR --decimals 2",
+      "notes": "The p recovered from the paper's own printed interval is about .0024, roughly 2.4 times the '<.001' bound the table prints. This is the ONLY such row: the ten other '<.001' cells in Table 2 recover p-values from 1.3e-04 down to below machine epsilon, so the discrepancy is isolated rather than a systematic convention. Two innocent explanations deserve weight. First, the paper used SAS PROC SURVEY procedures, whose design-based Wald test uses finite denominator degrees of freedom; that correction makes p LARGER, not smaller, so it cannot rescue the '<.001'. Second, and more likely, it is a typesetting slip: eTable 3 prints the analogous multiple-imputation row (AOR 2.25, 1.39-3.67) as p = 0.001, exactly the magnitude the CI here implies. The claim remains significant at alpha .05 either way, so nothing in the paper's conclusions turns on it; what is overstated is only the precision of the p.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that veterans with 3+ limitations had 127% higher odds of ideation stays significant; only the printed strength of evidence for it is overstated."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "2.27 (1.34 to 3.86)c",
+        "source_locator": "Table 2, Veteran / \u22653 Limitations row, Suicidal ideation columns",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "a table"
+      }
+    },
+    {
+      "id": "etable1_inverted_ci",
+      "location": "eTable 1 (Supplement 1), Number of chronic conditions row '1', fourth outcome column",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "1 63881044 27.0 (26.7-27.2) 27.2 (25.7-28.7) 27.2 (25.1-29.3) 30.3 (27.4-22.3)",
+      "reported": {
+        "estimate": 30.3,
+        "printed_ci_low": 27.4,
+        "printed_ci_high": 22.3
+      },
+      "computed": {
+        "observation": "printed lower bound 27.4 exceeds printed upper bound 22.3, and the point estimate 30.3 lies outside the closed interval under either ordering",
+        "tool_result": "check_estimate_ci was called and REFUSED with severity indeterminate: 'CI bounds arrive reversed: [27.4, 22.3]. Transposed bounds are at least as often an extraction error on our side as a defect in the paper, so nothing is judged.'"
+      },
+      "inputs": {
+        "estimate": 30.3,
+        "ci_low": 27.4,
+        "ci_high": 22.3,
+        "measure": "percentage",
+        "decimals": 1
+      },
+      "reproduction": "metascience check-ci --estimate 30.3 --ci-low 27.4 --ci-high 22.3 --measure percentage --decimals 1",
+      "notes": "Recorded as a reading of the printed cell, not as tool arithmetic: check_estimate_ci declined to judge reversed bounds, which is the correct guard. I did confirm the transposition is in the SOURCE and not in our extraction: the string '30.3 (27.4-22.3)' appears identically in the PDF's raw text layer AND in the independently reconstructed ruled-grid table, so it is not an alignment artifact. The obvious innocent explanation is a single-digit typo (32.3 misprinted as 22.3), which would give a well-formed interval 27.4-32.3 containing 30.3. This cell is a descriptive baseline percentage in a supplementary bivariate table; no analysis in the paper depends on it.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A descriptive supplementary cell; no reported inference rests on this interval."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "text_direction_contradicts_etable4",
+      "location": "Results, 'Suicide Planning and Attempt Among Those Reporting Suicide Ideation', final sentence; vs eTable 4 (Supplement 1)",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Lastly, veterans with 1 disabling limitation were more likely to report planning relative to their nonveteran counterparts, but this finding was only significant in sensitivity analyses (eTable 4 in Supplement 1).",
+      "reported": {
+        "text_claim": "veterans with 1 disabling limitation were MORE likely to report planning",
+        "etable4_value": "AOR 0.55 (0.32-0.94), p = 0.028",
+        "main_table3_counterpart": "AOR 0.61 (0.35-1.05), p = .07"
+      },
+      "computed": {
+        "observation": "an adjusted odds ratio of 0.55 with an interval entirely below 1 denotes LOWER odds; the sentence asserts the opposite direction",
+        "tool_result": "none applies -- a direction contradiction between prose and the table it cites, with no arithmetic involved"
+      },
+      "reproduction": "Not reproducible by a CLI command: a cross-reference contradiction between the Results text and eTable 4, established by reading both.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "Both the sensitivity estimate the sentence cites (0.55) and the corresponding main-analysis estimate (Table 3, 0.61) point the same way: veterans with one limitation had LOWER odds of planning than nonveterans. The sentence states 'more likely'. The rest of it is accurate -- the association is significant in the imputation analysis (p = .028) and not in the primary one (p = .07). The most likely explanation is a drafting slip in a summary sentence rather than a numerical error, since no table value would change. It matters because this sentence is the reader's only prose account of that contrast, and it inverts the paper's own moderation story, in which veteran status is protective at low levels of disability.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Reverses the reported direction of the veteran-vs-nonveteran planning contrast at one limitation, the direction on which the paper's protective-effect interpretation rests."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "etable_crossreference_mismatch",
+      "location": "Results, 'Suicide Ideation, Planning, and Attempt and Disability Status', final paragraph",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "This result was significant in sensitivity analyses (eTable 3 in Supplement 1).",
+      "reported": {
+        "cited_supplement": "eTable 3",
+        "correct_supplement": "eTable 4"
+      },
+      "computed": {
+        "observation": "the result is a Table 3 (ideation-subgroup) estimate, whose imputation counterpart is eTable 4; eTable 3 contains no 'vs suicidal ideation only' contrast at all, so the cited table cannot hold this result",
+        "tool_result": "none applies -- cross-reference check by reading both supplementary tables"
+      },
+      "reproduction": "Not reproducible by a CLI command: established by comparing the cited eTable 3 against eTable 4 in Supplement 1.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "The substantive claim is correct: eTable 4 gives AOR 1.24 (1.03-1.49), p = 0.024 for that contrast, which is significant. Only the pointer is wrong. Every other Table 3 result in the paper is correctly referred to eTable 4, so this is an isolated citation slip. Recorded because a reader following the pointer would find nothing.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The underlying claim is supported; only its supporting-table pointer misdirects the reader."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "t2_multiplicity_moderation_family",
+      "location": "Table 2, the 12 veteran-vs-nonveteran contrast rows",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05.",
+      "reported": {
+        "stated_correction": "none; alpha <= .05 applied test-by-test",
+        "n_significant_uncorrected": 3
+      },
+      "computed": {
+        "n_tests": 12,
+        "fwer_if_independent": 0.4596,
+        "expected_false_positives": 0.6,
+        "bonferroni_threshold": 0.004166666666666667,
+        "n_significant_bonferroni": 0,
+        "n_significant_holm": 0,
+        "n_significant_bh": 0,
+        "n_significant_by": 0,
+        "n_surviving_floor": 0,
+        "n_surviving_ceiling": 0,
+        "n_claims_lost_to_correction": 3,
+        "tool": "multiplicity_report"
+      },
+      "inputs": {
+        "family_label": "Table 2: the 12 veteran-vs-nonveteran contrasts within disability strata",
+        "p_values": [
+          0.35,
+          0.006,
+          0.92,
+          0.3,
+          0.03,
+          0.52,
+          0.32,
+          0.95,
+          0.87,
+          0.65,
+          0.32,
+          0.02
+        ],
+        "alpha": 0.05
+      },
+      "reproduction": "metascience multiplicity --family-label \"Table 2: the 12 veteran-vs-nonveteran contrasts within disability strata\" --alpha 0.05",
+      "notes": "This is deterministic arithmetic about what the reported p-values imply, not an accusation: uncorrected testing is the norm in survey epidemiology, and the paper states its convention openly rather than concealing it. But the interval of survivors is unusually stark -- none of the three uncorrected-significant contrasts (p = .006, .03, .02) clears any of the four corrections, because the smallest is .006 against a Bonferroni threshold of .0042. These 12 contrasts are one family on the strictest reading: they come from a single fitted model, on a single sample, and jointly answer the one moderation question the paper is built around. A reader who prefers to treat the three outcome types as separate families would get a less severe count. The FWER of 46% assumes independence and is an upper bound; these contrasts share a model and are correlated, so the true figure is lower.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 3,
+        "basis": "computed",
+        "explanation": "All three significant veteran-vs-nonveteran contrasts in Table 2 -- including the abstract-level claims AOR 1.71, AOR 0.57 and AOR 0.46 -- fall below significance under every correction tested. Computed from 3 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05.",
+        "source_locator": "Table 2, lower half (No limitations / 1 Limitation / 2 Limitations / \u22653 Limitations, Veteran vs Nonveteran rows)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "t3_multiplicity_subgroup_family",
+      "location": "Table 3, the 8 veteran-vs-nonveteran contrast rows (ideation subgroup)",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05.",
+      "reported": {
+        "stated_correction": "none",
+        "n_significant_uncorrected": 2
+      },
+      "computed": {
+        "n_tests": 8,
+        "fwer_if_independent": 0.3366,
+        "expected_false_positives": 0.4,
+        "bonferroni_threshold": 0.00625,
+        "n_significant_bonferroni": 1,
+        "n_significant_holm": 1,
+        "n_significant_bh": 1,
+        "n_significant_by": 1,
+        "n_surviving_floor": 1,
+        "n_surviving_ceiling": 1,
+        "n_claims_lost_to_correction": 1,
+        "tool": "multiplicity_report"
+      },
+      "inputs": {
+        "family_label": "Table 3: the 8 veteran-vs-nonveteran contrasts in the ideation subgroup analysis",
+        "p_values": [
+          0.04,
+          0.69,
+          0.07,
+          0.62,
+          0.74,
+          0.002,
+          0.7,
+          0.52
+        ],
+        "alpha": 0.05
+      },
+      "reproduction": "metascience multiplicity --family-label \"Table 3: the 8 veteran-vs-nonveteran contrasts in the ideation subgroup analysis\" --alpha 0.05",
+      "notes": "This subgroup analysis is explicitly secondary and, on the paper's own account, motivated by the ideation-to-action framework rather than preregistered, so multiplicity bears on it more heavily than on a primary test. One of the two significant contrasts survives all four corrections: AOR 0.31 (0.14-0.66), p = .002, veterans with 2 limitations less likely to attempt. The other, AOR 1.61 (1.03-2.49), p = .04 -- the abstract claim that veterans without disability were 61% more likely to plan -- does not.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The abstract-level claim that veterans with no limitations were 61% more likely to report planning (AOR 1.61, p = .04) does not survive correction within its own family; the AOR 0.31 attempt finding does. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05.",
+        "source_locator": "Table 2, lower half (No limitations / 1 Limitation / 2 Limitations / \u22653 Limitations, Veteran vs Nonveteran rows)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "t2_corrupted_ame_cell",
+      "location": "Table 2, 1 Limitation / Veteran row, Suicidal ideation AME (95% CI) cell",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "to 0.01 (-0.02 to 0.01)",
+      "reported": {
+        "cell_as_rendered_in_jats_xml": "to 0.01 (-0.02 to 0.01)"
+      },
+      "computed": {
+        "observation": "the cell begins with the word 'to' where a signed point estimate belongs; every other AME cell in Table 2 has the form 'estimate (low to high)'",
+        "tool_result": "none applies -- a malformed cell string, not an arithmetic result"
+      },
+      "reproduction": "Not reproducible by a CLI command: a malformed cell observed in the JATS XML rendering of Table 2.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "Deliberately left INDETERMINATE rather than charged to the authors. A stray leading 'to' is exactly the signature of a line-wrap or lost negative sign during XML conversion, and I could not resolve it: the PDF pages I retrieved (5-6) carry Table 1, not Table 2, and budget did not allow a further retrieval. Under the rulebook a disagreement or ambiguity between XML and PDF is an extraction or versioning problem, not evidence against the authors. The likely intended value is '-0.01 (-0.02 to 0.01)' or '0 (-0.02 to 0.01)'; either is consistent with the accompanying non-significant AOR 0.83 (0.59-1.18), p = .30. A human should read this cell in the published PDF.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "An average marginal effect on a non-significant row; no stated claim depends on it."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "etable4_no_stated_n",
+      "location": "eTable 4 (Supplement 1), title and header",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "eTable 4. Multiple Imputation Sensitivity Analysis For Adjusteda Multinomial Logistic Regression Models of Suicide-Related Outcomes Among Those With Suicidal Ideation",
+      "reported": {
+        "etable3_stated_n": 241675,
+        "etable4_stated_n": "not reported"
+      },
+      "computed": {
+        "observation": "eTable 3's title states its analytic N; eTable 4's title states none, and no N appears in its header, body or footnotes",
+        "tool_result": "none applies -- a reporting-completeness observation"
+      },
+      "reproduction": "Not reproducible by a CLI command: established by reading eTable 4's title, header and footnotes in Supplement 1.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "Minor but real: eTable 4 restricts to respondents reporting ideation after multiple imputation, and that denominator is not recoverable from anything printed in the paper. It is needed to judge the precision of the wide veteran-stratum intervals there, for example AOR 1.59 (0.58-4.40). Main Table 3, the unimputed counterpart, likewise prints no subgroup N.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Prevents a reader from assessing the precision of the ideation-subgroup sensitivity estimates."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_summation_all_blocks",
+      "location": "Table 1, all 18 characteristic blocks (Weighted No. column and both Weighted % columns)",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Sociodemographic and Clinical Characteristics of 231099 Respondents, Representing 236551727 US Adults, by Veteran Status",
+      "reported": {
+        "weighted_total": 236551727
+      },
+      "computed": {
+        "n_sums_checked": 36,
+        "n_evaluated": 36,
+        "n_inconsistent": 0,
+        "largest_absolute_deviation_in_weighted_counts": 1,
+        "blocks_deviating_by_one_person": [
+          "Age group (-1)",
+          "Health status (+1)",
+          "No. of chronic conditions (-1)"
+        ],
+        "tool": "check_summation_batch (36 rows), which dispatches check_summation per row"
+      },
+      "inputs": {
+        "n_rows": 36,
+        "expected_sum_counts": 236551727,
+        "expected_sum_percentages": 100
+      },
+      "reproduction": "metascience summation --values 226150662 7250065 1892256 1258744 --expected-sum 236551727 --decimals 0 0 0 0 --decimals-total 0",
+      "notes": "All 18 weighted-count blocks reconcile to the stated weighted total and all 18 percentage columns to 100, every one inside the window its own printed precision allows. Three blocks are off by exactly 1 person out of 236.5 million, which is ordinary rounding of survey-weighted estimates and well inside tolerance. This is a strong internal-consistency result: the table's counts and both percentage columns were computed from one coherent weighted dataset. The reproduction command shows the first of the 36 rows; the batch form check_summation_batch ran all 36 in one call.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation [OPTIONS]\nTry 'metascience summation --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extra argument(s) ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Sociodemographic and Clinical Characteristics of 231099 Respondents, Representing 236551727 US Adults, by Veteran Status",
+        "source_locator": "Table 1, Weighted No. and Weighted % columns",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      }
+    },
+    {
+      "id": "table2_estimate_ci_all",
+      "location": "Table 2, all 30 AOR (95% CI) cells",
+      "technique": "check_estimate_ci",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Adjusted Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Statusa",
+      "reported": {
+        "n_aor_cells": 30
+      },
+      "computed": {
+        "n_checks_run": 30,
+        "n_not_run": 0,
+        "n_consistent": 30,
+        "parse_coverage": 1,
+        "tool": "check_table, which typed every cell as estimate_ci and dispatched check_estimate_ci on each, log scale (measure=OR)"
+      },
+      "inputs": {
+        "measure": "OR",
+        "n_cells": 30,
+        "variable_family": "continuous"
+      },
+      "reproduction": "metascience check-table --source-locator \"Table 2, all AOR (95% CI) cells\" --measure OR",
+      "notes": "Every point estimate sits at the log-scale midpoint of its own interval, within printed precision, and inside its own bounds. Because odds ratios have log-symmetric intervals this was checked on the log scale; a linear check would misfire here. Denominator matters: 30 of 30 checked, 30 of 30 consistent, none refused.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --s",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "table3_estimate_ci_all",
+      "location": "Table 3, all 20 AOR (95% CI) cells",
+      "technique": "check_estimate_ci",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Adjusted Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Status Among Those With Suicidal Ideationa",
+      "reported": {
+        "n_aor_cells": 20
+      },
+      "computed": {
+        "n_checks_run": 20,
+        "n_not_run": 0,
+        "n_consistent": 20,
+        "parse_coverage": 1,
+        "tool": "check_table dispatching check_estimate_ci on each cell, log scale (measure=OR)"
+      },
+      "inputs": {
+        "measure": "OR",
+        "n_cells": 20,
+        "variable_family": "continuous"
+      },
+      "reproduction": "metascience check-table --source-locator \"Table 3, all AOR (95% CI) cells\" --measure OR",
+      "notes": "20 of 20 consistent, none refused.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --s",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "etable3_estimate_ci_all",
+      "location": "eTable 3 (Supplement 1), all 30 AOR (95% CI) cells",
+      "technique": "check_estimate_ci",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "eTable 3. Multiple Imputation Sensitivity Analysis for Adjusteda Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Status (N = 241 675)",
+      "reported": {
+        "n_aor_cells": 30
+      },
+      "computed": {
+        "n_checks_run": 30,
+        "n_not_run": 0,
+        "n_consistent": 30,
+        "parse_coverage": 1,
+        "tool": "check_table dispatching check_estimate_ci on each cell, log scale (measure=OR)"
+      },
+      "inputs": {
+        "measure": "OR",
+        "n_cells": 30,
+        "variable_family": "continuous"
+      },
+      "reproduction": "metascience check-table --source-locator \"eTable 3 (Supplement 1), all AOR (95% CI) cells\" --measure OR",
+      "notes": "All 30 imputation-analysis estimates sit correctly within their own log-scale intervals. Read against the main analysis this is reassuring in a second way: the sensitivity estimates track the primary ones closely across almost all rows, so the imputation did not manufacture the pattern. One row does move substantially -- nonveterans with 3+ limitations, suicide attempt, goes from AOR 3.68 (2.69-5.05) in Table 2 to 6.21 (4.88-7.90) in eTable 3 -- which the paper does not comment on. That is a substantive difference, not an arithmetic defect, and is noted for the reader rather than flagged.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --s",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "1 63881044 27.0 (26.7-27.2) 27.2 (25.7-28.7) 27.2 (25.1-29.3) 30.3 (27.4-22.3)",
+        "source_locator": "eTable 1 (Supplement 1), Number of chronic conditions row \"1\", suicide-planning column",
+        "source_quote_verified": "unverified",
+        "source_matched_by": "locator"
+      }
+    },
+    {
+      "id": "etable4_estimate_ci_all",
+      "location": "eTable 4 (Supplement 1), all 20 AOR (95% CI) cells",
+      "technique": "check_estimate_ci",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "eTable 4. Multiple Imputation Sensitivity Analysis For Adjusteda Multinomial Logistic Regression Models of Suicide-Related Outcomes Among Those With Suicidal Ideation",
+      "reported": {
+        "n_aor_cells": 20
+      },
+      "computed": {
+        "n_checks_run": 20,
+        "n_not_run": 0,
+        "n_consistent": 20,
+        "parse_coverage": 1,
+        "tool": "check_table dispatching check_estimate_ci on each cell, log scale (measure=OR)"
+      },
+      "inputs": {
+        "measure": "OR",
+        "n_cells": 20,
+        "variable_family": "continuous"
+      },
+      "reproduction": "metascience check-table --source-locator \"eTable 4 (Supplement 1), all AOR (95% CI) cells\" --measure OR",
+      "notes": "20 of 20 consistent, none refused.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --s",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "1 63881044 27.0 (26.7-27.2) 27.2 (25.7-28.7) 27.2 (25.1-29.3) 30.3 (27.4-22.3)",
+        "source_locator": "eTable 1 (Supplement 1), Number of chronic conditions row \"1\", suicide-planning column",
+        "source_quote_verified": "unverified",
+        "source_matched_by": "locator"
+      }
+    },
+    {
+      "id": "table2_table3_p_vs_ci",
+      "location": "Tables 2 and 3, exact-p rows cross-checked against their own confidence intervals",
+      "technique": "check_estimate_ci",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "1.71 (1.17 to 2.49)c",
+      "reported": {
+        "example_row": "AOR 1.71 (1.17-2.49), P = .006"
+      },
+      "computed": {
+        "n_rows_cross_checked_with_reported_p": 21,
+        "n_consistent": 21,
+        "n_inconsistent": 0,
+        "recovered_p_for_AOR_1_71": 0.0053623214266833585,
+        "recovered_p_for_AOR_0_57": 0.03199620913061696,
+        "recovered_p_for_AOR_0_46": 0.019140557950678483,
+        "recovered_p_for_AOR_0_31": 0.003068770350717509,
+        "tool": "check_estimate_ci, one call per row, measure=OR"
+      },
+      "inputs": {
+        "measure": "OR",
+        "decimals": 2,
+        "rows": "all exact-p AOR rows of Tables 2 and 3 carrying the paper's stated claims"
+      },
+      "reproduction": "metascience check-ci --estimate 1.71 --ci-low 1.17 --ci-high 2.49 --measure OR --reported-p 0.006 --decimals 2",
+      "notes": "Every exact-p row tested agrees with the p implied by its own interval, including all four abstract-level claims (AOR 1.71, 0.57, 0.46 and 0.31). Two near-null rows carried a tool note that the interval width reads more like a 99% CI (AOR 0.98, 0.60-1.59) or a 90% CI (AOR 1.03, 0.45-2.38) than a 95% one; both were nonetheless returned consistent, and the inference is numerically unstable when z is near zero because the implied level is then extremely sensitive to rounding. I do not treat either as a finding.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "descriptive_percentages_all",
+      "location": "Results, Descriptive Statistics paragraph",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "The final sample included 231099 participants, representing 236551727 US adults (weighted), of whom 20.03% (weighted n = 47397876) reported a disabling limitation.",
+      "reported": {
+        "percentages_checked": [
+          20.03,
+          4.39,
+          69.71,
+          18.19,
+          12.1,
+          60.5,
+          21.7,
+          17.8,
+          8.92,
+          91.08
+        ]
+      },
+      "computed": {
+        "n_percentages_checked": 10,
+        "n_percentages_consistent": 10,
+        "n_percentages_inconsistent": 0,
+        "computed_pct_for_disability_prevalence": 20.037003,
+        "computed_pct_for_suicide_risk_prevalence": 4.396952,
+        "computed_pct_for_veteran_share": 8.924782,
+        "rounding_convention_required_for_two_cells": "truncation rather than round-half-up (20.03 and 4.39)",
+        "n_summation_rows_checked": 7,
+        "n_summation_rows_consistent": 7,
+        "tools": "the ten percentage checks were produced by check_count_percent (one call each); the seven subtotal checks by check_summation_batch. NOTE: the schema's technique enum lists neither check_count_percent nor check_summation_batch, so this finding is filed under check_summation, the registered technique its batch member dispatches."
+      },
+      "inputs": {
+        "denominators": [
+          236551727,
+          10401065,
+          47397876
+        ],
+        "decimals": [
+          1,
+          2
+        ]
+      },
+      "reproduction": "metascience check-count-percent --count 47397876 --percentage 20.03 --n 236551727 --decimals 2",
+      "notes": "Every percentage in the descriptive paragraph reproduces from the counts printed in Table 1. Two of them (20.03% and 4.39%) match only if the reporter truncates rather than rounds -- SAS and several journal styles do this -- so it is a stated convention, not a defect. The seven accompanying summation checks also reconciled exactly: unweighted 13859 + 217240 = 231099, weighted 21111727 + 215440000 = 236551727, and the outcome and limitation subtotals against their stated group totals.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Veterans represented 8.92% of the sample (n = 13859; weighted n = 21111727; 16.0% aged 35-49 years; 91.0% men; 6.7% Hispanic; 10.9% non-Hispanic Black; and 78.4% non-Hispanic White), and 91.08% were nonveterans (n = 217240; weighted n = 215440000",
+        "source_locator": "Results, Descriptive Statistics paragraph",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text",
+        "source_matched_by": "locator"
+      }
+    },
+    {
+      "id": "statcheck_no_nhst",
+      "location": "Statistical Analysis and Results sections",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05. Multicollinearity was assessed using the variance inflation factor but was not detected.",
+      "reported": {
+        "apa_style_test_statistics_in_text": 0
+      },
+      "computed": {
+        "stats_found": 0,
+        "success": true,
+        "tool": "statcheck"
+      },
+      "inputs": {
+        "text": "Statistical Analysis section plus the Results paragraphs reporting the moderation contrasts"
+      },
+      "reproduction": "metascience statcheck --text \"Statistical Analysis and Results sections\"",
+      "notes": "A true zero, not a tool failure: the paper reports no t, F, chi-squared or r statistics anywhere in prose. Everything is expressed as adjusted odds ratios with intervals and p-values, which statcheck's APA grammar does not parse. The consequence for this review is that the p-vs-CI recovery done by check_estimate_ci, not statcheck, is what carries the NHST verification here.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "Test-specific significance levels were assessed at \u03b1 \u2264 .05. Multicollinearity was assessed using the variance inflation factor but was not detected.",
+        "source_locator": "Results and Statistical Analysis sections (XML body text)",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "xml_pdf_table1_reconciliation",
+      "location": "Table 1, XML rendering vs published PDF pages 5-6",
+      "technique": "not_computational",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "None 226150662 95.5(95.4-95.7) 96.2(95.7-96.7)",
+      "reported": {
+        "xml_cell": "226150662 | 95.5 (95.4-95.7) | 96.2 (95.7-96.7)",
+        "pdf_cell": "None 226150662 95.5(95.4-95.7) 96.2(95.7-96.7)"
+      },
+      "computed": {
+        "observation": "every weighted count, both percentage columns and every P value in Table 1 agree between the JATS XML grid and the ruled-grid extraction of PDF pages 5-6",
+        "tool_result": "none applies -- a source-to-source comparison of two independent extractions"
+      },
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.37679.pdf --first-page 5 --last-page 6",
+      "notes": "Worth recording because it establishes that the XML I ran every Table 1 check against is faithful to the version of record. The PDF extraction used the 'ruled' strategy, meaning column boundaries were read from lines the PDF actually draws rather than inferred from text alignment, so this is a genuine cross-check rather than two views of the same guess.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] PDF_PATH\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-page",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "or_to_percent_translations",
+      "location": "Results, all narrative percentage-change statements",
+      "technique": "no_tool_exists",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "suicide ideation was 50%, 160%, and 127% more likely among VWD reporting 1, 2, and 3 or more disabling limitations, respectively",
+      "reported": {
+        "narrative_percentages": [
+          50,
+          160,
+          127,
+          114,
+          160,
+          157,
+          102,
+          165,
+          143,
+          220,
+          113,
+          268,
+          51,
+          29,
+          31,
+          28,
+          71,
+          43,
+          54,
+          61,
+          69
+        ]
+      },
+      "computed": {
+        "method": "each narrative percentage compared against (AOR - 1) x 100 for an AOR above 1, or (1 - AOR) x 100 for an AOR below 1, using the AOR printed in the cited table",
+        "n_statements_checked": 21,
+        "n_matching": 21,
+        "n_mismatching": 0,
+        "worked_example_AOR_2_27_to_percent": "(2.27 - 1) x 100 = 127, matching the printed '127% more likely'",
+        "worked_example_AOR_0_57_to_percent": "(1 - 0.57) x 100 = 43, matching the printed '43% lower odds'"
+      },
+      "reproduction": "No registered tool converts an odds ratio to a percentage change; verified by the stated (AOR - 1) x 100 arithmetic against each cited table cell.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "All 21 percentage-change statements in the Results translate correctly from the odds ratios in the tables they cite. This is my own arithmetic, stated in full above so a reader can check it; no tool in the registry performs this conversion. Note the standing interpretive caveat, which is the paper's convention and not an error: an odds ratio is being described in the language of likelihood ('160% more likely'), which overstates a risk ratio when the outcome is common. Here the outcomes are rare -- suicide planning 0.8%, attempt 0.6% -- so odds approximate risk closely and the gloss is defensible. The direction error recorded separately under text_direction_contradicts_etable4 concerns a sentence with no percentage in it and is not among these 21.",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "data_availability_code_withheld",
+      "location": "Supplement 2, Data Sharing Statement",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Additional Information: The dataset is a publically available dataset. We can make all syntax and output available by request.",
+      "reported": {
+        "data_available": "Yes",
+        "how_to_access": "https://www.samhsa.gov/data/release/2020-national-survey-drug-use-and-health-nsduh-releases",
+        "code_availability": "All code will be made available by request."
+      },
+      "computed": {
+        "observation": "the underlying NSDUH data are genuinely public with a working URL given; the analysis code and output, which are what would allow this specific analysis to be reproduced, are gated behind an author request",
+        "tool_result": "none applies -- a reporting-practice observation"
+      },
+      "reproduction": "Not reproducible by a CLI command: read from the Data Sharing Statement in Supplement 2.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "A mild instance that should not be overstated. Unlike the classic state-but-withhold pattern, the data here really are downloadable by anyone and the paper says exactly where. What is withheld is the derivation: the NSDUH recodes, the survey-design specification and the multinomial model syntax, without which a reader cannot reproduce the AORs even though they can obtain the raw data. Given that the analysis rests on correctly specifying PROC SURVEY strata, clusters and weights, that syntax is load-bearing. Also noted without weight: 'publically' is misspelled twice in this one-page statement.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Independent recomputation of the reported odds ratios is not possible from the public data alone without the withheld survey-design and model syntax."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "a supplement"
+    },
+    {
+      "id": "no_preregistration",
+      "location": "Statistical Analysis section and article metadata",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "A subgroup analysis was performed for individuals with suicide ideation, consistent with the ideation-to-action framework,23,24,25,26 which suggests risk for suicide is truly most problematic among those with suicidal thoughts.",
+      "reported": {
+        "registry_id": "none stated",
+        "protocol_citation": "none stated"
+      },
+      "computed": {
+        "observation": "no trial registration, OSF link or analysis protocol is cited anywhere in the article; the primary moderation hypothesis is stated in advance in the paper's own Introduction but is not registered, and the ideation subgroup analysis is framework-motivated and secondary",
+        "tool_result": "none applies -- a reporting-practice observation"
+      },
+      "reproduction": "Not reproducible by a CLI command: established by searching the article for a registration identifier or protocol citation.",
+      "reproduction_kind": "no_command_applies",
+      "notes": "Ordinary for a secondary analysis of a public survey and not a defect in itself. I record it because it is what decides how the two multiplicity findings should be read. With no preregistration, nothing distinguishes the covariate set, the four-level disability coding, the choice to stratify contrasts within each limitation level, or the ideation subgroup from analytic choices made after seeing the data. That places the reported comparison count as a FLOOR on the true multiplicity, which is the assumption those findings already state.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Makes the reported number of comparisons a lower bound, strengthening rather than weakening the multiplicity findings."
+      },
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    }
+  ],
+  "coverage": {
+    "stats_found": 214,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "check_table",
+      "check_estimate_ci",
+      "check_summation_batch",
+      "check_count_percent",
+      "multiplicity_report",
+      "statcheck",
+      "extract_pdf"
+    ],
+    "tables_checked": [
+      "Table 1 (75 rows x 5 cols, 189 cells, fully paged)",
+      "Table 2 (22 rows x 10 cols, 144 cells, fully paged)",
+      "Table 3 (22 rows x 7 cols, 96 cells, fully paged)",
+      "eTable 3 (Supplement 1, 30 AOR cells)",
+      "eTable 4 (Supplement 1, 20 AOR cells)",
+      "eTable 1 (Supplement 1, partial - page 4 only)",
+      "eTable 2 (Supplement 1, partial - page 5 only)",
+      "Supplement 2 (Data Sharing Statement, no tables)"
+    ]
+  },
+  "figures": [
+    {
+      "label": "Figure",
+      "caption": "Study Cohort Selection Criteria and Process. Flowchart of participant selection from the National Survey on Drug Use and Health (NDSUH) database.",
+      "is_data_figure": false,
+      "n_panels": 1,
+      "carries_unique_values": false,
+      "panels": [
+        {
+          "chart_type": "flow_diagram",
+          "panel": "A",
+          "shows": "Participant selection flow from the 315,661 NSDUH respondents down to the 231,099-person analytic sample."
+        }
+      ]
+    }
+  ],
+  "unchecked": [
+    {
+      "location": "Table 2, 1 Limitation / Veteran row, Suicidal ideation AME cell ('to 0.01 (-0.02 to 0.01)')",
+      "reason": "Malformed in the JATS XML. I could not resolve it against the PDF: the pages retrieved (5-6) carry Table 1, and budget did not permit a further retrieval of the Table 2 page. Recorded as indeterminate rather than charged to the authors, since a stray leading 'to' is a characteristic XML line-wrap artifact. Needs a human to read the cell in the published PDF."
+    },
+    {
+      "location": "eTable 1 (Supplement 1), pages 1-3",
+      "reason": "Only page 4 of eTable 1 was retrieved. The table spans roughly pages 2-4 and reports weighted percentages of every covariate by suicide-related outcome; the rows on pages 1-3 were never extracted, so no check ran on them. The inverted-CI finding comes from the page-4 portion, and I cannot say whether similar defects exist in the unretrieved rows."
+    },
+    {
+      "location": "eTable 2 (Supplement 1), pages 6-7",
+      "reason": "Only page 5 of eTable 2 was retrieved. The remainder of its rows (from Employment onward) were not extracted and no check ran on them."
+    },
+    {
+      "location": "All AME (95% CI) cells in Tables 2 and 3 and eTables 3 and 4",
+      "reason": "Average marginal effects are printed to two decimals and most render as exactly '0' with intervals like '(0 to 0)'. At that precision the estimate/CI check is vacuous -- a zero-width interval around zero constrains nothing -- so running it would have produced meaningless 'consistent' verdicts and inflated apparent coverage. Deliberately skipped."
+    },
+    {
+      "location": "Table 1 P value column (18 bivariate association tests)",
+      "reason": "The P values are printed only as bounds ('<.001', '.002', '.006') with no test statistic, no degrees of freedom and no cell counts for the veteran/nonveteran cross-tabulation, so none can be recomputed. Note also that these were deliberately NOT run through a Table-1 baseline-similarity check (csf_test / bayesian_table1_dispersion): those tools test for suspicious uniformity under RANDOMISED allocation, and this is an observational survey in which veteran and nonveteran groups genuinely differ. Applying them here would be a category error."
+    },
+    {
+      "location": "eTable 1 and eTable 2 percentage columns",
+      "reason": "Not swept for column-sum or count-vs-percentage consistency. These are large bivariate descriptive tables whose denominators are outcome-specific and disability-specific subgroups the paper does not print, so the count-vs-percentage check has no denominator to work from, and the pages needed for the column sums were not all retrieved."
+    },
+    {
+      "location": "GRIM, GRIMMER, SPRITE and DEBIT family",
+      "reason": "Not applicable anywhere in this paper and deliberately not run. Every numeric cell is either a survey-WEIGHTED count (a sum of continuous person-level weights, not an integer count of observations), a weighted percentage derived from one, or an odds ratio. None is a mean of integer-valued observations on a bounded scale, which is the precondition for the entire granularity family. Running them here would manufacture impossibilities out of ordinary numbers."
+    },
+    {
+      "location": "detect_duplication across Tables 1, 2, 3 and eTables 3, 4",
+      "reason": "Not run. The tables are not independent samples of summary statistics: eTable 3 is the imputed counterpart of Table 2 and eTable 4 of Table 3, describing the SAME participants under a different missing-data treatment, so close agreement between them is expected by construction and is evidence of correctness rather than duplication. The AOR values are additionally too coarse (two decimals, clustered between 0.3 and 6.2) for a match to carry information."
+    },
+    {
+      "location": "verify_power_analysis",
+      "reason": "Not run: the paper states no a-priori power calculation, which is unremarkable for a secondary analysis of a fixed public survey where the sample size was not under the authors' control."
+    },
+    {
+      "location": "check_estimate_ci with a threshold p operator",
+      "reason": "Two intended calls passing reported_p_operator='<' were refused by the tool because the '<' character arrived escaped through the tool interface. Worked around by calling without reported_p and reading the tool's own recovered_p, then comparing it to the printed bound as a notational check. This is a harness limitation, not a property of the paper, and the substantive check was completed by the alternative route."
+    }
+  ],
+  "second_look": {
+    "n_accusatory": 9,
+    "n_flagged": 9,
+    "by_marker": {
+      "quote_not_located": 9
+    },
+    "items": [
+      {
+        "id": "t2_vet3lim_ideation_p_threshold",
+        "severity": "suspicious",
+        "location": "Table 2, Veteran / \u22653 Limitations row, Suicidal ideation columns",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "etable1_inverted_ci",
+        "severity": "suspicious",
+        "location": "eTable 1 (Supplement 1), Number of chronic conditions row '1', fourth outcome column",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "text_direction_contradicts_etable4",
+        "severity": "suspicious",
+        "location": "Results, 'Suicide Planning and Attempt Among Those Reporting Suicide Ideation', final sentence; vs eTable 4 (Supplement 1)",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "etable_crossreference_mismatch",
+        "severity": "suspicious",
+        "location": "Results, 'Suicide Ideation, Planning, and Attempt and Disability Status', final paragraph",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "t2_multiplicity_moderation_family",
+        "severity": "suspicious",
+        "location": "Table 2, the 12 veteran-vs-nonveteran contrast rows",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "t3_multiplicity_subgroup_family",
+        "severity": "suspicious",
+        "location": "Table 3, the 8 veteran-vs-nonveteran contrast rows (ideation subgroup)",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "etable4_no_stated_n",
+        "severity": "suspicious",
+        "location": "eTable 4 (Supplement 1), title and header",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "data_availability_code_withheld",
+        "severity": "suspicious",
+        "location": "Supplement 2, Data Sharing Statement",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "no_preregistration",
+        "severity": "suspicious",
+        "location": "Statistical Analysis section and article metadata",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      }
+    ],
+    "note": "9 of 9 accusation(s) carry a named weakness in their evidence. Each is listed with what would settle it. This is a worklist, not a verdict: none of these is wrong because it is listed, and a marker you resolve should be recorded in `triage` like any other triage decision."
+  }
+}

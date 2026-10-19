@@ -1,0 +1,56 @@
+# Named groups of tools-agent tools, for `tools: {toolset: <name>}`.
+# Readers and check_table are added to every toolset automatically.
+grim_family:
+  - grim_check
+  - list_tables
+  - declare_table
+  - grim_percentage
+  - grim_sweep
+  - grimmer_check
+  - debit_check
+  - debit_check_batch
+  - sprite_reconstruct
+  - r_sprite_ground_truth
+p_values:
+  - statcheck
+  - recalc_independent_t
+  - recalc_anova
+  - recalc_chi_squared
+  - recalc_f_to_p
+  - recalc_stat_to_p
+  - recalc_within_subjects_t
+  - stalt_check
+  - check_regression
+  - check_regression_batch
+  - grimu_check
+  - grimu_coexistence
+  - multiplicity_report
+table1_baseline:
+  - csf_test
+  - bayesian_table1_dispersion
+  - check_variance_dispersion
+  - check_sd_or_se
+  - check_sd_range
+effect_sizes:
+  - effect_size_from_f
+  - check_effect_plausibility
+  - paired_d_interval
+  - check_estimate_ci
+  - absence_of_evidence
+  - required_n
+  - verify_power_analysis
+counts_and_sums:
+  - check_count_percent
+  - check_summation
+  - check_summation_batch
+  - check_ratio
+  - reconstruct_2x2
+  - check_statistic_bounds
+duplication:
+  - detect_duplication
+  - detect_raw_duplication
+heuristics:
+  - flag_round_n
+  - flag_uninformative_stat
+  - rivets_independent_t
+  - rivets_anova

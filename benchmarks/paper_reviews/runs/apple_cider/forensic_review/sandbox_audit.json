@@ -1,0 +1,182 @@
+{
+  "level": "clean",
+  "verdict": "clean: every tool call was on the validated forensic surface",
+  "n_unvalidated_total": 0,
+  "n_severe_total": 0,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__check_regression_batch",
+        "mcp__forensic_metascience__check_summation_batch",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 22,
+      "n_validated": 21,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "level": "clean",
+      "calls_by_tool": {
+        "Read": 1,
+        "grim_sweep": 2,
+        "grim_percentage": 2,
+        "check_summation_batch": 1,
+        "check_sd_or_se": 2,
+        "csf_test": 1,
+        "bayesian_table1_dispersion": 1,
+        "check_sd_range": 1,
+        "check_effect_plausibility": 1,
+        "recalc_independent_t": 5,
+        "rivets_independent_t": 1,
+        "detect_duplication": 1,
+        "statcheck": 1,
+        "extract_pdf": 1,
+        "check_proportion_from_normal": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "clean: every tool call was on the validated forensic surface",
+      "guards": {
+        "n_guarded_calls": 3,
+        "n_guard_slots": 4,
+        "n_supplied": 3,
+        "n_defaulted": 1,
+        "supplied_rate": 0.75,
+        "per_tool": {
+          "csf_test": {
+            "supplied": 1,
+            "defaulted": 0
+          },
+          "bayesian_table1_dispersion": {
+            "supplied": 1,
+            "defaulted": 0
+          },
+          "check_effect_plausibility": {
+            "supplied": 1,
+            "defaulted": 1
+          }
+        },
+        "defaulted_calls": [
+          {
+            "seq": 12,
+            "tool": "check_effect_plausibility",
+            "guard": "provenance",
+            "consequence": "a value's origin was unrecorded, so figure-measured and printed numbers were treated alike."
+          }
+        ],
+        "verdict": "3/4 guard slots were supplied (75%). A defaulted guard is the most likely cause of a false accusation: specificity is 0.846 with correct bounds and 0.0000 with wrong ones."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 5,
+      "n_validated": 4,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "level": "clean",
+      "calls_by_tool": {
+        "Read": 1,
+        "rivets_independent_t": 1,
+        "recalc_independent_t": 2,
+        "grim_percentage": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "clean: every tool call was on the validated forensic surface",
+      "guards": {
+        "n_guarded_calls": 0,
+        "n_guard_slots": 0,
+        "n_supplied": 0,
+        "n_defaulted": 0,
+        "supplied_rate": null,
+        "per_tool": {},
+        "defaulted_calls": [],
+        "verdict": "no guarded tools were called"
+      }
+    }
+  }
+}

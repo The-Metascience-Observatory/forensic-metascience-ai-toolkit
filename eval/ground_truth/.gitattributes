@@ -1,0 +1,5 @@
+# Full-text PDFs go to LFS (~55 MB). The XML, CSV and JSON deliberately do NOT:
+# manifest.csv carries the fraud/control labels and evidence routes, and the
+# JATS XML carries 228 structured tables. Both must stay greppable and
+# diffable -- that reviewability is the point of having them.
+*.pdf filter=lfs diff=lfs merge=lfs -text

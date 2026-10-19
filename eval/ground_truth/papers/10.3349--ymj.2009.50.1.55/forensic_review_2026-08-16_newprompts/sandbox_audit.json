@@ -1,0 +1,375 @@
+{
+  "level": "unbacked",
+  "verdict": "BREACH (unbacked): 7 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+  "n_unbacked_findings": 7,
+  "unbacked_finding_ids": [
+    "beta_labelled_as_test_power",
+    "design_powered_for_a_much_larger_difference",
+    "no_trial_registration",
+    "null_conclusion_without_interval_or_effect_size",
+    "table1_cell_typing_coverage_gap",
+    "table1_image_only_in_xml",
+    "unblinded_allocation_with_subjective_outcome"
+  ],
+  "n_unvalidated_total": 0,
+  "n_severe_total": 0,
+  "n_off_allowlist_total": 5,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_sd_range",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__check_regression_batch",
+        "mcp__forensic_metascience__check_summation_batch",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__flag_round_n",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__reconstruct_2x2",
+        "mcp__forensic_metascience__required_n",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 18,
+      "by_surface": {
+        "forensic_mcp": 14,
+        "forensic_mcp_offlist": 2,
+        "harness": 2
+      },
+      "n_validated": 16,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 2,
+      "off_allowlist_calls": [
+        {
+          "seq": 13,
+          "tool": "check_proportion_from_normal",
+          "input_preview": "{'reported_proportion': 0, 'mean': 23.9, 'sd': 5.84, 'n': 28, 'threshold': 20, 'direction': 'below', 'source_locator': 'Patients and Methods, first sentence, against Table 1 Age row', 'source_quote': "
+        },
+        {
+          "seq": 16,
+          "tool": "check_proportion_from_normal",
+          "input_preview": "{'reported_proportion': 0, 'mean': 24.3, 'sd': 6.33, 'n': 28, 'threshold': 20, 'direction': 'below', 'source_locator': 'Patients and Methods, first sentence, against Table 1 Age row', 'source_quote': "
+        }
+      ],
+      "n_unbacked_findings": 7,
+      "unbacked_findings": [
+        {
+          "id": "null_conclusion_without_interval_or_effect_size",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Abstract (Results and Conclusion) and Discussion, final paragraph"
+        },
+        {
+          "id": "design_powered_for_a_much_larger_difference",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Discussion, sample-size paragraph, against Table 1 infection row"
+        },
+        {
+          "id": "table1_cell_typing_coverage_gap",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Table 1, Age row and Sex row"
+        },
+        {
+          "id": "table1_image_only_in_xml",
+          "technique": "not_computational",
+          "severity": "consistent",
+          "location": "Table 1 (XML), recovered from PDF page 3"
+        },
+        {
+          "id": "beta_labelled_as_test_power",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Discussion, sample-size paragraph"
+        },
+        {
+          "id": "unblinded_allocation_with_subjective_outcome",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Patients and Methods, allocation paragraph, and SSI criteria list"
+        },
+        {
+          "id": "no_trial_registration",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Patients and Methods, final paragraph"
+        }
+      ],
+      "level": "unbacked",
+      "calls_by_tool": {
+        "extract_xml": 1,
+        "extract_pdf": 1,
+        "statcheck": 1,
+        "recalc_chi_squared": 1,
+        "parse_cells_typed": 1,
+        "check_summation_batch": 1,
+        "grim_check": 2,
+        "grimmer_check": 4,
+        "check_sd_range": 2,
+        "check_proportion_from_normal": 2,
+        "StructuredOutput": 2
+      },
+      "unvalidated_calls": [],
+      "verdict": "BREACH (unbacked): 7 finding(s) name a check that never ran. No forbidden tool was called -- the arithmetic was asserted rather than performed, which is the likelier failure and the one a tool-surface check cannot see. Treat those findings as unverified.",
+      "findings_scored": "the sweep's own findings (findings.schema.json), which is the only schema carrying a `technique` to check a tool against",
+      "guards": {
+        "n_guarded_calls": 8,
+        "n_guard_slots": 26,
+        "n_supplied": 26,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "grim_check": {
+            "supplied": 8,
+            "defaulted": 0,
+            "excused": 2
+          },
+          "grimmer_check": {
+            "supplied": 16,
+            "defaulted": 0,
+            "excused": 4
+          },
+          "check_sd_range": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 6,
+        "excused_calls": [
+          {
+            "seq": 7,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 8,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 9,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 10,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 14,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 15,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "26/26 guard slots were supplied (100%); a further 6 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__reconstruct_2x2",
+        "mcp__forensic_metascience__required_n",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 10,
+      "by_surface": {
+        "forensic_mcp": 6,
+        "forensic_mcp_offlist": 3,
+        "harness": 1
+      },
+      "n_validated": 9,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 3,
+      "off_allowlist_calls": [
+        {
+          "seq": 5,
+          "tool": "check_sd_range",
+          "input_preview": "{'sd': 5.84, 'min_val': 20, 'max_val': 29, 'n': 28, 'decimals_sd': 2, 'bound_source': 'assumed', 'source_quote': 'Fifty-six patients in their 20s without a specific medical history, and who were to un"
+        },
+        {
+          "seq": 6,
+          "tool": "check_summation_batch",
+          "input_preview": "{'rows': [{'values': [16, 12], 'expected_sum': 28, 'decimals': [0, 0], 'decimals_total': 0, 'tolerance': 0, 'description': 'Experimental arm sex counts against stated n=28'}, {'values': [14, 14], 'exp"
+        },
+        {
+          "seq": 9,
+          "tool": "check_sd_range",
+          "input_preview": "{'sd': 6.33, 'min_val': 20, 'max_val': 29, 'n': 28, 'decimals_sd': 2, 'bound_source': 'assumed', 'source_quote': 'The mean (SD) age of the control group was 24.3 years (6.33) with male-female ratio of"
+        }
+      ],
+      "n_unbacked_findings": 0,
+      "unbacked_findings": [],
+      "level": "off_allowlist",
+      "calls_by_tool": {
+        "extract_xml": 1,
+        "extract_pdf": 1,
+        "recalc_chi_squared": 2,
+        "check_sd_range": 2,
+        "check_summation_batch": 1,
+        "grimmer_check": 2,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "OFF-LIST: 3 call(s) used a forensic tool this stage did not declare (check_sd_range, check_summation_batch). The arithmetic is still ours and still tested, so no finding is in doubt -- but the allowlist printed beside this verdict is not what the stage ran.",
+      "findings_scored": "the editorial report's own findings (report.schema.json). That schema has no `technique` field, so a stage-2 finding names no check and none can be scored unbacked; the count is 0 by construction, not by verification",
+      "guards": {
+        "n_guarded_calls": 4,
+        "n_guard_slots": 10,
+        "n_supplied": 10,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "check_sd_range": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "grimmer_check": {
+            "supplied": 8,
+            "defaulted": 0,
+            "excused": 2
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 2,
+        "excused_calls": [
+          {
+            "seq": 7,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 8,
+            "tool": "grimmer_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "10/10 guard slots were supplied (100%); a further 2 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    }
+  }
+}

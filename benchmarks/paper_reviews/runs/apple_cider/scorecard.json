@@ -1,0 +1,137 @@
+{
+  "paper": "apple_cider",
+  "verdict": "does_not_reconcile",
+  "verdict_expected": "does_not_reconcile",
+  "verdict_match": true,
+  "deterministic": {
+    "findings_json": {
+      "passed": true,
+      "problems": [],
+      "num_findings": 39,
+      "schema": "2.0"
+    },
+    "no_preamble": {
+      "passed": true,
+      "first_line": "Forensic review \u2014 paper",
+      "matched_patterns": []
+    },
+    "must_not_say": {
+      "passed": true,
+      "hits": []
+    },
+    "verdict": {
+      "passed": true,
+      "verdict": "does_not_reconcile",
+      "expected": "does_not_reconcile",
+      "valid_value": true
+    },
+    "tortured_track": {
+      "ran": true,
+      "k": 0,
+      "refusal_subtype": null,
+      "expected": "none",
+      "passed": true
+    },
+    "passed": true
+  },
+  "judge": {
+    "per_finding": [
+      {
+        "id": "baseline_uniformity",
+        "weight": "critical",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "The recomputed one-way ANOVA p-values for baseline Age, Weight and Height (0.931, 0.991, 0.990) are all far above 0.9, and the Carlisle-Stouffer-Fisher test finds this excess similarity survives a conservative correlation adjustment (rho=0.5, similarity p=0.0061).",
+        "severity_expected": [
+          3,
+          5
+        ],
+        "confidence": "high",
+        "matched_finding_id": "f_560ba7b66e510a7c",
+        "matched_severity": 3,
+        "severity_in_interval": true,
+        "severity_direction": "in"
+      },
+      {
+        "id": "data_availability",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": "",
+        "severity_expected": [
+          3,
+          4
+        ],
+        "confidence": "high"
+      },
+      {
+        "id": "effect_size_implausible",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": "",
+        "severity_expected": [
+          2,
+          3
+        ],
+        "confidence": "medium"
+      },
+      {
+        "id": "sprite_boundary_stacking",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": "",
+        "severity_expected": [
+          2,
+          5
+        ],
+        "confidence": "medium"
+      },
+      {
+        "id": "design_mislabel",
+        "weight": "minor",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "Methods state significance was determined \"by using an independent t-test,\" a single named procedure. But the overwhelming majority of the significance markers in Tables 2 and 3 are baseline-vs-follow-up comparisons WITHIN the same participants over time... which are paired/repeated-measures data, not independent samples."
+      },
+      {
+        "id": "feasibility_oddities",
+        "weight": "minor",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "All four groups are reported at n=30 at every timepoint (weeks 0, 4, 8, 12) in Tables 1-3, with venous blood draws and full anthropometric batteries required at each visit over a 12-week trial in adolescents and young adults. No flow diagram, no count of screened/excluded/lost-to-follow-up participants, and no discussion of missing data appears anywhere in the paper. Zero attrition over 12 weeks with repeated blood draws is unusually low and is not addressed as a limitation.",
+        "severity_expected": [
+          1,
+          3
+        ],
+        "confidence": "low",
+        "severity_in_interval": null
+      }
+    ],
+    "false_positives": [],
+    "recall_weighted": 0.455,
+    "recall_weighted_reachable": 0.455,
+    "num_false_positives": 0,
+    "no_findings_produced": false,
+    "severity_calibration": {
+      "n_scored": 1,
+      "n_in_interval": 1,
+      "n_over_severity": 0,
+      "n_under_severity": 0,
+      "severity_bias": -1.0,
+      "n_excluded_low_confidence": 0,
+      "n_covered_but_unmatched": 1
+    },
+    "judge_notes": "",
+    "judge_parse_path": "json_schema",
+    "cost_usd": 0.448908
+  },
+  "recall_weighted": 0.455,
+  "recall_weighted_reachable": 0.455,
+  "num_false_positives": 0,
+  "cost_usd": {
+    "analysis": 6.180099,
+    "judge": 0.448908
+  }
+}

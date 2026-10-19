@@ -1,0 +1,261 @@
+{
+  "paper_id": "10.1002--eat.24415",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-13 20:55 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_sha": "c8cde00c3fdb",
+  "git_dirty": false,
+  "prompt_sha256": "929a7a25e95a5df5",
+  "registry_sha256": "02bd45daa648c163",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 8.9575005,
+      "input_tokens": 46,
+      "output_tokens": 138660,
+      "cache_creation_input_tokens": 332763,
+      "cache_read_input_tokens": 4323089,
+      "wall_seconds": 1401.4,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001596
+        },
+        "claude-opus-5": {
+          "costUSD": 8.9559045
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 25
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 3.3467885000000006,
+      "input_tokens": 16,
+      "output_tokens": 32636,
+      "cache_creation_input_tokens": 191621,
+      "cache_read_input_tokens": 1151765,
+      "wall_seconds": 412.75,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.038716
+        },
+        "claude-opus-5": {
+          "costUSD": 3.3080725000000006
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 12.304289,
+  "total_wall_seconds": 1814.15,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [
+      {
+        "index": 5,
+        "question": "The Methods report that 'Sensitivity analyses showed that the overall pattern of results was consistent when data from assessments that followed eating episodes only were used, and those in which non-eating and eating episodes were included', but the results of those analyses do not appear in the article or in Data S1. Could you send them?",
+        "matched": "included', but the results of those analyses do not appear in the article",
+        "problem": "asks the authors to change the PUBLISHED article, which cannot be edited. Ask for the values to be SENT instead."
+      }
+    ],
+    "promoted_refusals": 0
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Romano et al. 2025",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 12,
+    "n_sentence_shaped": 8,
+    "sentence_shape_enforced": false,
+    "n_joined": 2,
+    "joined_enforced": false,
+    "n_overlong": 3,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [
+      "No degrees of freedom, no observation-level sample size, and two-decimal coefficients leave the main results table unverifiable",
+      "Data, code and the reported sensitivity analyses are available only on request, and the sensitivity results appear nowhere",
+      "Claimed variation across loss-of-control eating dimensions rests on comparing significance verdicts, not on testing the difference"
+    ],
+    "n_examples_omitted": 2,
+    "problems": [],
+    "detail": "all 12 title(s) name a defect rather than a method. 3 run past 120 characters and 2 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 37,
+    "n_headline": 1,
+    "n_targets": 38,
+    "n_valid": 6,
+    "n_invalid": 15,
+    "n_no_command_applies": 17,
+    "n_command_expected": 21,
+    "n_unparseable": 1,
+    "executed": true,
+    "n_ran_ok": 6,
+    "n_ran_failed": 14,
+    "problems": [
+      "finding[table2_regression_consistency]: exited 2: Usage: metascience regression-batch [OPTIONS] JSON_PATH\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "finding[table2_coefficient_precision]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] CI_LOW CI_HIGH\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n",
+      "finding[multiplicity_within_person_indirect]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[null_claim_stopping_eating]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] CI_LOW CI_HIGH\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n",
+      "finding[table1_count_percent_sweep]: exited 2: Usage: metascience check-table [OPTIONS] JSON_PATH\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --v",
+      "finding[supplement_s4_regression_consistency]: exited 2: Usage: metascience regression-batch [OPTIONS] JSON_PATH\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "finding[supplement_s4_boundary_significance]: exited 2: Usage: metascience regression-batch [OPTIONS] JSON_PATH\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "finding[supplement_s6_attrition_null_claim]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] CI_LOW CI_HIGH\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n",
+      "finding[supplement_s6_d_ci_vs_p]: exited 2: Usage: metascience check-ci [OPTIONS] ESTIMATE CI_LOW CI_HIGH\nTry 'metascience check-ci --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such opt",
+      "finding[statcheck_body_text]: contains placeholder '...' -- not runnable as written",
+      "finding[1]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] CI_LOW CI_HIGH\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n",
+      "finding[2]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[3]: exited 2: Usage: metascience absence-of-evidence [OPTIONS] CI_LOW CI_HIGH\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n",
+      "finding[9]: exited 2: Usage: metascience regression-batch [OPTIONS] JSON_PATH\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "finding[10]: exited 2: Usage: metascience regression-batch [OPTIONS] JSON_PATH\nTry 'metascience regression-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o"
+    ]
+  },
+  "exhaustive_checks": {
+    "n_tables": 9,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 6,
+      "n_blocks": 1,
+      "ran": true,
+      "severity": "consistent",
+      "max_identical_pairs": 0,
+      "n_duplicate_groups": 0,
+      "result": {
+        "severity": "consistent",
+        "explanation": "No duplicated summary statistics detected.",
+        "n_blocks": 1,
+        "n_cells_total": 6,
+        "n_comparisons": 0,
+        "max_identical_pairs": 0,
+        "chance_probability": null,
+        "duplicate_groups": [],
+        "assumptions": {
+          "span_mean": 86.57,
+          "span_sd": 25.76,
+          "decimals": [
+            2,
+            2
+          ],
+          "p_pair": 4.48421806357832e-08,
+          "note": "spans inferred from observed values; assumes independent cells and mean\u22a5SD (slightly conservative)."
+        },
+        "caveats": [
+          "Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly."
+        ],
+        "methodology": "Compared 0 cross-source (mean, SD) pairs across 1 blocks plus within-table rows/columns. Strongest independent overlap: 0 identical pair(s); coincidence probability \u2248 n/a after correcting for the number of comparisons."
+      }
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 6,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 6,
+      "results": [],
+      "worst": null,
+      "n_bound_by_name": 6
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_sweep": 25,
+    "n_report": 12,
+    "n_computed": 0,
+    "n_asserted": 37,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 6,
+    "n_diverged": 5,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 144,
+    "n_unjoined": 19,
+    "n_manual": 0,
+    "divergences": [
+      "table2_coefficient_precision: tool=consistent model=indeterminate (upgraded, explained)",
+      "supplement_s4_regression_consistency: tool=consistent model=indeterminate (upgraded, explained)",
+      "supplement_s4_boundary_significance: tool=consistent model=indeterminate (upgraded, explained)",
+      "supplement_s6_attrition_null_claim: tool=indeterminate model=suspicious (upgraded, explained)",
+      "supplement_s6_d_ci_vs_p: tool=suspicious model=indeterminate (downgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 12,
+    "n_uncomputed": 0,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 12,
+    "n_supplied": 2,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "logical": 9,
+      "field_norm": 2,
+      "paper_commitment": 1
+    }
+  },
+  "sourcing": {
+    "findings": 25,
+    "joinable": 25,
+    "traced_to_a_passage": 9
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 15 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 15,
+    "n_off_allowlist": 1
+  },
+  "text_provenance": {
+    "by_file": {
+      "10.1002--eat.24415.pdf": {
+        "extractor": "docling",
+        "n_chars": 78593
+      }
+    },
+    "docling_version": "2.119.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  }
+}

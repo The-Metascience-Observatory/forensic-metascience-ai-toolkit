@@ -1,0 +1,13 @@
+# Binary supplementary-material formats fetched alongside each paper.
+# Patterns without a slash apply at any depth below this directory, so the
+# per-DOI subfolders are covered too. Text formats (.xml, .json, .tex) are
+# deliberately NOT here -- they compress well and stay diffable/greppable.
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.bmp filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.doc filter=lfs diff=lfs merge=lfs -text
+*.docx filter=lfs diff=lfs merge=lfs -text
+*.xls filter=lfs diff=lfs merge=lfs -text
+*.xlsx filter=lfs diff=lfs merge=lfs -text

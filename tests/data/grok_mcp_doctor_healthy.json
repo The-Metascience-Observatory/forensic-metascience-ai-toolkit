@@ -1,0 +1,64 @@
+{
+  "sources": [
+    {
+      "path": "~/.grok/config.toml",
+      "status": {
+        "status": "found",
+        "server_count": 1
+      }
+    },
+    {
+      "path": "/tmp/claude-1000/-home-dan-Dropbox-AAA-METASCIENCE-OBSERVATORY-agent-for-forensic-metascience/7435394f-afd5-4e26-81f5-9e0f41c5338b/scratchpad/grok-spike/.grok/config.toml",
+      "status": {
+        "status": "found",
+        "server_count": 0
+      }
+    },
+    {
+      "path": "~/.claude.json",
+      "status": {
+        "status": "found",
+        "server_count": 0
+      }
+    },
+    {
+      "path": ".mcp.json",
+      "status": {
+        "status": "not_found"
+      }
+    }
+  ],
+  "servers": [
+    {
+      "name": "forensic_metascience",
+      "transport": "stdio",
+      "target": "/home/dan/anaconda3/bin/python -m metascience_agent.mcp_server",
+      "source": "config",
+      "checks": [
+        {
+          "label": "command found",
+          "passed": true,
+          "detail": "/home/dan/anaconda3/bin/python"
+        },
+        {
+          "label": "server started",
+          "passed": true,
+          "detail": "0.0s"
+        },
+        {
+          "label": "handshake OK",
+          "passed": true,
+          "detail": "protocol 2025-11-25"
+        },
+        {
+          "label": "58 tools discovered",
+          "passed": true,
+          "detail": ""
+        }
+      ],
+      "healthy": true
+    }
+  ],
+  "healthy_count": 1,
+  "failing_count": 0
+}

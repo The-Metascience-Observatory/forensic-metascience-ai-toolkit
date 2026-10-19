@@ -1,0 +1,10 @@
+# Everything except the adjudicator: findings ship at provisional severity.
+schema_version: 1
+name: no_adjudication
+description: Both analysts plus image and text tracks; no adjudicator (severities stay provisional).
+modules:
+  - use: tools_agent
+    tools: all
+  - use: scientific_proofreading_agent
+  - use: image_analysis
+  - use: text_forensics

@@ -1,0 +1,413 @@
+{
+  "headline": {
+    "statement": "Two of the paper's five significant mediation results -- including one of the four loss-of-control eating dimensions it concludes are mediated -- fail every standard correction for the 24 mediation tests it ran without applying one.",
+    "severity": "suspicious",
+    "rests_on": "stated_constraint",
+    "evidence": "Table 2 footnote: \"Bold text is used to reflect significant effects, defined as p < 0.05\". Twelve within-person indirect effects (p = .001, .070, .026, .122, .154, .233, .001, .067, .858, .859, .001, .065) and twelve between-person indirect effects (p = .052, .728, .210, .740, .060, .733, .164, .727, .380, .689, .017, .725), no correction stated anywhere. Within-person: 4 significant uncorrected, 3 survive (Bonferroni .0042, Holm .005, BH .0125, BY .0040) -- 'difficulties resisting eating' at p = .026 survives none. Between-person: 1 significant uncorrected (p = .017), 0 survive.",
+    "reproduction": "metascience multiplicity --tests within_indirect.json --family-label \"Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+    "plain": "The researchers ran twenty-four separate tests of whether difficulty managing emotions explains the link between mood and losing control over eating, and treated any result below the usual one-in-twenty cutoff as real. When that many tests are run at once, roughly one apparent discovery is expected by chance alone. Applying any of the standard adjustments for this, two of their five positive results drop out: one of the four eating behaviours they conclude is explained by emotion difficulties, and the single result about differences between people rather than within them. Their three strongest findings hold up comfortably under even the strictest adjustment.",
+    "reproduction_kind": "command",
+    "reproduction_valid": false,
+    "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+  },
+  "verdict": "questionable",
+  "confidence": "high",
+  "findings": [
+    {
+      "rank": 1,
+      "title": "One of four claimed mediated eating dimensions does not survive correction for its own test family",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, within-person Indirect effects rows, Models 1-6; Results 'Indirect Effects' paragraph; Discussion 'Variations Across LOC Eating Dimensions'",
+      "reported": "The Results state: \"There were also significant indirect effects at the within-person -- but not between-person -- level among the negative affect, emotion dysregulation, and (separately) general sense of LOC while eating, difficulties resisting eating, and feeling driven/compelled to eat factors (beta = 0.02-0.03).\" Table 2 footnote defines significance as p < 0.05. No correction for multiple comparisons is stated anywhere in the paper.",
+      "computed": "Twelve within-person indirect-effect tests on the same 107 participants. Family-wise error rate up to 46.0%; about 0.6 false positives expected by chance. Four significant uncorrected; three survive under all four methods (Bonferroni .00417, Holm .005, Benjamini-Hochberg .0125, Benjamini-Yekutieli .00403). 'Difficulties resisting eating' at p = .026 exceeds every threshold. n_claims_lost_to_correction = 1; surviving interval 3 to 3.",
+      "assumptions": "Family defined as the twelve within-person indirect effects (6 outcomes x 2 affect predictors) estimated on one sample -- a judgement, not a fact of the paper. FWER assumes independence and is an upper bound; the six LOC outcomes are measured on the same subjects and are correlated, which is why Benjamini-Yekutieli is the appropriate FDR method here, and it also keeps only three. The exploratory reverse-pathway models described in the Results add at least twelve further indirect-effect tests whose numbers appear only in Data S1, so this family count is a floor.",
+      "warrant": "paper_commitment",
+      "reproduction": "metascience multiplicity --tests within_indirect.json --family-label \"Within-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "stage1_finding_ids": [
+        "multiplicity_within_person_mediation"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "'Difficulties resisting eating' is named in the Results and repeated in the Discussion as one of the four dimensions emotion dysregulation was found to mediate, and at p = .026 it crosses the paper's own alpha only without correction. The mediation effect for 'difficulties resisting eating' (p = .026) does not survive any of the four corrections, yet it is named in the abstract and conclusions as one of the dimensions emotion dysregulation was found to mediate. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "plain": "Testing many things at once makes lucky results likelier, so researchers usually tighten the bar. These authors tested twelve versions of their main idea and used the ordinary bar for each. Three of their four positive results are strong enough that no reasonable tightening would remove them. The fourth -- difficulty resisting eating -- is not, yet it is listed alongside the others in the results and again in the discussion as something they showed. That one claim is weaker than the paper presents it as being; the other three are as strong as claimed.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+    },
+    {
+      "rank": 2,
+      "title": "Dimension-to-dimension contrast asserted without any test of the difference between dimensions",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Conclusions; Discussion section 'Variations Across LOC Eating Dimensions'; Table 2 Models 1-6 within-person indirect effects",
+      "reported": "Conclusions: \"However, notable variations in this pattern of results emerged based on the different LOC eating components.\" Discussion: participants \"subsequently reported more severe levels of certain LOC eating outcomes (general sense of LOC while eating, difficulties resisting eating, feeling driven or compelled to eat, feeling disconnected while eating), but not others (difficulties stopping eating after starting, not paying attention to one's eating).\" Table 2 gives Model 3 within-person indirect b = 0.04 (0.03), p = .154 and Model 5 b = -0.004 (0.02), p = .858, against b = 0.10, 0.09 and 0.09 (all p = .001) for the dimensions called mediated.",
+      "computed": "The interval derived from Model 3's own printed b and SE runs to 0.099 -- LARGER than the b = 0.09 and b = 0.10 effects the paper calls significant for other dimensions. The data therefore do not separate 'difficulties stopping eating after starting' from the mediated dimensions. Model 5 is the opposite case and supports the paper: its interval [-0.043, 0.035] excludes those effects, so that dimension genuinely does differ. No interaction or moderation test of dimension is reported, and no smallest effect size of interest is stated, so equivalence cannot be assessed for either null.",
+      "assumptions": "Intervals are DERIVED from the printed b and SE (b +/- 1.96 x SE on the normal, matching the paper's stated maximum likelihood estimation); the paper prints no confidence intervals anywhere, and the derived bounds inherit the 2-decimal rounding of b and SE. The norm invoked -- that a difference between a significant and a non-significant result is not itself a demonstrated difference -- is Gelman and Stern (2006, The American Statistician 60:328-331), an external standard I supply; the paper never claims to have tested dimensions against each other.",
+      "warrant": "field_norm",
+      "reproduction": "metascience absence-of-evidence --b 0.04 --se 0.03 --measure difference --claim-of-no-effect",
+      "stage1_finding_ids": [
+        "absence_of_evidence_model3_null",
+        "absence_of_evidence_model5_null"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's second headline claim -- that mediation varies meaningfully across LOC eating dimensions, stated in the Conclusions and given its own Discussion section -- holds for one of the two contrasting dimensions and is not established for the other."
+      },
+      "plain": "The paper's second main claim is that emotion difficulties explain some kinds of loss-of-control eating but not others. It reaches this by noting which results passed the significance bar and which did not, rather than by directly comparing the kinds to each other. For one of the two behaviours placed on the 'not explained' side -- difficulty stopping once you start -- the data are still compatible with an effect as large as the ones called real elsewhere, so it has not actually been shown to differ. For the other -- not paying attention while eating -- the data are tight enough that the contrast does hold. Half of this claim stands and half does not.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "rank": 3,
+      "title": "Sole between-person mediation claim survives none of four corrections for its twelve-test family",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, between-person Indirect effects rows, Models 1-6; Results 'Indirect Effects' paragraph",
+      "reported": "Results: \"Also, participants who generally reported greater negative affect than other participants generally reported greater emotion dysregulation and, in turn, feeling more disconnected while eating throughout the study.\" This rests on Table 2 Model 6 between-person indirect effect b = 0.95 (0.40), p = .017, beta = 0.69. No correction is stated.",
+      "computed": "Exactly one of twelve between-person indirect-effect tests reached p < .05, against about 0.6 false positives expected by chance across a family of that size. Zero claims survive Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli. n_claims_lost_to_correction = 1; surviving interval 0 to 0.",
+      "assumptions": "Family defined as the twelve between-person indirect effects (6 outcomes x 2 affect predictors) on one sample. FWER assumes independence and is an upper bound under the correlation these outcomes plainly have. Uncorrected testing is ordinary practice in this literature; this is arithmetic about what the reported p-values imply, not an allegation.",
+      "warrant": "paper_commitment",
+      "reproduction": "metascience multiplicity --tests between_indirect.json --family-label \"Between-person indirect (mediation) effects: 6 LOC eating dimensions x 2 affect predictors\" --alpha 0.05",
+      "stage1_finding_ids": [
+        "multiplicity_between_person_mediation"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The paper's only between-person mediation conclusion -- that people with generally higher negative mood report more emotion dysregulation and in turn feel more disconnected while eating -- is one significant test among twelve and is repeated in the Results without that context. The sole between-person mediation claim - that participants with generally greater negative affect reported greater emotion dysregulation and in turn felt more disconnected while eating - rests on p = .017 among 12 tests and survives none of the four corrections. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "plain": "Alongside the moment-to-moment analyses, the authors ran twelve tests comparing people to each other rather than comparing moments within a person. Exactly one came out positive, which is roughly what you would expect from chance alone with twelve tests. The paper reports that one result as a finding without noting it stood alone among twelve. It should be treated as a lead worth following, not as something demonstrated.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+    },
+    {
+      "rank": 4,
+      "title": "Fixed slopes omit a variance component known to bias 1-1-1 multilevel indirect effects",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Statistical Analyses, final paragraph; all within-person indirect effects in Table 2",
+      "reported": "\"Fixed slopes and random intercepts were modeled at both levels due to convergence difficulties when random slopes were added (because of the data structure's complexity).\" The paper discloses the constraint but does not discuss its consequence for the indirect effects, and the Strengths and Limitations section does not mention it.",
+      "computed": "No recomputation is possible from the printed values. In a 1-1-1 multilevel mediation the population within-person indirect effect is E(a)E(b) + cov(a,b); constraining both slopes to be fixed estimates only the first term and drops the covariance between the person-specific a and b paths. The direction and magnitude of the resulting bias cannot be determined from what the paper prints, because the slope covariance is exactly the quantity the model could not estimate.",
+      "assumptions": "The result invoked is Kenny, Korchmaros and Bolger (2003, Psychological Methods 8:115-128) and Bauer, Preacher and Gil (2006, Psychological Methods 11:142-163), an external methodological standard I supply. The authors state the random-slope model would not converge, so the constraint was forced rather than chosen; the finding concerns the undiscussed consequence, not the decision.",
+      "warrant": "field_norm",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Applies to every within-person indirect effect in Table 2, which is the paper's entire primary result; whether any specific estimate is materially affected cannot be determined from the printed values."
+      },
+      "plain": "The statistical model assumes the strength of the mood-to-emotion-difficulty link, and of the emotion-difficulty-to-eating link, is identical for every participant. The authors say they wanted to let these vary between people but the model would not run that way. When they are forced to be identical, a known extra ingredient of the mediation effect is left out, and the reported effects can be too large or too small as a result. Nothing in the published numbers lets anyone tell which, or by how much. The authors mention the technical problem but not this consequence.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           "
+    },
+    {
+      "rank": 5,
+      "title": "Table 2 in the publisher XML mislabels six rows, contradicting the paper's own positive-affect conclusion",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, third row under 'Direct effects' in each of Models 1-6, as rendered in the publisher XML (version of record)",
+      "reported": "In the XML each model block carries a row labelled \"Positive affect -> Emotion dysregulation -> LOC eating\" under the heading 'Direct effects', with Model 1 values 0.28 (0.07), p < 0.001, beta = 0.13, 0.82 (0.41), p = 0.048, beta = 0.68 -- and a second, differently-valued row bearing the identical label under 'Indirect effects' below it. The Conclusions state: \"Also, all momentary mediational pathways involving positive affect as a predictor were not significant.\"",
+      "computed": "Six affected rows, zero numeric cells affected -- every number is identical between the XML and the PDF. Two facts establish the defect from the XML alone, with no cross-source comparison: a two-mediator path cannot appear under a 'Direct effects' heading, and two rows in the same model block cannot carry the same label with different coefficients. The PDF and the paper's own prose independently identify the correct label as 'Emotion dysregulation -> LOC eating': the Results describe beta = 0.13-0.14 within-person and 0.68-0.77 between-person for that direct effect, matching Models 1 and 6 exactly.",
+      "assumptions": "The diagnosis of which label is correct rests on the PDF (a PMC author manuscript, which I did not open myself -- it was read by the numeric sweep) and on the paper's prose, which I did verify against the grid. The defect itself rests only on the XML. This is a typesetting or markup fault in the version of record, not an authorial or arithmetic one, and no accusation against the authors is implied.",
+      "warrant": "logical",
+      "reproduction": "metascience get-table --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml --table-num 2",
+      "stage1_finding_ids": [
+        "table2_row_label_xml_vs_pdf"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Read at face value, the published XML and the HTML generated from it show a positive-affect mediation path significant at p < .001 in Models 1, 4 and 6, flatly contradicting the paper's Conclusions that no positive-affect pathway was significant."
+      },
+      "plain": "In the online version of the article, six rows of the main results table carry the wrong description. As printed there, the table appears to show a strong result for positive mood that the paper's own conclusions say does not exist. The actual numbers are correct and identical to those in the manuscript version; only the row descriptions are wrong, and the mistake looks like it happened when the article was converted for online publication rather than being anything the authors did. It matters because most readers, and any automated system harvesting the results, will see the online version.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 6,
+      "title": "Trial registration number has seven digits and cannot be looked up as printed",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Participants and Procedures, second paragraph",
+      "reported": "\"The present study used baseline EMA data from a multisite randomized controlled trial (NCT0204349) testing the efficacy of Integrative Cognitive-Affective Therapy (ICAT-BED) versus guided self-help Cognitive Behavioral Therapy for Eating Disorders (CBTgsh).\"",
+      "computed": "ClinicalTrials.gov identifiers are 'NCT' followed by exactly eight digits. The printed string has seven and resolves to no registration. The same string appears in both the XML and the PDF, so it is the paper's own text rather than an extraction artefact. No claim is made about which digit is missing.",
+      "assumptions": "The eight-digit NCT format is a fact about the registry, external to the paper, which the paper never states it follows. Verifying the intended registration would require a registry lookup, which this analysis cannot perform -- it reads one paper and reaches no network.",
+      "warrant": "field_norm",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml",
+      "stage1_finding_ids": [
+        "nct_identifier_malformed"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The registration is a reader's only route to the parent trial's registered design and outcomes, against which this secondary analysis would be checked; as printed it cannot be followed."
+      },
+      "plain": "The paper gives a registration number for the parent clinical trial so readers can look up what that trial planned to do. The number as printed is one digit short of a valid registration number and leads nowhere. This is almost certainly a typing slip, but it blocks the one check a reader would want to make: whether this analysis matches what the original trial said it would measure.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           "
+    },
+    {
+      "rank": 7,
+      "title": "Survey compliance printed as 70.00% when the paper's own counts give 69.67%",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, first paragraph",
+      "reported": "\"Participants responded to 3131 out of 4494 possible surveys, reflecting good compliance (70.00%).\"",
+      "computed": "3131/4494 = 69.67%, outside the rounding interval [69.995, 70.01] that '70.00' asserts. The printed percentage implies a denominator of about 4,472.9 rather than 4,494. Both counts are independently sound: 6 surveys per day x 7 days x 107 participants = 4,494. The likeliest explanation is a value rounded to a whole number and then formatted to two decimals for consistency, asserting precision it does not carry. The same pattern is visible, though not checkable, in Table 1's BDI row, '15.00 (10.00)' -- the only row where both statistics are whole numbers, and one for which no more primitive figures are printed.",
+      "assumptions": "None beyond the paper's own statements; count, denominator and percentage are all printed in the same sentence. The remark about the BDI row is an observation offered as context for the diagnosis, not a second finding: that cell is granularity-consistent at n = 107 and nothing about it can be checked.",
+      "warrant": "logical",
+      "reproduction": "metascience check-count-percent --count 3131 --n 4494 --percentage 70.00 --decimals 2",
+      "stage1_finding_ids": [
+        "compliance_percentage_mismatch"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Overstates compliance by 0.33 percentage points and affects only the descriptive characterisation of compliance as 'good'; no inferential result depends on it."
+      },
+      "plain": "The paper says participants answered 3,131 of 4,494 possible surveys, which is 69.67 per cent, but prints the figure as 70.00 per cent. The two counts themselves are right and check out against the study design. This is a presentation slip of a third of a percentage point and changes nothing about the study's findings.",
+      "reproduction_kind": "command",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 8,
+      "title": "Blanket positive-affect null rests on three results just above the significance threshold",
+      "severity": "indeterminate",
+      "confidence": "high",
+      "location": "Conclusions and Discussion 'Positive Affect'; Table 2, within-person positive-affect Indirect effects rows, Models 1-6",
+      "reported": "Conclusions: \"Also, all momentary mediational pathways involving positive affect as a predictor were not significant.\" Discussion: \"It is noteworthy that all momentary pathways, including positive affect as a predictor of emotion dysregulation and, in turn, LOC eating dimensions, were not significant in the present study.\" Table 2 gives the six within-person positive-affect indirect p-values as .070, .122, .233, .067, .859, .065.",
+      "computed": "Three of the six sit at p = .065-.070, immediately above the paper's stated alpha of .05; only two (.859, .233) are clearly null. No confidence intervals are printed anywhere in the paper for any of the 84 coefficients, so a reader cannot see this from the table as presented. NOTE: an interval derived from Model 6's printed b = -0.02 and SE = 0.01 appears to exclude zero, but this is an artefact of two-decimal rounding, not a contradiction -- the coefficient row is consistent, with a reachable p-interval of [6e-07, 0.317] at that printed precision, and no inconsistency should be read into it.",
+      "assumptions": "Intervals are derived from printed b and SE, not reported by the paper. The judgement that a flat 'not significant' understates results at p = .065-.070 is a reporting-emphasis observation; the paper's arithmetic is correct throughout and its individual significance decisions are all right at its own threshold.",
+      "warrant": "field_norm",
+      "reproduction": "metascience absence-of-evidence --b -0.02 --se 0.01 --measure difference --claim-of-no-effect",
+      "stage1_finding_ids": [
+        "absence_of_evidence_positive_affect_null"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Conclusions' unqualified statement that no positive-affect pathway was significant is carried in half its instances by marginal rather than clearly null results, which the paper does not signal."
+      },
+      "plain": "The paper concludes flatly that positive mood played no part in any of the pathways it tested. Three of the six relevant results were only just short of the cutoff the authors used, and two were nowhere near it. Nothing here is calculated wrongly and every individual judgement is correct by the paper's own rule -- but 'no effect' is a stronger summary than results sitting just outside the line support, and the article prints no ranges that would let a reader notice.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience absence-of-evidence [OPTIONS] {ci_low} {ci_high}\nTry 'metascience absence-of-evidence --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "rank": 9,
+      "title": "No observation count reported for the six outcome variables' descriptive statistics",
+      "severity": "indeterminate",
+      "confidence": "high",
+      "location": "Results, first paragraph (LOC eating severity descriptives)",
+      "reported": "\"participants generally reported LOC eating at a moderate level of severity across the assessed dimensions, yet with high variability (all ranges = 1-5): (1) general feeling of losing control while eating (M = 2.26, SD = 1.32); (2) difficulties resisting eating (M = 2.79, SD = 1.42)\" and four further dimensions. Methods: \"Participants were presented with the LOC eating items if they endorsed that they ate since their last survey.\"",
+      "computed": "Nothing could be computed. These six means are otherwise ideal targets for granularity checking -- single items on a stated 1-5 integer scale -- and all three applicable checks are blocked for one reason: the number of eating-episode observations underlying them is an unstated subset of the 3,131 completed surveys. Substituting the survey total would invent the denominator and could manufacture a false impossibility, so nothing was run. All six standard deviations (1.18-1.42) sit well below the ceiling a 1-5 scale permits, so nothing looks wrong; it simply cannot be verified.",
+      "assumptions": "None beyond the paper's own statements. The 1-5 range is stated by the paper, as is the conditional administration of the items.",
+      "warrant": "field_norm",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml",
+      "stage1_finding_ids": [
+        "loc_outcome_descriptives_no_denominator"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No conclusion depends on these descriptive figures, but they are the paper's only distributional summary of its six outcome variables and none of them can be independently verified."
+      },
+      "plain": "The six eating-behaviour questions were only shown to a participant who had reported eating recently, so they were answered far fewer times than the total number of surveys. The paper never says how many times. Without that number the averages it reports for those six behaviours cannot be independently checked, even though they are exactly the kind of figure that is usually checkable. Nothing about them looks wrong -- there is simply no way to confirm them.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           "
+    },
+    {
+      "rank": 10,
+      "title": "Mediator correlates at .948 with the mediator used in a prior paper on the same sample",
+      "severity": "indeterminate",
+      "confidence": "medium",
+      "location": "Study Purpose, final paragraph",
+      "reported": "\"a prior analysis of the present sample examined whether the momentary negative affect-binge eating association was mediated by negative urgency (i.e., a self-regulatory process that overlaps with emotion dysregulation [r = 0.948 in the present study] and is defined as behaving impulsively while experiencing negative affect; Wonderlich et al. [2024]).\"",
+      "computed": "r = .948 is well within bounds and no arithmetic check flags it. The paper cites it as evidence of 'overlap'; at that magnitude the two constructs are close to interchangeable in this sample. The prior publication tested negative urgency as the mediator of the negative-affect-to-binge-eating path in these same 107 participants; the present paper tests emotion dysregulation.",
+      "assumptions": "Whether two analyses on one sample with mediators correlated at .948 should be read as independent contributions is an editorial judgement I am supplying, not a standard the paper accepted. The paper is transparent about the overlap and about the shared dataset, listing four prior publications from it. No shared-variance figure is computed here.",
+      "warrant": "field_norm",
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml",
+      "stage1_finding_ids": [
+        "near_collinear_construct_overlap"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Bears on how independently this paper's negative-affect mediation result should be read relative to the same team's prior result on the same participants, not on whether either result is correctly computed."
+      },
+      "plain": "The psychological quality this paper treats as the explanatory mechanism is almost perfectly correlated -- .948 out of a possible 1.0 -- with the quality an earlier paper by the same group used as the mechanism, in the very same participants. The paper reports this correlation openly and lists the earlier work. It does mean the two sets of findings are closer to one result than two, which is worth knowing when reading them alongside each other. Nothing here is miscalculated.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 1: \u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 /mnt/c/Users/gregs/agent_for_forensic_metascience/src/metascience_agent/cli. \u2502\n\u2502 py:447 in extract_xml_cmd           "
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Data S1 (Supporting Information): multilevel confirmatory factor analyses, all model fit statistics, missing-data analyses, the exploratory reverse-pathway models, and the comparison of the 5 excluded against the 107 analysed participants",
+      "reason": "OUR GAP, not an omission by the authors: no supplementary file was among the inputs to this analysis (only the .xml and .pdf were supplied), so its contents could not be read. This is the largest coverage hole here. Table 2's footnote states \"model fit statistics were good and are reported in Data S1\", and the Results describe the entire exploratory analysis set as significant for four of six dimensions without printing a single coefficient in the main text. None of that could be verified from what we hold."
+    },
+    {
+      "location": "Results, the six LOC eating means and SDs (M = 2.26 / 2.79 / 2.54 / 2.88 / 3.45 / 2.19)",
+      "reason": "All three granularity checks require an observation-level denominator and none is reported; the items were shown only after a reported eating episode, so the relevant count is an unstated subset of the 3,131 completed surveys. Substituting the survey total would invent the denominator."
+    },
+    {
+      "location": "Table 1, BDI / CIA / DERS total-score standard deviations (10.00, 9.87, 26.61)",
+      "reason": "The exact-arithmetic checks refused these rows because the paper states no scoring range for any of the three instruments. Falling back on a default Likert maximum would manufacture an impossibility out of an ordinary unbounded total score. The refusal is correct; a stated instrument range would make them checkable."
+    },
+    {
+      "location": "Table 1, baseline age (39.87) and BMI (35.10)",
+      "reason": "Declared continuous, so the exact-arithmetic family correctly does not apply. Age could in principle be whole years, but the paper does not say so, and asserting it would rest on an assumption we supplied."
+    },
+    {
+      "location": "Table 2, the 16 coefficient rows whose p is printed as '< .001'",
+      "reason": "A thresholded p is a bound, not a value, and was excluded from the 68-row coefficient check rather than being read as an exact 0.001. Those coefficients are large relative to their standard errors (0.35/0.06, 0.96/0.10), so the threshold itself is not in doubt, but no exact verification was performed."
+    },
+    {
+      "location": "Degrees of freedom for every coefficient in Table 2",
+      "reason": "The paper reports none. The coefficient check was run against the normal reference implied by the stated maximum likelihood estimation, which is what such models report; a different reference would shift the recovered p-values slightly."
+    },
+    {
+      "location": "A-priori power or sample-size justification",
+      "reason": "The paper reports none, so there was nothing to reproduce. This is expected for a secondary analysis where N is fixed by the parent trial, and is recorded as context rather than as a defect."
+    },
+    {
+      "location": "Exploratory reverse-pathway models (emotion dysregulation -> affect -> LOC eating)",
+      "reason": "Described in the Results as significant for four of six dimensions, with all numbers in Data S1, which we do not hold. These add at least twelve further indirect-effect tests, so the two multiplicity findings above understate the true comparison count."
+    },
+    {
+      "location": "Baseline-similarity tests on Table 1",
+      "reason": "Deliberately not run. Both such tests compare randomised arms; this paper reports a single pooled sample with no arm-wise breakdown and performs no baseline comparison, so there are no baseline p-values to combine. Running either would require inventing a grouping the paper does not report."
+    },
+    {
+      "location": "Effect-size plausibility benchmarking of the headline mediation effects",
+      "reason": "Not run, and unavailable for this paper. The benchmark table covers standardised mean differences; these are within-person standardised mediation path coefficients (beta = 0.02-0.03), which are not on that scale and have no corresponding benchmark. Passing them would compare incommensurable quantities."
+    },
+    {
+      "location": "Rank-sum granularity checks",
+      "reason": "Not applicable: every p-value in this paper comes from Wald tests of multilevel structural equation model coefficients, not from rank-sum tests."
+    },
+    {
+      "location": "The article abstract",
+      "reason": "The abstract was not present in the XML full text available to this stage. Claims are therefore cited to the Results, Discussion and Conclusions sections, whose text was verified directly, rather than to the abstract."
+    },
+    {
+      "location": "table rows Baseline depressive symptoms (BDI total score), Baseline eating disorder-related clinical impairment (CIA total score), Baseline emotion dysregulation (DERS total score)",
+      "reason": "grimmer_check, sprite_reconstruct not run: this check needs a STATED scale maximum and the paper does not give one. It would otherwise fall back to a default 1-7 Likert scale, which for an unbounded variable manufactures an impossibility out of an ordinary value (measured: a mean of 35.78 members at n=64 reported `impossible` against an invented maximum of 7).",
+      "n_cells": 3,
+      "source": "dispatcher"
+    }
+  ],
+  "limitations": [
+    "FIGURES WERE NOT READ. This agent reads text and tables and does not see figures. The paper contains one figure, a conceptual path diagram whose caption states it depicts the model structure and lagging scheme; on the caption alone it carries no estimated values, so no numeric check was lost. That judgement rests on the caption, not on the artwork.",
+    "The supplementary file Data S1 was not among the inputs supplied to this analysis. It holds every model fit statistic the paper claims, the factor analyses, the missing-data analyses and the whole exploratory analysis set. Its absence is our limitation, not a reporting failure by the authors, and it means the paper's fit claims and one entire analysis set are unverified here rather than verified or refuted.",
+    "I read the publisher XML directly and re-fetched both tables at source before writing. I did not open the PDF myself; the diagnosis of which Table 2 row label is correct rests on the numeric sweep's reading of the PDF, corroborated independently by the paper's own prose, which I did verify against the table grid.",
+    "Two of the four questions a multiplicity or overlap finding should be read against are outside this system's reach entirely: whether similar patterns appear in other papers by these authors, and what the equivalent values look like in comparable studies in this literature. This analysis reads one paper and reaches no network, so that part of the interpretation is the reader's to supply.",
+    "The multiplicity arithmetic depends on how the family of tests is defined, which is my judgement and not a fact of the paper. I grouped the twelve within-person and the twelve between-person indirect effects as two families. A reader who considers each of the six models a separate confirmatory question would reach a more permissive conclusion; one who pools all twenty-four tests, or adds the exploratory models, would reach a stricter one.",
+    "Confidence intervals are derived from the printed coefficients and standard errors, which are given to two decimal places; the paper prints no intervals of its own. For the smallest coefficients this rounding makes the derived bounds coarse, and one apparent interval-versus-p-value contradiction in the positive-affect rows was traced to exactly that rounding and is reported as no anomaly.",
+    "The 'questionable' verdict is not a default. The specific unresolved matters are: two named claims that cross the paper's own significance threshold only without correction, a dimension-to-dimension contrast that holds for one of the two contrasting outcomes and not the other, a bias from the forced fixed-slope specification whose direction and size cannot be recovered from the published numbers, and the unread supplement."
+  ],
+  "coverage_summary": {
+    "stats_found": 136,
+    "stats_checked": 94,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "check_count_percent",
+      "multiplicity_report",
+      "absence_of_evidence",
+      "parse_cells_typed",
+      "check_table",
+      "check_summation_batch",
+      "grim_check",
+      "check_regression_batch",
+      "detect_duplication",
+      "statcheck",
+      "extract_pdf"
+    ],
+    "tables_checked": [
+      "Table 1 (Participant characteristics, 29 rows x 3 cols, 26 cells, 100% typed, 0 ambiguous)",
+      "Table 2 (Multilevel SEM results, 60 rows x 7 cols, 84 coefficients, 68 with an exact p checked)"
+    ],
+    "checkable": {
+      "n_cells": 314,
+      "n_consumable": 110,
+      "n_routable": 104,
+      "n_runnable": 0,
+      "blocked_on_declaration": 6,
+      "blocked_on_input": 104,
+      "by_kind": {
+        "mean_sd": 6,
+        "n_percent": 20,
+        "mean_se": 84
+      },
+      "missing_inputs": {
+        "n": 104
+      },
+      "n_checked": 21,
+      "coverage": 0.19090909090909092,
+      "never_submitted": 0,
+      "cells_checked_via_check_table": 21,
+      "note": "Coverage: 21 of 110 checkable cells were checked (19%). 6 are waiting on a variable declaration (what kind of quantity is this?). 104 are waiting on an input: n (104)."
+    }
+  },
+  "questions_for_authors": [
+    {
+      "question": "How many eating-episode observations underlie the six loss-of-control eating descriptive statistics reported in the Results (M = 2.26, SD = 1.32 for the general feeling of losing control, and the five others)? Since the items were shown only when a participant had reported eating since the last survey, the relevant count is a subset of the 3,131 completed surveys, and it does not appear in the article. Could you also supply the number of level-1 observations that entered each of the six models?",
+      "why": "Without an observation-level denominator none of the six outcome descriptives can be granularity-checked, and the level-1 N is needed to gauge the precision of the within-person indirect effects. Resolves finding 9.",
+      "finding_ids": [
+        "loc_outcome_descriptives_no_denominator"
+      ]
+    },
+    {
+      "question": "Was any adjustment for multiple comparisons applied across the twenty-four indirect effects in Table 2, or across the further exploratory reverse-pathway models? If not, would you regard the within-person mediation of difficulties resisting eating (b = 0.06, SE 0.03, p = .026) and the between-person mediation of feeling disconnected while eating (b = 0.95, SE 0.40, p = .017) as robust, given that neither clears a Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli threshold for a twelve-test family?",
+      "why": "These are the two results that cross the paper's stated alpha of .05 only without correction, and both are stated as findings. Resolves findings 1 and 3.",
+      "finding_ids": [
+        "multiplicity_within_person_mediation",
+        "multiplicity_between_person_mediation"
+      ]
+    },
+    {
+      "question": "Was any formal test of the difference between loss-of-control eating dimensions run -- for example a joint model with dimension as a moderator? The within-person indirect effect for difficulties stopping eating after starting is b = 0.04 (SE 0.03), which is compatible with effects as large as the b = 0.09 to 0.10 reported as significant for the other dimensions, so the contrast between them does not appear to have been tested directly.",
+      "why": "The paper's second headline conclusion is that mediation varies across dimensions; for this dimension the printed estimates do not separate it from the mediated ones. Resolves finding 2.",
+      "finding_ids": [
+        "absence_of_evidence_model3_null",
+        "absence_of_evidence_model5_null"
+      ]
+    },
+    {
+      "question": "Could you confirm the ClinicalTrials.gov identifier for the parent trial? The article prints 'NCT0204349', which has seven digits where the registry format has eight, and does not resolve as written.",
+      "why": "The registration is the only route to the parent trial's registered design and outcomes. Resolves finding 6.",
+      "finding_ids": [
+        "nct_identifier_malformed"
+      ]
+    },
+    {
+      "question": "In the publisher's online version of Table 2, the third row under 'Direct effects' in each of the six models is labelled 'Positive affect -> Emotion dysregulation -> LOC eating' -- the same label as the indirect-effects row below it -- carrying values of 0.28 (0.07), p < 0.001 in Model 1. The manuscript PDF labels that row 'Emotion Dysregulation -> LOC Eating', which matches the beta values of 0.13 to 0.14 described in your Results. Could you confirm which label is correct, so the discrepancy can be raised with the publisher?",
+      "why": "As rendered online the table appears to report a significant positive-affect mediation path, contradicting the paper's own conclusion that no positive-affect pathway was significant. Resolves finding 5.",
+      "finding_ids": [
+        "table2_row_label_xml_vs_pdf"
+      ]
+    }
+  ],
+  "report_markdown": "This is a secondary analysis of baseline ecological momentary assessment data from a multisite randomised trial of two psychotherapies for binge eating disorder. In 107 adults who answered 3,131 of 4,494 prompted surveys over seven days, the authors fit six two-level multilevel structural equation models, each asking whether momentary emotion dysregulation carries the effect of momentary affect onto one of six distinct loss-of-control (LOC) eating dimensions. They conclude that emotion dysregulation mediated negative-affect pathways to four of the six dimensions, that the pattern varied meaningfully across dimensions, and that no positive-affect pathway was significant at any level.\n\n## The arithmetic is in good order\n\nThis is a carefully prepared paper at the level of its numbers, and that deserves stating before anything else. All 68 coefficient rows in Table 2 that carry an exact p-value reproduce that p from the coefficient and standard error printed beside them -- 68 of 68, with no inconsistency and none indeterminate. All 15 count-and-percentage pairs in Table 1 reconcile exactly against N = 107. All three categorical blocks sum exactly to 107, the sample flow reconciles at 107 + 5 = 112, and the three integer-scored baseline totals are granularity-consistent. Every standardised coefficient quoted in the Results narrative traces to the corresponding Table 2 cell, including the ranges (beta = 0.13-0.14, 0.68-0.77, 0.08-0.14, 0.02-0.03), and the prose is scrupulous at the significance boundary, describing Model 1's between-person direct effect at p = .048 as significant while calling its indirect effect at p = .052 not. A duplication scan over 960 comparisons found no improbable repetition; the small patternless variation across model blocks -- a between-person coefficient of 0.96 in Models 1-3 and 0.95 in Models 4-6, a p-value moving .038/.039/.040/.040/.042/.038 -- is the signature of six genuinely separate re-estimations rather than a copied block.\n\n## Where the problem lies\n\nThe difficulties in this paper are not in its arithmetic but in the inferences drawn from it, and they are really one problem seen twice. The paper asks a single question -- does emotion dysregulation mediate the affect-to-LOC-eating path -- of twenty-four correlated outcomes in the same 107 people, and then reads the resulting pattern of significant and non-significant results as a substantive map of which eating behaviours are mechanistically explained and which are not. Both halves of that reading are weaker than the paper presents them. The pattern of significance is partly a function of having run twenty-four tests at the ordinary threshold, and the contrast between a mediated and an unmediated dimension is asserted rather than tested -- for one of the two dimensions placed on the null side, the estimate is compatible with an effect larger than the ones called significant elsewhere.\n\nTwo counterweights belong in the same breath. First, uncorrected testing is ordinary practice in this literature and is not a mark against these authors; the arithmetic here is about what the reported p-values imply, not about anyone's conduct. Second, three of the four within-person mediation claims survive even Bonferroni, which is a demanding test, and the second null dimension -- not paying attention to one's eating -- genuinely does differ from the mediated ones. The paper's core finding, that momentary emotion dysregulation carries negative affect onto several forms of loss-of-control eating, is not what is in doubt. What is in doubt is the finer-grained dimensional story built on top of it.\n\n## Two things I considered and did not report\n\nThe paper's data availability statement offers data, materials and code \"from the corresponding author upon reasonable request\". For identifiable momentary data from an ongoing clinical trial this is the standard and defensible formulation, and treating it as evasive would hold the paper to a standard its design never owed. I do not report it.\n\nA citation year differs between the two versions of the article -- Stefano et al. is dated 2014 in the manuscript PDF and 2016 throughout the publisher XML. The PDF is a PMC author manuscript and the XML the version of record, so an ordinary copy-editing correction between them fully explains it, no numeric claim depends on it, and I have dropped it rather than padding the review.\n\nI also declined to escalate one cell in Table 1. The BDI row reads 15.00 (10.00), the only row in that table where both statistics are whole numbers. It is granularity-consistent at n = 107, nothing more primitive is printed against which it could be checked, and rounding for presentation explains it as readily as anything else. It appears in this review only as context for the compliance figure, which is the same formatting pattern in a case where the underlying counts are printed and the discrepancy can be demonstrated.\n\n## Reading the version of record\n\nOne defect belongs to the publisher rather than the authors, and it is the one most likely to mislead a reader who never opens the manuscript PDF. In the published XML -- and so in the HTML generated from it -- six rows of Table 2 carry the label of the row beneath them, with the effect that the article as published online appears to report a positive-affect mediation path significant at p < .001 in three models, in direct contradiction of its own conclusions. The numbers are all correct and identical across both versions. Only the labels are wrong, and the paper's own prose identifies which label belongs there.\n\nThe core result of this paper appears sound and its reported statistics verify; the dimension-by-dimension conclusions built on top of that result are less secure than the article states, and warrant clarification from the authors rather than distrust."
+}

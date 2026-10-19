@@ -1,0 +1,463 @@
+{
+  "level": "unbacked",
+  "verdict": "BREACH (unbacked): 25 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+  "n_unbacked_findings": 25,
+  "unbacked_finding_ids": [
+    "abstract_null_moderation_claims_unbounded",
+    "analytic_n_never_stated",
+    "direct_contact_t_sign_notation",
+    "interaction_beta_larger_than_headline_beta",
+    "no_power_analysis_reported",
+    "t10_fb_cognitive_controlling_loneliness_t_to_p",
+    "t11_interaction_affect_chi2_to_p",
+    "t12_interaction_cognitive_t_to_p",
+    "t13_simple_slope_low_chi2_to_p",
+    "t14_simple_slope_mean_chi2_to_p",
+    "t15_simple_slope_high_chi2_to_p",
+    "t16_supplement_s4_chi2_to_p",
+    "t17_supplement_s5_chi2_to_p",
+    "t1_affect_chi2_to_p",
+    "t2_reverse_pathway_chi2_to_p",
+    "t3_cognitive_t_to_p",
+    "t4_direct_contact_cognitive_t_to_p",
+    "t5_direct_contact_affect_chi2_to_p",
+    "t6_fb_controlling_direct_chi2_to_p",
+    "t7_worry_chi2_to_p",
+    "t8_loneliness_chi2_to_p",
+    "t9_fb_affect_controlling_loneliness_chi2_to_p",
+    "table1_borderline_correlation_star",
+    "text_s3_cited_for_regressions_contains_only_data_statement",
+    "text_s6_cited_for_moderation_contains_no_moderation_results"
+  ],
+  "n_unvalidated_total": 0,
+  "n_severe_total": 0,
+  "n_off_allowlist_total": 1,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__check_regression_batch",
+        "mcp__forensic_metascience__check_summation_batch",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 38,
+      "by_surface": {
+        "builtin_allowed": 2,
+        "forensic_mcp": 34,
+        "harness": 2
+      },
+      "n_validated": 34,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 0,
+      "off_allowlist_calls": [],
+      "n_unbacked_findings": 25,
+      "unbacked_findings": [
+        {
+          "id": "t1_affect_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Affective well-being"
+        },
+        {
+          "id": "t2_reverse_pathway_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Affective well-being (reverse pathway)"
+        },
+        {
+          "id": "t3_cognitive_t_to_p",
+          "technique": "recalc_independent_t",
+          "severity": "consistent",
+          "location": "Results, Cognitive well-being"
+        },
+        {
+          "id": "t4_direct_contact_cognitive_t_to_p",
+          "technique": "recalc_independent_t",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations"
+        },
+        {
+          "id": "t5_direct_contact_affect_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations"
+        },
+        {
+          "id": "t6_fb_controlling_direct_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations"
+        },
+        {
+          "id": "t7_worry_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations (worry)"
+        },
+        {
+          "id": "t8_loneliness_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations (loneliness)"
+        },
+        {
+          "id": "t9_fb_affect_controlling_loneliness_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations (controlling loneliness)"
+        },
+        {
+          "id": "t10_fb_cognitive_controlling_loneliness_t_to_p",
+          "technique": "recalc_independent_t",
+          "severity": "consistent",
+          "location": "Results, Alternative explanations (cognitive, loneliness controlled)"
+        },
+        {
+          "id": "t11_interaction_affect_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Exploratory analyses"
+        },
+        {
+          "id": "t12_interaction_cognitive_t_to_p",
+          "technique": "recalc_independent_t",
+          "severity": "consistent",
+          "location": "Results, Exploratory analyses"
+        },
+        {
+          "id": "t13_simple_slope_low_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Exploratory analyses (low direct contact)"
+        },
+        {
+          "id": "t14_simple_slope_mean_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Exploratory analyses (mean direct contact)"
+        },
+        {
+          "id": "t15_simple_slope_high_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Results, Exploratory analyses (high direct contact)"
+        },
+        {
+          "id": "t16_supplement_s4_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Text S4 (supplement)"
+        },
+        {
+          "id": "t17_supplement_s5_chi2_to_p",
+          "technique": "recalc_chi_squared",
+          "severity": "consistent",
+          "location": "Text S5 (supplement)"
+        },
+        {
+          "id": "table1_borderline_correlation_star",
+          "technique": "no_tool_exists",
+          "severity": "consistent",
+          "location": "Table 1, Facebook Use row / Loneliness column (between-person)"
+        },
+        {
+          "id": "text_s3_cited_for_regressions_contains_only_data_statement",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Methods, Analyses overview; and Text S3 (supplement)"
+        },
+        {
+          "id": "text_s6_cited_for_moderation_contains_no_moderation_results",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Results, Moderation; and Text S6 (supplement)"
+        },
+        {
+          "id": "abstract_null_moderation_claims_unbounded",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Abstract; Results, Moderation"
+        },
+        {
+          "id": "direct_contact_t_sign_notation",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Results, Alternative explanations"
+        },
+        {
+          "id": "interaction_beta_larger_than_headline_beta",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Results, Exploratory analyses vs Results, Cognitive well-being"
+        },
+        {
+          "id": "analytic_n_never_stated",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Results, Attrition and compliance; Results, Cognitive well-being"
+        },
+        {
+          "id": "no_power_analysis_reported",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Methods, Participants"
+        }
+      ],
+      "level": "unbacked",
+      "calls_by_tool": {
+        "extract_pdf": 1,
+        "Read": 2,
+        "grim_sweep": 1,
+        "check_summation": 1,
+        "grim_check": 4,
+        "recalc_stat_to_p": 18,
+        "stalt_check": 2,
+        "extract_supplement": 6,
+        "multiplicity_report": 1,
+        "StructuredOutput": 2
+      },
+      "unvalidated_calls": [],
+      "verdict": "BREACH (unbacked): 25 finding(s) name a check that never ran. No forbidden tool was called -- the arithmetic was asserted rather than performed, which is the likelier failure and the one a tool-surface check cannot see. Treat those findings as unverified.",
+      "findings_scored": "the sweep's own findings (findings.schema.json), which is the only schema carrying a `technique` to check a tool against",
+      "guards": {
+        "n_guarded_calls": 9,
+        "n_guard_slots": 22,
+        "n_supplied": 22,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "grim_sweep": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "check_summation": {
+            "supplied": 1,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "grim_check": {
+            "supplied": 16,
+            "defaulted": 0,
+            "excused": 4
+          },
+          "stalt_check": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "multiplicity_report": {
+            "supplied": 1,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 4,
+        "excused_calls": [
+          {
+            "seq": 6,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 7,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 8,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          },
+          {
+            "seq": 9,
+            "tool": "grim_check",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "22/22 guard slots were supplied (100%); a further 4 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 9,
+      "by_surface": {
+        "builtin_allowed": 1,
+        "forensic_mcp": 6,
+        "forensic_mcp_offlist": 1,
+        "harness": 1
+      },
+      "n_validated": 7,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 1,
+      "off_allowlist_calls": [
+        {
+          "seq": 3,
+          "tool": "grim_sweep",
+          "input_preview": "{'values': [60.5, 28.4, 6.2, 4.9], 'n_min': 2, 'n_max': 82, 'decimals': 1, 'value_type': 'percentage', 'n_max_source': 'stated', 'source_quote': 'Eighty-two people ( M age =19.52, SD age =2.17; 53 fem"
+        }
+      ],
+      "n_unbacked_findings": 0,
+      "unbacked_findings": [],
+      "level": "off_allowlist",
+      "calls_by_tool": {
+        "extract_pdf": 1,
+        "Read": 1,
+        "grim_sweep": 1,
+        "recalc_stat_to_p": 1,
+        "multiplicity_report": 2,
+        "extract_supplement": 2,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "OFF-LIST: 1 call(s) used a forensic tool this stage did not declare (grim_sweep). The arithmetic is still ours and still tested, so no finding is in doubt -- but the allowlist printed beside this verdict is not what the stage ran.",
+      "findings_scored": "the editorial report's own findings (report.schema.json). That schema has no `technique` field, so a stage-2 finding names no check and none can be scored unbacked; the count is 0 by construction, not by verification",
+      "guards": {
+        "n_guarded_calls": 3,
+        "n_guard_slots": 3,
+        "n_supplied": 3,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "grim_sweep": {
+            "supplied": 1,
+            "defaulted": 0,
+            "excused": 1
+          },
+          "multiplicity_report": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 1,
+        "excused_calls": [
+          {
+            "seq": 3,
+            "tool": "grim_sweep",
+            "guard": "provenance",
+            "default": "printed_text",
+            "why_sound": "the default is the correct reading for a value PRINTED in the paper, and the overwhelming majority are. This guard decides only whether the exact-arithmetic checks are REFUSED, and on a printed value they should run. Withdrawn as soon as this run opens a figure image."
+          }
+        ],
+        "verdict": "3/3 guard slots were supplied (100%); a further 1 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    }
+  }
+}

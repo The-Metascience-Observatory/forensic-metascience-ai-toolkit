@@ -1,0 +1,599 @@
+{
+  "headline": {
+    "statement": "None of the three veteran-vs-nonveteran contrasts that the abstract reports as significant survives correction for the twelve comparisons they were selected from, and two separate sentences in the Results state the opposite of what the supplementary tables they cite actually show.",
+    "severity": "suspicious",
+    "rests_on": "stated_constraint",
+    "evidence": "The paper states \"Test-specific significance levels were assessed at \u03b1 \u2264 .05\" and prints twelve veteran-vs-nonveteran contrasts in Table 2, of which three are significant: AOR 1.71 (1.17-2.49), P = .006; AOR 0.57 (0.34-0.95), P = .03; AOR 0.46 (0.24-0.88), P = .02. The Bonferroni threshold for twelve tests is .0042, and 0 of the 3 survive Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli. Separately, the Results state that the AOR 1.71 result \"was not significant in sensitivity analyses (eTable 3 in Supplement 1)\", while eTable 3 prints 1.77 (1.22-2.57), p = 0.003 for that same contrast; and state that \"veterans with 1 disabling limitation were more likely to report planning relative to their nonveteran counterparts\", while Table 3 prints 0.61 (0.35 to 1.05) and eTable 4 prints 0.55 (0.32-0.94) with an average marginal effect of -0.09, all of which denote LOWER odds.",
+    "reproduction": "metascience multiplicity --family-label \"Table 2: the 12 veteran-vs-nonveteran contrasts within disability strata\" --alpha 0.05",
+    "plain": "The authors ran twelve separate comparisons between veterans and non-veterans and highlighted the three that came out statistically significant, without adjusting for the fact that running many comparisons makes at least one look significant by chance. Once that adjustment is made, none of the three survives. Separately, two sentences describing the results say the opposite of what the paper's own supplementary tables show -- one reverses which group was at higher risk, the other says a result was not significant when the cited table reports that it was.",
+    "reproduction_kind": "command",
+    "reproduction_valid": false,
+    "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'"
+  },
+  "verdict": "questionable",
+  "confidence": "high",
+  "findings": [
+    {
+      "rank": 1,
+      "title": "None of Table 2's three significant veteran-vs-nonveteran contrasts survives correction for its own family of twelve",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, the 12 veteran-vs-nonveteran contrast rows; Statistical Analysis section",
+      "reported": "\"Test-specific significance levels were assessed at \u03b1 \u2264 .05.\" Three of the twelve contrasts are marked significant: AOR 1.71 (1.17-2.49), P = .006 (planning, no limitations); AOR 0.57 (0.34-0.95), P = .03 (planning, 1 limitation); AOR 0.46 (0.24-0.88), P = .02 (attempt, 2 limitations). No correction for multiplicity is applied or mentioned.",
+      "computed": "12 uncorrected tests at alpha = 0.05 imply a family-wise error rate of up to 46.0% and about 0.6 false positives by chance alone. Bonferroni threshold .0042. Surviving: 0 under Bonferroni, 0 Holm, 0 Benjamini-Hochberg, 0 Benjamini-Yekutieli. n_claims_lost_to_correction = 3, read off the most permissive method. I also tested the most generous alternative family the paper's structure permits -- the 4 planning contrasts alone -- and 1 of its 2 significant results is still lost (Bonferroni threshold .0125: AOR 1.71 at P = .006 survives, AOR 0.57 at P = .03 does not).",
+      "assumptions": "Family definition is my judgement, not the paper's: I treat the 12 veteran-vs-nonveteran contrasts as one family because they come from a single fitted model on a single sample and jointly answer the one moderation question the paper is built around. I tested the narrower per-outcome reading as a robustness check and report it above; at least one abstract-level claim is lost under either. The 46% FWER assumes independence and is an upper bound -- these contrasts share a model and are correlated, so the true figure is lower. Requiring correction is a standard I am supplying; the paper states its test-by-test convention openly and uncorrected testing is ordinary in survey epidemiology.",
+      "warrant": "field_norm",
+      "reproduction": "metascience multiplicity --family-label \"Table 2: the 12 veteran-vs-nonveteran contrasts within disability strata\" --alpha 0.05",
+      "stage1_finding_ids": [
+        "t2_multiplicity_moderation_family"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 3,
+        "basis": "computed",
+        "explanation": "All three significant veteran-vs-nonveteran contrasts in Table 2 -- including the abstract-level claims AOR 1.71, AOR 0.57 and AOR 0.46 -- fall below significance under every correction tested. All three significant veteran-vs-nonveteran contrasts in Table 2 -- including the abstract-level claims AOR 1.71, AOR 0.57 and AOR 0.46 -- fall below significance under every correction tested. Computed from 3 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "plain": "When you compare two groups twelve different ways and keep the three comparisons that came out significant, some of those three are likely to be flukes -- roughly a one-in-two chance that at least one is. Standard adjustments exist for this, and the authors did not apply one. Applying any of the four usual adjustments removes all three of the significant results, including the specific numbers quoted in the paper's own summary. Even under the most forgiving way of grouping the comparisons, one of the summary claims still does not survive. This does not mean the findings are wrong -- it means the evidence for them is weaker than the paper presents.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 2,
+      "title": "Results state veterans with one limitation were \"more likely\" to plan, while both tables cited report the opposite direction",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, \"Suicide Planning and Attempt Among Those Reporting Suicide Ideation\", final sentence; vs Table 3 and eTable 4 (Supplement 1)",
+      "reported": "\"Lastly, veterans with 1 disabling limitation were more likely to report planning relative to their nonveteran counterparts, but this finding was only significant in sensitivity analyses (eTable 4 in Supplement 1).\"",
+      "computed": "Three separate numbers in the paper contradict the direction asserted. Table 3 prints AOR 0.61 (0.35 to 1.05), P = .07, with an average marginal effect of -0.07 (-0.15 to 0). eTable 4 prints AOR 0.55 (0.32-0.94), p = 0.028, with an average marginal effect of -0.09 (-0.16 to -0.02). An odds ratio below 1 and a negative marginal effect both denote LOWER odds. I confirmed all three values in the published PDF (page 8) and in the supplementary PDF (page 10, ruled-grid extraction), independently of the XML.",
+      "assumptions": "None beyond the paper's own statements. The remainder of the sentence is accurate: the association is significant in the imputation analysis (p = .028) and not in the primary one (P = .07).",
+      "warrant": "logical",
+      "reproduction": "Not reproducible by a CLI command: a direction contradiction between the Results text and the two tables it cites, established by reading both.",
+      "stage1_finding_ids": [
+        "text_direction_contradicts_etable4"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Reverses the reported direction of the veteran-vs-nonveteran planning contrast at one limitation -- the stratum whose protective direction the paper's central interpretation rests on."
+      },
+      "plain": "The paper says that among people with one disability, veterans were MORE likely than non-veterans to have made a suicide plan. Both tables it points to report the reverse: veterans were LESS likely. The most likely cause is a slip of the pen when summarising, since no number in any table would have to change. It matters because this is the only place in the text a reader is told about that comparison, and the sentence contradicts the paper's own conclusion that military service appears protective for people with disability.",
+      "reproduction_valid": null,
+      "reproduction_kind": "no_command_applies",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 3,
+      "title": "Results call the AOR 1.71 planning result non-significant in sensitivity analyses; the cited eTable 3 reports p = 0.003",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, \"Suicide Ideation, Planning, and Attempt by Veteran and Disability Status\", first sentence; vs eTable 3 (Supplement 1)",
+      "reported": "\"Among those reporting no disabling limitations, veterans were 71% more likely to report planning relative to nonveterans (AOR, 1.71; 95% CI, 1.17-2.49) (Table 2), but this was not significant in sensitivity analyses (eTable 3 in Supplement 1).\"",
+      "computed": "eTable 3, the multiple-imputation counterpart, prints for exactly that contrast (No limitations, Veteran vs Nonveteran, suicide planning): AOR 1.77 (1.22-2.57), p = 0.003. That is significant at the paper's own stated threshold of \u03b1 \u2264 .05, in the same direction and at a similar magnitude to the primary estimate. Confirmed from the supplementary PDF page 8 via a ruled-grid extraction, in which the column mapping to the \"Suicide planning without attempt\" p column is explicit.",
+      "assumptions": "None beyond the paper's own statements. I verified the column assignment directly rather than inferring it from position: the extracted grid labels the value 1.77 (1.22-2.57) under \"Suicide planning without attempt (vs. no suicide-related outcome)\" with its p of 0.003 in the adjacent column.",
+      "warrant": "logical",
+      "reproduction": "Not reproducible by a CLI command: a contradiction between the Results text and eTable 3 in Supplement 1, established by reading both.",
+      "stage1_finding_ids": [],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Misstates the robustness of the abstract-level AOR 1.71 claim, in the conservative direction -- the paper understates its own sensitivity-analysis support."
+      },
+      "plain": "The paper reports that veterans without disability were 71% more likely to have made a suicide plan, then says this result did not hold up in the backup analysis. The backup table it names actually reports the result holding up clearly. This error runs against the authors' own interest -- it makes their finding look weaker than their data show -- but it is still a statement contradicted by the table cited to support it, and a reader relying on the text would draw the wrong conclusion about how robust the result is.",
+      "reproduction_valid": null,
+      "reproduction_kind": "no_command_applies",
+      "anchor": "none",
+      "anchored": false
+    },
+    {
+      "rank": 4,
+      "title": "The abstract's \"61% more likely to plan\" subgroup claim does not survive correction within its own family of eight",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 3, the 8 veteran-vs-nonveteran contrast rows (ideation subgroup)",
+      "reported": "Two of eight contrasts significant uncorrected: AOR 1.61 (1.03-2.49), P = .04 (planning, no limitations) and AOR 0.31 (0.14-0.66), P = .002 (attempt, 2 limitations). No correction applied.",
+      "computed": "8 uncorrected tests at alpha = 0.05 imply a family-wise error rate of up to 33.7% and about 0.4 false positives by chance. Bonferroni threshold .00625. One of the two survives all four corrections (AOR 0.31, P = .002); the other (AOR 1.61, P = .04) survives none. n_claims_lost_to_correction = 1.",
+      "assumptions": "Family definition is my judgement: the eight contrasts come from one fitted model in one subgroup analysis. Requiring correction is a standard I am supplying. This subgroup analysis is, on the paper's own account, motivated by the ideation-to-action framework rather than prespecified, which is the paper's stated basis and is why multiplicity bears on it more heavily than on a primary test.",
+      "warrant": "field_norm",
+      "reproduction": "metascience multiplicity --family-label \"Table 3: the 8 veteran-vs-nonveteran contrasts in the ideation subgroup analysis\" --alpha 0.05",
+      "stage1_finding_ids": [
+        "t3_multiplicity_subgroup_family"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "computed",
+        "explanation": "The abstract-level claim that veterans with no limitations were 61% more likely to report planning (AOR 1.61, P = .04) does not survive correction within its own family; the AOR 0.31 attempt finding does. The abstract-level claim that veterans with no limitations were 61% more likely to report planning (AOR 1.61, p = .04) does not survive correction within its own family; the AOR 0.31 attempt finding does. Computed from 1 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "plain": "In the secondary analysis restricted to people who had thought about suicide, eight comparisons were made and two came out significant. After adjusting for the number of comparisons, one holds up firmly -- veterans with two disabilities were less likely to attempt -- and the other, the claim that veterans without disability were 61% more likely to make a plan, does not. That second claim appears in the paper's summary.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 5,
+      "title": "An average marginal effect in Table 2 is printed with no point estimate and a stray leading \"to\"",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, 1 Limitation / Veteran row, Suicidal ideation AME (95% CI) cell",
+      "reported": "The cell reads \"to 0.01 (-0.02 to 0.01)\". Every other AME cell in Table 2 has the form \"estimate (low to high)\", e.g. \"0.01 (0 to 0.03)\", \"0 (-0.01 to 0)\".",
+      "computed": "Confirmed present in the version of record, not an extraction artefact. The JATS XML renders the cell as \"to 0.01 (-0.02 to 0.01)\"; an independent ruled-grid extraction of the published PDF (page 7) renders the same cell as \"to0.01(\u22120.02to 0.01)\", wrapping across two lines. Two independent extractions of two independent sources agree, so the defect is in the printed table. The point estimate is absent; the accompanying AOR is 0.83 (0.59 to 1.18), P = .30.",
+      "assumptions": "None beyond the paper's own statements. Stage 1 recorded this as indeterminate because it could not reach the relevant PDF page; retrieving page 7 settles it. I do not infer what the intended value was -- only that one is missing.",
+      "warrant": "logical",
+      "reproduction": "metascience extract --pdf-path 10.1001--jamanetworkopen.2023.37679.pdf --first-page 7 --last-page 8",
+      "stage1_finding_ids": [
+        "t2_corrupted_ame_cell"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "An average marginal effect on a non-significant row; no stated claim depends on it."
+      },
+      "plain": "One cell of the main results table is printed without the number it is supposed to report -- it begins with the word \"to\" where a figure should be. This is a printing error in the published article rather than a problem with the underlying analysis, and the row it sits on is not one the paper draws any conclusion from. It is recorded because a reader cannot check that value.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] PDF_PATH\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --first-page",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 6,
+      "title": "A confidence interval in eTable 1 is printed with its lower bound above its upper bound",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "eTable 1 (Supplement 1), Number of chronic conditions, row \"1\", suicide-attempt column",
+      "reported": "\"27.0 (26.7-27.2) 27.2 (25.7-28.7) 27.2 (25.1-29.3) 30.3 (27.4-22.3)\"",
+      "computed": "The printed lower bound 27.4 exceeds the printed upper bound 22.3, and the point estimate 30.3 lies outside the interval under either ordering. The estimate/CI check was called and correctly REFUSED to judge reversed bounds, returning indeterminate; this finding is therefore recorded as a reading of the printed cell rather than as tool arithmetic. Confirmed at source: a ruled-grid extraction of supplementary page 4 -- where column boundaries are read from lines the PDF draws rather than inferred -- reproduces the string \"30.3 (27.4-22.3)\" exactly.",
+      "assumptions": "None beyond the paper's own statements. The obvious innocent explanation is a single-digit typographical error (32.3 misprinted as 22.3), which would give a well-formed interval 27.4-32.3 containing 30.3. I cannot confirm that reading and do not assert it.",
+      "warrant": "logical",
+      "reproduction": "metascience check-ci --estimate 30.3 --ci-low 27.4 --ci-high 22.3 --measure percentage --decimals 1",
+      "stage1_finding_ids": [
+        "etable1_inverted_ci"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A descriptive supplementary baseline percentage; no reported inference rests on this interval."
+      },
+      "plain": "A range of uncertainty in a supplementary table is printed backwards -- its bottom value is higher than its top value, which is impossible. Most likely a single digit was mistyped. It sits in a descriptive table and nothing the paper concludes depends on it.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 7,
+      "title": "A Results sentence directs readers to eTable 3 for a result that can only be in eTable 4",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results, \"Suicide Ideation, Planning, and Attempt and Disability Status\", final paragraph",
+      "reported": "\"Moreover, nonveterans reporting 2 disabling limitations were 28% more likely to report attempt relative to those with no disabling limitations (Table 3). This result was significant in sensitivity analyses (eTable 3 in Supplement 1).\"",
+      "computed": "The result is a Table 3 estimate, i.e. from the ideation subgroup where the reference category is \"suicidal ideation only\". Its multiple-imputation counterpart is eTable 4, which prints AOR 1.24 (1.03-1.49), p = 0.024 for that contrast. eTable 3 contains no \"vs suicidal ideation only\" contrast at all, so the cited table cannot hold this result. Every other Table 3 result in the paper is correctly referred to eTable 4.",
+      "assumptions": "None beyond the paper's own statements. The substantive claim is correct and supported; only the pointer misdirects.",
+      "warrant": "logical",
+      "reproduction": "Not reproducible by a CLI command: established by comparing the cited eTable 3 against eTable 4 in Supplement 1.",
+      "stage1_finding_ids": [
+        "etable_crossreference_mismatch"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "The underlying claim is supported by eTable 4; only its supporting-table pointer misdirects the reader."
+      },
+      "plain": "The text points readers to the wrong supplementary table to check one of its claims. The claim itself is correct and is supported by a different table in the same supplement. A reader who followed the pointer would find nothing there.",
+      "reproduction_valid": null,
+      "reproduction_kind": "no_command_applies",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 8,
+      "title": "The ideation-subgroup analyses report no sample size, in either the main table or the supplement",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 3 and eTable 4 (Supplement 1), titles and headers",
+      "reported": "eTable 3's title states its analytic N: \"(N = 241 675)\". eTable 4's title states none: \"eTable 4. Multiple Imputation Sensitivity Analysis For Adjusted Multinomial Logistic Regression Models of Suicide-Related Outcomes Among Those With Suicidal Ideation\". Main Table 3, the unimputed counterpart, likewise prints no subgroup N.",
+      "computed": "No N appears in eTable 4's title, header, body or footnotes, and none appears for Table 3. The subgroup denominator is not recoverable from anything printed in the article: the Results give the weighted share reporting any suicide risk (4.39%, weighted n = 10 401 065) and the share of those reporting ideation only (69.71%), but not the unweighted analytic n on which the subgroup models were fitted.",
+      "assumptions": "None beyond the paper's own statements. This is a reporting-completeness observation, not an arithmetic one.",
+      "warrant": "logical",
+      "reproduction": "Not reproducible by a CLI command: established by reading the titles, headers and footnotes of Table 3 and eTable 4.",
+      "stage1_finding_ids": [
+        "etable4_no_stated_n"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Prevents a reader from assessing the precision of the ideation-subgroup estimates, several of which have very wide intervals -- for example AOR 1.59 (0.58-4.40) in eTable 4."
+      },
+      "plain": "The paper reports a second set of analyses restricted to people who had thought about suicide, but never says how many people that group contained. Without that number a reader cannot judge how much weight the estimates carry -- and several of them span a very wide range, which usually signals a small group.",
+      "reproduction_valid": null,
+      "reproduction_kind": "no_command_applies",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 9,
+      "title": "Analysis code and survey-design syntax are withheld behind an author request",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Supplement 2, Data Sharing Statement",
+      "reported": "\"Additional Information: The dataset is a publically available dataset. We can make all syntax and output available by request.\" Data available: Yes. Who can access the data: \"All code will be made available by request.\"",
+      "computed": "The underlying NSDUH data are genuinely public and a working URL is supplied, so this is not the classic state-but-withhold pattern. What is gated is the derivation: the NSDUH recodes, the PROC SURVEY strata/cluster/weight specification and the multinomial model syntax. Because the reported odds ratios depend on correctly specifying the complex survey design, a reader holding the public data still cannot reproduce them.",
+      "assumptions": "Availability-on-request is common practice and permitted by the journal; I am not asserting the authors would decline a request. The observation is that reproduction is not possible from the deposited materials alone.",
+      "warrant": "field_norm",
+      "reproduction": "Not reproducible by a CLI command: read from the Data Sharing Statement in Supplement 2.",
+      "stage1_finding_ids": [
+        "data_availability_code_withheld"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Independent recomputation of the reported odds ratios is not possible from the public data alone without the withheld survey-design and model syntax."
+      },
+      "plain": "The survey data behind this study can be downloaded by anyone, which is good. But the computer code that turns that raw survey into the paper's results is only available if you email the authors. Because the results depend on handling the survey's complicated sampling structure correctly, nobody can independently check the numbers without that code.",
+      "reproduction_valid": null,
+      "reproduction_kind": "no_command_applies",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    }
+  ],
+  "triage": [
+    {
+      "stage1_finding_id": "t2_vet3lim_ideation_p_threshold",
+      "disposition": "downgraded",
+      "reason": "Downgraded to indeterminate and dropped from the findings list. The p of .0024 is recovered from the printed CI under a normal approximation, but the paper states it used SAS PROC SURVEY, which builds intervals on a design-based t with finite denominator degrees of freedom; a t-multiplier wider than 1.96 means my recovery overstates the standard error and so overstates p, and I have no way to bound the design df from what is printed. Stage 1's rebuttal (that the design correction makes p larger) addresses computing p from a test statistic, not recovering it from an interval, so it does not settle this. eTable 3's counterpart row printing p = 0.001 for AOR 2.25 (1.39-3.67) makes a typesetting slip the likelier reading. Either way the claim stays significant and nothing the paper concludes turns on it."
+    },
+    {
+      "stage1_finding_id": "no_preregistration",
+      "disposition": "merged",
+      "reason": "Folded into the assumptions of the two multiplicity findings rather than reported separately. Absence of preregistration is unremarkable for a secondary analysis of a fixed public survey and, reported alone, would read to a lay reader as a violation of something this design never owed. Its real function is what Stage 1 identified: it makes the reported comparison count a floor rather than a ceiling, which is a qualifier on the multiplicity results, not a finding in itself."
+    },
+    {
+      "stage1_finding_id": "t2_corrupted_ame_cell",
+      "disposition": "superseded",
+      "reason": "Upgraded from indeterminate to a confirmed defect. Stage 1 left it unresolved because it could not retrieve the Table 2 page; I retrieved PDF page 7 and the published table prints the same malformed cell, so the ruling that this was probably an XML line-wrap artefact is wrong and the defect is in the version of record. Consequence remains nil."
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "eTable 1 (Supplement 1), pages 1-3",
+      "reason": "Only page 4 of eTable 1 was retrieved in the sweep. The table spans roughly pages 2-4 and reports weighted percentages of every covariate by suicide-related outcome; the rows on pages 1-3 were never extracted, so no check ran on them. The inverted-CI finding comes from the page-4 portion, and I cannot say whether similar defects exist in the unretrieved rows."
+    },
+    {
+      "location": "eTable 2 (Supplement 1), pages 6-7",
+      "reason": "Only page 5 of eTable 2 was retrieved. The remainder of its rows (from Employment onward) were not extracted and no check ran on them."
+    },
+    {
+      "location": "All AME (95% CI) cells in Tables 2 and 3 and eTables 3 and 4",
+      "reason": "Average marginal effects are printed to two decimals and most render as exactly '0' with intervals like '(0 to 0)'. At that precision the estimate/CI check is vacuous -- a zero-width interval around zero constrains nothing -- so running it would have produced meaningless 'consistent' verdicts and inflated apparent coverage. Deliberately skipped."
+    },
+    {
+      "location": "Table 1 P value column (18 bivariate association tests)",
+      "reason": "The P values are printed only as bounds ('<.001', '.002') with no test statistic, no degrees of freedom and no cell counts for the veteran/nonveteran cross-tabulation, so none can be recomputed. These were also deliberately NOT run through a baseline-similarity check (csf_test / bayesian_table1_dispersion): those tools test for suspicious uniformity under RANDOMISED allocation, and this is an observational survey in which veteran and nonveteran groups genuinely and expectedly differ. Applying them here would be a category error, and their absence is not a gap in coverage."
+    },
+    {
+      "location": "eTable 1 and eTable 2 percentage columns",
+      "reason": "Not swept for column-sum or count-vs-percentage consistency. These are large bivariate descriptive tables whose denominators are outcome-specific and disability-specific subgroups the paper does not print, so the count-vs-percentage check has no denominator to work from, and the pages needed for the column sums were not all retrieved."
+    },
+    {
+      "location": "GRIM, GRIMMER, SPRITE and DEBIT family",
+      "reason": "Not applicable anywhere in this paper and deliberately not run. Every numeric cell is either a survey-WEIGHTED count (a sum of continuous person-level weights, not an integer count of observations), a weighted percentage derived from one, or an odds ratio. None is a mean of integer-valued observations on a bounded scale, which is the precondition for the entire granularity family. Running them here would manufacture impossibilities out of ordinary numbers."
+    },
+    {
+      "location": "detect_duplication across Tables 1, 2, 3 and eTables 3, 4",
+      "reason": "Not run, correctly. The tables are not independent samples: eTable 3 is the imputed counterpart of Table 2 and eTable 4 of Table 3, describing the SAME participants under a different missing-data treatment, so close agreement between them is expected by construction and is evidence of correctness rather than duplication."
+    },
+    {
+      "location": "verify_power_analysis",
+      "reason": "Not run: the paper states no a-priori power calculation, which is unremarkable for a secondary analysis of a fixed public survey where the sample size was not under the authors' control."
+    },
+    {
+      "location": "check_estimate_ci with a threshold p operator ('P < .001' rows)",
+      "reason": "A harness limitation, not a property of the paper. Calls passing reported_p_operator='<' are refused because the '<' character arrives HTML-escaped through the tool interface; I hit this again at the editorial stage and confirmed it is reproducible. Worked around by calling without reported_p and reading the tool's own recovered p, then comparing it to the printed bound as a notational check."
+    },
+    {
+      "location": "eTable 3 vs Table 2, nonveteran / 3+ limitations / suicide attempt",
+      "reason": "Noted, not checked as a defect. The estimate moves from AOR 3.68 (2.69-5.05) in the primary analysis to 6.21 (4.88-7.90) under multiple imputation -- a near-doubling the paper does not comment on, describing the sensitivity results only as having 'retained significance'. This is a substantive divergence between two analyses rather than an arithmetic error, and no tool in this kit adjudicates it."
+    }
+  ],
+  "limitations": [
+    "This agent reads text and does not see figures. I did not run a figure-extraction pass on this paper. Its single figure is a participant flow diagram, and Stage 1 recorded that it carries no unique values; the counts it depicts (315 661 to 231 099) are also printed in the Study Sample prose, which I did read and which is internally consistent with Table 1's totals. No numeric claim in this review depends on reading a chart.",
+    "The two multiplicity findings rest on a family definition that is my judgement and not the paper's. I tested the most generous alternative grouping available and report that result inside the finding, but a reader who defines the families differently again would get different counts. Uncorrected testing is standard practice in survey epidemiology and the paper states its convention openly.",
+    "The p-value recovered from a printed confidence interval uses a normal approximation. The paper's stated method (SAS PROC SURVEY) builds design-based intervals on a t distribution with finite denominator degrees of freedom, which the paper does not report. This is why I downgraded Stage 1's one arithmetic flag rather than carrying it: I could not bound the design degrees of freedom from anything printed.",
+    "Roughly half of eTable 1 and eTable 2 were never extracted. The one defect found in eTable 1 comes from the single page that was retrieved, so I cannot say whether the unretrieved rows are clean or carry similar errors.",
+    "This system reads one paper and reaches no network. I cannot say whether comparable reporting slips appear in other papers by these authors, nor how this paper's error density compares with other NSDUH secondary analyses -- both of which a reader would need in order to judge whether the narrative/table mismatches here are unusual or typical for this literature.",
+    "No effect-size plausibility benchmark exists in this toolkit for complex-survey epidemiology of suicide outcomes, so that dimension was unavailable for this paper and no judgement about whether the odds ratios are unusually large was attempted."
+  ],
+  "coverage_summary": {
+    "stats_found": 214,
+    "stats_checked": 120,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "extract_pdf",
+      "extract_supplement",
+      "get_supplement_table",
+      "check_table",
+      "check_estimate_ci",
+      "check_summation_batch",
+      "check_count_percent",
+      "multiplicity_report",
+      "statcheck"
+    ],
+    "tables_checked": [
+      "Table 1 (75 rows x 5 cols, 189 cells)",
+      "Table 2 (22 rows x 10 cols, 144 cells; 30 AOR cells checked, all consistent)",
+      "Table 3 (22 rows x 7 cols, 96 cells; 20 AOR cells checked, all consistent)",
+      "eTable 3 (Supplement 1, 30 AOR cells, all consistent)",
+      "eTable 4 (Supplement 1, 20 AOR cells, all consistent)",
+      "eTable 1 (Supplement 1, page 4 only)",
+      "eTable 2 (Supplement 1, page 5 only)",
+      "Supplement 2 (Data Sharing Statement, no tables)"
+    ],
+    "checkable": {
+      "n_cells": 709,
+      "n_consumable": 213,
+      "n_routable": 213,
+      "n_runnable": 213,
+      "blocked_on_declaration": 0,
+      "blocked_on_input": 0,
+      "by_kind": {
+        "estimate_ci": 213
+      },
+      "missing_inputs": {},
+      "n_checked": 100,
+      "coverage": 0.4694835680751174,
+      "never_submitted": 113,
+      "cells_checked_via_check_table": 100,
+      "rows_checked_by_batch_tools": 43,
+      "batch_tools": {
+        "check_summation_batch": 43
+      },
+      "direct_check_calls": 50,
+      "direct_check_tools": {
+        "check_estimate_ci": 40,
+        "check_count_percent": 10
+      },
+      "note": "Coverage: 100 of 213 checkable cells were checked (47%). 113 could have run as they stand and were never submitted to a check."
+    },
+    "completeness": {
+      "n_items": 754,
+      "n_refused": 496,
+      "n_outstanding": 258,
+      "by_disposition": {
+        "refused:no_applicable_check": 100,
+        "OUTSTANDING": 258,
+        "refused:not_a_statistic": 396
+      },
+      "complete": false,
+      "n_table_items": 429,
+      "n_body_items": 45,
+      "n_supplement_items": 280,
+      "n_supplement_table_items": 280,
+      "n_supplement_body_items": 0,
+      "n_checked": null,
+      "n_checked_measurable": false,
+      "n_checked_unmeasured_because": "no persisted item identity joins a tool call back to a manifest row, so how many items were CHECKED cannot be counted. This is not a count of zero.",
+      "gate_passed": false,
+      "gate_enforced": false,
+      "gate_message": "258 of 754 checkable item(s) have NO disposition. Every item must be either checked or refused with a reason from the closed vocabulary before this run is complete.\n\nOutstanding (first 20):\n  cell:Table 1.:3:1:95.5 (95.4-95.7)  [estimate_ci]  '95.5 (95.4-95.7)'  in table Table 1.\n  cell:Table 1.:3:2:96.2 (95.7-96.7)  [estimate_ci]  '96.2 (95.7-96.7)'  in table Table 1.\n  cell:Table 1.:4:1:3.1 (3.0-3.2)  [estimate_ci]  '3.1 (3.0-3.2)'  in table Table 1.\n  cell:Table 1.:4:2:2.8 (2.3-3.2)  [estimate_ci]  '2.8 (2.3-3.2)'  in table Table 1.\n  cell:Table 1.:5:1:0.8 (0.8-0.8)  [estimate_ci]  '0.8 (0.8-0.8)'  in table Table 1.\n  cell:Table 1.:5:2:0.8 (0.6-0.9)  [estimate_ci]  '0.8 (0.6-0.9)'  in table Table 1.\n  cell:Table 1.:6:1:0.6 (0.5-0.6)  [estimate_ci]  '0.6 (0.5-0.6)'  in table Table 1.\n  cell:Table 1.:6:2:0.3 (0.2-0.4)  [estimate_ci]  '0.3 (0.2-0.4)'  in table Table 1.\n  cell:Table 1.:8:1:80.9 (80.6-81.3)  [estimate_ci]  '80.9 (80.6-81.3)'  in table Table 1.\n  cell:Table 1.:8:2:70.1 (68.8-71.3)  [estimate_ci]  '70.1 (68.8-71.3)'  in table Table 1.\n  cell:Table 1.:9:1:11.6 (11.4-11.9)  [estimate_ci]  '11.6 (11.4-11.9)'  in table Table 1.\n  cell:Table 1.:9:2:17.1 (16.1-18.0)  [estimate_ci]  '17.1 (16.1-18.0)'  in table Table 1.\n  cell:Table 1.:10:1:4.2 (4.0-4.3)  [estimate_ci]  '4.2 (4.0-4.3)'  in table Table 1.\n  cell:Table 1.:10:2:6.5 (5.9-7.1)  [estimate_ci]  '6.5 (5.9-7.1)'  in table Table 1.\n  cell:Table 1.:11:1:3.3 (3.1-3.4)  [estimate_ci]  '3.3 (3.1-3.4)'  in table Table 1.\n  cell:Table 1.:11:2:6.4 (5.8-7.1)  [estimate_ci]  '6.4 (5.8-7.1)'  in table Table 1.\n  cell:Table 1.:13:1:14.8 (14.6-15.0)  [estimate_ci]  '14.8 (14.6-15.0)'  in table Table 1.\n  cell:Table 1.:13:2:2.2 (2.0-2.4)  [estimate_ci]  '2.2 (2.0-2.4)'  in table Table 1.\n  cell:Table 1.:14:1:16.8 (16.5-17.0)  [estimate_ci]  '16.8 (16.5-17.0)'  in table Table 1.\n  cell:Table 1.:14:2:7.0 (6.5-7.5)  [estimate_ci]  '7.0 (6.5-7.5)'  in table Table 1.",
+      "note": "754 checkable item(s) enumerated (0 checked, 0.0%; 496 refused; 258 outstanding).\n    396  refused: not_a_statistic -- a row or column label, a heading, or prose -- correctly not checked\n    100  refused: no_applicable_check -- the item's kind routes to no check in the dispatch table -- a gap in the toolkit, not a property of the paper\n    258  OUTSTANDING -- present in the paper and neither checked nor refused. These are invisible in the findings, and a reader cannot tell them from a clean pass."
+    },
+    "computation_audit": {
+      "n_findings": 20,
+      "by_kind": {
+        "tool": 11,
+        "not_computational": 8,
+        "no_tool_exists": 1
+      },
+      "n_unauditable": 6,
+      "unauditable": [
+        {
+          "id": "etable1_inverted_ci",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 5 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "text_direction_contradicts_etable4",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 2 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "etable_crossreference_mismatch",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 3 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "t2_corrupted_ame_cell",
+          "severity": "indeterminate",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 1 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "etable4_no_stated_n",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 2 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "xml_pdf_table1_reconciliation",
+          "severity": "consistent",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 3 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        }
+      ],
+      "n_ledger": 1,
+      "ledger": [
+        {
+          "id": "or_to_percent_translations",
+          "severity": "consistent",
+          "kind": "no_tool_exists",
+          "codes": [
+            "number_derived"
+          ],
+          "problems": [
+            "5 of its 23 figure(s) appear nowhere in the paper -- 100, 57 -- so the agent produced them, with no registered tool to answer for the arithmetic. Show the derivation."
+          ],
+          "auditable": true,
+          "transcribed": false
+        }
+      ],
+      "by_code": {
+        "number_under_not_computational": 6,
+        "number_derived": 1
+      },
+      "code_meanings": {
+        "number_under_not_computational": "declared no arithmetic and then presented some",
+        "number_derived": "presents a figure that is NOT in the paper, so the agent produced it -- the derivation is what a reader has to be shown"
+      },
+      "paper_readable": true,
+      "n_transcribed": 0,
+      "n_derived": 1,
+      "note": "20 finding(s): 11 computed by a registered tool, 8 resting on no arithmetic at all, 1 on arithmetic no tool covers, 0 on arithmetic a tool could have done, 0 on the legacy `manual` label. 1 present a figure that is NOT in the paper, so the agent produced it -- each one is named, and its derivation is what to check; 6 declare no arithmetic and then present some. Nothing here is deleted: an unrecorded number is not a fabricated one, and the pattern of what needed rescuing is itself worth reading."
+    },
+    "stage1_reconciliation": {
+      "n_stage1": 20,
+      "n_carried": 8,
+      "n_dropped": 12,
+      "dropped_by_severity": {
+        "suspicious": 2,
+        "consistent": 10
+      },
+      "n_accusatory_dropped": 2,
+      "accusatory_dropped": [
+        {
+          "id": "t2_vet3lim_ideation_p_threshold",
+          "severity": "suspicious",
+          "location": "Table 2, Veteran / \u22653 Limitations row, Suicidal ideation columns",
+          "explained": true,
+          "disposition": "downgraded",
+          "reason": "Downgraded to indeterminate and dropped from the findings list. The p of .0024 is recovered from the printed CI under a normal approximation, but the paper states it used SAS PROC SURVEY, which builds intervals on a design-based t with finite denominator degrees of freedom; a t-multiplier wider than 1.96 means my recovery overstates the standard error and so overstates p, and I have no way to bound the design df from what is printed. Stage 1's rebuttal (that the design correction makes p larger) addresses computing p from a test statistic, not recovering it from an interval, so it does not settle this. eTable 3's counterpart row printing p = 0.001 for AOR 2.25 (1.39-3.67) makes a typesetting slip the likelier reading. Either way the claim stays significant and nothing the paper concludes turns on it."
+        },
+        {
+          "id": "no_preregistration",
+          "severity": "suspicious",
+          "location": "Statistical Analysis section and article metadata",
+          "explained": true,
+          "disposition": "merged",
+          "reason": "Folded into the assumptions of the two multiplicity findings rather than reported separately. Absence of preregistration is unremarkable for a secondary analysis of a fixed public survey and, reported alone, would read to a lay reader as a violation of something this design never owed. Its real function is what Stage 1 identified: it makes the reported comparison count a floor rather than a ceiling, which is a qualifier on the multiplicity results, not a finding in itself."
+        }
+      ],
+      "n_accusatory_unexplained": 0,
+      "accusatory_unexplained": [],
+      "clean": true,
+      "reconcilable": true,
+      "note": "12 of 20 stage-1 findings are not cited by any editorial finding. A `consistent` result belongs nowhere in a findings report, so most of this is ordinary editorial work. None of the dropped findings was accusatory."
+    }
+  },
+  "questions_for_authors": [
+    {
+      "question": "The Results state that veterans with 1 disabling limitation \"were more likely to report planning relative to their nonveteran counterparts\", but Table 3 reports AOR 0.61 (0.35 to 1.05) and eTable 4 reports AOR 0.55 (0.32-0.94) with an average marginal effect of -0.09 (-0.16 to -0.02) for that contrast, all of which indicate lower odds. Could you confirm which direction is correct?",
+      "why": "Settles whether the discrepancy is a wording slip in the summary sentence or a sign that a different estimate was intended, and resolves an inversion of the paper's own protective-effect interpretation.",
+      "finding_ids": [
+        "2"
+      ]
+    },
+    {
+      "question": "The Results state that the planning result among those with no disabling limitations (AOR, 1.71; 95% CI, 1.17-2.49) \"was not significant in sensitivity analyses (eTable 3 in Supplement 1)\", while eTable 3 reports 1.77 (1.22-2.57) with p = 0.003 for that contrast. Could you confirm whether the sentence or the table carries the intended value?",
+      "why": "Determines whether the paper understates the robustness of one of its abstract-level claims, or whether a different sensitivity estimate was meant.",
+      "finding_ids": [
+        "3"
+      ]
+    },
+    {
+      "question": "Could you send the analytic sample size for the suicidal-ideation subgroup used in Table 3, and the corresponding post-imputation size for eTable 4? Neither table states an N, whereas eTable 3 states N = 241 675.",
+      "why": "The subgroup denominator is needed to assess the precision of the ideation-subgroup estimates, several of which are very wide (for example AOR 1.59, 95% CI 0.58-4.40 in eTable 4).",
+      "finding_ids": [
+        "8"
+      ]
+    },
+    {
+      "question": "In Table 2, the average marginal effect for the veteran-vs-nonveteran ideation contrast at 1 limitation is printed as \"to 0.01 (-0.02 to 0.01)\", with no point estimate. Could you supply the intended value for that cell?",
+      "why": "The cell as printed cannot be read; confirming the estimate would complete the row. The same string appears in both the XML and the published PDF, so it is not a rendering artefact of any one format.",
+      "finding_ids": [
+        "5"
+      ]
+    },
+    {
+      "question": "In eTable 1, the suicide-attempt column for respondents with 1 chronic condition reads \"30.3 (27.4-22.3)\", where the lower bound exceeds the upper bound. Could you supply the correct interval?",
+      "why": "Confirms whether this is a single-digit typographical error and lets a reader use the descriptive estimate.",
+      "finding_ids": [
+        "6"
+      ]
+    },
+    {
+      "question": "Would you be willing to send the SAS syntax for the NSDUH recodes, the PROC SURVEY strata/cluster/weight specification and the multinomial models, as offered in the Data Sharing Statement?",
+      "why": "The public NSDUH files alone do not permit reproduction of the reported adjusted odds ratios without the survey-design and model specification; the authors state this material is available on request.",
+      "finding_ids": [
+        "9"
+      ]
+    },
+    {
+      "question": "Were the veteran-vs-nonveteran contrasts within disability strata treated as a single family for inference, or as separate per-outcome families? The Methods state only that \"test-specific significance levels were assessed at alpha <= .05\".",
+      "why": "The number of reported claims that survive multiplicity correction depends on how the family is defined, and the paper does not state which grouping the authors had in mind.",
+      "finding_ids": [
+        "1",
+        "4"
+      ]
+    }
+  ],
+  "report_markdown": "This is a cross-sectional secondary analysis of six pooled years of the National Survey on Drug Use and Health (2015-2020), covering 231 099 adult respondents weighted to represent 236.5 million US adults. The authors fit survey-weighted multinomial logistic regressions with a disability-by-veteran-status interaction, asking whether the well-established association between functional disability and suicide risk differs for veterans. Their answer, and the paper's headline, is that it does and in a protective direction: veterans with disability had lower odds of suicide planning and attempt than non-veterans with comparable disability, while veterans without disability had higher odds of planning.\n\nStart with what verified, because it is most of the paper and it is genuinely reassuring. Every one of the 100 adjusted odds ratios printed across Table 2, Table 3, eTable 3 and eTable 4 sits at the log-scale midpoint of its own confidence interval, within printed precision -- 100 of 100 checked, none refused. All 36 summation checks over Table 1 reconcile: the eighteen weighted-count blocks sum to the stated weighted total and the eighteen percentage columns to 100, with the largest deviation anywhere being one person in 236.5 million. Every percentage in the descriptive paragraph reproduces from the counts in Table 1, and all 21 narrative conversions from odds ratio to percentage change are correct. I also confirmed that the XML I checked Table 1 against is faithful to the published PDF. This is what a carefully computed paper looks like at the level of arithmetic, and nothing in this review disturbs that.\n\nThe problems are not in the arithmetic. They are in the narrative and in the inference.\n\nTwo sentences in the Results assert things the supplementary tables they cite by name directly contradict. One reverses a direction: the text says veterans with one disabling limitation were \"more likely\" to report planning, where Table 3, eTable 4 and eTable 4's average marginal effect all say less likely. The other reverses a verdict: the text says the AOR 1.71 planning result \"was not significant in sensitivity analyses (eTable 3)\", where eTable 3 reports p = 0.003 for exactly that contrast. Stage 1 caught the first; the second I found while verifying it, and both are confirmed against the published PDF rather than only the XML. Note that they point in opposite directions -- one flatters the paper's story, the other undercuts it -- which is the signature of careless reconciliation rather than of anything directional. Add a wrong supplementary-table pointer, a cell in Table 2 printed with its estimate missing, and a confidence interval in eTable 1 printed backwards, and the pattern is that the prose and the tables were not read against each other before publication. Individually each is trivial. Together they mean a reader who trusts the text over the tables will be misled about at least two results.\n\nThe inferential problem is multiplicity, and it is the one that touches what the paper can claim. Table 2 contains twelve veteran-vs-nonveteran contrasts; three are significant and all three appear in the abstract. None survives Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli. I treated this claim adversarially before keeping it, because the family definition is mine and not the paper's, and because uncorrected test-by-test inference is ordinary in survey epidemiology and is stated openly here rather than concealed. So I recomputed under the most generous alternative grouping the paper's structure allows -- the four planning contrasts on their own -- and one of the two significant results is still lost. The finding is weaker under that reading but it does not disappear, and that robustness is why I kept it. The eight-contrast subgroup family behaves the same way: the AOR 0.31 attempt result survives every correction, and the abstract's \"61% more likely to plan\" does not. The honest summary is that of this paper's four abstract-level moderation claims, one is solid under any reading and the rest depend on not adjusting for how many comparisons produced them.\n\nOne Stage-1 flag did not survive scrutiny. The sweep read Table 2's \"<.001\" for the veteran, three-or-more-limitations ideation row as overstated, on a p of .0024 recovered from the printed interval. But that recovery assumes a normal approximation, and the paper states it used SAS PROC SURVEY, whose design-based intervals use a t with finite degrees of freedom that the paper never reports -- which biases the recovery in exactly the direction that would explain the gap. eTable 3's counterpart row prints p = 0.001, making a typesetting slip likelier still. I downgraded it rather than carry an accusation I could not bound.\n\nWhat remains open is a matter of interpretation rather than arithmetic. The imputed estimate for non-veterans with three or more limitations attempting suicide is nearly double its primary counterpart (6.21 versus 3.68), and the paper describes its sensitivity analyses only as having \"retained significance\" -- true, but it passes over a substantial change in magnitude. And roughly half of eTables 1 and 2 were never extracted, so the one malformed interval found there sits in the only portion anyone looked at.\n\nThe underlying analysis appears competently executed and its numbers reconcile. My reservations are about how confidently its conclusions are stated: the protective effect of veteran status is presented as an established moderation result, when the contrasts carrying it are three significant findings drawn from twelve, described in a Results section that misstates two of them."
+}

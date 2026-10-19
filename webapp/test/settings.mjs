@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'workbench-settings-'));
+const cwd = process.cwd();
+const oldEnv = {...process.env};
+try {
+  const checkout = path.join(scratch, 'shared', 'repo', 'webapp');
+  const local = path.join(scratch, 'private', 'settings.json');
+  fs.mkdirSync(path.join(checkout, 'data'), {recursive:true});
+  process.chdir(checkout);
+  process.env.METASCIENCE_SETTINGS_FILE = local;
+  delete process.env.METASCIENCE_PAPERS_ROOT;
+  delete process.env.METASCIENCE_PYTHON;
+  const shared = path.join(checkout, 'data', 'settings.json');
+  fs.writeFileSync(shared, JSON.stringify({papers_root:'/missing/other-machine'}));
+  const {loadSettings, saveSettings, DEFAULT_PAPERS_ROOT} = await import('../lib/settings.ts');
+  assert.equal(loadSettings().papers_root, DEFAULT_PAPERS_ROOT);
+  const papers = path.join(scratch, 'papers');
+  fs.mkdirSync(papers);
+  const python = path.join(scratch, 'python');
+  fs.writeFileSync(python, '');
+  saveSettings({...loadSettings(),papers_root:papers,python_bin:python});
+  const sharedBefore = fs.readFileSync(shared, 'utf8');
+  saveSettings({papers_root:papers,known_reviewers:['Reviewer']});
+  assert.equal(fs.readFileSync(shared, 'utf8'), sharedBefore);
+  fs.writeFileSync(shared, JSON.stringify({papers_root:'/media/other-machine'}));
+  assert.equal(loadSettings().papers_root, papers);
+  assert.equal(loadSettings().python_bin, python);
+  const {pythonBin} = await import('../lib/python.ts');
+  assert.equal(pythonBin(), python);
+  process.env.METASCIENCE_PAPERS_ROOT = '/explicit-override';
+  assert.equal(loadSettings().papers_root, '/explicit-override');
+  delete process.env.METASCIENCE_PAPERS_ROOT;
+  assert.equal(loadSettings().papers_root, papers);
+  process.env.METASCIENCE_SETTINGS_FILE = path.join(scratch, 'other-private', 'settings.json');
+  fs.writeFileSync(shared, JSON.stringify({papers_root:papers}));
+  assert.equal(loadSettings().papers_root, papers);
+  fs.writeFileSync(shared, JSON.stringify({papers_root:'/changed-after-migration'}));
+  assert.equal(loadSettings().papers_root, papers);
+  console.log('settings: local persistence, one-time migration, Dropbox isolation, Python selection and overrides passed');
+} finally {
+  process.chdir(cwd);
+  for (const k of Object.keys(process.env)) if (!(k in oldEnv)) delete process.env[k];
+  Object.assign(process.env, oldEnv);
+  fs.rmSync(scratch, {recursive:true,force:true});
+}

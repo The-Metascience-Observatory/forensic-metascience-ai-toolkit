@@ -1,0 +1,948 @@
+[
+  {
+    "seq": 1,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-a7337c8f-324b-4c10-a6f7-3d9dff8d5bad-0",
+    "input": {
+      "query": "extract_pdf forensic_metascience",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":5,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_pdf\\\",\\n          \\\"description\\\": \\\"Extract text and tables from a PDF file for forensic analysis. Returns structured content including page text and table data. Output is capped at max_chars (default 50000); if the result says TRUNCATED, call again with first_page/last_page (1-based, inclusive) to fetch specific pages. A PDF table is only returned when it can actually be resolved into a grid. AN EMPTY `tables` DOES NOT MEAN THE PAPER HAS NO TABLES: a table whose rules pdfplumber cannot find is still printed in `text`, so search there for \\\\\\\"Table 1\\\\\\\" and read the numbers from the page. `tables_rejected` counts candidates dropped as segmented prose or reference-list text -- an inference from text alignment alone accepts ANY page, and on one prose paper it produced twelve \\\\\\\"tables\\\\\\\", the first being the title page. Prefer extract_xml + get_table wherever an .xml exists.\\\",\\n          \\\"score\\\": 5.917055130004883,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"pdf_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_xml\\\",\\n          \\\"description\\\": \\\"Extract body text and TABLES from a publisher XML full text (JATS, PMC or Elsevier). PREFER THIS OVER extract_pdf whenever an .xml exists: tables come back as a dense rectangular cell grid with colspan/rowspan already expanded and multi-row headers flattened into composite column labels, which neither a PDF extraction nor markdown can represent. Measured on a real clinical Table 1, the PDF route recovers 7 usable cells per table and the XML route 86. THIS RETURNS A TABLE INDEX, NOT THE GRIDS -- table number, label, caption, section, shape and footnote count per table. Call get_table(xml_path, table_num) for the cells of each table you actually want. That extra hop exists for a reason: returning every grid at once produced a 184 kB result the harness could not deliver, so it spilled to a file and about 60% of it went unread. One table at a time always arrives. get_table returns `cells` -- ready-made {raw, row_label, col_label, row} records: pass those STRAIGHT to parse_cells_typed and check_table, UNCHANGED AND INCLUDING `row`. `row` is the cell coordinate the value register joins each verdict back to; two columns of one row can print the same number, so the text alone cannot identify a cell. Dropping it does not degrade the join, it ends it: every verdict then carries `row: None`, matches nothing, and the paper reports zero checks attached however many ran. Do NOT rebuild these records by hand. Do NOT route them through parse_table first; it drops every cell it cannot reduce to a scalar, which silently discards the estimate(CI) cells that are the highest-yield check on clinical papers. Use parse_table only to reconcile two extractions via cross_check. A merged cell appears ONCE, at its anchor position, with empty continuations: that is deliberate -- one measurement is one value, and repeating it would fabricate a duplication finding. XML HAS NO PAGE NUMBERS: cite the table label and section, never a page. A table with `alignment_uncertain: true` had ragged source rows and its column labels may be s\u2026 [truncated]\\\",\\n          \\\"score\\\": 4.986930847167969,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"xml_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_html\\\",\\n          \\\"description\\\": \\\"Extract body text and TABLES from FETCHED PUBLISHER HTML full text -- the fallback when a paper has no .xml. Same cells/spans/alignment_uncertain/image_only contract as extract_xml; treat its output identically (pass `cells` STRAIGHT to parse_cells_typed and check_table, never through parse_table first). UNLIKE extract_xml, a fetched HTML file can be a landing page, cookie gate, or JS-rendered app shell rather than the article -- it will look plausible (a real title, a real abstract, even a populated nav/metrics table). This tool runs a landing-page/decoy check BEFORE any parsing and returns a structured `error` if the page fails it -- that refusal IS the result: do NOT attempt to recover text from the raw file yourself. Record it and fall back to extract_pdf or Read on body.md for this paper instead. Do not treat a returned error as \\\\\\\"zero tables found\\\\\\\" -- that reads as a clean paper when the paper was never actually read. A merged cell appears ONCE, at its anchor position, with empty continuations -- same reasoning as extract_xml: repeating it fabricates a duplication finding. A table with `alignment_uncertain: true` had ragged source rows; reconcile against the PDF. A table with `image_only: true` had no populated rows (most likely never rendered by the page's own JavaScript) and has NO cells: get it from the PDF, or record it in `unchecked`. HTML has no standard footnote convention, unlike JATS -- `footnotes` may be empty even when a table needs one to disambiguate `n (%)` from `mean (SD)`; reconcile against the PDF if a cell's meaning is unclear. HTML HAS NO PAGE NUMBERS: cite the table label and section, never a page. Text is capped at max_chars; when TRUNCATED call again with first_section/last_section (1-based, inclusive) -- HTML is currently always one section, so this mainly reserves interface parity with extract_xml. Tables are never truncated. Parameters: html_path (str), max_chars (int, default 50000), first_section, last_section\\\",\\n          \\\"score\\\": 4.7023115158081055,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"html_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__parse_table\\\",\\n          \\\"description\\\": \\\"Parse a summary-statistics table into normalized cells so you don't have to hand-transcribe numbers. Accepts a markdown pipe table (from body.md), a pdfplumber `data` grid (the 'data' field from extract_pdf tables), or raw text. Returns cells [{row_label, col_label, value, sd, extras, raw}] plus parse warnings. Handles cell formats '5.38 (1.17) a', 'M=5.38, SD=1.17', '5.38\u00b11.17', bare numbers, and merged whole-row blobs. Feed the returned cells to detect_duplication, or pass cross_check to reconcile two extractions -- NOTHING ELSE. They are UNTYPED: every \\\\\\\"X (Y)\\\\\\\" reads as value/sd, so a count and a percentage arrive as a mean and an SD. Never hand them to grim/grimmer/sprite/debit; use parse_cells_typed or check_table for anything per-cell. Optionally pass cross_check (the SAME table from the other source) to reconcile the two extractions. Parameters: source (str markdown/text OR list-of-rows grid), source_format ('auto'|'markdown'|'grid'|'text'), source_label (str), header_row (int, default 0), label_col (int, default 0), cross_check (optional), cross_check_format (str)\\\",\\n          \\\"score\\\": 3.0760467052459717,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"source\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_format\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_label\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"header_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"label_col\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"cross_check\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"cross_check_format\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__get_table\\\",\\n          \\\"description\\\": \\\"Fetch ONE table from a publisher XML, in full, with the identity the checking tools need. Call it after extract_xml, which returns only an index. Returns `cells` ({raw, row_label, col_label}) for parse_cells_typed and check_table, the `data` grid a human reads, `headers`, and -- the part that was previously lost at this boundary -- `label`, `caption` and `footnotes`. READ THE FOOTNOTES BEFORE TYPING THE CELLS. They are what decide whether \\\\\\\"142 (71.0)\\\\\\\" is \\\\\\\"n (%)\\\\\\\" or \\\\\\\"mean (SD)\\\\\\\", and getting that wrong inverts every granularity check downstream. The label is what a finding should cite: say \\\\\\\"Table 2\\\\\\\", never a page number, because XML has none. A table with `image_only: true` is a picture and has no cells -- get it from the PDF, and if there is no PDF record it in `unchecked`. One with `alignment_uncertain: true` had ragged source rows and its column labels may be shifted; reconcile against the PDF before reporting from it. If the number does not exist the result lists the ones that do. THE GRID IS COMPLETE ON THE FIRST CALL. `data` carries every number the paper printed -- verified over all 475 tables in the corpus -- so you never have to page anything to be sure you have seen a value. `data_is_complete` confirms it. Only `cells` (the check_table format, roughly four times the size for the same content because both labels repeat on every cell) is windowed. `how_to_get_more` therefore says which of two DIFFERENT things is happening: if it mentions paging `cells`, nothing is missing and you only need to continue when you are feeding check_table; if it begins THE GRID IS TRUNCATED, a printed number really is absent and you must continue. Parameters: xml_path (str), table_num (int), first_row (int, optional -- 1-based grid row to resume from), last_row (int, optional)\\\",\\n          \\\"score\\\": 2.149178981781006,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"xml_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"table_num\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 12391,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-a7337c8f-324b-4c10-a6f7-3d9dff8d5bad-1",
+    "input": {
+      "query": "extract_xml forensic_metascience",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":5,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_xml\\\",\\n          \\\"description\\\": \\\"Extract body text and TABLES from a publisher XML full text (JATS, PMC or Elsevier). PREFER THIS OVER extract_pdf whenever an .xml exists: tables come back as a dense rectangular cell grid with colspan/rowspan already expanded and multi-row headers flattened into composite column labels, which neither a PDF extraction nor markdown can represent. Measured on a real clinical Table 1, the PDF route recovers 7 usable cells per table and the XML route 86. THIS RETURNS A TABLE INDEX, NOT THE GRIDS -- table number, label, caption, section, shape and footnote count per table. Call get_table(xml_path, table_num) for the cells of each table you actually want. That extra hop exists for a reason: returning every grid at once produced a 184 kB result the harness could not deliver, so it spilled to a file and about 60% of it went unread. One table at a time always arrives. get_table returns `cells` -- ready-made {raw, row_label, col_label, row} records: pass those STRAIGHT to parse_cells_typed and check_table, UNCHANGED AND INCLUDING `row`. `row` is the cell coordinate the value register joins each verdict back to; two columns of one row can print the same number, so the text alone cannot identify a cell. Dropping it does not degrade the join, it ends it: every verdict then carries `row: None`, matches nothing, and the paper reports zero checks attached however many ran. Do NOT rebuild these records by hand. Do NOT route them through parse_table first; it drops every cell it cannot reduce to a scalar, which silently discards the estimate(CI) cells that are the highest-yield check on clinical papers. Use parse_table only to reconcile two extractions via cross_check. A merged cell appears ONCE, at its anchor position, with empty continuations: that is deliberate -- one measurement is one value, and repeating it would fabricate a duplication finding. XML HAS NO PAGE NUMBERS: cite the table label and section, never a page. A table with `alignment_uncertain: true` had ragged source rows and its column labels may be s\u2026 [truncated]\\\",\\n          \\\"score\\\": 5.0960917472839355,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"xml_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_pdf\\\",\\n          \\\"description\\\": \\\"Extract text and tables from a PDF file for forensic analysis. Returns structured content including page text and table data. Output is capped at max_chars (default 50000); if the result says TRUNCATED, call again with first_page/last_page (1-based, inclusive) to fetch specific pages. A PDF table is only returned when it can actually be resolved into a grid. AN EMPTY `tables` DOES NOT MEAN THE PAPER HAS NO TABLES: a table whose rules pdfplumber cannot find is still printed in `text`, so search there for \\\\\\\"Table 1\\\\\\\" and read the numbers from the page. `tables_rejected` counts candidates dropped as segmented prose or reference-list text -- an inference from text alignment alone accepts ANY page, and on one prose paper it produced twelve \\\\\\\"tables\\\\\\\", the first being the title page. Prefer extract_xml + get_table wherever an .xml exists.\\\",\\n          \\\"score\\\": 5.018839359283447,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"pdf_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_html\\\",\\n          \\\"description\\\": \\\"Extract body text and TABLES from FETCHED PUBLISHER HTML full text -- the fallback when a paper has no .xml. Same cells/spans/alignment_uncertain/image_only contract as extract_xml; treat its output identically (pass `cells` STRAIGHT to parse_cells_typed and check_table, never through parse_table first). UNLIKE extract_xml, a fetched HTML file can be a landing page, cookie gate, or JS-rendered app shell rather than the article -- it will look plausible (a real title, a real abstract, even a populated nav/metrics table). This tool runs a landing-page/decoy check BEFORE any parsing and returns a structured `error` if the page fails it -- that refusal IS the result: do NOT attempt to recover text from the raw file yourself. Record it and fall back to extract_pdf or Read on body.md for this paper instead. Do not treat a returned error as \\\\\\\"zero tables found\\\\\\\" -- that reads as a clean paper when the paper was never actually read. A merged cell appears ONCE, at its anchor position, with empty continuations -- same reasoning as extract_xml: repeating it fabricates a duplication finding. A table with `alignment_uncertain: true` had ragged source rows; reconcile against the PDF. A table with `image_only: true` had no populated rows (most likely never rendered by the page's own JavaScript) and has NO cells: get it from the PDF, or record it in `unchecked`. HTML has no standard footnote convention, unlike JATS -- `footnotes` may be empty even when a table needs one to disambiguate `n (%)` from `mean (SD)`; reconcile against the PDF if a cell's meaning is unclear. HTML HAS NO PAGE NUMBERS: cite the table label and section, never a page. Text is capped at max_chars; when TRUNCATED call again with first_section/last_section (1-based, inclusive) -- HTML is currently always one section, so this mainly reserves interface parity with extract_xml. Tables are never truncated. Parameters: html_path (str), max_chars (int, default 50000), first_section, last_section\\\",\\n          \\\"score\\\": 4.891091346740723,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"html_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__get_table\\\",\\n          \\\"description\\\": \\\"Fetch ONE table from a publisher XML, in full, with the identity the checking tools need. Call it after extract_xml, which returns only an index. Returns `cells` ({raw, row_label, col_label}) for parse_cells_typed and check_table, the `data` grid a human reads, `headers`, and -- the part that was previously lost at this boundary -- `label`, `caption` and `footnotes`. READ THE FOOTNOTES BEFORE TYPING THE CELLS. They are what decide whether \\\\\\\"142 (71.0)\\\\\\\" is \\\\\\\"n (%)\\\\\\\" or \\\\\\\"mean (SD)\\\\\\\", and getting that wrong inverts every granularity check downstream. The label is what a finding should cite: say \\\\\\\"Table 2\\\\\\\", never a page number, because XML has none. A table with `image_only: true` is a picture and has no cells -- get it from the PDF, and if there is no PDF record it in `unchecked`. One with `alignment_uncertain: true` had ragged source rows and its column labels may be shifted; reconcile against the PDF before reporting from it. If the number does not exist the result lists the ones that do. THE GRID IS COMPLETE ON THE FIRST CALL. `data` carries every number the paper printed -- verified over all 475 tables in the corpus -- so you never have to page anything to be sure you have seen a value. `data_is_complete` confirms it. Only `cells` (the check_table format, roughly four times the size for the same content because both labels repeat on every cell) is windowed. `how_to_get_more` therefore says which of two DIFFERENT things is happening: if it mentions paging `cells`, nothing is missing and you only need to continue when you are feeding check_table; if it begins THE GRID IS TRUNCATED, a printed number really is absent and you must continue. Parameters: xml_path (str), table_num (int), first_row (int, optional -- 1-based grid row to resume from), last_row (int, optional)\\\",\\n          \\\"score\\\": 3.411860942840576,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"xml_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"table_num\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__parse_table\\\",\\n          \\\"description\\\": \\\"Parse a summary-statistics table into normalized cells so you don't have to hand-transcribe numbers. Accepts a markdown pipe table (from body.md), a pdfplumber `data` grid (the 'data' field from extract_pdf tables), or raw text. Returns cells [{row_label, col_label, value, sd, extras, raw}] plus parse warnings. Handles cell formats '5.38 (1.17) a', 'M=5.38, SD=1.17', '5.38\u00b11.17', bare numbers, and merged whole-row blobs. Feed the returned cells to detect_duplication, or pass cross_check to reconcile two extractions -- NOTHING ELSE. They are UNTYPED: every \\\\\\\"X (Y)\\\\\\\" reads as value/sd, so a count and a percentage arrive as a mean and an SD. Never hand them to grim/grimmer/sprite/debit; use parse_cells_typed or check_table for anything per-cell. Optionally pass cross_check (the SAME table from the other source) to reconcile the two extractions. Parameters: source (str markdown/text OR list-of-rows grid), source_format ('auto'|'markdown'|'grid'|'text'), source_label (str), header_row (int, default 0), label_col (int, default 0), cross_check (optional), cross_check_format (str)\\\",\\n          \\\"score\\\": 1.7031042575836182,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"source\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_format\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_label\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"header_row\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"label_col\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"cross_check\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"cross_check_format\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 12391,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-a7337c8f-324b-4c10-a6f7-3d9dff8d5bad-2",
+    "input": {
+      "query": "check_flow_arithmetic forensic_metascience",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":5,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_flow_arithmetic\\\",\\n          \\\"description\\\": \\\"Reconcile a CONSORT/participant-flow cascade by EXACT integer arithmetic: each stage minus its stated exclusions must equal the next stage; arms must sum to their stage total; nothing after randomization may exceed it. Counts of people have no rounding window, so there is no tolerance parameter. Build `stages` top-down exactly as the diagram reads: [{\\\\\\\"label\\\\\\\": \\\\\\\"assessed\\\\\\\", \\\\\\\"n\\\\\\\": 240, \\\\\\\"excluded\\\\\\\": [{\\\\\\\"reason\\\\\\\": \\\\\\\"declined\\\\\\\", \\\\\\\"n\\\\\\\": 12}], \\\\\\\"arms\\\\\\\": [{\\\\\\\"label\\\\\\\": \\\\\\\"treatment\\\\\\\", \\\\\\\"n\\\\\\\": 100}]}]. Every n must be a whole number the paper PRINTS -- an absent, assumed, or fractional operand makes the tool REFUSE (`indeterminate`), never accuse. A drop between stages with no stated exclusions is `unaccounted_attrition`, capped `suspicious` (papers legitimately omit attrition reasons); a broken identity with every operand printed is `impossible`. Pass `randomized_label` to anchor the analyzed<=randomized check when no stage label contains \\\\\\\"random\\\\\\\". Parameters: stages (list of stage objects), randomized_label (optional), description (optional)\\\",\\n          \\\"score\\\": 7.893719673156738,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"stages\\\": {\\n                \\\"type\\\": \\\"array\\\",\\n                \\\"description\\\": \\\"Ordered cascade, top-down: [{\\\\\\\"label\\\\\\\", \\\\\\\"n\\\\\\\", \\\\\\\"excluded\\\\\\\": [{\\\\\\\"reason\\\\\\\", \\\\\\\"n\\\\\\\"}], \\\\\\\"arms\\\\\\\": [{\\\\\\\"label\\\\\\\", \\\\\\\"n\\\\\\\"}]}]. Transcribe every n as printed; the tool refuses rather than assumes.\\\"\\n              },\\n              \\\"randomized_label\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Which stage the analyzed<=randomized check anchors on, when no stage label contains 'random'.\\\"\\n              },\\n              \\\"description\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__run_python_script\\\",\\n          \\\"description\\\": \\\"Run a short Python script in a NETWORK-OFF sandbox and get its captured stdout/stderr back. This is your ONLY route to running code, and it exists for checks no registry tool covers: bespoke arithmetic over odd data presentations, unit conversions, reshaping a table before a real check. Every load-bearing number you report must come from the CAPTURED OUTPUT returned here or from a registry tool -- never from your own arithmetic. The script is persisted to analysis_code/ BEFORE it runs, and your finding cites that file as its reproduction. Rules: if a registry tool covers the check, you MUST use the tool instead (a code result can never establish `impossible` -- only a validated registry tool can); no network (it is disabled at the OS level, do not try); print() what you need, the result is the captured output. Parameters: code (the script), label (short slug for the filename), timeout_seconds (default 60, max 300)\\\",\\n          \\\"score\\\": 2.535743474960327,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"code\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"The Python script. stdout is your result -- print what you need. No network; filesystem read-only outside the scripts directory.\\\"\\n              },\\n              \\\"label\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Short slug naming what the script checks; becomes part of the persisted filename.\\\"\\n              },\\n              \\\"timeout_seconds\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_summation_batch\\\",\\n          \\\"description\\\": \\\"Run EVERY summation check in ONE call. Use this whenever a paper has more than one thing that must add up -- CONSORT/flow-diagram arms, table column totals, percentage columns, subgroup counts against their total. Measured on a real review, 55 of 124 tool calls were `check_summation` invoked once per sum; each call is a turn, and turns are the cost of a review. Each row is {values, expected_sum, description, tolerance (optional, overrides the batch default -- a percentage column rounding to 100 needs a wider window than a count column that must be exact), decimals (int or list of int -- the printed precision of the addends), decimals_total}. GIVE `decimals` PER ROW: the window a sum is allowed depends on how many addends there are and how precisely each was printed, so one window across a whole batch is wrong for most of it, and a row with no precision returns `indeterminate` rather than guessing. The aggregate severity is the WORST row, and a batch in which nothing could be evaluated returns `indeterminate`, never `consistent`. Parameters: rows (list of dicts), tolerance (optional batch-wide override)\\\",\\n          \\\"score\\\": 2.470184564590454,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"rows\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              },\\n              \\\"tolerance\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_count_percent\\\",\\n          \\\"description\\\": \\\"Does the printed COUNT over the printed denominator give the printed PERCENTAGE? Call it on every `n (%)` cell whose n you know -- it is STRICTLY STRONGER than grim_percentage there. GRIM asks whether a percentage is attainable for SOME integer numerator; this asks whether it matches THE numerator the paper printed. MEASURED: a cell reading `142 (73.0)` at n = 200 passes grim_percentage as `consistent`, because 73.0 is reachable at k = 146 -- while the printed count gives 100 x 142 / 200 = 71.0. That is a FALSE CLEAR, and it is what this check exists to catch. CAPPED AT `suspicious`, never higher. A percentage taken over a DIFFERENT base is the commonest convention in clinical tables -- row versus column percentages, subgroup denominators -- so a mismatch is evidence about which denominator was used at least as often as about the arithmetic. The result reports `implied_denominator`, which usually settles it at a glance: check it against the other denominators in the table before calling anything a defect. `decimals` is REQUIRED for a verdict: read it off the literal (`73.0` is 1). Without it the rounding interval is unknown and the result is `indeterminate` rather than a guess. A count LARGER than n returns `indeterminate`, not a flag: it proves this n is not the base for this percentage, which is a fact about the pairing. Parameters: count (int), percentage (float), n (int), decimals (int)\\\",\\n          \\\"score\\\": 1.7991704940795898,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"count\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"percentage\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_effect_plausibility\\\",\\n          \\\"description\\\": \\\"Compute an effect size and report it WITH A 95% CONFIDENCE INTERVAL. Takes the six group statistics (or a d directly) and returns Cohen's d, Hedges' g and an estimated CI. Reporting the value IS the deliverable. An effect far outside the usual range is informative and is NOT evidence of misconduct, and severity is capped at `suspicious` because an effect size can be improbable but never arithmetically impossible. `field` is OPTIONAL and usually omitted -- magnitude is REPORTED, not judged, because whether an effect is unrealistically large is a judgement for the reader with the paper's effects laid out as a set. PASS `reported_d` ALONGSIDE the group statistics to check INTERNAL CONSISTENCY instead: does the effect size the paper printed match the one its own means, SDs and ns imply? That needs no comparison class and is what catches a mistyped effect size. Supplying `field` additionally places the value against field benchmarks, which are mostly uncited estimates and say so. THIS IS THE CHECK THAT WORKS ON FIGURE-DERIVED DATA: gross implausibility survives digitization error (verified -- the verdict is unchanged across the full +/-37% dispersion error range), so a paper reporting its outcome ONLY as a bar chart becomes checkable here even though GRIM/GRIMMER/SPRITE cannot touch it. Pass provenance='figure_pixels' when the inputs were read off a chart. Before treating a large effect as a finding, rule out the three ordinary causes: dispersion reported as SEM and read as SD (inflates d by sqrt(n)), a waitlist rather than active comparator, and a units mismatch. Parameters: d (optional), field, mean1, sd1, n1, mean2, sd2, n2, design, provenance\\\",\\n          \\\"score\\\": 1.6148709058761597,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"d\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"reported_d\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"field\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"mean1\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"sd1\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n1\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"mean2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"sd2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n2\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"design\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 13371,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-0c371e5b-e6c7-437a-8730-43e4f4092ce1-3",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/wound_healing.pdf",
+      "max_chars": 50000,
+      "first_page": 1,
+      "last_page": 4
+    },
+    "result": "{\n  \"text\": \"--- Page 1 ---\\nThe Journal of Maternal-Fetal & Neonatal Medicine\\nISSN: 1476-7058 (Print) 1476-4954 (Online) Journal homepage: www.tandfonline.com/journals/ijmf20\\nEffect of subcutaneous tissue closure technique in cesarean section on postoperative wound complications in obese Egyptian women\\nMahmoud Alalfy, Ahmed Elgazzar, Tamer Fares, Omar Nagy, Ahmed Ellithy, Yossra Lasheen, Ahmed Kamel, Mahmoud Soliman, Ahmed Hassan, Ahmed Samy, Ayman M. Taher, Asmaa I. Ogila, Hany Saad, Hend Salah, Mohamed Ramadan, Mohamed Nabil, Dina L. Hatem & Mohamed Fikry\\nTo cite this article: Mahmoud Alalfy, Ahmed Elgazzar, Tamer Fares, Omar Nagy, Ahmed Ellithy, Yossra Lasheen, Ahmed Kamel, Mahmoud Soliman, Ahmed Hassan, Ahmed Samy, Ayman M. Taher, Asmaa I. Ogila, Hany Saad, Hend Salah, Mohamed Ramadan, Mohamed Nabil, Dina L. Hatem & Mohamed Fikry (2019) Effect of subcutaneous tissue closure technique in cesarean section on postoperative wound complications in obese Egyptian women, The Journal of Maternal-Fetal & Neonatal Medicine, 32:15, 2452-2459, DOI: 10.1080/14767058.2018.1438399\\nTo link to this article: https://doi.org/10.1080/14767058.2018.1438399\\nPublished online: 20 Feb 2018.\\nSubmit your article to this journal\\nArticle views: 519\\nView related articles\\nView Crossmark data\\nCiting articles: 5 View citing articles\\n\\u66f2\\na\\nCrossMark\\n\\n--- Page 2 ---\\nORIGINAL ARTICLE\\nEffect of subcutaneous tissue closure technique in cesarean section on postoperative wound complications in obese Egyptian women\\nMahmoud Alalfy a , Ahmed Elgazzar b , Tamer Fares c , Omar Nagy d , Ahmed Ellithy b , Yossra Lasheen b , Ahmed Kamel b , Mahmoud Soliman b , Ahmed Hassan e , Ahmed Samy b , Ayman M. Taher b , Asmaa I. Ogila b , Hany Saad b , Hend Salah c , Mohamed Ramadan b , Mohamed Nabil b , Dina L. Hatem b and Mohamed Fikry b\\na Department of Reproductive Health and Family Planning, National Research Centre, Aljazeerah Hospital, CAIFM, Geza, Egypt; b Department of Obstetrics and Gynecology, Kasralainy, Cairo University, Cairo, Egypt; c Department of Obstetrics and Gynecology, AlAzhar University, Cairo, Egypt; d Department of Reproductive Health and Family Planning, National Research Centre, Cairo, Egypt; e Department of Obstetrics and Gynecology, Suez Canal University, Ismaelia, Egypt\\nABSTRACT\\nSubcutaneous tissue closure technique is a wide area of interest for obstetricians who perform cesarean section especially on obese women while many observers studied in an extensive manner postoperative pain and wound cosmetic results.\\nAim of the work: The main goal of our work was to display the differences in wound outcome results as regard postoperative wound complications comparing the two widely implemented techniques in subcutaneous tissue closure (interrupted versus continuous methods).\\nResults: A comparative analysis between continuous and interrupted techniques regarding wound complications (gapping, seroma, erythema, and infection) showing statistical significant differences in all four wound complications presented with p values \\u00bc .019, .011, .015, and .001, in consecutive order with odds ratio in wound gapping \\u00bc 5.239, wound seroma OR \\u00bc 9.429, wound erythema OR \\u00bc 3.709, and wound infection OR \\u00bc 6.136.\\nConclusions: Subcutaneous wound closure using interrupted technique of suturing in obese patients is superior to continuous technique as regard wound complications.\\nClinical trials.gov ID Identifier (NCT 03354078).\\nIntroduction\\nOnly a small number of research studies evaluated the impact of various subcutaneous tissue and skin closure methods at cesarean section (CS) [1,2]. In a metaanalysis, a major decline in incision site rupture was revealed when suturing the subcutaneous tissue in women with a subcutaneous depth > 2cm [3,4]. However, the outcome of these, the research performed, are made on a small number of patients, insufficient follow-up period of time for accurate longterm assessment [5,6].\\nPostoperati",
+    "result_truncated": true,
+    "result_chars": 24331,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-0c371e5b-e6c7-437a-8730-43e4f4092ce1-4",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/markdown/body.md",
+      "limit": 400
+    },
+    "result": "{\"type\":\"ReadFile\",\"FileContent\":{\"content\":\"1\u2192--- Page 1 ---\\nThe Journal of Maternal-Fetal & Neonatal Medicine\\nISSN: 1476-7058 (Print) 1476-4954 (Online) Journal homepage: www.tandfonline.com/journals/ijmf20\\nEffect of subcutaneous tissue closure technique\\nin cesarean section on postoperative wound\\ncomplications in obese Egyptian women\\nMahmoud Alalfy, Ahmed Elgazzar, Tamer Fares, Omar Nagy, Ahmed Ellithy,\\nYossra Lasheen, Ahmed Kamel, Mahmoud Soliman, Ahmed Hassan, Ahmed\\nSamy, Ayman M. Taher, Asmaa I. Ogila, Hany Saad, Hend Salah, Mohamed\\n10\u2192Ramadan, Mohamed Nabil, Dina L. Hatem & Mohamed Fikry\\nTo cite this article: Mahmoud Alalfy, Ahmed Elgazzar, Tamer Fares, Omar Nagy, Ahmed Ellithy,\\nYossra Lasheen, Ahmed Kamel, Mahmoud Soliman, Ahmed Hassan, Ahmed Samy, Ayman M.\\nTaher, Asmaa I. Ogila, Hany Saad, Hend Salah, Mohamed Ramadan, Mohamed Nabil, Dina L.\\nHatem & Mohamed Fikry (2019) Effect of subcutaneous tissue closure technique in cesarean\\nsection on postoperative wound complications in obese Egyptian women, The Journal of\\nMaternal-Fetal & Neonatal Medicine, 32:15, 2452-2459, DOI: 10.1080/14767058.2018.1438399\\nTo link to this article: https://doi.org/10.1080/14767058.2018.1438399\\nPublished online: 20 Feb 2018.\\nSubmit your article to this journal\\n20\u2192Article views: 519\\nView related articles\\nView Crossmark data\\nCiting articles: 5 View citing articles\\nFull Terms & Conditions of access and use can be found at\\nhttps://www.tandfonline.com/action/journalInformation?journalCode=ijmf20\\n\\n--- Page 2 ---\\nTHEJOURNALOFMATERNAL-FETAL&NEONATALMEDICINE\\n2019,VOL.32,NO.15,2452\u20132459\\n30\u2192https://doi.org/10.1080/14767058.2018.1438399\\nORIGINAL ARTICLE\\nEffect of subcutaneous tissue closure technique in cesarean section on\\npostoperative wound complications in obese Egyptian women\\nMahmoud Alalfya , Ahmed Elgazzarb, Tamer Faresc, Omar Nagyd , Ahmed Ellithyb, Yossra Lasheenb,\\nAhmed Kamelb, Mahmoud Solimanb, Ahmed Hassane, Ahmed Samyb, Ayman M. Taherb, Asmaa I. Ogilab,\\nHany Saadb, Hend Salahc, Mohamed Ramadanb, Mohamed Nabilb, Dina L. Hatemb and Mohamed Fikryb\\naDepartment ofReproductiveHealthandFamily Planning,NationalResearchCentre,Aljazeerah Hospital, CAIFM,Geza, Egypt;\\nbDepartmentofObstetricsandGynecology, Kasralainy,CairoUniversity,Cairo,Egypt;cDepartment ofObstetricsand Gynecology,\\nAlAzharUniversity, Cairo,Egypt;dDepartmentofReproductiveHealthandFamily Planning,NationalResearchCentre, Cairo,Egypt;\\n40\u2192eDepartmentofObstetricsandGynecology, SuezCanal University,Ismaelia,Egypt\\nABSTRACT ARTICLEHISTORY\\nSubcutaneous tissue closure technique is a wide area of interest for obstetricians who perform Received1December2017\\ncesareansectionespeciallyonobesewomenwhilemanyobserversstudiedinanextensiveman- Revised29January2018\\nnerpostoperativepainandwoundcosmeticresults. Accepted5February2018\\nAim of the work: The main goal of our work was to display the differences in wound outcome\\nKEYWORDS\\nresults as regard postoperative wound complications comparing the two widely implemented\\nSubcutaneous;seroma;\\ntechniquesinsubcutaneoustissueclosure(interruptedversuscontinuousmethods).\\n50\u2192woundgapping;wound\\nResults: A comparative analysis between continuous and interrupted techniques regarding\\ninfection;erythema\\nwound complications (gapping, seroma, erythema, and infection) showing statistical significant\\ndifferences in all four wound complications presented with p values=.019, .011, .015, and .001,\\nin consecutive order with odds ratio in wound gapping=5.239, wound seroma OR=9.429,\\nwounderythemaOR=3.709,andwoundinfectionOR=6.136.\\nConclusions: Subcutaneous wound closure using interrupted technique of suturing in obese\\npatientsissuperiortocontinuoustechniqueasregardwoundcomplications.\\nClinicaltrials.govIDIdentifier(NCT03354078).\\n60\u2192Introduction performed and assessed the influence of subcutaneous\\ntissue closure in the past 20 years [9,10]. The apparent\\nOnly a small number of research studies evaluated the\\nadvantage of closing t",
+    "result_truncated": true,
+    "result_chars": 85914,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-99a64d33-f15b-477a-82a3-2e318bdbf095-5",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/wound_healing.pdf",
+      "first_page": 5,
+      "last_page": 9,
+      "max_chars": 50000
+    },
+    "result": "{\n  \"text\": \"--- Page 5 ---\\nAim of the research\\nThe main goal of our work was to display the difference in wound outcome results as regard postoperative wound complications comparing the two widely implemented techniques in subcutaneous tissue closure (interrupted versus continuous methods).\\nResults\\nDescription\\nTable 1 describes and displays the following variables: type of suturing: wound complications in both study groups wound gapping, seroma, erythema, infection. Continuous and interrupted groups are nearly similar in the number of study subjects involved, wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.\\nTable 2 displays and demonstrates the following study variables: age, BMI, GA at time of CS, number of sutures in subcutaneous tissue operative time, estimated blood loss, and subcutaneous tissue depth. The mean age of the whole cohort studied \\u00bc 30.3 \\u00b1 3.3 years, mean BMI \\u00bc 34.5, mean gestational age at time of CS 37.7 \\u00b1 1.1 weeks, mean number of sutures of subcutaneous tissue \\u00bc 6.3 \\u00b1 2.9, operative time (min) mean \\u00bc 42.8 \\u00b1 10.4 min, estimated blood loss (cc) mean \\u00bc 658.8 \\u00b1 165.2 cc, subcutaneous tissue depth (cm) mean \\u00bc 4.4 \\u00b1 1.0 cm.\\nTable 4 displays and contrasts comparative analysis between continuous and interrupted regarding wound complications (gapping, seroma, erythema, and infection) showing statistical significant differences in all four wound complications presented with p values \\u00bc .019, .011, .015, and .001, in consecutive order with odds ratio in wound gapping \\u00bc 5.239, wound seroma\\nTable 3 compares the following variables: between continuous and interrupted sutures including age, BMI, GA at the time of CS, number of sutures in subcutaneous tissue operative time (min), estimated blood loss (cc), subcutaneous tissue depth (cm), and showing statistical significant difference only regarding operative time with p value \\u00bc < .001.\\nTable 1. Descriptive analysis of wound complications in relation to suture technique.\\nTable 2. Demonestrates analysis of the demographic data and operative parameters.\\nTable 3. Shows a comparison between continuous and interrupted techniques as regard operative parameters and demographic data.\\nTable 4. Display a comparison between between continuous and interrupted techniques regarding wound complications.\\nOR: odds ratio; CI: confidence interval.\\nOR \\u00bc 9.429, wound erythema OR \\u00bc 3.709, and wound infection OR \\u00bc 6.136.\\nTable 5 represents univariant analysis as regard wound complications and statistical significant difference was observed as regard BMI p value \\u00bc < .001, number of sutures with p value \\u00bc .005, estimated blood loss (cc) < 0.001, subcutaneous tissue depth (cm) p value \\u00bc < .001, and continuous suture type p value \\u00bc < .001.\\n\\n--- Page 6 ---\\nTable 5. Shows univariate determinants of wound complications.\\nTable 6. Multivariate analysis (logistic regression model) to explore predictors of wound complications.\\nTable 6 displays and reveals multivariate analysis to explore predictors of wound complications showing BMI of statistical significance with p value \\u00bc < .001, OR \\u00bc 1.333, estimated blood loss (cc) of statistical significance with p value \\u00bc < .001, subcutaneous tissue depth (cm) of statistical significance with p value \\u00bc .009, OR \\u00bc 1.855, continuous versus interrupted sutures of statistical significance with p value \\u00bc < .001, OR \\u00bc 7.743.\\nDiscussion\\nThe results of the present study displayed the following after interpretation and analysis of data in the whole cohort of cases studied: the percentage of wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, and wound erythema occurred in 18% of cases, while wound infection occurred in 20% of cases. The mean ",
+    "result_truncated": true,
+    "result_chars": 55670,
+    "is_error": false
+  },
+  {
+    "seq": 7,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-99a64d33-f15b-477a-82a3-2e318bdbf095-6",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/markdown/body.md",
+      "offset": 400,
+      "limit": 250
+    },
+    "result": "{\"type\":\"ReadFile\",\"FileContent\":{\"content\":\"400\u2192additionally BMI could be used as a predictor tool for\\nwound complications. Estimated blood loss by the sur-\\nReferences\\ngeon was a prominent parameter for the prediction of\\nwound complications. In our research, subcutaneous [1] Brown BC, Moss TP, McGrouther DA, et al. Skin scar\\ntissue depth and suturing technique are even tools preconceptions must be challenged: importance of\\nthat can be implemented in predictability of wound selfperception in skin scarring. J Plast Reconstr\\nAesthetSurg.2010;63(6):1022\u20131029.\\ncomplications. In the future, all variables that revealed\\n[2] Yamasato K, Yoshino K, Chang AL, et al.\\n410\u2192value in predictability of wound complications could\\nCesarean delivery complications in women with mor-\\nbe adjusted in broader studies to be clinically used to bid obesity. J Matern Fetal Neonat Med. 2016;29(23):\\npredict and manage wound morbidities helping to cal- 3885\u20133888.\\nculate the risk of wound complications leading to [3] Mackeen AD, Berghella V, Larsen ML. Techniques and\\nmaterials for skin closure in caesarean section.\\nbetter management of obese patients surgically\\nCochrane Database Syst Rev. 2012;11:CD003577:\\nparticularly preoperative preparation, intra-operative\\nCD003577.\\n420\u2192management technique of closure, and postoperative [4] CORONIS Collaborative Group, Abalos E, Addo V, et al.\\ncare providing a guidance in effectively managing Caesarean section surgical techniques (CORONIS): a\\nfractional, factorial, unmasked, randomised controlled\\nthese cases by using a special formula integrating\\ntrial.Lancet.2013;382(9888):234\u2013248.\\nthese predictors.\\n[5] Figueroa D, Jauk VC, Szychowski JM, et al. Surgical\\nstaples compared with subcuticular suture for skin\\nclosure after cesarean delivery: a randomized con-\\nConclusions trolledtrial.Obstet Gynecol.2013;121(1):33\u201338.\\n430\u2192[6] Cromi A, Ghezzi F, Gottardi A, et al. Cosmetic out-\\nSubcutaneous tissue closure in our study groups\\ncomes of various skin closure methods following\\nrevealed that subcutaneous wound closure using cesarean delivery: a randomized trial. Am J Obstet\\ninterrupted technique of suturing in obese patients is Gynecol.2010;203(1):36.e1\u201336.e8.\\nsuperior to continuous technique as regard wound [7] Menacker F, Hamilton BE. Recent trends in cesarean\\ndelivery in the United States. NCHS data brief, no 35.\\ncomplications; however, operative time is more.\\nHyattsville, MD: National Center for Health Statistics;\\nFuture research should include more variables that\\n440\u21922010.\\ncould play a role such as ethnic differences, and [8] Wloch C, Wilson J, Lamagni T, et al. Risk factors for\\noperator performance variability, postoperative wound surgical site infection following caesarean section in\\nEngland: results from a multicentre cohort study.\\npain, and cosmetic results with a more wide cohort\\nBJOG.2012;119(11):1324\u20131333.\\nof patients.\\n[9] Huppelschoten AG, van Ginderen JC, van den Broek\\nThe variables used in the present study could be\\nKC, et al. Different ways of subcutaneous tissue and\\n450\u2192implemented in the future to calculate the risk of skin closure at cesarean section: a randomized clinical\\nwound infection in obese pregnant women perform- trial on the long-term cosmetic outcome. Acta Obstet\\nGynecolScand.2013;92(8):916\u2013924.\\ning a CS. This will result in applying better manage-\\n[10] Gaertner I, Burkhardt T, Beinder E. Scar appearance of\\nment protocols for obese cases with a special\\ndifferent skin and subcutaneous tissue closure techni-\\npreoperative preparation, intra-operative closure tech-\\nques in caesarean section: a randomized study. Eur J\\nnique, and postoperative care. ObstetGynecolReprod Biol.2008;138(1):29\u201333.\\n460\u2192[11] de Graaf IM, Oude Rengerink K, Wiersma IC, et al.\\nTechniques for wound closure at caesarean section: a\\nAcknowledgements randomized clinical trial. Eur J Obstet Gynecol Reprod\\nBiol.2012;165(1):47\u201352.\\nThe authors would like to thank all medical staff me",
+    "result_truncated": true,
+    "result_chars": 19072,
+    "is_error": false
+  },
+  {
+    "seq": 8,
+    "tool": "mcp__forensic_metascience__check_flow_arithmetic",
+    "tool_short": "check_flow_arithmetic",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-e61a10c2-f14d-465d-a557-6a912c1e2d94-7",
+    "input": {
+      "description": "CONSORT diagram and Methods participant cascade as printed",
+      "randomized_label": "randomized",
+      "source_locator": "Figure 1 CONSORT flow diagram and Methods randomization paragraph",
+      "source_quote": "Assessed (N= 411) Excluded (N =11) Refused to participate Randomized N= 400 Allocated to interrupted Technique N=200 Allocated to continous Technique N=200 Lost follow up ... ( N= 1) ... (N= 2) Analysed (N=199 ) Analysed (N=198)",
+      "stages": [
+        {
+          "label": "assessed",
+          "n": 411,
+          "excluded": [
+            {
+              "reason": "refused to participate",
+              "n": 11
+            }
+          ]
+        },
+        {
+          "label": "randomized",
+          "n": 400,
+          "arms": [
+            {
+              "label": "interrupted",
+              "n": 200
+            },
+            {
+              "label": "continuous",
+              "n": 200
+            }
+          ],
+          "excluded": [
+            {
+              "reason": "lost to follow-up interrupted",
+              "n": 1
+            },
+            {
+              "reason": "lost to follow-up continuous",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "label": "analyzed",
+          "n": 397,
+          "arms": [
+            {
+              "label": "interrupted analyzed",
+              "n": 199
+            },
+            {
+              "label": "continuous analyzed",
+              "n": 198
+            }
+          ]
+        }
+      ]
+    },
+    "result": "{\n  \"success\": true,\n  \"severity\": \"consistent\",\n  \"consistent\": true,\n  \"applicable\": true,\n  \"n_checks\": 5,\n  \"n_stages\": 3,\n  \"failures\": [],\n  \"explanation\": \"The CONSORT diagram and Methods participant cascade as printed reconciles: 5 flow identit(ies) hold exactly.\",\n  \"source_quote\": \"Assessed (N= 411) Excluded (N =11) Refused to participate Randomized N= 400 Allocated to interrupted Technique N=200 Allocated to continous Technique N=200 Lost follow up ... ( N= 1) ... (N= 2) Analysed (N=199 ) Analysed (N=198)\",\n  \"source_locator\": \"Figure 1 CONSORT flow diagram and Methods randomization paragraph\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 646,
+    "is_error": false
+  },
+  {
+    "seq": 9,
+    "tool": "mcp__forensic_metascience__check_flow_arithmetic",
+    "tool_short": "check_flow_arithmetic",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-e61a10c2-f14d-465d-a557-6a912c1e2d94-8",
+    "input": {
+      "description": "Table 1 interrupted arm: 199 remaining after lost follow-up of 2 from 200 allocated",
+      "randomized_label": "allocated interrupted",
+      "source_locator": "Table 1, Suture Type rows",
+      "source_quote": "Interrupted 199(50.1)afterlostfollowupof2women",
+      "stages": [
+        {
+          "label": "allocated interrupted",
+          "n": 200,
+          "excluded": [
+            {
+              "reason": "lost follow up of 2 women",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "label": "interrupted remaining Table 1",
+          "n": 199
+        }
+      ]
+    },
+    "result": "{\n  \"success\": true,\n  \"severity\": \"impossible\",\n  \"consistent\": false,\n  \"applicable\": true,\n  \"n_checks\": 2,\n  \"n_stages\": 2,\n  \"failures\": [\n    {\n      \"failure_mode\": \"step_mismatch\",\n      \"stage\": \"allocated interrupted\",\n      \"next_stage\": \"interrupted remaining Table 1\",\n      \"expected\": 198,\n      \"observed\": 199,\n      \"difference\": 1,\n      \"sentence\": \"'allocated interrupted' (n=200) minus its 1 stated exclusion(s) (2) leaves 198, but 'interrupted remaining Table 1' reports 199 -- 1 participant(s) unaccounted for by the paper's own arithmetic.\"\n    }\n  ],\n  \"explanation\": \"The Table 1 interrupted arm: 199 remaining after lost follow-up of 2 from 200 allocated does not reconcile: 'allocated interrupted' (n=200) minus its 1 stated exclusion(s) (2) leaves 198, but 'interrupted remaining Table 1' reports 199 -- 1 participant(s) unaccounted for by the paper's own arithmetic.\",\n  \"source_quote\": \"Interrupted 199(50.1)afterlostfollowupof2women\",\n  \"source_locator\": \"Table 1, Suture Type rows\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1050,
+    "is_error": false
+  },
+  {
+    "seq": 10,
+    "tool": "mcp__forensic_metascience__check_summation_batch",
+    "tool_short": "check_summation_batch",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-e61a10c2-f14d-465d-a557-6a912c1e2d94-9",
+    "input": {
+      "source_locator": "Tables 1, 4 and 5 counts",
+      "source_quote": "Yes 12(3) No 385(97) ... Yes 10(2.5) No 387(97.5) ... Yes 18(4.5) No 379(95.5) ... Yes 20(5) No 377(95) ... Yes 42(10.6) No 355(89.4)",
+      "rows": [
+        {
+          "values": [
+            12,
+            385
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 wound gapping yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            10,
+            387
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 wound seroma yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            18,
+            379
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 wound erythema yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            20,
+            377
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 wound infection yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            42,
+            355
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 any wound complication yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            198,
+            199
+          ],
+          "expected_sum": 397,
+          "description": "Table 1 continuous+interrupted",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "expected_sum": 12,
+          "description": "Table 4 gapping arms vs Table 1 total",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            9,
+            1
+          ],
+          "expected_sum": 10,
+          "description": "Table 4 seroma arms vs Table 1 total",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            14,
+            4
+          ],
+          "expected_sum": 18,
+          "description": "Table 4 erythema arms vs Table 1 total",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            17,
+            3
+          ],
+          "expected_sum": 20,
+          "description": "Table 4 infection arms vs Table 1 total",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            33,
+            9
+          ],
+          "expected_sum": 42,
+          "description": "Table 5 complications by suture type among Yes",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            165,
+            190
+          ],
+          "expected_sum": 355,
+          "description": "Table 5 no-complication by suture type",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            33,
+            165
+          ],
+          "expected_sum": 198,
+          "description": "Table 5 continuous yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            9,
+            190
+          ],
+          "expected_sum": 199,
+          "description": "Table 5 interrupted yes+no",
+          "decimals": 0,
+          "decimals_total": 0
+        },
+        {
+          "values": [
+            12,
+            10,
+            18,
+            20
+          ],
+          "expected_sum": 42,
+          "description": "Sum of four specific complications vs composite 42 (overlap unstated)",
+          "decimals": 0,
+          "decimals_total": 0
+        }
+      ]
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"n_rows\": 15,\n  \"n_evaluated\": 15,\n  \"n_indeterminate\": 0,\n  \"n_inconsistent\": 1,\n  \"results\": [\n    {\n      \"values\": [\n        12,\n        385\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 wound gapping yes+no sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 0,\n      \"description\": \"Table 1 wound gapping yes+no\"\n    },\n    {\n      \"values\": [\n        10,\n        387\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 wound seroma yes+no sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 1,\n      \"description\": \"Table 1 wound seroma yes+no\"\n    },\n    {\n      \"values\": [\n        18,\n        379\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 wound erythema yes+no sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 2,\n      \"description\": \"Table 1 wound erythema yes+no\"\n    },\n    {\n      \"values\": [\n        20,\n        377\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 wound infection yes+no sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 3,\n      \"description\": \"Table 1 wound infection yes+no\"\n    },\n    {\n      \"values\": [\n        42,\n        355\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 any wound complication yes+no sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 4,\n      \"description\": \"Table 1 any wound complication yes+no\"\n    },\n    {\n      \"values\": [\n        198,\n        199\n      ],\n      \"actual_sum\": 397,\n      \"expected_sum\": 397,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 1 continuous+interrupted sum to 397, expected 397, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 5,\n      \"description\": \"Table 1 continuous+interrupted\"\n    },\n    {\n      \"values\": [\n        10,\n        2\n      ],\n      \"actual_sum\": 12,\n      \"expected_sum\": 12,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 4 gapping arms vs Table 1 total sum to 12, expected 12, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 6,\n      \"description\": \"Table 4 gapping arms vs Table 1 total\"\n    },\n    {\n      \"values\": [\n        9,\n        1\n      ],\n      \"actual_sum\": 10,\n      \"expected_sum\": 10,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 4 seroma arms vs Table 1 total sum to 10, expected 10, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 7,\n      \"description\": \"Table 4 seroma arms vs Table 1 total\"\n    },\n    {\n      \"values\": [\n        14,\n        4\n      ],\n      \"actual_sum\": 18,\n      \"expected_sum\": 18,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 4 erythema arms vs Table 1 total sum to 18, expected 18, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 8,\n      \"description\": \"Table 4 erythema arms vs Table 1 total\"\n    },\n    {\n      \"values\": [\n        17,\n        3\n      ],\n      \"actual_sum\": 20,\n      \"expected_sum\": 20,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 4 infection arms vs Table 1 total sum to 20, expected 20, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 9,\n      \"description\": \"Table 4 infection arms vs Table 1 total\"\n    },\n    {\n      \"values\": [\n        33,\n        9\n      ],\n      \"actual_sum\": 42,\n      \"expected_sum\": 42,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 5 complications by suture type among Yes sum to 42, expected 42, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 10,\n      \"description\": \"Table 5 complications by suture type among Yes\"\n    },\n    {\n      \"values\": [\n        165,\n        190\n      ],\n      \"actual_sum\": 355,\n      \"expected_sum\": 355,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 5 no-complication by suture type sum to 355, expected 355, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 11,\n      \"description\": \"Table 5 no-complication by suture type\"\n    },\n    {\n      \"values\": [\n        33,\n        165\n      ],\n      \"actual_sum\": 198,\n      \"expected_sum\": 198,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 5 continuous yes+no sum to 198, expected 198, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 12,\n      \"description\": \"Table 5 continuous yes+no\"\n    },\n    {\n      \"values\": [\n        9,\n        190\n      ],\n      \"actual_sum\": 199,\n      \"expected_sum\": 199,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 5 interrupted yes+no sum to 199, expected 199, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 13,\n      \"description\": \"Table 5 interrupted yes+no\"\n    },\n    {\n      \"values\": [\n        12,\n        10,\n        18,\n        20\n      ],\n      \"actual_sum\": 60,\n      \"expected_sum\": 42,\n      \"difference\": 18,\n      \"tolerance\": 2.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": false,\n      \"severity\": \"suspicious\",\n      \"methodology\": \"Summation check: Sum of four specific complications vs composite 42 (overlap unstated) sum to 60, expected 42, difference = 18, window = 2.5 (printed precision; 4 addend(s) at [0, 0, 0, 0] dp, total at 0 dp)\",\n      \"row\": 14,\n      \"description\": \"Sum of four specific complications vs composite 42 (overlap unstated)\"\n    }\n  ],\n  \"explanation\": \"1 of 15 evaluated sums do not reconcile.\",\n  \"methodology\": \"Batched summation. Each row is checked independently by check_summation; the aggregate severity is the worst row, and a batch in which nothing could be evaluated reports `indeterminate` rather than `consistent`.\",\n  \"source_quote\": \"Yes 12(3) No 385(97) ... Yes 10(2.5) No 387(97.5) ... Yes 18(4.5) No 379(95.5) ... Yes 20(5) No 377(95) ... Yes 42(10.6) No 355(89.4)\",\n  \"source_locator\": \"Tables 1, 4 and 5 counts\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 8920,
+    "is_error": false
+  },
+  {
+    "seq": 11,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-e61a10c2-f14d-465d-a557-6a912c1e2d94-10",
+    "input": {
+      "query": "check_count_percent forensic_metascience",
+      "limit": 3
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":3,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_count_percent\\\",\\n          \\\"description\\\": \\\"Does the printed COUNT over the printed denominator give the printed PERCENTAGE? Call it on every `n (%)` cell whose n you know -- it is STRICTLY STRONGER than grim_percentage there. GRIM asks whether a percentage is attainable for SOME integer numerator; this asks whether it matches THE numerator the paper printed. MEASURED: a cell reading `142 (73.0)` at n = 200 passes grim_percentage as `consistent`, because 73.0 is reachable at k = 146 -- while the printed count gives 100 x 142 / 200 = 71.0. That is a FALSE CLEAR, and it is what this check exists to catch. CAPPED AT `suspicious`, never higher. A percentage taken over a DIFFERENT base is the commonest convention in clinical tables -- row versus column percentages, subgroup denominators -- so a mismatch is evidence about which denominator was used at least as often as about the arithmetic. The result reports `implied_denominator`, which usually settles it at a glance: check it against the other denominators in the table before calling anything a defect. `decimals` is REQUIRED for a verdict: read it off the literal (`73.0` is 1). Without it the rounding interval is unknown and the result is `indeterminate` rather than a guess. A count LARGER than n returns `indeterminate`, not a flag: it proves this n is not the base for this percentage, which is a fact about the pairing. Parameters: count (int), percentage (float), n (int), decimals (int)\\\",\\n          \\\"score\\\": 6.368259429931641,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"count\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"percentage\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__parse_cells_typed\\\",\\n          \\\"description\\\": \\\"Classify table cells BEFORE running any other check. The untyped parser read every 'X (Y)' cell as mean=X, sd=Y, so a clinical '142 (71.0)' -- a count and a PERCENTAGE -- was handed downstream as sd=71.0, manufacturing impossibilities out of an ordinary table. Returns a `kind` per cell (mean_sd | n_percent | median_iqr | median_range | estimate_ci | mean_se | numeric | count | ambiguous | non_numeric) plus a `coverage` figure -- the honest answer to how much of the table was actually understood. Cells returned as `ambiguous` carry candidate readings and MUST NOT be fed to any forensic tool: run nothing on a value whose meaning is unknown. Parameters: cells (list of {raw, row_label, col_label})\\\",\\n          \\\"score\\\": 1.2289429903030396,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"cells\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_summation_batch\\\",\\n          \\\"description\\\": \\\"Run EVERY summation check in ONE call. Use this whenever a paper has more than one thing that must add up -- CONSORT/flow-diagram arms, table column totals, percentage columns, subgroup counts against their total. Measured on a real review, 55 of 124 tool calls were `check_summation` invoked once per sum; each call is a turn, and turns are the cost of a review. Each row is {values, expected_sum, description, tolerance (optional, overrides the batch default -- a percentage column rounding to 100 needs a wider window than a count column that must be exact), decimals (int or list of int -- the printed precision of the addends), decimals_total}. GIVE `decimals` PER ROW: the window a sum is allowed depends on how many addends there are and how precisely each was printed, so one window across a whole batch is wrong for most of it, and a row with no precision returns `indeterminate` rather than guessing. The aggregate severity is the WORST row, and a batch in which nothing could be evaluated returns `indeterminate`, never `consistent`. Parameters: rows (list of dicts), tolerance (optional batch-wide override)\\\",\\n          \\\"score\\\": 1.1627565622329712,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"rows\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              },\\n              \\\"tolerance\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 6004,
+    "is_error": false
+  },
+  {
+    "seq": 12,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-e61a10c2-f14d-465d-a557-6a912c1e2d94-11",
+    "input": {
+      "query": "check_ratio check_statistic_bounds reconstruct_2x2 forensic_metascience",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":5,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__reconstruct_2x2\\\",\\n          \\\"description\\\": \\\"Reconstruct a 2\u00d72 contingency table from two column-conditional percentages and a total N. Searches every (col1, col2) pair summing to n_total for ones where both percentages GRIM-pass. Optionally filters by reported chi-squared. Use when a paper gives row-percentages and a chi-squared but suppresses the cell counts. Parameters: pct_col1 (float), pct_col2 (float), n_total (int), decimals (int, default 1), value_type (str, default 'percentage'), reported_chi2 (float, optional), chi2_tolerance (float, default 0.05), balance_ratio_max (float, default 4.0)\\\",\\n          \\\"score\\\": 12.317924499511719,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"pct_col1\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"pct_col2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n_total\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\",\\n                \\\"description\\\": \\\"The COARSEST printed precision among the percentages given. One window covers both columns, so the finest precision present would shrink it for both. No default -- the wrong one accuses.\\\"\\n              },\\n              \\\"value_type\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"reported_chi2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"chi2_tolerance\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"balance_ratio_max\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"uncertainty\\\": {\\n                \\\"type\\\": \\\"object\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_statistic_bounds\\\",\\n          \\\"description\\\": \\\"Is a value inside the range its measure LOGICALLY permits? Call it the moment you hold a statistic that looks impossible on its face -- a correlation above 1, a p-value above 1, a percentage above 100, an alpha above 1. IT WILL NOT LET YOU ACCUSE THE PAPER, and that is deliberate. A value that far outside its own definition is not the kind of error that survives to publication in an honest paper OR a fabricated one -- fabricators produce plausible numbers, because that is the point of fabricating them. The likeliest author of the error is whoever read the page, which was us. So the verdict is `indeterminate` with failure_mode `extraction_suspect`, and the result names the specific decimal-point slip that would explain it (11.3 as a correlation reads as 0.113 with the point two places out). GO AND CHECK THE SOURCE. Re-read the value in the paper itself: the decimal point against the printed figure, and the COLUMN -- a mean or a test statistic read out of the wrong column is the other common cause. If the value is confirmed there, call this again with extraction_verified=true and it returns `impossible`, which the bound then fully licenses. Verification is the price of the accusation. Parameters: value, measure (r/correlation, p_value, percentage, proportion, r_squared, kappa, icc, cronbach_alpha, auc, sd, se, variance, chi_squared, f_statistic, n), extraction_verified (default false), source_quote.\\\",\\n          \\\"score\\\": 9.274845123291016,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"value\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"measure\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"What the value is meant to be. Only measures with a bound that follows from their DEFINITION are known; anything else is refused rather than guessed at.\\\"\\n              },\\n              \\\"extraction_verified\\\": {\\n                \\\"type\\\": \\\"boolean\\\",\\n                \\\"description\\\": \\\"Set true ONLY after re-reading the value in the paper itself and confirming both the digits and the column. This is what lifts the refusal to `impossible`.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"The passage the value was confirmed against.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_ratio\\\",\\n          \\\"description\\\": \\\"Verify a printed RATIO against the numerator and denominator printed beside it: cost-effectiveness ratios (ICERs), rates, cost-per-outcome, any \\\\\\\"X per Y\\\\\\\". Nothing else in this toolkit checks a division, and a health-economics paper's entire result is one -- a cost-utility table printed all three columns and the sweep recorded \\\\\\\"no tool performs ratio verification\\\\\\\", missing that its three rows implied three different incremental costs where there can only be one. YOU MUST SUPPLY all three `decimals_*`: a quotient's tolerance depends on both inputs' precision AND on the denominator's magnitude (B/SE with SE=0.5 tolerates about +/-0.5; the same precisions with SE=0.05 about +/-11), so without them the tool returns `indeterminate` rather than guessing. Read `implied_denominator` / `implied_numerator` out of the result: for a TABLE of ratios, several rows implying DIFFERENT values for a quantity that can only have one is far stronger evidence than any single mismatch. Capped at `suspicious` -- ratios are often computed from unrounded intermediates the paper never shows. Parameters: numerator, denominator, reported_ratio, decimals_numerator, decimals_denominator, decimals_ratio, description (optional)\\\",\\n          \\\"score\\\": 6.332773208618164,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"numerator\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"denominator\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"reported_ratio\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"decimals_numerator\\\": {\\n                \\\"type\\\": \\\"integer\\\",\\n                \\\"description\\\": \\\"Printed decimals of the numerator, read from the literal. Without it the check refuses.\\\"\\n              },\\n              \\\"decimals_denominator\\\": {\\n                \\\"type\\\": \\\"integer\\\",\\n                \\\"description\\\": \\\"Printed decimals of the denominator, read from the literal. Without it the check refuses.\\\"\\n              },\\n              \\\"decimals_ratio\\\": {\\n                \\\"type\\\": \\\"integer\\\",\\n                \\\"description\\\": \\\"Printed decimals of the reported ratio, read from the literal. Without it the check refuses.\\\"\\n              },\\n              \\\"description\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_effect_plausibility\\\",\\n          \\\"description\\\": \\\"Compute an effect size and report it WITH A 95% CONFIDENCE INTERVAL. Takes the six group statistics (or a d directly) and returns Cohen's d, Hedges' g and an estimated CI. Reporting the value IS the deliverable. An effect far outside the usual range is informative and is NOT evidence of misconduct, and severity is capped at `suspicious` because an effect size can be improbable but never arithmetically impossible. `field` is OPTIONAL and usually omitted -- magnitude is REPORTED, not judged, because whether an effect is unrealistically large is a judgement for the reader with the paper's effects laid out as a set. PASS `reported_d` ALONGSIDE the group statistics to check INTERNAL CONSISTENCY instead: does the effect size the paper printed match the one its own means, SDs and ns imply? That needs no comparison class and is what catches a mistyped effect size. Supplying `field` additionally places the value against field benchmarks, which are mostly uncited estimates and say so. THIS IS THE CHECK THAT WORKS ON FIGURE-DERIVED DATA: gross implausibility survives digitization error (verified -- the verdict is unchanged across the full +/-37% dispersion error range), so a paper reporting its outcome ONLY as a bar chart becomes checkable here even though GRIM/GRIMMER/SPRITE cannot touch it. Pass provenance='figure_pixels' when the inputs were read off a chart. Before treating a large effect as a finding, rule out the three ordinary causes: dispersion reported as SEM and read as SD (inflates d by sqrt(n)), a waitlist rather than active comparator, and a units mismatch. Parameters: d (optional), field, mean1, sd1, n1, mean2, sd2, n2, design, provenance\\\",\\n          \\\"score\\\": 2.7717604637145996,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"d\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"reported_d\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"field\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"mean1\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"sd1\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n1\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"mean2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"sd2\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n2\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"design\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__paired_d_interval\\\",\\n          \\\"description\\\": \\\"What a WITHIN-SUBJECTS effect size could be, when the pre-post correlation is not reported. A paired design reports d_z -- the difference over the SD OF THE DIFFERENCES -- and a reader comparing it against a between-subjects literature wants a raw-SD effect size. This returns d_rm (Lakens 2013 eq. 8): d_rm = d_z * sqrt(2*(1-r)). It is NOT d_av, which also needs the SD ratio this tool does not take -- they differ by up to 44% at unequal SDs. Papers reporting d_z almost never report r. USE `recalc_within_subjects_t` FIRST: when the pre and post SDs are both printed it RECOVERS r, which is strictly better than this. Use this only when they are not, and then quote the INTERVAL rather than a point -- picking r = 0.5 silently is an unstated assumption doing the work of a measurement. Note the direction, which is easy to invert: d_rm SHRINKS as r rises, because a high correlation makes the paired test efficient, so d_z is large while the raw-SD effect is not. Returns d_rm_low, d_rm_high, the value at each r on the grid, and the high/low ratio -- typically over 4x, which is how much the paper left unsaid. DESCRIPTIVE: it reports a property of what was printed and can never accuse. A wide interval is a fact about the reporting, not about the work. Parameters: dz (or t with n), r (optional, if the paper reports it)\\\",\\n          \\\"score\\\": 2.333845615386963,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"dz\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"t\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"r\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 17257,
+    "is_error": false
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-12",
+    "input": {
+      "count": 12,
+      "percentage": 3,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Table 1, Wound Gapping Yes row",
+      "source_quote": "WoundGapping Yes 12(3)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 12,\n  \"reported_percentage\": 3,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"WoundGapping Yes 12(3)\",\n  \"source_locator\": \"Table 1, Wound Gapping Yes row\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 3.02267,\n  \"rounding_interval\": [\n    2.5,\n    4.0\n  ],\n  \"implied_denominator\": 400.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"12/397 = 3.02%, which matches the printed 3. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 926,
+    "is_error": false
+  },
+  {
+    "seq": 14,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-13",
+    "input": {
+      "count": 12,
+      "percentage": 12,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Results, Description paragraph",
+      "source_quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases."
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 12,\n  \"reported_percentage\": 12,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.\",\n  \"source_locator\": \"Results, Description paragraph\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 3.02267,\n  \"rounding_interval\": [\n    11.5,\n    13.0\n  ],\n  \"implied_denominator\": 100.0,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -8.97733,\n  \"explanation\": \"12/397 = 3.02%, but the paper prints 12, outside the rounding interval [11.50, 13.00]. The printed percentage implies a denominator of about 100.0 rather than 397.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1549,
+    "is_error": false
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-14",
+    "input": {
+      "count": 10,
+      "percentage": 10,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Results, Description paragraph",
+      "source_quote": "wound seroma occurred in 10% of cases"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 10,\n  \"reported_percentage\": 10,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"wound seroma occurred in 10% of cases\",\n  \"source_locator\": \"Results, Description paragraph\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 2.518892,\n  \"rounding_interval\": [\n    9.5,\n    11.0\n  ],\n  \"implied_denominator\": 100.0,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -7.481108,\n  \"explanation\": \"10/397 = 2.52%, but the paper prints 10, outside the rounding interval [9.50, 11.00]. The printed percentage implies a denominator of about 100.0 rather than 397.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1392,
+    "is_error": false
+  },
+  {
+    "seq": 16,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-15",
+    "input": {
+      "count": 18,
+      "percentage": 18,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Results, Description paragraph",
+      "source_quote": "wound erythema occurred in 18% of cases"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 18,\n  \"reported_percentage\": 18,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"wound erythema occurred in 18% of cases\",\n  \"source_locator\": \"Results, Description paragraph\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 4.534005,\n  \"rounding_interval\": [\n    17.5,\n    19.0\n  ],\n  \"implied_denominator\": 100.0,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -13.465995,\n  \"explanation\": \"18/397 = 4.53%, but the paper prints 18, outside the rounding interval [17.50, 19.00]. The printed percentage implies a denominator of about 100.0 rather than 397.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1397,
+    "is_error": false
+  },
+  {
+    "seq": 17,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-16",
+    "input": {
+      "count": 20,
+      "percentage": 20,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Results, Description paragraph",
+      "source_quote": "wound infection occurred in 20% of cases in the whole cohort of cases."
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 20,\n  \"reported_percentage\": 20,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"wound infection occurred in 20% of cases in the whole cohort of cases.\",\n  \"source_locator\": \"Results, Description paragraph\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 5.037783,\n  \"rounding_interval\": [\n    19.5,\n    21.0\n  ],\n  \"implied_denominator\": 100.0,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -14.962217,\n  \"explanation\": \"20/397 = 5.04%, but the paper prints 20, outside the rounding interval [19.50, 21.00]. The printed percentage implies a denominator of about 100.0 rather than 397.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1428,
+    "is_error": false
+  },
+  {
+    "seq": 18,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-17",
+    "input": {
+      "count": 10,
+      "percentage": 2.5,
+      "n": 397,
+      "decimals": 1,
+      "source_locator": "Table 1, Wound seroma Yes",
+      "source_quote": "Woundseroma Yes 10(2.5)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 10,\n  \"reported_percentage\": 2.5,\n  \"n\": 397,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundseroma Yes 10(2.5)\",\n  \"source_locator\": \"Table 1, Wound seroma Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 2.518892,\n  \"rounding_interval\": [\n    2.45,\n    2.6\n  ],\n  \"implied_denominator\": 400.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"10/397 = 2.52%, which matches the printed 2.5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 928,
+    "is_error": false
+  },
+  {
+    "seq": 19,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-18",
+    "input": {
+      "count": 18,
+      "percentage": 4.5,
+      "n": 397,
+      "decimals": 1,
+      "source_locator": "Table 1, Wound erythema Yes",
+      "source_quote": "Wounderythema Yes 18(4.5)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 18,\n  \"reported_percentage\": 4.5,\n  \"n\": 397,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Wounderythema Yes 18(4.5)\",\n  \"source_locator\": \"Table 1, Wound erythema Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 4.534005,\n  \"rounding_interval\": [\n    4.45,\n    4.6\n  ],\n  \"implied_denominator\": 400.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"18/397 = 4.53%, which matches the printed 4.5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 932,
+    "is_error": false
+  },
+  {
+    "seq": 20,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-19",
+    "input": {
+      "count": 20,
+      "percentage": 5,
+      "n": 397,
+      "decimals": 0,
+      "source_locator": "Table 1, Wound infection Yes",
+      "source_quote": "Woundinfection Yes 20(5)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 20,\n  \"reported_percentage\": 5,\n  \"n\": 397,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundinfection Yes 20(5)\",\n  \"source_locator\": \"Table 1, Wound infection Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 5.037783,\n  \"rounding_interval\": [\n    4.5,\n    6.0\n  ],\n  \"implied_denominator\": 400.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"20/397 = 5.04%, which matches the printed 5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 927,
+    "is_error": false
+  },
+  {
+    "seq": 21,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-20",
+    "input": {
+      "count": 42,
+      "percentage": 10.6,
+      "n": 397,
+      "decimals": 1,
+      "source_locator": "Table 1, Wound complications Yes",
+      "source_quote": "Woundcomplications Yes 42(10.6)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 42,\n  \"reported_percentage\": 10.6,\n  \"n\": 397,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundcomplications Yes 42(10.6)\",\n  \"source_locator\": \"Table 1, Wound complications Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 10.579345,\n  \"rounding_interval\": [\n    10.55,\n    10.7\n  ],\n  \"implied_denominator\": 396.2264,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"42/397 = 10.58%, which matches the printed 10.6. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 952,
+    "is_error": false
+  },
+  {
+    "seq": 22,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-21",
+    "input": {
+      "count": 198,
+      "percentage": 49.9,
+      "n": 397,
+      "decimals": 1,
+      "source_locator": "Table 1, Continuous row",
+      "source_quote": "Continuous 198(49.9)afterlostfollowupof2women"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 198,\n  \"reported_percentage\": 49.9,\n  \"n\": 397,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Continuous 198(49.9)afterlostfollowupof2women\",\n  \"source_locator\": \"Table 1, Continuous row\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 49.874055,\n  \"rounding_interval\": [\n    49.85,\n    50.0\n  ],\n  \"implied_denominator\": 396.7936,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"198/397 = 49.87%, which matches the printed 49.9. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 959,
+    "is_error": false
+  },
+  {
+    "seq": 23,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-c9268971-6bad-410f-99d7-3ed62dd5a5c7-22",
+    "input": {
+      "count": 199,
+      "percentage": 50.1,
+      "n": 397,
+      "decimals": 1,
+      "source_locator": "Table 1, Interrupted row",
+      "source_quote": "Interrupted 199(50.1)afterlostfollowupof2women"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 199,\n  \"reported_percentage\": 50.1,\n  \"n\": 397,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Interrupted 199(50.1)afterlostfollowupof2women\",\n  \"source_locator\": \"Table 1, Interrupted row\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 50.125945,\n  \"rounding_interval\": [\n    50.05,\n    50.2\n  ],\n  \"implied_denominator\": 397.2056,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"199/397 = 50.13%, which matches the printed 50.1. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 961,
+    "is_error": false
+  },
+  {
+    "seq": 24,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-23",
+    "input": {
+      "count": 10,
+      "decimals": 1,
+      "n": 198,
+      "percentage": 5.1,
+      "source_locator": "Table 4, Wound gapping continuous",
+      "source_quote": "Woundgapping 10(5.1) 2(1) .019"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 10,\n  \"reported_percentage\": 5.1,\n  \"n\": 198,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundgapping 10(5.1) 2(1) .019\",\n  \"source_locator\": \"Table 4, Wound gapping continuous\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 5.050505,\n  \"rounding_interval\": [\n    5.05,\n    5.2\n  ],\n  \"implied_denominator\": 196.0784,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"10/198 = 5.05%, which matches the printed 5.1. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 946,
+    "is_error": false
+  },
+  {
+    "seq": 25,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-24",
+    "input": {
+      "count": 2,
+      "decimals": 0,
+      "n": 199,
+      "percentage": 1,
+      "source_locator": "Table 4, Wound gapping interrupted",
+      "source_quote": "Woundgapping 10(5.1) 2(1) .019"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 2,\n  \"reported_percentage\": 1,\n  \"n\": 199,\n  \"decimals\": 0,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundgapping 10(5.1) 2(1) .019\",\n  \"source_locator\": \"Table 4, Wound gapping interrupted\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 1.005025,\n  \"rounding_interval\": [\n    0.5,\n    2.0\n  ],\n  \"implied_denominator\": 200.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"2/199 = 1.01%, which matches the printed 1. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 937,
+    "is_error": false
+  },
+  {
+    "seq": 26,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-25",
+    "input": {
+      "count": 17,
+      "decimals": 1,
+      "n": 198,
+      "percentage": 8.6,
+      "source_locator": "Table 4, Wound infection continuous",
+      "source_quote": "WoundInfection 17(8.6) 3(1.5) .001"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 17,\n  \"reported_percentage\": 8.6,\n  \"n\": 198,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"WoundInfection 17(8.6) 3(1.5) .001\",\n  \"source_locator\": \"Table 4, Wound infection continuous\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 8.585859,\n  \"rounding_interval\": [\n    8.55,\n    8.7\n  ],\n  \"implied_denominator\": 197.6744,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"17/198 = 8.59%, which matches the printed 8.6. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 952,
+    "is_error": false
+  },
+  {
+    "seq": 27,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-26",
+    "input": {
+      "count": 3,
+      "decimals": 1,
+      "n": 199,
+      "percentage": 1.5,
+      "source_locator": "Table 4, Wound infection interrupted",
+      "source_quote": "WoundInfection 17(8.6) 3(1.5) .001"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 3,\n  \"reported_percentage\": 1.5,\n  \"n\": 199,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"WoundInfection 17(8.6) 3(1.5) .001\",\n  \"source_locator\": \"Table 4, Wound infection interrupted\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 1.507538,\n  \"rounding_interval\": [\n    1.45,\n    1.6\n  ],\n  \"implied_denominator\": 200.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"3/199 = 1.51%, which matches the printed 1.5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 948,
+    "is_error": false
+  },
+  {
+    "seq": 28,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-27",
+    "input": {
+      "count": 33,
+      "decimals": 1,
+      "n": 42,
+      "percentage": 78.6,
+      "source_locator": "Table 5, Continuous among complications Yes",
+      "source_quote": "Continuous 33(78.6) 165(46.5) <.001"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 33,\n  \"reported_percentage\": 78.6,\n  \"n\": 42,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Continuous 33(78.6) 165(46.5) <.001\",\n  \"source_locator\": \"Table 5, Continuous among complications Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 78.571429,\n  \"rounding_interval\": [\n    78.55,\n    78.7\n  ],\n  \"implied_denominator\": 41.9847,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"33/42 = 78.57%, which matches the printed 78.6. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 964,
+    "is_error": false
+  },
+  {
+    "seq": 29,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-52f2be71-9e12-40e5-963b-748c2293690b-28",
+    "input": {
+      "count": 9,
+      "decimals": 1,
+      "n": 42,
+      "percentage": 21.4,
+      "source_locator": "Table 5, Interrupted among complications Yes",
+      "source_quote": "Interrupted 9(21.4) 190(53.5)"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 9,\n  \"reported_percentage\": 21.4,\n  \"n\": 42,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Interrupted 9(21.4) 190(53.5)\",\n  \"source_locator\": \"Table 5, Interrupted among complications Yes\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 21.428571,\n  \"rounding_interval\": [\n    21.35,\n    21.5\n  ],\n  \"implied_denominator\": 42.0561,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"9/42 = 21.43%, which matches the printed 21.4. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 957,
+    "is_error": false
+  },
+  {
+    "seq": 30,
+    "tool": "WebFetch",
+    "tool_short": "WebFetch",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-414b2272-067c-4d54-bb8c-e0ce9550d428-32",
+    "input": {
+      "url": "https://clinicaltrials.gov/study/NCT03354078"
+    },
+    "result": "{\"type\":\"WebFetch\",\"Content\":{\"url\":\"https://clinicaltrials.gov/study/NCT03354078\",\"content\":\"ClinicalTrials.gov\\n\\nShow glossary \\n\\n#### Search for terms\\n\\n Hide glossary\\n\\nStudy record managers: refer to the [Data Element Definitions](/policy#data-element-definitions) if submitting registration or results information. \\n\\n* * *\",\"content_type\":\"markdown\",\"status_code\":200,\"bytes\":230}}",
+    "result_truncated": false,
+    "result_chars": 393,
+    "is_error": false
+  },
+  {
+    "seq": 31,
+    "tool": "WebFetch",
+    "tool_short": "WebFetch",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-414b2272-067c-4d54-bb8c-e0ce9550d428-33",
+    "input": {
+      "url": "https://ichgcp.net/clinical-trials-registry/NCT03354078"
+    },
+    "result": "{\"type\":\"WebFetch\",\"Content\":{\"url\":\"https://ichgcp.net/clinical-trials-registry/NCT03354078\",\"content\":\"Interrupted sutures and continous sutures in Cesarean Section - Clinical Trials Registry - ICH GCP\\n\\n*\\n*   [](https://telegram.me/share/url?url=https://ichgcp.net/clinical-trials-registry/NCT03354078&text= \\\"Share on telegram\\\")\\n*   [](https://twitter.com/intent/tweet?url=https://ichgcp.net/clinical-trials-registry/NCT03354078 \\\"Share on Twitter\\\")\\n\\n# Effect of Subcutaneous Tissue Closure on Wound Complications\\n\\nApril 2, 2022 updated by: [Aljazeera Hospital](https://ichgcp.net/clinical-trials-registry/research/list?spons=Aljazeera%20Hospital \\\"List all studies sponsored by Aljazeera Hospital\\\")\\n\\n## The Effect of Subcutaneous Tissue Closure Technique in Cesarean Section on Reducing Postoperative Wound Complications\\n\\nOnly a small number of research studies evaluated the impact of various subcutaneous tissue and skin closure methods at cesarean section. In a meta-analysis a major decline in incision site rupture was revealed when suturing the subcutaneous tissue in women with a subcutaneous depth >2 cm.\\n\\n## Study Overview\\n\\n#### Status\\n\\nCompleted\\n\\n#### Conditions\\n\\n*   [Cesarean Section](https://ichgcp.net/clinical-trials-registry/research/list?cond=Cesarean%20Section \\\"List all studies focused on condition Cesarean Section\\\")\\n\\n#### Intervention / Treatment\\n\\n*   [Procedure: interrupted sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=interrupted%20sutures \\\"List all studies with intervention interrupted sutures\\\")\\n*   [Procedure: continous sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=continous%20sutures \\\"List all studies with intervention continous sutures\\\")\\n\\n#### Detailed Description\\n\\nPostoperative wound complications are one of the great issues in cesarean section (CS) with an incidence ranging from 3% to 30%.1 Obesity, operative time, diabetes, age of the patient, anemia, associated infection (e.g chorioamnionitis), the use of internal monitoring, delayed labor with many vaginal examinations and reduced nutrition are recognized risk factors for wound infections.\\n\\nEvaluating the various techniques for closure of the subcutaneous layer.\\n\\n#### Study Type\\n\\nInterventional \\n\\n#### Enrollment (Actual)\\n\\n400 \\n\\n#### Phase\\n\\n*   Not Applicable\\n\\n## Contacts and Locations\\n\\nThis section provides the contact details for those conducting the study, and information on where this study is being conducted.\\n\\n### Study Locations\\n\\n*   [Egypt](https://ichgcp.net/clinical-trials-registry/research/list?locn=Egypt \\\"List all studies conducted in Egypt\\\")\\n\\n    *   *   Giza, Egypt\\n\\n            *   Algazeerah\\n\\n## Participation Criteria\\n\\nResearchers look for people who fit a certain description, called eligibility criteria. Some examples of these criteria are a person's general health condition or prior treatments.\\n\\n### Eligibility Criteria\\n\\n#### Ages Eligible for Study\\n\\n18 years to 40 years (Adult) \\n\\n#### Accepts Healthy Volunteers\\n\\nYes \\n\\n#### Genders Eligible for Study\\n\\nFemale \\n\\n#### Description\\n\\nInclusion Criteria:\\n\\n*   All patients included in this research BMI \u2265 30, First cesarean section performed, no medical disorders with pregnancy e.g DM, HTN. All patients were subjected to full history taking, examination.\\n\\ndepth of subcutaneous tissue estimated by a special device used (sterilized operative ruler). number of sutures estimation\\n\\nExclusion Criteria:\\n\\n*   The following patients were excluded BMI <30, Previous CS, DM with pregnancy, HTN with pregnancy\\n\\n## Study Plan\\n\\nThis section provides details of the study plan, including how the study is designed and what the study is measuring.\\n\\n### How is the study designed?\\n\\n#### Design Details\\n\\n*   **Primary Purpose**: Prevention\\n*   **Allocation**: Randomized\\n*   **Interventional Model**: Parallel Assignment\\n*   **Masking**: Single\\n\\n#### Number of Arms\\n\\n2\\n\\n#### Arms and Interventions\\n\\n| ##### Participant Group / Arm                                                                                                         | ##### Intervention / Treatment                                                                                                                                                                                                                                                                                                                                                                                                                                                                |\\n| ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\\n| Active Comparator: interrupted sutures group   This group in which closure of the subcutaneous layer is closed by interrupted sutures | [Procedure: interrupted sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=interrupted%20sutures \\\"List all studies with intervention interrupted sutures\\\")   The way of closing subcutaneous tissue either by interrupted   [Procedure: continous sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=continous%20sutures \\\"List all studies with intervention continous sutures\\\")   The way of closure of subcutanous tissue is by continous sutures |\\n| Active Comparator: Continous sutures group   subcutanous tissue layer is closed by continous sutures in this group                    | [Procedure: interrupted sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=interrupted%20sutures \\\"List all studies with intervention interrupted sutures\\\")   The way of closing subcutaneous tissue either by interrupted   [Procedure: continous sutures](https://ichgcp.net/clinical-trials-registry/research/list?intr=continous%20sutures \\\"List all studies with intervention continous sutures\\\")   The way of closure of subcutanous tissue is by continous sutures |\\n\\n### What is the study measuring?\\n\\n#### Primary Outcome Measures\\n\\n| ##### Outcome Measure                                                                                                   | ##### Measure Description                                                                              | ##### Time Frame                |\\n| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------- |\\n| The number of participants who passed without postoperative complications   Time Frame: one month post cesarean section | Describes how many participant willnot complain from wound seroma , wound erythema and wound infection | one month post cesarean section |\\n\\n## Collaborators and Investigators\\n\\nThis is where you will find people and organizations involved with this study.\\n\\n#### Sponsor\\n\\n[Aljazeera Hospital](https://ichgcp.net/clinical-trials-registry/research/list?spons=Aljazeera%20Hospital \\\"List all studies sponsored by Aljazeera Hospital\\\") \\n\\n## Publications and helpful links\\n\\nThe person responsible for entering information about the study voluntarily provides these publications. These may be about anything related to the study.\\n\\n#### General Publications\\n\\n*   [Alalfy M, Elgazzar A, Fares T, Nagy O, Ellithy A, Lasheen Y, Kamel A, Soliman M, Hassan A, Samy A, Taher AM, Ogila AI, Saad H, Salah H, Ramadan M, Nabil M, Hatem DL, Fikry M. Effect of subcutaneous tissue closure technique in cesarean section on postoperative wound complications in obese Egyptian women. J Matern Fetal Neonatal Med. 2019 Aug;32(15):2452-2459. doi: 10.1080/14767058.2018.1438399. Epub 2018 Feb 20.](https://pubmed.ncbi.nlm.nih.gov/29415592)\\n\\n## Study record dates\\n\\nThese dates track the progress of study record and summary results submissions to ClinicalTrials.gov. Study records and reported results are reviewed by the National Library of Medicine (NLM) to make sure they meet specific quality control standards before being posted on the public website.\\n\\n### Study Major Dates\\n\\n#### Study Start (Actual)\\n\\nJune 18, 2017 \\n\\n#### Primary Completion (Actual)\\n\\nNovember 1, 2017 \\n\\n#### Study Completion (Actual)\\n\\nNovember 23, 2017 \\n\\n### Study Registration Dates\\n\\n#### First Submitted\\n\\nNovember 19, 2017\\n\\n#### First Submitted That Met QC Criteria\\n\\nNovember 21, 2017\\n\\n#### First Posted (Actual)\\n\\nNovember 27, 2017\\n\\n### Study Record Updates\\n\\n#### Last Update Posted (Actual)\\n\\nApril 5, 2022\\n\\n#### Last Update Submitted That Met QC Criteria\\n\\nApril 2, 2022\\n\\n#### Last Verified\\n\\nApril 1, 2022\\n\\n## More Information\\n\\n### Terms related to this study\\n\\n#### Keywords\\n\\n*   [Cesarean section](https://ichgcp.net/clinical-trials-registry/research/list?term=Cesarean%20section \\\"List all studies by keyword: Cesarean section\\\")\\n*   [Wound infection](https://ichgcp.net/clinical-trials-registry/research/list?term=Wound%20infection \\\"List all studies by keyword: Wound infection\\\")\\n*   [Gapping](https://ichgcp.net/clinical-trials-registry/research/list?term=Gapping \\\"List all studies by keyword: Gapping\\\")\\n\\n#### Other Study ID Numbers\\n\\n*   Cesarean section / sutures\\n\\n### Drug and device information, study documents\\n\\n#### Studies a U.S. FDA-regulated drug product\\n\\nNo \\n\\n#### Studies a U.S. FDA-regulated device product\\n\\nNo \\n\\nThis information was retrieved directly from the website [clinicaltrials.gov](https://clinicaltrials.gov) without any changes. If you have any requests to change, remove or update your study details, please contact [register@clinicaltrials.gov](mailto:register@clinicaltrials.gov). As soon as a change is implemented on [clinicaltrials.gov](https://clinicaltrials.gov), this will be updated automatically on our website as well.\\n\\n\u2715\\n\\nGOOD CLINICAL PRACTICE NETWORK\\n\\nSubscribe to receive notifications of new clinical trials you are interested in.\\n\\nSubscribe\\n\\nSubscribe\",\"content_type\":\"markdown\",\"status_code\":200,\"bytes\":10239}}",
+    "result_truncated": false,
+    "result_chars": 10648,
+    "is_error": false
+  },
+  {
+    "seq": 32,
+    "tool": "WebFetch",
+    "tool_short": "WebFetch",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-3ca882f2-921a-48c8-b269-08c99046db7a-35",
+    "input": {
+      "url": "https://www.cdc.gov/nchs/products/databriefs/db35.htm"
+    },
+    "result": "{\"type\":\"WebFetch\",\"Content\":{\"url\":\"https://www.cdc.gov/nchs/products/databriefs/db35.htm\",\"content\":\"Products - Data Briefs - Number 35 - March 2010\\n\\n[Skip directly to site content](#content) [Skip directly to search](#headerSearch) \\n\\n[Espa\u00f1ol](/spanish/) | [Other Languages](https://wwwn.cdc.gov/pubs/other-languages/) \\n\\n![](/TemplatePackage/4.0/assets/imgs/uswds/us_flag_small.png) An official website of the United States government Here's how you know \\n\\n![](/TemplatePackage/4.0/assets/imgs/uswds/icon-dot-gov.svg)\\n\\n**Official websites use .gov**\\n\\nA .gov website belongs to an official government organization in the United States.\\n\\n![](/TemplatePackage/4.0/assets/imgs/uswds/icon-https.svg)\\n\\n**Secure .gov websites use HTTPS**\\n\\nA lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\\n\\n# Recent Trends in Cesarean Delivery in the United States\\n\\n[Print](#print) \\n\\n[](#collapse_858663afff1da2fb)\\n\\nRelated Pages\\n\\nOn This Page\\n\\n*   [Key findings](#key)\\n*   [In 2007, the cesarean rate was the highest ever reported in the United States.](#highestever)\\n*   [Cesarean rates rose for women in all age groups in the last decade.](#cesareanrates)\\n*   [Cesarean rates rose for women in all racial and ethnic groups from 1996 to 2007.](#2007_groups)\\n*   [Cesarean rates increased for infants of all gestational ages in the last decade.](#ratesincreased)\\n*   [Cesarean rates varied widely by state.](#ratesvaried)\\n*   [Summary](#sum)\\n*   [Definitions](#define)\\n*   [Data source and methods](#data)\\n*   [About the authors](#about)\\n*   [References](#refer)\\n*   [Suggested citation](#citation)\\n\\nNCHS Data Brief No. 35, March 2010\\n\\n[PDF Version](/nchs/data/databriefs/db35.pdf) (856 KB)\\n\\nFay Menacker, Dr. P.H., and Brady E. Hamilton, Ph.D.\\n\\n### Key findings\\n\\nData from the Natality Data File, National Vital Statistics System\\n\\n*   The cesarean rate rose by 53% from 1996 to 2007, reaching 32%, the highest rate ever reported in the United States.\\n*   From 1996 to 2007, the cesarean rate increased for mothers in all age and racial and Hispanic origin groups. The pace of the increase accelerated from 2000 to 2007.\\n*   Cesarean rates also increased for infants at all gestational ages; from 1996 to 2006 preterm infants had the highest rates.\\n*   Cesarean rates increased for births to mothers in all U.S. states, and by more than 70% in six states from 1996 to 2007.\\n\\nIn 2007, nearly one-third (32%) of all births were cesarean deliveries ([1](#ref1)). Although there are often clear clinical indications for a cesarean delivery, the short- and long-term benefits and risks for both mother and infant have been the subject of intense debate for over 25 years ([2](#ref2)). Cesarean delivery involves major abdominal surgery, and is associated with higher rates of surgical complications and maternal rehospitalization, as well as with complications requiring neonatal intensive care unit admission ([3\u20135](#ref3)). In addition to health and safety risks for mothers and newborns, hospital charges for a cesarean delivery are almost double those for a vaginal delivery, imposing significant costs ([6](#ref6)).\\n\\nThis report shows trends in cesarean delivery since 1991, focusing on the period from 1996 to 2007 when cesarean rates began to rise following a decline in the early 1990s. Data for 2007 are preliminary and 2006 data are presented when preliminary 2007 data are not available ([1](#ref1),[7](#ref7)).\\n\\n**Keywords:** *cesarean delivery, race and Hispanic origin, gestational age, state specific rates*\\n\\n### In 2007, the cesarean rate was the highest ever reported in the United States.\\n\\nThere were 1.4 million cesarean births in 2007, representing approximately one-third of all births in the United States.\\n\\nFollowing a decline in the early 1990s, the cesarean rate increased by 53% from 1996 to 2007, from 21% to an all-time high of 32% ([Figure 1](#fig1)).\\n\\nThe number of cesarean births increased by 71% from 1996 (797,119) to 2007 (1,367,049).\\n\\n[![Figure 1 is a bar graph showing rates of cesarean delivery for each year, 1991 to 2007.](/nchs/images/databriefs/1-50/db35_fig1.gif?_=78598)](/nchs/images/databriefs/1-50/db35_fig1.png)\\n\\n### Cesarean rates rose for women in all age groups in the last decade.\\n\\nCesarean rates rose for women in all age groups from 1996 to 2007 ([Figure 2](#fig2)). Rates for all age groups increased modestly from 1996 to 2000, then rose more than 33% from 2000 to 2007. Women under age 25 experienced the greatest increases in cesarean deliveries from 2000 to 2007 (57%).\\n\\nRates of cesarean delivery typically rise with increasing maternal age. As in 1996 and 2000, the rate for mothers aged 40\u201354 years in 2007 was more than twice the rate for mothers under age 20 (48% and 23%, respectively).\\n\\n[![Figure 2 is a bar graph showing rates of cesarean delivery by maternal age groups for 1996, 2000, and 2007.](/nchs/images/databriefs/1-50/db35_fig2.gif?_=78645)](/nchs/images/databriefs/1-50/db35_fig2.png)\\n\\n### Cesarean rates rose for women in all racial and ethnic groups from 1996 to 2007.\\n\\nAll racial and ethnic groups experienced large increases in cesarean rates from 1996 to 2007 ([Figure 3](#fig3)). The rate increased moderately for all groups from 1996 to 2000 (by about 12%), then accelerated with each group experiencing increases of around 40% from 2000 to 2007.\\n\\nIn 2007, cesarean delivery rates were slightly higher for non-Hispanic black women compared with non-Hispanic white women (34% and 32%, respectively). American Indian or Alaska Native women had the lowest cesarean delivery rate (28%).\\n\\n[![Figure 3 is a bar graph showing rates of cesarean delivery by maternal race and Hispanic origin groups for 1996, 2000, and 2007.](/nchs/images/databriefs/1-50/db35_fig3.gif?_=78607)](/nchs/images/databriefs/1-50/db35_fig3.png)\\n\\n### Cesarean rates increased for infants of all gestational ages in the last decade.\\n\\nCesarean rates increased for births at all gestational ages from 1996 to 2006 ([Figure 4](#fig4)). During the decade, the cesarean rate for early preterm infants (less than 34 completed weeks of gestation) increased by 36%. Rates for infants born late preterm (34 to 36 completed weeks of gestation) and term and over (37 or more completed weeks of gestation) rose by almost 50%.\\n\\nFrom 1996 to 2007, cesarean rates were higher for both early and late preterm infants than for term births.\\n\\n[![Figure 4 is a line graph showing rates of cesarean delivery by infant gestational age categories for each year 1996 to 2007.](/nchs/images/databriefs/1-50/db35_fig4.gif?_=78619)](/nchs/images/databriefs/1-50/db35_fig4.png)\\n\\n### Cesarean rates varied widely by state.\\n\\nRates varied considerably by state. In 2007, cesarean rates ranged from less than 25% in Alaska, Idaho, New Mexico, and Utah, to over 35% in Florida, Louisiana, Mississippi, New Jersey, and West Virginia.\\n\\nCesarean rates rose significantly in each state from 1996 to 2007 ([see Table](#table)). The magnitude of the increases varied. Six states (Colorado, Connecticut, Florida, Nevada, Rhode Island, and Washington) had increases of over 70%. In 34 states, cesarean delivery rates increased by 50% or more.\\n\\n##### Table. Cesarean delivery rates, by state: United States, 1996 and 2007 and percent change, 1996\u20132007\\n\\n|      | 1996 | 2007 | Percent change    1996-2007 |\\n| ---- | ---- | ---- | --------------------------- |\\n| 20.7 | 31.8 | 54   |                             |\\n| 23.3 | 33.8 | 45   |                             |\\n| 16.7 | 22.6 | 35   |                             |\\n| 16.1 | 26.2 | 63   |                             |\\n| 25.3 | 34.8 | 38   |                             |\\n| 20.6 | 32.1 | 56   |                             |\\n| 15.1 | 25.8 | 71   |                             |\\n| 19.8 | 34.6 | 75   |                             |\\n| 21.0 | 32.1 | 53   |                             |\\n| 21.3 | 32.6 | 53   |                             |\\n| 21.6 | 37.2 | 72   |                             |\\n| 20.9 | 32.0 | 53   |                             |\\n| 17.5 | 26.4 | 51   |                             |\\n| 16.0 | 24.0 | 50   |                             |\\n| 19.3 | 30.3 | 57   |                             |\\n| 20.3 | 29.4 | 45   |                             |\\n| 18.6 | 29.4 | 58   |                             |\\n| 19.2 | 29.8 | 55   |                             |\\n| 21.3 | 34.6 | 62   |                             |\\n| 26.4 | 35.9 | 36   |                             |\\n| 20.8 | 30.0 | 44   |                             |\\n| 21.6 | 33.1 | 53   |                             |\\n| 19.8 | 33.5 | 69   |                             |\\n| 20.2 | 30.4 | 50   |                             |\\n| 16.9 | 26.2 | 55   |                             |\\n| 26.6 | 36.2 | 36   |                             |\\n| 20.4 | 30.3 | 49   |                             |\\n| 19.1 | 29.4 | 54   |                             |\\n| 19.8 | 30.9 | 56   |                             |\\n| 19.3 | 33.1 | 72   |                             |\\n| 20.3 | 30.8 | 52   |                             |\\n| 24.0 | 38.3 | 60   |                             |\\n| 17.2 | 23.3 | 35   |                             |\\n| 22.9 | 33.7 | 47   |                             |\\n| 21.1 | 30.7 | 45   |                             |\\n| 18.9 | 28.4 | 50   |                             |\\n| 19.0 | 29.8 | 57   |                             |\\n| 22.5 | 33.6 | 49   |                             |\\n| 16.9 | 28.2 | 67   |                             |\\n| 19.4 | 30.1 | 55   |                             |\\n| 17.7 | 32.2 | 82   |                             |\\n| 22.6 | 33.4 | 48   |                             |\\n| 20.8 | 26.6 | 28   |                             |\\n| 21.7 | 33.3 | 53   |                             |\\n| 23.1 | 33.7 | 46   |                             |\\n| 15.9 | 22.2 | 40   |                             |\\n| 16.5 | 26.8 | 62   |                             |\\n| 21.1 | 33.5 | 59   |                             |\\n| 16.8 | 29.0 | 73   |                             |\\n| 22.8 | 35.2 | 54   |                             |\\n| 15.6 | 25.0 | 60   |                             |\\n| 18.3 | 26.9 | 47   |                             |\\n\\nNOTE: The cesarean rate is the percentage of all live births by cesarean delivery.\\n\\n### Summary\\n\\nIn 2007, approximately 1.4 million women had a cesarean birth, representing 32% of all births, the highest rate ever recorded in the United States and higher than rates in most other industrialized countries ([8](#ref8)).\\n\\nFrom 1996 to 2007, cesarean rates increased for all women, regardless of age, race and Hispanic origin, or state of residence. In 2006, cesarean delivery was the most frequently performed surgical procedure in U.S. hospitals ([9](#ref9)). Cesarean rates also increased for infants of all gestational ages and may be partly related to the increased rate of multiple births ([7](#ref7)), because infants in multiple births are much more likely than singletons to be cesarean births ([10](#ref10)). However, cesarean delivery rates for singletons increased substantially more than cesarean rates for infants in multiple deliveries (data not shown).\\n\\nIn addition to clinical reasons, nonmedical factors suggested for the widespread and continuing rise of the cesarean rate may include maternal demographic characteristics (e.g., older maternal age), physician practice patterns, maternal choice, more conservative practice guidelines, and legal pressures ([11\u201313](#ref11)).\\n\\n### Definitions\\n\\n**Cesarean delivery**: Extraction of the infant, placenta, and membranes through an incision in the maternal abdominal and uterine walls.\\n\\n**Cesarean rate**: Number of cesarean births per 100 live births.\\n\\n**Race and Hispanic origin:** These items are reported separately on birth certificates. Persons of Hispanic origin may be of any race. Persons of non-Hispanic ancestry are further classified by race because there are substantial differences in fertility and maternal characteristics between Hispanic and non-Hispanic persons. Persons of American Indian or Alaska Native and Asian or Pacific Islander ancestry are not classified separately by Hispanic origin because the majority of these persons are non-Hispanic. Multiple race data reported since 2003 were bridged to single-race categories for trend analysis ([7](#ref7)).\\n\\n**Preterm birth rate:** The number of births delivered at less than 37 completed weeks of gestation per 100 total births.\\n\\n**Early preterm birth rate**: The number of births delivered at less than 34 completed weeks of gestation per 100 total births.\\n\\n**Late preterm birth rate**: The number of births delivered at 34 to 36 completed weeks of gestation per 100 total births.\\n\\n**Rate of term and later births:** The number of births delivered at 37 completed weeks of gestation and over per 100 total births.\\n\\n### Data source and methods\\n\\nThis report contains data from the Natality Data File from the National Vital Statistics System (NVSS). The NVSS includes information for all live births reported in the United States. The Natality Data File is the primary data file for analyzing birth trends and patterns in the United States. Data may be accessed from NCHS at [Vital Statistics Online](/nchs/data_access/vitalstatsonline.htm) and VitalStats\\n\\nTerms such as \u201chigher than\u201d and \u201cless than\u201d indicate statistically significant differences.\\n\\nComputations exclude records with missing data.\\n\\n### About the authors\\n\\nFay Menacker and Brady E. Hamilton are with the Centers for Disease Control and Prevention\u2019s National Center for Health Statistics, Division of Vital Statistics, Reproductive Statistics Branch.\\n\\n### References\\n\\n1.   Hamilton BE, Martin JA, Ventura SJ. [Births: Preliminary data for 2007 \\\\[PDF \u2013 650 KB\\\\]](/nchs/data/nvsr/nvsr57/nvsr57_12.pdf). National vital statistics reports; vol 57 no 12. Hyattsville, MD. National Center for Health Statistics, Released March 18, 2009.\\n2.   U.S. Department of Health and Human Services. Cesarean childbirth. Report of a consensus development conference sponsored by the National Institute of Child Health and Human Development in conjunction with the National Center for Health Care Technology. September 22\u201324, 1980. NIH Publication No.82\u20132067. 1981.\\n3.   Yang Q, Wen SW, Oppenheimer L, et al. Association of caesarean delivery for first birth with placenta previa and placental abruption in second pregnancy. BJOG 114(5): 609\u201313. 2007.\\n4.   Kuklina EV, Meikle SF, Jamieson DJ, et al. Severe obstetric morbidity in the United States: 1998\u20132005. Obstet Gynecol. 113(2 Part 1):293\u20139. 2009.\\n5.   Liston FA, Allen VM, O\u2019Connel CM, Jangaard KA. Neonatal outcomes with cesarean delivery at term. Arch Dis Child Fetal Neonatal Ed. 93(3): F176\u201382. 2008.\\n6.   U.S. Agency for Healthcare Research and Quality. HCUPnet. Healthcare Cost and Utilization Project: Rockville, MD. AHRQ 2005 \\\\[DRGs 370\u20133\\\\].\\n7.   Martin JA, Hamilton BE, Sutton PD, Ventura SJ, et al. Births: Final data for 2006. National vital statistics reports; vol 57 no 7. Hyattsville, MD. National Center for Health Statistics. 2009.\\n8.   Organization for Economic Co-operation and Development. OECD health data 2009: statistics and indicators for 30 countries. Paris, France: Organization for Economic Cooperation and Development: 2009.\\n9.   Russo CA (Thompson Reuters), Wier L (Thompson Reuters), Steiner C. (AHRQ). Hospitalizations related to childbirth, 2006. HCUP, Statistical Brief #71. U.S. Agency for Healthcare Research and Quality, Rockville, MD. April 2009.\\n10.  CDC. QuickStats: Percentage of live births by cesarean delivery, by plurality\u2014United States, 1996, 2000, and 2006. MMWR 58(19):542. 2009.\\n11.  Williams HO. The ethical debate of maternal choice and autonomy in cesarean delivery. Clin Perinatol 35:455\u201362. 2008.\\n12.  Murthy K, Grobman WA, Lee TA, Hall J L. Association between rising professional liability insurance premiums and primary cesarean delivery rates. Obstet Gynecol 110(6):1264\u20139. 2007.\\n13.  Guise J-M, McDonagh M, Hashima J, et al. Vaginal births after cesarean (VBAC). Evidence report/technology assessment No. 71 (Prepared by the Oregon Health & Science university Evidence-based Practice Center under Contract No. 209\u2013977\u20130018). AHRQ Publication No. 03\u2013Eoi8,: Agency for Healthcare Research and Quality. Rockville, MD. March 2003.\\n\\n### Suggested citation\\n\\nMenacker F, Hamilton BE. Recent trends in cesarean delivery in the United States. NCHS data brief, no 35. Hyattsville, MD: National Center for Health Statistics. 2010.\\n\\n#### Copyright information\\n\\nAll material appearing in this report is in the public domain and may be reproduced or copied without permission; citation as to source, however, is appreciated.\\n\\n#### National Center for Health Statistics\\n\\nEdward J. Sondik, Ph.D., *Director*  \\n Jennifer H. Madans, Ph.D., *Associate Director for Science*\\n\\n##### Division of Vital Statistics\\n\\nCharles J. Rothwell, M.S., *Director*\\n\\nLast Reviewed: November 6, 2015\\n\\nSource: [CDC/National Center for Health Statistics](/nchs/) \\n\\nRelated Sites\\n\\n*   [Get E-mail Updates](/nchs/updates/)\\n*   [Data Visualization Gallery](/nchs/data-visualization/)\\n*   [FastStats](/nchs/fastats/default.htm)\\n*   [NHIS Early Release Program](/nchs/nhis/early-release/index.html)\\n*   [MMWR QuickStats](/nchs/pressroom/quickstats.htm)\",\"content_type\":\"markdown\",\"status_code\":200,\"bytes\":17233}}",
+    "result_truncated": false,
+    "result_chars": 17594,
+    "is_error": false
+  },
+  {
+    "seq": 33,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-3ca882f2-921a-48c8-b269-08c99046db7a-36",
+    "input": {
+      "query": "run_python_script forensic_metascience",
+      "limit": 2
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":2,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__run_python_script\\\",\\n          \\\"description\\\": \\\"Run a short Python script in a NETWORK-OFF sandbox and get its captured stdout/stderr back. This is your ONLY route to running code, and it exists for checks no registry tool covers: bespoke arithmetic over odd data presentations, unit conversions, reshaping a table before a real check. Every load-bearing number you report must come from the CAPTURED OUTPUT returned here or from a registry tool -- never from your own arithmetic. The script is persisted to analysis_code/ BEFORE it runs, and your finding cites that file as its reproduction. Rules: if a registry tool covers the check, you MUST use the tool instead (a code result can never establish `impossible` -- only a validated registry tool can); no network (it is disabled at the OS level, do not try); print() what you need, the result is the captured output. Parameters: code (the script), label (short slug for the filename), timeout_seconds (default 60, max 300)\\\",\\n          \\\"score\\\": 13.543379783630371,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"code\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"The Python script. stdout is your result -- print what you need. No network; filesystem read-only outside the scripts directory.\\\"\\n              },\\n              \\\"label\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Short slug naming what the script checks; becomes part of the persisted filename.\\\"\\n              },\\n              \\\"timeout_seconds\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        },\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__parse_cells_typed\\\",\\n          \\\"description\\\": \\\"Classify table cells BEFORE running any other check. The untyped parser read every 'X (Y)' cell as mean=X, sd=Y, so a clinical '142 (71.0)' -- a count and a PERCENTAGE -- was handed downstream as sd=71.0, manufacturing impossibilities out of an ordinary table. Returns a `kind` per cell (mean_sd | n_percent | median_iqr | median_range | estimate_ci | mean_se | numeric | count | ambiguous | non_numeric) plus a `coverage` figure -- the honest answer to how much of the table was actually understood. Cells returned as `ambiguous` carry candidate readings and MUST NOT be fed to any forensic tool: run nothing on a value whose meaning is unknown. Parameters: cells (list of {raw, row_label, col_label})\\\",\\n          \\\"score\\\": 2.2991018295288086,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"cells\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 17,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 3092,
+    "is_error": false
+  },
+  {
+    "seq": 34,
+    "tool": "mcp__forensic_metascience__run_python_script",
+    "tool_short": "run_python_script",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-1e71b95e-2ab1-4d54-b47d-8710ef333de7-38",
+    "input": {
+      "label": "binary_outcome_sds",
+      "code": "import math\n\ndef bernoulli(k, n):\n    p = k / n\n    sd = math.sqrt(p * (1 - p))\n    print(f\"k={k} n={n} p={p:.10f} sd={sd:.10f}\")\n    return p, sd\n\nprint(\"infection\")\nbernoulli(17, 198)\nbernoulli(3, 199)\nprint(\"composite\")\nbernoulli(33, 198)\nbernoulli(9, 199)\nprint(\"gapping\")\nbernoulli(10, 198)\nbernoulli(2, 199)\n"
+    },
+    "result": "{\n  \"success\": true,\n  \"returncode\": 0,\n  \"timed_out\": false,\n  \"timeout_seconds\": 60,\n  \"duration_s\": 0.024,\n  \"stdout\": \"infection\\nk=17 n=198 p=0.0858585859 sd=0.2801551161\\nk=3 n=199 p=0.0150753769 sd=0.1218528206\\ncomposite\\nk=33 n=198 p=0.1666666667 sd=0.3726779962\\nk=9 n=199 p=0.0452261307 sd=0.2077997299\\ngapping\\nk=10 n=198 p=0.0505050505 sd=0.2189846807\\nk=2 n=199 p=0.0100502513 sd=0.0997458957\\n\",\n  \"stderr\": \"\",\n  \"stdout_truncated\": false,\n  \"stderr_truncated\": false,\n  \"script_path\": \"analysis_code/001_binary_outcome_sds.py\",\n  \"label\": \"binary_outcome_sds\",\n  \"seq\": 1,\n  \"sandbox\": \"bwrap\",\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 697,
+    "is_error": false
+  },
+  {
+    "seq": 35,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-1e71b95e-2ab1-4d54-b47d-8710ef333de7-39",
+    "input": {
+      "count": 9,
+      "decimals": 1,
+      "n": 198,
+      "percentage": 4.5,
+      "source_locator": "Table 4, Wound seroma continuous",
+      "source_quote": "Woundseroma 9(4.5) 1(0.5) .011"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 9,\n  \"reported_percentage\": 4.5,\n  \"n\": 198,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Woundseroma 9(4.5) 1(0.5) .011\",\n  \"source_locator\": \"Table 4, Wound seroma continuous\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 4.545455,\n  \"rounding_interval\": [\n    4.45,\n    4.6\n  ],\n  \"implied_denominator\": 200.0,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"9/198 = 4.55%, which matches the printed 4.5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 940,
+    "is_error": false
+  },
+  {
+    "seq": 36,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-1e71b95e-2ab1-4d54-b47d-8710ef333de7-40",
+    "input": {
+      "count": 14,
+      "decimals": 1,
+      "n": 198,
+      "percentage": 7.1,
+      "source_locator": "Table 4, Wound erythema continuous",
+      "source_quote": "Wounderythema 14(7.1) 4(2) .015"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 14,\n  \"reported_percentage\": 7.1,\n  \"n\": 198,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Wounderythema 14(7.1) 4(2) .015\",\n  \"source_locator\": \"Table 4, Wound erythema continuous\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 7.070707,\n  \"rounding_interval\": [\n    7.05,\n    7.2\n  ],\n  \"implied_denominator\": 197.1831,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"14/198 = 7.07%, which matches the printed 7.1. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 948,
+    "is_error": false
+  },
+  {
+    "seq": 37,
+    "tool": "mcp__forensic_metascience__check_count_percent",
+    "tool_short": "check_count_percent",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-1e71b95e-2ab1-4d54-b47d-8710ef333de7-41",
+    "input": {
+      "count": 165,
+      "decimals": 1,
+      "n": 355,
+      "percentage": 46.5,
+      "source_locator": "Table 5, Continuous among No complications",
+      "source_quote": "Continuous 33(78.6) 165(46.5) <.001"
+    },
+    "result": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 165,\n  \"reported_percentage\": 46.5,\n  \"n\": 355,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Continuous 33(78.6) 165(46.5) <.001\",\n  \"source_locator\": \"Table 5, Continuous among No complications\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 46.478873,\n  \"rounding_interval\": [\n    46.45,\n    46.6\n  ],\n  \"implied_denominator\": 354.8387,\n  \"severity\": \"consistent\",\n  \"applicable\": true,\n  \"consistent\": true,\n  \"explanation\": \"165/355 = 46.48%, which matches the printed 46.5. The count and the percentage agree.\"\n}",
+    "result_truncated": false,
+    "result_chars": 968,
+    "is_error": false
+  },
+  {
+    "seq": 38,
+    "tool": "mcp__forensic_metascience__check_effect_plausibility",
+    "tool_short": "check_effect_plausibility",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-f728a5df-d538-4f85-ace9-e8f6e1605c96-42",
+    "input": {
+      "mean1": 0.0858585859,
+      "sd1": 0.2801551161,
+      "n1": 198,
+      "mean2": 0.0150753769,
+      "sd2": 0.1218528206,
+      "n2": 199,
+      "design": "between",
+      "field": "surgery",
+      "source_locator": "Table 4, Wound Infection row",
+      "source_quote": "WoundInfection 17(8.6) 3(1.5) .001 6.136 1.769\u201321.287"
+    },
+    "result": "{\n  \"d\": 0.3273197563893202,\n  \"abs_d\": 0.3273197563893202,\n  \"field\": \"surgery\",\n  \"design\": \"between\",\n  \"provenance\": \"printed_text\",\n  \"computed_from_group_stats\": {\n    \"d\": 0.32794282699158417,\n    \"abs_d\": 0.32794282699158417,\n    \"pooled_sd\": 0.21584008910741168,\n    \"df\": 395,\n    \"n_total\": 397,\n    \"severity\": \"consistent\",\n    \"methodology\": \"Cohen's d = (M1 - M2) / pooled SD, with pooled SD from the (n-1)-weighted variances.\",\n    \"hedges_g\": 0.3273197563893202,\n    \"hedges_correction_j\": 0.9981000633312223,\n    \"se_d\": 0.1010498870275821,\n    \"ci95_d\": [\n      0.12988504841752327,\n      0.5260006055656451\n    ],\n    \"ci95_method\": \"large-sample normal approximation (Hedges & Olkin); an estimate, not an exact interval\"\n  },\n  \"severity\": \"indeterminate\",\n  \"explanation\": \"Effect size d = 0.327, 95% CI [0.130, 0.526]. No benchmark exists for field 'surgery', so the comparison you asked for was not made. Available: cognitive_psychology, education, medicine_rct, psychotherapy, social_psychology. Omit `field` entirely to report the value without any comparison.\",\n  \"methodology\": \"Effect-size report: requested benchmark unavailable.\",\n  \"source_quote\": \"WoundInfection 17(8.6) 3(1.5) .001 6.136 1.769\\u201321.287\",\n  \"source_locator\": \"Table 4, Wound Infection row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1327,
+    "is_error": false
+  },
+  {
+    "seq": 39,
+    "tool": "mcp__forensic_metascience__check_effect_plausibility",
+    "tool_short": "check_effect_plausibility",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-f728a5df-d538-4f85-ace9-e8f6e1605c96-43",
+    "input": {
+      "mean1": 0.1666666667,
+      "sd1": 0.3726779962,
+      "n1": 198,
+      "mean2": 0.0452261307,
+      "sd2": 0.2077997299,
+      "n2": 199,
+      "design": "between",
+      "field": "surgery",
+      "source_locator": "Table 5, suture type among wound complications",
+      "source_quote": "Continuous 33(78.6) 165(46.5) <.001 Interrupted 9(21.4) 190(53.5)"
+    },
+    "result": "{\n  \"d\": 0.40199735039013984,\n  \"abs_d\": 0.40199735039013984,\n  \"field\": \"surgery\",\n  \"design\": \"between\",\n  \"provenance\": \"printed_text\",\n  \"computed_from_group_stats\": {\n    \"d\": 0.4027625737728622,\n    \"abs_d\": 0.4027625737728622,\n    \"pooled_sd\": 0.3015189193534311,\n    \"df\": 395,\n    \"n_total\": 397,\n    \"severity\": \"consistent\",\n    \"methodology\": \"Cohen's d = (M1 - M2) / pooled SD, with pooled SD from the (n-1)-weighted variances.\",\n    \"hedges_g\": 0.40199735039013984,\n    \"hedges_correction_j\": 0.9981000633312223,\n    \"se_d\": 0.10139001467185901,\n    \"ci95_d\": [\n      0.20403814501601852,\n      0.6014870025297059\n    ],\n    \"ci95_method\": \"large-sample normal approximation (Hedges & Olkin); an estimate, not an exact interval\"\n  },\n  \"severity\": \"indeterminate\",\n  \"explanation\": \"Effect size d = 0.402, 95% CI [0.204, 0.601]. No benchmark exists for field 'surgery', so the comparison you asked for was not made. Available: cognitive_psychology, education, medicine_rct, psychotherapy, social_psychology. Omit `field` entirely to report the value without any comparison.\",\n  \"methodology\": \"Effect-size report: requested benchmark unavailable.\",\n  \"source_quote\": \"Continuous 33(78.6) 165(46.5) <.001 Interrupted 9(21.4) 190(53.5)\",\n  \"source_locator\": \"Table 5, suture type among wound complications\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1353,
+    "is_error": false
+  }
+]

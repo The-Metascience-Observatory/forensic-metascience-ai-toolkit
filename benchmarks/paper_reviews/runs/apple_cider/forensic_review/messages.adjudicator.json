@@ -1,0 +1,2367 @@
+[
+  {
+    "type": "system",
+    "subtype": "init",
+    "cwd": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "tools": [
+      "Read",
+      "StructuredOutput",
+      "mcp__forensic_metascience__bayesian_table1_dispersion",
+      "mcp__forensic_metascience__check_count_percent",
+      "mcp__forensic_metascience__check_effect_plausibility",
+      "mcp__forensic_metascience__check_estimate_ci",
+      "mcp__forensic_metascience__check_flow_arithmetic",
+      "mcp__forensic_metascience__check_proportion_from_normal",
+      "mcp__forensic_metascience__check_ratio",
+      "mcp__forensic_metascience__check_statistic_bounds",
+      "mcp__forensic_metascience__check_variance_dispersion",
+      "mcp__forensic_metascience__csf_test",
+      "mcp__forensic_metascience__debit_check",
+      "mcp__forensic_metascience__detect_duplication",
+      "mcp__forensic_metascience__detect_raw_duplication",
+      "mcp__forensic_metascience__effect_size_from_f",
+      "mcp__forensic_metascience__extract_html",
+      "mcp__forensic_metascience__extract_pdf",
+      "mcp__forensic_metascience__extract_supplement",
+      "mcp__forensic_metascience__extract_xml",
+      "mcp__forensic_metascience__get_supplement_table",
+      "mcp__forensic_metascience__get_table",
+      "mcp__forensic_metascience__grim_check",
+      "mcp__forensic_metascience__grimmer_check",
+      "mcp__forensic_metascience__grimu_check",
+      "mcp__forensic_metascience__grimu_coexistence",
+      "mcp__forensic_metascience__multiplicity_report",
+      "mcp__forensic_metascience__parse_cells_as_declared",
+      "mcp__forensic_metascience__parse_cells_typed",
+      "mcp__forensic_metascience__parse_table",
+      "mcp__forensic_metascience__r_grim_ground_truth",
+      "mcp__forensic_metascience__r_sprite_ground_truth",
+      "mcp__forensic_metascience__recalc_anova",
+      "mcp__forensic_metascience__recalc_chi_squared",
+      "mcp__forensic_metascience__recalc_f_to_p",
+      "mcp__forensic_metascience__recalc_independent_t",
+      "mcp__forensic_metascience__recalc_stat_to_p",
+      "mcp__forensic_metascience__recalc_within_subjects_t",
+      "mcp__forensic_metascience__reconstruct_2x2",
+      "mcp__forensic_metascience__required_n",
+      "mcp__forensic_metascience__sprite_reconstruct",
+      "mcp__forensic_metascience__stalt_check",
+      "mcp__forensic_metascience__statcheck"
+    ],
+    "mcp_servers": [
+      {
+        "name": "forensic_metascience",
+        "status": "connected"
+      }
+    ],
+    "model": "claude-sonnet-5",
+    "permissionMode": "bypassPermissions",
+    "slash_commands": [
+      "agents-sdk",
+      "cloudflare",
+      "cloudflare-email-service",
+      "cloudflare-one",
+      "cloudflare-one-migrations",
+      "durable-objects",
+      "find-skills",
+      "general-video",
+      "hyperframes",
+      "hyperframes-animation",
+      "hyperframes-cli",
+      "hyperframes-media",
+      "motion-graphics",
+      "product-launch-video",
+      "sandbox-sdk",
+      "turnstile-spin",
+      "web-perf",
+      "workers-best-practices",
+      "wrangler",
+      "deep-research",
+      "design-sync",
+      "dataviz",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "run",
+      "run-skill-generator",
+      "agents",
+      "auto-mode-setup",
+      "autocompact",
+      "clear",
+      "color",
+      "compact",
+      "config",
+      "context",
+      "effort",
+      "fast",
+      "heapdump",
+      "init",
+      "mcp",
+      "import",
+      "model",
+      "__remote-workflow",
+      "workflow-launch-exec",
+      "reload-skills",
+      "rename",
+      "ultrareview",
+      "security-review",
+      "usage-credits",
+      "extra-usage",
+      "usage",
+      "insights",
+      "recap",
+      "goal",
+      "design",
+      "design-consent",
+      "design-revoke",
+      "list-agents",
+      "team-onboarding"
+    ],
+    "terminal_slash_commands": [
+      "doctor",
+      "color"
+    ],
+    "apiKeySource": "none",
+    "claude_code_version": "2.1.241",
+    "output_style": "default",
+    "agents": [
+      "claude",
+      "Explore",
+      "general-purpose",
+      "Plan",
+      "statusline-setup"
+    ],
+    "skills": [
+      "agents-sdk",
+      "cloudflare",
+      "cloudflare-email-service",
+      "cloudflare-one",
+      "cloudflare-one-migrations",
+      "durable-objects",
+      "find-skills",
+      "general-video",
+      "hyperframes",
+      "hyperframes-animation",
+      "hyperframes-cli",
+      "hyperframes-media",
+      "motion-graphics",
+      "product-launch-video",
+      "sandbox-sdk",
+      "turnstile-spin",
+      "web-perf",
+      "workers-best-practices",
+      "wrangler",
+      "deep-research",
+      "design-sync",
+      "dataviz",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "run",
+      "run-skill-generator"
+    ],
+    "plugins": [],
+    "capabilities": [
+      "interrupt_receipt_v1",
+      "interrupt_cancel_queued_v1",
+      "msg_lifecycle_v1"
+    ],
+    "analytics_disabled": false,
+    "product_feedback_disabled": false,
+    "uuid": "7c2f0f86-f758-493f-a991-71bf304ccf78",
+    "memory_paths": {
+      "auto": "/home/dan/.claude/projects/-home-dan-Dropbox-AAA-METASCIENCE-OBSERVATORY-agent-for-forensic-metascience/memory/"
+    },
+    "messaging_socket_path": "/run/user/1000/cc-socks/2962246.sock",
+    "fast_mode_state": "off",
+    "fast_mode_disabled_reason": "sdk_opt_in_required"
+  },
+  {
+    "type": "rate_limit_event",
+    "rate_limit_info": {
+      "status": "allowed_warning",
+      "resetsAt": 1787900400,
+      "rateLimitType": "seven_day",
+      "utilization": 0.57,
+      "isUsingOverage": false
+    },
+    "uuid": "20a81bf9-4eee-421c-80cc-7cdc2f3197e9",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 50,
+    "estimated_tokens_delta": 50,
+    "uuid": "5f16e0a0-4948-4ca0-adce-1b90b17121d2",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 150,
+    "estimated_tokens_delta": 100,
+    "uuid": "0c717772-9318-43ce-ac65-ac07d10e82ec",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 250,
+    "estimated_tokens_delta": 100,
+    "uuid": "da21a641-a8dd-4165-a6ea-fe5789643a02",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 400,
+    "estimated_tokens_delta": 150,
+    "uuid": "5101cdaa-11ce-41d5-bbb7-62077fbdff78",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 550,
+    "estimated_tokens_delta": 150,
+    "uuid": "e46bf49a-c49a-43c5-818f-e19eddd53dd7",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 650,
+    "estimated_tokens_delta": 100,
+    "uuid": "86603c88-b347-405b-bdd6-f86d7c84af53",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 750,
+    "estimated_tokens_delta": 100,
+    "uuid": "8cfe0cb6-cd49-4f3f-be3f-1635cb2b1cfb",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 900,
+    "estimated_tokens_delta": 150,
+    "uuid": "78058bae-9682-4ac7-978d-d63f27533b55",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 950,
+    "estimated_tokens_delta": 50,
+    "uuid": "1e4aa503-9009-41cf-b263-365d41cdeb8d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1050,
+    "estimated_tokens_delta": 100,
+    "uuid": "08dee861-354d-4eba-89d8-caebf4a91205",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1200,
+    "estimated_tokens_delta": 150,
+    "uuid": "3531bb1a-1c04-4005-864c-2b81ce863c88",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1350,
+    "estimated_tokens_delta": 150,
+    "uuid": "25849527-6242-42e2-bd24-659275bb0226",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1450,
+    "estimated_tokens_delta": 100,
+    "uuid": "74c95515-b92d-4c2a-bc5f-97dd7a63b195",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1650,
+    "estimated_tokens_delta": 200,
+    "uuid": "c7595b28-2794-4cde-bf49-f4e8f06d7270",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1800,
+    "estimated_tokens_delta": 150,
+    "uuid": "480bd4b1-4be7-4e01-9b88-81fca786528d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2000,
+    "estimated_tokens_delta": 200,
+    "uuid": "e65ecd2d-0285-47e5-925d-e1be2b688047",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2100,
+    "estimated_tokens_delta": 100,
+    "uuid": "2d8bceee-3c7b-444d-9916-a31c0b9ea962",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2250,
+    "estimated_tokens_delta": 150,
+    "uuid": "468431a1-8bce-4c1f-9167-5dc906c7f310",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2400,
+    "estimated_tokens_delta": 150,
+    "uuid": "7523c537-57dc-472a-a535-d6e42e9395c2",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2550,
+    "estimated_tokens_delta": 150,
+    "uuid": "9399e0b2-e073-4841-90f0-d8754f3def9a",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2650,
+    "estimated_tokens_delta": 100,
+    "uuid": "38ffd566-cc76-41ad-8d2e-bf4069de6a52",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2800,
+    "estimated_tokens_delta": 150,
+    "uuid": "058141c2-0eb5-43c7-a6db-f6ca141567d8",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2900,
+    "estimated_tokens_delta": 100,
+    "uuid": "52fb681b-f777-45fd-891e-97864421ea50",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3050,
+    "estimated_tokens_delta": 150,
+    "uuid": "f1c7a836-3dce-474c-ad65-42b9ba712f27",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3200,
+    "estimated_tokens_delta": 150,
+    "uuid": "b9f0afa0-a24c-4226-be10-1a2f7ee030ba",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3300,
+    "estimated_tokens_delta": 100,
+    "uuid": "24664543-d1c3-4bd6-bc4e-a01533662023",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3450,
+    "estimated_tokens_delta": 150,
+    "uuid": "6c436d9d-6f1c-4ad7-85a5-ae0fd32371c2",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3500,
+    "estimated_tokens_delta": 50,
+    "uuid": "825b44fe-c31b-40b7-848c-9ffa4fecea40",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3650,
+    "estimated_tokens_delta": 150,
+    "uuid": "c392d059-d475-4d74-8700-8b59acb0aa47",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3800,
+    "estimated_tokens_delta": 150,
+    "uuid": "467835b3-673b-4755-a83b-8e5aabe55750",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3900,
+    "estimated_tokens_delta": 100,
+    "uuid": "771bf3ec-98d5-4e7a-abc9-6726fe3fd889",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4100,
+    "estimated_tokens_delta": 200,
+    "uuid": "bf139c87-c904-453b-83d4-df2999ba02f9",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4250,
+    "estimated_tokens_delta": 150,
+    "uuid": "f31c957b-c0b1-4904-8cc6-bad10bb7ce80",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4350,
+    "estimated_tokens_delta": 100,
+    "uuid": "b9ac52c6-c284-46dd-aa22-bd40d364f1a8",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4550,
+    "estimated_tokens_delta": 200,
+    "uuid": "ceaf413e-a44d-4f99-b0b3-ab13572a4d8f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4600,
+    "estimated_tokens_delta": 50,
+    "uuid": "56460202-aabe-440b-b519-9a6742d9f598",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4750,
+    "estimated_tokens_delta": 150,
+    "uuid": "427a2589-f2ed-41fd-b7b0-8dd8aab2757f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4900,
+    "estimated_tokens_delta": 150,
+    "uuid": "14749dd7-64b1-4e34-ad24-49d4a1f49616",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5050,
+    "estimated_tokens_delta": 150,
+    "uuid": "9c3a732b-a073-441d-9f18-5b1f2ccc54cf",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5200,
+    "estimated_tokens_delta": 150,
+    "uuid": "066df22a-6ee5-4c78-8fcd-a26c94c34e07",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5300,
+    "estimated_tokens_delta": 100,
+    "uuid": "6a20ba19-4bc2-4a0b-b029-f21be78a7cba",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5450,
+    "estimated_tokens_delta": 150,
+    "uuid": "62aa2274-223e-4675-9cde-1c5a1b47512d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5600,
+    "estimated_tokens_delta": 150,
+    "uuid": "9f9a620e-456e-4b04-842b-ce427649bdc8",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5700,
+    "estimated_tokens_delta": 100,
+    "uuid": "bd34caff-0089-414e-ba95-7f21af9d6326",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5850,
+    "estimated_tokens_delta": 150,
+    "uuid": "75cb71be-6873-4e3e-bc39-a08806840801",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6000,
+    "estimated_tokens_delta": 150,
+    "uuid": "2c5ad29d-ef76-430f-b973-c9e8738a1eb4",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6100,
+    "estimated_tokens_delta": 100,
+    "uuid": "0f59f692-074d-4e8c-b16f-222dd486b6fb",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6150,
+    "estimated_tokens_delta": 50,
+    "uuid": "42a4dd50-27f4-4c9b-a3d5-7a6c84381932",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6350,
+    "estimated_tokens_delta": 200,
+    "uuid": "94fb7c8d-ccb8-41a4-a880-522e2a0c4e49",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6500,
+    "estimated_tokens_delta": 150,
+    "uuid": "a3b12c1c-756e-4e6b-ad3e-4ddd8242841b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6650,
+    "estimated_tokens_delta": 150,
+    "uuid": "6a9edbae-8244-4eca-a77e-5cb817336a04",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6700,
+    "estimated_tokens_delta": 50,
+    "uuid": "561416c6-92d5-46f1-8282-2698df3d1776",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6800,
+    "estimated_tokens_delta": 100,
+    "uuid": "b89c0313-b323-4d8f-9bd2-29f044879d04",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 6950,
+    "estimated_tokens_delta": 150,
+    "uuid": "339584e9-1630-42aa-b50c-898f19698022",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7150,
+    "estimated_tokens_delta": 200,
+    "uuid": "39853e02-a76e-4469-8835-82783c3c3757",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7300,
+    "estimated_tokens_delta": 150,
+    "uuid": "32f2806f-64f4-4ac2-adec-2ef513afc5f0",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7500,
+    "estimated_tokens_delta": 200,
+    "uuid": "75c1976a-3d1a-4f22-8327-ac1e71d822aa",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7600,
+    "estimated_tokens_delta": 100,
+    "uuid": "fa9e8548-f081-4131-9968-df37415a7cdd",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7700,
+    "estimated_tokens_delta": 100,
+    "uuid": "686833c3-49cf-4ec8-b61e-45d703b2d23a",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7850,
+    "estimated_tokens_delta": 150,
+    "uuid": "30f1edda-d63f-4830-81c4-f1a9f701f816",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 7950,
+    "estimated_tokens_delta": 100,
+    "uuid": "ac13456e-e85b-488d-aeef-ff4e833a0bfc",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8050,
+    "estimated_tokens_delta": 100,
+    "uuid": "edc3cff5-5464-4c33-9884-f245d4bff836",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8150,
+    "estimated_tokens_delta": 100,
+    "uuid": "079973a9-7023-46f4-ae08-de9685fe1940",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8300,
+    "estimated_tokens_delta": 150,
+    "uuid": "15564906-e23e-4619-8ae2-4f41e9987fd4",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8450,
+    "estimated_tokens_delta": 150,
+    "uuid": "b349894f-dee4-4db0-bf6f-865945a2cbaf",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8550,
+    "estimated_tokens_delta": 100,
+    "uuid": "2b1bd7cc-d529-4092-a5ff-4ccadd5a1b98",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8650,
+    "estimated_tokens_delta": 100,
+    "uuid": "78b8725e-8a90-4e30-b875-d1d6518a7105",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8850,
+    "estimated_tokens_delta": 200,
+    "uuid": "4d9346b4-345b-40c8-898e-2d494fa48929",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 8950,
+    "estimated_tokens_delta": 100,
+    "uuid": "467eb247-8738-4628-8bdf-5de3e5a34568",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 9100,
+    "estimated_tokens_delta": 150,
+    "uuid": "9c1da4fb-8f81-469e-a9b5-fc5be834285d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 9250,
+    "estimated_tokens_delta": 150,
+    "uuid": "9f5827ca-3fbb-4d6e-8b74-83bfcc44103b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJuxuzTAzVXmjWGpUgBX",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "thinking",
+          "thinking": "",
+          "signature": "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"
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 108829,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108829
+        },
+        "output_tokens": 5,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "83d048f9-fb02-4e66-aa0e-0b1993d5149c",
+    "timestamp": "2026-08-23T02:47:21.330Z",
+    "request_id": "req_011CeJuxuF4X12XjQJ8f5xqi"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJuxuzTAzVXmjWGpUgBX",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll do a few targeted spot-checks before ruling \u2014 the CSF baseline-similarity finding, the weight variance-dispersion finding, and the gender percentage mismatch, since these anchor the paper-level severity."
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 108829,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108829
+        },
+        "output_tokens": 5,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "538571bc-fbae-47f1-935e-10d042fef463",
+    "timestamp": "2026-08-23T02:47:21.864Z",
+    "request_id": "req_011CeJuxuF4X12XjQJ8f5xqi"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJuxuzTAzVXmjWGpUgBX",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_01GK54ojBJTfdaYn7BBJmzN1",
+          "name": "mcp__forensic_metascience__csf_test",
+          "input": {
+            "p_values": [
+              0.931,
+              0.9905,
+              0.9897
+            ],
+            "method": "stouffer",
+            "design": "parallel_rct",
+            "correlation": 0.5,
+            "source_locator": "Table 1, Age/Weight/Height rows",
+            "source_quote": "Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7"
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 108829,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108829
+        },
+        "output_tokens": 5,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "6233f12e-d6d3-4ae9-b29e-8db1964e08ec",
+    "timestamp": "2026-08-23T02:47:23.503Z",
+    "request_id": "req_011CeJuxuF4X12XjQJ8f5xqi",
+    "tool_use_meta": [
+      {
+        "id": "toolu_01GK54ojBJTfdaYn7BBJmzN1",
+        "display_name": "Csf Test",
+        "server_display_name": "forensic_metascience"
+      }
+    ]
+  },
+  {
+    "type": "user",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "tool_use_id": "toolu_01GK54ojBJTfdaYn7BBJmzN1",
+          "type": "tool_result",
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"individual_p_values\": [\n    0.931,\n    0.9905,\n    0.9897\n  ],\n  \"dropped_p_values\": [],\n  \"similarity_p\": 0.006065734756248253,\n  \"combined_p\": 0.006065734756248253,\n  \"similarity_p_under_independence\": 0.00019462460544646075,\n  \"sensitivity_profile\": {\n    \"0.5\": 0.006065734756248253\n  },\n  \"correlation_used\": 0.5,\n  \"correlation_assumed\": true,\n  \"direction\": \"too_similar\",\n  \"method\": \"stouffer\",\n  \"design\": \"parallel_rct\",\n  \"design_resolved\": \"parallel_rct\",\n  \"design_recognized\": true,\n  \"num_tests\": 3,\n  \"mean_p\": 0.9704,\n  \"severity\": \"suspicious\",\n  \"explanation\": \"Baseline p-values are more similar than expected under randomisation, and the result survives a correlation of rho = 0.5 (similarity p = 0.0061).\",\n  \"caveat\": \"Baseline p-values within one table are usually correlated. Evaluated at rho = 0.5. Assuming independence inflates the false-positive rate to roughly 33% at rho = 0.6 and ~50% at rho = 0.75 with 25 rows, so a verdict that does not survive plausible correlation is reported as indeterminate rather than as a finding.\",\n  \"methodology\": \"Carlisle-Stouffer-Fisher (stouffer) with a correlation-aware null: Stouffer divided by sqrt(k + k(k-1)rho) (Strube 1985) over 3 baseline p-values. One-sided for EXCESS similarity: a small similarity_p means the groups are more alike than randomisation predicts, which is the signal of interest -- uniformly high baseline p-values are never reassurance.\",\n  \"source_quote\": \"Age (years) 17.2\\u00b15.2 18.1\\u00b15.5 17.6\\u00b15.1 17.8\\u00b15.7\",\n  \"source_locator\": \"Table 1, Age/Weight/Height rows\",\n  \"source_quote_supplied\": true\n}"
+            }
+          ]
+        }
+      ]
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "472222ca-acc7-492c-9973-9acfea90a645",
+    "timestamp": "2026-08-23T02:47:23.514Z",
+    "tool_use_result": [
+      {
+        "type": "text",
+        "text": "{\n  \"individual_p_values\": [\n    0.931,\n    0.9905,\n    0.9897\n  ],\n  \"dropped_p_values\": [],\n  \"similarity_p\": 0.006065734756248253,\n  \"combined_p\": 0.006065734756248253,\n  \"similarity_p_under_independence\": 0.00019462460544646075,\n  \"sensitivity_profile\": {\n    \"0.5\": 0.006065734756248253\n  },\n  \"correlation_used\": 0.5,\n  \"correlation_assumed\": true,\n  \"direction\": \"too_similar\",\n  \"method\": \"stouffer\",\n  \"design\": \"parallel_rct\",\n  \"design_resolved\": \"parallel_rct\",\n  \"design_recognized\": true,\n  \"num_tests\": 3,\n  \"mean_p\": 0.9704,\n  \"severity\": \"suspicious\",\n  \"explanation\": \"Baseline p-values are more similar than expected under randomisation, and the result survives a correlation of rho = 0.5 (similarity p = 0.0061).\",\n  \"caveat\": \"Baseline p-values within one table are usually correlated. Evaluated at rho = 0.5. Assuming independence inflates the false-positive rate to roughly 33% at rho = 0.6 and ~50% at rho = 0.75 with 25 rows, so a verdict that does not survive plausible correlation is reported as indeterminate rather than as a finding.\",\n  \"methodology\": \"Carlisle-Stouffer-Fisher (stouffer) with a correlation-aware null: Stouffer divided by sqrt(k + k(k-1)rho) (Strube 1985) over 3 baseline p-values. One-sided for EXCESS similarity: a small similarity_p means the groups are more alike than randomisation predicts, which is the signal of interest -- uniformly high baseline p-values are never reassurance.\",\n  \"source_quote\": \"Age (years) 17.2\\u00b15.2 18.1\\u00b15.5 17.6\\u00b15.1 17.8\\u00b15.7\",\n  \"source_locator\": \"Table 1, Age/Weight/Height rows\",\n  \"source_quote_supplied\": true\n}"
+      }
+    ]
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJuxuzTAzVXmjWGpUgBX",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_01J9VzvDf7UDXTcKsQiyf1sy",
+          "name": "mcp__forensic_metascience__check_variance_dispersion",
+          "input": {
+            "sds": [
+              27.1,
+              28.5,
+              27.2,
+              28.6
+            ],
+            "ns": [
+              30,
+              30,
+              30,
+              30
+            ],
+            "sd_texts": [
+              "27.1",
+              "28.5",
+              "27.2",
+              "28.6"
+            ],
+            "homogeneous_variances": true,
+            "design": "parallel_rct",
+            "source_locator": "Table 1, Weight row",
+            "source_quote": "Weight (kg) 79.0\u00b127.1 79.3\u00b128.5 77.2\u00b127.2 79.1\u00b128.6"
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 108829,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108829
+        },
+        "output_tokens": 5,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "3c10aa67-96d8-4766-a9dc-5d6ef95c3572",
+    "timestamp": "2026-08-23T02:47:25.685Z",
+    "request_id": "req_011CeJuxuF4X12XjQJ8f5xqi",
+    "tool_use_meta": [
+      {
+        "id": "toolu_01J9VzvDf7UDXTcKsQiyf1sy",
+        "display_name": "Check Variance Dispersion",
+        "server_display_name": "forensic_metascience"
+      }
+    ]
+  },
+  {
+    "type": "user",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "tool_use_id": "toolu_01J9VzvDf7UDXTcKsQiyf1sy",
+          "type": "tool_result",
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"dispersion_p\": 0.00777,\n  \"dispersion_statistic\": 0.1076515722541117,\n  \"dispersion_measure\": \"max_z - min_z\",\n  \"sd_z_secondary\": 0.05815704078263474,\n  \"z_squared\": [\n    0.9462644066923073,\n    1.0465588218240853,\n    0.9532607925371883,\n    1.053915978946419\n  ],\n  \"ms_within\": 776.115,\n  \"n_groups\": 4,\n  \"sample_sizes\": [\n    30,\n    30,\n    30,\n    30\n  ],\n  \"granularity_ratios\": [\n    0.0036900369003690036,\n    0.0035087719298245615,\n    0.0036764705882352945,\n    0.0034965034965034965\n  ],\n  \"printed_decimals\": [\n    1,\n    1,\n    1,\n    1\n  ],\n  \"homogeneous_variances\": true,\n  \"design\": \"parallel_rct\",\n  \"iterations\": 100000,\n  \"reference_required\": true,\n  \"explanation\": \"The 4 reported SDs are more similar to one another than sampling error comfortably allows: only 0.78% of honest draws under the equal-variance null are this tightly clustered or tighter (max_z - min_z = 0.1077). Under-dispersed SDs are the signature Hartgerink et al. (2019) found most diagnostic of fabricated data (AUROC 1.00 on raw data). This is a RELATIVE screening signal, not proof: the same analysis flagged genuine datasets in absolute terms, and it warrants comparison against a reference distribution of known-genuine data before any conclusion.\",\n  \"caveat\": \"Severity is capped at `suspicious`: over-similar SDs are improbable, never impossible. The source study's AUROC of 1.00 was a RELATIVE result -- every dataset it examined, genuine and fabricated alike, looked significant against the theoretical null, and only comparison between groups separated them. At a 2% base rate, perfect sensitivity with 5% false positives still yields a positive predictive value of 29%, i.e. roughly one in three accusations wrong. Confirm the dispersion values are SDs and not SEs (`check_sd_or_se`) before reading anything into this.\",\n  \"methodology\": \"Standardised variances z^2 = s^2 / MS_w with MS_w = sum (n_j-1) s_j^2 / sum (n_j-1); dispersion me \u2026[log truncated, 2418 chars]"
+            }
+          ]
+        }
+      ]
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "1c5b1cd8-4e8e-4c02-8735-5c6f4b8bf014",
+    "timestamp": "2026-08-23T02:47:25.713Z",
+    "tool_use_result": [
+      {
+        "type": "text",
+        "text": "{\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"dispersion_p\": 0.00777,\n  \"dispersion_statistic\": 0.1076515722541117,\n  \"dispersion_measure\": \"max_z - min_z\",\n  \"sd_z_secondary\": 0.05815704078263474,\n  \"z_squared\": [\n    0.9462644066923073,\n    1.0465588218240853,\n    0.9532607925371883,\n    1.053915978946419\n  ],\n  \"ms_within\": 776.115,\n  \"n_groups\": 4,\n  \"sample_sizes\": [\n    30,\n    30,\n    30,\n    30\n  ],\n  \"granularity_ratios\": [\n    0.0036900369003690036,\n    0.0035087719298245615,\n    0.0036764705882352945,\n    0.0034965034965034965\n  ],\n  \"printed_decimals\": [\n    1,\n    1,\n    1,\n    1\n  ],\n  \"homogeneous_variances\": true,\n  \"design\": \"parallel_rct\",\n  \"iterations\": 100000,\n  \"reference_required\": true,\n  \"explanation\": \"The 4 reported SDs are more similar to one another than sampling error comfortably allows: only 0.78% of honest draws under the equal-variance null are this tightly clustered or tighter (max_z - min_z = 0.1077). Under-dispersed SDs are the signature Hartgerink et al. (2019) found most diagnostic of fabricated data (AUROC 1.00 on raw data). This is a RELATIVE screening signal, not proof: the same analysis flagged genuine datasets in absolute terms, and it warrants comparison against a reference distribution of known-genuine data before any conclusion.\",\n  \"caveat\": \"Severity is capped at `suspicious`: over-similar SDs are improbable, never impossible. The source study's AUROC of 1.00 was a RELATIVE result -- every dataset it examined, genuine and fabricated alike, looked significant against the theoretical null, and only comparison between groups separated them. At a 2% base rate, perfect sensitivity with 5% false positives still yields a positive predictive value of 29%, i.e. roughly one in three accusations wrong. Confirm the dispersion values are SDs and not SEs (`check_sd_or_se`) before reading anything into this.\",\n  \"methodology\": \"Standardised variances z^2 = s^2 / MS_w with MS_w = sum (n_j-1) s_j^2 / sum (n_j-1); dispersion measured as max_z - min_z; null obtained by parametric bootstrap of s^2 ~ chi2_{n-1}/(n-1) over 100,000 draws; one-sided p for excessive consistency. Hartgerink, Voelkel, Wicherts & van Assen (2019), Eqs. 3-5; statistic as used by Simonsohn (2013).\",\n  \"source_quote\": \"Weight (kg) 79.0\\u00b127.1 79.3\\u00b128.5 77.2\\u00b127.2 79.1\\u00b128.6\",\n  \"source_locator\": \"Table 1, Weight row\",\n  \"source_quote_supplied\": true\n}"
+      }
+    ]
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJuxuzTAzVXmjWGpUgBX",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_0141Lfe1bGVM2ZMaaZTa42f6",
+          "name": "mcp__forensic_metascience__check_count_percent",
+          "input": {
+            "count": 19,
+            "percentage": 63.4,
+            "n": 30,
+            "decimals": 1,
+            "source_locator": "Table 1, Female row, Group 3",
+            "source_quote": "Female 60.0 (n=18) 66.7 (n=20) 63.4 (n=19) 56.7 (n=17)"
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 108829,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 108829
+        },
+        "output_tokens": 5,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "7abd50b7-778f-41ae-a39c-32337ce9a252",
+    "timestamp": "2026-08-23T02:47:26.495Z",
+    "request_id": "req_011CeJuxuF4X12XjQJ8f5xqi",
+    "tool_use_meta": [
+      {
+        "id": "toolu_0141Lfe1bGVM2ZMaaZTa42f6",
+        "display_name": "Check Count Percent",
+        "server_display_name": "forensic_metascience"
+      }
+    ]
+  },
+  {
+    "type": "user",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "tool_use_id": "toolu_0141Lfe1bGVM2ZMaaZTa42f6",
+          "type": "tool_result",
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 19,\n  \"reported_percentage\": 63.4,\n  \"n\": 30,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Female 60.0 (n=18) 66.7 (n=20) 63.4 (n=19) 56.7 (n=17)\",\n  \"source_locator\": \"Table 1, Female row, Group 3\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 63.333333,\n  \"rounding_interval\": [\n    63.35,\n    63.5\n  ],\n  \"implied_denominator\": 29.9685,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -0.066667,\n  \"explanation\": \"19/30 = 63.33%, but the paper prints 63.4, outside the rounding interval [63.35, 63.50]. The printed percentage implies a denominator of about 30.0 rather than 30.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "6e759935-1cdc-49dd-a811-6b3092d98120",
+    "timestamp": "2026-08-23T02:47:26.515Z",
+    "tool_use_result": [
+      {
+        "type": "text",
+        "text": "{\n  \"check\": \"count_vs_percent\",\n  \"reported_count\": 19,\n  \"reported_percentage\": 63.4,\n  \"n\": 30,\n  \"decimals\": 1,\n  \"methodology\": \"Exact arithmetic on the paper's own printed count and denominator, compared against its own printed percentage within that percentage's rounding interval. Strictly stronger than GRIM where the count is printed: GRIM asks whether the percentage is attainable for SOME integer numerator, this asks whether it matches THE numerator the paper printed.\",\n  \"ceiling\": \"suspicious\",\n  \"source_quote\": \"Female 60.0 (n=18) 66.7 (n=20) 63.4 (n=19) 56.7 (n=17)\",\n  \"source_locator\": \"Table 1, Female row, Group 3\",\n  \"source_quote_supplied\": true,\n  \"computed_percentage\": 63.333333,\n  \"rounding_interval\": [\n    63.35,\n    63.5\n  ],\n  \"implied_denominator\": 29.9685,\n  \"severity\": \"suspicious\",\n  \"applicable\": true,\n  \"consistent\": false,\n  \"difference\": -0.066667,\n  \"explanation\": \"19/30 = 63.33%, but the paper prints 63.4, outside the rounding interval [63.35, 63.50]. The printed percentage implies a denominator of about 30.0 rather than 30.\",\n  \"alternative_reading\": \"A percentage taken over a DIFFERENT base is the commonest reason for this and is not an error: row versus column percentages sit in the same table, and subgroup percentages are taken over the subgroup. Check the implied denominator against the other denominators in the table before treating this as a defect.\"\n}"
+      }
+    ]
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 50,
+    "estimated_tokens_delta": 50,
+    "uuid": "eb6a697d-4885-4e43-aae9-3ded2601890c",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 150,
+    "estimated_tokens_delta": 100,
+    "uuid": "7d168533-19ca-404d-8457-6061d753ea1b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 250,
+    "estimated_tokens_delta": 100,
+    "uuid": "f7f297b6-5dff-41b6-95bc-2f1284dfe934",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 350,
+    "estimated_tokens_delta": 100,
+    "uuid": "a69556ab-c09d-45c2-9d25-aa2e1d6d5ea1",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 500,
+    "estimated_tokens_delta": 150,
+    "uuid": "69f7cb98-147f-4f2d-8d74-2d43a6a977b0",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 600,
+    "estimated_tokens_delta": 100,
+    "uuid": "18555866-1f20-43bd-955f-9eff2abb416d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 650,
+    "estimated_tokens_delta": 50,
+    "uuid": "d615b191-f496-4a8f-b03a-b82ae6916974",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 750,
+    "estimated_tokens_delta": 100,
+    "uuid": "9f89414b-1444-4693-bcec-a791b27878b6",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 850,
+    "estimated_tokens_delta": 100,
+    "uuid": "9923d419-c958-427c-b34f-964144a6b11d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 950,
+    "estimated_tokens_delta": 100,
+    "uuid": "0716dfc9-4903-4ae9-a6cf-470b15d15acc",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1050,
+    "estimated_tokens_delta": 100,
+    "uuid": "ef03ec69-d2e6-4cbe-b4bf-7cc13bd813ab",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1200,
+    "estimated_tokens_delta": 150,
+    "uuid": "6c0d0302-97b2-43dd-b75e-0ad55c6b83bc",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1350,
+    "estimated_tokens_delta": 150,
+    "uuid": "fe8bcca7-07a9-4336-89dd-026e284ca7dc",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1500,
+    "estimated_tokens_delta": 150,
+    "uuid": "917dcece-eeae-4f05-aebf-94f44cbf6708",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1600,
+    "estimated_tokens_delta": 100,
+    "uuid": "4606456e-0b49-42ed-9904-a29af578f75b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1700,
+    "estimated_tokens_delta": 100,
+    "uuid": "6dda4317-065c-47e9-9822-548cb7d0517f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1800,
+    "estimated_tokens_delta": 100,
+    "uuid": "72299e4c-af33-4df3-98b4-423b1bbe8075",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 1900,
+    "estimated_tokens_delta": 100,
+    "uuid": "312fbfe5-dffa-4a95-b0ad-8ddb1887b3be",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2000,
+    "estimated_tokens_delta": 100,
+    "uuid": "3603d045-28cd-4f0a-b00f-3ccb6f708e7a",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2150,
+    "estimated_tokens_delta": 150,
+    "uuid": "d7a0100a-3bae-4803-ba64-f5fa1fd64ec2",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2300,
+    "estimated_tokens_delta": 150,
+    "uuid": "c0108d2e-40cc-46dd-8d03-3a0a9a3b0bd0",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2400,
+    "estimated_tokens_delta": 100,
+    "uuid": "2efcc4cd-124f-45fb-b121-e88cb22af39a",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2550,
+    "estimated_tokens_delta": 150,
+    "uuid": "e7297ae9-1547-452f-96a9-4ff580cb7ed7",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2650,
+    "estimated_tokens_delta": 100,
+    "uuid": "5fc4d6c1-477a-4ff8-b639-4a5efd5ba61f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2700,
+    "estimated_tokens_delta": 50,
+    "uuid": "8ce99300-8213-4008-b626-326376657cf1",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 2850,
+    "estimated_tokens_delta": 150,
+    "uuid": "0b92d037-16e1-4b0b-bdf1-8921a7c7bbab",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3000,
+    "estimated_tokens_delta": 150,
+    "uuid": "3494fbf2-a398-4658-b4d5-87af53c5f975",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3050,
+    "estimated_tokens_delta": 50,
+    "uuid": "8ea14dfa-472a-41ff-95ea-dbc25b47b423",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3150,
+    "estimated_tokens_delta": 100,
+    "uuid": "efe791e0-6af9-45dc-8125-b5acf8ea0e23",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3200,
+    "estimated_tokens_delta": 50,
+    "uuid": "e3befe1d-45f9-4748-88fe-ce27e521541f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3250,
+    "estimated_tokens_delta": 50,
+    "uuid": "76d916d0-bd1b-4fc8-9b5b-0f2eb84bf0ae",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3350,
+    "estimated_tokens_delta": 100,
+    "uuid": "b95dc357-1339-435b-9752-f21dcb955619",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3550,
+    "estimated_tokens_delta": 200,
+    "uuid": "f1a7e61c-77f6-4ca1-94a5-79d1dabcb5c4",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3650,
+    "estimated_tokens_delta": 100,
+    "uuid": "d44559e1-5702-46da-9d86-a57e6926cafd",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3700,
+    "estimated_tokens_delta": 50,
+    "uuid": "2e8d962e-f5e8-4198-b8ea-f4281cdfed1b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 3900,
+    "estimated_tokens_delta": 200,
+    "uuid": "9f05ac50-91fd-486f-8908-2b2bf708a66b",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4000,
+    "estimated_tokens_delta": 100,
+    "uuid": "54d76a2f-92d5-43c5-aabd-309ca0a7f9fd",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4200,
+    "estimated_tokens_delta": 200,
+    "uuid": "c63353f6-f4a6-4b15-9922-c7adbf0fbe79",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4300,
+    "estimated_tokens_delta": 100,
+    "uuid": "50b98186-3ffe-4e10-98b2-d422550bd3fc",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4450,
+    "estimated_tokens_delta": 150,
+    "uuid": "34ded98c-39c7-4628-bb27-bdeb3a3d6a0c",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4650,
+    "estimated_tokens_delta": 200,
+    "uuid": "b2ee9aff-18b8-483c-8fb5-0df65dfaa93d",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4850,
+    "estimated_tokens_delta": 200,
+    "uuid": "9b905255-7608-41e6-a2fd-92525de2de60",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 4950,
+    "estimated_tokens_delta": 100,
+    "uuid": "6f3eb0ab-319b-4ec1-8dde-6da11c131676",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5100,
+    "estimated_tokens_delta": 150,
+    "uuid": "f6054acf-aee6-4ddd-b2a5-f2bc6f2c860a",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5250,
+    "estimated_tokens_delta": 150,
+    "uuid": "bb95a6ba-2937-4ac9-9a3b-a04586b1cd37",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5350,
+    "estimated_tokens_delta": 100,
+    "uuid": "2332852f-35a9-4f02-8f37-d463a0888c99",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5500,
+    "estimated_tokens_delta": 150,
+    "uuid": "13a92fb4-a298-4ecd-81a7-df480fa98e7c",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5700,
+    "estimated_tokens_delta": 200,
+    "uuid": "5854b410-69b4-4e5b-a087-7aa74572ff75",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 5800,
+    "estimated_tokens_delta": 100,
+    "uuid": "9ff55115-aae9-4d6b-a8ab-b0f5aabe4b24",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJv71s9PRPe6uvuWudBN",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "thinking",
+          "thinking": "",
+          "signature": "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"
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 12670,
+        "cache_read_input_tokens": 108829,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 12670
+        },
+        "output_tokens": 2,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "3893304f-1b7f-424a-8372-b9515bb526b8",
+    "timestamp": "2026-08-23T02:48:37.188Z",
+    "request_id": "req_011CeJv6zhT2rFnV5eZhMFTd"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJv71s9PRPe6uvuWudBN",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_01S7FctH5cb6ktHPfM8Gs8Xg",
+          "name": "StructuredOutput",
+          "input": {
+            "verdicts": [
+              {
+                "finding_id": "f_3b213d597e3b6533",
+                "action": "kept",
+                "severity": 4,
+                "category": "merged_pattern",
+                "title": "Baseline biochemical values disagree between Table 1 and Table 3 across four cells",
+                "description": "Table 1's baseline (week 0) values for FBS (Groups 3 and 4), TC (Group 2) and TG (Group 4) do not match the identical measurement printed as the Week 0 column of Table 3 -- means and/or SDs differ in every case (e.g. FBS Group 3: 119.9\u00b17.2 vs 119.9\u00b112.2; FBS Group 4: 113.6\u00b112.5 vs 118.6\u00b112.5; TC Group 2: 173.6\u00b116.3 vs 175.6\u00b112.9; TG Group 4: 168.1\u00b118.2 vs 166.1\u00b118.2). This is a plain, verified internal contradiction spanning three variables and three groups, not a single arithmetic slip.",
+                "rationale": "Four separate model-read cell comparisons (tool expert and science analyst, independently) describe the same underlying defect: the paper's own baseline table and its own Week-0 outcome column disagree on values that should be identical. Merging them into one pattern finding and keeping severity at 4 reflects the pervasiveness across variables/groups without treating each cell as its own finding; the outcome trends within each table remain internally self-consistent, so this is a data-provenance/reporting problem rather than one that overturns a specific reported claim."
+              },
+              {
+                "finding_id": "f_332408d83d42a15d",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 TC/Group 2 discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_f8da056b67e0b51e",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "The Methods name only an independent t-test, but the '*' baseline-vs-follow-up markers in Tables 2 and 3 are necessarily within-subject repeated measures on the same 30 people. This is a genuine design/reporting mismatch, but as the finding itself notes an independent test on paired data is typically conservative (inflates SE), so it is unlikely to have inflated the reported significant effects -- a localized methods-reporting correction rather than a result-altering flaw."
+              },
+              {
+                "finding_id": "f_560ba7b66e510a7c",
+                "action": "kept",
+                "severity": 4,
+                "category": "none",
+                "rationale": "Cross-checked with csf_test (rho=0.5, similarity_p=0.0061) and check_variance_dispersion (Weight SDs, p=0.0078); both confirmed as printed. Baseline Age/Weight/Height are far more similar across the four arms than randomisation predicts, even after a conservative correlation adjustment for these mutually-related anthropometric measures. Per rulebook rule 1, uniformly high baseline p-values are the red flag, not reassurance -- this is consistent with a randomisation or data-integrity problem, though it remains a statistical improbability (capped at 'suspicious' by the tools) rather than positive proof of manipulation."
+              },
+              {
+                "finding_id": "f_d6633f134967cd3c",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "The Discussion's claimed 6-8 kg / 2.7-3.0 BMI-point reduction range is not supported by Table 2's own week-0-to-week-12 changes; Group 1 shows only 5.1 kg / 1.8 points, both below the claimed range. This overstates the study's own results and should be corrected in the text, though it does not change the direction of the finding or any abstract-level claim."
+              },
+              {
+                "finding_id": "f_eeea930918c6818f",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 FBS/Group 3 SD discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_492278fa506a51f8",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "A valid design limitation -- pooling ages 12-25 without stratification, using adult BMI cut-points and an adult-marketed bioimpedance device -- but this is a scope/generalisability limitation of an otherwise-described method, not an error in a reported number."
+              },
+              {
+                "finding_id": "f_eeea930918c6818f-2",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 FBS/Group 4 mean discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_7ef256175dfe066a",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "Zero attrition across 120 participants over 12 weeks with repeated venous blood draws is unusually clean and worth flagging per rulebook rule 7, but by itself it is a plausibility concern about reporting completeness, not a demonstrated error; kept at its provisional minor severity and named in the paper summary as part of the broader too-clean pattern."
+              },
+              {
+                "finding_id": "f_f1c349f876a22033",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "Confirmed by re-running check_variance_dispersion (p=0.0078, matches the reported figure exactly). The four baseline Weight SDs are more uniform than sampling error predicts; this corroborates the CSF baseline-similarity finding on the same rows but remains capped at 'suspicious' as a relative screening signal, not proof."
+              },
+              {
+                "finding_id": "f_2b248813e814c6a3",
+                "action": "kept",
+                "severity": 1,
+                "category": "none",
+                "rationale": "An undefined '#' and doubled asterisk in two Table 3 cells is a self-evident typesetting artifact; no reader would misread the underlying value, and no formal correction is warranted beyond a copyediting note."
+              },
+              {
+                "finding_id": "f_1940365da8c3fce7",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 TG/Group 4 mean discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_481c4f1e806097ee",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "A prospective RCT with no registry identifier is a genuine reporting-standards gap worth naming, but it is a transparency omission rather than an error in any reported result."
+              },
+              {
+                "finding_id": "f_5d9bb1a945704e45",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_d6633f134967cd3c",
+                "rationale": "Same Discussion-vs-Table-2 weight/BMI overstatement already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_88d5f25ba358bcd1",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_f8da056b67e0b51e",
+                "rationale": "Same independent-t-test-on-repeated-measures design issue already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_f05b0569d8065e42",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "Confirmed by re-running check_count_percent: 19/30=63.33%, printed as 63.4%, just outside the rounding interval [63.35, 63.50). The paired male figure (36.6%) is consistent under truncation and the two figures still sum to 100%, so this reads as an isolated rounding/typo slip rather than a wrong headcount -- an erratum-level issue."
+              },
+              {
+                "finding_id": "f_89cfa57e927b602d",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_2b248813e814c6a3",
+                "rationale": "Same undefined '#' symbol in Table 3 already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_1835358965bb4560",
+                "action": "merged",
+                "severity": null,
+                "category": "merged_pattern",
+                "merged_into": "f_560ba7b66e510a7c",
+                "rationale": "The whole-table dispersion result is itself indeterminate (tau-hat CI spans 1), but its own upper-tail Simes signal (p=0.057) points at the same Age/Weight/Height rows already flagged by the CSF test; it adds marginal corroboration to that finding rather than standing as an independent one."
+              },
+              {
+                "finding_id": "f_2fe455c58e777c04",
+                "action": "merged",
+                "severity": null,
+                "category": "merged_pattern",
+                "merged_into": "f_560ba7b66e510a7c",
+                "rationale": "Height's borderline under-dispersion (p=0.049) is explicitly described by the tool as not enough to report alone, and it concerns the same anthropometric cluster (Age/Weight/Height) already carried by the CSF finding; folded in as corroboration rather than a separate row."
+              },
+              {
+                "finding_id": "f_34cf6d99dfa6a3c7",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "89% of them reported having a high eating frequency, with more than four meals per day",
+                "rationale": "At n=120 with 0 printed decimals every integer percentage is GRIM-attainable, so this check has no discriminating power by construction; it is a null result correctly labeled indeterminate by the tool, not a finding."
+              },
+              {
+                "finding_id": "f_7f69c27dd9e1161a",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "Group 1 79.0\u00b127.1 78.1\u00b126.5*\u2021 77.3\u00b126.0*\u2021 73.9\u00b123.7*\u2021",
+                "rationale": "Recovering the implied pre/post correlation from a thresholded 'p<0.05' gives only a lower bound that is compatible with [-1,1] in every case tested, so no inconsistency is established; correctly indeterminate, not a finding."
+              },
+              {
+                "finding_id": "f_900979ef3700a863",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7",
+                "rationale": "The 7-row anthropometric block's excess-similarity signal does not survive a realistic rho=0.5 correlation adjustment (p=0.11); it neither adds to nor contradicts the narrower, still-significant Age/Weight/Height finding, so it is dropped rather than reported as its own row."
+              }
+            ],
+            "paper": {
+              "verdict": "does_not_reconcile",
+              "paper_severity": 5,
+              "headline_finding_id": "f_560ba7b66e510a7c",
+              "confidence": "medium",
+              "summary": "The most serious concern is that Table 1's baseline Age, Weight and Height are statistically far too similar across the four randomised arms (Carlisle-Stouffer-Fisher similarity p=0.006, confirmed on re-run and surviving a conservative rho=0.5 adjustment for these correlated measures), reinforced by Weight's own SDs (27.1/28.5/27.2/28.6) being more uniform than sampling error predicts (p=0.008, also confirmed). This pattern is associated with fabricated or non-randomly-allocated data in the literature, though it remains a statistical improbability rather than proof of manipulation. Independently, Table 1's baseline FBS, TC and TG values for several groups do not match the same measurements printed as Table 3's own Week-0 column -- a plain internal contradiction of supposedly identical data. The Discussion also overstates Table 2's own weight/BMI reductions, and the Methods name only an independent t-test for what are mostly within-subject comparisons. Table 2's internal week-by-week trends, most percentages, and the effect-size/summation checks were internally consistent. A journal would need at minimum a corrigendum reconciling Table 1 against Table 3 and correcting the Discussion's overstated range, plus an editorial query about the baseline-similarity signal and randomisation records. This review did not have access to raw participant-level data and cannot establish whether the discrepancies reflect data fabrication, transcription error, or an unreported protocol detail."
+            }
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 12670,
+        "cache_read_input_tokens": 108829,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 12670
+        },
+        "output_tokens": 2,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "db4099f3-8578-4a5c-9bdf-54bd07a53d84",
+    "timestamp": "2026-08-23T02:49:13.729Z",
+    "request_id": "req_011CeJv6zhT2rFnV5eZhMFTd"
+  },
+  {
+    "type": "user",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "content": "Output does not match required schema: /verdicts/0/rationale: must NOT have more than 500 characters, /verdicts/3/rationale: must NOT have more than 500 characters",
+          "is_error": true,
+          "tool_use_id": "toolu_01S7FctH5cb6ktHPfM8Gs8Xg"
+        }
+      ]
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "4ca826ee-bbf7-4120-a564-1ada8f55a08b",
+    "timestamp": "2026-08-23T02:49:13.737Z",
+    "tool_use_result": "Error: Output does not match required schema: /verdicts/0/rationale: must NOT have more than 500 characters, /verdicts/3/rationale: must NOT have more than 500 characters"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 50,
+    "estimated_tokens_delta": 50,
+    "uuid": "84f70a0a-97f3-4562-9685-4696dac2b74f",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "system",
+    "subtype": "thinking_tokens",
+    "estimated_tokens": 76,
+    "estimated_tokens_delta": 26,
+    "uuid": "0c2bdbb6-822a-4c10-8bd1-929c64d139ce",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJvEvURRo4ZVGhu3vTCz",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "thinking",
+          "thinking": "",
+          "signature": "EqgCCqgBCBEYAipAG2vt5ci5iBwsgT2+XuulM1+doH7LyRLpDv7OUQDL5cyZ6O+EFF4NN2P9y1YodH1sxbNInH4yC4ZGLNBj+3tMBTIPY2xhdWRlLXNvbm5ldC01OABCCHRoaW5raW5nWiQ5ZTM2NjQ0ZS0yMDAzLTRlMTktOTE5Ny0zY2NlMjQ3NTQ1MGJyEG3C9H9kHMN5Xu8QtlKR9amIAQGoAau/qdQGsAECEgyHEluyK8zHnCtasXsaDMAMlONCk863Ae+jFiIwLb4NCgoRTAVrPVM5C86dleOYj/sV6nAa2oQu1SfeZ7X+4tHWHoTD4K7p29IZNRGHKi30LqATVpPerTDwm8cvN7eKAOWpeaHIGindIO3YqrXSTuac6DKFAWzGAarqu5kYAQ=="
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 10343,
+        "cache_read_input_tokens": 121499,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 10343
+        },
+        "output_tokens": 2,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "4a89715d-6a01-4600-8e8d-9e5574bb1e03",
+    "timestamp": "2026-08-23T02:49:15.896Z",
+    "request_id": "req_011CeJvEuPgTQntN8U9xW9qm"
+  },
+  {
+    "type": "assistant",
+    "message": {
+      "model": "claude-sonnet-5",
+      "id": "msg_011CeJvEvURRo4ZVGhu3vTCz",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_0118ep7owVgZoXHa4qXb45LE",
+          "name": "StructuredOutput",
+          "input": {
+            "verdicts": [
+              {
+                "finding_id": "f_3b213d597e3b6533",
+                "action": "kept",
+                "severity": 4,
+                "category": "merged_pattern",
+                "title": "Baseline biochemical values disagree between Table 1 and Table 3 across four cells",
+                "description": "Table 1's baseline (week 0) values for FBS (Groups 3 and 4), TC (Group 2) and TG (Group 4) do not match the identical measurement printed as the Week 0 column of Table 3 -- means and/or SDs differ in every case (e.g. FBS Group 3: 119.9\u00b17.2 vs 119.9\u00b112.2; FBS Group 4: 113.6\u00b112.5 vs 118.6\u00b112.5; TC Group 2: 173.6\u00b116.3 vs 175.6\u00b112.9; TG Group 4: 168.1\u00b118.2 vs 166.1\u00b118.2). This is a plain, verified internal contradiction spanning three variables and three groups, not a single arithmetic slip.",
+                "rationale": "Four independent model-read cell comparisons describe the same defect: the baseline table and the Week-0 outcome column disagree on values that should be identical. Merged into one pattern finding; each table's own within-table trend stays self-consistent, so this is a data-provenance/reporting problem, not one that overturns a specific claim."
+              },
+              {
+                "finding_id": "f_332408d83d42a15d",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 TC/Group 2 discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_f8da056b67e0b51e",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "The Methods name only an independent t-test, but the '*' baseline-vs-follow-up markers in Tables 2 and 3 are necessarily within-subject repeated measures on the same 30 people. This is a genuine design/reporting mismatch, but as the finding itself notes an independent test on paired data is typically conservative (inflates SE), so it is unlikely to have inflated the reported significant effects -- a localized methods-reporting correction rather than a result-altering flaw."
+              },
+              {
+                "finding_id": "f_560ba7b66e510a7c",
+                "action": "kept",
+                "severity": 4,
+                "category": "none",
+                "rationale": "Cross-checked with csf_test (rho=0.5, p=0.0061) and check_variance_dispersion (Weight, p=0.0078); both confirmed as printed. Baseline Age/Weight/Height are far more similar than randomisation predicts, even after adjusting for correlation. Per rule 1, uniform high baseline p-values are the red flag, not reassurance -- consistent with a randomisation or data-integrity problem, but capped at 'suspicious', not proof."
+              },
+              {
+                "finding_id": "f_d6633f134967cd3c",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "The Discussion's claimed 6-8 kg / 2.7-3.0 BMI-point reduction range is not supported by Table 2's own week-0-to-week-12 changes; Group 1 shows only 5.1 kg / 1.8 points, both below the claimed range. This overstates the study's own results and should be corrected in the text, though it does not change the direction of the finding or any abstract-level claim."
+              },
+              {
+                "finding_id": "f_eeea930918c6818f",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 FBS/Group 3 SD discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_492278fa506a51f8",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "A valid design limitation -- pooling ages 12-25 without stratification, using adult BMI cut-points and an adult-marketed bioimpedance device -- but this is a scope/generalisability limitation of an otherwise-described method, not an error in a reported number."
+              },
+              {
+                "finding_id": "f_eeea930918c6818f-2",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 FBS/Group 4 mean discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_7ef256175dfe066a",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "Zero attrition across 120 participants over 12 weeks with repeated venous blood draws is unusually clean and worth flagging per rulebook rule 7, but by itself it is a plausibility concern about reporting completeness, not a demonstrated error; kept at its provisional minor severity and named in the paper summary as part of the broader too-clean pattern."
+              },
+              {
+                "finding_id": "f_f1c349f876a22033",
+                "action": "kept",
+                "severity": 3,
+                "category": "none",
+                "rationale": "Confirmed by re-running check_variance_dispersion (p=0.0078, matches the reported figure exactly). The four baseline Weight SDs are more uniform than sampling error predicts; this corroborates the CSF baseline-similarity finding on the same rows but remains capped at 'suspicious' as a relative screening signal, not proof."
+              },
+              {
+                "finding_id": "f_2b248813e814c6a3",
+                "action": "kept",
+                "severity": 1,
+                "category": "none",
+                "rationale": "An undefined '#' and doubled asterisk in two Table 3 cells is a self-evident typesetting artifact; no reader would misread the underlying value, and no formal correction is warranted beyond a copyediting note."
+              },
+              {
+                "finding_id": "f_1940365da8c3fce7",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_3b213d597e3b6533",
+                "rationale": "Same Table 1 vs Table 3 TG/Group 4 mean discrepancy already covered in the merged pattern finding."
+              },
+              {
+                "finding_id": "f_481c4f1e806097ee",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "A prospective RCT with no registry identifier is a genuine reporting-standards gap worth naming, but it is a transparency omission rather than an error in any reported result."
+              },
+              {
+                "finding_id": "f_5d9bb1a945704e45",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_d6633f134967cd3c",
+                "rationale": "Same Discussion-vs-Table-2 weight/BMI overstatement already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_88d5f25ba358bcd1",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_f8da056b67e0b51e",
+                "rationale": "Same independent-t-test-on-repeated-measures design issue already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_f05b0569d8065e42",
+                "action": "kept",
+                "severity": 2,
+                "category": "none",
+                "rationale": "Confirmed by re-running check_count_percent: 19/30=63.33%, printed as 63.4%, just outside the rounding interval [63.35, 63.50). The paired male figure (36.6%) is consistent under truncation and the two figures still sum to 100%, so this reads as an isolated rounding/typo slip rather than a wrong headcount -- an erratum-level issue."
+              },
+              {
+                "finding_id": "f_89cfa57e927b602d",
+                "action": "merged",
+                "severity": null,
+                "category": "duplicate",
+                "merged_into": "f_2b248813e814c6a3",
+                "rationale": "Same undefined '#' symbol in Table 3 already covered by the science analyst's version of this finding."
+              },
+              {
+                "finding_id": "f_1835358965bb4560",
+                "action": "merged",
+                "severity": null,
+                "category": "merged_pattern",
+                "merged_into": "f_560ba7b66e510a7c",
+                "rationale": "The whole-table dispersion result is itself indeterminate (tau-hat CI spans 1), but its own upper-tail Simes signal (p=0.057) points at the same Age/Weight/Height rows already flagged by the CSF test; it adds marginal corroboration to that finding rather than standing as an independent one."
+              },
+              {
+                "finding_id": "f_2fe455c58e777c04",
+                "action": "merged",
+                "severity": null,
+                "category": "merged_pattern",
+                "merged_into": "f_560ba7b66e510a7c",
+                "rationale": "Height's borderline under-dispersion (p=0.049) is explicitly described by the tool as not enough to report alone, and it concerns the same anthropometric cluster (Age/Weight/Height) already carried by the CSF finding; folded in as corroboration rather than a separate row."
+              },
+              {
+                "finding_id": "f_34cf6d99dfa6a3c7",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "89% of them reported having a high eating frequency, with more than four meals per day",
+                "rationale": "At n=120 with 0 printed decimals every integer percentage is GRIM-attainable, so this check has no discriminating power by construction; it is a null result correctly labeled indeterminate by the tool, not a finding."
+              },
+              {
+                "finding_id": "f_7f69c27dd9e1161a",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "Group 1 79.0\u00b127.1 78.1\u00b126.5*\u2021 77.3\u00b126.0*\u2021 73.9\u00b123.7*\u2021",
+                "rationale": "Recovering the implied pre/post correlation from a thresholded 'p<0.05' gives only a lower bound that is compatible with [-1,1] in every case tested, so no inconsistency is established; correctly indeterminate, not a finding."
+              },
+              {
+                "finding_id": "f_900979ef3700a863",
+                "action": "discarded",
+                "severity": null,
+                "category": "insufficient_evidence",
+                "evidence_quote": "Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7",
+                "rationale": "The 7-row anthropometric block's excess-similarity signal does not survive a realistic rho=0.5 correlation adjustment (p=0.11); it neither adds to nor contradicts the narrower, still-significant Age/Weight/Height finding, so it is dropped rather than reported as its own row."
+              }
+            ],
+            "paper": {
+              "verdict": "does_not_reconcile",
+              "paper_severity": 5,
+              "headline_finding_id": "f_560ba7b66e510a7c",
+              "confidence": "medium",
+              "summary": "The most serious concern is that Table 1's baseline Age, Weight and Height are statistically far too similar across the four randomised arms (Carlisle-Stouffer-Fisher similarity p=0.006, confirmed on re-run and surviving a conservative rho=0.5 adjustment for these correlated measures), reinforced by Weight's own SDs (27.1/28.5/27.2/28.6) being more uniform than sampling error predicts (p=0.008, also confirmed). This pattern is associated with fabricated or non-randomly-allocated data in the literature, though it remains a statistical improbability rather than proof of manipulation. Independently, Table 1's baseline FBS, TC and TG values for several groups do not match the same measurements printed as Table 3's own Week-0 column -- a plain internal contradiction of supposedly identical data. The Discussion also overstates Table 2's own weight/BMI reductions, and the Methods name only an independent t-test for what are mostly within-subject comparisons. Table 2's internal week-by-week trends, most percentages, and the effect-size/summation checks were internally consistent. A journal would need at minimum a corrigendum reconciling Table 1 against Table 3 and correcting the Discussion's overstated range, plus an editorial query about the baseline-similarity signal and randomisation records. This review did not have access to raw participant-level data and cannot establish whether the discrepancies reflect data fabrication, transcription error, or an unreported protocol detail."
+            }
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "stop_reason": null,
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": 10343,
+        "cache_read_input_tokens": 121499,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 10343
+        },
+        "output_tokens": 2,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null,
+      "context_management": null
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "6b9cda44-4291-4755-b61b-6358495fb398",
+    "timestamp": "2026-08-23T02:49:49.668Z",
+    "request_id": "req_011CeJvEuPgTQntN8U9xW9qm"
+  },
+  {
+    "type": "user",
+    "message": {
+      "role": "user",
+      "content": [
+        {
+          "tool_use_id": "toolu_0118ep7owVgZoXHa4qXb45LE",
+          "type": "tool_result",
+          "content": "Structured output provided successfully"
+        }
+      ]
+    },
+    "parent_tool_use_id": null,
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "uuid": "05043edd-930b-4047-8614-253d51b18cc0",
+    "timestamp": "2026-08-23T02:49:49.675Z",
+    "tool_use_result": "Structured output provided successfully"
+  },
+  {
+    "is_error": false,
+    "duration_api_ms": 254575,
+    "num_turns": 6,
+    "stop_reason": "tool_use",
+    "session_id": "154841aa-5a3a-4dc2-a65f-50ccb19bf3df",
+    "total_cost_usd": 0.8448275999999999,
+    "usage": {
+      "input_tokens": 6,
+      "cache_creation_input_tokens": 131842,
+      "cache_read_input_tokens": 230328,
+      "output_tokens": 24846,
+      "output_tokens_details": {
+        "thinking_tokens": 15129
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 131842,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 4238,
+          "cache_read_input_tokens": 121499,
+          "cache_creation_input_tokens": 10343,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 10343
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "modelUsage": {
+      "claude-haiku-4-5-20251001": {
+        "inputTokens": 22837,
+        "outputTokens": 17,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0,
+        "webSearchRequests": 0,
+        "costUSD": 0.022921999999999998,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000,
+        "canonicalModel": "claude-haiku-4-5",
+        "provider": "firstParty"
+      },
+      "claude-sonnet-5": {
+        "inputTokens": 6,
+        "outputTokens": 24846,
+        "cacheReadInputTokens": 230328,
+        "cacheCreationInputTokens": 131842,
+        "webSearchRequests": 0,
+        "costUSD": 0.8219056,
+        "contextWindow": 1000000,
+        "maxOutputTokens": 64000,
+        "canonicalModel": "claude-sonnet-5",
+        "provider": "firstParty"
+      }
+    },
+    "permission_denials": [],
+    "terminal_reason": "completed",
+    "fast_mode_state": "off",
+    "fast_mode_disabled_reason": "sdk_opt_in_required",
+    "subagent_stats": {
+      "spawned": 0,
+      "requested": {
+        "background": 0,
+        "foreground": 0,
+        "unset": 0
+      },
+      "started_in_background": 0,
+      "max_depth": 0,
+      "spawned_by_subagents": 0,
+      "completed": 0,
+      "failed": 0,
+      "killed": {
+        "parent": 0,
+        "user": 0,
+        "system": 0
+      },
+      "refused": {
+        "depth_limit": 0,
+        "concurrency_limit": 0,
+        "budget": 0
+      },
+      "by_type": {}
+    },
+    "subtype": "success",
+    "api_error_status": null,
+    "result": "{\"verdicts\":[{\"finding_id\":\"f_3b213d597e3b6533\",\"action\":\"kept\",\"severity\":4,\"category\":\"merged_pattern\",\"title\":\"Baseline biochemical values disagree between Table 1 and Table 3 across four cells\",\"description\":\"Table 1's baseline (week 0) values for FBS (Groups 3 and 4), TC (Group 2) and TG (Group 4) do not match the identical measurement printed as the Week 0 column of Table 3 -- means and/or SDs differ in every case (e.g. FBS Group 3: 119.9\u00b17.2 vs 119.9\u00b112.2; FBS Group 4: 113.6\u00b112.5 vs 118.6\u00b112.5; TC Group 2: 173.6\u00b116.3 vs 175.6\u00b112.9; TG Group 4: 168.1\u00b118.2 vs 166.1\u00b118.2). This is a plain, verified internal contradiction spanning three variables and three groups, not a single arithmetic slip.\",\"rationale\":\"Four independent model-read cell comparisons describe the same defect: the baseline table and the Week-0 outcome column disagree on values that should be identical. Merged into one pattern finding; each table's own within-table trend stays self-consistent, so this is a data-provenance/reporting problem, not one that overturns a specific claim.\"},{\"finding_id\":\"f_332408d83d42a15d\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_3b213d597e3b6533\",\"rationale\":\"Same Table 1 vs Table 3 TC/Group 2 discrepancy already covered in the merged pattern finding.\"},{\"finding_id\":\"f_f8da056b67e0b51e\",\"action\":\"kept\",\"severity\":3,\"category\":\"none\",\"rationale\":\"The Methods name only an independent t-test, but the '*' baseline-vs-follow-up markers in Tables 2 and 3 are necessarily within-subject repeated measures on the same 30 people. This is a genuine design/reporting mismatch, but as the finding itself notes an independent test on paired data is typically conservative (inflates SE), so it is unlikely to have inflated the reported significant effects -- a localized methods-reporting correction rather than a result-altering flaw.\"},{\"finding_id\":\"f_560ba7b66e510a7c\",\"action\":\"kept\",\"severity\":4,\"category\":\"none\",\"rationale\":\"Cross-checked with csf_test (rho=0.5, p=0.0061) and check_variance_dispersion (Weight, p=0.0078); both confirmed as printed. Baseline Age/Weight/Height are far more similar than randomisation predicts, even after adjusting for correlation. Per rule 1, uniform high baseline p-values are the red flag, not reassurance -- consistent with a randomisation or data-integrity problem, but capped at 'suspicious', not proof.\"},{\"finding_id\":\"f_d6633f134967cd3c\",\"action\":\"kept\",\"severity\":3,\"category\":\"none\",\"rationale\":\"The Discussion's claimed 6-8 kg / 2.7-3.0 BMI-point reduction range is not supported by Table 2's own week-0-to-week-12 changes; Group 1 shows only 5.1 kg / 1.8 points, both below the claimed range. This overstates the study's own results and should be corrected in the text, though it does not change the direction of the finding or any abstract-level claim.\"},{\"finding_id\":\"f_eeea930918c6818f\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_3b213d597e3b6533\",\"rationale\":\"Same Table 1 vs Table 3 FBS/Group 3 SD discrepancy already covered in the merged pattern finding.\"},{\"finding_id\":\"f_492278fa506a51f8\",\"action\":\"kept\",\"severity\":2,\"category\":\"none\",\"rationale\":\"A valid design limitation -- pooling ages 12-25 without stratification, using adult BMI cut-points and an adult-marketed bioimpedance device -- but this is a scope/generalisability limitation of an otherwise-described method, not an error in a reported number.\"},{\"finding_id\":\"f_eeea930918c6818f-2\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_3b213d597e3b6533\",\"rationale\":\"Same Table 1 vs Table 3 FBS/Group 4 mean discrepancy already covered in the merged pattern finding.\"},{\"finding_id\":\"f_7ef256175dfe066a\",\"action\":\"kept\",\"severity\":2,\"category\":\"none\",\"rationale\":\"Zero attrition across 120 participants over 12 weeks with repeated venous blood draws is unusually clean and worth flagging per rulebook rule 7, but by itself it is a plausibility concern about reporting completeness, not a demonstrated error; kept at its provisional minor severity and named in the paper summary as part of the broader too-clean pattern.\"},{\"finding_id\":\"f_f1c349f876a22033\",\"action\":\"kept\",\"severity\":3,\"category\":\"none\",\"rationale\":\"Confirmed by re-running check_variance_dispersion (p=0.0078, matches the reported figure exactly). The four baseline Weight SDs are more uniform than sampling error predicts; this corroborates the CSF baseline-similarity finding on the same rows but remains capped at 'suspicious' as a relative screening signal, not proof.\"},{\"finding_id\":\"f_2b248813e814c6a3\",\"action\":\"kept\",\"severity\":1,\"category\":\"none\",\"rationale\":\"An undefined '#' and doubled asterisk in two Table 3 cells is a self-evident typesetting artifact; no reader would misread the underlying value, and no formal correction is warranted beyond a copyediting note.\"},{\"finding_id\":\"f_1940365da8c3fce7\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_3b213d597e3b6533\",\"rationale\":\"Same Table 1 vs Table 3 TG/Group 4 mean discrepancy already covered in the merged pattern finding.\"},{\"finding_id\":\"f_481c4f1e806097ee\",\"action\":\"kept\",\"severity\":2,\"category\":\"none\",\"rationale\":\"A prospective RCT with no registry identifier is a genuine reporting-standards gap worth naming, but it is a transparency omission rather than an error in any reported result.\"},{\"finding_id\":\"f_5d9bb1a945704e45\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_d6633f134967cd3c\",\"rationale\":\"Same Discussion-vs-Table-2 weight/BMI overstatement already covered by the science analyst's version of this finding.\"},{\"finding_id\":\"f_88d5f25ba358bcd1\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_f8da056b67e0b51e\",\"rationale\":\"Same independent-t-test-on-repeated-measures design issue already covered by the science analyst's version of this finding.\"},{\"finding_id\":\"f_f05b0569d8065e42\",\"action\":\"kept\",\"severity\":2,\"category\":\"none\",\"rationale\":\"Confirmed by re-running check_count_percent: 19/30=63.33%, printed as 63.4%, just outside the rounding interval [63.35, 63.50). The paired male figure (36.6%) is consistent under truncation and the two figures still sum to 100%, so this reads as an isolated rounding/typo slip rather than a wrong headcount -- an erratum-level issue.\"},{\"finding_id\":\"f_89cfa57e927b602d\",\"action\":\"merged\",\"severity\":null,\"category\":\"duplicate\",\"merged_into\":\"f_2b248813e814c6a3\",\"rationale\":\"Same undefined '#' symbol in Table 3 already covered by the science analyst's version of this finding.\"},{\"finding_id\":\"f_1835358965bb4560\",\"action\":\"merged\",\"severity\":null,\"category\":\"merged_pattern\",\"merged_into\":\"f_560ba7b66e510a7c\",\"rationale\":\"The whole-table dispersion result is itself indeterminate (tau-hat CI spans 1), but its own upper-tail Simes signal (p=0.057) points at the same Age/Weight/Height rows already flagged by the CSF test; it adds marginal corroboration to that finding rather than standing as an independent one.\"},{\"finding_id\":\"f_2fe455c58e777c04\",\"action\":\"merged\",\"severity\":null,\"category\":\"merged_pattern\",\"merged_into\":\"f_560ba7b66e510a7c\",\"rationale\":\"Height's borderline under-dispersion (p=0.049) is explicitly described by the tool as not enough to report alone, and it concerns the same anthropometric cluster (Age/Weight/Height) already carried by the CSF finding; folded in as corroboration rather than a separate row.\"},{\"finding_id\":\"f_34cf6d99dfa6a3c7\",\"action\":\"discarded\",\"severity\":null,\"category\":\"insufficient_evidence\",\"evidence_quote\":\"89% of them reported having a high eating frequency, with more than four meals per day\",\"rationale\":\"At n=120 with 0 printed decimals every integer percentage is GRIM-attainable, so this check has no discriminating power by construction; it is a null result correctly labeled indeterminate by the tool, not a finding.\"},{\"finding_id\":\"f_7f69c27dd9e1161a\",\"action\":\"discarded\",\"severity\":null,\"category\":\"insufficient_evidence\",\"evidence_quote\":\"Group 1 79.0\u00b127.1 78.1\u00b126.5*\u2021 77.3\u00b126.0*\u2021 73.9\u00b123.7*\u2021\",\"rationale\":\"Recovering the implied pre/post correlation from a thresholded 'p<0.05' gives only a lower bound that is compatible with [-1,1] in every case tested, so no inconsistency is established; correctly indeterminate, not a finding.\"},{\"finding_id\":\"f_900979ef3700a863\",\"action\":\"discarded\",\"severity\":null,\"category\":\"insufficient_evidence\",\"evidence_quote\":\"Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7\",\"rationale\":\"The 7-row anthropometric block's excess-similarity signal does not survive a realistic rho=0.5 correlation adjustment (p=0.11); it neither adds to nor contradicts the narrower, still-significant Age/Weight/Height finding, so it is dropped rather than reported as its own row.\"}],\"paper\":{\"verdict\":\"does_not_reconcile\",\"paper_severity\":5,\"headline_finding_id\":\"f_560ba7b66e510a7c\",\"confidence\":\"medium\",\"summary\":\"The most serious concern is that Table 1's baseline Age, Weight and Height are statistically far too similar across the four randomised arms (Carlisle-Stouffer-Fisher similarity p=0.006, confirmed on re-run and surviving a conservative rho=0.5 adjustment for these correlated measures), reinforced by Weight's own SDs (27.1/28.5/27.2/28.6) being more uniform than sampling error predicts (p=0.008, also confirmed). This pattern is associated with fabricated or non-randomly-allocated data in the literature, though it remains a statistical improbability rather than proof of manipulation. Independently, Table 1's baseline FBS, TC and TG values for several groups do not match the same measurements printed as Table 3's own Week-0 column -- a plain internal contradiction of supposedly identical data. The Discussion also overstates Table 2's own weight/BMI reductions, and the Methods name only an independent t-test for what are mostly within-subject comparisons. Table 2's internal week-by-week trends, most percentages, and the effect-size/summation checks were internally consistent. A journal would need at minimum a corrigendum reconciling Table 1 against Table 3 and correcting the Discussion's overstated range, plus an editorial query about the baseline-similarity signal and randomisation records. This review did not have access to raw participant-level data and cannot establish whether the discrepancies reflect data fabrication, transcription error, or an unreported protocol detail.\"}}",
+    "structured_output": {
+      "verdicts": [
+        {
+          "finding_id": "f_3b213d597e3b6533",
+          "action": "kept",
+          "severity": 4,
+          "category": "merged_pattern",
+          "title": "Baseline biochemical values disagree between Table 1 and Table 3 across four cells",
+          "description": "Table 1's baseline (week 0) values for FBS (Groups 3 and 4), TC (Group 2) and TG (Group 4) do not match the identical measurement printed as the Week 0 column of Table 3 -- means and/or SDs differ in every case (e.g. FBS Group 3: 119.9\u00b17.2 vs 119.9\u00b112.2; FBS Group 4: 113.6\u00b112.5 vs 118.6\u00b112.5; TC Group 2: 173.6\u00b116.3 vs 175.6\u00b112.9; TG Group 4: 168.1\u00b118.2 vs 166.1\u00b118.2). This is a plain, verified internal contradiction spanning three variables and three groups, not a single arithmetic slip.",
+          "rationale": "Four independent model-read cell comparisons describe the same defect: the baseline table and the Week-0 outcome column disagree on values that should be identical. Merged into one pattern finding; each table's own within-table trend stays self-consistent, so this is a data-provenance/reporting problem, not one that overturns a specific claim."
+        },
+        {
+          "finding_id": "f_332408d83d42a15d",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_3b213d597e3b6533",
+          "rationale": "Same Table 1 vs Table 3 TC/Group 2 discrepancy already covered in the merged pattern finding."
+        },
+        {
+          "finding_id": "f_f8da056b67e0b51e",
+          "action": "kept",
+          "severity": 3,
+          "category": "none",
+          "rationale": "The Methods name only an independent t-test, but the '*' baseline-vs-follow-up markers in Tables 2 and 3 are necessarily within-subject repeated measures on the same 30 people. This is a genuine design/reporting mismatch, but as the finding itself notes an independent test on paired data is typically conservative (inflates SE), so it is unlikely to have inflated the reported significant effects -- a localized methods-reporting correction rather than a result-altering flaw."
+        },
+        {
+          "finding_id": "f_560ba7b66e510a7c",
+          "action": "kept",
+          "severity": 4,
+          "category": "none",
+          "rationale": "Cross-checked with csf_test (rho=0.5, p=0.0061) and check_variance_dispersion (Weight, p=0.0078); both confirmed as printed. Baseline Age/Weight/Height are far more similar than randomisation predicts, even after adjusting for correlation. Per rule 1, uniform high baseline p-values are the red flag, not reassurance -- consistent with a randomisation or data-integrity problem, but capped at 'suspicious', not proof."
+        },
+        {
+          "finding_id": "f_d6633f134967cd3c",
+          "action": "kept",
+          "severity": 3,
+          "category": "none",
+          "rationale": "The Discussion's claimed 6-8 kg / 2.7-3.0 BMI-point reduction range is not supported by Table 2's own week-0-to-week-12 changes; Group 1 shows only 5.1 kg / 1.8 points, both below the claimed range. This overstates the study's own results and should be corrected in the text, though it does not change the direction of the finding or any abstract-level claim."
+        },
+        {
+          "finding_id": "f_eeea930918c6818f",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_3b213d597e3b6533",
+          "rationale": "Same Table 1 vs Table 3 FBS/Group 3 SD discrepancy already covered in the merged pattern finding."
+        },
+        {
+          "finding_id": "f_492278fa506a51f8",
+          "action": "kept",
+          "severity": 2,
+          "category": "none",
+          "rationale": "A valid design limitation -- pooling ages 12-25 without stratification, using adult BMI cut-points and an adult-marketed bioimpedance device -- but this is a scope/generalisability limitation of an otherwise-described method, not an error in a reported number."
+        },
+        {
+          "finding_id": "f_eeea930918c6818f-2",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_3b213d597e3b6533",
+          "rationale": "Same Table 1 vs Table 3 FBS/Group 4 mean discrepancy already covered in the merged pattern finding."
+        },
+        {
+          "finding_id": "f_7ef256175dfe066a",
+          "action": "kept",
+          "severity": 2,
+          "category": "none",
+          "rationale": "Zero attrition across 120 participants over 12 weeks with repeated venous blood draws is unusually clean and worth flagging per rulebook rule 7, but by itself it is a plausibility concern about reporting completeness, not a demonstrated error; kept at its provisional minor severity and named in the paper summary as part of the broader too-clean pattern."
+        },
+        {
+          "finding_id": "f_f1c349f876a22033",
+          "action": "kept",
+          "severity": 3,
+          "category": "none",
+          "rationale": "Confirmed by re-running check_variance_dispersion (p=0.0078, matches the reported figure exactly). The four baseline Weight SDs are more uniform than sampling error predicts; this corroborates the CSF baseline-similarity finding on the same rows but remains capped at 'suspicious' as a relative screening signal, not proof."
+        },
+        {
+          "finding_id": "f_2b248813e814c6a3",
+          "action": "kept",
+          "severity": 1,
+          "category": "none",
+          "rationale": "An undefined '#' and doubled asterisk in two Table 3 cells is a self-evident typesetting artifact; no reader would misread the underlying value, and no formal correction is warranted beyond a copyediting note."
+        },
+        {
+          "finding_id": "f_1940365da8c3fce7",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_3b213d597e3b6533",
+          "rationale": "Same Table 1 vs Table 3 TG/Group 4 mean discrepancy already covered in the merged pattern finding."
+        },
+        {
+          "finding_id": "f_481c4f1e806097ee",
+          "action": "kept",
+          "severity": 2,
+          "category": "none",
+          "rationale": "A prospective RCT with no registry identifier is a genuine reporting-standards gap worth naming, but it is a transparency omission rather than an error in any reported result."
+        },
+        {
+          "finding_id": "f_5d9bb1a945704e45",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_d6633f134967cd3c",
+          "rationale": "Same Discussion-vs-Table-2 weight/BMI overstatement already covered by the science analyst's version of this finding."
+        },
+        {
+          "finding_id": "f_88d5f25ba358bcd1",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_f8da056b67e0b51e",
+          "rationale": "Same independent-t-test-on-repeated-measures design issue already covered by the science analyst's version of this finding."
+        },
+        {
+          "finding_id": "f_f05b0569d8065e42",
+          "action": "kept",
+          "severity": 2,
+          "category": "none",
+          "rationale": "Confirmed by re-running check_count_percent: 19/30=63.33%, printed as 63.4%, just outside the rounding interval [63.35, 63.50). The paired male figure (36.6%) is consistent under truncation and the two figures still sum to 100%, so this reads as an isolated rounding/typo slip rather than a wrong headcount -- an erratum-level issue."
+        },
+        {
+          "finding_id": "f_89cfa57e927b602d",
+          "action": "merged",
+          "severity": null,
+          "category": "duplicate",
+          "merged_into": "f_2b248813e814c6a3",
+          "rationale": "Same undefined '#' symbol in Table 3 already covered by the science analyst's version of this finding."
+        },
+        {
+          "finding_id": "f_1835358965bb4560",
+          "action": "merged",
+          "severity": null,
+          "category": "merged_pattern",
+          "merged_into": "f_560ba7b66e510a7c",
+          "rationale": "The whole-table dispersion result is itself indeterminate (tau-hat CI spans 1), but its own upper-tail Simes signal (p=0.057) points at the same Age/Weight/Height rows already flagged by the CSF test; it adds marginal corroboration to that finding rather than standing as an independent one."
+        },
+        {
+          "finding_id": "f_2fe455c58e777c04",
+          "action": "merged",
+          "severity": null,
+          "category": "merged_pattern",
+          "merged_into": "f_560ba7b66e510a7c",
+          "rationale": "Height's borderline under-dispersion (p=0.049) is explicitly described by the tool as not enough to report alone, and it concerns the same anthropometric cluster (Age/Weight/Height) already carried by the CSF finding; folded in as corroboration rather than a separate row."
+        },
+        {
+          "finding_id": "f_34cf6d99dfa6a3c7",
+          "action": "discarded",
+          "severity": null,
+          "category": "insufficient_evidence",
+          "evidence_quote": "89% of them reported having a high eating frequency, with more than four meals per day",
+          "rationale": "At n=120 with 0 printed decimals every integer percentage is GRIM-attainable, so this check has no discriminating power by construction; it is a null result correctly labeled indeterminate by the tool, not a finding."
+        },
+        {
+          "finding_id": "f_7f69c27dd9e1161a",
+          "action": "discarded",
+          "severity": null,
+          "category": "insufficient_evidence",
+          "evidence_quote": "Group 1 79.0\u00b127.1 78.1\u00b126.5*\u2021 77.3\u00b126.0*\u2021 73.9\u00b123.7*\u2021",
+          "rationale": "Recovering the implied pre/post correlation from a thresholded 'p<0.05' gives only a lower bound that is compatible with [-1,1] in every case tested, so no inconsistency is established; correctly indeterminate, not a finding."
+        },
+        {
+          "finding_id": "f_900979ef3700a863",
+          "action": "discarded",
+          "severity": null,
+          "category": "insufficient_evidence",
+          "evidence_quote": "Age (years) 17.2\u00b15.2 18.1\u00b15.5 17.6\u00b15.1 17.8\u00b15.7",
+          "rationale": "The 7-row anthropometric block's excess-similarity signal does not survive a realistic rho=0.5 correlation adjustment (p=0.11); it neither adds to nor contradicts the narrower, still-significant Age/Weight/Height finding, so it is dropped rather than reported as its own row."
+        }
+      ],
+      "paper": {
+        "verdict": "does_not_reconcile",
+        "paper_severity": 5,
+        "headline_finding_id": "f_560ba7b66e510a7c",
+        "confidence": "medium",
+        "summary": "The most serious concern is that Table 1's baseline Age, Weight and Height are statistically far too similar across the four randomised arms (Carlisle-Stouffer-Fisher similarity p=0.006, confirmed on re-run and surviving a conservative rho=0.5 adjustment for these correlated measures), reinforced by Weight's own SDs (27.1/28.5/27.2/28.6) being more uniform than sampling error predicts (p=0.008, also confirmed). This pattern is associated with fabricated or non-randomly-allocated data in the literature, though it remains a statistical improbability rather than proof of manipulation. Independently, Table 1's baseline FBS, TC and TG values for several groups do not match the same measurements printed as Table 3's own Week-0 column -- a plain internal contradiction of supposedly identical data. The Discussion also overstates Table 2's own weight/BMI reductions, and the Methods name only an independent t-test for what are mostly within-subject comparisons. Table 2's internal week-by-week trends, most percentages, and the effect-size/summation checks were internally consistent. A journal would need at minimum a corrigendum reconciling Table 1 against Table 3 and correcting the Discussion's overstated range, plus an editorial query about the baseline-similarity signal and randomisation records. This review did not have access to raw participant-level data and cannot establish whether the discrepancies reflect data fabrication, transcription error, or an unreported protocol detail."
+      }
+    },
+    "ttft_ms": 104713,
+    "ttft_stream_ms": 2351,
+    "time_to_request_ms": 31,
+    "type": "result",
+    "duration_ms": 253136,
+    "uuid": "6d0539e0-eb43-400a-a72d-404b0a6cca30"
+  }
+]

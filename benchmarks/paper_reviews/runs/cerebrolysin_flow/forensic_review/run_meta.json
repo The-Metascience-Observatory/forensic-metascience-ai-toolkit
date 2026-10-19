@@ -1,0 +1,283 @@
+{
+  "paper_id": "paper",
+  "mode": "parallel",
+  "schema_version": "2.0",
+  "run_id": "r_0049688599592e2c",
+  "analysed_at": "2026-09-02T15:46:28Z",
+  "version": "1.15.0",
+  "llm_backend": "grok",
+  "model": "grok-4.6",
+  "effort": "high",
+  "stages": {
+    "tool_agent": {
+      "model": "grok-4.6",
+      "cost_usd": 0.44002324,
+      "input_tokens": 405948,
+      "output_tokens": 48139,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 1679104,
+      "wall_seconds": 769.64,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "flag_round_n",
+      "tool_calls": 57,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.44002324,
+          "outputTokens": 48139,
+          "inputTokens": 405948
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "internet": false
+    },
+    "science_agent": {
+      "model": "grok-4.6",
+      "cost_usd": 0.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "wall_seconds": 990.65,
+      "return_code": -9,
+      "is_error": true,
+      "error_subtype": "error_stalled",
+      "truncated_by_budget": false,
+      "truncated_by_timeout": true,
+      "current_tool": "check_flow_arithmetic",
+      "tool_calls": 19,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6"
+      ],
+      "model_usage": {},
+      "primary_billed_model": null,
+      "fallbacks": [],
+      "model_switched": false,
+      "output_parse_path": "failed",
+      "internet": true,
+      "n_web_calls": 0
+    },
+    "adjudicator": {
+      "model": "grok-4.6",
+      "cost_usd": 0.13033118,
+      "input_tokens": 137406,
+      "output_tokens": 29099,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 634496,
+      "wall_seconds": 442.98,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "grimu_check",
+      "tool_calls": 31,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.13033118,
+          "outputTokens": 29099,
+          "inputTokens": 137406
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "internet": false
+    },
+    "text_forensics": {
+      "cost_usd": 0.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "ran": true,
+      "is_error": false,
+      "error_subtype": "ran_clean",
+      "return_code": 0,
+      "wall_seconds": 1.28,
+      "n_findings_injected": 0,
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 14206 words"
+    }
+  },
+  "limitations": [
+    "the science_agent stage produced no parseable findings JSON"
+  ],
+  "total_cost_usd": 0.570354,
+  "exhaustive_checks": {
+    "n_tables": 4,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 0,
+      "n_blocks": 0,
+      "ran": false,
+      "severity": "indeterminate",
+      "why_not": "The paper prints no (mean, SD) pair in any table, so there was nothing to compare. This is a refusal, not a clean result."
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 0,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 0,
+      "n_skipped_model_output": 0,
+      "skipped_model_output_why": {},
+      "results": [],
+      "worst": null
+    },
+    "claims": {
+      "check": "claim_vs_printed_p",
+      "alpha": 0.05,
+      "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+      "n_interpretations": 4,
+      "n_checked": 0,
+      "n_refused": 4,
+      "refusals": {
+        "the paper printed a threshold (p < x) rather than an exact p, so there is no number to compare": 1,
+        "the claim asserts 'not_supported'; only an assertion that the effect WAS found can contradict a p above alpha": 2,
+        "the sentence is hedged, which is the paper telling the reader not to over-read the result -- honest behavior is never the trigger": 1
+      },
+      "results": [
+        {
+          "check": "claim_vs_printed_p",
+          "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+          "ceiling": "suspicious",
+          "claim_quote": "The coexistence of graft-induced cholinergic and glutamatergic neurotransmission and a great capacity of lower motor neurons and other types of spinal neurons to regenerate were observed.",
+          "p_quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "source_locator": "Table 2, Combined (Wei-Lachin)",
+          "asserts": "supported",
+          "reported_p": 0.0001,
+          "stated_alpha": 0.05,
+          "hedged": false,
+          "severity": "indeterminate",
+          "applicable": false,
+          "why_not_checked": "the paper printed a threshold (p < x) rather than an exact p, so there is no number to compare",
+          "interpretation_id": "int_abstract_coexist",
+          "test_id": "t_weilachin_histology",
+          "location": "abstract"
+        },
+        {
+          "check": "claim_vs_printed_p",
+          "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+          "ceiling": "suspicious",
+          "claim_quote": "Because of limited animals, pharmacological neuromodulation requires further investigation.",
+          "p_quote": null,
+          "source_locator": null,
+          "asserts": "not_supported",
+          "reported_p": null,
+          "stated_alpha": 0.05,
+          "hedged": true,
+          "severity": "indeterminate",
+          "applicable": false,
+          "why_not_checked": "the claim asserts 'not_supported'; only an assertion that the effect WAS found can contradict a p above alpha",
+          "interpretation_id": "int_abstract_cere",
+          "test_id": null,
+          "location": "abstract"
+        },
+        {
+          "check": "claim_vs_printed_p",
+          "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+          "ceiling": "suspicious",
+          "claim_quote": "The combined results of the histological assessments revealed a significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95% CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation).",
+          "p_quote": "The combined result of the histological assessments shows significant superiority of the 'stimulus yes' group of animals versus the 'stimulus no' group (MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "source_locator": "Table 2, Combined (Wei-Lachin)",
+          "asserts": "supported",
+          "reported_p": 0.0001,
+          "stated_alpha": 0.05,
+          "hedged": true,
+          "severity": "indeterminate",
+          "applicable": false,
+          "why_not_checked": "the sentence is hedged, which is the paper telling the reader not to over-read the result -- honest behavior is never the trigger",
+          "interpretation_id": "int_stats_superiority",
+          "test_id": "t_weilachin_histology",
+          "location": "results"
+        },
+        {
+          "check": "claim_vs_printed_p",
+          "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+          "ceiling": "suspicious",
+          "claim_quote": "Although not statistically significant, compared with the two other groups, the CERE rats showed a clear tendency toward larger muscle fiber diameters, as represented and explained herein by the positive values in the chart.",
+          "p_quote": null,
+          "source_locator": null,
+          "asserts": "not_supported",
+          "reported_p": null,
+          "stated_alpha": 0.05,
+          "hedged": true,
+          "severity": "indeterminate",
+          "applicable": false,
+          "why_not_checked": "the claim asserts 'not_supported'; only an assertion that the effect WAS found can contradict a p above alpha",
+          "interpretation_id": "int_cere_tendency",
+          "test_id": null,
+          "location": "results"
+        }
+      ],
+      "worst": "indeterminate",
+      "n_contradictions": 0
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_computed": 0,
+    "n_asserted": 0,
+    "n_absent": 21,
+    "corroborated": true
+  },
+  "git_dirty": true,
+  "git_sha": "cd30cbac0c8a",
+  "prompt_sha256": "ab728557bdd0c064",
+  "registry_sha256": "0b06c178cea5ee68",
+  "backend_binary_version": "grok 1.0.13 (5e9a58528b76) [stable]",
+  "backend_default_model": "grok-4.6",
+  "sandbox_limitation": "Grok's `search_tool` cannot be denied: it is the only route to the forensic MCP tools. This run's sandbox is weaker than a Claude run's.",
+  "mode_requested": "parallel"
+}

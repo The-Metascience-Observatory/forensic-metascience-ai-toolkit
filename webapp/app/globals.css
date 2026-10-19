@@ -1,0 +1,481 @@
+:root, html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --fg: #1a1f26;
+  --muted: #5c6770;
+  --line: #d5dde5;
+  --accent: #1f6fbf;
+  --on-accent: #fff;
+  --hover: #eef1f5;
+  --focus: #e7f0fa;
+  --media-bg: #e8eaed;
+  --sev-impossible: #b42318;
+  --sev-highly: #c2410c;
+  --sev-suspicious: #a16207;
+  --sev-indeterminate: #0e7490;
+  --sev-consistent: #15803d;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1216;
+  --panel: #171c22;
+  --fg: #e8edf2;
+  --muted: #8b98a5;
+  --line: #2a323c;
+  --accent: #3d8fd1;
+  --on-accent: #fff;
+  --hover: #1d242c;
+  --focus: #1a222b;
+  --media-bg: #0b0e11;
+  --sev-impossible: #ff6b6b;
+  --sev-highly: #ff8a65;
+  --sev-suspicious: #e0b04a;
+  --sev-indeterminate: #6cb6c4;
+  --sev-consistent: #6bcb8b;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.45;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
+button, input, select {
+  font: inherit;
+  color: inherit;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+button { cursor: pointer; }
+button:disabled { opacity: 0.4; cursor: default; }
+button.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+table.grid { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.grid th, table.grid td {
+  text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+table.grid th.title-col,
+table.grid td.title-col {
+  white-space: normal;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.25;
+  max-width: 240px;
+  min-width: 180px;
+  width: 240px;
+  vertical-align: top;
+}
+table.grid th.title-col {
+  font-size: 11px;
+  font-weight: 600;
+}
+table.grid td.title-col a {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+table.grid th { color: var(--muted); font-weight: 600; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.03em; }
+table.grid th.stack {
+  white-space: normal;
+  line-height: 1.15;
+  max-width: 4.8em;
+  text-align: center;
+}
+/* "NON-IMAGE" does not fit the 4.8em stack; without the extra room the
+   browser breaks it after the hyphen and the header reads as three lines. */
+table.grid th.stack-wide { max-width: 7.2em; }
+button.sort-th {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  text-align: inherit;
+}
+button.sort-th:hover {
+  color: var(--fg);
+}
+table.grid tr:hover td { background: var(--hover); }
+.pill {
+  display: inline-block; padding: 1px 7px; border-radius: 10px;
+  font-size: 11px; border: 1px solid var(--line);
+}
+.muted { color: var(--muted); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.shell { display: flex; flex-direction: column; height: 100%; }
+.topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 14px; border-bottom: 1px solid var(--line);
+  background: var(--panel); flex-shrink: 0;
+}
+.page { padding: 18px 22px; overflow: auto; }
+.banner {
+  border: 1px solid var(--sev-highly); border-left: 3px solid var(--sev-highly);
+  padding: 8px 12px; border-radius: 4px; margin-bottom: 12px; max-width: 900px;
+}
+.xml-article { max-width: 720px; margin: 0 auto; padding: 24px 28px 80px;
+  font-size: 15px; line-height: 1.6; }
+/* A caption is the authors' text and must be quotable/markable, so it is set
+   apart from body prose without being made quieter than it. */
+.xml-article figure.xml-figure { margin: 14px 0; padding: 8px 12px;
+  border-left: 3px solid var(--line); background: var(--hover); }
+.xml-article figure.xml-figure figcaption { font-size: 13px; }
+.xml-article h1 { font-size: 22px; margin: 0 0 8px; }
+.xml-article h2 { font-size: 16px; margin: 22px 0 8px; }
+.xml-article table { border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.xml-article th, .xml-article td { border: 1px solid var(--line); padding: 3px 6px; }
+.xml-article .byline { color: var(--muted); }
+.xml-article .xml-table { margin: 16px 0; }
+table.sheet { border-collapse: collapse; font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; }
+table.sheet td { border: 1px solid var(--line); padding: 2px 6px; white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+table.sheet td.rowhead { color: var(--muted); background: var(--hover); text-align: right; }
+table.sheet td.hit { background: rgba(224, 176, 74, 0.35); outline: 1px solid var(--sev-suspicious); }
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+}
+/* Sits over the pdf.js canvas AND text layer, so it needs both a stacking
+   context above them and an opaque background to stay legible on either. */
+.source-view-toggle {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  z-index: 5;
+  display: inline-flex;
+  gap: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+/* `:not(.primary)` matters: this rule sits later in the file than
+   `button.primary` and carries the same specificity, so an unqualified
+   `background` here would beat it and leave `--on-accent` text on a panel
+   background -- the selected label turns invisible. */
+.source-view-toggle button:not(.primary) {
+  background: var(--panel);
+}
+.source-view-toggle button {
+  border-radius: 0;
+  padding: 3px 10px;
+  font-size: 12px;
+}
+.source-view-toggle button + button { border-left: 0; }
+/* Same corner as the view toggle, sitting to its left when both are shown. */
+.pdf-zoom {
+  position: absolute;
+  top: 8px;
+  z-index: 5;
+  display: inline-flex;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.pdf-zoom button {
+  background: var(--panel);
+  border-radius: 0;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pdf-zoom button + button { border-left: 0; }
+.journal-title { font-style: italic; }
+.finding-flags {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  gap: 1px 14px;
+  margin-top: 8px;
+  align-items: start;
+  justify-content: start;
+  width: max-content;
+}
+.finding-flags-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.finding-flags label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.finding-flags input { margin: 0; }
+.split {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.split.dragging { user-select: none; cursor: col-resize; }
+.split-left {
+  min-width: 0;
+  overflow: auto;
+  padding: 10px;
+}
+.split-right {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.source-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.source-col.dragging { user-select: none; cursor: row-resize; }
+/* A row-resize drag INSIDE the right column (the image item page splits the
+   evidence column into a comparator and a PDF pane). */
+.split-right.dragging { user-select: none; cursor: row-resize; }
+.exhibit-strip {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 8px 8px 10px;
+  background: var(--media-bg);
+}
+.exhibit-open {
+  font-size: 12px;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+.exhibit-link {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+}
+.exhibit-media {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.exhibit-link img.exhibit-media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.exhibit-strip video.exhibit-media {
+  flex: 0 1 auto;
+  max-height: 40%;
+  width: 100%;
+}
+.pdf-pane {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pdf-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 28px 24px 8px;
+  /* Last-resort fallback only. PdfPane sets the real per-page value on each
+     page wrapper, which wins by being nearer the text layer. It must NOT be
+     declared on .textLayer itself: a custom property on the element beats one
+     inherited from the wrapper, which would pin every page to scale 1 and
+     bring back the unselectable text this replaced. */
+  --scale-factor: 1;
+}
+.pdf-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.pdf-finding {
+  position: absolute;
+  border-radius: 2px;
+}
+.pdf-finding-focus {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.textLayer.pdf-text-layer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  line-height: 1;
+  z-index: 2;
+  opacity: 1;
+  transform-origin: 0 0;
+  caret-color: CanvasText;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+.textLayer.pdf-text-layer :is(span, br) {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0 0;
+}
+.textLayer.pdf-text-layer ::selection {
+  background: color-mix(in srgb, AccentColor, transparent 75%);
+}
+.pdf-find {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.pdf-find input {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+.pdf-hit {
+  position: absolute;
+  background: rgba(224, 176, 74, 0.35);
+  border-radius: 2px;
+}
+.pdf-hit-current {
+  background: rgba(61, 143, 209, 0.4);
+}
+mark.html-hit {
+  background: rgba(224, 176, 74, 0.35);
+  color: inherit;
+  outline: 1px solid var(--sev-suspicious);
+  padding: 0;
+}
+mark.html-hit-current {
+  background: rgba(61, 143, 209, 0.4);
+  outline: 2px solid var(--accent);
+}
+mark.xml-hit {
+  color: inherit;
+  padding: 0;
+}
+.split-gutter {
+  flex: 0 0 8px;
+  cursor: col-resize;
+  background: var(--line);
+  touch-action: none;
+  position: relative;
+}
+.split-gutter::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
+  background: var(--muted);
+}
+.split-gutter:hover,
+.split-gutter:focus-visible,
+.split-gutter.dragging {
+  background: var(--accent);
+  outline: none;
+}
+.split-gutter:hover::after,
+.split-gutter:focus-visible::after,
+.split-gutter.dragging::after {
+  background: var(--on-accent);
+}
+.split-gutter-row {
+  cursor: row-resize;
+}
+.split-gutter-row::after {
+  width: 32px;
+  height: 2px;
+}
+table.grid th.review-status,
+table.grid td.review-status {
+  position: sticky;
+  right: 60px;
+  z-index: 1;
+  background: var(--panel);
+  min-width: 8em;
+  box-shadow: -8px 0 8px -8px var(--line);
+}
+table.grid th.review-go,
+table.grid td.review-go {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  width: 60px;
+  min-width: 60px;
+  text-align: center;
+  padding: 4px 8px;
+  background: var(--panel);
+}
+table.grid tr:hover td.review-status,
+table.grid tr:hover td.review-go { background: var(--hover); }
+.review-go-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+}
+.review-go-link:hover { text-decoration: none; filter: brightness(1.08); }
+.review-go-link svg { display: block; }
+
+.xml-article figure.xml-figure img { display: block; max-width: 100%; height: auto; margin: 8px auto; }
+.xml-article figure.xml-figure { scroll-margin-top: 12px; }
+.xml-article { width: 100%; box-sizing: border-box; }
+.xml-navigation { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 6px 12px; font-size: 12px; }
+.xml-navigation select { max-width: 240px; }
+.xml-source-note { margin: 3px 12px; font-size: 12px; }
+.xml-article figure.xml-figure figcaption { white-space: pre-line; }
+.xml-image-overlay { display: block; position: relative; width: fit-content; max-width: 100%; margin: 8px auto; }
+.xml-article figure.xml-figure .xml-image-overlay img { margin: 0; }
+.xml-image-overlay > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+
+/* Landing-page project deletion: destructive, so visibly different. */
+button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible); }
+.delete-plan {
+  margin-top: 14px; padding: 12px 14px; max-width: 900px;
+  border: 1px solid var(--sev-impossible); border-radius: 6px;
+}
+.delete-progress {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000;
+  background: var(--bg); border-top: 1px solid var(--border, #8884);
+  box-shadow: 0 -2px 8px #0002; padding: 6px 12px; font-size: 12px;
+}
+.delete-progress-row { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.delete-progress-name { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 40%; }
+.delete-progress-bar { flex: 1 1 auto; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+.delete-progress-close { padding: 0 6px; }

@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+# Every env file and every backup of one, at any depth. `.env` alone let
+# `.env.bak.neon.20260912` (a live Neon password) reach the public repo.
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Claude Code: settings, preview config and session worktrees are all
+# per-machine and personal -- nothing in .claude/ is shared.
+.claude/
+
+# Review workbench: node deps, the generated index and local settings
+webapp/node_modules/
+webapp/data/index.json
+webapp/data/settings.json
+webapp/data/*.lock
+webapp/.env*.local
+webapp/public/pdf.worker.min.mjs
+# Every Next build directory (.next, .next-dev, .next-review and each QA/audit
+# build). No trailing slash: some are symlinks to the data disk, and `dir/`
+# matches only real directories.
+webapp/.next*
+# TypeScript's incremental-compile cache
+webapp/*.tsbuildinfo
+
+run_logs
+run_logs/*
+
+# Local scratch: measurement scripts and dated memos. Untracked 2026-09-02
+# (392 files, 102 MB, 44 MB of non-LFS binaries, read by nothing); the files
+# stay on disk. Four source docstrings cite memos here by path and say so.
+scratchpad/
+
+# Local run outputs and scratch at the repository root (GBs; never committed)
+/artifacts/
+/outputs/
+/tmp/
+
+.analysis_runs/
+
+# Downloaded third-party image benchmarks and generated results (see docs/datasets)
+.image_datasets
+.image_runs
+
+# Downloaded copy-paste fixtures, frozen baselines and generated evaluations
+.copy_paste_evaluation/
+copy_paste_detector/dist/

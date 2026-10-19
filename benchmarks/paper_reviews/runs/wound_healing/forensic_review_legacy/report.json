@@ -1,0 +1,2195 @@
+{
+  "headline": {
+    "statement": "Results and Discussion report whole-cohort wound-complication rates of 12%, 10%, 18% and 20% by reprinting Table 1\u2019s event counts as percentages of the same 397 women, whose table rates are 3%, 2.5%, 4.5% and 5%.",
+    "severity": "suspicious",
+    "rests_on": "logical_necessity",
+    "evidence": "Table 1: \u201cYes 12(3)\u201d, \u201cYes 10(2.5)\u201d, \u201cYes 18(4.5)\u201d, \u201cYes 20(5)\u201d of \u201cn=397\u201d. Results: \u201cwound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.\u201d Discussion repeats the same four percentages.",
+    "reproduction": "metascience check-count-percent --count 12 --percentage 12 --n 397 --decimals 0",
+    "plain": "The authors wrote that 12, 10, 18 and 20 percent of all women had each wound problem, but their own table shows those were the numbers of women, not the percentages \u2014 the table rates are about 3, 2.5, 4.5 and 5 percent.",
+    "reproduction_kind": "command",
+    "reproduction_valid": true
+  },
+  "findings": [
+    {
+      "rank": 1,
+      "title": "Results and Discussion reprint Table 1 event counts as whole-cohort percentages",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Results Description and Discussion, whole-cohort wound-complication rates vs Table 1",
+      "reported": "Results: \u201cwound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.\u201d Discussion repeats \u201cthe percentage of wound gapping occurred in 12% of cases \u2026 wound infection occurred in 20% of cases.\u201d Table 1, n=397: gapping 12 (3), seroma 10 (2.5), erythema 18 (4.5), infection 20 (5).",
+      "computed": "12/397 = 3.02%, which matches Table 1\u2019s printed 3% and not the prose 12% (implied denominator about 100, not 397). 10/397 = 2.52% vs prose 10%; 20/397 = 5.04% vs prose 20%. Stage 1: 18/397 prints as 4.5%. The Abstract reports the Table 4 p-values and odds ratios, not these inflated percentages.",
+      "assumptions": "The Results sentence states the rates are of the whole cohort; Table 1 gives n=397 after exclusion of 3 cases. The implied base of 100 is not a sample size the paper prints, which rules out a silent subgroup denominator. A 0-decimal 12% is attainable at n=397 as some other count, so this is a contradiction between two printed renderings of the same four numerators, not a granularity impossibility. Likeliest innocent reading: the event counts were pasted into a percentage sentence twice.",
+      "warrant": "logical",
+      "reproduction": "metascience check-count-percent --count 12 --percentage 12 --n 397 --decimals 0",
+      "stage1_finding_ids": [
+        "prose_counts_reported_as_percentages"
+      ],
+      "plain": "In two narrative sections the authors say 12, 10, 18 and 20 percent of the whole group had each wound problem. Their own table uses those same four numbers as head-counts, and the true shares of the 397 women are about four times smaller. A reader of the story will overstate how common the complications were; the head-to-head comparison between suture methods is a separate set of figures and is not changed by this.",
+      "passages": [
+        {
+          "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+          "id": "a",
+          "role": "said",
+          "label": "Results, Description"
+        },
+        {
+          "quote": "Yes 12(3)",
+          "id": "b",
+          "role": "against",
+          "label": "Table 1, Wound Gapping Yes"
+        }
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "The four whole-cohort complication rates in Results and Discussion are fourfold higher than Table 1; the interrupted-versus-continuous tests in Table 4 are unchanged."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 2,
+      "title": "Table 2 BMI range starts at 23.0 while Methods excludes BMI below 30",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, BMI row vs Patients and methods inclusion criteria",
+      "reported": "Methods: \u201cwith BMI>30 (so, we do not have a group of women with BMI below 30 as our focus in the present research was to assess the obese women)\u201d; exclusions include \u201cwomen with BMI<30\u201d. Table 2: \u201cBMI 23.0\u201345.0 34.5\u00b13.6 34.0\u201d.",
+      "computed": "A contiguous Methods span that the sample contains no woman with BMI below 30 cannot both be true with a printed BMI minimum of 23.0. Mean 34.5 and median 34.0 remain compatible with an obese sample.",
+      "assumptions": "none beyond the paper's own statements. Innocent readings include a mistyped lower bound (33.0 printed as 23.0) or unreported protocol deviations. Stage 1 confirmed the 23.0\u201345.0 range on the PDF page image.",
+      "warrant": "paper_commitment",
+      "reproduction": "not_computational: no metascience command applies",
+      "stage1_finding_ids": [
+        "bmi_range_vs_inclusion"
+      ],
+      "plain": "The methods say every woman had a body-mass index above 30 \u2014 that is the paper\u2019s own rule for who was obese and who was enrolled \u2014 yet the summary table lists a lowest value of 23. Those two statements cannot both be right. The average and midpoint still look like an obese group, so a mistyped 23 for 33 is a live possibility, but the printed range as it stands includes women the authors said they did not have.",
+      "passages": [
+        {
+          "quote": "with BMI>30 (so, we do not have a group of women with BMI below 30 as our focus in the present research was to assess the obese women)",
+          "id": "a",
+          "role": "said",
+          "label": "Patients and methods, inclusion"
+        },
+        {
+          "quote": "BMI 23.0\u201345.0 34.5\u00b13.6 34.0",
+          "id": "b",
+          "role": "against",
+          "label": "Table 2, BMI row"
+        }
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that the analysed cohort is obese women with BMI>30 is incompatible with the printed BMI range starting at 23.0."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not_computational:'",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 3,
+      "title": "Table 3 subcutaneous-depth p=.127 does not match a t-test on the printed means",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Table 3, Subcutaneous tissue depth row",
+      "reported": "\u201cSubcutaneoustissuedepth(cm) 4.5\u00b11 4.4\u00b10.9.127\u201d for continuous vs interrupted.",
+      "computed": "Welch two-tailed p = 0.295708 (t = 1.0471, df = 390.28); Student two-tailed p = 0.295573 (t = 1.0474, df = 395); one-tailed p = 0.147854. None matches reported p = 0.127 (p_matches false; difference 0.169). Both the printed and the recalculated values are above .05.",
+      "assumptions": "Group sizes n=198 and n=199 are taken from Table 4 column headers and Methods, not printed on Table 3 itself. The paper never names the test; Table 3 presents mean\u00b1SD with a p, and the other six Table 3 rows match independent t-tests, which is why a t-test is the working reading. A rank-sum test is not named and is not ruled out.",
+      "warrant": "logical",
+      "reproduction": "metascience ttest --mean1 4.5 --sd1 1.0 --n1 198 --mean2 4.4 --sd2 0.9 --n2 199 --reported-p 0.127 --decimals-p 3 --decimals-mean 1 --decimals-sd 0",
+      "stage1_finding_ids": [
+        "table3_subcut_depth_p"
+      ],
+      "plain": "For thickness of the fat layer under the skin, the paper prints group averages 4.5 versus 4.4 centimetres and a probability of .127 that such a difference arose by chance. Recalculating from those averages and spreads gives a probability of about .30, not .127. Both figures still count as \u201cnot a statistically significant difference,\u201d so the claim that the two suture groups started similar on this measure is unchanged. The paper never says which test produced .127.",
+      "passages": [
+        {
+          "quote": "Subcutaneoustissuedepth(cm) 4.5\u00b11 4.4\u00b10.9.127",
+          "id": "a",
+          "role": "source",
+          "label": "Table 3, Subcutaneous tissue depth"
+        }
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Both the printed p=.127 and the recalculated p\u2248.296 are non-significant; the baseline \u201cno difference\u201d claim is unchanged."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience ttest [OPTIONS] MEAN1 SD1 N1 MEAN2 SD2 N2\nTry 'metascience ttest --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option:",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 4,
+      "title": "Table 1 attributes two lost-to-follow-up cases to the interrupted arm, which lost one",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 1, Interrupted row vs Figure 1 and Methods",
+      "reported": "Table 1: \u201cInterrupted 199(50.1)afterlostfollowupof2women\u201d and the same \u201cafter lost follow up of 2 women\u201d clause on the Continuous 198 (49.9) row. Methods: \u201cTwo cases from the continuous group and one case from the interrupted group did not come for the follow up after CS.\u201d Figure 1: interrupted lost N=1, analysed N=199; continuous lost N=2, analysed N=198.",
+      "computed": "Stage 1: 200 minus 1 = 199; 200 minus 2 = 198. Analysed 199 matches one loss, not two. 199/397 = 50.1% is internally consistent. Stage 1 summation batch: 1+199=200 and 2+198=200 reconcile; the error is the copied \u201c2 women\u201d clause on the interrupted row.",
+      "assumptions": "none beyond the paper's own statements. Innocent reading: the Continuous-row clause was copied onto the Interrupted row.",
+      "warrant": "logical",
+      "reproduction": "not_computational: no metascience command applies",
+      "stage1_finding_ids": [
+        "interrupted_lost_followup_two_vs_one"
+      ],
+      "plain": "The flow diagram and the methods say one woman in the interrupted-suture group did not return, leaving 199 analysed. Table 1 still lists 199 women but writes that two were lost \u2014 the same \u201clost follow up of 2 women\u201d phrase already used, correctly, for the other group. The analysed numbers add up; the phrase on that row does not.",
+      "passages": [
+        {
+          "quote": "Interrupted 199(50.1)afterlostfollowupof2women",
+          "id": "a",
+          "role": "said",
+          "label": "Table 1, Interrupted row"
+        },
+        {
+          "quote": "Two cases from the continuous group and one case from the interrupted group did not come for the follow up after CS",
+          "id": "b",
+          "role": "against",
+          "label": "Patients and methods, randomization paragraph"
+        }
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The interrupted arm\u2019s analysed n=199 matches one loss, not two; no outcome comparison uses a denominator of 198 for that arm."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'not_computational:'",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Publisher XML",
+      "reason": "extract_xml: no XML full text at the paper path; sweep used PDF + body.md."
+    },
+    {
+      "location": "Figure 1 image crop",
+      "reason": "extract_figures was denied. CONSORT counts were read from the markdown extraction of Figure 1 and checked as sums, not from a figure-pixel pass."
+    },
+    {
+      "location": "Supplementary files",
+      "reason": "No supplementary data files were present in the paper directory."
+    },
+    {
+      "location": "Table 2 vs Table 3 vs Table 5 pooled means",
+      "reason": "No registered tool checks whether two group means/SDs pool to the printed overall mean."
+    },
+    {
+      "location": "A-priori power calculation",
+      "reason": "The paper prints none. verify_power_analysis cannot run without stated inputs."
+    },
+    {
+      "location": "ClinicalTrials.gov NCT03354078",
+      "reason": "The identifier is printed. Registration contents and date versus the June\u2013December 2017 enrolment window were not retrieved."
+    },
+    {
+      "location": "Table 3 check_table cells",
+      "reason": "check_table ran 0 of 18 dispatched checks because group n was not in Table 3 column headers. Independent t-tests were run separately with n1=198, n2=199."
+    },
+    {
+      "location": "GRIM on n=397 means to 1 decimal",
+      "reason": "grim_check refused for no discriminating power. Not a pass."
+    },
+    {
+      "location": "Discussion statistics from cited trials",
+      "reason": "Pain 0.17 vs 0.51 p=.04, operative time 24.6 vs 32.9 min p<.0001, and De Vivo ORs belong to cited papers, not this dataset."
+    },
+    {
+      "location": "detect_tortured_phrases / image duplication",
+      "reason": "Those detectors were not available or were permission-denied on this backend."
+    },
+    {
+      "location": "table rows Age (years), Age (years), BMI, BMI, Gestational age at time of CS, Gestational age at time of CS and 6 more",
+      "reason": "check_sd_or_se not run: check_sd_or_se needs n and this cell carries none; supply n for this row (the participants paragraph or the table footnote usually states it)",
+      "n_cells": 12,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows No. of subcutaneous sutures, No. of subcutaneous sutures",
+      "reason": "grim_check not run: grim_check needs n and this cell carries none; supply n for this row (the participants paragraph or the table footnote usually states it)",
+      "n_cells": 2,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows No. of subcutaneous sutures, No. of subcutaneous sutures",
+      "reason": "grimmer_check not run: grimmer_check needs n and this cell carries none; supply n for this row (the participants paragraph or the table footnote usually states it)",
+      "n_cells": 2,
+      "source": "dispatcher"
+    },
+    {
+      "location": "table rows No. of subcutaneous sutures, No. of subcutaneous sutures",
+      "reason": "sprite_reconstruct not run: sprite_reconstruct needs n and this cell carries none; supply n for this row (the participants paragraph or the table footnote usually states it)",
+      "n_cells": 2,
+      "source": "dispatcher"
+    }
+  ],
+  "limitations": [
+    "quote_not_located fired on all four Stage-1 accusations; every quoted span is present in the markdown extraction (PDF extraction collapses spaces), so the marker is an instrument fact, not a missing source.",
+    "Figures were not read as images. CONSORT flow counts were taken from the markdown extraction of Figure 1 and checked as sums; no other figure carried unique numeric results.",
+    "No publisher XML and no supplementary data files were available. ClinicalTrials.gov NCT03354078 was not retrieved, so registration timing and outcome correspondence are unchecked.",
+    "The paper has no statistical-methods paragraph (no named t-test, chi-square, logistic model, tails, or software), so the Table 3 subcutaneous-depth mismatch cannot be pinned to a named procedure.",
+    "Whether similar reporting slips appear in other papers by the same authors, and how these wound-complication rates sit against other trials in the same comparison, are outside the reach of a single-paper check.",
+    "RIVETS and standalone check_summation were permission-denied on this recheck; the depth p-value was re-run with recalc_independent_t, and lost-to-follow-up arithmetic is taken from Stage-1 summation-batch output."
+  ],
+  "coverage_summary": {
+    "stats_found": 118,
+    "stats_checked": 96,
+    "tools_run": [
+      "extract_pdf",
+      "extract_xml",
+      "parse_table",
+      "parse_cells_typed",
+      "parse_cells_as_declared",
+      "check_summation_batch",
+      "check_count_percent",
+      "check_estimate_ci",
+      "recalc_chi_squared",
+      "recalc_independent_t",
+      "grim_check",
+      "grimmer_check",
+      "check_sd_range",
+      "check_table",
+      "csf_test",
+      "bayesian_table1_dispersion",
+      "statcheck",
+      "multiplicity_report",
+      "detect_duplication",
+      "flag_round_n",
+      "check_effect_plausibility",
+      "required_n"
+    ],
+    "tables_checked": [
+      "Table 1",
+      "Table 2",
+      "Table 3",
+      "Table 4",
+      "Table 5",
+      "Table 6",
+      "Figure 1 CONSORT"
+    ],
+    "completeness": {
+      "n_items": 230,
+      "n_refused": 124,
+      "n_outstanding": 106,
+      "by_disposition": {
+        "refused:not_a_statistic": 21,
+        "refused:undeclared_variable": 22,
+        "refused:missing_input": 35,
+        "refused:no_applicable_check": 46,
+        "OUTSTANDING": 106
+      },
+      "complete": false,
+      "n_table_items": 124,
+      "n_body_items": 106,
+      "n_supplement_items": 0,
+      "n_supplement_table_items": 0,
+      "n_supplement_body_items": 0,
+      "n_checked": null,
+      "n_checked_measurable": false,
+      "n_checked_unmeasured_because": "no persisted item identity joins a tool call back to a manifest row, so how many items were CHECKED cannot be counted. This is not a count of zero.",
+      "gate_passed": false,
+      "gate_enforced": false,
+      "gate_message": "106 of 230 checkable item(s) have NO disposition. Every item must be either checked or refused with a reason from the closed vocabulary before this run is complete.\n\nOutstanding (first 20):\n  body:3414  [named_equality]  'OR\u00bc9.429'  in body\n  body:4922  [percentage]  '3%'  in body\n  body:10933  [named_equality]  'N= 411'  in body\n  body:10951  [named_equality]  'N =11'  in body\n  body:10992  [named_equality]  'N= 400'  in body\n  body:11069  [named_equality]  'N=200'  in body\n  body:11115  [named_equality]  'N=200'  in body\n  body:11121  [named_equality]  'N=200'  in body\n  body:11157  [named_equality]  'N=200'  in body\n  body:11391  [named_equality]  'N= 1'  in body\n  body:11398  [named_equality]  'N= 2'  in body\n  body:11423  [named_equality]  'N=199'  in body\n  body:11441  [named_equality]  'N=198'  in body\n  body:12621  [named_equality]  'n\u00bc397'  in body\n  body:13677  [mean_pm_prose]  '30.3\u00b13.3'  in body\n  body:13705  [mean_pm_prose]  '34.5\u00b13.6'  in body\n  body:13807  [mean_pm_prose]  '37.7\u00b11.1'  in body\n  body:13908  [mean_pm_prose]  '6.3\u00b12.9'  in body\n  body:13949  [mean_pm_prose]  '42.8\u00b110.4'  in body\n  body:13981  [percentage]  '12%'  in body",
+      "note": "230 checkable item(s) enumerated (0 checked, 0.0%; 124 refused; 106 outstanding).\n     46  refused: no_applicable_check -- the item's kind routes to no check in the dispatch table -- a gap in the toolkit, not a property of the paper\n     35  refused: missing_input -- a required input (almost always the denominator n) is not available for this item\n     22  refused: undeclared_variable -- the cell is `ambiguous` and no variable family was declared, so its meaning is unknown and no tool may run on it\n     21  refused: not_a_statistic -- a row or column label, a heading, or prose -- correctly not checked\n    106  OUTSTANDING -- present in the paper and neither checked nor refused. These are invisible in the findings, and a reader cannot tell them from a clean pass."
+    },
+    "computation_audit": {
+      "n_findings": 42,
+      "by_kind": {
+        "not_computational": 4,
+        "tool": 38
+      },
+      "n_unauditable": 3,
+      "unauditable": [
+        {
+          "id": "bmi_range_vs_inclusion",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 4 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "prose_counts_reported_as_percentages",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 14 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "interrupted_lost_followup_two_vs_one",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 6 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        }
+      ],
+      "n_ledger": 0,
+      "ledger": [],
+      "by_code": {
+        "number_under_not_computational": 3
+      },
+      "code_meanings": {
+        "number_under_not_computational": "declared no arithmetic and then presented some"
+      },
+      "paper_readable": true,
+      "n_transcribed": 0,
+      "n_derived": 0,
+      "note": "42 finding(s): 38 computed by a registered tool, 4 resting on no arithmetic at all, 0 on arithmetic no tool covers, 0 on arithmetic a tool could have done, 0 on the legacy `manual` label. 3 declare no arithmetic and then present some. Nothing here is deleted: an unrecorded number is not a fabricated one, and the pattern of what needed rescuing is itself worth reading."
+    },
+    "statistics_register": {
+      "absent": false,
+      "rows": [
+        {
+          "source": "abstract",
+          "kind": "p_value",
+          "values": {
+            "p_gapping": 0.019,
+            "p_seroma": 0.011,
+            "p_erythema": 0.015,
+            "p_infection": 0.001
+          },
+          "quote": "p values=.019, .011, .015, and .001, in consecutive order",
+          "checkable": {
+            "tools": [
+              "recalc_chi_squared",
+              "check_estimate_ci"
+            ]
+          },
+          "id": "abs_p",
+          "location": "Abstract, Results",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "estimate_ci",
+          "values": {
+            "or_gapping": 5.239,
+            "or_seroma": 9.429,
+            "or_erythema": 3.709,
+            "or_infection": 6.136
+          },
+          "quote": "odds ratio in wound gapping=5.239, wound seroma OR=9.429, wound erythema OR=3.709, and wound infection OR=6.136",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "recalc_chi_squared"
+            ]
+          },
+          "id": "abs_or",
+          "location": "Abstract, Results",
+          "duplicate_of": "t4_ors",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_recruited": 400
+          },
+          "quote": "Four hundred pregnant women were recruited for this study",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "n400",
+          "location": "Patients and methods",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 400"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_per_arm": 200
+          },
+          "quote": "The two groups were randomly selected, 200 in each group.",
+          "checkable": {
+            "tools": [
+              "check_summation",
+              "flag_round_n"
+            ]
+          },
+          "id": "n200",
+          "location": "Patients and methods",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "lost_continuous": 2,
+            "lost_interrupted": 1,
+            "n_continuous": 198,
+            "n_interrupted": 199
+          },
+          "quote": "The net of the continuous group was 198 and that of the interrupted group was 199 ladies",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "n_analysed",
+          "location": "Patients and methods",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 2, 1"
+            ]
+          }
+        },
+        {
+          "source": "figure",
+          "kind": "count",
+          "values": {
+            "assessed": 411,
+            "excluded": 11,
+            "randomized": 400
+          },
+          "quote": "Assessed (N= 411) Excluded (N =11) Refused to participate Randomized N= 400",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "consort_top",
+          "location": "Figure 1",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 198,
+            "pct": 49.9
+          },
+          "quote": "Continuous 198 (49.9) after lost follow up of 2 women",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_cont",
+          "location": "Table 1, Continuous",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 199,
+            "pct": 50.1
+          },
+          "quote": "Interrupted 199 (50.1) after lost follow up of 2 women",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_int",
+          "location": "Table 1, Interrupted",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 12,
+            "pct": 3
+          },
+          "quote": "Yes 12 (3)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_gap_y",
+          "location": "Table 1, Wound Gapping Yes",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 385,
+            "pct": 97
+          },
+          "quote": "No 385 (97)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_gap_n",
+          "location": "Table 1, Wound Gapping No",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 10,
+            "pct": 2.5
+          },
+          "quote": "Yes 10 (2.5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_ser_y",
+          "location": "Table 1, Wound seroma Yes",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 387,
+            "pct": 97.5
+          },
+          "quote": "No 387 (97.5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_ser_n",
+          "location": "Table 1, Wound seroma No",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 18,
+            "pct": 4.5
+          },
+          "quote": "Yes 18 (4.5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_ery_y",
+          "location": "Table 1, Wound erythema Yes",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 379,
+            "pct": 95.5
+          },
+          "quote": "No 379 (95.5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_ery_n",
+          "location": "Table 1, Wound erythema No",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 20,
+            "pct": 5
+          },
+          "quote": "Yes 20 (5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_inf_y",
+          "location": "Table 1, Wound infection Yes",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 377,
+            "pct": 95
+          },
+          "quote": "No 377 (95)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_inf_n",
+          "location": "Table 1, Wound infection No",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 42,
+            "pct": 10.6
+          },
+          "quote": "Yes 42 (10.6)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_any_y",
+          "location": "Table 1, Wound complications Yes",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n": 355,
+            "pct": 89.4
+          },
+          "quote": "No 355 (89.4)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t1_any_n",
+          "location": "Table 1, Wound complications No",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "percentage",
+          "values": {
+            "gapping_pct": 12,
+            "seroma_pct": 10,
+            "erythema_pct": 18,
+            "infection_pct": 20
+          },
+          "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+          "checkable": {
+            "tools": [],
+            "reason": "these percentages contradict Table 1 n (%); the contradiction is logical, not a GRIM question"
+          },
+          "id": "prose_pct_results",
+          "location": "Results, Description",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "percentage",
+          "values": {
+            "gapping_pct": 12,
+            "seroma_pct": 10,
+            "erythema_pct": 18,
+            "infection_pct": 20
+          },
+          "quote": "the percentage of wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, and wound erythema occurred in 18% of cases, while wound infection occurred in 20% of cases.",
+          "checkable": {
+            "tools": [],
+            "reason": "duplicate of the Results 12%/10%/18%/20% misreporting"
+          },
+          "id": "prose_pct_disc",
+          "location": "Discussion",
+          "duplicate_of": "prose_pct_results",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 30.3,
+            "SD": 3.3,
+            "min": 25.0,
+            "max": 35.0,
+            "median": 30.0
+          },
+          "quote": "Age (years) 25.0\u201335.0 30.3\u00b13.3 30.0",
+          "checkable": {
+            "tools": [
+              "grim_check",
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_age",
+          "location": "Table 2, Age",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 25, 35, 30"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 34.5,
+            "SD": 3.6,
+            "min": 23.0,
+            "max": 45.0,
+            "median": 34.0
+          },
+          "quote": "BMI 23.0\u201345.0 34.5\u00b13.6 34.0",
+          "checkable": {
+            "tools": [
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_bmi",
+          "location": "Table 2, BMI",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": false,
+            "problems": [
+              "value(s) not present in the row's own quote: 23, 45, 34"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 37.7,
+            "SD": 1.1,
+            "min": 35.0,
+            "max": 39.7,
+            "median": 38.0
+          },
+          "quote": "Gestational age at time of CS 35.0\u201339.7 37.7\u00b11.1 38.0",
+          "checkable": {
+            "tools": [
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_ga",
+          "location": "Table 2, GA",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 35, 38"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 6.3,
+            "SD": 2.9,
+            "min": 3.0,
+            "max": 13.0,
+            "median": 5.0
+          },
+          "quote": "No. of sutures subcutaneous 3.0\u201313.0 6.3\u00b12.9 5.0",
+          "checkable": {
+            "tools": [
+              "grim_check",
+              "grimmer_check",
+              "sprite_reconstruct",
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_sut",
+          "location": "Table 2, sutures",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 3, 13, 5"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 42.8,
+            "SD": 10.4,
+            "min": 30.0,
+            "max": 60.0,
+            "median": 40.0
+          },
+          "quote": "Operative time (min) 30.0\u201360.0 42.8\u00b110.4 40.0",
+          "checkable": {
+            "tools": [
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_opt",
+          "location": "Table 2, operative time",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 30, 60, 40"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 658.8,
+            "SD": 165.2,
+            "min": 350.0,
+            "max": 1000.0,
+            "median": 650.0
+          },
+          "quote": "Estimated blood loss (cc) 350.0\u20131000.0 658.8\u00b1165.2 650.0",
+          "checkable": {
+            "tools": [
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_ebl",
+          "location": "Table 2, EBL",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 350, 1000, 650"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M": 4.4,
+            "SD": 1.0,
+            "min": 2.0,
+            "max": 6.5,
+            "median": 4.5
+          },
+          "quote": "Subcutaneous tissue depth (cm) 2.0\u20136.5 4.4\u00b11.0 4.5",
+          "checkable": {
+            "tools": [
+              "check_sd_range"
+            ]
+          },
+          "id": "t2_dep",
+          "location": "Table 2, depth",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 1, 2"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 30.2,
+            "SD1": 3.2,
+            "M2": 30.4,
+            "SD2": 3.4,
+            "p": 0.444
+          },
+          "quote": "Age (years) 30.2\u00b13.2 30.4\u00b13.4.444",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t3_age",
+          "location": "Table 3, Age",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 3.4, 0.444"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 34.8,
+            "SD1": 3.9,
+            "M2": 34.2,
+            "SD2": 3.3,
+            "p": 0.101
+          },
+          "quote": "BMI 34.8\u00b13.9 34.2\u00b13.3.101",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t3_bmi",
+          "location": "Table 3, BMI",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 3.3, 0.101"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 37.6,
+            "SD1": 1.1,
+            "M2": 37.8,
+            "SD2": 1.0,
+            "p": 0.114
+          },
+          "quote": "GestationalageattimeofCS 37.6\u00b11.1 37.8\u00b11.114",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t3_ga",
+          "location": "Table 3, GA",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 1, 0.114"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 6.3,
+            "SD1": 3.0,
+            "M2": 6.3,
+            "SD2": 2.8,
+            "p": 0.791
+          },
+          "quote": "No.ofsubcutaneoussutures 6.3\u00b13 6.3\u00b12.8.791",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t",
+              "grim_check"
+            ]
+          },
+          "id": "t3_sut",
+          "location": "Table 3, sutures",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 2.8, 0.791"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 40.1,
+            "SD1": 9.2,
+            "M2": 45.5,
+            "SD2": 10.8,
+            "p": "<.001"
+          },
+          "quote": "Operativetime(min) 40.1\u00b19.2 45.5\u00b110.8 <.001",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t",
+              "check_effect_plausibility"
+            ]
+          },
+          "id": "t3_opt",
+          "location": "Table 3, operative time",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 644.4,
+            "SD1": 164.2,
+            "M2": 673.1,
+            "SD2": 165.4,
+            "p": 0.084
+          },
+          "quote": "Estimatedbloodloss(cc) 644.4\u00b1164.2 673.1\u00b1165.4.084",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t3_ebl",
+          "location": "Table 3, EBL",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 165.4, 0.084"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 4.5,
+            "SD1": 1.0,
+            "M2": 4.4,
+            "SD2": 0.9,
+            "p": 0.127
+          },
+          "quote": "Subcutaneoustissuedepth(cm) 4.5\u00b11 4.4\u00b10.9.127",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t3_dep",
+          "location": "Table 3, depth",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 0.9, 0.127"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "n_c": 10,
+            "pct_c": 5.1,
+            "n_i": 2,
+            "pct_i": 1,
+            "p": 0.019,
+            "or": 5.239,
+            "ci_lo": 1.133,
+            "ci_hi": 24.227
+          },
+          "quote": "Wound gapping 10 (5.1) 2 (1) .019 5.239 1.133\u201324.227",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "recalc_chi_squared",
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t4_ors",
+          "location": "Table 4, Wound gapping",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "n_c": 9,
+            "pct_c": 4.5,
+            "n_i": 1,
+            "pct_i": 0.5,
+            "p": 0.011,
+            "or": 9.429,
+            "ci_lo": 1.183,
+            "ci_hi": 75.138
+          },
+          "quote": "Wound seroma 9 (4.5) 1 (0.5) .011 9.429 1.183\u201375.138",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "recalc_chi_squared",
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t4_ser",
+          "location": "Table 4, Wound seroma",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "n_c": 14,
+            "pct_c": 7.1,
+            "n_i": 4,
+            "pct_i": 2,
+            "p": 0.015,
+            "or": 3.709,
+            "ci_lo": 1.199,
+            "ci_hi": 11.475
+          },
+          "quote": "Wound erythema 14 (7.1) 4 (2) .015 3.709 1.199\u201311.475",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "recalc_chi_squared",
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t4_ery",
+          "location": "Table 4, Wound erythema",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "n_c": 17,
+            "pct_c": 8.6,
+            "n_i": 3,
+            "pct_i": 1.5,
+            "p": 0.001,
+            "or": 6.136,
+            "ci_lo": 1.769,
+            "ci_hi": 21.287
+          },
+          "quote": "Wound Infection 17 (8.6) 3 (1.5) .001 6.136 1.769\u201321.287",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "recalc_chi_squared",
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t4_inf",
+          "location": "Table 4, Wound Infection",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 29.9,
+            "SD1": 3.5,
+            "M2": 30.3,
+            "SD2": 3.2,
+            "p": 0.336
+          },
+          "quote": "Age (years) 29.9\u00b13.5 30.3\u00b13.2.336",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t5_age",
+          "location": "Table 5, Age",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 3.2, 0.336"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 37.8,
+            "SD1": 3.9,
+            "M2": 34.1,
+            "SD2": 3.4,
+            "p": "<.001"
+          },
+          "quote": "BMI 37.8\u00b13.9 34.1\u00b13.4 <.001",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t",
+              "check_effect_plausibility"
+            ]
+          },
+          "id": "t5_bmi",
+          "location": "Table 5, BMI",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 38,
+            "SD1": 1,
+            "M2": 37.7,
+            "SD2": 1.1,
+            "p": 0.077
+          },
+          "quote": "GestationalageattimeofCS 38\u00b11 37.7\u00b11.1.077",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t5_ga",
+          "location": "Table 5, GA",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 1.1, 0.077"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 5.1,
+            "SD1": 2.4,
+            "M2": 6.4,
+            "SD2": 2.9,
+            "p": 0.005
+          },
+          "quote": "No.ofsuturessubcutaneous 5.1\u00b12.4 6.4\u00b12.9.005",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t",
+              "grimmer_check"
+            ]
+          },
+          "id": "t5_sut",
+          "location": "Table 5, sutures",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 2.9, 0.005"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 44.8,
+            "SD1": 9.9,
+            "M2": 42.5,
+            "SD2": 10.4,
+            "p": 0.141
+          },
+          "quote": "Operativetime(min) 44.8\u00b19.9 42.5\u00b110.4.141",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t5_opt",
+          "location": "Table 5, operative time",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 10.4, 0.141"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 754.8,
+            "SD1": 179,
+            "M2": 647.5,
+            "SD2": 160,
+            "p": "<.001"
+          },
+          "quote": "Estimatedbloodloss(cc) 754.8\u00b1179 647.5\u00b1160 <.001",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t"
+            ]
+          },
+          "id": "t5_ebl",
+          "location": "Table 5, EBL",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "mean_sd",
+          "values": {
+            "M1": 5,
+            "SD1": 1,
+            "M2": 4.4,
+            "SD2": 1,
+            "p": "<.001"
+          },
+          "quote": "Subcutaneoustissuedepth(cm) 5\u00b11 4.4\u00b11 <.001",
+          "checkable": {
+            "tools": [
+              "recalc_independent_t",
+              "check_effect_plausibility"
+            ]
+          },
+          "id": "t5_dep",
+          "location": "Table 5, depth",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n_yes": 33,
+            "pct_yes": 78.6,
+            "n_no": 165,
+            "pct_no": 46.5,
+            "p": "<.001"
+          },
+          "quote": "Continuous 33 (78.6) 165 (46.5) <.001",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "recalc_chi_squared"
+            ]
+          },
+          "id": "t5_cont",
+          "location": "Table 5, Continuous",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "percentage",
+          "values": {
+            "n_yes": 9,
+            "pct_yes": 21.4,
+            "n_no": 190,
+            "pct_no": 53.5
+          },
+          "quote": "Interrupted 9 (21.4) 190 (53.5)",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "t5_int",
+          "location": "Table 5, Interrupted",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.005,
+            "ci_lo": 0.887,
+            "ci_hi": 1.138,
+            "p": 0.943
+          },
+          "quote": "Age (years) 1.005 0.887\u20131.138 .943",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_age",
+          "location": "Table 6, Age",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.333,
+            "ci_lo": 1.188,
+            "ci_hi": 1.494,
+            "p": "<.001"
+          },
+          "quote": "BMI 1.333 1.188\u20131.494 <.001",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_bmi",
+          "location": "Table 6, BMI",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": true,
+            "problems": []
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.359,
+            "ci_lo": 0.896,
+            "ci_hi": 2.062,
+            "p": 0.149
+          },
+          "quote": "Gestational age at time of CS 1.359 0.896\u20132.062 .149",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_ga",
+          "location": "Table 6, GA",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.02,
+            "ci_lo": 0.805,
+            "ci_hi": 1.293,
+            "p": 0.87
+          },
+          "quote": "No. of sutures subcutaneous 1.020 0.805\u20131.293 .870",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_sut",
+          "location": "Table 6, sutures",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 1.02, 0.87"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.037,
+            "ci_lo": 0.987,
+            "ci_hi": 1.089,
+            "p": 0.146
+          },
+          "quote": "Operative time (min) 1.037 0.987\u20131.089 .146",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_opt",
+          "location": "Table 6, operative time",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.008,
+            "ci_lo": 1.005,
+            "ci_hi": 1.01,
+            "p": "<.001"
+          },
+          "quote": "Estimated blood loss (cc) 1.008 1.005\u20131.010 <.001",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_ebl",
+          "location": "Table 6, EBL",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 1.01"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 1.855,
+            "ci_lo": 1.171,
+            "ci_hi": 2.94,
+            "p": 0.009
+          },
+          "quote": "Subcutaneous tissue depth (cm) 1.855 1.171\u20132.940 .009",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_dep",
+          "location": "Table 6, depth",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 2.94"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "or": 7.743,
+            "ci_lo": 3.03,
+            "ci_hi": 19.788,
+            "p": "<.001"
+          },
+          "quote": "Continuous VS Interrupted Sutures 7.743 3.030\u201319.788 <.001",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t6_sutype",
+          "location": "Table 6, suture type",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": false,
+            "problems": [
+              "the quoted span was not found in the paper text",
+              "value(s) not present in the row's own quote: 3.03"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "n_cited": 218
+          },
+          "quote": "they recruited a total of 218 women",
+          "checkable": {
+            "tools": [],
+            "reason": "sample size of a cited trial, not this paper's data"
+          },
+          "id": "cited_218",
+          "location": "Discussion",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "n_ops": 6930,
+            "n_drain": 3495,
+            "n_nodrain": 3435
+          },
+          "quote": "A total of 6930 operations were investigated",
+          "checkable": {
+            "tools": [],
+            "reason": "cited meta-analysis [20], not this paper's data"
+          },
+          "id": "cited_6930",
+          "location": "Discussion",
+          "problems": [],
+          "verification": {
+            "quote_located": true,
+            "values_in_quote": false,
+            "problems": [
+              "value(s) not present in the row's own quote: 3495, 3435"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "p_value",
+          "values": {
+            "p": 0.04
+          },
+          "quote": "pain at 6 weeks postoperatively was statistically significantly less in the staple category (0.17 versus 0.51; p=.04)",
+          "checkable": {
+            "tools": [],
+            "reason": "cited RCT [21], not this paper's data"
+          },
+          "id": "cited_pain",
+          "location": "Discussion",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "n_cited": 212
+          },
+          "quote": "recruitment of 212 women at term giving birth by elective cesarean delivery",
+          "checkable": {
+            "tools": [],
+            "reason": "cited observational study [22]"
+          },
+          "id": "cited_212",
+          "location": "Discussion",
+          "problems": [],
+          "verification": {
+            "quote_located": false,
+            "values_in_quote": true,
+            "problems": [
+              "the quoted span was not found in the paper text"
+            ]
+          }
+        }
+      ],
+      "n_rows": 59,
+      "n_duplicates": 2,
+      "n_unique": 57,
+      "n_checkable": 52,
+      "n_verified": 6,
+      "n_malformed": 0,
+      "by_source": {
+        "abstract": 1,
+        "prose": 8,
+        "figure": 1,
+        "table": 47
+      },
+      "floor": {
+        "ok": false,
+        "n_floor": 106,
+        "n_unmatched": 97,
+        "unmatched": [
+          {
+            "raw": "OR\u00bc9.429",
+            "kind": "named_equality",
+            "offset": 3414
+          },
+          {
+            "raw": "3%",
+            "kind": "percentage",
+            "offset": 4922
+          },
+          {
+            "raw": "N= 411",
+            "kind": "named_equality",
+            "offset": 10933
+          },
+          {
+            "raw": "N =11",
+            "kind": "named_equality",
+            "offset": 10951
+          },
+          {
+            "raw": "N= 400",
+            "kind": "named_equality",
+            "offset": 10992
+          },
+          {
+            "raw": "N=200",
+            "kind": "named_equality",
+            "offset": 11069
+          },
+          {
+            "raw": "N=200",
+            "kind": "named_equality",
+            "offset": 11115
+          },
+          {
+            "raw": "N=200",
+            "kind": "named_equality",
+            "offset": 11121
+          },
+          {
+            "raw": "N=200",
+            "kind": "named_equality",
+            "offset": 11157
+          },
+          {
+            "raw": "N= 1",
+            "kind": "named_equality",
+            "offset": 11391
+          },
+          {
+            "raw": "N= 2",
+            "kind": "named_equality",
+            "offset": 11398
+          },
+          {
+            "raw": "N=199",
+            "kind": "named_equality",
+            "offset": 11423
+          },
+          {
+            "raw": "N=198",
+            "kind": "named_equality",
+            "offset": 11441
+          },
+          {
+            "raw": "n\u00bc397",
+            "kind": "named_equality",
+            "offset": 12621
+          },
+          {
+            "raw": "30.3\u00b13.3",
+            "kind": "mean_pm_prose",
+            "offset": 13677
+          },
+          {
+            "raw": "34.5\u00b13.6",
+            "kind": "mean_pm_prose",
+            "offset": 13705
+          },
+          {
+            "raw": "37.7\u00b11.1",
+            "kind": "mean_pm_prose",
+            "offset": 13807
+          },
+          {
+            "raw": "6.3\u00b12.9",
+            "kind": "mean_pm_prose",
+            "offset": 13908
+          },
+          {
+            "raw": "42.8\u00b110.4",
+            "kind": "mean_pm_prose",
+            "offset": 13949
+          },
+          {
+            "raw": "658.8\u00b1165.2",
+            "kind": "mean_pm_prose",
+            "offset": 14044
+          }
+        ],
+        "note": "97 statistic(s) the independent regex enumerator found do NOT appear in any register row. The register is incomplete: these were located mechanically, so they are present in the paper and the model did not list them."
+      },
+      "provenance": {
+        "by_file": {
+          "wound_healing.pdf": {
+            "extractor": "docling",
+            "n_chars": 36805
+          }
+        },
+        "docling_version": "2.115.0",
+        "n_docling": 1,
+        "n_pdfplumber": 0,
+        "all_high_fidelity": true,
+        "note": "1 file(s) read by docling, 0 by pdfplumber."
+      },
+      "note": "`n_unique` is the count of statistics THE AGENT LOCATED, not of statistics the paper contains. Enumeration recall is unmeasured; the floor below is a lower bound on it, not an estimate of it."
+    },
+    "text_integrity": {
+      "quarantine": false,
+      "note": "No character-level corruption detected in the extracted text.",
+      "patterns": []
+    },
+    "extraction": {
+      "checked": [
+        {
+          "file": "wound_healing.pdf",
+          "path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/wound_healing.pdf",
+          "role": "article",
+          "status": "cached",
+          "seconds": 0.0,
+          "error": null
+        }
+      ],
+      "n_cached": 1,
+      "n_extracted": 0,
+      "failed": [],
+      "seconds": 0.005053074972238392,
+      "note": "1 PDF(s) available to the review (1 already extracted, 0 extracted now).",
+      "skipped_article_pdf": null,
+      "markdown": {
+        "paper": "paper",
+        "action": "current",
+        "body_md": {
+          "state": "match",
+          "n_repairs": 0,
+          "path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/wound_healing/paper/markdown/body.md"
+        },
+        "source_channel": "body_md",
+        "n_chars": 34130
+      }
+    },
+    "undelivered": {
+      "ok": true,
+      "n_files": 0,
+      "n_unread": 0,
+      "n_partial": 0,
+      "files": [],
+      "note": "every file this review reached for arrived."
+    },
+    "stage1_reconciliation": {
+      "n_stage1": 42,
+      "n_carried": 4,
+      "n_dropped": 38,
+      "dropped_by_severity": {
+        "indeterminate": 5,
+        "consistent": 33
+      },
+      "n_accusatory_dropped": 0,
+      "accusatory_dropped": [],
+      "n_accusatory_unexplained": 0,
+      "accusatory_unexplained": [],
+      "clean": true,
+      "reconcilable": true,
+      "note": "38 of 42 stage-1 findings are not cited by any editorial finding. A `consistent` result belongs nowhere in a findings report, so most of this is ordinary editorial work. None of the dropped findings was accusatory."
+    },
+    "harness_sweep": {
+      "n_tables": 6,
+      "duplication_targets": 35,
+      "duplication_ran": true,
+      "duplication_why_not": null,
+      "sd_range_targets": 35,
+      "sd_range_checked": 10,
+      "sd_range_skipped_undeclared": 17,
+      "n_accusatory": 0,
+      "accusatory": [],
+      "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets."
+    }
+  },
+  "verdict": "unresolved",
+  "confidence": "high",
+  "report_markdown": "This trial randomised 400 women having a first caesarean to continuous or interrupted Vicryl 3-0 closure of the subcutaneous layer (analysed 198 vs 199) and concluded that interrupted closure is superior on four wound complications.\n\nThe arm-level comparisons that carry that conclusion check. Table 4\u2019s four 2\u00d72 tables reproduce the printed p-values and odds ratios (gapping 10/198 vs 2/199, p=.019, OR=5.239; seroma 9 vs 1, p=.011, OR=9.429; erythema 14 vs 4, p=.015, OR=3.709; infection 17 vs 3, p=.001, OR=6.136). Table 1\u2019s n(%) cells, the composite 33+9=42 in Table 5, the flow-diagram cascade 411\u221211=400 with 200\u22121=199 and 200\u22122=198, six of seven Table 3 t-tests, the Table 6 odds-ratio intervals, and the suture-count reconstruction all reconcile. Forty-one of fifty checks passed; every granularity item matched on its printed values, with no rounding or population-SD allowance needed. Baseline similarity was unremarkable (similarity p=.883; \u03c4\u0302=0.72).\n\nWhat does not settle is how the same four event counts are written in prose. Table 1 prints 12 (3), 10 (2.5), 18 (4.5) and 20 (5) of 397. The Results description, and again the opening of the Discussion, call those 12%, 10%, 18% and 20% \u201cof cases in the whole cohort.\u201d That sentence names the 397-woman cohort as the base, so a silent subgroup denominator is not available as an explanation: 12 events in 397 is 3%, and the printed 12% implies a base of about 100, a size the paper never uses. The Abstract does not repeat the inflated rates. The likeliest innocent reading is that the numerators were pasted into a percentage sentence and never converted. A reader who uses the Discussion\u2019s rates will think complications were four times as common as the table shows. The between-arm claims are untouched.\n\nA second pair of passages cannot both be true of the cohort. Methods states BMI>30 and \u201cwe do not have a group of women with BMI below 30\u201d; Table 2 prints BMI range 23.0\u201345.0. Mean 34.5 and median 34.0 still look like an obese sample, so a mistyped 23.0 for 33.0 remains live, but the two statements as printed conflict.\n\nTable 1 copies \u201cafter lost follow up of 2 women\u201d onto both arms. Interrupted analysed n=199 matches Methods and Figure 1 (one loss), not two. And Table 3\u2019s subcutaneous-depth p=.127 does not come from a t-test on 4.5\u00b11 vs 4.4\u00b10.9 (that t-test is p=.296); both values are non-significant. Tests are never named, so a rank-sum remains possible; the other six Table 3 rows do match t-tests.\n\nThe numbers that support interrupted versus continuous closure reconcile with each other. The whole-cohort rates in the Results and Discussion, and the BMI inclusion statement, do not.\n\nThe arm-comparison figures check; the whole-cohort rates in the narrative and the body-mass-index range do not, and those contradictions need to be resolved before the descriptive results are used.",
+  "questions_for_authors": [
+    {
+      "question": "Results and Discussion state that wound gapping, seroma, erythema and infection occurred in 12%, 10%, 18% and 20% of the whole cohort, while Table 1 prints 12 (3), 10 (2.5), 18 (4.5) and 20 (5) of 397. Could you confirm which figures are the intended whole-cohort rates?",
+      "why": "Settles whether the narrative rates are a count-as-percent transcription or a different analysis.",
+      "finding_ids": [
+        "prose_counts_reported_as_percentages"
+      ]
+    },
+    {
+      "question": "Methods states inclusion with BMI>30 and \u201cwe do not have a group of women with BMI below 30,\u201d while Table 2 prints BMI range 23.0\u201345.0 (mean 34.5\u00b13.6). Could you send the minimum BMI in the 397 analysed women?",
+      "why": "Settles whether the 23.0 lower bound is a typo or an enrolment deviation from the stated criterion.",
+      "finding_ids": [
+        "bmi_range_vs_inclusion"
+      ]
+    },
+    {
+      "question": "Table 3 reports subcutaneous tissue depth 4.5\u00b11 vs 4.4\u00b10.9, p=.127. An independent t-test on those means, SDs and n=198 vs 199 gives p\u2248.296. Could you say which test and software produced .127?",
+      "why": "Settles whether the mismatch is an unnamed rank-sum (or other) procedure or a misreported p.",
+      "finding_ids": [
+        "table3_subcut_depth_p"
+      ]
+    },
+    {
+      "question": "Table 1\u2019s Interrupted row reads \u201c199 (50.1) after lost follow up of 2 women,\u201d while Methods and Figure 1 give one interrupted loss and analysed n=199. Could you confirm the interrupted arm\u2019s lost-to-follow-up count?",
+      "why": "Settles a copied clause versus a real second loss that would make analysed n=198.",
+      "finding_ids": [
+        "interrupted_lost_followup_two_vs_one"
+      ]
+    }
+  ],
+  "triage": [
+    {
+      "stage1_finding_id": "bmi_range_vs_inclusion",
+      "disposition": "merged",
+      "reason": "quote_not_located fired on all four accusations from PDF whitespace collapse; all four spans are in body.md verbatim, so the marker is global and the BMI finding is kept."
+    },
+    {
+      "stage1_finding_id": "table4_gapping_or_ci_vs_p",
+      "disposition": "discarded",
+      "reason": "Pearson chi-square on [[10,188],[2,197]] reproduces p=.019 and Fisher OR=5.239; Wald p from the CI is a mixed SPSS pairing the paper never claimed."
+    },
+    {
+      "stage1_finding_id": "table4_seroma_or_ci_vs_p",
+      "disposition": "discarded",
+      "reason": "Chi-square/Fisher from [[9,189],[1,198]] reproduces p=.011 and OR=9.429; the CI-implied Wald p is the same mixed-method pattern."
+    },
+    {
+      "stage1_finding_id": "table4_erythema_or_ci_vs_p",
+      "disposition": "discarded",
+      "reason": "Pearson p=0.01538 from [[14,184],[4,195]] matches printed .015 and Fisher OR=3.709; not a p-versus-CI defect."
+    },
+    {
+      "stage1_finding_id": "no_statistical_methods_section",
+      "disposition": "discarded",
+      "reason": "Absence of a named-test paragraph is a reporting gap, not arithmetic; it is named in limitations and in the depth-p assumptions."
+    }
+  ]
+}

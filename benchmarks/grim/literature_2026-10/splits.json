@@ -1,0 +1,48 @@
+{
+ "created": "2026-10-18",
+ "seed": 20261018,
+ "method": "The verified papers (a primary value_verified cell, or paper_verified) are grouped into units: each family below is one unit, every other paper its own. The units, listed as families first then the other DOIs sorted, are shuffled with random.Random(seed).shuffle; dev takes units in that order unless a unit would push it past 10, and holdout takes the rest.",
+ "families": {
+  "wansink_pizza": {
+   "members": [
+    "10.1111/joss.12117",
+    "10.1108/JPBM-01-2015-0802",
+    "10.1007/s40806-015-0035-3",
+    "10.1186/s40795-015-0030-x"
+   ],
+   "why": "one dataset; JPBM's Table I copies joss's Table 1"
+  },
+  "strauer_stem_cell": {
+   "members": [
+    "10.1093/eurjhf/hfq095",
+    "10.1016/j.jacc.2009.02.051"
+   ],
+   "why": "same group, overlapping patients"
+  }
+ },
+ "rule": "Holdout reviews are not inspected, scored or tuned against until the final test.",
+ "dev": [
+  "10.1162--rest_a_00057",
+  "10.7759--cureus.53725",
+  "10.1177--0956797611432497",
+  "10.5812--aapm.5(3)2015.22367",
+  "10.1007--s00404-012-2277-7",
+  "10.1016--j.foodqual.2004.06.005",
+  "10.1111--joss.12117",
+  "10.1108--jpbm-01-2015-0802",
+  "10.1007--s40806-015-0035-3",
+  "10.1186--s40795-015-0030-x"
+ ],
+ "holdout": [
+  "10.1016--j.amepre.2006.04.003",
+  "10.5178--lebs.2012.17",
+  "10.1177--0956797611398497",
+  "10.1080--1612197x.2021.1877325",
+  "10.1038--sj.ijo.0803217",
+  "10.1093--eurjhf--hfq095",
+  "10.1016--j.jacc.2009.02.051",
+  "10.1891--1933-3196.10.2.59",
+  "10.1037--h0041593",
+  "10.1038--oby.2008.286"
+ ]
+}

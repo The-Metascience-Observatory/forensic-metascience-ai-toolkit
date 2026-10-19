@@ -1,0 +1,483 @@
+[
+  {
+    "seq": 1,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01YELgUhqwYJpmiRVpFyWiiE",
+    "input": {
+      "file_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1001--jamanetworkopen.2023.37679/body.md"
+    },
+    "result": "1\t# Body\n2\t\n3\t## KeyPoints\n4\t\n5\tQuestion Is service in the US military associated with suicide risk among those with disability?\n6\t\n7\tFindings In this survey study with selfreported cross-sectional data from 231 099 US adults, representing more than 236 million individuals, service in the military was associated with higher suicide risk among those without disability. However, among those with disability, military service was associated with lower suicide risk compared with nonveterans with disability.\n8\t\n9\tMeaning These findings suggest that military service could be a protective factor against suicide among a subpopulation of US adults.\n10\t\n11\t<!-- image -->\n12\t\n13\t## [+ Supplementalcontent](https://jama.jamanetwork.com/article.aspx?doi=10.1001/jamanetworkopen.2023.37679&utm_campaign=articlePDF%26utm_medium=articlePDFlink%26utm_source=articlePDF%26utm_content=jamanetworkopen.2023.37679)\n14\t\n15\tAuthor affiliations and article information are listed at the end of this article.\n16\t\n17\t<!-- image -->\n18\t\n19\t## Introduction\n20\t\n21\tSuicide is a leading public health concern. In 2020, there were nearly 46 000 suicide deaths with more than 1.2 million suicide attempts. 1 Suicide was listed as the 12th leading cause of death, at a rate of 13.48 per 100 000 people, with men at greatest risk. 1 Also in 2020, 4.9% of US adults reported suicide ideation, 1.3% suicide planning, and 0.5% attempting suicide. 2 Suicide and self-directed injury have high costs to society that extend beyond the emotional toll of losing individuals to a preventable cause of death. Notably, suicide behaviors cost more than $1.3 trillion/y in lifetime medical and work-loss expenditures. 3\n22\t\n23\tAmongthose at heightened risk for suicide are people with disability. Indeed, a recent US population-based study demonstrated that the presence of any disability impacting function was associated with a greater likelihood of reporting suicide ideation, suicide planning, and attempting suicide, with risk increasing as the number of disabling limitations increased. 4 Unfortunately, and as observed in the literature, 5 subgroups of people with disability at most heightened risk for death by suicide are not well known. Within the disability population, veterans of US military service are overrepresented, 6 likely due to exposure to injury and death during service. The most common physical disabilities among veterans include tinnitus, hearing loss, and motor deficits. 7 Veterans are also overrepresented in the population of individuals who die by suicide. In 2020, 6146 veterans died by suicide with an unadjusted rate of 31.7 per 100 000 people. 8 This is over twice the general US population suicide rate, 1 with elevated risk among veterans consistently observed over a 19-year period. 1 As of 2020, suicide was the 2nd leading cause of death among service members and veterans younger than 45 years, and the 13th leading cause among all veterans. 8 In sum, veterans are at greater risk for having a disability and for experiencing heightened risk for suicide relative to nonveterans. However, little is known about how veteran status may moderate the effect of disability status on risk for suicide-related outcomes.\n24\t\n25\tAlthough suicide risk in the context of disability has not been compared between veterans and nonveterans, critical within group differences have been observed among veterans. Veterans with disability (VWD) or physical health difficulties exhibited heightened suicide risk and were more likely to attempt suicide relative to veterans without disability. 9-14 However, among VWD, those who received lower or no disability-related benefits were at higher suicide risk, 15,16 and receipt of benefits mitigated risk for suicide. 17 Although existing studies highlight the complexity of disability and risk for suicide within military samples, current evidence has not directly compared risk of suicide-related outcomes between veteran and nonveteran samples with and without disabi",
+    "result_truncated": true,
+    "result_chars": 66184,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01DDdGPjSrYvGAyBQp15c9uG",
+    "input": {
+      "estimate": 0.04,
+      "ci_low": -0.01,
+      "ci_high": 0.05,
+      "null_value": 0,
+      "reported_p": 0.07,
+      "measure": "AME"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the estimate 0.04 is not the arithmetic midpoint of [-0.01, 0.05] (expected about 0.0200)\",\n    \"the p-value recovered from the CI is 0.0090, but p = 0.07 is reported\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.01530640370773962,\n  \"recovered_p\": 0.008967640459553117,\n  \"recovered_z\": 2.613285312720072,\n  \"implied_centre\": 0.02,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the estimate 0.04 is not the arithmetic midpoint of [-0.01, 0.05] (expected about 0.0200); the p-value recovered from the CI is 0.0090, but p = 0.07 is reported\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 881,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01CfAaVsbhEC9uBQMMaFoUB7",
+    "input": {
+      "estimate": 2.27,
+      "ci_low": 1.34,
+      "ci_high": 3.86,
+      "measure": "OR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.2699022986797894,\n  \"recovered_p\": 0.0023869138074426033,\n  \"recovered_z\": 3.037320673085092,\n  \"implied_centre\": 2.274291098342514,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 588,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Cno9WbTvhsRn79mCmRYPsy",
+    "input": {
+      "estimate": 1.71,
+      "ci_low": 1.17,
+      "ci_high": 2.49,
+      "measure": "OR",
+      "reported_p": 0.006
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.1926767449872793,\n  \"recovered_p\": 0.0053623214266833585,\n  \"recovered_z\": 2.7844220149659904,\n  \"implied_centre\": 1.706839183988931,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 595,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01FM5fgFBsAgXRP4vP2znF3z",
+    "input": {
+      "estimate": 0.57,
+      "ci_low": 0.34,
+      "ci_high": 0.95,
+      "measure": "OR",
+      "reported_p": 0.03
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.2621263388228807,\n  \"recovered_p\": 0.03199620913061696,\n  \"recovered_z\": -2.144457976553688,\n  \"implied_centre\": 0.5683308895353129,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 594,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_0183LCcT1iVZAJprj5KyyZca",
+    "input": {
+      "estimate": 0.46,
+      "ci_low": 0.24,
+      "ci_high": 0.88,
+      "measure": "OR",
+      "reported_p": 0.02
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.33145583142824037,\n  \"recovered_p\": 0.019140557950678483,\n  \"recovered_z\": -2.342782102076588,\n  \"implied_centre\": 0.45956501172304226,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 597,
+    "is_error": false
+  },
+  {
+    "seq": 7,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01QPSrUe65H2CqWjM9x1MxwJ",
+    "input": {
+      "estimate": 1.5,
+      "ci_low": 1.01,
+      "ci_high": 2.23,
+      "measure": "OR",
+      "reported_p": 0.04
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.20205760434029874,\n  \"recovered_p\": 0.044783665383413274,\n  \"recovered_z\": 2.006680765279655,\n  \"implied_centre\": 1.5007664708408168,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 595,
+    "is_error": false
+  },
+  {
+    "seq": 8,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_015wLkRYWDuZAQLvdzGwXA8M",
+    "input": {
+      "ci_low": 0.32,
+      "ci_high": 1.45,
+      "measure": "OR",
+      "null_value": 1,
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 3.125,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.32, 1.45] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 3.12-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 998,
+    "is_error": false
+  },
+  {
+    "seq": 9,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01AkejhBm5js2KJ44pYDQgPB",
+    "input": {
+      "ci_low": 0.88,
+      "ci_high": 1.42,
+      "measure": "OR",
+      "null_value": 1,
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 1.42,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.88, 1.42] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 1.42-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 997,
+    "is_error": false
+  },
+  {
+    "seq": 10,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01TYo9sD1TPgrJsiTufEgcMk",
+    "input": {
+      "ci_low": 0.6,
+      "ci_high": 1.59,
+      "measure": "OR",
+      "null_value": 1,
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 1.6666666666666667,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.6, 1.59] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 1.67-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1010,
+    "is_error": false
+  },
+  {
+    "seq": 11,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01JYzbA6Qzffyu68TiRstqPB",
+    "input": {
+      "estimate": 2.6,
+      "ci_low": 1.59,
+      "ci_high": 4.24,
+      "measure": "OR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.2502161419159694,\n  \"recovered_p\": 0.00013413275248042034,\n  \"recovered_z\": 3.818744217342811,\n  \"implied_centre\": 2.596459127350169,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 589,
+    "is_error": false
+  },
+  {
+    "seq": 12,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01QUfVBj3qk1eBcQufC8s5nV",
+    "input": {
+      "estimate": 2.02,
+      "ci_low": 1.8,
+      "ci_high": 2.27,
+      "measure": "OR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.05918301775469468,\n  \"recovered_p\": 0.0,\n  \"recovered_z\": 11.880055091603374,\n  \"implied_centre\": 2.021385663350762,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 572,
+    "is_error": false
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_015WE4ixCYhLf9hZMVb4h5so",
+    "input": {
+      "estimate": 3.68,
+      "ci_low": 2.69,
+      "ci_high": 5.05,
+      "measure": "OR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.1606782202738606,\n  \"recovered_p\": 4.440892098500626e-16,\n  \"recovered_z\": 8.108832360478912,\n  \"implied_centre\": 3.6857156699886655,\n  \"scale\": \"log\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the log scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported.\"\n}",
+    "result_truncated": false,
+    "result_chars": 589,
+    "is_error": false
+  },
+  {
+    "seq": 14,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_016mT5UZeGLnvoZDsp7u1996",
+    "input": {
+      "ci_low": 0.65,
+      "ci_high": 2.03,
+      "measure": "OR",
+      "null_value": 1,
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 2.03,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.65, 2.03] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 2.03-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 997,
+    "is_error": false
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__absence_of_evidence",
+    "tool_short": "absence_of_evidence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Ni3rppkjeenuNTXyaGRhEW",
+    "input": {
+      "ci_low": 0.58,
+      "ci_high": 1.58,
+      "measure": "OR",
+      "null_value": 1,
+      "claim_of_no_effect": true
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"includes_null\": true,\n  \"largest_compatible_effect\": 1.7241379310344829,\n  \"sesoi_provided\": false,\n  \"explanation\": \"The interval [0.58, 1.58] includes the null, so the result is not statistically significant \\u2014 but it remains compatible with a 1.72-fold effect in either direction. 'Not significant' is not 'no effect'. Because the paper states no smallest effect size of interest, equivalence cannot be assessed and no conclusion of 'no effect' is licensed by these numbers alone.\",\n  \"recommendation\": \"An equivalence test (TOST) against a pre-specified SESOI is required to support a claim of no effect.\",\n  \"methodology\": \"Absence-of-evidence check: a CI containing the null shows only that the data are compatible with the null, not that the null is true. The largest compatible effect is read off the interval bound furthest from the null. Equivalence is assessed only against a stated SESOI; with none, the check reports the interval and declines to conclude.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1011,
+    "is_error": false
+  },
+  {
+    "seq": 16,
+    "tool": "StructuredOutput",
+    "tool_short": "StructuredOutput",
+    "surface": "UNVALIDATED",
+    "validated": false,
+    "tool_use_id": "toolu_01CGVA7sJ7iBMRqHt1RKR5UZ",
+    "input": {
+      "headline": {
+        "statement": "The paper's central claim -- that veteran status moderates the disability-suicide association -- is never actually tested: no statistic, df or p-value for the disability x veteran interaction appears anywhere in the article, and the stratum-specific contrasts it is inferred from are null in 7 of the 9 veteran-versus-nonveteran comparisons among people with disability.",
+        "severity": "suspicious",
+        "rests_on": "stated_constraint",
+        "evidence": "Methods: \"Multivariable adjusted multinomial logistic regression with an interaction term for disability status x veteran status estimated adjusted odds ratios (AORs) and 95% CIs\" -- yet no interaction test is printed in Table 2, Table 3 or the Results. The nine veteran-vs-nonveteran contrasts among those with disability (Table 2) are: 1 limitation 0.83 (0.59-1.18) p=.30, 0.57 (0.34-0.95) p=.03, 1.19 (0.70-2.04) p=.52; 2 limitations 1.25 (0.81-1.95) p=.32, 1.03 (0.45-2.38) p=.95, 0.46 (0.24-0.88) p=.02; >=3 limitations 0.96 (0.58-1.58) p=.87, 1.14 (0.65-2.03) p=.65, 0.68 (0.32-1.45) p=.32. Only two are significant, and four of the seven null point estimates are ABOVE 1. The >=3-limitation attempt interval [0.32, 1.45] remains compatible with a 3.12-fold effect in either direction.",
+        "reproduction": "metascience absence-of-evidence --ci-low 0.32 --ci-high 1.45 --measure OR --null-value 1 --claim-of-no-effect"
+      },
+      "verdict": "questionable",
+      "confidence": "medium",
+      "findings": [
+        {
+          "rank": 1,
+          "title": "Moderation is claimed but never tested; the inference is a difference-in-significance fallacy",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Methods (Statistical Analysis); Tables 2 and 3; Results, \"Suicide Ideation, Planning, and Attempt by Veteran and Disability Status\"; Conclusions",
+          "reported": "Methods state an interaction term for disability status x veteran status was fitted. Title, Key Points, Discussion (\"being a US veteran mitigated the association of disability status and risk for suicide\") and Conclusions (\"exploring veteran status as a moderator\") all assert moderation. The Results close with \"No significant differences in risks for suicide were observed by veteran status among people reporting 3 or more disabling limitations.\"",
+          "computed": "Zero interaction test statistics, df or p-values are printed anywhere in the article; 50 stratum-specific simple-effect contrasts are reported instead. The >=3-limitation stratum, on which the \"no difference\" statement rests, is uninformative rather than null: attempt [0.32, 1.45] permits a 3.12-fold effect either way, planning [0.65, 2.03] a 2.03-fold effect, ideation [0.58, 1.58] a 1.72-fold effect. Each is compatible with the same magnitude of effect observed in the strata the paper calls significant, so declaring the strata different requires the interaction test that is absent.",
+          "assumptions": "None beyond the paper's own statements. The absence-of-evidence tool declines to judge equivalence because the paper states no smallest effect size of interest; that refusal is the correct result and is what establishes the stratum is uninformative, not null.",
+          "reproduction": "metascience absence-of-evidence --ci-low 0.32 --ci-high 1.45 --measure OR --null-value 1 --claim-of-no-effect",
+          "stage1_finding_ids": [
+            "interaction_term_never_reported",
+            "absence_of_evidence_3plus_limitations"
+          ]
+        },
+        {
+          "rank": 2,
+          "title": "Conclusions describe as \"uniform\" a pattern that is mostly null in the paper's own tables, and rest on one result the authors' own sensitivity analysis did not replicate",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Key Points; Discussion paragraph 1; Results, \"Suicide Ideation, Planning, and Attempt by Veteran and Disability Status\"; Table 2",
+          "reported": "Key Points: \"service in the military was associated with higher suicide risk among those without disability. However, among those with disability, military service was associated with lower suicide risk.\" Discussion: \"results were not uniform across all levels of risk for suicide and disability status, but were uniform among veteran status.\"",
+          "computed": "Among those WITHOUT disability, only 1 of 3 outcomes is significant (planning AOR 1.71 [1.17-2.49], p=.006, recovered p=.0054); ideation 1.12 [0.88-1.42] permits at most a 1.42-fold effect and attempt 0.98 [0.60-1.59] at most 1.67-fold -- both uninformative. The Results themselves state the 1.71 result \"was not significant in sensitivity analyses (eTable 3 in Supplement 1).\" Among those WITH disability, 7 of 9 contrasts are null and four of those seven point ABOVE 1 (1.19, 1.25, 1.03, 1.14), i.e. toward higher risk in veterans. \"Uniform\" is not a defensible description of this pattern.",
+          "assumptions": "None beyond the paper's own statements. Counting significant versus null contrasts is an enumeration of Table 2, not a tool computation; the interval widths cited were computed by absence_of_evidence and check_estimate_ci.",
+          "reproduction": "metascience absence-of-evidence --ci-low 0.88 --ci-high 1.42 --measure OR --null-value 1 --claim-of-no-effect",
+          "stage1_finding_ids": [
+            "absence_of_evidence_3plus_limitations",
+            "interaction_term_never_reported"
+          ]
+        },
+        {
+          "rank": 3,
+          "title": "A Table 3 average marginal effect is arithmetically inconsistent with its own confidence interval",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Table 3, Nonveteran / >=3 Limitations, Suicide attempt (vs suicidal ideation only), AME column",
+          "reported": "\"1.36 (0.98 to 1.89) | .07 | 0.04 (-0.01 to 0.05)\"",
+          "computed": "The printed AME of 0.04 is not the arithmetic midpoint of [-0.01, 0.05], whose centre is 0.02, and the interval implies p = .0090 against a printed p = .07. All 19 other AME cells in Table 3 sit correctly at the midpoint of their own intervals, and the companion planning cell on the same table line reads 0.04 (-0.01 to 0.10), symmetric about 0.045. The isolation of the anomaly makes a mis-set upper bound (0.09 or 0.10 printed as 0.05) the most economical explanation.",
+          "assumptions": "AMEs are on a linear risk-difference scale, so arithmetic (not geometric) symmetry is the correct test; this follows from the measure and is not an assumed bound. Warrants a published correction; it is not evidence of anything beyond a printing error, and it does not affect any conclusion.",
+          "reproduction": "metascience check-ci --estimate 0.04 --ci-low -0.01 --ci-high 0.05 --null-value 0 --reported-p 0.07",
+          "stage1_finding_ids": [
+            "table3_ame_asymmetric_ci"
+          ]
+        },
+        {
+          "rank": 4,
+          "title": "Fifty odds-ratio contrasts tested at alpha = .05 with no multiplicity adjustment, and every headline result sits near the threshold",
+          "severity": "suspicious",
+          "confidence": "high",
+          "location": "Methods, Statistical Analysis; Tables 2 and 3",
+          "reported": "\"Test-specific significance levels were assessed at alpha <= .05.\" No correction is mentioned anywhere.",
+          "computed": "Tables 2 and 3 contain 50 non-reference AOR contrasts, plus 18 baseline comparisons in Table 1 and roughly 50 more cited from the sensitivity eTables. At alpha = .05 across the 50 primary contrasts alone, about 2.5 false positives are expected. Both results supporting the \"protection among those with disability\" claim recover p just under threshold (0.57 [0.34-0.95] recovers p = .0320; 0.46 [0.24-0.88] recovers p = .0191), as do several others the Results emphasise (1.50 [1.01-2.23] recovers p = .0448, with a lower bound of 1.01; 1.61 [1.03-2.49] recovers p = .0344; 0.49 [0.24-0.97] recovers p = .0453). None would survive even a modest correction.",
+          "assumptions": "The count of the test family is an enumeration of the paper's contents, not a tool output; the recovered p-values were computed by check_estimate_ci on the log scale. No individual number is wrong -- this bears on how many of the 50 should be believed.",
+          "reproduction": "metascience check-ci --estimate 1.50 --ci-low 1.01 --ci-high 2.23 --measure OR --reported-p 0.04",
+          "stage1_finding_ids": [
+            "multiplicity_uncorrected"
+          ]
+        },
+        {
+          "rank": 5,
+          "title": "Outcome substitution: self-reported 12-month ideation and attempt are presented as evidence that military service is protective against suicide",
+          "severity": "suspicious",
+          "confidence": "medium",
+          "location": "Key Points (\"Meaning\"); Introduction paragraph 2; Conclusions; Measures, \"Risk for Suicide\"",
+          "reported": "Measured outcome: three dichotomous self-report items about the past 12 months. Key Points \"Meaning\": \"military service could be a protective factor against suicide among a subpopulation of US adults.\" Conclusions: \"prior military service may be protective against suicide when considering disability status.\"",
+          "computed": "The paper's own Introduction states the opposite for the outcome the conclusion invokes: \"In 2020, 6146 veterans died by suicide with an unadjusted rate of 31.7 per 100 000 people. This is over twice the general US population suicide rate, with elevated risk among veterans consistently observed over a 19-year period.\" A protective association for self-reported 12-month ideation and attempt does not license a claim about suicide, and the substitution is not flagged in the Limitations, which raise self-report only as a measurement-accuracy concern.",
+          "assumptions": "No metascience tool adjudicates a conclusion-versus-outcome mismatch; this is a reading of the paper's stated measure against its stated conclusion, using the paper's own cited mortality figures. No assumed bounds are involved.",
+          "reproduction": "No metascience command applies -- this finding is a comparison of the paper's stated outcome measure with its stated conclusion, not a recomputation. The supporting numbers are quoted verbatim above from the Introduction and Key Points.",
+          "stage1_finding_ids": []
+        },
+        {
+          "rank": 6,
+          "title": "The headline association is produced entirely by covariate adjustment across groups with very little demographic overlap",
+          "severity": "indeterminate",
+          "confidence": "medium",
+          "location": "Table 1; Table 2, No limitations / Veteran vs Nonveteran; Discussion paragraph 2",
+          "reported": "Table 1 crude weighted percentages -- veterans vs nonveterans: suicidal ideation only 2.8% vs 3.1%, planning 0.8% vs 0.8%, attempt 0.3% vs 0.6%. Composition: veterans 91.0% male and 48.8% aged >=65; nonveterans 44.0% male and 17.8% aged >=65.",
+          "computed": "Crude figures show veterans reporting equal or LOWER suicidality on all three outcomes, yet the adjusted model yields AOR 1.71 (1.17-2.49) for planning among those with no disability. The \"higher risk without disability\" claim is therefore a product of the adjustment, over exposure groups that differ by 47 percentage points on sex and 31 points on age >=65. The Discussion attributes the protective finding to Department of Veterans Affairs services while conceding \"the veteran group was not limited to those using VA health services, nor was assessment for receipt of DRC among veterans included in the NSDUH.\"",
+          "assumptions": "Table 1 is not stratified by disability status, so the crude-versus-adjusted contrast is suggestive rather than dispositive -- adjustment for age and sex can legitimately reverse a marginal association. Recorded as indeterminate for that reason. No forensic tool quantifies residual confounding or covariate overlap; no assumed bounds are involved.",
+          "reproduction": "No metascience command applies -- no tool in the validated suite assesses covariate overlap or residual confounding. The Table 1 percentages and the Table 2 AOR are quoted verbatim above.",
+          "stage1_finding_ids": []
+        },
+        {
+          "rank": 7,
+          "title": "One \"<.001\" threshold is not supported by its own confidence interval",
+          "severity": "suspicious",
+          "confidence": "low",
+          "location": "Table 2, Veteran / >=3 Limitations, Suicidal ideation only",
+          "reported": "\"2.27 (1.34 to 3.86) <.001\"",
+          "computed": "The interval recovers p = .0024, roughly 2.4 times the printed threshold. The estimate and interval are mutually consistent with each other (the tool grades the pair \"consistent\"; it is the threshold LABEL that does not follow). Three neighbouring cells labelled <.001 recover p-values that genuinely clear it -- 2.60 (1.59-4.24) recovers p = 1.3e-4, 2.02 (1.80-2.27) recovers p < 1e-16, and 3.68 (2.69-5.05) recovers p = 4.4e-16 -- which isolates this cell rather than implicating the column.",
+          "assumptions": "p is recovered by a normal approximation on the log-OR scale. A design-based t reference distribution would shrink the recovered p somewhat, and NSDUH's design degrees of freedom are not stated in the article, so I could not test how far. Ranked last and given low confidence for that reason; substantively harmless, since the result is significant on either reading. Note that Stage 1 graded this cell 'suspicious'; the tool's own verdict on the estimate-CI pair is 'consistent', and only the threshold label is at issue.",
+          "reproduction": "metascience check-ci --estimate 2.27 --ci-low 1.34 --ci-high 3.86 --measure OR",
+          "stage1_finding_ids": [
+            "table2_aor227_p_threshold"
+          ]
+        }
+      ],
+      "not_checked": [
+        {
+          "location": "eTables 1 and 2 in Supplement 1 (bivariate associations of all covariates with suicide-related outcomes and with disability status)",
+          "reason": "Supplement 1 was not provided. The Results assert \"All evaluated covariates had significant bivariate associations\" -- roughly 36 further comparisons -- and this claim drove covariate selection for every adjusted model in the paper."
+        },
+        {
+          "location": "eTable 3 in Supplement 1 (multiple-imputation sensitivity analysis, N = 241 675)",
+          "reason": "Supplement not provided. About 30 further AORs are cited in the Results. Its N of 241 675 implies the outcome and the exposure were themselves imputed for the 3315 respondents missing suicide, disability or veteran information -- a substantive analytic choice that could not be examined."
+        },
+        {
+          "location": "eTable 4 in Supplement 1 (multiple-imputation sensitivity analysis among those with suicidal ideation)",
+          "reason": "Supplement not provided. The Results rely on it for three claims significant ONLY in the sensitivity analysis (nonveterans with >=3 limitations for planning; nonveterans with >=3 disabilities for attempt; veterans with 1 limitation for planning), and for one headline claim that LOSES significance there (the 1.71 planning result). None could be verified."
+        },
+        {
+          "location": "Supplement 2 (Data Sharing Statement)",
+          "reason": "Not provided with the paper. The body states the NSDUH data set is publicly available -- which is true of the NSDUH public-use files -- but the specific sharing commitments and any analytic-code availability could not be inspected."
+        },
+        {
+          "location": "Table 1, P value column (18 baseline comparisons)",
+          "reason": "The authors do not state which test produced these p-values (design-based Rao-Scott chi-squared and Wald F are both plausible under PROC SURVEYFREQ), and 16 of 18 rows print only a threshold. Without the test type, cell counts or exact p-values, no recalculation is possible."
+        },
+        {
+          "location": "Table 2, AME (95% CI) column, all 30 cells",
+          "reason": "Printed to 2 decimals on values of magnitude <= 0.03, with twelve cells reading exactly \"0 (0 to 0)\" or similar. The rounding destroys the resolution that midpoint and p-recovery checks require; running them would generate spurious flags rather than information."
+        },
+        {
+          "location": "Results text percentages 20.03% and 4.39%",
+          "reason": "No validated tool performs a ratio recomputation from a weighted numerator and denominator, and grim_percentage is inapplicable to weighted survey estimates. Both numerators and the denominator were independently confirmed by check_summation; only the final division is unverified."
+        },
+        {
+          "location": "One AME cell in Table 2 (1 Limitation / Veteran vs Nonveteran, ideation)",
+          "reason": "The cell breaks across a line in both the rotated PDF and the markdown extraction, probably losing a leading minus sign. parse_cells_typed classified it non_numeric, so it was not fed to any tool, per the rule against checking a value of unknown meaning."
+        },
+        {
+          "location": "Headline effect size versus external field benchmarks",
+          "reason": "check_effect_plausibility requires a Cohen's d or group means/SDs/ns. This paper reports only odds ratios from a multinomial model with no group-level summary statistics, so no d can be formed and no benchmark comparison is possible without inventing inputs."
+        },
+        {
+          "location": "GRIM / GRIMMER / SPRITE / DEBIT on all Table 1 percentages",
+          "reason": "Deliberately not run. Every percentage in Table 1 is a design-weighted estimate whose numerator is a sum of person-level survey weights, not an integer count, so the granularity argument does not hold. Supplying the unweighted n as a denominator would test a quantity the paper never computed."
+        },
+        {
+          "location": "Carlisle-Stouffer-Fisher and Table-1 dispersion tests",
+          "reason": "Deliberately not run, and correctly so. Both presuppose random allocation. This is an observational comparison of veterans with nonveterans, so the null they assume does not exist; running them would have inverted the logic of rulebook rule 1."
+        },
+        {
+          "location": "A-priori power or minimum-detectable-effect analysis",
+          "reason": "The paper states none, so verify_power_analysis would have required inventing the effect size, alpha and target power. For a secondary analysis of a fixed existing survey this is defensible, but it means the small veteran strata carry no stated minimum detectable effect."
+        }
+      ],
+      "limitations": [
+        "This agent reads text and tables only and does not see figures. The article's sole figure is a cohort-selection flow diagram whose 11 counts were extracted as text and fully reconciled; there are no data figures (no plotted means, error bars or effect estimates), so no figure-derived quantities were required.",
+        "Supplement 1 (eTables 1-4) and Supplement 2 were not available. Roughly 80 further estimates are cited in the Results, including three claims that are significant only in the sensitivity analyses and one headline claim that loses significance there. My assessment of the paper's evidentiary base is therefore incomplete in a direction that matters.",
+        "All p-values recovered from confidence intervals use a normal approximation on the log-odds scale. The analysis used design-based SAS PROC SURVEY procedures with a t reference distribution, and NSDUH's design degrees of freedom are not stated in the article, so small discrepancies between recovered and printed p-values cannot be fully adjudicated.",
+        "Table 2 is typeset rotated in the PDF and extracts character-reversed; both the PDF and markdown renderings were decoded and reconciled cell by cell before any check was run, and they agree completely, but a systematic decoding error would not have been visible to either source.",
+        "Two findings (outcome substitution; residual confounding and covariate overlap) rest on reading the paper's text against its own tables rather than on a tool computation, and are marked as such. No validated tool in the available subset adjudicates either question.",
+        "The multiplicity count is an enumeration of the paper's contents, not a tool output. No tool in the suite performs a family-wise error calculation."
+      ],
+      "coverage_summary": {
+        "stats_found": 406,
+        "stats_checked": 158,
+        "tools_run": [
+          "extract_pdf",
+          "statcheck",
+          "parse_table",
+          "parse_cells_typed",
+          "check_summation",
+          "check_estimate_ci",
+          "stalt_check",
+          "detect_duplication",
+          "absence_of_evidence",
+          "flag_round_n"
+        ],
+        "tables_checked": [
+          "Figure (cohort selection flow diagram, 11 counts)",
+          "Table 1 page 5 (sociodemographic and clinical characteristics by veteran status)",
+          "Table 1 page 6 (continued)",
+          "Table 2 (adjusted multinomial logistic regression, 30 AORs + 30 AMEs, decoded from the rotated PDF and cross-checked against body.md)",
+          "Table 3 (adjusted multinomial logistic regression among those with suicidal ideation, 20 AORs + 20 AMEs)"
+        ]
+      },
+      "report_markdown": "This study pools six years of the National Survey on Drug Use and Health (2015-2020) and asks whether prior US military service changes the well-established association between disability and suicide risk. From 231 099 adult respondents, weighted to 236 551 727 US adults, the authors fit an adjusted multinomial logistic regression with a disability x veteran interaction and report that veterans without disability are at higher suicide risk, while among people with disability military service appears protective. The Key Points conclude that \"military service could be a protective factor against suicide among a subpopulation of US adults.\"\n\n**What the arithmetic shows.** This is a clean paper at the level of numbers, and that deserves saying plainly before the criticism. The cohort flow reconciles exactly at both steps (315 661 = 241 675 + 73 986; 241 675 = 231 099 + 7261 + 130 + 1141 + 2044). Fifteen of eighteen weighted-N blocks in Table 1 sum to the stated weighted total with a difference of exactly zero, and the remaining three miss by exactly one person out of 236.5 million -- ordinary display rounding, not an anomaly. Every multi-category percentage column sums to 100 within the 0.1 that one-decimal rounding permits. Seven independent reconciliations between the Results text and Table 1 are exact, and all ten narrative percentage restatements (\"71% more likely\", \"43% lower odds\") match their table odds ratios precisely. Across 600 cross-table comparisons there are no duplicated estimate pairs. Of 50 odds ratios in Tables 2 and 3, 49 sit at the geometric centre of their own interval on the log scale; the small p-value drifts Stage 1 flagged in Table 3 are all under 0.012, change no significance call, and reduce to the coarse standard errors implied by printing two-decimal values near 1. I found no signature of data fabrication anywhere.\n\n**A note on Table 1's p-values, since this is where reviews of survey papers usually go wrong.** Sixteen of the eighteen baseline rows print P<.001. In a randomised trial that pattern would be unremarkable and the *opposite* pattern -- uniformly high p-values -- would be the red flag. Neither logic applies here. There is no randomisation; this is a comparison of two naturally occurring populations that differ on essentially everything, at n = 231 099. The Carlisle-Stouffer-Fisher test and Table-1 dispersion analysis were correctly not run, and I confirm that refusal: running them would have inverted their own logic and manufactured a finding out of an expected result.\n\n**Where the paper goes wrong is inferential, not arithmetic.** The problem is that the conclusion is about a comparison the article never reports. The Methods say an interaction term was fitted; no interaction statistic, degrees of freedom or p-value appears in Table 2, Table 3 or the Results. What the tables contain are simple effects within strata, and moderation is being read off the pattern of which ones cleared .05. That is the difference-in-significance fallacy, and here it is doing real work: the >=3-limitation stratum -- the most severely disabled group, where \"protection\" would matter most -- is not null but uninformative, its intervals compatible with veterans having roughly a third the odds of attempt or triple the odds. The interaction p-value is precisely the quantity that would settle whether the strata differ, and it is the one quantity not printed.\n\nThe gap between the tables and the prose compounds this. The Discussion calls the veteran-status result \"uniform\"; seven of nine contrasts among people with disability are null, and four of those seven point *above* 1. The claim of higher risk among veterans without disability rests on one outcome out of three -- and the Results themselves note that this result \"was not significant in sensitivity analyses.\" Readers of the Key Points are told something considerably firmer than Table 2 supports.\n\n**Two interpretive concerns the numbers cannot settle.** First, the outcome is self-reported 12-month ideation, planning and attempt, but the Conclusions speak of protection \"against suicide\" -- while the paper's own Introduction documents that veterans die by suicide at over twice the general population rate. Second, the veteran and nonveteran groups differ by 47 percentage points on sex and 31 on age >=65; crude Table 1 percentages show veterans reporting *equal or lower* suicidality on all three outcomes, so the headline association is entirely a product of the adjustment model, over groups with limited covariate overlap. The Discussion attributes the effect to Department of Veterans Affairs services while conceding that VA use was never measured.\n\nCredit where due: the NSDUH public-use files genuinely are downloadable, so this is not a state-but-withhold data-availability pattern. The four supplementary eTables were unavailable to me, however, and several Results claims depend entirely on them.\n\nThe underlying data appear sound and the reported statistics largely verify; it is the conclusion that outruns them. The moderation claim, as published, is not supported by any test the paper reports and should not be relied upon without the interaction estimate."
+    },
+    "result": "Structured output provided successfully",
+    "result_truncated": false,
+    "result_chars": 39,
+    "is_error": false
+  }
+]

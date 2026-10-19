@@ -1,0 +1,30 @@
+{
+  "name": "metascience-workbench",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.mjs dev",
+    "build": "node scripts/serve.mjs build",
+    "start": "node scripts/serve.mjs start",
+    "test": "node --experimental-strip-types test/settings.mjs && node --experimental-strip-types test/smoke.mjs && node --experimental-strip-types test/reviewSync.mjs && node --experimental-strip-types test/python.mjs",
+    "postinstall": "node scripts/prepare-assets.mjs",
+    "test:review-sync-browser": "node test/reviewSyncBrowser.mjs",
+    "test:browser": "node test/browser.mjs",
+    "test:history": "node test/run-history.mjs",
+    "test:performance": "node test/imageQueueFilters.mjs && node test/performance.mjs",
+    "test:infinite-scroll": "node test/infiniteQueueBrowser.mjs"
+  },
+  "dependencies": {
+    "gifenc": "^1.0.3",
+    "next": "^14.2.15",
+    "pdfjs-dist": "^4.8.69",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "playwright": "^1.56.1",
+    "typescript": "^5.6.2"
+  }
+}

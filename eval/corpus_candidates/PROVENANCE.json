@@ -1,0 +1,63 @@
+{
+  "seed": 20260811,
+  "per_family": 25,
+  "frames": [
+    {
+      "bucket": "primary",
+      "key": "qualitative",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2015-2025,title_and_abstract.search:\"semi-structured interviews\" AND \"thematic analysis\"",
+      "search": null,
+      "why": "interviews, focus groups, thematic analysis -- no numbers of the kind our checks consume, which is exactly why we need to see what the pipeline does with one"
+    },
+    {
+      "bucket": "primary",
+      "key": "bench_chemistry_materials",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2015-2025,primary_topic.field.id:fields/25,title_and_abstract.search:\"synthesis\" AND (\"characterization\" OR \"characterisation\")",
+      "search": null,
+      "why": "replicates vs technical repeats, yields, spectra; no clinical reporting guideline applies"
+    },
+    {
+      "bucket": "primary",
+      "key": "genomics_omics",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2015-2025,title_and_abstract.search:\"differentially expressed\" AND (\"RNA-seq\" OR \"false discovery rate\")",
+      "search": null,
+      "why": "high-throughput multiplicity is the whole design; our multiplicity family has never met an FDR over 20,000 tests"
+    },
+    {
+      "bucket": "primary",
+      "key": "economics_polisci",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2015-2025,primary_topic.field.id:fields/20,title_and_abstract.search:(\"difference-in-differences\" OR \"instrumental variable\" OR \"fixed effects\") AND \"standard errors\"",
+      "search": null,
+      "why": "quantitative social science outside psychology: panel data, instrumental variables, clustered standard errors"
+    },
+    {
+      "bucket": "primary",
+      "key": "single_case_small_n",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2010-2025,title_and_abstract.search:\"single-case experimental design\" OR \"multiple baseline design\" OR \"n-of-1 trial\"",
+      "search": null,
+      "why": "N-of-1 and multiple-baseline designs, where group statistics do not apply and GRIM's n is 1"
+    },
+    {
+      "bucket": "primary",
+      "key": "simulation_modelling",
+      "filter": "type:article,open_access.is_oa:true,has_doi:true,publication_year:2015-2025,title_and_abstract.search:\"simulation study\" AND (\"Monte Carlo\" OR \"data-generating\")",
+      "search": null,
+      "why": "every number is generated rather than measured, so 'impossible' means something different and the seed IS the method"
+    },
+    {
+      "bucket": "separate_undertaking",
+      "key": "meta_analysis",
+      "filter": "open_access.is_oa:true,has_doi:true,publication_year:2015-2025,title_and_abstract.search:\"meta-analysis\" AND (\"random-effects\" OR \"pooled\")",
+      "search": null,
+      "why": "pooled effects, weights, heterogeneity -- own numbers, different audit"
+    },
+    {
+      "bucket": "separate_undertaking",
+      "key": "umbrella_meta_meta",
+      "filter": "open_access.is_oa:true,has_doi:true,publication_year:2015-2025,title_and_abstract.search:\"umbrella review\" OR \"overview of systematic reviews\" OR \"meta-analysis of meta-analyses\"",
+      "search": null,
+      "why": "meta-analysis OF meta-analyses -- Greg's 'meta meta-analysis'. The unit of analysis is another synthesis, so even the meta-analysis audit does not transfer unchanged"
+    }
+  ],
+  "note": "Regenerate with the same --seed to reproduce this exact draw."
+}

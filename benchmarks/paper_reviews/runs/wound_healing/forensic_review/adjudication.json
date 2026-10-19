@@ -1,0 +1,63 @@
+{
+  "verdicts": [
+    {
+      "finding_id": "f_283798d106b66085",
+      "action": "kept",
+      "severity": 4,
+      "category": "none",
+      "rationale": "Methods describe a prospective 1:1 randomized trial but never define diagnostic criteria for gapping, seroma, erythema, or infection, never name the Table 4 test or a sample-size calculation, and never describe sequence generation, allocation concealment, or skin-closure technique. Informed consent is recorded; no ethics-committee approval appears. These gaps block reproduction of the primary comparison.",
+      "title": "Methods omit outcome definitions, analysis, randomization, and ethics",
+      "description": "This interventional RCT reports wound gapping, seroma, erythema, infection, and a 42-event composite without diagnostic criteria, a named statistical test for Table 4, a sample-size calculation, sequence generation, or allocation concealment. Skin closure is never specified even though surgeons closed skin and subcutaneous layers. The only ethics statement is informed consent; no ethics-committee approval is recorded."
+    },
+    {
+      "finding_id": "f_8e7f4efcee23e022",
+      "action": "merged",
+      "severity": null,
+      "category": "duplicate",
+      "rationale": "Same Results and Discussion percentages (12%, 10%, 18%, 20%) versus Table 1 counts 12, 10, 18, and 20 of 397. One defect; the registry-tool row is the survivor.",
+      "merged_into": "f_a6b28cb05fe71636"
+    },
+    {
+      "finding_id": "f_8a461c74de2b8322",
+      "action": "kept",
+      "severity": 4,
+      "category": "none",
+      "rationale": "Table 2 prints BMI range 23.0\u201345.0 (mean 34.5, SD 3.6). Methods require BMI>30 and state there is no group with BMI below 30. Those statements cannot both be true. The title and abstract frame the trial as a study of obese women, so the range or the inclusion claim needs a public correction."
+    },
+    {
+      "finding_id": "f_a6b28cb05fe71636",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "check_count_percent confirms 12/397 equals 3.02%, not 12%; the implied denominator is 100, not a missing-data base. The same integers appear as Table 1 counts 12 (3), 10 (2.5), 18 (4.5), 20 (5) and as cohort percentages in Results and Discussion. Table 1 and Table 4 cell counts agree. Correcting the prose changes the reported incidences about four-fold."
+    },
+    {
+      "finding_id": "f_b18c6b49b22ee707",
+      "action": "downgraded",
+      "severity": 2,
+      "category": "consequence_reassessed",
+      "rationale": "check_flow_arithmetic on Table 1's own operands is a broken identity: 200 minus 2 leaves 198, not 199. Figure 1 and Methods already reconcile (interrupted lost 1 remaining 199; continuous lost 2 remaining 198; n=397). The interrupted row's 'lost followup of 2 women' is a copy-paste parenthetical; the analysed counts do not need re-derivation."
+    },
+    {
+      "finding_id": "f_f921a11338ca1c43",
+      "action": "kept",
+      "severity": 3,
+      "category": "none",
+      "rationale": "The paper cites NCT03354078 but reports diagnosis of gapping, seroma, erythema, and infection at about 7 days and does not present 1-month results; age inclusion in the paper is 25\u201335 years. Claims about the registry record itself were not re-fetched with recorded sources here, so this row stays at the model-knowledge cap."
+    },
+    {
+      "finding_id": "f_265622f5cc9dca88",
+      "action": "kept",
+      "severity": 2,
+      "category": "none",
+      "rationale": "Reference [1] as printed is Brown et al. 2010 on skin-scar self-perception, which cannot support the Introduction's 3% to 30% cesarean wound-complication incidence. Reference [7] is an NCHS brief on cesarean-delivery trends, cited for wound-infection risk factors; [8] (Wloch et al.) is on-point. These are background citations, not results."
+    }
+  ],
+  "paper": {
+    "verdict": "unresolved",
+    "paper_severity": 4,
+    "confidence": "medium",
+    "summary": "The most trust-undermining defect is Table 2's BMI range of 23.0\u201345.0 against the Methods inclusion rule BMI>30 and the explicit claim that the study has no women with BMI below 30; the title and abstract present the trial as a study of obese women. Results and Discussion also print Table 1 event counts (12, 10, 18, 20 of 397) as cohort percentages, inflating gapping, seroma, erythema, and infection about four-fold relative to the table's 3%, 2.5%, 4.5%, and 5%. Figure 1 and the Methods attrition narrative reconcile (411 assessed, 11 declined, 400 randomized 1:1, 3 lost, 199 and 198 analysed), and the six result tables' cell counts, percentages, and Table 4 odds ratios match one another. Methods never define the four wound outcomes, name the Table 4 test, report a sample-size calculation, describe sequence generation or allocation concealment, specify skin closure, or record ethics-committee approval. A corrigendum should correct the BMI range or the inclusion claim, restore the prose incidences to the table values, and supply the missing CONSORT items. This review did not independently re-fetch the ClinicalTrials.gov record, did not establish intent, and the table-level arithmetic screen otherwise reconciled on the printed values.",
+    "headline_finding_id": "f_8a461c74de2b8322"
+  }
+}

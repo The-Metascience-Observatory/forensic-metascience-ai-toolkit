@@ -1,0 +1,172 @@
+{
+  "schema_version": 2,
+  "identifier": "10.1002/ajcp.70049",
+  "target_task": "extraction",
+  "flags": {
+    "prioritize_xml": true,
+    "xml_only": false,
+    "upgrade_existing": false,
+    "legalonly": false
+  },
+  "started_at": "2026-07-31T14:11:56Z",
+  "completed_at": "2026-07-31T14:12:08Z",
+  "identifiers_resolved": {
+    "doi": "10.1002/ajcp.70049",
+    "pmid": "41649128",
+    "pmcid": "PMC13289527"
+  },
+  "resolution_chain": [
+    {
+      "step": "cache",
+      "url": null,
+      "http_status": null,
+      "yielded": {
+        "pmid": "41649128",
+        "pmcid": "PMC13289527"
+      },
+      "note": "stage 0 hit",
+      "timestamp": 1785507116.6487992
+    },
+    {
+      "step": "europepmc.search",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "http_status": 200,
+      "yielded": {
+        "license": "cc by-nc-nd"
+      },
+      "note": "availability flags",
+      "timestamp": 1785507120.3360698
+    }
+  ],
+  "attempts": [
+    {
+      "source": "europepmc_xml",
+      "tier_attempted": "T1_XML",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13289527/fullTextXML?email=dan%40metascienceobservatory.org",
+      "http_status": 200,
+      "served_content_type": "application/xml",
+      "accepted": true,
+      "outcome": "accepted",
+      "checks_passed": [
+        "parses",
+        "not-a-denial-stub",
+        "body-populated",
+        "min-chars>=5000"
+      ],
+      "timestamp": "2026-07-31T14:12:08Z"
+    }
+  ],
+  "artifact": {
+    "path": "10.1002--ajcp.70049.xml",
+    "source": "europepmc_xml",
+    "tier": "T1_XML",
+    "tier_value": 1,
+    "tier_declared_by_source": "T1_XML",
+    "tier_assigned_by": "content inspection",
+    "why_this_tier": {
+      "checks_passed": [
+        "parses",
+        "not-a-denial-stub",
+        "body-populated",
+        "min-chars>=5000"
+      ],
+      "reason": ""
+    },
+    "served_content_type": "application/xml",
+    "identifier_used": "PMC13289527",
+    "request_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13289527/fullTextXML?email=dan%40metascienceobservatory.org",
+    "http_status": 200,
+    "retrieved_at": "2026-07-31T14:12:08Z",
+    "content_hash": "sha256:6697f38519572244183a30c1e8ce99ce0c08fc2c3f13b8f105dff155adb8c858",
+    "content_bytes": 166903,
+    "license": "cc by-nc-nd",
+    "table_count": 4,
+    "footnote_count": 8,
+    "populated_cell_count": 195,
+    "canonical_token_count": 380,
+    "tables_unavailable": false,
+    "normalization_failures": []
+  },
+  "artifacts": [
+    {
+      "path": "10.1002--ajcp.70049.xml",
+      "source": "europepmc_xml",
+      "tier": "T1_XML",
+      "tier_value": 1,
+      "tier_declared_by_source": "T1_XML",
+      "tier_assigned_by": "content inspection",
+      "why_this_tier": {
+        "checks_passed": [
+          "parses",
+          "not-a-denial-stub",
+          "body-populated",
+          "min-chars>=5000"
+        ],
+        "reason": ""
+      },
+      "served_content_type": "application/xml",
+      "identifier_used": "PMC13289527",
+      "request_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13289527/fullTextXML?email=dan%40metascienceobservatory.org",
+      "http_status": 200,
+      "retrieved_at": "2026-07-31T14:12:08Z",
+      "content_hash": "sha256:6697f38519572244183a30c1e8ce99ce0c08fc2c3f13b8f105dff155adb8c858",
+      "content_bytes": 166903,
+      "license": "cc by-nc-nd",
+      "table_count": 4,
+      "footnote_count": 8,
+      "populated_cell_count": 195,
+      "canonical_token_count": 380,
+      "tables_unavailable": false,
+      "normalization_failures": []
+    }
+  ],
+  "tables": [
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t1",
+      "label": "Table 1",
+      "caption": "Coalition evidence‐based practices, inclusive leadership, and other attributes.",
+      "footnotes": [
+        "Abbreviations: EBP, evidence‐based practice; SD, standard deviation."
+      ],
+      "n_footnotes": 1,
+      "token_count": 107,
+      "normalization_failures": []
+    },
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t2",
+      "label": "Table 2",
+      "caption": "Associations between initial measures of inclusive leadership and subsequent number of evidence‐based practices (n = 64 coalitions).",
+      "footnotes": [
+        "Abbreviations: EBP, evidence‐based programs; SD, standard deviation."
+      ],
+      "n_footnotes": 1,
+      "token_count": 93,
+      "normalization_failures": []
+    },
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t3",
+      "label": "Table 3",
+      "caption": "Associations between initial measures of inclusive leadership and subsequent reach of evidence‐based practices (n = 64 coalitions).",
+      "footnotes": [
+        "Abbreviations: EBP, evidence‐based programs; SD, standard deviation."
+      ],
+      "n_footnotes": 1,
+      "token_count": 89,
+      "normalization_failures": []
+    },
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t4",
+      "label": "Table 4",
+      "caption": "Associations between initial measures of inclusive leadership and subsequent evidence‐based practice fidelity (n = 101 programs in 35 coalitions).",
+      "footnotes": [
+        "Abbreviations: EBP, evidence‐based programs; SD, standard deviation."
+      ],
+      "n_footnotes": 1,
+      "token_count": 91,
+      "normalization_failures": []
+    }
+  ],
+  "notes": [
+    "supersedes 10.1002--ajcp.70049.pdf (T5_PDF); superseded file left on disk"
+  ]
+}

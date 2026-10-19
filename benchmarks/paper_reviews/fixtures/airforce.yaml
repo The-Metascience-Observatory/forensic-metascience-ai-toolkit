@@ -1,0 +1,53 @@
+# Gold-standard fixture: Air Force multivitamin compliance RCT.
+# Source review: benchmarks/paper_reviews/papers/airforce.md
+paper: airforce
+pdf: benchmarks/paper_reviews/papers/air_force.pdf
+gold_review: benchmarks/paper_reviews/papers/airforce.md
+verdict_expected: does_not_reconcile
+# The tortured-phrases track runs locally (free) during the eval and
+# must report ran with zero guarded fingerprints on this gold paper.
+tortured_expected: none
+
+key_findings:
+  - id: grim_failures
+    weight: critical
+    description: >
+      Nine of the ten numbers in the initial compliance-survey results fail
+      GRIM against their stated cell sizes (n=79/n=80), making the first five
+      results impossible to recalculate.
+    aliases: ["GRIM", "impossible percentage", "granularity", "fail GRIM", "implied n", "imply n=", "implied denominator", "denominator"]
+    reachable: true
+    # 1-9 ladder: nine-of-ten GRIM failures is the merged-pattern case —
+    # 4 for a single impossible cell, 6 when the pattern makes the primary
+    # results unreliable (retraction candidate).
+    severity_expected: [4, 6]
+    confidence: high
+
+  - id: zero_cell_chi2
+    weight: major
+    description: >
+      A chi-squared test is reported for a comparison containing a cell size
+      of zero (the 100% row), with no mention of how it was computed or of
+      Fisher's exact test.
+    aliases: ["zero cell", "Fisher", "chi-squared", "empty cell"]
+    reachable: true
+
+  - id: percentage_sum
+    weight: major
+    description: >
+      The compliance-survey percentages sum to more than 100% for n=79 and
+      less than 100% for n=80.
+    aliases: ["sum to", "101%", "summation", "do not sum", "percentage total"]
+    reachable: true
+
+  - id: single_item_multiplicity
+    weight: minor
+    description: >
+      Three separate single-item comparisons are reported from one survey
+      instead of a single 2x3 chi-squared test on the whole survey.
+    aliases: ["2x3", "multiple comparisons", "single-item"]
+    reachable: true
+
+must_not_say:
+  - "statistics (are|were|appear)[^.]*\\bconsistent\\b and (verifiable|reproducible)"
+  - "results (are|appear) (sound|trustworthy)"

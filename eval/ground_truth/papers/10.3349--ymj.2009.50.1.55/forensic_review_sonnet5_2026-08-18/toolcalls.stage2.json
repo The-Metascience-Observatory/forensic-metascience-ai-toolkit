@@ -1,0 +1,205 @@
+[
+  {
+    "seq": 1,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01Gj5gFskZdf7LiEcjGkhPDt",
+    "input": {
+      "file_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3349--ymj.2009.50.1.55/10.3349--ymj.2009.50.1.55.xml"
+    },
+    "result": "1\t<?xml version=\"1.0\" encoding=\"UTF-8\"?><article xml:lang=\"en\" article-type=\"research-article\"><front><journal-meta><journal-id journal-id-type=\"pmc-domain-id\">800</journal-id><journal-id journal-id-type=\"pmc-domain\">yonseimj</journal-id><journal-title-group><journal-title>Yonsei Medical Journal</journal-title><abbrev-journal-title>Yonsei Med J</abbrev-journal-title></journal-title-group><publisher><publisher-name>Yonsei University College of Medicine</publisher-name></publisher></journal-meta><article-meta><article-id pub-id-type=\"pmcid\">PMC2649850</article-id><article-id pub-id-type=\"pmcaid\">2649850</article-id><article-id pub-id-type=\"pmcaiid\">2649850</article-id><article-id pub-id-type=\"pmid\">19259349</article-id><article-id pub-id-type=\"doi\">10.3349/ymj.2009.50.1.55</article-id><title-group><article-title>The Efficacy of Postoperative Prophylactic Antibiotics in Orthognathic Surgery: A Prospective Study in Le Fort I Osteotomy and Bilateral Intraoral Vertical Ramus Osteotomy</article-title></title-group><contrib-group content-type=\"author\"><contrib><name name-style=\"western\"><surname>Kang</surname><given-names initials=\"SH\">Sang-Hoon</given-names></name><xref ref-type=\"aff\" rid=\"A1\">1</xref><xref ref-type=\"aff\" rid=\"A2\">2</xref></contrib><contrib><name name-style=\"western\"><surname>Yoo</surname><given-names initials=\"JH\">Jae-Ha</given-names></name><xref ref-type=\"aff\" rid=\"A1\">1</xref><xref ref-type=\"aff\" rid=\"A3\">3</xref></contrib><contrib><name name-style=\"western\"><surname>Yi</surname><given-names initials=\"CK\">Choong-Kook</given-names></name><xref ref-type=\"aff\" rid=\"A1\">1</xref><xref ref-type=\"author-notes\" rid=\"_fncrsp93pmc__\">\u2709</xref></contrib></contrib-group><aff id=\"A1\"><label>1</label>Department of Oral and Maxillofacial Surgery, College of Dentistry, Yonsei University, Seoul, Korea.</aff><aff id=\"A2\"><label>2</label>Department of Oral and Maxillofacial Surgery, National Health Insurance Corporation Ilsan Hospital, Gyeonggi, Korea.</aff><aff id=\"A3\"><label>3</label>Department of Oral and Maxillofacial Surgery, Wonju Christian Hospital, Kangwon, Korea.</aff><author-notes><fn id=\"corresp1\"><label>\u2709</label><p>Reprint address: requests to Dr. Choong-Kook Yi, Department of Oral and Maxillofacial Surgery, College of Dentistry, Yonsei University, 250 Seongsanno, Seodaemun-gu, Seoul 120-752, Korea. Tel: 82-2-2228-3138, Fax: 82-2-364-0992, <email>choongomfs@yuhs.ac</email></p></fn><fn id=\"_fncrsp93pmc__\"><label>\u2709</label><p>Corresponding author.</p></fn></author-notes><pub-date><day>24</day><month>2</month><year>2009</year></pub-date><volume>50</volume><issue>1</issue><fpage>55</fpage><page-range>55\u201359</page-range><pub-history><event event-type=\"pmc-release\"><date><day>3</day><month>3</month><year>2009</year></date></event></pub-history><permissions><copyright-statement>Copyright \u00a9 2009 The Yonsei University College of Medicine</copyright-statement><license><license-p>This is an Open Access article distributed under the terms of the Creative Commons Attribution Non-Commercial License (<ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"http://creativecommons.org/licenses/by-nc/3.0\" ext-link-type=\"uri\">http://creativecommons.org/licenses/by-nc/3.0</ext-link>) which permits unrestricted noncommercial use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions><self-uri xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"ymj-50-55.pdf\" content-type=\"pmc-pdf\"><?cloudpmc-path e7f4/2649850/eaab15c66ea2/ymj-50-55.pdf?><?cloudpmc-bucket app?><?size 275856?></self-uri><abstract id=\"abstract1\"><title>Abstract</title><sec id=\"sec1\" disp-level=\"2\"><title>Purpose</title><p>This study examined the efficacy of the postoperative prophylactic antibiotics used in orthognathic surgery. The prevalence of surgical site infections (SSIs) was determined according to the use of postoperative prophylactic antibiotics.</p></sec><sec id=\"sec2\" disp-level=\"2\"><tit",
+    "result_truncated": true,
+    "result_chars": 41647,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "mcp__forensic_metascience__recalc_chi_squared",
+    "tool_short": "recalc_chi_squared",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01SYEHdB4V6QXfDFypaML6sV",
+    "input": {
+      "observed": [
+        [
+          3,
+          25
+        ],
+        [
+          2,
+          26
+        ]
+      ],
+      "reported_p": 0.639,
+      "decimals_p": 3,
+      "source_locator": "Results, para 2 / Table 1",
+      "source_quote": "According to the \u03c7\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639)."
+    },
+    "result": "{\n  \"calculated_chi2\": 0.2196078431372549,\n  \"calculated_p\": 0.639338884785466,\n  \"df\": 1,\n  \"test_type\": \"Pearson\",\n  \"expected\": [\n    [\n      2.5,\n      25.5\n    ],\n    [\n      2.5,\n      25.5\n    ]\n  ],\n  \"inputs\": {\n    \"observed\": [\n      [\n        3,\n        25\n      ],\n      [\n        2,\n        26\n      ]\n    ]\n  },\n  \"calculated_chi2_pearson\": 0.2196078431372549,\n  \"calculated_p_pearson\": 0.639338884785466,\n  \"calculated_chi2_yates\": 0.0,\n  \"calculated_p_yates\": 1.0,\n  \"fisher_p\": 1.0,\n  \"fisher_odds_ratio\": 1.56,\n  \"reported_p\": 0.639,\n  \"p_matches\": true,\n  \"severity\": \"consistent\",\n  \"methodology\": \"Chi-squared test (Pearson): \\u03c7\\u00b2 = 0.2196, df = 1, p = 0.639339. Both 2x2 conventions tried for the match: Pearson \\u03c7\\u00b2 = 0.2196 (p = 0.639339), Yates-corrected \\u03c7\\u00b2 = 0.0000 (p = 1.000000); a reported statistic matching either convention (or Fisher's exact, for the p) is consistent.\",\n  \"source_quote\": \"According to the \\u03c7\\u00b2-test, there was no significant difference in the prevalence of postoperative wound infections between the patients who had received postoperative prophylactic antibiotic administration and those who had not (p = 0.639).\",\n  \"source_locator\": \"Results, para 2 / Table 1\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1284,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 3,
+    "tool": "mcp__forensic_metascience__check_summation_batch",
+    "tool_short": "check_summation_batch",
+    "surface": "forensic_mcp_offlist",
+    "validated": true,
+    "tool_use_id": "toolu_01WzJ3eeeenerMyKG9GvMkKB",
+    "input": {
+      "rows": [
+        {
+          "values": [
+            16,
+            12
+          ],
+          "expected_sum": 28,
+          "decimals": [
+            0,
+            0
+          ],
+          "description": "Experimental group sex count"
+        },
+        {
+          "values": [
+            14,
+            14
+          ],
+          "expected_sum": 28,
+          "decimals": [
+            0,
+            0
+          ],
+          "description": "Control group sex count"
+        }
+      ],
+      "source_locator": "Table 1, Sex row",
+      "source_quote": "Sex (Male : Female) | 16 : 12 | 14 : 14"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"n_rows\": 2,\n  \"n_evaluated\": 2,\n  \"n_indeterminate\": 0,\n  \"n_inconsistent\": 0,\n  \"results\": [\n    {\n      \"values\": [\n        16,\n        12\n      ],\n      \"actual_sum\": 28,\n      \"expected_sum\": 28,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Experimental group sex count sum to 28, expected 28, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 0,\n      \"description\": \"Experimental group sex count\"\n    },\n    {\n      \"values\": [\n        14,\n        14\n      ],\n      \"actual_sum\": 28,\n      \"expected_sum\": 28,\n      \"difference\": 0,\n      \"tolerance\": 1.500000000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Control group sex count sum to 28, expected 28, difference = 0, window = 1.5 (printed precision; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 1,\n      \"description\": \"Control group sex count\"\n    }\n  ],\n  \"explanation\": \"All 2 evaluated sums reconcile within tolerance.\",\n  \"methodology\": \"Batched summation. Each row is checked independently by check_summation; the aggregate severity is the worst row, and a batch in which nothing could be evaluated reports `indeterminate` rather than `consistent`.\",\n  \"source_quote\": \"Sex (Male : Female) | 16 : 12 | 14 : 14\",\n  \"source_locator\": \"Table 1, Sex row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1616,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 4,
+    "tool": "StructuredOutput",
+    "tool_short": "StructuredOutput",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "toolu_01CpPE4qUvtBWw35Qwy9f4yD",
+    "input": {
+      "confidence": "medium",
+      "coverage_summary": {
+        "stats_found": 13,
+        "stats_checked": 10,
+        "tools_run": [
+          "extract_xml",
+          "extract_pdf",
+          "statcheck",
+          "parse_cells_typed",
+          "parse_cells_as_declared",
+          "recalc_chi_squared",
+          "check_summation_batch",
+          "grim_check",
+          "grimmer_check",
+          "flag_round_n"
+        ],
+        "tables_checked": [
+          "Table 1 (image_only in XML, recovered from PDF and cross-checked against prose)"
+        ]
+      },
+      "findings": [
+        {
+          "rank": 1,
+          "title": "A symptom-description sentence, read too literally, appears to assign 5 infections to one arm instead of 3",
+          "severity": "indeterminate",
+          "confidence": "medium",
+          "location": "Results, paragraph 2",
+          "reported": "\"One patient in the experimental group was diagnosed with an infection by facial swelling, redness and sinus haziness in the waters' view, and the other 4 patients were diagnosed with a postoperative infection by swelling and redness, and pain on the mandibular area.\"",
+          "computed": "The immediately preceding sentence and Table 1 both give 3 infections in the experimental group and 2 in the control group (total 5). Read with 'in the experimental group' scoping only the first clause, the sentence splits the same 5 patients by SYMPTOM type (1 with a maxillary/sinus finding on Waters' view, consistent with the Le Fort I maxillary osteotomy arm of the procedure; 4 with mandibular swelling/pain, consistent with the vertical ramus osteotomy) rather than by TREATMENT arm, and the totals reconcile exactly: 1 + 4 = 5 = 3 + 2. The chi-squared test itself uses the 3/2 counts, independently confirmed against Table 1 by recalc_chi_squared (chi2 = 0.2196, p = 0.6393, matching the reported p = 0.639 to three decimals), so the primary result does not depend on how this sentence is parsed.",
+          "assumptions": "The clinical reconciliation (Waters' view = maxillary sinus finding correlating with Le Fort I; mandibular pain correlating with IVRO) is my own reading of the anatomy the paper describes, not a claim the paper makes explicitly. The paper never states which treatment arm each of the 4 remaining patients belonged to, so the ambiguity itself is real and unresolved by anything in the text -- the paper is silent on that specific attribution.",
+          "warrant": "logical",
+          "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+          "stage1_finding_ids": [
+            "infection_case_narrative_ambiguity",
+            "chi2_infection_recalc"
+          ],
+          "plain": "One sentence describing symptoms could be misread as saying 5 patients in the no-postoperative-antibiotics group got infected, when the study's own summary table says 3. Read naturally, though, the sentence is grouping patients by which symptoms they had (sinus swelling versus jaw pain, which map onto the two different operations performed), not by which treatment group they were in, and the total patient count (5) matches the table either way. The test result the study's conclusion rests on uses the table's numbers, which were independently checked and are correct, so this wording issue does not change the finding."
+        }
+      ],
+      "triage": [
+        {
+          "stage1_finding_id": "infection_case_narrative_ambiguity",
+          "disposition": "downgraded",
+          "reason": "The quote_not_located marker was a false flag: the exact quote, including the apostrophe in \"waters' view\", is present verbatim in the XML full text. On substance, the sentence's apparent conflict with the 3/2 table counts resolves under a natural reading that splits the same 5 total infected patients by symptom/anatomic site rather than by treatment arm (1+4=5=3+2), and the anatomic detail (sinus finding vs. mandibular pain) tracks the two different osteotomy sites performed on these patients, which is a strong clinical account for that split. The primary chi-squared result uses the table counts directly and reconciles exactly (chi2=0.2196, p=0.6393 vs reported 0.639), so this does not touch the headline finding. Downgraded from suspicious to indeterminate: a real wording ambiguity remains (the paper never explicitly assigns the 4 patients to arms), but it is not evidence of a numeric error."
+        },
+        {
+          "stage1_finding_id": "age_grim_experimental",
+          "disposition": "discarded",
+          "reason": "Correctly marked indeterminate by the sweep for lack of discriminating power at n=28/1 decimal and an assumed (not stated) discreteness of age-in-years; carries no accusatory content and needs no separate row in the findings list."
+        },
+        {
+          "stage1_finding_id": "age_grim_control",
+          "disposition": "discarded",
+          "reason": "Same as age_grim_experimental: indeterminate, no discriminating power, correctly non-accusatory."
+        },
+        {
+          "stage1_finding_id": "statcheck_no_apa_stats",
+          "disposition": "discarded",
+          "reason": "Correctly indeterminate: the paper reports a bare p-value with no accompanying test statistic in APA-parseable form, which statcheck cannot scan; the chi-squared value itself was independently recalculated and verified separately."
+        }
+      ],
+      "not_checked": [
+        {
+          "location": "Discussion, paragraph 4: a-priori sample-size/power justification (\u03b1=0.05, \u03b2=0.20, p1=5%, p2=35%, n=28/group)",
+          "reason": "verify_power_analysis and required_n require a single precomputed effect size (e.g. Cohen's h for two proportions); neither accepts raw proportions to derive that effect size internally, and deriving it by hand is disallowed manual computation.",
+          "n_cells": 1
+        },
+        {
+          "location": "Results/Abstract: the 'no significant difference' conclusion (p=0.639)",
+          "reason": "absence_of_evidence needs a printed CI or a (b, se) pair. The paper reports only a bare chi-squared p-value with no odds ratio, risk difference or CI printed anywhere, so the largest effect the data still permit cannot be assessed with the available tools.",
+          "n_cells": 1
+        },
+        {
+          "location": "Whole paper: baseline group comparability beyond age and sex",
+          "reason": "csf_test / bayesian_table1_dispersion need multiple independent baseline p-values or several rows of means/SDs+counts; this paper reports only two baseline variables (age, sex), neither with a stated between-group p-value, which is too few to run an omnibus baseline-similarity test.",
+          "n_cells": 0
+        },
+        {
+          "location": "Whole paper: trial registration status",
+          "reason": "No trial registry ID, protocol number, or registration statement appears anywhere in the text.",
+          "n_cells": 0
+        }
+      ],
+      "limitations": [
+        "Figures were not read for this paper: extract_figures was not invoked. Table 1 is embedded as an image in the XML (image_only=true) with no extractable cells, and its contents were instead recovered from the PDF's docling-extracted grid and cross-checked against every value restated in prose (age means/SDs, sex ratios, infection and dehiscence counts); all values agree exactly across the two sources. No other figures appear in the paper.",
+        "This is a very small trial (28 per arm) with only two baseline variables reported (age, sex) and no between-group baseline p-values printed, so the omnibus baseline-similarity checks (CSF, Bayesian Table 1 dispersion) that would ordinarily surface allocation-integrity concerns could not be run at all -- their absence here is a limit of what the paper reports, not a clean bill on randomization.",
+        "This review reads only this one paper and reaches no external database; whether the finding pattern here (small, exactly-reconciling numbers) recurs across this author's other work, or how the observed infection rates compare to the wider literature the Discussion cites, is outside what this analysis can determine.",
+        "The one accusatory finding in this report was flagged by the automated worklist as having a quote that could not be located in the paper's extraction; on manual re-reading of the XML full text, the quoted sentence is present verbatim, so that marker was a false flag specific to this run, not evidence of a transcription problem in the finding itself."
+      ],
+      "questions_for_authors": [],
+      "verdict": "reconciles",
+      "headline": {
+        "statement": "Every checkable number in this small trial reconciles: the chi-squared test, the group sex counts, and the age statistics all agree with the values printed beside them, and no finding rises above an open wording question that does not touch the study's result.",
+        "severity": "none",
+        "rests_on": "stated_constraint",
+        "evidence": "Table 1 gives 3/28 infections in the experimental group and 2/28 in the control group; recalculating chi-squared from those counts gives chi2 = 0.2196, p = 0.6393, matching the paper's reported \u201cp = 0.639\u201d exactly. The sex counts (16:12 and 14:14) sum to the stated group n of 28 in both arms.",
+        "reproduction": "metascience chi2 --observed \"[[3,25],[2,26]]\" --reported-p 0.639 --decimals-p 3",
+        "plain": "This is a small, plainly reported clinical trial. Every number we could check -- the main statistical test, the patient counts, the age figures -- matches what the paper printed, and the only open question is a single ambiguously worded sentence that, on inspection, does not change the study's conclusion."
+      },
+      "report_markdown": "This is a 56-patient, open-label, parallel-arm randomized trial (Kang, Yoo & Yi, 2009, *Yonsei Medical Journal*) comparing a single preoperative antibiotic dose against a preoperative dose plus three days of postoperative antibiotics in patients undergoing orthognathic surgery (Le Fort I osteotomy and bilateral intraoral vertical ramus osteotomy). The stated aim was to test whether continuing prophylactic antibiotics after surgery reduces surgical-site infection versus a single preoperative dose. The paper's own conclusion is that it does not (p = 0.639), and it recommends against routine prolonged postoperative antibiotic use in this population.\n\nThe trial is small and its reporting is correspondingly thin -- one continuous baseline variable (age) and one categorical one (sex), no confidence interval or effect size for the primary comparison, and no trial registration -- but everything the paper does report is internally consistent. The primary chi-squared test recalculates exactly from Table 1's raw counts (3/28 infected in the experimental arm, 2/28 in the control arm): chi2 = 0.2196, p = 0.6393, matching the paper's \"p = 0.639\" to the decimal. The sex ratios in Table 1 (16:12 and 14:14) both sum correctly to the stated group size of 28, and match the reduced ratios given in the prose (4:3 and 1:1). Age means and SDs are printed identically in both the Results text and Table 1, with no drift between the two. GRIMMER (which tests whether an integer-valued sample could produce a given mean and SD) finds admissible integer solutions for both groups' age statistics, though this rests on an assumption -- not stated by the paper -- that age was recorded in whole years; GRIM itself has no power to distinguish anything at n=28 with one decimal place of precision, so those checks are reported as uninformative rather than as passes.\n\nThe one place a reader might reasonably pause is a sentence describing individual infection cases by symptom: one patient with a maxillary sinus finding on Waters' view, and \"the other 4 patients\" with mandibular swelling and pain. Read too literally, \"in the experimental group\" could seem to scope the whole sentence, which would put 5 infections in one arm against Table 1's stated 3. The more natural reading -- and the one that actually accounts for every patient -- splits the same 5 total infected patients (3 experimental + 2 control, per Table 1) by which of the two operations they had: a maxillary finding tracks the Le Fort I osteotomy, mandibular pain tracks the vertical ramus osteotomy performed on the rest of the cohort. Under that reading the numbers add up exactly (1 + 4 = 5 = 3 + 2), and it is the reading consistent with everything else the paper reports. The paper never explicitly states which treatment arm each of the four remaining patients was in, so a genuine wording ambiguity survives -- but the chi-squared test itself is computed directly from Table 1's counts, which are independently verified, so this sentence does not bear on the study's conclusion regardless of how it is parsed.\n\nTwo things worth naming without treating them as defects. First, the trial reports no confidence interval or effect-size estimate alongside its null result, and no printed odds ratio or risk difference exists to check how large an effect the data could still be hiding -- a reader relying on \"no significant difference\" as evidence of equivalence should know the study does not license that stronger claim, though it also never makes it. Second, no trial registration is reported anywhere in the text; that is unremarkable for a 2008-submitted trial in this journal and is not treated here as an anomaly, only as an absence.\n\nThe results appear sound and the reported statistics verify."
+    },
+    "result": "Structured output provided successfully",
+    "result_truncated": false,
+    "result_chars": 39,
+    "is_error": false
+  }
+]

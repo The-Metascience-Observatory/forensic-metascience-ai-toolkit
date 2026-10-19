@@ -1,0 +1,209 @@
+{
+  "paper_id": "10.1073--pnas.0801268105",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-16 21:08 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_dirty": false,
+  "git_sha": "688e35541907",
+  "prompt_sha256": "fff81930534d35ad",
+  "registry_sha256": "90c6f8e0da7bce9c",
+  "text_provenance": {
+    "by_file": {
+      "10.1073--pnas.0801268105.pdf": {
+        "extractor": "docling",
+        "n_chars": 31727
+      }
+    },
+    "docling_version": "2.119.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  },
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 3.347839,
+      "input_tokens": 20,
+      "output_tokens": 55103,
+      "cache_creation_input_tokens": 143071,
+      "cache_read_input_tokens": 1077428,
+      "wall_seconds": 621.46,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.00074
+        },
+        "claude-opus-5": {
+          "costUSD": 3.347099
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 17
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.5676135,
+      "input_tokens": 10,
+      "output_tokens": 28259,
+      "cache_creation_input_tokens": 156009,
+      "cache_read_input_tokens": 540945,
+      "wall_seconds": 371.87,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.030525999999999998
+        },
+        "claude-opus-5": {
+          "costUSD": 2.5370875
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "medium"
+    }
+  },
+  "total_cost_usd": 5.915452500000001,
+  "total_wall_seconds": 993.32,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 1
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Jaeggi et al. 2008",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 7,
+    "n_sentence_shaped": 5,
+    "sentence_shape_enforced": false,
+    "n_joined": 1,
+    "joined_enforced": false,
+    "n_overlong": 4,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [
+      "Every outcome value in the paper appears only as a bar in Figure 3; no table and no means or standard deviations are printed anywhere",
+      "Degrees of freedom of the four training-curve regressions imply 68 trained participants against the 34 the paper analysed",
+      "Two of the four significant primary results, including the interaction cited as confirming transfer, do not survive correction for their own family of tests"
+    ],
+    "n_examples_omitted": 2,
+    "problems": [],
+    "detail": "all 7 title(s) name a defect rather than a method. 4 run past 120 characters and 1 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 24,
+    "n_headline": 1,
+    "n_targets": 25,
+    "n_valid": 10,
+    "n_invalid": 3,
+    "n_no_command_applies": 12,
+    "n_command_expected": 13,
+    "n_unparseable": 0,
+    "executed": true,
+    "n_ran_ok": 10,
+    "n_ran_failed": 3,
+    "problems": [
+      "finding[ancova_family_halved_p]: exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extra ar",
+      "finding[multiplicity_primary_family]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[2]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    "
+    ]
+  },
+  "consequence": {
+    "n_sweep": 17,
+    "n_report": 7,
+    "n_computed": 0,
+    "n_asserted": 24,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 4,
+    "n_diverged": 2,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 29,
+    "n_unjoined": 13,
+    "n_manual": 0,
+    "divergences": [
+      "ancova_17day_p_above_threshold: tool=consistent model=suspicious (upgraded, explained)",
+      "ancova_19day_p_above_threshold: tool=consistent model=suspicious (upgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 7,
+    "n_uncomputed": 0,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 7,
+    "n_supplied": 3,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "logical": 4,
+      "field_norm": 3
+    }
+  },
+  "sourcing": {
+    "findings": 17,
+    "joinable": 17,
+    "traced_to_a_passage": 7
+  },
+  "delivery": {
+    "ok": false,
+    "n_calls": 28,
+    "n_undelivered": 1,
+    "n_extraction": 1,
+    "n_unrecovered": 1,
+    "lost": [
+      {
+        "seq": 1,
+        "tool": "extract_pdf",
+        "kind": "overflow",
+        "chars": 1396,
+        "input": {
+          "pdf_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1073--pnas.0801268105/10.1073--pnas.08012"
+        },
+        "detail": "Error: result (64,560 characters across 90 lines) exceeds maximum allowed tokens. Output has been saved to /home/gsfitzgerald/.claude/projects/-mnt-c-Users-greg"
+      }
+    ],
+    "note": "1 tool call(s) returned NO usable payload, 1 of them extraction calls; 1 were never retried with a narrower request. Where an extraction overflowed and was not retried, that file is absent from this review -- and any coverage figure counts items the model could not have seen. This is OUR pipe being too narrow, not the paper reporting less."
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 9 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 9,
+    "n_off_allowlist": 4
+  }
+}

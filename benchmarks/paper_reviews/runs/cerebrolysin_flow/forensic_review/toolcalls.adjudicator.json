@@ -1,0 +1,750 @@
+[
+  {
+    "seq": 1,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-0",
+    "input": {
+      "query": "extract_pdf",
+      "limit": 10
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_pdf\\\",\\n          \\\"description\\\": \\\"Extract text and tables from a PDF file for forensic analysis. Returns structured content including page text and table data. Output is capped at max_chars (default 50000); if the result says TRUNCATED, call again with first_page/last_page (1-based, inclusive) to fetch specific pages. A PDF table is only returned when it can actually be resolved into a grid. AN EMPTY `tables` DOES NOT MEAN THE PAPER HAS NO TABLES: a table whose rules pdfplumber cannot find is still printed in `text`, so search there for \\\\\\\"Table 1\\\\\\\" and read the numbers from the page. `tables_rejected` counts candidates dropped as segmented prose or reference-list text -- an inference from text alignment alone accepts ANY page, and on one prose paper it produced twelve \\\\\\\"tables\\\\\\\", the first being the title page. Prefer extract_xml + get_table wherever an .xml exists.\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"pdf_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_page\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 1721,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-1",
+    "input": {
+      "query": "grimu_check",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__grimu_check\\\",\\n          \\\"description\\\": \\\"GRIM-U: check whether a p-value from a Mann-Whitney U / Wilcoxon rank-sum test is achievable given the group sizes. The U statistic is (half-)integer in [0, n1*n2], so only a finite set of p-values is possible. ONLY apply to p-values a paper attributes to a Mann-Whitney/Wilcoxon test with known group sizes n1, n2 \u2014 NEVER to t-test/ANOVA/chi-squared/regression p-values. Best at 3 decimals and small groups (per-group n <~15). Verdicts: impossible = below the U=0 floor; suspicious = between achievable granular values; consistent = some achievable U reproduces it. reported_p accepts a number or a string like '<0.001'. test_type must be mann_whitney or wilcoxon (default mann_whitney); a t / F / chi-squared / ANOVA p is REFUSED as indeterminate, not scored. TWO MORE PRECONDITIONS, AND YOU MUST SUPPLY THEM. (1) If the paper prints a normal-approximation Z beside the p -- 'Z = 1.219, p = .223', which is how SPSS reports Mann-Whitney -- PASS IT as reported_z. That p is a function of the ROUNDED Z, not of U, so the U lattice does not constrain it and the check refuses. (2) If the outcome is a small-integer or ordinal scale, ranks TIE, the tie-corrected sdU is smaller than the untied one, and every achievable p moves: pass ties_possible=true and the granularity branch refuses (the below-floor branch still runs, since ties cannot push U below 0). Skipping either produced two published severity-2 findings against an honest paper. Parameters: n1 (int), n2 (int), reported_p (number or str), decimals (int, inferred if omitted), continuity_correction ('none'|'cc'|'both', default 'both'), method ('normal'|'exact'|'both', default 'normal'), one_sided (bool, default false), test_type (str, default 'mann_whitney'), reported_z (float, the printed Z if there is one), p_source ('u_statistic'|'normal_z'|'unspecified'), ties_possible (bool)\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"n1\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"n2\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"reported_p\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"continuity_correction\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"method\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"one_sided\\\": {\\n                \\\"type\\\": \\\"boolean\\\"\\n              },\\n              \\\"test_type\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"What test the paper attributed this p to. mann_whitney / wilcoxon only; t, F, chi-squared, ANOVA are refused (indeterminate), not scored.\\\"\\n              },\\n              \\\"reported_z\\\": {\\n                \\\"type\\\": \\\"number\\\",\\n                \\\"description\\\": \\\"The normal-approximation Z printed beside the p, if the paper printed one. If it reproduces the p at its printed precision the check refuses: the p is the Z's rounding, not U's granularity.\\\"\\n              },\\n              \\\"p_source\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"'u_statistic' | 'normal_z' | 'unspecified'. 'normal_z' refuses without needing the Z itself.\\\"\\n              },\\n              \\\"ties_possible\\\": {\\n                \\\"type\\\": \\\"boolean\\\",\\n                \\\"description\\\": \\\"True for a small-integer or ordinal outcome. Ranks tie, the tie correction shrinks sdU, and the untied lattice no longer describes the achievable p's.\\\"\\n              },\\n              \\\"uncertainty\\\": {\\n                \\\"type\\\": \\\"object\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 5885,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-2",
+    "input": {
+      "query": "check_estimate_ci",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_estimate_ci\\\",\\n          \\\"description\\\": \\\"Reconcile a point estimate against its own confidence interval: interval ordered and containing the estimate, estimate at the CI-implied midpoint ON THE CORRECT SCALE, and the p recovered from the CI agreeing with the reported p. PASS `measure` -- for ratio measures (OR/RR/HR/IRR) the CI is symmetric in LOG space, and checking linear symmetry misfires on 100% of hazard ratios at SE_log = 0.4 (measured, 2000/2000; the scale inference is what keeps the unlabelled path clean). A 'wrong' p is tested against alternative confidence levels before being flagged. Parameters: estimate, ci_low, ci_high, measure (optional), reported_p (optional), reported_p_operator (default \\\\\\\"=\\\\\\\"), confidence_level (default 0.95), null_value (optional; defaults to 1 for ratios, 0 otherwise), decimals (optional). A THRESHOLD p IS EXPRESSIBLE AND MUST BE PASSED AS ONE: for 'P < .001' pass reported_p=0.001 with reported_p_operator='<' ('<=', '>', '>=' likewise for 'P \u2264 .05' or 'P > .99'). Never coerce 'P < .001' to reported_p=0.001 alone -- that asserts equality and can be rescued as a mislabelled CI level -- and never omit the p because it is a threshold: that silently skips the p cross-check and records the row as consistent (measured: an abstract-headline 'ARR 0.185 (0.046-0.748), P < .001' whose CI-implied p is .018 passed clean under both encodings). PASS `decimals` -- the PRINTED precision of the COARSEST of the three numbers, since a comparison among them is only known to that precision. Without it the tolerance is re-derived from the parsed floats, and it errs WIDE: a bound printed 1.40 reads as one decimal, because str(1.40) is '1.4', so the tolerance comes out ten times too LOOSE and a real discrepancy can be waved through. An integral 5 reads at zero decimals, which is what it asserts.PASS `sampling='complex_survey'` WHEN THE PAPER SAYS SO (survey weights, NHANES WTMEC*, R's survey package, Stata svy:, PROC SURVEY*). The p-vs-CI comparison then becomes ONE-SIDED: a design-based interval uses a t with the survey degrees \u2026 [truncated]\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"estimate\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"ci_low\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"ci_high\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"measure\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"reported_p\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"reported_p_operator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Comparison the paper printed with the p: '=', '<', '<=', '>' or '>='. Pass '<' for 'P < .001'.\\\"\\n              },\\n              \\\"confidence_level\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"null_value\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\",\\n                \\\"description\\\": \\\"Printed decimals of the coarsest of estimate, ci_low, ci_high.\\\"\\n              },\\n              \\\"sampling\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"interval_method\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"How the interval was CONSTRUCTED, if the paper says -- \\\\\\\"bootstrap\\\\\\\", \\\\\\\"BCa\\\\\\\", \\\\\\\"exact\\\\\\\", \\\\\\\"Clopper-Pearson\\\\\\\", \\\\\\\"profile likelihood\\\\\\\", \\\\\\\"Fieller\\\\\\\", \\\\\\\"Wilson\\\\\\\", \\\\\\\"Bayesian credible\\\\\\\". The midpoint test assumes a WALD interval (estimate +/- z*SE), which is the only method symmetric about its estimate. Bootstrap intervals are mandatory practice for skewed cost data and exact intervals are routine in epidemiology; both fail a midpoint test innocently. Leave it out when the paper does not say -- the test then still runs and names the ambiguity rather than asserting an inconsistency.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 5310,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-3",
+    "input": {
+      "query": "r_grim_ground_truth",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__r_grim_ground_truth\\\",\\n          \\\"description\\\": \\\"Run GRIM via R's canonical `scrutiny` package. Use to CROSS-CHECK a grim_check result before reporting an anomaly. Disagreement between engines means our tooling is wrong, not the paper. ASK IT THE SAME QUESTION YOU ASKED THE PYTHON TOOL, or it is not a cross-check. Checking a `grim_percentage` finding? Pass percentage=true and the SAME percentage you gave grim_percentage -- not the number divided by 100, and not the percentage as a `mean`. MEASURED: a 28% share at n=41 that grim_percentage calls impossible comes back `consistent` if you pass it as mean=28, because R is then correctly answering \\\\\\\"can 41 integers average 28?\\\\\\\" (they can: 28*41 = 1148). The share question -- is 28% a possible k/41? -- is no: 11/41 = 26.83, 12/41 = 29.27. A cross-check that quietly answers an easier question reads as exoneration. The reply carries `asked_as` so you can see which question was answered; quote it in `notes`. Parameters: mean (the mean, or the percentage if percentage=true), n, items (default 1), decimals (default 2, the printed precision), percentage (bool, default false)\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"mean\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"n\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"items\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"percentage\\\": {\\n                \\\"type\\\": \\\"boolean\\\",\\n                \\\"description\\\": \\\"`mean` is a percentage share (100*k/n), not a mean. Set this when cross-checking grim_percentage.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              },\\n              \\\"variable_id\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"The `id` of the variable in the statistical anatomy that this value measures. Supply it whenever the paper declared one. It is not a substitute for the scale arguments -- the two are CHECKED AGAINST EACH OTHER, and a contradiction between them widens the scale, downgrades the provenance to `assumed` and is reported. Naming the variable is how a granularity verdict becomes traceable to the declaration that licensed it.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 3585,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-4",
+    "input": {
+      "query": "check_flow_arithmetic",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_flow_arithmetic\\\",\\n          \\\"description\\\": \\\"Reconcile a CONSORT/participant-flow cascade by EXACT integer arithmetic: each stage minus its stated exclusions must equal the next stage; arms must sum to their stage total; nothing after randomization may exceed it. Counts of people have no rounding window, so there is no tolerance parameter. Build `stages` top-down exactly as the diagram reads: [{\\\\\\\"label\\\\\\\": \\\\\\\"assessed\\\\\\\", \\\\\\\"n\\\\\\\": 240, \\\\\\\"excluded\\\\\\\": [{\\\\\\\"reason\\\\\\\": \\\\\\\"declined\\\\\\\", \\\\\\\"n\\\\\\\": 12}], \\\\\\\"arms\\\\\\\": [{\\\\\\\"label\\\\\\\": \\\\\\\"treatment\\\\\\\", \\\\\\\"n\\\\\\\": 100}]}]. Every n must be a whole number the paper PRINTS -- an absent, assumed, or fractional operand makes the tool REFUSE (`indeterminate`), never accuse. A drop between stages with no stated exclusions is `unaccounted_attrition`, capped `suspicious` (papers legitimately omit attrition reasons); a broken identity with every operand printed is `impossible`. Pass `randomized_label` to anchor the analyzed<=randomized check when no stage label contains \\\\\\\"random\\\\\\\". Parameters: stages (list of stage objects), randomized_label (optional), description (optional)\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"stages\\\": {\\n                \\\"type\\\": \\\"array\\\",\\n                \\\"description\\\": \\\"Ordered cascade, top-down: [{\\\\\\\"label\\\\\\\", \\\\\\\"n\\\\\\\", \\\\\\\"excluded\\\\\\\": [{\\\\\\\"reason\\\\\\\", \\\\\\\"n\\\\\\\"}], \\\\\\\"arms\\\\\\\": [{\\\\\\\"label\\\\\\\", \\\\\\\"n\\\\\\\"}]}]. Transcribe every n as printed; the tool refuses rather than assumes.\\\"\\n              },\\n              \\\"randomized_label\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Which stage the analyzed<=randomized check anchors on, when no stage label contains 'random'.\\\"\\n              },\\n              \\\"description\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 3146,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-7f9556cc-7c18-4bbb-bd3d-e0c2cb820c77-5",
+    "input": {
+      "query": "detect_duplication",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__detect_duplication\\\",\\n          \\\"description\\\": \\\"Detect duplicated/copy-pasted summary statistics WITHIN a table and ACROSS tables/studies. This catches identical (mean, SD) pairs appearing in two supposedly-independent samples \u2014 a data-integrity red flag that per-cell GRIM/GRIMMER cannot see. ALWAYS run this when a paper reports 2+ tables of means/SDs (e.g. one per study): compare every table against every other. Each block = {label, sample_id (blocks sharing a sample_id describe the SAME participants and are EXPECTED to match \u2014 set this to avoid false positives), independent (bool, default true), cells: [{label, value, sd}]}. Use parse_table to build the cells. Severity is keyed on the count of identical pairs (>=3 => highly_suspicious) and capped at highly_suspicious. Parameters: blocks (list of dicts), decimals_mean (int, default 2), decimals_sd (int, default 2), near_match (bool, default true)\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"blocks\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              },\\n              \\\"decimals_mean\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"decimals_sd\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"near_match\\\": {\\n                \\\"type\\\": \\\"boolean\\\"\\n              },\\n              \\\"uncertainty\\\": {\\n                \\\"type\\\": \\\"object\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 3566,
+    "is_error": false
+  },
+  {
+    "seq": 7,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-f25ad02d-7352-4500-beb1-79db590ce3d4-6",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/markdown/body.md",
+      "offset": 1,
+      "limit": 400
+    },
+    "result": "{\"type\":\"ReadFile\",\"FileTooLarge\":\"The requested line range (offset=1, limit=400) contains 25494 tokens, which exceeds the maximum allowed tokens (25000 tokens).\\nTry a smaller `limit`, a different starting `offset`, or use the '' tool to search for specific content.\"}",
+    "result_truncated": false,
+    "result_chars": 269,
+    "is_error": true
+  },
+  {
+    "seq": 8,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-f25ad02d-7352-4500-beb1-79db590ce3d4-7",
+    "input": {
+      "query": "grimu_coexistence",
+      "limit": 3
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__grimu_coexistence\\\",\\n          \\\"description\\\": \\\"GRIM-U co-existence: given several p-values from Mann-Whitney/Wilcoxon tests on the SAME group sizes n1, n2, flag minimally-differing p-values that cannot both arise from achievable U's (e.g. 0.171 vs 0.172 at n=8v8 \u2014 one maps to a U, the other falls in a gap). Same applicability rule as grimu_check (rank-sum tests only). PASS `one_sided` if the paper reports one-sided tests -- the achievable p-value set differs, and forcing a one-sided table onto the two-sided set manufactures accusations. The two preconditions grimu_check names apply here too and void this heuristic the same way: pass ties_possible=true for a small-integer or ordinal outcome, and p_source=\\\\\\\"normal_z\\\\\\\" when the paper printed Z values rather than U. Parameters: n1 (int), n2 (int), p_values (list of numbers/strings), decimals (int, optional), continuity_correction (str, default 'both'), method (str, default 'normal'), one_sided (bool, default false), test_type (str, default 'mann_whitney'), p_source (str), ties_possible (bool)\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"n1\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"n2\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"p_values\\\": {\\n                \\\"type\\\": \\\"array\\\"\\n              },\\n              \\\"decimals\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"continuity_correction\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"method\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"one_sided\\\": {\\n                \\\"type\\\": \\\"boolean\\\"\\n              },\\n              \\\"test_type\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"What test the paper attributed these p-values to. mann_whitney / wilcoxon only.\\\"\\n              },\\n              \\\"p_source\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"'u_statistic' | 'normal_z' | 'unspecified'. 'normal_z' refuses: a p rendered from a rounded Z does not sit on the U lattice.\\\"\\n              },\\n              \\\"ties_possible\\\": {\\n                \\\"type\\\": \\\"boolean\\\",\\n                \\\"description\\\": \\\"True for a small-integer or ordinal outcome; the tie correction moves every achievable p.\\\"\\n              },\\n              \\\"uncertainty\\\": {\\n                \\\"type\\\": \\\"object\\\"\\n              },\\n              \\\"provenance\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where these numbers came from. 'measured_raster' / 'measured_vector' mean you READ them off a figure's marks; this check then REFUSES, because it tests whether a value is possible to its LAST PRINTED DIGIT and a measured value has no last printed digit. 'ocr_table' / 'ocr_text' mean a MACHINE transcribed the numeral off an image (any cell an extractor returned with provenance 'ocr_table' -- scanned supplements arrive this way); this check refuses those too, for a different reason: the digit exists but we may have misread it, and a misread digit yields `impossible` against arithmetic that was fine. Anything the paper printed and we read from a text layer -- table, text, or a numeral inside a figure -- is not measured and runs normally.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"VERBATIM text from the paper containing the values you are passing -- one contiguous span, copied exactly, not reassembled. Prefer a short exact quote over a long approximate one. This is checked against the paper: a quote that cannot be located is reported as OUR search failing, but a quote you compose rather than copy is reported as composed, so copy it.\\\"\\n              },\\n              \\\"source_locator\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"Where in the paper that quote lives, in the terms a reader would use: 'Table 1, Age row', 'Results, paragraph 2', 'eTable 3'. Short. This is what makes a refusal legible -- 'we could not check the Age row' beats 'we could not check cell 7'.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 4648,
+    "is_error": false
+  },
+  {
+    "seq": 9,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-f25ad02d-7352-4500-beb1-79db590ce3d4-8",
+    "input": {
+      "query": "channels",
+      "limit": 5
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":0,\"content\":\"{\\n  \\\"results\\\": [],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 150,
+    "is_error": false
+  },
+  {
+    "seq": 10,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-f25ad02d-7352-4500-beb1-79db590ce3d4-9",
+    "input": {
+      "query": "extract_xml",
+      "limit": 3
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__extract_xml\\\",\\n          \\\"description\\\": \\\"Extract body text and TABLES from a publisher XML full text (JATS, PMC or Elsevier). PREFER THIS OVER extract_pdf whenever an .xml exists: tables come back as a dense rectangular cell grid with colspan/rowspan already expanded and multi-row headers flattened into composite column labels, which neither a PDF extraction nor markdown can represent. Measured on a real clinical Table 1, the PDF route recovers 7 usable cells per table and the XML route 86. THIS RETURNS A TABLE INDEX, NOT THE GRIDS -- table number, label, caption, section, shape and footnote count per table. Call get_table(xml_path, table_num) for the cells of each table you actually want. That extra hop exists for a reason: returning every grid at once produced a 184 kB result the harness could not deliver, so it spilled to a file and about 60% of it went unread. One table at a time always arrives. get_table returns `cells` -- ready-made {raw, row_label, col_label, row} records: pass those STRAIGHT to parse_cells_typed and check_table, UNCHANGED AND INCLUDING `row`. `row` is the cell coordinate the value register joins each verdict back to; two columns of one row can print the same number, so the text alone cannot identify a cell. Dropping it does not degrade the join, it ends it: every verdict then carries `row: None`, matches nothing, and the paper reports zero checks attached however many ran. Do NOT rebuild these records by hand. Do NOT route them through parse_table first; it drops every cell it cannot reduce to a scalar, which silently discards the estimate(CI) cells that are the highest-yield check on clinical papers. Use parse_table only to reconcile two extractions via cross_check. A merged cell appears ONCE, at its anchor position, with empty continuations: that is deliberate -- one measurement is one value, and repeating it would fabricate a duplication finding. XML HAS NO PAGE NUMBERS: cite the table label and section, never a page. A table with `alignment_uncertain: true` had ragged source rows and its column labels may be s\u2026 [truncated]\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"xml_path\\\": {\\n                \\\"type\\\": \\\"string\\\"\\n              },\\n              \\\"max_chars\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"first_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              },\\n              \\\"last_section\\\": {\\n                \\\"type\\\": \\\"integer\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 2921,
+    "is_error": false
+  },
+  {
+    "seq": 11,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-8d6f3c41-b85d-4c3a-815f-23dfc1479192-10",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/markdown/body.md",
+      "offset": 1,
+      "limit": 150
+    },
+    "result": "{\"type\":\"ReadFile\",\"FileContent\":{\"content\":\"1\u2192<!-- image -->\\n\\n## Research Article Research Article\\n\\nOpen Acess Open Acess\\n\\n## New Aspects of Graft-induced Central Plasticity and Neuroregeneration at T 10 in a Rat Model \u2020\\n\\nvon Wild  KRH 1 *, Catoi C 2 , Tobias von Wild 3 , Giorgio Brunelli 4 , Dafin Muresanu 5 , Peter Trillenberg 6 , Marc Heidbreder 7 , Laura Farcas 8 , Adrian F Gal 8 , Marian A Taulescu 8 , Alexandru I Gudea 9 , Johannes C Vester 10 and Marlene L\u00f6hnhardt 11 *\\n10\u2192\\n1 Westphalia Wilhelm's University M\u00fcnster, M\u00fcnster, Germany\\n\\n2 Department of Pathology, Rector of University of Agricultural Science and Veterinary Medicine, Cluj  Napoca, Romania\\n\\n3 Department of Plastic Reconstructive and Aesthetic Surgery, Hand Surgery; Praxisklinik in der Alster City, Hamburg, Germany\\n\\n4 Foundation Giorgio Brunelli for Research on Spinal Cord Lesions, Cellatica, Italy\\n\\n5 Department of Neurosciences, University of Medicine and Pharmacy Iuliu Hatieganu, Cluj Napoca, Romania\\n20\u2192\\n6 Department for Neurology, UK-SH, Campus Luebeck, Germany\\n\\n7 Department of Pharmacology and Toxicology, Krankenversicherung Nord, Hamburg, Germany\\n\\n8 Department of Veterinary Pathology, University of Agricultural Sciences and Veterinary Medicine, Cluj-Napoca, Romania\\n\\n9 Department of Comparative Anatomy, University of Agricultural Sciences and Veterinary Medicine, Cluj Napoca, Romania\\n\\n10 Department of Biometry and Clinical Research, idv Data Analysis and Study Planning; Konrad-Zuse-Bogen, Germany\\n30\u2192\\n11 Clinic and Polyclinic for Accident, Hand and Restorative Surgery, University Hospital Hamburg-Eppendorf Martinistra\u00dfe, Germany\\n\\n\u2020 In Memoriam Geoffrey Raisman, born  at June 28. 1939, deceased at January  27. 2017\\n\\n## Abstract\\n\\nObjective: Retest Brunelli's graft induced glutamate neurotransmitter switch at the neuromuscular junction in rat for the translation of new aspects of central plasticity concepts for human reconstructive surgery in spinal cord lesions.\\n\\nMethods: Randomized double blind controlled study in rat, which was limited to 30 animals (Charles River, 220 to 280 g). Ethical research approval was obtained from the Animal Research Committee of the University Hospital Schleswig  Holstein,  UK-SH,  L\u00fcbeck,  D,  and  legitimated  by  the  Governmental  Department  of Agriculture,  Natural Environments and Agriculture Kiel, D, in compliance with the European Commission Recommendation to retest and review of graft-induced glutamatergic regeneration and /or cholinergic co-transmission at the neuromuscular junction for reinnervation of the skeletal internal obliquus abdominal muscle fibres. Assessments were performed to demonstrate pharmacological neuromodulation after attaching the lateral corticospinal tract at T10 to the bisected skeletal motor nerve. Medication was administered for 14 days postoperatively-a) verum Cerebrolysin \u00ae  IP=12-b) shams NaCl 0.9% IP=11, and c) 7 controls (nil). 2nd Op at day 90 (16 surviving rats) for open proof of reinnervation and its type by a) CMAP, b)Vecuronium \u00ae  application. Fast Blue \u00ae  labeling were performed. 10 days later, on the 3rd Op N=15, euthanasia and organ fixation were performed. Extensive histology-morphology examinations were performed in Cluj.\\n40\u2192\\nResults: Eight rats showed positive CMAPs. Reinnervation and neuromodulation were demonstrated by counting and comparison of the grafted muscle fibers diameter. Four CAMP- positive- rats received Vecuronium \u00ae :  1  CERE and  1  NaCl  each  demonstrated  a  loss  of  amplitude  respectively  two  an  incomplete  muscle  blockage  due  to  the coexistence of glutamatergic and cholinergic neurotransmission. Confirmation of the VGluT2 in axons was observed by immunofluorescence. FB+ neurons were observed in many Rexed laminae in grafted spinal cord, but not in the brain.\\n\\nConclusion: The  coexistence  of  graft-induced  cholinergic  and  glutamatergic  neurotransmission  and  a  great capacity of lower motor neurons and o",
+    "result_truncated": true,
+    "result_chars": 93935,
+    "is_error": false
+  },
+  {
+    "seq": 12,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-8d6f3c41-b85d-4c3a-815f-23dfc1479192-11",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/cerebrolysin_rat_sci.pdf",
+      "first_page": 1,
+      "last_page": 6,
+      "max_chars": 50000
+    },
+    "result": "{\n  \"text\": \"--- Page 1 ---\\nResearch Article Research Article\\nOpen Acess Open Acess\\nNew Aspects of Graft-induced Central Plasticity and Neuroregeneration at T 10 in a Rat Model \\u2020\\nvon Wild  KRH 1 *, Catoi C 2 , Tobias von Wild 3 , Giorgio Brunelli 4 , Dafin Muresanu 5 , Peter Trillenberg 6 , Marc Heidbreder 7 , Laura Farcas 8 , Adrian F Gal 8 , Marian A Taulescu 8 , Alexandru I Gudea 9 , Johannes C Vester 10 and Marlene L\\u00f6hnhardt 11 *\\n1 Westphalia Wilhelm's University M\\u00fcnster, M\\u00fcnster, Germany\\n2 Department of Pathology, Rector of University of Agricultural Science and Veterinary Medicine, Cluj  Napoca, Romania\\n3 Department of Plastic Reconstructive and Aesthetic Surgery, Hand Surgery; Praxisklinik in der Alster City, Hamburg, Germany\\n4 Foundation Giorgio Brunelli for Research on Spinal Cord Lesions, Cellatica, Italy\\n5 Department of Neurosciences, University of Medicine and Pharmacy Iuliu Hatieganu, Cluj Napoca, Romania\\n6 Department for Neurology, UK-SH, Campus Luebeck, Germany\\n7 Department of Pharmacology and Toxicology, Krankenversicherung Nord, Hamburg, Germany\\n8 Department of Veterinary Pathology, University of Agricultural Sciences and Veterinary Medicine, Cluj-Napoca, Romania\\n9 Department of Comparative Anatomy, University of Agricultural Sciences and Veterinary Medicine, Cluj Napoca, Romania\\n10 Department of Biometry and Clinical Research, idv Data Analysis and Study Planning; Konrad-Zuse-Bogen, Germany\\n11 Clinic and Polyclinic for Accident, Hand and Restorative Surgery, University Hospital Hamburg-Eppendorf Martinistra\\u00dfe, Germany\\n\\u2020 In Memoriam Geoffrey Raisman, born  at June 28. 1939, deceased at January  27. 2017\\nAbstract\\nObjective: Retest Brunelli's graft induced glutamate neurotransmitter switch at the neuromuscular junction in rat for the translation of new aspects of central plasticity concepts for human reconstructive surgery in spinal cord lesions.\\nMethods: Randomized double blind controlled study in rat, which was limited to 30 animals (Charles River, 220 to 280 g). Ethical research approval was obtained from the Animal Research Committee of the University Hospital Schleswig  Holstein,  UK-SH,  L\\u00fcbeck,  D,  and  legitimated  by  the  Governmental  Department  of Agriculture,  Natural Environments and Agriculture Kiel, D, in compliance with the European Commission Recommendation to retest and review of graft-induced glutamatergic regeneration and /or cholinergic co-transmission at the neuromuscular junction for reinnervation of the skeletal internal obliquus abdominal muscle fibres. Assessments were performed to demonstrate pharmacological neuromodulation after attaching the lateral corticospinal tract at T10 to the bisected skeletal motor nerve. Medication was administered for 14 days postoperatively-a) verum Cerebrolysin \\u00ae  IP=12-b) shams NaCl 0.9% IP=11, and c) 7 controls (nil). 2nd Op at day 90 (16 surviving rats) for open proof of reinnervation and its type by a) CMAP, b)Vecuronium \\u00ae  application. Fast Blue \\u00ae  labeling were performed. 10 days later, on the 3rd Op N=15, euthanasia and organ fixation were performed. Extensive histology-morphology examinations were performed in Cluj.\\nResults: Eight rats showed positive CMAPs. Reinnervation and neuromodulation were demonstrated by counting and comparison of the grafted muscle fibers diameter. Four CAMP- positive- rats received Vecuronium \\u00ae :  1  CERE and  1  NaCl  each  demonstrated  a  loss  of  amplitude  respectively  two  an  incomplete  muscle  blockage  due  to  the coexistence of glutamatergic and cholinergic neurotransmission. Confirmation of the VGluT2 in axons was observed by immunofluorescence. FB+ neurons were observed in many Rexed laminae in grafted spinal cord, but not in the brain.\\nConclusion: The  coexistence  of  graft-induced  cholinergic  and  glutamatergic  neurotransmission  and  a  great capacity of lower motor neurons and other types of spinal neurons to regenerate",
+    "result_truncated": true,
+    "result_chars": 73494,
+    "is_error": false
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-ff3b8d2c-833e-419a-90d9-a3bc7112b983-12",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/cerebrolysin_rat_sci.pdf",
+      "first_page": 7,
+      "last_page": 12,
+      "max_chars": 50000
+    },
+    "result": "{\n  \"text\": \"--- Page 7 ---\\nPage 7 of 18\\nFigure 7: Synopsis graft- positioning by histology- morphology analysis inside the SC at T 10 Positioning of the graft inside the cord was evaluated in each of the 15 surviving cases and additionally in one rat that died at day of revision (No 21 CERE). Only one case, which exhibited a pyogranulomatous inflammation in and around the SC next to the graft segment, was excluded from further review (Table 1) The position of the SNG was considered the entire area in which the former spinal structure was unrecognizable and replaced by the transplanted nerve (regenerated or not) by degenerated/necrotic material and Gc (ceroid-loaded macrophages derived from microglia) and by reactive cell proliferation immediately surrounding the SNG-especially that of Schwann cells, astrocytes, and oligodendroglia. Thus, the grey areas indicating the position of the SNG in each case when spinal tissue was modified and replaced by the NG. Variation in the position of NGs within the SC are as expected for visually guided free-hand insertion. NG positions varied in both depth (ranging from 0.52 mm to 1.53 mm in electromyography (emg) positive cases, respectively, from 0.12 mm to 1.91 mm in emg negative cases that helps to explain the negative results) and angles of insertion from the vertical and median planes (ranging from 9\\u00b0 to 40\\u00b0 in emg positive cases and from 0\\u00b0 to 43\\u00b0 in emg negative cases, more or less same range). A scheme of the final position of the SNG (gray shapes) inside the SC and used abbreviations: 1,2,3\\u202610 - Rexed laminae of spinal gray matter, medial (M) or lateral (L) part, axial (Ax) or abaxial (Ab); D Dorsal nucleus (Clarke); dc -dorsal columns; dcs - dorsal corticospinal tract; dl - dorsolateral fasciculus (Lissauer); Ec - ependymary canal; gr - gracile fasciculus; ICl - intercalated nucleus; IML - intermediolateral nucleus; IMM - intermediomedial nucleus; lf - lateral funiculus; LDCom - lumbar dorsal common; LSp - lateral spinal nucleus; psdc - postsynaptic dorsal column; rs - rubrospinal tract; vf - ventral funiculus; VH - ventral horn of SC; vwc - ventral white common. (Rexed B 59 Cytoarchitectonic organization of the spinal cord in the cat).\\n\\n--- Page 8 ---\\nStatistical Methods\\nIt was assumed that no single histopathological measure can capture the multidimensional nature of the neuroplasticity of SC after peripheral nerve grafting [35,42]. In this situation, the use of multiple measures to address the breadth of potential neuroplasticity is recommended, and a multidimensional approach for evaluation of the assessments was chosen for  the  present  study  [45].  Minimizing  the  required  assumptions  is  a recommended approach for confirmatory statements to ensure efficacy, which applies especially in scales with skewed distributions, including floor  and  ceiling  effects.  Furthermore,  with  very  small  sample  sizes, parametric statistics are very sensitive to outliers. Thus, a non-parametric assessment  of  effects  independent  of  data  type  and  distribution  was chosen  as  the  primary  analysis  method.  The  analysis  was  performed by  means of the highly efficient  Wei-Lachin  procedure,  a  multivariate generalization  of  the  Wilcoxon-Mann-Whitney  test.  The  procedure takes into account the correlation among single variables to produce an overall average estimate and test for differences, as described by Wei and Lachin 1983 and Lachin 1992 [46-47]. Practical examples are provided in  modern  textbooks  on  multiple  testing  problems  [48].  Incidentally, it  should  be  noted  that  the  nonparametric  Wei-Lachin  procedure  is similar  to  the  frequently  used  parametric  procedure  of  O'Brien  [49]. We  preferred,  however,  the  Wei-Lachin  procedure  because  it  is  more robust  for  practical  data  sets  (minimization  of  required  assumptions) [50].  Additionally,  the  O'Brien  procedure  has  been  shown  to  provide ove",
+    "result_truncated": true,
+    "result_chars": 65933,
+    "is_error": false
+  },
+  {
+    "seq": 14,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-ff3b8d2c-833e-419a-90d9-a3bc7112b983-13",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/markdown/body.md",
+      "offset": 150,
+      "limit": 100
+    },
+    "result": "{\"type\":\"ReadFile\",\"FileContent\":{\"content\":\"150\u2192| 21 (+) | 9 o , 1.53 mm Rxl 7-9          | I : WM atrophy (80% lf , 70% vf ); Ec dilated              | A : LDCom (2); dc (3) T : Rxl 7-10 (2) .     | Gc (1); fibr (1); ang (3); Sc in SC (1); OB in SNG.   | 2,44(1,08-7,61) 5161                 | -                                                              |\\n| 28 (+) | 10 o , 0.83 mm Rxl 5,7         | I : WM atrophy (10% of lf )                                | A : Rxl 4-6 (3) T : Rxl 7-9 (3)              | Gc (1); fibr (1); Npres (2); Sc in SC (1); OB in SNG. | 2,42 (1,37-5,45) 3745                | -                                                              |\\n| 7 (-)  | 16 o , 1.11 mm Rxl 7           | I : WM atrophy (50% lf ; 10% vf ); I+C: Wd in dcs and lf ; | A : gr, psdc , lf (3) T : Rxl 7-9 (1)        | Gc (2); fibr (1); ang (2); Npres (1); Sc in SC (0)    | 2,48 (1,13 -5,22) 1411               | -                                                              |\\n| 9 (-)  | 43 o , 1.91 mm Contralat. - lf | I : Wd of dcs ; C : Wd of dcs ; Ec destruction             | A : not found T : not found                  | Gc (3); fibr (1); ang (1); Npres (1); Sc in SC (1)    | 1,71 (1,09 - 2,36) 1598              | -                                                              |\\n| 12 (-) | 30 o , 0.28 mm Rxl 3,4         | I : WM atrophy (10% lf )                                   | A : Rxl 1-3 (1) T : Rxl 3,4 (1)              | Gc (1); fibr (1); ang (1); Npres (2); Sc in SC (1)    | 3,04 (1,70-6,47) 3275                | L1= 2( Rxl 9)                                                  |\\n| 17 (-) | 4 o , 0.66 mm Rxl 5            | I : WM atrophy (20% lf )                                   | A : Rxl 4 (1) T : Rxl 5 (1)                  | Gc (1); fibr (2); ang (1); Npres (3); Sc in SC (0).   | 2,32 (1,22-4,08) 1016                | -                                                              |\\n| 18 (-) | 22 o , 0.56 mm Rxl 5           | I : WM atrophy (75% lf; 50% vf ); Wd of lf and vf          | A : Rxl 4 (1) T : Rxl 5 (1)                  | Gc (1); fibr (3); ang (2); Npres (2); Sc+OB in SC (3) | 2,18 (1,29-3,88) 4503                | -                                                              |\\n| 23 (-) | 0 o , 1.11 mm Rxl 7            | I : WM atrophy (50% dc& lf ); C : lymphoplasmac. inflam.   | A : gr, psdc (3) T : Rxl 7-9 (3)             | Gc (3); fibr (1); ang (2); Npres (1); Sc in SC (0)    | 2,05 (1,14-3,84) 8682                | -                                                              |\\n| 24 (-) | 37 o , 0.12 mm Rxl 2           | No                                                         | A : not found T : not found                  | Gc (2); fibr (3); ang (1); Npres (3); Sc in SC (0).   | 2,11 (1,09-4,42) 5099                | -                                                              |\\n| 25 (-) | 0 o , 0.32 mm Rxl 2-4          | No                                                         | A : Rxl 1,2 (1) T : Rxl 3,4 (1)              | Gc (2); fibr. (2); ang (1); Npres (2); Sc in SC (1)   | Not found                            | -                                                              |\\n160\u2192| 26 (-) | 35 o , 0.35 mm LSp             | I+C: Wd in dcs and vwc ; C : Malacia - Rxl 7               | A : Rxl 2,3, rs (1) T : Rxl 4 (1)            | Gc (2); fibr (1); ang.(1); Npres (2); Sc in SC (0)    | 2,19 (1,02-3,13) 3294                | -                                                              |\\n| 27 (-) | 0 o , 0.32 mm Rxl 3            | I+C: WM atrophy (50% of dc )                               | A : not found T : not found                  | Gc (2); fibr (1); ang (1); Npres (2); Sc in SC (0)    | 2,38 (1,36-2,90) 579                 | -                                                              |\\n\\npats were attached around the nerve fascicles, distal to the coadaptation (Figure 3) [11,35-37,40,41].\\n\\n3rd Op 10 days after Fast Blue \u00ae application  (N=15):  The  following organs were h",
+    "result_truncated": true,
+    "result_chars": 75440,
+    "is_error": false
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-0c5dc8c1-cb26-421a-85f5-3edd30bfeb5f-14",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/cerebrolysin_rat_sci.pdf",
+      "first_page": 13,
+      "last_page": 18,
+      "max_chars": 50000
+    },
+    "result": "{\n  \"text\": \"--- Page 13 ---\\nAxon regeneration and sprouting\\n(AR) around (A) and on the tip (T) of the SNG were demonstrated in all positive cases and in most negative cases (Figure 8). Axon regeneration constitutes  the  regrowth  of  transected  axons  at  their  cut  tip,  whereas sprouting involves the growth of collateral branches from fibers that are spared by the injury [55-69].\\nIn  our  experiments,  AR/T  could  not  be  differentiated  and  was observed  in  multiple  areas  of  the  SC.  Regenerating  and  sprouting axons were associated with both NG regeneration and the regeneration of SC structures, such as tracts, laminae, and funiculi. In histological experiments,  we  considered  NG  regeneration  to  be  the  presence  of myelin-covered axons in the SNG. Theoretically, these new axons can regenerate  SNGs  only  by  accessing  their  tip,  whereas  the  remaining SNGs  are  covered  by  epineurium  that  is  impenetrable  for  neuronal buds. Newly formed myelinated axons were observed in various areas of  the  SC,  including Rexed laminae (Rxl) [1-10]. The Rexed laminae comprise a system of ten layers of gray matter (I-X), which is identified by Bror Rexed to label portions of the gray columns of the spinal cord (Figures 8 and 9), the lateral funiculus (lf), the lateral spinal nucleus (LSp), the rubrospinal (rs) tract, the medullary (caudal) reticulospinal (mrs) tract, the dorsal corticospinal (dcs) tract, the gracile fascicle (gr), the  lumbar  dorsal  common  (LDCom),  and  the  postsynaptic  dorsal column  (psdc).  However,  axon  regeneration  and  sprouting  near  the tip of the SNG was observed only in Rexed laminae 3-5 (emg-negative cases) and 7-10 (all emg-positive and two negative cases). The intensity (score) of AR/T around and at the tip of the SNG was variable (scored from 1 to 3) [59]. On routine histology, it was impossible to determine the exact origin of axons that grew near or inside the SNG. For example, in case 12 (emg-negative), new axons were observed only in laminae 1-4, but the neurotracer FB was demonstrated in two neurons in lamina 9,  indicating  at  least  a  partial  axon  origin.  Moreover,  spinal  neurons possess projections to various laminae of the SC that could be involved in the formation of new axons. Due to the small number of animals evaluated and the wide variety of SNG positions and tissue reactions in the SC, statistical analysis of the positions of the grafts and the area and intensity of axonal growth was not feasible. Although a comparative, statistical  analysis  of  the  non-transected  nerve  was  not  possible,  our results  revealed  a  large  number  of  regenerated  myelinated  axons  of various  diameters  in  SNGs.  Although  there  is  evidence  that  spinal axons grow into the PNG, the number of axons, the thickness of the axons, and their ion channel expression patterns may not be identical to those necessary for typical signal propagation [60]. This finding may explain the limited functional recovery observed during intraoperative electrostimulation.\\nAngiogenesis\\n(Figures  8  and  Figure  9  B)  Around  and  in  the  SNG,  which  is characterized  by  the  outgrowth  of  capillary  sprouts,  venules,  and arterioles that are newly formed from pre-existing blood vessels of the SC, was more intense in EMG-positive cases.\\nGitter cells\\nGitter cells were identified around and inside the SNG in all cases (Figure 8 A) [61].\\nThe outgrowth of Schwann cells\\n(Figure  9)  From  SNGs  inside  the  SC  was  observed  as  bands  of B\\u00fcngner  that  consisted  of  aligned  cell  strands  that  selectively  guided regrowing axons. After traumatic SC injuries, Schwann cells migrate from the periphery into the injury site, where they contribute to endogenous repair  processes  [63.  Other  studies  have  shown  that  transplanted Schwann cells will not mix with astrocytes; thus, the bridges across injury cavities will not integrate with the SC.5, 64 Our finding",
+    "result_truncated": true,
+    "result_chars": 94722,
+    "is_error": false
+  },
+  {
+    "seq": 16,
+    "tool": "search_tool",
+    "tool_short": "search_tool",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "call-0c5dc8c1-cb26-421a-85f5-3edd30bfeb5f-15",
+    "input": {
+      "query": "check_statistic_bounds",
+      "limit": 3
+    },
+    "result": "{\"type\":\"SearchTool\",\"result_count\":1,\"content\":\"{\\n  \\\"results\\\": [\\n    {\\n      \\\"server\\\": \\\"forensic_metascience\\\",\\n      \\\"tools\\\": [\\n        {\\n          \\\"tool_name\\\": \\\"forensic_metascience__check_statistic_bounds\\\",\\n          \\\"description\\\": \\\"Is a value inside the range its measure LOGICALLY permits? Call it the moment you hold a statistic that looks impossible on its face -- a correlation above 1, a p-value above 1, a percentage above 100, an alpha above 1. IT WILL NOT LET YOU ACCUSE THE PAPER, and that is deliberate. A value that far outside its own definition is not the kind of error that survives to publication in an honest paper OR a fabricated one -- fabricators produce plausible numbers, because that is the point of fabricating them. The likeliest author of the error is whoever read the page, which was us. So the verdict is `indeterminate` with failure_mode `extraction_suspect`, and the result names the specific decimal-point slip that would explain it (11.3 as a correlation reads as 0.113 with the point two places out). GO AND CHECK THE SOURCE. Re-read the value in the paper itself: the decimal point against the printed figure, and the COLUMN -- a mean or a test statistic read out of the wrong column is the other common cause. If the value is confirmed there, call this again with extraction_verified=true and it returns `impossible`, which the bound then fully licenses. Verification is the price of the accusation. Parameters: value, measure (r/correlation, p_value, percentage, proportion, r_squared, kappa, icc, cronbach_alpha, auc, sd, se, variance, chi_squared, f_statistic, n), extraction_verified (default false), source_quote.\\\",\\n          \\\"score\\\": 1.0,\\n          \\\"input_schema\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"properties\\\": {\\n              \\\"value\\\": {\\n                \\\"type\\\": \\\"number\\\"\\n              },\\n              \\\"measure\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"What the value is meant to be. Only measures with a bound that follows from their DEFINITION are known; anything else is refused rather than guessed at.\\\"\\n              },\\n              \\\"extraction_verified\\\": {\\n                \\\"type\\\": \\\"boolean\\\",\\n                \\\"description\\\": \\\"Set true ONLY after re-reading the value in the paper itself and confirming both the digits and the column. This is what lifts the refusal to `impossible`.\\\"\\n              },\\n              \\\"source_quote\\\": {\\n                \\\"type\\\": \\\"string\\\",\\n                \\\"description\\\": \\\"The passage the value was confirmed against.\\\"\\n              }\\n            }\\n          }\\n        }\\n      ]\\n    }\\n  ],\\n  \\\"total_hidden_tools\\\": 42,\\n  \\\"status\\\": \\\"ready\\\",\\n  \\\"note\\\": null\\n}\"}",
+    "result_truncated": false,
+    "result_chars": 2776,
+    "is_error": false
+  },
+  {
+    "seq": 17,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-16",
+    "input": {
+      "estimate": 0.5611,
+      "ci_low": 0.5456,
+      "ci_high": 0.5766,
+      "reported_p": 0.0001,
+      "reported_p_operator": "<",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "source_locator": "Table 2, Combined (Wei-Lachin) row"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [],\n  \"recovered_se\": 0.007908308582332144,\n  \"recovered_p\": 1.1102230246251565e-14,\n  \"recovered_z\": 7.726051577767566,\n  \"implied_centre\": 0.5610999999999999,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"Estimate, CI and p are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001\",\n  \"source_locator\": \"Table 2, Combined (Wei-Lachin) row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 959,
+    "is_error": false
+  },
+  {
+    "seq": 18,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-17",
+    "input": {
+      "estimate": 0.8,
+      "ci_low": 0.5362,
+      "ci_high": 1.0,
+      "reported_p": 0.9017,
+      "reported_p_operator": "=",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017",
+      "source_locator": "Table 2, NNTXMAX row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0112 (reachable range [0.0112, 0.0113] across the printed precision of the estimate and its bounds), but p = 0.9017 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n    \"the CI excludes the null (0.5), but the reported p = 0.9017 says the result is not significant\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.11831850066082725,\n  \"recovered_p\": 0.011227760363422767,\n  \"recovered_z\": 2.5355290873739387,\n  \"implied_centre\": 0.7681,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"the p-value recovered from the CI is 0.0112 (reachable range [0.0112, 0.0113] across the printed precision of the estimate and its bounds), but p = 0.9017 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding; the CI excludes the null (0.5), but the reported p = 0.9017 says the result is not significant\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017\",\n  \"source_locator\": \"Table 2, NNTXMAX row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1835,
+    "is_error": false
+  },
+  {
+    "seq": 19,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-18",
+    "input": {
+      "estimate": 0.8182,
+      "ci_low": 0.5578,
+      "ci_high": 1.0,
+      "reported_p": 0.4936,
+      "reported_p_operator": "=",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "Muscle Catoi | 0,8182 | (0,5578 to 1,0000) | 11 / 2 | 0,4936",
+      "source_locator": "Table 3, Muscle Catoi row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0048 (reachable range [0.0048, 0.0048] across the printed precision of the estimate and its bounds), but p = 0.4936 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n    \"the CI excludes the null (0.5), but the reported p = 0.4936 says the result is not significant\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.112808195326041,\n  \"recovered_p\": 0.004791644595675937,\n  \"recovered_z\": 2.8207170505682733,\n  \"implied_centre\": 0.7788999999999999,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": true,\n  \"explanation\": \"the p-value recovered from the CI is 0.0048 (reachable range [0.0048, 0.0048] across the printed precision of the estimate and its bounds), but p = 0.4936 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding; the CI excludes the null (0.5), but the reported p = 0.4936 says the result is not significant\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"Muscle Catoi | 0,8182 | (0,5578 to 1,0000) | 11 / 2 | 0,4936\",\n  \"source_locator\": \"Table 3, Muscle Catoi row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1855,
+    "is_error": false
+  },
+  {
+    "seq": 20,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-19",
+    "input": {
+      "estimate": 0.4,
+      "ci_low": 0.0704,
+      "ci_high": 0.7296,
+      "reported_p": 0.4146,
+      "reported_p_operator": "=",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "NNTXDIAM | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4146",
+      "source_locator": "Table 2, NNTXDIAM row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.5521 (reachable range [0.5518, 0.5523] across the printed precision of the estimate and its bounds), but p = 0.4146 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.16816635540236594,\n  \"recovered_p\": 0.5520779404300087,\n  \"recovered_z\": -0.5946492671541425,\n  \"implied_centre\": 0.4,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.5521 (reachable range [0.5518, 0.5523] across the printed precision of the estimate and its bounds), but p = 0.4146 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"NNTXDIAM | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4146\",\n  \"source_locator\": \"Table 2, NNTXDIAM row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1636,
+    "is_error": false
+  },
+  {
+    "seq": 21,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-20",
+    "input": {
+      "estimate": 0.4,
+      "ci_low": 0.0704,
+      "ci_high": 0.7296,
+      "reported_p": 0.4936,
+      "reported_p_operator": "=",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "NNTXAREA | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4936",
+      "source_locator": "Table 2, NNTXAREA row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.5521 (reachable range [0.5518, 0.5523] across the printed precision of the estimate and its bounds), but p = 0.4936 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.16816635540236594,\n  \"recovered_p\": 0.5520779404300087,\n  \"recovered_z\": -0.5946492671541425,\n  \"implied_centre\": 0.4,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.5521 (reachable range [0.5518, 0.5523] across the printed precision of the estimate and its bounds), but p = 0.4936 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"NNTXAREA | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4936\",\n  \"source_locator\": \"Table 2, NNTXAREA row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1636,
+    "is_error": false
+  },
+  {
+    "seq": 22,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-9eb33cf1-b3f9-4f3f-a797-8f4ba0f3bfdc-21",
+    "input": {
+      "estimate": 0.625,
+      "ci_low": 0.3993,
+      "ci_high": 0.8507,
+      "reported_p": 0.4146,
+      "reported_p_operator": "=",
+      "null_value": 0.5,
+      "decimals": 4,
+      "confidence_level": 0.95,
+      "source_quote": "Muscle Marlene | 0,6250 | (0,3993 to 0,8507) | 16 / 5 | 0,4146",
+      "source_locator": "Table 3, Muscle Marlene row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.2777 (reachable range [0.2774, 0.2780] across the printed precision of the estimate and its bounds), but p = 0.4146 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.11515517722789441,\n  \"recovered_p\": 0.2777038958845508,\n  \"recovered_z\": 1.0854917947164675,\n  \"implied_centre\": 0.625,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.2777 (reachable range [0.2774, 0.2780] across the printed precision of the estimate and its bounds), but p = 0.4146 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"Muscle Marlene | 0,6250 | (0,3993 to 0,8507) | 16 / 5 | 0,4146\",\n  \"source_locator\": \"Table 3, Muscle Marlene row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1649,
+    "is_error": false
+  },
+  {
+    "seq": 23,
+    "tool": "mcp__forensic_metascience__grimu_check",
+    "tool_short": "grimu_check",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-daf57c90-625f-4b7a-a50e-e158d99e5805-22",
+    "input": {
+      "n1": 10,
+      "n2": 3,
+      "reported_p": "0.9017",
+      "decimals": 4,
+      "test_type": "mann_whitney",
+      "ties_possible": false,
+      "source_quote": "NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017",
+      "source_locator": "Table 2, NNTXMAX row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"consistent\": false,\n  \"reported_p\": 0.9017,\n  \"reported_p_interval\": [\n    0.90165,\n    0.9017499999999999\n  ],\n  \"decimals\": 4,\n  \"decimals_source\": \"caller\",\n  \"n1\": 10,\n  \"n2\": 3,\n  \"mU\": 15.0,\n  \"sdU\": 5.916079783099616,\n  \"floor_p\": 0.006993006993006993,\n  \"floor_p_by_convention\": {\n    \"normal\": 0.011229886652916665,\n    \"normal+cc\": 0.014248079672347166,\n    \"exact\": 0.006993006993006993\n  },\n  \"min_possible_p\": 0.006993006993006993,\n  \"n_achievable_p\": 45,\n  \"below_floor\": false,\n  \"is_threshold\": false,\n  \"matched\": [],\n  \"matched_convention\": null,\n  \"nearest_below\": {\n    \"U\": 13.5,\n    \"p\": 0.8657723749926214\n  },\n  \"nearest_above\": {\n    \"U\": 14.0,\n    \"p\": 0.932646638965876\n  },\n  \"note\": null,\n  \"explanation\": \"Reported p = 0.9017 falls between achievable Mann-Whitney p-values for 10v3 and is reproduced by no permissible rank sum (nearest: U=13.5\\u2192p=0.8658 below, U=14\\u2192p=0.9326 above). A granularity inconsistency \\u2014 often a software / continuity-correction / rounding artifact, so treated cautiously, not as impossible.\",\n  \"methodology\": \"GRIM-U: Mann-Whitney U for 10v3 has mU=15, sdU=5.9161; achievable U are {0, 0.5, ..., 30} giving 45 distinct p at 4 dp (normal approximation, \\u00b1continuity correction, exact-permutation union). Reported p=0.9017 checked against interval [0.90165, 0.90175).\",\n  \"source_quote\": \"NNTXMAX | 0,8000 | (0,5362 to 1,0000) | 10 / 3 | 0,9017\",\n  \"source_locator\": \"Table 2, NNTXMAX row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1530,
+    "is_error": false
+  },
+  {
+    "seq": 24,
+    "tool": "mcp__forensic_metascience__grimu_check",
+    "tool_short": "grimu_check",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-daf57c90-625f-4b7a-a50e-e158d99e5805-23",
+    "input": {
+      "n1": 10,
+      "n2": 3,
+      "reported_p": "<0.0001",
+      "decimals": 4,
+      "test_type": "mann_whitney",
+      "ties_possible": false,
+      "source_quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "source_locator": "Table 2, Combined (Wei-Lachin) row"
+    },
+    "result": "{\n  \"severity\": \"impossible\",\n  \"consistent\": false,\n  \"reported_p\": 0.0001,\n  \"reported_p_interval\": [\n    5e-05,\n    0.00015000000000000001\n  ],\n  \"decimals\": 4,\n  \"decimals_source\": \"caller\",\n  \"n1\": 10,\n  \"n2\": 3,\n  \"mU\": 15.0,\n  \"sdU\": 5.916079783099616,\n  \"floor_p\": 0.006993006993006993,\n  \"floor_p_by_convention\": {\n    \"normal\": 0.011229886652916665,\n    \"normal+cc\": 0.014248079672347166,\n    \"exact\": 0.006993006993006993\n  },\n  \"min_possible_p\": 0.006993006993006993,\n  \"n_achievable_p\": 45,\n  \"below_floor\": true,\n  \"is_threshold\": true,\n  \"matched\": [],\n  \"matched_convention\": null,\n  \"nearest_below\": null,\n  \"nearest_above\": null,\n  \"note\": null,\n  \"explanation\": \"Reported p < 0.0001 is impossible: the minimum achievable Mann-Whitney p for 10v3 (at U=0) is 0.00699301, which is already >= 0.0001. No rank configuration can produce a value this small.\",\n  \"methodology\": \"GRIM-U: Mann-Whitney U for 10v3 has mU=15, sdU=5.9161; achievable U are {0, 0.5, ..., 30} giving 45 distinct p at 4 dp (normal approximation, \\u00b1continuity correction, exact-permutation union). Reported p=0.0001 checked against interval [5e-05, 0.00015).\",\n  \"source_quote\": \"Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001\",\n  \"source_locator\": \"Table 2, Combined (Wei-Lachin) row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1333,
+    "is_error": false
+  },
+  {
+    "seq": 25,
+    "tool": "mcp__forensic_metascience__grimu_coexistence",
+    "tool_short": "grimu_coexistence",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-daf57c90-625f-4b7a-a50e-e158d99e5805-24",
+    "input": {
+      "n1": 10,
+      "n2": 3,
+      "p_values": [
+        "0.4146",
+        "0.4936",
+        "0.1928",
+        "0.1020",
+        "0.7533",
+        "0.9017",
+        "0.2347",
+        "0.3505"
+      ],
+      "decimals": 4,
+      "test_type": "mann_whitney",
+      "ties_possible": false,
+      "source_quote": "NNTXDIAM | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4146",
+      "source_locator": "Table 2, P column, n=10/3 rows"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"n1\": 10,\n  \"n2\": 3,\n  \"per_value\": [\n    {\n      \"reported_p\": 0.4146,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 9.5,\n        \"p\": 0.39802471950693785\n      },\n      \"nearest_above\": {\n        \"U\": 10.0,\n        \"p\": 0.4468728207108308\n      }\n    },\n    {\n      \"reported_p\": 0.4936,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 10.0,\n        \"p\": 0.46853146853146854\n      },\n      \"nearest_above\": {\n        \"U\": 10.5,\n        \"p\": 0.49896229860376107\n      }\n    },\n    {\n      \"reported_p\": 0.1928,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 6.5,\n        \"p\": 0.17629637444051116\n      },\n      \"nearest_above\": {\n        \"U\": 7.0,\n        \"p\": 0.20489389381637868\n      }\n    },\n    {\n      \"reported_p\": 0.102,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 4.5,\n        \"p\": 0.09096894797535775\n      },\n      \"nearest_above\": {\n        \"U\": 5.0,\n        \"p\": 0.10831938073000408\n      }\n    },\n    {\n      \"reported_p\": 0.7533,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 12.5,\n        \"p\": 0.7353166906373405\n      },\n      \"nearest_above\": {\n        \"U\": 13.0,\n        \"p\": 0.7998461056624733\n      }\n    },\n    {\n      \"reported_p\": 0.9017,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 13.5,\n        \"p\": 0.8657723749926214\n      },\n      \"nearest_above\": {\n        \"U\": 14.0,\n        \"p\": 0.932646638965876\n      }\n    },\n    {\n      \"reported_p\": 0.2347,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 7.0,\n        \"p\": 0.2167832167832168\n      },\n      \"nearest_above\": {\n        \"U\": 7.5,\n        \"p\": 0.23672357063785732\n      }\n    },\n    {\n      \"reported_p\": 0.3505,\n      \"severity\": \"suspicious\",\n      \"consistent\": false,\n      \"matched\": [],\n      \"nearest_below\": {\n        \"U\": 8.5,\n        \"p\": 0.3104944343172349\n      },\n      \"nearest_above\": {\n        \"U\": 9.0,\n        \"p\": 0.35254213749971297\n      }\n    }\n  ],\n  \"coexistence_violations\": [],\n  \"explanation\": \"No co-existence violations among the supplied p-values, but 8 of 8 p-value(s) are individually flagged (worst: suspicious); see per_value.\",\n  \"methodology\": \"GRIM-U co-existence: build the achievable p-set for the shared group sizes, then flag any granularity-inconsistent p that differs minimally from a reproducible p (they cannot both be real).\",\n  \"source_quote\": \"NNTXDIAM | 0,4000 | (0,0704 to 0,7296) | 10 / 3 | 0,4146\",\n  \"source_locator\": \"Table 2, P column, n=10/3 rows\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 2958,
+    "is_error": false
+  },
+  {
+    "seq": 26,
+    "tool": "mcp__forensic_metascience__detect_duplication",
+    "tool_short": "detect_duplication",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-daf57c90-625f-4b7a-a50e-e158d99e5805-25",
+    "input": {
+      "decimals_mean": 4,
+      "decimals_sd": 4,
+      "near_match": true,
+      "source_locator": "Table 2 Combined row versus Table 3 Combined row",
+      "source_quote": "Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001",
+      "blocks": [
+        {
+          "label": "Table 2 Combined Wei-Lachin",
+          "sample_id": "table2_histology",
+          "independent": true,
+          "cells": [
+            {
+              "label": "Combined_MW",
+              "value": 0.5611,
+              "sd": 0.0079
+            }
+          ]
+        },
+        {
+          "label": "Table 3 Combined Wei-Lachin",
+          "sample_id": "table3_muscle",
+          "independent": true,
+          "cells": [
+            {
+              "label": "Combined_MW",
+              "value": 0.5611,
+              "sd": 0.0079
+            }
+          ]
+        },
+        {
+          "label": "Table 2 NNTXDIAM p",
+          "sample_id": "table2_nntxdiam",
+          "independent": true,
+          "cells": [
+            {
+              "label": "p",
+              "value": 0.4146,
+              "sd": 0.4
+            }
+          ]
+        },
+        {
+          "label": "Table 3 Muscle Marlene p",
+          "sample_id": "table3_marlene",
+          "independent": true,
+          "cells": [
+            {
+              "label": "p",
+              "value": 0.4146,
+              "sd": 0.625
+            }
+          ]
+        },
+        {
+          "label": "Table 2 NNTXAREA p",
+          "sample_id": "table2_nntxarea",
+          "independent": true,
+          "cells": [
+            {
+              "label": "p",
+              "value": 0.4936,
+              "sd": 0.4
+            }
+          ]
+        },
+        {
+          "label": "Table 3 Muscle Catoi p",
+          "sample_id": "table3_catoi",
+          "independent": true,
+          "cells": [
+            {
+              "label": "p",
+              "value": 0.4936,
+              "sd": 0.8182
+            }
+          ]
+        }
+      ]
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"explanation\": \"1 identical (mean, SD) pair(s) shared across independent blocks (coincidence probability \\u2248 1.3e-06). Confirm the sources describe different participants before treating this as a data-integrity anomaly.\",\n  \"n_blocks\": 6,\n  \"n_cells_total\": 6,\n  \"n_comparisons\": 15,\n  \"max_identical_pairs\": 1,\n  \"chance_probability\": 1.2635939011375085e-06,\n  \"duplicate_groups\": [\n    {\n      \"kind\": \"cross_source_pair\",\n      \"block_a\": \"Table 2 Combined Wei-Lachin\",\n      \"block_b\": \"Table 3 Combined Wei-Lachin\",\n      \"same_sample_caveat\": false,\n      \"is_round_value\": false,\n      \"is_bernoulli_pair\": false,\n      \"k_pairs\": 1,\n      \"values\": [\n        [\n          0.5611,\n          0.0079\n        ]\n      ],\n      \"occurrences\": [\n        {\n          \"block\": \"Table 2 Combined Wei-Lachin\",\n          \"cells\": [\n            \"Combined_MW\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 Combined Wei-Lachin\",\n          \"cells\": [\n            \"Combined_MW\"\n          ]\n        }\n      ],\n      \"severity\": \"suspicious\"\n    }\n  ],\n  \"assumptions\": {\n    \"span_mean\": 0.1465,\n    \"span_sd\": 0.8103,\n    \"decimals\": [\n      4,\n      4\n    ],\n    \"p_pair\": 8.42396466315303e-08,\n    \"note\": \"spans inferred from observed values; assumes independent cells and mean\\u22a5SD (slightly conservative).\"\n  },\n  \"caveats\": [\n    \"Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly.\"\n  ],\n  \"methodology\": \"Compared 15 cross-source (mean, SD) pairs across 6 blocks plus within-table rows/columns. Strongest independent overlap: 1 identical pair(s); coincidence probability \\u2248 1.3e-06 after correcting for the number of comparisons.\",\n  \"source_quote\": \"Combined (Wei-Lachin) | 0,5611 | (0,5456 to 0,5766) | 10 / 3 | <0.0001\",\n  \"source_locator\": \"Table 2 Combined row versus Table 3 Combined row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 2033,
+    "is_error": false
+  },
+  {
+    "seq": 27,
+    "tool": "mcp__forensic_metascience__check_flow_arithmetic",
+    "tool_short": "check_flow_arithmetic",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-daf57c90-625f-4b7a-a50e-e158d99e5805-26",
+    "input": {
+      "description": "Rat attrition from enrolment through 2nd and 3rd operations",
+      "randomized_label": "enrolled",
+      "source_locator": "Abstract and Results, Surgery",
+      "source_quote": "2nd Op at day 90 (16 surviving rats)",
+      "stages": [
+        {
+          "label": "enrolled",
+          "n": 30,
+          "arms": [
+            {
+              "label": "CERE",
+              "n": 12
+            },
+            {
+              "label": "NaCl",
+              "n": 11
+            },
+            {
+              "label": "controls",
+              "n": 7
+            }
+          ],
+          "excluded": [
+            {
+              "reason": "lost during 1st Op",
+              "n": 2
+            },
+            {
+              "reason": "died same day",
+              "n": 1
+            },
+            {
+              "reason": "died day 2",
+              "n": 1
+            },
+            {
+              "reason": "died day 3",
+              "n": 1
+            },
+            {
+              "reason": "died day 5",
+              "n": 1
+            },
+            {
+              "reason": "lost day 10",
+              "n": 2
+            },
+            {
+              "reason": "died day 19",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "label": "2nd Op",
+          "n": 21,
+          "excluded": [
+            {
+              "reason": "died immediately after 2nd Op",
+              "n": 4
+            },
+            {
+              "reason": "died first postoperative day",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "label": "completed 100 days / 3rd Op",
+          "n": 15
+        }
+      ]
+    },
+    "result": "{\n  \"success\": true,\n  \"severity\": \"consistent\",\n  \"consistent\": true,\n  \"applicable\": true,\n  \"n_checks\": 5,\n  \"n_stages\": 3,\n  \"failures\": [],\n  \"explanation\": \"The Rat attrition from enrolment through 2nd and 3rd operations reconciles: 5 flow identit(ies) hold exactly.\",\n  \"source_quote\": \"2nd Op at day 90 (16 surviving rats)\",\n  \"source_locator\": \"Abstract and Results, Surgery\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 419,
+    "is_error": false
+  },
+  {
+    "seq": 28,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "call-21e8c0ea-5cd6-40cb-9ffb-f28813945a37-27",
+    "input": {
+      "target_file": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper",
+      "offset": 1,
+      "limit": 50
+    },
+    "result": "{\"type\":\"ReadFile\",\"IsADirectory\":\"Error: /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper is a directory, not a file.\"}",
+    "result_truncated": false,
+    "result_chars": 182,
+    "is_error": true
+  },
+  {
+    "seq": 29,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-21e8c0ea-5cd6-40cb-9ffb-f28813945a37-28",
+    "input": {
+      "ci_high": 1,
+      "ci_low": 0.4988,
+      "confidence_level": 0.95,
+      "decimals": 4,
+      "estimate": 0.7667,
+      "null_value": 0.5,
+      "reported_p": 0.7533,
+      "reported_p_operator": "=",
+      "source_locator": "Table 2, NNTXMIN row",
+      "source_quote": "NNTXMIN | 0,7667 | (0,4988 to 1,0000) | 10 / 3 | 0,7533"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"problems\": [\n    \"the p-value recovered from the CI is 0.0370 (reachable range [0.0369, 0.0371] across the printed precision of the estimate and its bounds), but p = 0.7533 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\"\n  ],\n  \"notes\": [],\n  \"recovered_se\": 0.1278594923053183,\n  \"recovered_p\": 0.036989181025656626,\n  \"recovered_z\": 2.0858834584071526,\n  \"implied_centre\": 0.7494000000000001,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": false,\n  \"explanation\": \"the p-value recovered from the CI is 0.0370 (reachable range [0.0369, 0.0371] across the printed precision of the estimate and its bounds), but p = 0.7533 is reported -- this recovery inverts a WALD interval, so if the paper used a bootstrap, exact, profile-likelihood or Fieller interval the two numbers are not comparable; confirm the method before treating this as a finding\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"NNTXMIN | 0,7667 | (0,4988 to 1,0000) | 10 / 3 | 0,7533\",\n  \"source_locator\": \"Table 2, NNTXMIN row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1649,
+    "is_error": false
+  },
+  {
+    "seq": 30,
+    "tool": "mcp__forensic_metascience__grimu_check",
+    "tool_short": "grimu_check",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-21e8c0ea-5cd6-40cb-9ffb-f28813945a37-29",
+    "input": {
+      "n1": 16,
+      "n2": 5,
+      "reported_p": "0.4146",
+      "decimals": 4,
+      "test_type": "mann_whitney",
+      "ties_possible": false,
+      "source_quote": "Muscle Marlene | 0,6250 | (0,3993 to 0,8507) | 16 / 5 | 0,4146",
+      "source_locator": "Table 3, Muscle Marlene row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"consistent\": false,\n  \"reported_p\": 0.4146,\n  \"reported_p_interval\": [\n    0.41455000000000003,\n    0.41465\n  ],\n  \"decimals\": 4,\n  \"decimals_source\": \"caller\",\n  \"n1\": 16,\n  \"n2\": 5,\n  \"mU\": 40.0,\n  \"sdU\": 12.110601416389967,\n  \"floor_p\": 9.828492800629023e-05,\n  \"floor_p_by_convention\": {\n    \"normal\": 0.0009569347564412679,\n    \"normal+cc\": 0.0011078333519970315,\n    \"exact\": 9.828492800629023e-05\n  },\n  \"min_possible_p\": 9.828492800629023e-05,\n  \"n_achievable_p\": 119,\n  \"below_floor\": false,\n  \"is_threshold\": false,\n  \"matched\": [],\n  \"matched_convention\": null,\n  \"nearest_below\": {\n    \"U\": 29.5,\n    \"p\": 0.4089613420368744\n  },\n  \"nearest_above\": {\n    \"U\": 30.0,\n    \"p\": 0.43278392112159914\n  },\n  \"note\": null,\n  \"explanation\": \"Reported p = 0.4146 falls between achievable Mann-Whitney p-values for 16v5 and is reproduced by no permissible rank sum (nearest: U=29.5\\u2192p=0.409 below, U=30\\u2192p=0.4328 above). A granularity inconsistency \\u2014 often a software / continuity-correction / rounding artifact, so treated cautiously, not as impossible.\",\n  \"methodology\": \"GRIM-U: Mann-Whitney U for 16v5 has mU=40, sdU=12.1106; achievable U are {0, 0.5, ..., 80} giving 119 distinct p at 4 dp (normal approximation, \\u00b1continuity correction, exact-permutation union). Reported p=0.4146 checked against interval [0.41455, 0.41465).\",\n  \"source_quote\": \"Muscle Marlene | 0,6250 | (0,3993 to 0,8507) | 16 / 5 | 0,4146\",\n  \"source_locator\": \"Table 3, Muscle Marlene row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1555,
+    "is_error": false
+  },
+  {
+    "seq": 31,
+    "tool": "mcp__forensic_metascience__grimu_check",
+    "tool_short": "grimu_check",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "call-21e8c0ea-5cd6-40cb-9ffb-f28813945a37-30",
+    "input": {
+      "n1": 11,
+      "n2": 2,
+      "reported_p": "0.4936",
+      "decimals": 4,
+      "test_type": "mann_whitney",
+      "ties_possible": false,
+      "source_quote": "Muscle Catoi | 0,8182 | (0,5578 to 1,0000) | 11 / 2 | 0,4936",
+      "source_locator": "Table 3, Muscle Catoi row"
+    },
+    "result": "{\n  \"severity\": \"suspicious\",\n  \"consistent\": false,\n  \"reported_p\": 0.4936,\n  \"reported_p_interval\": [\n    0.49355,\n    0.49365\n  ],\n  \"decimals\": 4,\n  \"decimals_source\": \"caller\",\n  \"n1\": 11,\n  \"n2\": 2,\n  \"mU\": 11.0,\n  \"sdU\": 5.066228051190222,\n  \"floor_p\": 0.02564102564102564,\n  \"floor_p_by_convention\": {\n    \"normal\": 0.029912990320775948,\n    \"normal+cc\": 0.03821437969666879,\n    \"exact\": 0.02564102564102564\n  },\n  \"min_possible_p\": 0.02564102564102564,\n  \"n_achievable_p\": 34,\n  \"below_floor\": false,\n  \"is_threshold\": false,\n  \"matched\": [],\n  \"matched_convention\": null,\n  \"nearest_below\": {\n    \"U\": 7.0,\n    \"p\": 0.4896602630171414\n  },\n  \"nearest_above\": {\n    \"U\": 7.0,\n    \"p\": 0.5128205128205128\n  },\n  \"note\": null,\n  \"explanation\": \"Reported p = 0.4936 falls between achievable Mann-Whitney p-values for 11v2 and is reproduced by no permissible rank sum (nearest: U=7\\u2192p=0.4897 below, U=7\\u2192p=0.5128 above). A granularity inconsistency \\u2014 often a software / continuity-correction / rounding artifact, so treated cautiously, not as impossible.\",\n  \"methodology\": \"GRIM-U: Mann-Whitney U for 11v2 has mU=11, sdU=5.0662; achievable U are {0, 0.5, ..., 22} giving 34 distinct p at 4 dp (normal approximation, \\u00b1continuity correction, exact-permutation union). Reported p=0.4936 checked against interval [0.49355, 0.49365).\",\n  \"source_quote\": \"Muscle Catoi | 0,8182 | (0,5578 to 1,0000) | 11 / 2 | 0,4936\",\n  \"source_locator\": \"Table 3, Muscle Catoi row\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1520,
+    "is_error": false
+  }
+]

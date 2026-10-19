@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "text_track output",
+  "description": "Contract between the text_track child subprocess (tortured-phrases screen) and the pipeline. The parent validates structurally (see agent._validate_text_track_output) and injects findings_rows only from a valid object; anything else is recorded as track_output_invalid with ZERO findings injected. Every row arrives QUARANTINED: severity is never accusatory at this boundary.",
+  "type": "object",
+  "required": ["schema_version", "paper_id", "status", "findings_rows"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "paper_id": {"type": "string"},
+    "status": {
+      "type": "object",
+      "required": ["ran", "refusal_subtype", "wall_seconds"],
+      "properties": {
+        "ran": {
+          "type": "boolean",
+          "description": "True only when the dictionary loaded AND paper text was actually read and scanned. False on every refusal -- and the report then keeps the blanket no-tortured-phrase-screen note rather than the scope note."
+        },
+        "refusal_subtype": {
+          "type": ["string", "null"],
+          "enum": [null, "fingerprints_missing", "no_text_source", "text_unreadable"],
+          "description": "Distinct refusal states, per the house invariant: fingerprints_missing (installation property -- the dictionary could not load) != no_text_source (directory property -- no text-bearing file at all) != text_unreadable (file property -- sources exist but none yielded text; the shape of a scanned, never-OCR'd or corrupt paper). null when ran is True."
+        },
+        "wall_seconds": {"type": "number"},
+        "text_source": {
+          "type": ["string", "null"],
+          "enum": [null, "body_md", "xml", "html", "pdf", "direct"],
+          "description": "Which source in paper_text's fallback chain the screen actually read -- provenance discipline; a null accompanies a refusal."
+        },
+        "dictionary_version": {"type": "string"},
+        "dictionary_sha256": {"type": "string"},
+        "n_fingerprints_loaded": {"type": "integer"},
+        "n_words_scanned": {"type": "integer"},
+        "families_fired": {"type": "array", "items": {"type": "string"}},
+        "detail": {"type": "string"}
+      }
+    },
+    "result": {
+      "type": "object",
+      "description": "The full detect_tortured_phrases result (quarantined), for the run directory -- not for the editorial prompt, which gets only findings_rows (summary-only payload keeps paid stage-2 tokens flat)."
+    },
+    "findings_rows": {
+      "type": "array",
+      "description": "Rows shaped for findings.schema.json findings[], one per FAMILY that fired (aggregate rows: the signal is the count of distinct fingerprints, not any single match). The parent re-checks each: technique must be tortured_phrases and severity must be indeterminate or consistent (the quarantine leaves no other legal value at this boundary).",
+      "items": {
+        "type": "object",
+        "required": ["id", "location", "technique", "consistent", "severity", "reproduction"],
+        "properties": {
+          "id": {"type": "string"},
+          "location": {"type": "string"},
+          "technique": {"const": "tortured_phrases"},
+          "consistent": {"type": "boolean"},
+          "severity": {"enum": ["indeterminate", "consistent"]},
+          "reproduction": {"type": "string"},
+          "inputs": {"type": "object"},
+          "explanation": {"type": "string"},
+          "severity_before_quarantine": {"type": "string"},
+          "quarantine_reason": {"type": "string"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-10-18T19:02:35Z",
+  "quick": false,
+  "code_sha256": {
+    "src/metascience_agent/tools/grim.py": "904c66876cff5973cf800f6fe1836620dfe9f79c873ab1b63e5aa34f2c95ee6a",
+    "src/metascience_agent/tools/rounding.py": "6c14306bdb06bdf1ccc4be1bffbc9dea9cab964eb85c2584ba4da5057d122bce",
+    "src/metascience_agent/tools/severity.py": "10980acb7c35e52ca85922d7885300fa3fe9cf7be3da6a50133263963d9d8678"
+  },
+  "n_cases": 400400,
+  "n_compared": 326785,
+  "n_agree": 326785,
+  "n_disagree": 0,
+  "n_r_declined": 0,
+  "n_python_declined": 73615,
+  "python_decline_reasons": {
+    "no_discriminating_power": 73615
+  },
+  "n_declines_where_r_said_consistent": 73615,
+  "decline_note": "A Python decline is not a disagreement. Where GRIM has no discriminating power -- n coarse enough relative to the reported precision that EVERY mean is reachable -- Python returns None and names the reason, while scrutiny returns TRUE. Reporting that TRUE as `consistent` would publish a vacuous pass as evidence, which is the substitution this toolkit exists to catch. The refusal is the better answer.",
+  "agreement": 1.0,
+  "disagreements": [],
+  "note": "Compares `grim_consistent` against `scrutiny::grim`. R is handed the mean as a STRING and Python the (float, decimals) pair built from that same string, because scrutiny reads the decimal count off the literal -- otherwise the two are asked different questions and the run means nothing."
+}

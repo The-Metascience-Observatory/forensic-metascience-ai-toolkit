@@ -1,0 +1,1890 @@
+[
+  {
+    "seq": 1,
+    "tool": "mcp__forensic_metascience__extract_xml",
+    "tool_short": "extract_xml",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01UvwBvipXQ8AhFK14d8Pzdr",
+    "input": {
+      "xml_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml"
+    },
+    "result": "{\n  \"text\": \"## Cost-Effectiveness of Cerebrolysin after Ischemic Stroke: Secondary Analysis of the CARS Study\\n\\n## Abstract\\nThe cost-effectiveness of Cerebrolysin as an add-on therapy for moderate\\u2013severe acute ischemic stroke is a topic that remains understudied. This study aims to address this gap by performing a comprehensive cost-utility analysis using both deterministic and probabilistic methods from a payer perspective and within the Romanian inpatient care setting. Quality-adjusted life years (QALYs) were calculated using partial individual patient data from the 2016 Cerebrolysin and Recovery After Stroke (CARS) trial, utilizing three different health state valuation models. Cost data was extracted from actual acute care costs reported by Romanian public hospitals for reimbursement purposes for patients included in the CARS study. Incremental cost-effectiveness ratios were calculated for each treatment arm for the duration of the clinical trial. Deterministic analysis based on sample mean values indicates Cerebrolysin would be cost-effective at a threshold between roughly 18.8 and 29.9 thousand EUR, depending on valuation techniques. Probabilistic sensitivity analysis results indicate an 80% chance probability of cost-effectiveness of Cerebrolysin as an add-on therapy for acute ischemic stroke, considering a willingness-to-pay threshold of 50,000 EUR in a 90-day timeframe after stroke. Further economic evaluations of Cerebrolysin are needed to strengthen these findings, covering a timeframe of at least 12 months after the acute incident, which would account for treatment effects spanning beyond the first 90 days after ischemic stroke. These should be conducted to determine its cost-effectiveness under various care settings and patient pathways. Most importantly, modelling techniques are needed to answer important questions such as the estimates of population gain in QALYs after acute administration of Cerebrolysin and the potential offsetting of direct medical costs as a result of administering the intervention.\\n\\n## 1. Introduction\\nStroke continues to be one of the leading death and disability causes worldwide, with 12.2 million new cases (among which 62.4% were ischemic) and 6.55 million deaths in 2019 [[1]]. A major public health issue, the stroke is projected to hold its global rank by 2040 on the list of causes for years of life lost [[2]]. Acute management of stroke has progressed significantly in the past decades, resulting in a considerable reduction in mortality rates [[3]], while advances in neurorehabilitation have led to improvement in outcomes after stroke [[4]]. To alleviate the global burden of stroke, continuous expansion of care networks, improvements in care standards and proper implementation of primary and secondary prevention guidelines are required [[5],[6]]. The changing age distribution of populations and increasing economic burden of innovation with health technologies have powerful implications for both the supply and demand of healthcare services [[7],[8]]. The COVID-19 pandemic has caused major disturbances in this already fragile equilibrium by redirecting resources and redesigning health services delivery priority [[9],[10]], generating a tsunami of unforeseen health care needs for both communicable and non-communicable diseases and creating consequential setbacks in most other disease areas [[11]]. An increasing body of evidence points out that stroke admissions have substantially decreased during the pandemic [[12],[13],[14],[15]] and measured time of stroke care acute indicators (door-to-imaging, door-to-needle, door-to-groin, door-to-reperfusion) for assisted cases have increased [[16]].\\n\\nThe ability of countries to simultaneously navigate crises and tackle long-term challenges is largely dependent on socioeconomic context [[17]], as impoverished health systems are less equipped to focus on the shifting health needs of the population [[18]]. In the context of low health expenditure, circumstantial resource allocation and poor mechanisms for health technology assessment often considerably hinder improvement in populational health. As a result of this constellation of determinants, health systems are under unprecedented distress, while being forced to operate under budgetary constraints similar to the pre-pandemic period. The importance of developing and incorporating cost-effectiveness evidence in health decision making and resource allocation is becoming paramount, even as the world prepares to return to \\u201cnormal\\u201d once COVID-19 reaches an endemic phase [[17]].\\n\\nThe landscape of stroke care is rapidly evolving, and the incorporation of novel therapeutic approaches and technologies is essential to improve patient outcomes and reduce the burden on healthcare systems. With an aging population and an increase in the prevalence of risk factors, such as hypertension, obesity and diabetes, the demand for efficient and cost-effective stroke treatments will continue to rise [[1]]. In addition, the complexity and interrelated nature of stroke pathophysiology and treatment necessitates a multidisciplinary approach, which can prove challenging in the context of constrained resources and competing healthcare priorities [[19]].\\n\\nAs healthcare systems worldwide strive to optimize the allocation of resources and improve patient outcomes, cost-effectiveness analysis plays a crucial role in informing policy decisions and clinical practice guidelines [[20]]. The integration of economic evaluations into the decision-making process can help identify the most efficient use of limited healthcare resources and facilitate the adoption of new therapies that provide the greatest value to patients and society [[21]]. Given the significant human and economic impact of a stroke, the assessment of cost-effectiveness for emerging therapies is of particular importance to ensure that healthcare systems can provide optimal care while maintaining financial sustainability [[22]].\\n\\nCerebrolysin is a promising biological agent that mimics the biological action of neurotrophic factors, aiding both neuroprotection and neurorecovery after ischemic stroke. It has been recently included in several clinical guidelines [[23],[24],[25]] and is particularly recommended as an add-on treatment in moderate\\u2013severe cases. Cerebrolysin is a peptide-based medication derived from porcine brain tissue, which contains a mixture of neurotrophic factors and active peptides that demonstrate neuroprotective and neurorestorative properties. The mechanism of action of Cerebrolysin is multifaceted, involving reduced inflammation, decreased apoptosis, enhanced neurogenesis and increased synaptic plasticity [[26]]. These combined effects contribute to the improvement of neurological outcomes and functional recovery in patients with ischemic stroke. Several clinical trials have demonstrated the efficacy and safety of Cerebrolysin as an adjunct therapy to standard stroke care, with better functional outcomes and lower rates of adverse events compared to placebo [[27],[28]]. Cerebrolysin has shown potential benefits in other neurological disorders, such as Alzheimer\\u2019s disease and traumatic brain injury [[29],[30],[31]]. Although it is emerging as part of care standards, there is little evidence regarding the cost-effectiveness profile of Cerebrolysin [[32],[33]].\\n\\nOur research seeks to expand current knowledge on this topic by providing a new cost-utility assessment on Cerebrolysin as complementary treatment for moderate to severe ischemic stroke. Understanding the agent\\u2019s cost-effectiveness profile is critical to inform decision-makers and clinicians of the potential value it could provide in the management of ischemic stroke. As healthcare systems grapple with the challenges of delivering high-quality care under budgetary constraints, the generation of robust cost-effectiveness evidence for Cerebrolysin can help support its integration into clinical practice and optimize the use of limited resources.\\n\\nMoreover, the examination of cost-effectiveness in the context of the Romanian healthcare system is particularly relevant, given its unique challenges and the need for evidence-based decision-making. Romania faces considerable disparities in access to healthcare services, particularly in rural areas, and is characterized by a high degree of fragmentation in service provision [[34]]. In addition, the country has one of the lowest healthcare expenditures in the European Union, resulting in a significant unmet need for quality care [[35]]. By conducting a cost-utility analysis of Cerebrolysin within the Romanian inpatient care setting, this study aims to provide valuable insights for policymakers and healthcare providers in addressing the specific needs and constraints of the local context. Furthermore, the secondary analysis of the CARS study offers a unique opportunity to assess the cost-effectiveness of Cerebrolysin using real-world data from a well-designed clinical trial. By leveraging individual patient data and actual acute care costs reported by Romanian public hospitals, the findings of this study can help bridge the gap between clinical efficacy and the economic implications of Cerebrolysin as an add-on therapy for moderate\\u2013severe acute ischemic stroke.\\n\\nThis study seeks to provide a comprehensive assessment of the cost-effectiveness of Cerebrolysin in the context of the Romanian healthcare system, contributing to the evidence base for its potential value in improving stroke outcomes and informing healthcare decision-making. By combining clinical, economic and policy perspectives, our research aims to shed light on the complex interplay between stroke care, resource allocation and health outcomes, ultimately providing valuable insights for the ongoing development and refinement of stroke management strategies.\\n\\n## 2. Materials and Methods\\nUsing deterministic and probabilistic approaches, we conducted a cost-utility evaluation to compute the incremental cost-effectiveness ratio (ICER) for Cerebrolysin, drawing on information gathered from multiple sources. Deterministic methods (using fixed input values) in economic evaluations involve calculating cost-effectiveness using single-point estimates for all input parameters, such as costs, effectiveness and utilities. This approach does not account for uncertainty or variability in the input parameters, and thus, the results may not reflect the full range of possible outcomes. Probabilistic methods (incorporating uncertainty) in economic evaluations, on the other hand, use probability distributions for input parameters to account for uncertainty and variability. By performing multiple simulations, these methods generate a range of possible outcomes, providing a more comprehensive understanding of the cost-effectiveness and the likelihood of different scenarios occurring. Due to the nature of data collection (secondary analysis of clinical trial data; extraction of anonymized and aggregated cost values for various care scenarios), Institutional Review Board approval was not required for this study. To simulate patient pathways and costs, we selected the main care setting from the only available clinical trial that may be used to derive utilities for inpatient acute ischemic stroke care, based on the dominant participating country (Romania). This analysis was performed from the perspective of the payer, based on a predefined sequence (Figure 1).\\n\\n## 2.1. Deriving Utilities for the Intervention and Standard of Care\\nWe obtained individual patient data from the 2016 Cerebrolysin and Recovery After Stroke (CARS) trial from the principal investigators [[36]]. Patient demographics, medical history, risk factors and 36-Item-Short-Form-Survey (SF-36) results (n = 208) were transferred to a Microsoft Excel workbook and further processed and analyzed to assess baseline comparability and to obtain individual patient utilities for Cerebrolysin in the parallel quasi-experimental paradigm. SF-36 data consisted of single score values at day 2 and day 90 after stroke onset (visit 2 and visit 7, respectively). The resulting database included 198 patients. SF-36 values were converted to health utility scores using converters [[37]] developed by School of Health and Related Research (ScHARR) at the University of Sheffield. Several instances of missing SF-36 data were handled by excluding cases with missing values on more than 3 SF-36 subscales on either visit (n = 10) or by recoding missing entries as 9 (n = 13), according to the instructions of the SF-36 to SF-6D utility score converter. The tool generated three different types of utility scores using standard gamble, ordinal and Bayesian posterior mean health state valuation models. Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\\u2014Cerebrolysin; 93\\u2014placebo).\\n\\nThe utility scores generated were used to calculate quality-adjusted life years (QALYs) for the first year after stroke onset. Three values were obtained for each patient based on the health state valuation models used in the convertor tool. The formula used to calculate QALYs for each individual patient was:2 \\u2217 D 2 + 88 \\u2217 A V E R A G E D 2 , D 90 / 90 \\u2217 0.25 where D2 is the utility score for day 2 and D90 is the utility score for day 90. The assumptions within this QALY calculation fit the definitions and timeline for stroke recovery set by Bernhardt et al. (2017), where improvement is registered in the acute and early subacute phases (up to day 90), followed by a plateau in neurorecovery [[38]].\\n\\n## 2.2. Extracting Costs with Acute Ischemic Stroke\\nCost data on inpatient standard treatment of stroke was determined by analyzing actual costs from the acute hospitalization of the CARS study. Reported sums include direct (staff wages, medication, supplies, diagnostic services) and indirect (administration and overhead) hospital costs associated with inpatient care. Costs were converted from RON to EUR based on an average conversion rate between 15 November and 15 December 2021 of 1 EUR = 4.95 RON and rounded to the nearest integer value. The cost for one therapeutic unit (10 mL) of Cerebrolysin was retrieved from the webpage of the Romanian National Health Insurance House (5.5 EUR per 10 mL vial). This cost represents the maximal price set by national legislation and covers the most expensive scenario. Given that the treatment course used in the CARS study consisted of 30 mL of Cerebrolysin per day, diluted with physiological saline solution to a total volume of 100 mL, we added the cost of a 100 mL vial of saline solution (0.6 EUR) to the cost of three Cerebrolysin 10 mL vials. The price for a 100 mL saline solution vial was worked out by gathering the prices for 20 vial boxes from 3 independent sources (the websites of major distributors of pharmaceutical products in Romania) and averaging the per-vial price. The resulting price describes the theoretical daily cost of the Cerebrolysin add-on therapy from the CARS study to the standard treatment of ischemic stroke. Costs were then converted across currencies based on the referenced conversion rate and rounded to the nearest single decimal value. Costs for acute discharges below 21 days were estimated at 150 RON (30 EUR) per day for infusion. An annual discount rate of 3% was applied to acute care costs.\\n\\n## 2.3. Calculating the Incremental Cost-Effectiveness Ratio of Cerebrolysin Add-on Therapy for Ischemic Stroke Using a Deterministic Approach\\nHaving computed the costs described above, we calculated the incremental cost-effectiveness ratios (ICERs) for the Cerebrolysin add-on therapy compared to the standard treatment of ischemic stroke from the CARS study: 30 mL per day, diluted in physiological saline solution up to a total of 100 mL, for 21 days. The formula used for calculating the incremental cost-effectiveness ratios in all scenarios was:c o s t o f a d d e d C e r e b r o l y s i n A - c o s t o f s t a n d a r d t r e a t m e n t B Q A L Y s C e r e b r o l y s i n C - Q A L Y s p l a c e b o D\\n\\nWe calculated three ICER values, one for each of the three different health state valuation models used for generating health utilities based on which QALYs were calculated.\\n\\n## 2.4. Probabilistic Sensitivity Analysis\\nProbabilistic sensitivity analysis (PSA) was performed to deal with parameter uncertainty and the hypothetical nature of the scenarios and inputs used for deterministic ICER calculations. We used a custom MS Excel spreadsheet to perform 10,000 ICER simulations per patient pathway and represented these on cost-effectiveness planes. Cost-effectiveness acceptability curves (CEACs) were constructed by plotting probabilities for the cost-effectiveness of the intervention against threshold increments up to 50,000 EUR. PSA random sampling was performed based on log normal (QALYs) or uniform (costs) distributions. The highest and lowest aggregate values by health state valuation model were used as the upper and lower bounds of QALY distributions for patient groups.\\n\\n## 3. Results\\nWe compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.\\n\\nThe QALYs calculated using the utilities resulting from SF-36 to SF-6D conversion were aggregated by health state valuation model: standard gamble (0.698 Cerebrolysin vs. 0.643 placebo), ordinal (0.704 Cerebrolysin vs. 0.647 placebo) and Bayesian posterior mean (0.653 Cerebrolysin vs. 0.613 placebo). Average total costs per patient were 7214 RON (1458 EUR) for Cerebrolysin and 5197 RON (1050 EUR) for placebo. This amounts to a mean increment in treatment cost difference between patients treated with Cerebrolysin and standard care of 2017 RON (408 EUR), as highlighted in Table 1, and a mean increment in QALYs between 0.01\\u20130.015, depending on the valuation technique (Table 2).\\n\\nThree different ICER values corresponding to the health state valuation models used are presented in Table 2. The lowest ICER values were determined based on the ordinal valuation (18,788 EUR/QALY), while the highest were concluded for the Bayesian posterior valuation method (26,981 EUR/QALY).\\n\\n## Probabilistic Sensitivity Analysis\\nBased on the CARS trial patient pathway, the Cerebrolysin add-on treatment was cost-effective in roughly 80% of cases for an ICER threshold set at 50,000 EUR (Figure 2 and Figure 3), considering only the 90-day timeframe of the CARS-study.\\n\\n## 4. Discussion\\nIn this study, we aimed to appraise the cost-effectiveness of Cerebrolysin add-on therapy compared to standard care for acute ischemic stroke by calculating ICER values for different cost scenarios using deterministic and probabilistic methods. Assuming that Cerebrolysin add-on therapy generates no additional costs with extra hospitalization, we concluded the agent to be cost-effective 80% of the time considering a high willingness-to-pay threshold. Our findings are in line with the scarce existing literature on this topic [[32],[33]], providing much-needed additional evidence of the economic viability of this therapy. The next step would be to conduct a budget impact analysis that would accompany the results produced by our study [[39]].\\n\\nKulikov and Abdrashitova have conducted a cost-effectiveness analysis of Cerebrolysin in moderate and severe patients and have reported life years gained (LYG) as an efficiency criterion. Their inquiry demonstrated that Cerebrolysin (vs. standard stroke therapy) is a dominant intervention. The CER (cost-effectiveness ratio) for Cerebrolysin was 2367 EUR less compared to standard stroke therapy [[32]]. Walter et al. [[33]] employed a Markov-model on a horizon of 10 years from the payer\\u2019s perspective and used mRS data collected (from multiple sources) at day 90 post-stroke and reported health benefits in terms of QALYs and life years (LYs). This study demonstrated that Cerebrolysin is cost-effective as it reduces costs incurred in acute care and nursing homes. However, the difference between Cerebrolysin and rt-PA vs. rt-PA are slightly higher for the first scenario (3.77 vs. 3.75 QALYs).\\n\\nAdditionally, our examination includes the CARS treatment methodology, which involves an extended duration of hospitalization to conclude the 21-day Cerebrolysin regimen. These circumstances apply to healthcare environments where the guidance from expert organizations to establish comprehensive physical rehabilitation initiatives following an ischemic stroke [[40],[41]] is adhered to. Within this framework, we have found that Cerebrolysin proves to be cost-effective in 80% of cases when considering a higher willingness-to-pay limit. Conversely, a lower threshold renders the intervention less financially viable, indicating that providing Cerebrolysin in an outpatient setting after prompt discharge would serve as a suitable alternative to prolonging hospital stays solely for Cerebrolysin administration, which would impose an unwarranted fiscal burden on healthcare budgets.\\n\\nTo our knowledge, this study yields the first explicit measure of change in QALY values between standard therapy and Cerebrolysin add-on scheme for ischemic stroke in the first year after the event. Aggregated QALYs for the Cerebrolysin group were higher than those for the placebo group (0.051 average difference across the three health state valuation models), indicating that the Cerebrolysin add-on scheme has a beneficial impact on quality of life of ischemic stroke patients. The SF-36 to utility converter from the University of Sheffield provides three options for generating health utility scores: standard gamble, ordinal and Bayesian posterior mean. Each of these approaches employs a different health state valuation model to transform SF-36 data into utility scores. The standard gamble method is based on the concept of risk preference, wherein individuals are asked to choose between a certain health outcome and a gamble with a probability of either perfect health or a less desirable outcome. This method captures the individual\\u2019s preferences and risk tolerance in relation to different health states. The ordinal approach, on the other hand, ranks health states according to their desirability, without considering the magnitude of preference between them. This approach is simpler to implement but may not capture the full spectrum of preference differences between health states. Lastly, the Bayesian posterior mean model combines prior beliefs and observed data to generate health utility scores. This method accounts for uncertainty and can adaptively update utility scores as new data become available. Using all three valuation models and comparing their results can offer valuable insights into the robustness and sensitivity of the derived utility scores. By doing so, we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis.\\n\\nOur findings should be interpreted in conjunction with the selected study setting. The Romanian healthcare system, based on social health insurance, features significant government involvement, with the Ministry of Health (MoH) playing a central role in regulation, control and coordination. Public Health Directorates at the county level implement MoH directives and oversee local healthcare tasks. The MoH also coordinates other governmental healthcare institutions, such as the National Health Insurance House, the National Agency for Medicines and Medical Devices and the National Authority for Quality Management in Health Care. Local public authorities and the Romanian Parliament also influence the healthcare system. In Romania, the healthcare system heavily emphasizes inpatient care, with insufficient focus on primary, ambulatory and preventive care. Access to healthcare remains a challenge, particularly in rural areas, leading to high levels of unmet medical needs. Stroke care in Romania involves many stakeholders, including emergency medicine, intensive care, neurology, neurosurgery, radiology and rehabilitation. The pre-hospital phase is managed by the Ambulance Service and the Mobile Emergency Service for Resuscitation (SMURD). Patients are transported to hospitals with designated stroke acute care units. The rehabilitation process begins in the neurology ward or in a dedicated rehabilitation unit [[42]]. In 2015, the MoH introduced the \\u201cPriority Action-Stroke\\u201d (PAS) program to finance reperfusion treatment for acute ischemic stroke and endovascular treatment for subarachnoid hemorrhage. Initially covering 10 hospitals, the program expanded to 44 hospitals performing intravenous thrombolysis (IVT) by 2021. However, only a few hospitals can perform endovascular thrombectomy (EVT) for stroke patients, while the rest can only conduct intravenous thrombolysis. Notably, most hospitals are not meeting comprehensive stroke unit standards, as defined by the European Stroke Organization (ESO) [[43]]. From 2015 to 2018, around 1800 patients received reperfusion treatment through the PAS program, as reported by the Romanian Ministry of Health. The percentage of patients receiving IVT treatment was 0.8% in 2017. By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients. This marks a significant improvement but falls short against the estimate of patients eligible for pharmacological reperfusion and the ESO\\u2019s 15% recommended minimum rate for IVT. In 2021, only 0.9% of patients underwent EVT, well below the estimated 10% of eligible patients and the ESO\\u2019s 5% target for 2030 [[44]].\\n\\nCerebrolysin is reimbursed in Romania in the acute setting and in the open pharmaceutical circuit under list B (50% reimbursement). This means that, currently, there is a combination of uses and protocols within its market authorization of a 10\\u201350 mL daily dosage for ischemic stroke. Therefore, the budget impact of normalizing care in line with the CARS protocol is impossible to measure without a high-quality observational study to assess how and how much Cerebrolysin is currently being used. An opportunity to explore this topic will emerge upon completion of the C-REGS 2 registry study [[45]]. Nevertheless, based on incident strokes reported by the Romanian Society of Neurology in 2022 (n = 37.225), a gross assumption that around 80% of cases would fit the ischemic indication [[46]], and of those, two-thirds of cases would be moderate\\u2013severe and hence, eligible for Cerebrolysin treatment, the incremental cost difference from our study (408 EUR) and the estimated budget impact of treating acute stroke patients for 21 days with Cerebrolysin in line with the CARS protocol would be roughly 8.5 million EUR per year, assuming the intervention would not currently exist on the market, which is around 5% of the healthcare economic burden of stroke in the country [[43],[47]]. In addition to this proportionally small estimated budget impact (which we stress is likely overestimated in such gross calculations), given that overall stroke expenditure in Romania is up to tenfold less than other countries in Europe and the current increasing trend of expenditure at the national level [[46],[48]], we assert that the normalization of Cerebrolysin treatment in line with the CARS protocol would entail a manageable budget impact for the Romanian healthcare system.\\n\\nThe limitations of our study predominantly arise from the care setting in which Cerebrolysin outcomes were determined and on which the costing exercise was based. While a 21-day treatment course is more than plausible, the guideline recommendation that Cerebrolysin is administered for a minimum of 10 days [[23]] allows for an assessment of the cost-effectiveness of this agent for shorter treatment courses. Such analyses would further enlighten our perspective on the economic viability of Cerebrolysin and could constitute strong evidence for its wide adoption, even in health systems with less abundant resources. The information surfaced by our study, although building a favorable cost-effectiveness profile for Cerebrolysin, calls for further economic evaluations of this treatment in different care settings along various other patient pathways and exploring issues such as the impact of the intervention on direct medical cost, recurrence and effects beyond the 90-day span of the CARS trial.\\n\\nThese limitations are balanced by the broadness of our methodological approach and set of tools employed. Firstly, health utilities for Cerebrolysin and standard of care have been derived using three different health state valuation models, consequently resulting in three types of ICER values. Cost data was extracted from the same care setting which utilities were derived from, hence, decreasing overall uncertainty. Furthermore, our probability sensitivity analysis accounts for several patient profiles and pathways in this specific care setting. Data from another study assessing cost of inpatient stroke care in the same exact setting [[47]] rendered similar values for daily hospitalization as our costing exercise did. The theoretical cost of the Cerebrolysin treatment course has been built to reflect its highest possible value. The strongest asset of our approach, though, consists of the simultaneous use of deterministic and probabilistic methods. The deterministic method produces concrete values that can be referenced against specific ICER thresholds, even though there is much debate around the way willingness-to-pay thresholds are established and used [[49]]. The probabilistic method encompasses diverse scenarios for costs and outcomes valid in both resource-abundant and resource-constrained health systems and provides a wide perspective on the economic implications determined by Cerebrolysin usage.\\n\\nThe emergence of health systems from the pandemic paradigm surfaces an imperative for more consistent use of economic evidence in healthcare decision-making and resource allocation. As the burden of stroke is estimated to increase in the following decades [[50]], strategies for stroke care need to be carefully crafted and regularly revised so that they strike a balance between producing health gains and remaining sustainable. Such an approach requires perpetual assessment of the cost-effectiveness of both existing and emergent therapies for stroke based on newly formed evidence on costs and outcomes.\\n\\nOur results indicate a favorable cost-effectiveness profile for Cerebrolysin add-on treatment in moderate\\u2013severe acute ischemic stroke based on the CARS treatment paradigm at a 50,000 EUR cost-effectiveness threshold. Cost-effectiveness thresholds are used to determine whether an intervention is considered cost-effective in comparison to a relevant alternative, such as the standard of care. These thresholds typically represent the maximum amount a decision-maker, such as a healthcare payer, is willing to pay for an additional unit of health outcome, such as a quality-adjusted life year (QALY). It is important to note that there is no universally agreed-upon threshold, as the appropriate value depends on the specific context, including the health care system, the country\\u2019s willingness to pay and the disease area being studied.\\n\\nIn our sensitivity analysis, we chose a 50,000 EUR threshold as the maximum threshold in line with the definition of high-value interventions from the Institute for Clinical and Economic Review\\u2019s Value Assessment Framework [[51]]. Nevertheless, we acknowledge that different stakeholders may have different thresholds based on their priorities and resources. To account for this variability, we used cost-effectiveness acceptability curves (CEACs) to explore the likelihood of Cerebrolysin being cost-effective across a range of potential threshold values. CEACs help decision-makers understand the probability of an intervention being cost-effective at different willingness-to-pay thresholds, allowing for a more flexible and context-specific interpretation of the results. This approach helps convey the uncertainty in our analysis and allows stakeholders to make informed decisions based on their unique circumstances and priorities. Our result must be interpreted against the objectives of health systems. Despite several attempts to reform Health Technology Assessment [[52]], Romania still uses a scorecard system based on assessments from other countries [[53]]. Therefore, a cost-effectiveness threshold has not been set by the public payer. While previous works from the World Health Organization (WHO-CHOICE) have suggested such thresholds may be set in line with per capita gross domestic product, there is wide criticism of such recommendations as they have no link with willingness to pay [[54]]. While priorities in the Romanian health system and the population\\u2019s health-related preferences are a rich ground for debate, we argue the threshold itself if not relevant in the context of this trial-based cost-effectiveness analysis, as QALY gain is underestimated over the chronic phase of stroke that follows after the initial 90 days of treatment. The question whether Cerebrolysin would be cost-effective in Romania under the CARS protocol remains difficult to answer in the absence of a decision-analytic model that accounts for a longer post-stroke timespan. Nevertheless, this analysis paves the way for future economic evaluations of this agent performed in different contexts, countries and from various other perspectives. It simultaneously adds to the evidence base to be used for shaping future strategies aimed at effectively and sustainably reducing the currently heavy societal burden of stroke.\\n\\n## Floats\\n[Table 1: Descriptive values of total medical cost (EUR) used in the analysis. \\u2014 6 rows x 3 cols; see tables]\\n[Table 2: Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique. \\u2014 3 rows x 4 cols; see tables]\",\n  \"tables\": [\n    {\n      \"table_num\": 1,\n      \"id\": \"healthcare-11-01497-t001\",\n      \"label\": \"Table 1\",\n      \"caption\": \"Descriptive values of total medical cost (EUR) used in the analysis.\",\n      \"section\": \"Floats\",\n      \"n_rows\": 6,\n      \"width\": 3,\n      \"n_header_rows\": 1,\n      \"n_footnotes\": 0,\n      \"image_only\": false,\n      \"alignment_uncertain\": false\n    },\n    {\n      \"table_num\": 2,\n      \"id\": \"healthcare-11-01497-t002\",\n      \"label\": \"Table 2\",\n      \"caption\": \"Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique.\",\n      \"section\": \"Floats\",\n      \"n_rows\": 3,\n      \"width\": 4,\n      \"n_header_rows\": 2,\n      \"n_footnotes\": 0,\n      \"image_only\": false,\n      \"alignment_uncertain\": false\n    }\n  ],\n  \"tables_mode\": \"index\",\n  \"how_to_get_a_table\": \"Cells are not included here. Call get_table(xml_path, table_num) for the full grid of any table listed above, with its footnotes.\",\n  \"pages\": [\n    {\n      \"page_num\": 1,\n      \"unit\": \"section\",\n      \"section\": \"Cost-Effectiveness of Cerebrolysin after Ischemic Stroke: Secondary Analysis of the CARS Study\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 2,\n      \"unit\": \"section\",\n      \"section\": \"Abstract\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 3,\n      \"unit\": \"section\",\n      \"section\": \"1. Introduction\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 4,\n      \"unit\": \"section\",\n      \"section\": \"2. Materials and Methods\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 5,\n      \"unit\": \"section\",\n      \"section\": \"2.1. Deriving Utilities for the Intervention and Standard of Care\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 6,\n      \"unit\": \"section\",\n      \"section\": \"2.2. Extracting Costs with Acute Ischemic Stroke\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 7,\n      \"unit\": \"section\",\n      \"section\": \"2.3. Calculating the Incremental Cost-Effectiveness Ratio of Cerebrolysin Add-on Therapy for Ischemic Stroke Using a Deterministic Approach\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 8,\n      \"unit\": \"section\",\n      \"section\": \"2.4. Probabilistic Sensitivity Analysis\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 9,\n      \"unit\": \"section\",\n      \"section\": \"3. Results\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 10,\n      \"unit\": \"section\",\n      \"section\": \"Probabilistic Sensitivity Analysis\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 11,\n      \"unit\": \"section\",\n      \"section\": \"4. Discussion\",\n      \"tables\": []\n    },\n    {\n      \"page_num\": 12,\n      \"unit\": \"section\",\n      \"section\": \"Floats\",\n      \"tables\": [\n        {\n          \"table_num\": 1\n        },\n        {\n          \"table_num\": 2\n        }\n      ]\n    }\n  ],\n  \"num_pages\": 12,\n  \"pages_extracted\": [\n    1,\n    12\n  ],\n  \"truncated\": false,\n  \"source_format\": \"jats\",\n  \"unit\": \"section\",\n  \"article_meta\": {\n    \"title\": \"Cost-Effectiveness of Cerebrolysin after Ischemic Stroke: Secondary Analysis of the CARS Study\",\n    \"journal\": \"Healthcare\",\n    \"doi\": \"10.3390/healthcare11101497\",\n    \"year\": \"2023\",\n    \"volume\": \"11\",\n    \"issue\": \"10\",\n    \"pages\": \"\",\n    \"authors\": \"Stefan Strilciuc, Constantin Radu, Diana-Alecsandra Grad, Adina Dora Stan, Cristian Vladescu, Anca Dana Buzoianu, Dafin Muresanu\",\n    \"author_list\": [\n      \"Stefan Strilciuc\",\n      \"Constantin Radu\",\n      \"Diana-Alecsandra Grad\",\n      \"Adina Dora Stan\",\n      \"Cristian Vladescu\",\n      \"Anca Dana Buzoianu\",\n      \"Dafin Muresanu\"\n    ],\n    \"corresponding_author\": \"\",\n    \"corresponding_email\": \"constantin.radu@yale.edu\"\n  },\n  \"n_tables\": 2,\n  \"n_tables_image_only\": 0,\n  \"warnings\": [],\n  \"normalizations\": {\n    \"bibr_xref_bracketed\": 64,\n    \"formula_flattened\": 2,\n    \"true_minus_to_ascii\": 2\n  },\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 38266,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "mcp__forensic_metascience__get_table",
+    "tool_short": "get_table",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WToRNTB8EMZQdBYJZcAMRK",
+    "input": {
+      "xml_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "table_num": 1
+    },
+    "result": "{\n  \"found\": true,\n  \"table_num\": 1,\n  \"id\": \"healthcare-11-01497-t001\",\n  \"label\": \"Table 1\",\n  \"caption\": \"Descriptive values of total medical cost (EUR) used in the analysis.\",\n  \"section\": \"Floats\",\n  \"n_rows\": 6,\n  \"width\": 3,\n  \"n_header_rows\": 1,\n  \"n_footnotes\": 0,\n  \"image_only\": false,\n  \"alignment_uncertain\": false,\n  \"headers\": [\n    \"Total Medical Cost Estimates\",\n    \"Cerebrolysin\",\n    \"Standard Treatment\"\n  ],\n  \"data\": [\n    [\n      \"Total Medical Cost Estimates\",\n      \"Cerebrolysin\",\n      \"Standard Treatment\"\n    ],\n    [\n      \"Sample size\",\n      \"100\",\n      \"93\"\n    ],\n    [\n      \"Mean\",\n      \"1458 EUR\",\n      \"1050 EUR\"\n    ],\n    [\n      \"Median\",\n      \"1466 EUR\",\n      \"1767 EUR\"\n    ],\n    [\n      \"Lower threshold (95%)\",\n      \"1437 EUR\",\n      \"1029 EUR\"\n    ],\n    [\n      \"Upper threshold (95%)\",\n      \"1478 EUR\",\n      \"1070 EUR\"\n    ],\n    [\n      \"Standard deviation\",\n      \"106 EUR\",\n      \"101 EUR\"\n    ]\n  ],\n  \"data_is_complete\": true,\n  \"rows_total\": 7,\n  \"cells\": [\n    {\n      \"raw\": \"100\",\n      \"row\": 2,\n      \"row_label\": \"Sample size\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"93\",\n      \"row\": 2,\n      \"row_label\": \"Sample size\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1458 EUR\",\n      \"row\": 3,\n      \"row_label\": \"Mean\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1050 EUR\",\n      \"row\": 3,\n      \"row_label\": \"Mean\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1466 EUR\",\n      \"row\": 4,\n      \"row_label\": \"Median\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1767 EUR\",\n      \"row\": 4,\n      \"row_label\": \"Median\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1437 EUR\",\n      \"row\": 5,\n      \"row_label\": \"Lower threshold (95%)\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1029 EUR\",\n      \"row\": 5,\n      \"row_label\": \"Lower threshold (95%)\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1478 EUR\",\n      \"row\": 6,\n      \"row_label\": \"Upper threshold (95%)\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1070 EUR\",\n      \"row\": 6,\n      \"row_label\": \"Upper threshold (95%)\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"106 EUR\",\n      \"row\": 7,\n      \"row_label\": \"Standard deviation\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"101 EUR\",\n      \"row\": 7,\n      \"row_label\": \"Standard deviation\",\n      \"col_label\": \"Standard Treatment\"\n    }\n  ],\n  \"cells_total\": 12,\n  \"cells_row_window\": [\n    1,\n    7\n  ],\n  \"footnotes\": [],\n  \"spans\": [],\n  \"spans_total\": 0,\n  \"graphic_href\": null,\n  \"warnings\": [],\n  \"normalizations\": {\n    \"bibr_xref_bracketed\": 64,\n    \"formula_flattened\": 2,\n    \"true_minus_to_ascii\": 2\n  },\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 2901,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "mcp__forensic_metascience__get_table",
+    "tool_short": "get_table",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01AZsMLrNj5ok5uuzHydftoZ",
+    "input": {
+      "xml_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml",
+      "table_num": 2
+    },
+    "result": "{\n  \"found\": true,\n  \"table_num\": 2,\n  \"id\": \"healthcare-11-01497-t002\",\n  \"label\": \"Table 2\",\n  \"caption\": \"Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique.\",\n  \"section\": \"Floats\",\n  \"n_rows\": 3,\n  \"width\": 4,\n  \"n_header_rows\": 2,\n  \"n_footnotes\": 0,\n  \"image_only\": false,\n  \"alignment_uncertain\": false,\n  \"headers\": [\n    \"Valuation Technique\",\n    \"QALYs Derived from CARS | Cerebrolysin\",\n    \"QALYs Derived from CARS | Standard Treatment\",\n    \"Deterministic ICER (EUR)\"\n  ],\n  \"data\": [\n    [\n      \"Valuation Technique\",\n      \"QALYs Derived from CARS | Cerebrolysin\",\n      \"QALYs Derived from CARS | Standard Treatment\",\n      \"Deterministic ICER (EUR)\"\n    ],\n    [\n      \"Bayesian posterior\",\n      \"0.166\",\n      \"0.156\",\n      \"\\u20ac26,981\"\n    ],\n    [\n      \"Ordinal\",\n      \"0.182\",\n      \"0.168\",\n      \"\\u20ac18,788\"\n    ],\n    [\n      \"Standard gamble\",\n      \"0.186\",\n      \"0.171\",\n      \"\\u20ac20,618\"\n    ]\n  ],\n  \"data_is_complete\": true,\n  \"rows_total\": 4,\n  \"cells\": [\n    {\n      \"raw\": \"0.166\",\n      \"row\": 2,\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.156\",\n      \"row\": 2,\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac26,981\",\n      \"row\": 2,\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    },\n    {\n      \"raw\": \"0.182\",\n      \"row\": 3,\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.168\",\n      \"row\": 3,\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac18,788\",\n      \"row\": 3,\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    },\n    {\n      \"raw\": \"0.186\",\n      \"row\": 4,\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.171\",\n      \"row\": 4,\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac20,618\",\n      \"row\": 4,\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    }\n  ],\n  \"cells_total\": 9,\n  \"cells_row_window\": [\n    1,\n    4\n  ],\n  \"footnotes\": [],\n  \"spans\": [\n    {\n      \"row\": 0,\n      \"col\": 0,\n      \"colspan\": 1,\n      \"rowspan\": 2,\n      \"text\": \"Valuation Technique\",\n      \"repeated\": true\n    },\n    {\n      \"row\": 0,\n      \"col\": 1,\n      \"colspan\": 2,\n      \"rowspan\": 1,\n      \"text\": \"QALYs Derived from CARS\",\n      \"repeated\": true\n    },\n    {\n      \"row\": 0,\n      \"col\": 3,\n      \"colspan\": 1,\n      \"rowspan\": 2,\n      \"text\": \"Deterministic ICER (EUR)\",\n      \"repeated\": true\n    }\n  ],\n  \"spans_total\": 3,\n  \"graphic_href\": null,\n  \"warnings\": [],\n  \"normalizations\": {\n    \"bibr_xref_bracketed\": 64,\n    \"formula_flattened\": 2,\n    \"true_minus_to_ascii\": 2\n  },\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 3170,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "mcp__forensic_metascience__parse_cells_typed",
+    "tool_short": "parse_cells_typed",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01URQEU7xkdivdtNJf1YUBZv",
+    "input": {
+      "cells": [
+        {
+          "raw": "100",
+          "row_label": "Sample size",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "93",
+          "row_label": "Sample size",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1458 EUR",
+          "row_label": "Mean",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1050 EUR",
+          "row_label": "Mean",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1466 EUR",
+          "row_label": "Median",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1767 EUR",
+          "row_label": "Median",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1437 EUR",
+          "row_label": "Lower threshold (95%)",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1029 EUR",
+          "row_label": "Lower threshold (95%)",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1478 EUR",
+          "row_label": "Upper threshold (95%)",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1070 EUR",
+          "row_label": "Upper threshold (95%)",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "106 EUR",
+          "row_label": "Standard deviation",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "101 EUR",
+          "row_label": "Standard deviation",
+          "col_label": "Standard Treatment"
+        }
+      ]
+    },
+    "result": "{\n  \"cells\": [\n    {\n      \"raw\": \"100\",\n      \"kind\": \"count\",\n      \"value\": 100.0,\n      \"count\": 100,\n      \"decimals_value\": 0,\n      \"row_label\": \"Sample size\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"93\",\n      \"kind\": \"count\",\n      \"value\": 93.0,\n      \"count\": 93,\n      \"decimals_value\": 0,\n      \"row_label\": \"Sample size\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1458 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1458 EUR' as a numeric cell\",\n      \"row_label\": \"Mean\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1050 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1050 EUR' as a numeric cell\",\n      \"row_label\": \"Mean\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1466 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1466 EUR' as a numeric cell\",\n      \"row_label\": \"Median\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1767 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1767 EUR' as a numeric cell\",\n      \"row_label\": \"Median\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1437 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1437 EUR' as a numeric cell\",\n      \"row_label\": \"Lower threshold (95%)\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1029 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1029 EUR' as a numeric cell\",\n      \"row_label\": \"Lower threshold (95%)\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"1478 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1478 EUR' as a numeric cell\",\n      \"row_label\": \"Upper threshold (95%)\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"1070 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '1070 EUR' as a numeric cell\",\n      \"row_label\": \"Upper threshold (95%)\",\n      \"col_label\": \"Standard Treatment\"\n    },\n    {\n      \"raw\": \"106 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '106 EUR' as a numeric cell\",\n      \"row_label\": \"Standard deviation\",\n      \"col_label\": \"Cerebrolysin\"\n    },\n    {\n      \"raw\": \"101 EUR\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '101 EUR' as a numeric cell\",\n      \"row_label\": \"Standard deviation\",\n      \"col_label\": \"Standard Treatment\"\n    }\n  ],\n  \"n_cells\": 12,\n  \"kind_counts\": {\n    \"count\": 2,\n    \"non_numeric\": 10\n  },\n  \"n_unusable\": 10,\n  \"n_footnote_marked\": 0,\n  \"n_unicode_repaired\": 0,\n  \"coverage\": 0.167,\n  \"warnings\": [\n    \"could not parse '1458 EUR' as a numeric cell\",\n    \"could not parse '1050 EUR' as a numeric cell\",\n    \"could not parse '1466 EUR' as a numeric cell\",\n    \"could not parse '1767 EUR' as a numeric cell\",\n    \"could not parse '1437 EUR' as a numeric cell\",\n    \"could not parse '1029 EUR' as a numeric cell\",\n    \"could not parse '1478 EUR' as a numeric cell\",\n    \"could not parse '1070 EUR' as a numeric cell\",\n    \"could not parse '106 EUR' as a numeric cell\",\n    \"could not parse '101 EUR' as a numeric cell\"\n  ],\n  \"severity\": \"indeterminate\",\n  \"methodology\": \"Typed cell parsing: each cell classified by in-cell syntax, then row/column label, then once more with a trailing footnote marker removed and recorded. Conflicting labels, label-syntax contradictions and unlabelled X (Y) cells are reported as ambiguous rather than guessed, so no tool runs on a value of unknown meaning; a declared variable can still resolve them downstream.\",\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 3896,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "mcp__forensic_metascience__parse_cells_typed",
+    "tool_short": "parse_cells_typed",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01TaBzYMYJWD893Hdo4ugpye",
+    "input": {
+      "cells": [
+        {
+          "raw": "0.166",
+          "row_label": "Bayesian posterior",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.156",
+          "row_label": "Bayesian posterior",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "\u20ac26,981",
+          "row_label": "Bayesian posterior",
+          "col_label": "Deterministic ICER (EUR)"
+        },
+        {
+          "raw": "0.182",
+          "row_label": "Ordinal",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.168",
+          "row_label": "Ordinal",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "\u20ac18,788",
+          "row_label": "Ordinal",
+          "col_label": "Deterministic ICER (EUR)"
+        },
+        {
+          "raw": "0.186",
+          "row_label": "Standard gamble",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.171",
+          "row_label": "Standard gamble",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "\u20ac20,618",
+          "row_label": "Standard gamble",
+          "col_label": "Deterministic ICER (EUR)"
+        }
+      ]
+    },
+    "result": "{\n  \"cells\": [\n    {\n      \"raw\": \"0.166\",\n      \"kind\": \"numeric\",\n      \"value\": 0.166,\n      \"decimals_value\": 3,\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.156\",\n      \"kind\": \"numeric\",\n      \"value\": 0.156,\n      \"decimals_value\": 3,\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac26,981\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '\\u20ac26,981' as a numeric cell\",\n      \"row_label\": \"Bayesian posterior\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    },\n    {\n      \"raw\": \"0.182\",\n      \"kind\": \"numeric\",\n      \"value\": 0.182,\n      \"decimals_value\": 3,\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.168\",\n      \"kind\": \"numeric\",\n      \"value\": 0.168,\n      \"decimals_value\": 3,\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac18,788\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '\\u20ac18,788' as a numeric cell\",\n      \"row_label\": \"Ordinal\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    },\n    {\n      \"raw\": \"0.186\",\n      \"kind\": \"numeric\",\n      \"value\": 0.186,\n      \"decimals_value\": 3,\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"QALYs Derived from CARS | Cerebrolysin\"\n    },\n    {\n      \"raw\": \"0.171\",\n      \"kind\": \"numeric\",\n      \"value\": 0.171,\n      \"decimals_value\": 3,\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"QALYs Derived from CARS | Standard Treatment\"\n    },\n    {\n      \"raw\": \"\\u20ac20,618\",\n      \"kind\": \"non_numeric\",\n      \"value\": null,\n      \"warning\": \"could not parse '\\u20ac20,618' as a numeric cell\",\n      \"row_label\": \"Standard gamble\",\n      \"col_label\": \"Deterministic ICER (EUR)\"\n    }\n  ],\n  \"n_cells\": 9,\n  \"kind_counts\": {\n    \"numeric\": 6,\n    \"non_numeric\": 3\n  },\n  \"n_unusable\": 3,\n  \"n_footnote_marked\": 0,\n  \"n_unicode_repaired\": 0,\n  \"coverage\": 0.667,\n  \"warnings\": [\n    \"could not parse '\\u20ac26,981' as a numeric cell\",\n    \"could not parse '\\u20ac18,788' as a numeric cell\",\n    \"could not parse '\\u20ac20,618' as a numeric cell\"\n  ],\n  \"severity\": \"indeterminate\",\n  \"methodology\": \"Typed cell parsing: each cell classified by in-cell syntax, then row/column label, then once more with a trailing footnote marker removed and recorded. Conflicting labels, label-syntax contradictions and unlabelled X (Y) cells are reported as ambiguous rather than guessed, so no tool runs on a value of unknown meaning; a declared variable can still resolve them downstream.\",\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 2870,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "mcp__forensic_metascience__check_table",
+    "tool_short": "check_table",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01NCrxSRd99b9aCuyRSu7di9",
+    "input": {
+      "cells": [
+        {
+          "raw": "100",
+          "row_label": "Sample size",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "93",
+          "row_label": "Sample size",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1458",
+          "row_label": "Mean",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1050",
+          "row_label": "Mean",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1466",
+          "row_label": "Median",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1767",
+          "row_label": "Median",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1437",
+          "row_label": "Lower threshold (95%)",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1029",
+          "row_label": "Lower threshold (95%)",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "1478",
+          "row_label": "Upper threshold (95%)",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "1070",
+          "row_label": "Upper threshold (95%)",
+          "col_label": "Standard Treatment"
+        },
+        {
+          "raw": "106",
+          "row_label": "Standard deviation",
+          "col_label": "Cerebrolysin"
+        },
+        {
+          "raw": "101",
+          "row_label": "Standard deviation",
+          "col_label": "Standard Treatment"
+        }
+      ],
+      "variables": [
+        {
+          "id": "cost_eur",
+          "name": "Total medical cost per patient",
+          "measurement_level": "ratio",
+          "discreteness": "continuous",
+          "family": "continuous",
+          "units": "EUR",
+          "lower_bound": 0,
+          "confidence": "high"
+        },
+        {
+          "id": "n_group",
+          "name": "Group sample size",
+          "measurement_level": "ratio",
+          "discreteness": "discrete",
+          "family": "count",
+          "lower_bound": 0,
+          "confidence": "high"
+        }
+      ],
+      "bindings": {
+        "Sample size": "n_group",
+        "Mean": "cost_eur",
+        "Median": "cost_eur",
+        "Lower threshold (95%)": "cost_eur",
+        "Upper threshold (95%)": "cost_eur",
+        "Standard deviation": "cost_eur"
+      },
+      "source_locator": "Table 1",
+      "source_quote": "Descriptive values of total medical cost (EUR) used in the analysis."
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"parse\": {\n    \"n_cells\": 12,\n    \"coverage\": 1.0,\n    \"kind_counts\": {\n      \"count\": 12\n    },\n    \"warnings\": []\n  },\n  \"n_checks_run\": 0,\n  \"n_not_run\": 12,\n  \"results\": [],\n  \"consistent_index\": [],\n  \"not_run\": [\n    {\n      \"cell\": \"Sample size\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Sample size\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Mean\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Mean\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Median\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Median\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Lower threshold (95%)\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Lower threshold (95%)\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Upper threshold (95%)\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Upper threshold (95%)\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Standard deviation\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Standard deviation\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    }\n  ],\n  \"summary_by_severity\": {\n    \"consistent\": 0\n  },\n  \"tools_run\": [],\n  \"provenance\": \"printed_table\",\n  \"methodology\": \"Deterministic dispatch: typed cell kind x declared variable family -> the checks that apply. Every check runs through the registry, so applicability guards, the exact-value gate and withheld parameters are inherited, not reimplemented. `not_run` is machine-generated per (cell, check), so coverage does not depend on anything being remembered. Consistent results are counted and indexed rather than repeated in full. 0 checks run, 12 refused. Report the DENOMINATOR with any finding: 3 suspicious out of 140 checks and 3 out of 4 are different papers.\",\n  \"source_quote\": \"Descriptive values of total medical cost (EUR) used in the analysis.\",\n  \"source_locator\": \"Table 1\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 2966,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 7,
+    "tool": "mcp__forensic_metascience__check_table",
+    "tool_short": "check_table",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_011WDzkTFZ1nscNCVZDUnfoJ",
+    "input": {
+      "cells": [
+        {
+          "raw": "0.166",
+          "row_label": "Bayesian posterior",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.156",
+          "row_label": "Bayesian posterior",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "26981",
+          "row_label": "Bayesian posterior",
+          "col_label": "Deterministic ICER (EUR)"
+        },
+        {
+          "raw": "0.182",
+          "row_label": "Ordinal",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.168",
+          "row_label": "Ordinal",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "18788",
+          "row_label": "Ordinal",
+          "col_label": "Deterministic ICER (EUR)"
+        },
+        {
+          "raw": "0.186",
+          "row_label": "Standard gamble",
+          "col_label": "QALYs Derived from CARS | Cerebrolysin"
+        },
+        {
+          "raw": "0.171",
+          "row_label": "Standard gamble",
+          "col_label": "QALYs Derived from CARS | Standard Treatment"
+        },
+        {
+          "raw": "20618",
+          "row_label": "Standard gamble",
+          "col_label": "Deterministic ICER (EUR)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "qaly",
+          "name": "Mean QALYs over 90 days",
+          "measurement_level": "ratio",
+          "discreteness": "continuous",
+          "family": "continuous",
+          "lower_bound": 0,
+          "upper_bound": 0.25,
+          "confidence": "medium",
+          "derivation": "other",
+          "derived_from": "2*D2 + 88*AVERAGE(D2,D90) / 90 * 0.25, where D2 and D90 are SF-6D utility scores"
+        },
+        {
+          "id": "icer_eur",
+          "name": "Deterministic ICER",
+          "measurement_level": "ratio",
+          "discreteness": "continuous",
+          "family": "continuous",
+          "units": "EUR per QALY",
+          "confidence": "high",
+          "derivation": "ratio",
+          "derived_from": "incremental cost divided by incremental QALYs"
+        }
+      ],
+      "bindings": {
+        "Bayesian posterior": "qaly",
+        "Ordinal": "qaly",
+        "Standard gamble": "qaly"
+      },
+      "source_locator": "Table 2",
+      "source_quote": "Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique."
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"parse\": {\n    \"n_cells\": 9,\n    \"coverage\": 1.0,\n    \"kind_counts\": {\n      \"numeric\": 6,\n      \"count\": 3\n    },\n    \"warnings\": []\n  },\n  \"n_checks_run\": 0,\n  \"n_not_run\": 9,\n  \"results\": [],\n  \"consistent_index\": [],\n  \"not_run\": [\n    {\n      \"cell\": \"Bayesian posterior\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Bayesian posterior\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Bayesian posterior\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Ordinal\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Ordinal\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Ordinal\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    },\n    {\n      \"cell\": \"Standard gamble\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Standard gamble\",\n      \"kind\": \"numeric\",\n      \"tools\": [],\n      \"reason\": \"a bare number carries no dispersion or denominator to check\"\n    },\n    {\n      \"cell\": \"Standard gamble\",\n      \"kind\": \"count\",\n      \"tools\": [],\n      \"reason\": \"a bare count contributes to table-level checks only\"\n    }\n  ],\n  \"summary_by_severity\": {\n    \"consistent\": 0\n  },\n  \"tools_run\": [],\n  \"provenance\": \"printed_table\",\n  \"methodology\": \"Deterministic dispatch: typed cell kind x declared variable family -> the checks that apply. Every check runs through the registry, so applicability guards, the exact-value gate and withheld parameters are inherited, not reimplemented. `not_run` is machine-generated per (cell, check), so coverage does not depend on anything being remembered. Consistent results are counted and indexed rather than repeated in full. 0 checks run, 9 refused. Report the DENOMINATOR with any finding: 3 suspicious out of 140 checks and 3 out of 4 are different papers.\",\n  \"source_quote\": \"Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique.\",\n  \"source_locator\": \"Table 2\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 2591,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 8,
+    "tool": "mcp__forensic_metascience__statcheck",
+    "tool_short": "statcheck",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01RScAYX5L84uKQUDE1SVr9u",
+    "input": {
+      "text": "We compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups. The QALYs calculated using the utilities resulting from SF-36 to SF-6D conversion were aggregated by health state valuation model: standard gamble (0.698 Cerebrolysin vs. 0.643 placebo), ordinal (0.704 Cerebrolysin vs. 0.647 placebo) and Bayesian posterior mean (0.653 Cerebrolysin vs. 0.613 placebo). Average total costs per patient were 7214 RON (1458 EUR) for Cerebrolysin and 5197 RON (1050 EUR) for placebo. This amounts to a mean increment in treatment cost difference between patients treated with Cerebrolysin and standard care of 2017 RON (408 EUR), as highlighted in Table 1, and a mean increment in QALYs between 0.01-0.015, depending on the valuation technique (Table 2). Three different ICER values corresponding to the health state valuation models used are presented in Table 2. The lowest ICER values were determined based on the ordinal valuation (18,788 EUR/QALY), while the highest were concluded for the Bayesian posterior valuation method (26,981 EUR/QALY). Based on the CARS trial patient pathway, the Cerebrolysin add-on treatment was cost-effective in roughly 80% of cases for an ICER threshold set at 50,000 EUR (Figure 2 and Figure 3), considering only the 90-day timeframe of the CARS-study. Aggregated QALYs for the Cerebrolysin group were higher than those for the placebo group (0.051 average difference across the three health state valuation models), indicating that the Cerebrolysin add-on scheme has a beneficial impact on quality of life of ischemic stroke patients. Patient demographics, medical history, risk factors and 36-Item-Short-Form-Survey (SF-36) results (n = 208) were transferred to a Microsoft Excel workbook. The resulting database included 198 patients. Several instances of missing SF-36 data were handled by excluding cases with missing values on more than 3 SF-36 subscales on either visit (n = 10) or by recoding missing entries as 9 (n = 13). Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100-Cerebrolysin; 93-placebo). The percentage of patients receiving IVT treatment was 0.8% in 2017. By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients. In 2021, only 0.9% of patients underwent EVT.",
+      "source_locator": "Results and Discussion body text",
+      "source_quote": "No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups."
+    },
+    "result": "{\n  \"success\": true,\n  \"stats_found\": 0,\n  \"message\": \"No statistics found in text\",\n  \"source_quote\": \"No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.\",\n  \"source_locator\": \"Results and Discussion body text\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 327,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 9,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_016tfb8nyGEpM79uYsw7UBeF",
+    "input": {
+      "estimate": 1458,
+      "ci_low": 1437,
+      "ci_high": 1478,
+      "decimals": "0",
+      "source_locator": "Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "source_quote": "Mean\t1458 EUR\t1050 EUR"
+    },
+    "result": "{\"error\": \"TypeError: bad operand type for unary -: 'str'\", \"severity\": \"indeterminate\", \"tool\": \"check_estimate_ci\", \"arguments\": {\"estimate\": 1458, \"ci_low\": 1437, \"ci_high\": 1478, \"decimals\": \"0\", \"source_locator\": \"Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))\", \"source_quote\": \"Mean\\t1458 EUR\\t1050 EUR\"}, \"note\": \"The tool raised instead of returning a result. Check the inputs (e.g. n too small, zero SD, malformed table) and retry with corrected arguments if appropriate.\"}",
+    "result_truncated": false,
+    "result_chars": 518,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 10,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01BTMh24cypWQqjnCFnhURmv",
+    "input": {
+      "estimate": 1050,
+      "ci_low": 1029,
+      "ci_high": 1070,
+      "decimals": "0",
+      "source_locator": "Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "source_quote": "Lower threshold (95%)\t1437 EUR\t1029 EUR"
+    },
+    "result": "{\"error\": \"TypeError: bad operand type for unary -: 'str'\", \"severity\": \"indeterminate\", \"tool\": \"check_estimate_ci\", \"arguments\": {\"estimate\": 1050, \"ci_low\": 1029, \"ci_high\": 1070, \"decimals\": \"0\", \"source_locator\": \"Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))\", \"source_quote\": \"Lower threshold (95%)\\t1437 EUR\\t1029 EUR\"}, \"note\": \"The tool raised instead of returning a result. Check the inputs (e.g. n too small, zero SD, malformed table) and retry with corrected arguments if appropriate.\"}",
+    "result_truncated": false,
+    "result_chars": 541,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 11,
+    "tool": "mcp__forensic_metascience__check_proportion_from_normal",
+    "tool_short": "check_proportion_from_normal",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WdL2XubspbMGWkBFVPL9cU",
+    "input": {
+      "reported_proportion": 0.5,
+      "mean": 1050,
+      "sd": 101,
+      "n": 93,
+      "threshold": 1767,
+      "direction": "below",
+      "source_locator": "Table 1, Standard Treatment column (Median, Mean, Standard deviation, Sample size)",
+      "source_quote": "Median\t1466 EUR\t1767 EUR"
+    },
+    "result": "{\n  \"severity\": \"highly_suspicious\",\n  \"explanation\": \"Reported proportion 0.5000 (46/93) is outside what ANY distribution with mean 1050 and SD 101 can produce: Cantelli's inequality bounds the proportion below 1767 to [0.9805, 1.0000], and even the reported proportion's 95% CI [0.3893, 0.6003] falls outside it. The categorical and continuous summaries are mutually inconsistent, with no distributional assumption at all.\",\n  \"reported_proportion\": 0.5,\n  \"observed_count\": 46,\n  \"n\": 93,\n  \"threshold\": 1767,\n  \"direction\": \"below\",\n  \"theoretical_proportion\": 0.9999999999993717,\n  \"distribution_free_bound_95\": [\n    0.9805432108184402,\n    1.0\n  ],\n  \"distribution_free_violation\": true,\n  \"binomial_p_two_sided\": 0.0,\n  \"binomial_ci_95\": [\n    0.389285463077456,\n    0.6003136115914716\n  ],\n  \"mc_mean_proportion\": 1.0,\n  \"mc_ci_95\": [\n    1.0,\n    1.0\n  ],\n  \"mc_empirical_p_two_sided\": 0.0,\n  \"mc_num_simulations\": 10000,\n  \"z_score\": 7.099009900990099,\n  \"methodology\": \"Continuous\\u2192categorical plausibility: under the assumed normal N(1050, 101\\u00b2), theoretical P(X below 1767) = 1.0000. Reported proportion = 46/93 = 0.5000. Two-sided binomial test gives p = 0; Monte Carlo with 10000 replicates of n = 93 gives 95% CI [1.0000, 1.0000].\",\n  \"source_quote\": \"Median\\t1466 EUR\\t1767 EUR\",\n  \"source_locator\": \"Table 1, Standard Treatment column (Median, Mean, Standard deviation, Sample size)\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1446,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 12,
+    "tool": "mcp__forensic_metascience__check_proportion_from_normal",
+    "tool_short": "check_proportion_from_normal",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WGJT1NfEcj2FnmWgriZAEy",
+    "input": {
+      "reported_proportion": 0.5,
+      "mean": 1458,
+      "sd": 106,
+      "n": 100,
+      "threshold": 1466,
+      "direction": "below",
+      "source_locator": "Table 1, Cerebrolysin column (Median, Mean, Standard deviation, Sample size)",
+      "source_quote": "Standard deviation\t106 EUR\t101 EUR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"Reported proportion 0.5000 (50/100) is consistent with a normal model: theoretical proportion below 1466 = \\u03a6-based 0.5301 (binomial p = 0.5497, 95% CI 0.3983\\u20130.6017).\",\n  \"reported_proportion\": 0.5,\n  \"observed_count\": 50,\n  \"n\": 100,\n  \"threshold\": 1466,\n  \"direction\": \"below\",\n  \"theoretical_proportion\": 0.5300802925340248,\n  \"distribution_free_bound_95\": [\n    0.005663716814159336,\n    1.0\n  ],\n  \"distribution_free_violation\": false,\n  \"binomial_p_two_sided\": 0.5497216869790649,\n  \"binomial_ci_95\": [\n    0.3983211295033012,\n    0.6016788704966989\n  ],\n  \"mc_mean_proportion\": 0.5297370000000001,\n  \"mc_ci_95\": [\n    0.43,\n    0.63\n  ],\n  \"mc_empirical_p_two_sided\": 0.6214,\n  \"mc_num_simulations\": 10000,\n  \"z_score\": 0.07547169811320754,\n  \"methodology\": \"Continuous\\u2192categorical plausibility: under the assumed normal N(1458, 106\\u00b2), theoretical P(X below 1466) = 0.5301. Reported proportion = 50/100 = 0.5000. Two-sided binomial test gives p = 0.5497; Monte Carlo with 10000 replicates of n = 100 gives 95% CI [0.4300, 0.6300].\",\n  \"source_quote\": \"Standard deviation\\t106 EUR\\t101 EUR\",\n  \"source_locator\": \"Table 1, Cerebrolysin column (Median, Mean, Standard deviation, Sample size)\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1299,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__check_summation_batch",
+    "tool_short": "check_summation_batch",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01LbwFCv5DHtbCxiHj289y9d",
+    "input": {
+      "rows": [
+        {
+          "values": [
+            198,
+            10
+          ],
+          "expected_sum": 208,
+          "decimals": 0,
+          "decimals_total": 0,
+          "tolerance": 0,
+          "description": "SF-36 records transferred (208) = retained database (198) + cases excluded for >3 missing subscales (10)"
+        },
+        {
+          "values": [
+            193,
+            5
+          ],
+          "expected_sum": 198,
+          "decimals": 0,
+          "decimals_total": 0,
+          "tolerance": 0,
+          "description": "retained database (198) = final analysis (193) + additional converter exclusions (5)"
+        },
+        {
+          "values": [
+            100,
+            93
+          ],
+          "expected_sum": 193,
+          "decimals": 0,
+          "decimals_total": 0,
+          "tolerance": 0,
+          "description": "final analysis 193 = 100 Cerebrolysin + 93 placebo"
+        },
+        {
+          "values": [
+            5197,
+            2017
+          ],
+          "expected_sum": 7214,
+          "decimals": 0,
+          "decimals_total": 0,
+          "tolerance": 0,
+          "description": "mean total cost RON: placebo 5197 + increment 2017 = Cerebrolysin 7214"
+        },
+        {
+          "values": [
+            1050,
+            408
+          ],
+          "expected_sum": 1458,
+          "decimals": 0,
+          "decimals_total": 0,
+          "tolerance": 0,
+          "description": "mean total cost EUR: placebo 1050 + increment 408 = Cerebrolysin 1458"
+        },
+        {
+          "values": [
+            0.156,
+            0.01
+          ],
+          "expected_sum": 0.166,
+          "decimals": [
+            3,
+            2
+          ],
+          "decimals_total": 3,
+          "description": "Table 2 Bayesian posterior: standard treatment QALY + stated lower QALY increment (0.01) = Cerebrolysin QALY"
+        },
+        {
+          "values": [
+            0.171,
+            0.015
+          ],
+          "expected_sum": 0.186,
+          "decimals": [
+            3,
+            3
+          ],
+          "decimals_total": 3,
+          "description": "Table 2 Standard gamble: standard treatment QALY + stated upper QALY increment (0.015) = Cerebrolysin QALY"
+        }
+      ],
+      "source_locator": "Methods 2.1, Results paragraphs 1-2, Table 1 and Table 2",
+      "source_quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo)."
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"n_rows\": 7,\n  \"n_evaluated\": 7,\n  \"n_indeterminate\": 0,\n  \"n_inconsistent\": 0,\n  \"results\": [\n    {\n      \"values\": [\n        198,\n        10\n      ],\n      \"actual_sum\": 208,\n      \"expected_sum\": 208,\n      \"difference\": 0,\n      \"tolerance\": 1e-12,\n      \"tolerance_basis\": \"explicit tolerance\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: SF-36 records transferred (208) = retained database (198) + cases excluded for >3 missing subscales (10) sum to 208, expected 208, difference = 0, window = 1e-12 (explicit tolerance; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 0,\n      \"description\": \"SF-36 records transferred (208) = retained database (198) + cases excluded for >3 missing subscales (10)\"\n    },\n    {\n      \"values\": [\n        193,\n        5\n      ],\n      \"actual_sum\": 198,\n      \"expected_sum\": 198,\n      \"difference\": 0,\n      \"tolerance\": 1e-12,\n      \"tolerance_basis\": \"explicit tolerance\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: retained database (198) = final analysis (193) + additional converter exclusions (5) sum to 198, expected 198, difference = 0, window = 1e-12 (explicit tolerance; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 1,\n      \"description\": \"retained database (198) = final analysis (193) + additional converter exclusions (5)\"\n    },\n    {\n      \"values\": [\n        100,\n        93\n      ],\n      \"actual_sum\": 193,\n      \"expected_sum\": 193,\n      \"difference\": 0,\n      \"tolerance\": 1e-12,\n      \"tolerance_basis\": \"explicit tolerance\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: final analysis 193 = 100 Cerebrolysin + 93 placebo sum to 193, expected 193, difference = 0, window = 1e-12 (explicit tolerance; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 2,\n      \"description\": \"final analysis 193 = 100 Cerebrolysin + 93 placebo\"\n    },\n    {\n      \"values\": [\n        5197,\n        2017\n      ],\n      \"actual_sum\": 7214,\n      \"expected_sum\": 7214,\n      \"difference\": 0,\n      \"tolerance\": 1e-12,\n      \"tolerance_basis\": \"explicit tolerance\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: mean total cost RON: placebo 5197 + increment 2017 = Cerebrolysin 7214 sum to 7214, expected 7214, difference = 0, window = 1e-12 (explicit tolerance; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 3,\n      \"description\": \"mean total cost RON: placebo 5197 + increment 2017 = Cerebrolysin 7214\"\n    },\n    {\n      \"values\": [\n        1050,\n        408\n      ],\n      \"actual_sum\": 1458,\n      \"expected_sum\": 1458,\n      \"difference\": 0,\n      \"tolerance\": 1e-12,\n      \"tolerance_basis\": \"explicit tolerance\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: mean total cost EUR: placebo 1050 + increment 408 = Cerebrolysin 1458 sum to 1458, expected 1458, difference = 0, window = 1e-12 (explicit tolerance; 2 addend(s) at [0, 0] dp, total at 0 dp)\",\n      \"row\": 4,\n      \"description\": \"mean total cost EUR: placebo 1050 + increment 408 = Cerebrolysin 1458\"\n    },\n    {\n      \"values\": [\n        0.156,\n        0.01\n      ],\n      \"actual_sum\": 0.166,\n      \"expected_sum\": 0.166,\n      \"difference\": 0.0,\n      \"tolerance\": 0.0060000000010000006,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 2 Bayesian posterior: standard treatment QALY + stated lower QALY increment (0.01) = Cerebrolysin QALY sum to 0.166, expected 0.166, difference = 0.0, window = 0.006 (printed precision; 2 addend(s) at [3, 2] dp, total at 3 dp)\",\n      \"row\": 5,\n      \"description\": \"Table 2 Bayesian posterior: standard treatment QALY + stated lower QALY increment (0.01) = Cerebrolysin QALY\"\n    },\n    {\n      \"values\": [\n        0.171,\n        0.015\n      ],\n      \"actual_sum\": 0.186,\n      \"expected_sum\": 0.186,\n      \"difference\": 0.0,\n      \"tolerance\": 0.001500000001,\n      \"tolerance_basis\": \"printed precision\",\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Table 2 Standard gamble: standard treatment QALY + stated upper QALY increment (0.015) = Cerebrolysin QALY sum to 0.186, expected 0.186, difference = 0.0, window = 0.0015 (printed precision; 2 addend(s) at [3, 3] dp, total at 3 dp)\",\n      \"row\": 6,\n      \"description\": \"Table 2 Standard gamble: standard treatment QALY + stated upper QALY increment (0.015) = Cerebrolysin QALY\"\n    }\n  ],\n  \"explanation\": \"All 7 evaluated sums reconcile within tolerance.\",\n  \"methodology\": \"Batched summation. Each row is checked independently by check_summation; the aggregate severity is the worst row, and a batch in which nothing could be evaluated reports `indeterminate` rather than `consistent`.\",\n  \"source_quote\": \"Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\\u2014Cerebrolysin; 93\\u2014placebo).\",\n  \"source_locator\": \"Methods 2.1, Results paragraphs 1-2, Table 1 and Table 2\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 5301,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 14,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01MQ1KELudFaPcvnzCxs2WJ6",
+    "input": {
+      "estimate": 1458,
+      "ci_low": 1437,
+      "ci_high": 1478,
+      "source_locator": "Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "source_quote": "Mean\t1458 EUR\t1050 EUR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"measure not stated and the interval is compatible with both a ratio (null 1) and a difference (null 0) reading; null-dependent outputs (recovered p and z, null exclusion) were not evaluated. Pass `measure`.\"\n  ],\n  \"recovered_se\": 10.459375866955407,\n  \"recovered_p\": null,\n  \"recovered_z\": null,\n  \"implied_centre\": 1457.5,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": null,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"Mean\\t1458 EUR\\t1050 EUR\",\n  \"source_locator\": \"Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1125,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__check_estimate_ci",
+    "tool_short": "check_estimate_ci",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01BgBHU2daHGMmYHVKag5nRY",
+    "input": {
+      "estimate": 1050,
+      "ci_low": 1029,
+      "ci_high": 1070,
+      "source_locator": "Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))",
+      "source_quote": "Lower threshold (95%)\t1437 EUR\t1029 EUR"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"problems\": [],\n  \"notes\": [\n    \"measure not stated and the interval is compatible with both a ratio (null 1) and a difference (null 0) reading; null-dependent outputs (recovered p and z, null exclusion) were not evaluated. Pass `measure`.\"\n  ],\n  \"recovered_se\": 10.459375866955407,\n  \"recovered_p\": null,\n  \"recovered_z\": null,\n  \"implied_centre\": 1049.5,\n  \"scale\": \"linear\",\n  \"inferred_confidence_level\": null,\n  \"ci_excludes_null\": null,\n  \"explanation\": \"Estimate, CI are mutually consistent.\",\n  \"methodology\": \"SE recovered from the CI width on the linear scale; p recovered by a normal approximation. Tolerances derive from the printed precision. Alternative confidence levels are tested before any discrepancy is reported. Null-dependent checks run only when the null is known (stated measure, stated null, or settled by the data); otherwise both readings must agree before anything is flagged.\",\n  \"source_quote\": \"Lower threshold (95%)\\t1437 EUR\\t1029 EUR\",\n  \"source_locator\": \"Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1148,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the PDF text layer"
+  },
+  {
+    "seq": 16,
+    "tool": "mcp__forensic_metascience__extract_figures",
+    "tool_short": "extract_figures",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01RAnNcerv2mqssRLE7i54jN",
+    "input": {
+      "pdf_path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.pdf"
+    },
+    "result": "{\n  \"success\": true,\n  \"paper_id\": \"10.3390--healthcare11101497\",\n  \"pdf\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.pdf\",\n  \"n_figures\": 3,\n  \"n_cropped\": 3,\n  \"n_partial\": 0,\n  \"n_low_confidence\": 0,\n  \"n_uncropped\": 0,\n  \"figures\": [\n    {\n      \"paper_id\": \"10.3390--healthcare11101497\",\n      \"label\": \"Figure 1\",\n      \"page\": 4,\n      \"caption\": \"Methodological \\ufb02ow describing steps taken in the analysis. CE: Cerebrolysin, CEACs: Cost- effectiveness acceptability curves, CARS: Cerebrolysin and Recovery After Stroke, QALY: Quality- adjusted life years\",\n      \"image_path\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/figures/Figure_1_p004.png\",\n      \"bbox\": [\n        35.40599822998047,\n        57.1229248046875,\n        562.6300048828125,\n        335.8475036621094\n      ],\n      \"ordinal\": 1,\n      \"error_bar_meaning\": null,\n      \"crop_confidence\": \"high\",\n      \"provenance\": {\n        \"source\": \"printed_figure\",\n        \"method\": \"pymupdf_crop\",\n        \"locator\": \"Figure 1, p. 4\",\n        \"relative_error\": null,\n        \"note\": \"caption text is PRINTED; any value read off the marks is not\"\n      },\n      \"warnings\": []\n    },\n    {\n      \"paper_id\": \"10.3390--healthcare11101497\",\n      \"label\": \"Figure 2\",\n      \"page\": 6,\n      \"caption\": \"Cost-effectiveness plane, highlighting the favorable cost-effectiveness of Cerebrolysin\",\n      \"image_path\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/figures/Figure_2_p006.png\",\n      \"bbox\": [\n        165.5,\n        531.3349609375,\n        491.1789855957031,\n        769.2949829101562\n      ],\n      \"ordinal\": 2,\n      \"error_bar_meaning\": null,\n      \"crop_confidence\": \"high\",\n      \"provenance\": {\n        \"source\": \"printed_figure\",\n        \"method\": \"pymupdf_crop\",\n        \"locator\": \"Figure 2, p. 6\",\n        \"relative_error\": null,\n        \"note\": \"caption text is PRINTED; any value read off the marks is not\"\n      },\n      \"warnings\": []\n    },\n    {\n      \"paper_id\": \"10.3390--healthcare11101497\",\n      \"label\": \"Figure 3\",\n      \"page\": 7,\n      \"caption\": \"Cost-effectiveness acceptability curve (CEAC), highlighting probability of cost-effectiveness (vertical axis, percentual) at various monetary thresholds (horizontal axis, EUR\",\n      \"image_path\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/figures/Figure_3_p007.png\",\n      \"bbox\": [\n        167.45199584960938,\n        159.96505737304688,\n        553.6119995117188,\n        442.2050476074219\n      ],\n      \"ordinal\": 3,\n      \"error_bar_meaning\": null,\n      \"crop_confidence\": \"high\",\n      \"provenance\": {\n        \"source\": \"printed_figure\",\n        \"method\": \"pymupdf_crop\",\n        \"locator\": \"Figure 3, p. 7\",\n        \"relative_error\": null,\n        \"note\": \"caption text is PRINTED; any value read off the marks is not\"\n      },\n      \"warnings\": []\n    }\n  ],\n  \"warnings\": [],\n  \"output_dir\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/figures\",\n  \"methodology\": \"Caption-anchored figure extraction (PyMuPDF, local, no network). Captions are located as text BLOCKS, and the crop is the artwork -- raster images and vector drawings -- nearest that block, above it or below it. This catches VECTOR charts, which `get_images()` misses entirely; on this corpus vector linework is the common case. The crop is then GROWN outward from that artwork to take in the figure's text -- axis tick labels, axis titles, panel letters, legends -- which are not drawing paths and therefore fall outside the artwork's own bounding box; growth stops at a caption or a paragraph of body text, never at a distance threshold, because half of all within-figure artwork gaps are wider than the gap that separates two different figures. Read `crop_confidence` before trusting an image: `high` means the whole figure was located and cropped to; `partial` means the crop is real but figure-shaped material was walled off just outside it, so the image may be missing a panel; `low` means the crop holds too little ink to be a chart; `none` means no crop was possible and `image_path` is the WHOLE PAGE. Each figure's own `warnings` say which. Caption text is PRINTED and carries tier-0 provenance; anything later read off the marks is tier-2 figure_pixels and is barred from exact-arithmetic checks. `n_figures: 0` is not a claim that the paper has no figures: check `warnings` for a NO FIGURE CAPTION notice, which means the PDF carries figure-sized artwork whose captions are not in its text layer and nothing could be anchored.\",\n  \"source_quote\": null,\n  \"source_locator\": null,\n  \"source_quote_supplied\": false\n}",
+    "result_truncated": false,
+    "result_chars": 4946,
+    "is_error": false
+  },
+  {
+    "seq": 17,
+    "tool": "mcp__forensic_metascience__extract_supplement",
+    "tool_short": "extract_supplement",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Hg8LGuJ5GR6ebonoHBbT9G",
+    "input": {
+      "path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx"
+    },
+    "result": "Error: result (853,043 characters across 36,431 lines) exceeds maximum allowed tokens. Output has been saved to /home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-extract_supplement-1786355997647.txt.\nFormat: Plain text\nUse offset and limit parameters to read specific portions of the file, search within it for specific content, and jq to make structured queries.\nREQUIREMENTS FOR SUMMARIZATION/ANALYSIS/REVIEW:\n- You MUST read the content from the file at /home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-extract_supplement-1786355997647.txt in sequential chunks until 100% of the content has been read.\n- If you receive truncation warnings when reading the file, reduce the chunk size until you have read 100% of the content without truncation.\n- Before producing ANY summary or analysis, you MUST explicitly describe what portion of the content you have read. ***If you did not read the entire content, you MUST explicitly state this.***\n- If after a few attempts you cannot read the file (file not found, lines too long for Read's offset/limit, no shell access), STOP retrying. Summarize what you were able to read, explicitly state which portion you could not read and why, and proceed.\n",
+    "result_truncated": false,
+    "result_chars": 1415,
+    "is_error": false
+  },
+  {
+    "seq": 18,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01UHb7BjyPE4Zx1X1ExCcmqi",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-extract_supplement-1786355997647.txt",
+      "limit": 60
+    },
+    "result": "1\t{\n2\t  \"text\": \"\",\n3\t  \"tables\": [\n4\t    {\n5\t      \"page\": null,\n6\t      \"table_num\": 1,\n7\t      \"id\": \"\",\n8\t      \"label\": \"QALY\",\n9\t      \"caption\": \"\",\n10\t      \"section\": \"10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx\",\n11\t      \"footnotes\": [],\n12\t      \"source\": \"xlsx\",\n13\t      \"data\": [\n14\t        [\n15\t          \"patient_ID\",\n16\t          \"Group\",\n17\t          \"SG - V2\",\n18\t          \"SG - V7\",\n19\t          \"QALY - SG\",\n20\t          \"ORD - V2\",\n21\t          \"ORD - V7\",\n22\t          \"QALY - ORD\",\n23\t          \"Bpost - V2\",\n24\t          \"Bpost - V7\",\n25\t          \"QALY - Bpost\"\n26\t        ],\n27\t        [\n28\t          \"C-1-1\",\n29\t          \"Cerebrolysin\",\n30\t          \"0.609999999999999\",\n31\t          \"0.617999999999999\",\n32\t          \"0.15347777777777752\",\n33\t          \"0.5947\",\n34\t          \"0.6713\",\n35\t          \"0.15803722222222222\",\n36\t          \"0.587\",\n37\t          \"0.6043\",\n38\t          \"0.14886444444444444\"\n39\t        ],\n40\t        [\n41\t          \"C-1-2\",\n42\t          \"Cerebrolysin\",\n43\t          \"0.609999999999999\",\n44\t          \"0.587\",\n45\t          \"0.14968888888888876\",\n46\t          \"0.5758\",\n47\t          \"0.530899999999999\",\n48\t          \"0.1384622222222221\",\n49\t          \"0.6061\",\n50\t          \"0.5631\",\n51\t          \"0.14626944444444445\"\n52\t        ],\n53\t        [\n54\t          \"C-1-5\",\n55\t          \"Cerebrolysin\",\n56\t          \"0.609999999999999\",\n57\t          \"0.609999999999999\",\n58\t          \"0.15249999999999975\",\n59\t          \"0.5799\",\n60\t          \"0.5799\",",
+    "result_truncated": false,
+    "result_chars": 1541,
+    "is_error": false
+  },
+  {
+    "seq": 19,
+    "tool": "mcp__forensic_metascience__detect_raw_duplication",
+    "tool_short": "detect_raw_duplication",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_0179PYprTjpRniefmUfbcS5f",
+    "input": {
+      "path": "/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx",
+      "data_context": "raw_participant_level",
+      "source_locator": "Supplementary dataverse workbook (PCRGJE Strilciuc CEA CARS)",
+      "source_quote": "We obtained individual patient data from the 2016 Cerebrolysin and Recovery After Stroke (CARS) trial from the principal investigators [[36]]."
+    },
+    "result": "Error: result (384,424 characters across 18,914 lines) exceeds maximum allowed tokens. Output has been saved to /home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt.\nFormat: Plain text\nUse offset and limit parameters to read specific portions of the file, search within it for specific content, and jq to make structured queries.\nREQUIREMENTS FOR SUMMARIZATION/ANALYSIS/REVIEW:\n- You MUST read the content from the file at /home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt in sequential chunks until 100% of the content has been read.\n- If you receive truncation warnings when reading the file, reduce the chunk size until you have read 100% of the content without truncation.\n- Before producing ANY summary or analysis, you MUST explicitly describe what portion of the content you have read. ***If you did not read the entire content, you MUST explicitly state this.***\n- If after a few attempts you cannot read the file (file not found, lines too long for Read's offset/limit, no shell access), STOP retrying. Summarize what you were able to read, explicitly state which portion you could not read and why, and proceed.\n",
+    "result_truncated": false,
+    "result_chars": 1423,
+    "is_error": false,
+    "source_quote_verified": "stitched",
+    "source_quote_source": "assembled from values in the paper"
+  },
+  {
+    "seq": 20,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01BG4LoRyjWQ3Spd8DkGgQUc",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt",
+      "limit": 70
+    },
+    "result": "1\t{\n2\t  \"severity\": \"highly_suspicious\",\n3\t  \"explanation\": \"75 duplicated row pair(s), 1 repeated column sequence(s), 73 repeated high-precision value(s) across 2 table(s).\",\n4\t  \"path\": \"/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx\",\n5\t  \"n_tables\": 2,\n6\t  \"tables\": [\n7\t    \"QALY\",\n8\t    \"Cost\"\n9\t  ],\n10\t  \"n_numeric_cells\": 4053,\n11\t  \"n_columns_excluded\": 1,\n12\t  \"excluded_columns\": [\n13\t    \"Discount/year (constant column)\"\n14\t  ],\n15\t  \"duplicate_groups\": [\n16\t    {\n17\t      \"kind\": \"row_pair\",\n18\t      \"cross_sheet\": false,\n19\t      \"sheet_a\": \"QALY\",\n20\t      \"sheet_b\": \"QALY\",\n21\t      \"rows\": [\n22\t        {\n23\t          \"sheet\": \"QALY\",\n24\t          \"cell\": \"C119\",\n25\t          \"row\": 119,\n26\t          \"col\": 2\n27\t        },\n28\t        {\n29\t          \"sheet\": \"QALY\",\n30\t          \"cell\": \"C120\",\n31\t          \"row\": 120,\n32\t          \"col\": 2\n33\t        }\n34\t      ],\n35\t      \"cells\": [\n36\t        {\n37\t          \"sheet\": \"QALY\",\n38\t          \"cell\": \"C119\",\n39\t          \"row\": 119,\n40\t          \"col\": 2\n41\t        },\n42\t        {\n43\t          \"sheet\": \"QALY\",\n44\t          \"cell\": \"E119\",\n45\t          \"row\": 119,\n46\t          \"col\": 4\n47\t        },\n48\t        {\n49\t          \"sheet\": \"QALY\",\n50\t          \"cell\": \"G119\",\n51\t          \"row\": 119,\n52\t          \"col\": 6\n53\t        },\n54\t        {\n55\t          \"sheet\": \"QALY\",\n56\t          \"cell\": \"K119\",\n57\t          \"row\": 119,\n58\t          \"col\": 10\n59\t        },\n60\t        {\n61\t          \"sheet\": \"QALY\",\n62\t          \"cell\": \"H119\",\n63\t          \"row\": 119,\n64\t          \"col\": 7\n65\t        },\n66\t        {\n67\t          \"sheet\": \"QALY\",\n68\t          \"cell\": \"J119\",\n69\t          \"row\": 119,\n70\t          \"col\": 9",
+    "result_truncated": false,
+    "result_chars": 1845,
+    "is_error": false
+  },
+  {
+    "seq": 21,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01QAXmAQdkjArX9g45GdgAPs",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt",
+      "offset": 18820,
+      "limit": 94
+    },
+    "result": "18820\t      \"severity\": \"indeterminate\"\n18821\t    },\n18822\t    {\n18823\t      \"kind\": \"repeated_value\",\n18824\t      \"value\": 5375.86,\n18825\t      \"occurrences_in_file\": 2,\n18826\t      \"n_columns\": 2,\n18827\t      \"single_column_repeat\": false,\n18828\t      \"significant_digits\": 6,\n18829\t      \"chance_expected_repeats\": 0.0339,\n18830\t      \"cells\": [\n18831\t        {\n18832\t          \"sheet\": \"Cost\",\n18833\t          \"cell\": \"D7\",\n18834\t          \"row\": 7,\n18835\t          \"col\": 3\n18836\t        },\n18837\t        {\n18838\t          \"sheet\": \"Cost\",\n18839\t          \"cell\": \"E7\",\n18840\t          \"row\": 7,\n18841\t          \"col\": 4\n18842\t        }\n18843\t      ],\n18844\t      \"adjusted_score\": 2.25,\n18845\t      \"severity\": \"indeterminate\"\n18846\t    },\n18847\t    {\n18848\t      \"kind\": \"repeated_value\",\n18849\t      \"value\": 5669.72,\n18850\t      \"occurrences_in_file\": 2,\n18851\t      \"n_columns\": 2,\n18852\t      \"single_column_repeat\": false,\n18853\t      \"significant_digits\": 6,\n18854\t      \"chance_expected_repeats\": 0.0339,\n18855\t      \"cells\": [\n18856\t        {\n18857\t          \"sheet\": \"Cost\",\n18858\t          \"cell\": \"D10\",\n18859\t          \"row\": 10,\n18860\t          \"col\": 3\n18861\t        },\n18862\t        {\n18863\t          \"sheet\": \"Cost\",\n18864\t          \"cell\": \"E10\",\n18865\t          \"row\": 10,\n18866\t          \"col\": 4\n18867\t        }\n18868\t      ],\n18869\t      \"adjusted_score\": 2.25,\n18870\t      \"severity\": \"indeterminate\"\n18871\t    },\n18872\t    {\n18873\t      \"kind\": \"repeated_value\",\n18874\t      \"value\": 5172.72,\n18875\t      \"occurrences_in_file\": 2,\n18876\t      \"n_columns\": 2,\n18877\t      \"single_column_repeat\": false,\n18878\t      \"significant_digits\": 6,\n18879\t      \"chance_expected_repeats\": 0.0339,\n18880\t      \"cells\": [\n18881\t        {\n18882\t          \"sheet\": \"Cost\",\n18883\t          \"cell\": \"D15\",\n18884\t          \"row\": 15,\n18885\t          \"col\": 3\n18886\t        },\n18887\t        {\n18888\t          \"sheet\": \"Cost\",\n18889\t          \"cell\": \"E15\",\n18890\t          \"row\": 15,\n18891\t          \"col\": 4\n18892\t        }\n18893\t      ],\n18894\t      \"adjusted_score\": 2.25,\n18895\t      \"severity\": \"indeterminate\"\n18896\t    }\n18897\t  ],\n18898\t  \"n_duplicate_groups\": 149,\n18899\t  \"assumptions\": {\n18900\t    \"size_normalization\": 3.608,\n18901\t    \"matching\": \"exact equality after float canonicalization; no tolerance matching\",\n18902\t    \"data_context\": \"raw_participant_level\"\n18903\t  },\n18904\t  \"caveats\": [\n18905\t    \"column 'ORD - V7' in 'QALY' looks transformed (fraction/sqrt/log); its precision was discounted\",\n18906\t    \"column 'Adjusted hosp Cost.' in 'Cost' looks transformed (fraction/sqrt/log); its precision was discounted\",\n18907\t    \"row-pair comparison budget (5000) exhausted; coverage of row pairs is PARTIAL\",\n18908\t    \"Duplication is improbable, not mathematically impossible; identical records can be legitimate (repeated measures, shared covariates). The editorial stage must confirm the rows describe supposedly DIFFERENT observations, and whether the flagged columns feed any reported result.\"\n18909\t  ],\n18910\t  \"methodology\": \"Compared 5001 candidate row pairs, all vertical runs, and value recurrences over 4053 numeric cells in 2 table(s); matches weighted by significant-digit information content with derived-value (fraction/sqrt/log) and regularity discounts, normalized by log10(cells)=3.61. Formula cells are invisible here (cached values only), so derived columns are handled by the transform detector and the same-row guard instead.\",\n18911\t  \"source_quote\": \"We obtained individual patient data from the 2016 Cerebrolysin and Recovery After Stroke (CARS) trial from the principal investigators [[36]].\",\n18912\t  \"source_locator\": \"Supplementary dataverse workbook (PCRGJE Strilciuc CEA CARS)\",\n18913\t  \"source_quote_supplied\": true",
+    "result_truncated": false,
+    "result_chars": 3782,
+    "is_error": false
+  },
+  {
+    "seq": 22,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01LwaFUpXHgMg6fm1rY27uNn",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt",
+      "offset": 70,
+      "limit": 120
+    },
+    "result": "70\t          \"col\": 9\n71\t        },\n72\t        {\n73\t          \"sheet\": \"QALY\",\n74\t          \"cell\": \"D119\",\n75\t          \"row\": 119,\n76\t          \"col\": 3\n77\t        },\n78\t        {\n79\t          \"sheet\": \"QALY\",\n80\t          \"cell\": \"I119\",\n81\t          \"row\": 119,\n82\t          \"col\": 8\n83\t        },\n84\t        {\n85\t          \"sheet\": \"QALY\",\n86\t          \"cell\": \"F119\",\n87\t          \"row\": 119,\n88\t          \"col\": 5\n89\t        },\n90\t        {\n91\t          \"sheet\": \"QALY\",\n92\t          \"cell\": \"C120\",\n93\t          \"row\": 120,\n94\t          \"col\": 2\n95\t        },\n96\t        {\n97\t          \"sheet\": \"QALY\",\n98\t          \"cell\": \"E120\",\n99\t          \"row\": 120,\n100\t          \"col\": 4\n101\t        },\n102\t        {\n103\t          \"sheet\": \"QALY\",\n104\t          \"cell\": \"G120\",\n105\t          \"row\": 120,\n106\t          \"col\": 6\n107\t        },\n108\t        {\n109\t          \"sheet\": \"QALY\",\n110\t          \"cell\": \"K120\",\n111\t          \"row\": 120,\n112\t          \"col\": 10\n113\t        },\n114\t        {\n115\t          \"sheet\": \"QALY\",\n116\t          \"cell\": \"H120\",\n117\t          \"row\": 120,\n118\t          \"col\": 7\n119\t        },\n120\t        {\n121\t          \"sheet\": \"QALY\",\n122\t          \"cell\": \"J120\",\n123\t          \"row\": 120,\n124\t          \"col\": 9\n125\t        },\n126\t        {\n127\t          \"sheet\": \"QALY\",\n128\t          \"cell\": \"D120\",\n129\t          \"row\": 120,\n130\t          \"col\": 3\n131\t        },\n132\t        {\n133\t          \"sheet\": \"QALY\",\n134\t          \"cell\": \"I120\",\n135\t          \"row\": 120,\n136\t          \"col\": 8\n137\t        },\n138\t        {\n139\t          \"sheet\": \"QALY\",\n140\t          \"cell\": \"F120\",\n141\t          \"row\": 120,\n142\t          \"col\": 5\n143\t        }\n144\t      ],\n145\t      \"n_shared_columns\": 9,\n146\t      \"n_distinct_values\": 9,\n147\t      \"shared\": [\n148\t        {\n149\t          \"column\": \"bpost - v2\",\n150\t          \"value\": 0.6228,\n151\t          \"occurrences_in_file\": 4,\n152\t          \"occurrences_in_column\": 4\n153\t        },\n154\t        {\n155\t          \"column\": \"bpost - v7\",\n156\t          \"value\": 0.6242,\n157\t          \"occurrences_in_file\": 2,\n158\t          \"occurrences_in_column\": 2\n159\t        },\n160\t        {\n161\t          \"column\": \"ord - v2\",\n162\t          \"value\": 0.7476,\n163\t          \"occurrences_in_file\": 4,\n164\t          \"occurrences_in_column\": 4\n165\t        },\n166\t        {\n167\t          \"column\": \"ord - v7\",\n168\t          \"value\": 0.6185,\n169\t          \"occurrences_in_file\": 2,\n170\t          \"occurrences_in_column\": 2\n171\t        },\n172\t        {\n173\t          \"column\": \"qaly - bpost\",\n174\t          \"value\": 0.1558711111111111,\n175\t          \"occurrences_in_file\": 2,\n176\t          \"occurrences_in_column\": 2\n177\t        },\n178\t        {\n179\t          \"column\": \"qaly - ord\",\n180\t          \"value\": 0.17112111111111086,\n181\t          \"occurrences_in_file\": 2,\n182\t          \"occurrences_in_column\": 2\n183\t        },\n184\t        {\n185\t          \"column\": \"qaly - sg\",\n186\t          \"value\": 0.17381666666666667,\n187\t          \"occurrences_in_file\": 2,\n188\t          \"occurrences_in_column\": 2\n189\t        },",
+    "result_truncated": false,
+    "result_chars": 3065,
+    "is_error": false
+  },
+  {
+    "seq": 23,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_019KmGCxGFtSVxgW7DqH2ZuK",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-detect_raw_duplication-1786356016556.txt",
+      "offset": 6280,
+      "limit": 150
+    },
+    "result": "6280\t    {\n6281\t      \"kind\": \"repeated_value\",\n6282\t      \"value\": 207.9,\n6283\t      \"occurrences_in_file\": 93,\n6284\t      \"n_columns\": 1,\n6285\t      \"single_column_repeat\": true,\n6286\t      \"significant_digits\": 4,\n6287\t      \"chance_expected_repeats\": 0.0,\n6288\t      \"cells\": [\n6289\t        {\n6290\t          \"sheet\": \"Cost\",\n6291\t          \"cell\": \"K102\",\n6292\t          \"row\": 102,\n6293\t          \"col\": 10\n6294\t        },\n6295\t        {\n6296\t          \"sheet\": \"Cost\",\n6297\t          \"cell\": \"K103\",\n6298\t          \"row\": 103,\n6299\t          \"col\": 10\n6300\t        },\n6301\t        {\n6302\t          \"sheet\": \"Cost\",\n6303\t          \"cell\": \"K104\",\n6304\t          \"row\": 104,\n6305\t          \"col\": 10\n6306\t        },\n6307\t        {\n6308\t          \"sheet\": \"Cost\",\n6309\t          \"cell\": \"K105\",\n6310\t          \"row\": 105,\n6311\t          \"col\": 10\n6312\t        },\n6313\t        {\n6314\t          \"sheet\": \"Cost\",\n6315\t          \"cell\": \"K106\",\n6316\t          \"row\": 106,\n6317\t          \"col\": 10\n6318\t        },\n6319\t        {\n6320\t          \"sheet\": \"Cost\",\n6321\t          \"cell\": \"K107\",\n6322\t          \"row\": 107,\n6323\t          \"col\": 10\n6324\t        },\n6325\t        {\n6326\t          \"sheet\": \"Cost\",\n6327\t          \"cell\": \"K108\",\n6328\t          \"row\": 108,\n6329\t          \"col\": 10\n6330\t        },\n6331\t        {\n6332\t          \"sheet\": \"Cost\",\n6333\t          \"cell\": \"K109\",\n6334\t          \"row\": 109,\n6335\t          \"col\": 10\n6336\t        },\n6337\t        {\n6338\t          \"sheet\": \"Cost\",\n6339\t          \"cell\": \"K110\",\n6340\t          \"row\": 110,\n6341\t          \"col\": 10\n6342\t        },\n6343\t        {\n6344\t          \"sheet\": \"Cost\",\n6345\t          \"cell\": \"K111\",\n6346\t          \"row\": 111,\n6347\t          \"col\": 10\n6348\t        },\n6349\t        {\n6350\t          \"sheet\": \"Cost\",\n6351\t          \"cell\": \"K112\",\n6352\t          \"row\": 112,\n6353\t          \"col\": 10\n6354\t        },\n6355\t        {\n6356\t          \"sheet\": \"Cost\",\n6357\t          \"cell\": \"K113\",\n6358\t          \"row\": 113,\n6359\t          \"col\": 10\n6360\t        },\n6361\t        {\n6362\t          \"sheet\": \"Cost\",\n6363\t          \"cell\": \"K114\",\n6364\t          \"row\": 114,\n6365\t          \"col\": 10\n6366\t        },\n6367\t        {\n6368\t          \"sheet\": \"Cost\",\n6369\t          \"cell\": \"K115\",\n6370\t          \"row\": 115,\n6371\t          \"col\": 10\n6372\t        },\n6373\t        {\n6374\t          \"sheet\": \"Cost\",\n6375\t          \"cell\": \"K116\",\n6376\t          \"row\": 116,\n6377\t          \"col\": 10\n6378\t        },\n6379\t        {\n6380\t          \"sheet\": \"Cost\",\n6381\t          \"cell\": \"K117\",\n6382\t          \"row\": 117,\n6383\t          \"col\": 10\n6384\t        },\n6385\t        {\n6386\t          \"sheet\": \"Cost\",\n6387\t          \"cell\": \"K118\",\n6388\t          \"row\": 118,\n6389\t          \"col\": 10\n6390\t        },\n6391\t        {\n6392\t          \"sheet\": \"Cost\",\n6393\t          \"cell\": \"K119\",\n6394\t          \"row\": 119,\n6395\t          \"col\": 10\n6396\t        },\n6397\t        {\n6398\t          \"sheet\": \"Cost\",\n6399\t          \"cell\": \"K120\",\n6400\t          \"row\": 120,\n6401\t          \"col\": 10\n6402\t        },\n6403\t        {\n6404\t          \"sheet\": \"Cost\",\n6405\t          \"cell\": \"K121\",\n6406\t          \"row\": 121,\n6407\t          \"col\": 10\n6408\t        }\n6409\t      ],\n6410\t      \"adjusted_score\": 7.56,\n6411\t      \"severity\": \"indeterminate\"\n6412\t    },\n6413\t    {\n6414\t      \"kind\": \"repeated_value\",\n6415\t      \"value\": 0.6166,\n6416\t      \"occurrences_in_file\": 27,\n6417\t      \"n_columns\": 1,\n6418\t      \"single_column_repeat\": true,\n6419\t      \"significant_digits\": 4,\n6420\t      \"chance_expected_repeats\": 0.0,\n6421\t      \"cells\": [\n6422\t        {\n6423\t          \"sheet\": \"QALY\",\n6424\t          \"cell\": \"I13\",\n6425\t          \"row\": 13,\n6426\t          \"col\": 8\n6427\t        },\n6428\t        {\n6429\t          \"sheet\": \"QALY\",",
+    "result_truncated": false,
+    "result_chars": 3773,
+    "is_error": false
+  },
+  {
+    "seq": 24,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01UokZU38atTEDoXH6iUU95u",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-extract_supplement-1786355997647.txt",
+      "offset": 1520,
+      "limit": 70
+    },
+    "result": "1520\t          \"0.1368888888888889\"\n1521\t        ],\n1522\t        [\n1523\t          \"P-2-26\",\n1524\t          \"Placebo\",\n1525\t          \"0.709\",\n1526\t          \"0.597\",\n1527\t          \"0.1635611111111111\",\n1528\t          \"0.714\",\n1529\t          \"0.592399999999999\",\n1530\t          \"0.16363777777777766\",\n1531\t          \"0.6166\",\n1532\t          \"0.6055\",\n1533\t          \"0.15279333333333334\"\n1534\t        ],\n1535\t        [\n1536\t          \"P-2-28\",\n1537\t          \"Placebo\",\n1538\t          \"0.709\",\n1539\t          \"0.657999999999999\",\n1540\t          \"0.17101666666666657\",\n1541\t          \"0.7078\",\n1542\t          \"0.7021\",\n1543\t          \"0.17625333333333332\",\n1544\t          \"0.6244\",\n1545\t          \"0.659\",\n1546\t          \"0.16032888888888888\"\n1547\t        ],\n1548\t        [\n1549\t          \"P-2-29\",\n1550\t          \"Placebo\",\n1551\t          \"0.751\",\n1552\t          \"0.637\",\n1553\t          \"0.17381666666666667\",\n1554\t          \"0.747599999999999\",\n1555\t          \"0.618499999999999\",\n1556\t          \"0.17112111111111086\",\n1557\t          \"0.6228\",\n1558\t          \"0.6242\",\n1559\t          \"0.1558711111111111\"\n1560\t        ],\n1561\t        [\n1562\t          \"P-2-32\",\n1563\t          \"Placebo\",\n1564\t          \"0.751\",\n1565\t          \"0.637\",\n1566\t          \"0.17381666666666667\",\n1567\t          \"0.747599999999999\",\n1568\t          \"0.618499999999999\",\n1569\t          \"0.17112111111111086\",\n1570\t          \"0.6228\",\n1571\t          \"0.6242\",\n1572\t          \"0.1558711111111111\"\n1573\t        ],\n1574\t        [\n1575\t          \"P-2-34\",\n1576\t          \"Placebo\",\n1577\t          \"0.883\",\n1578\t          \"0.894\",\n1579\t          \"0.22209444444444446\",\n1580\t          \"0.9013\",\n1581\t          \"0.905799999999999\",\n1582\t          \"0.22587499999999988\",\n1583\t          \"0.6649\",\n1584\t          \"0.7804\",\n1585\t          \"0.18034166666666668\"\n1586\t        ],\n1587\t        [\n1588\t          \"P-2-35\",\n1589\t          \"Placebo\",",
+    "result_truncated": false,
+    "result_chars": 1905,
+    "is_error": false
+  },
+  {
+    "seq": 25,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01UFXgwucVcvHxbodYufyrkx",
+    "input": {
+      "file_path": "/home/gsfitzgerald/.claude/projects/-mnt-c-Users-gregs-agent-for-forensic-metascience/374dfbb3-5979-4de9-b6e7-60c80f62fcd8/tool-results/mcp-forensic_metascience-extract_supplement-1786355997647.txt",
+      "offset": 2560,
+      "limit": 70
+    },
+    "result": "2560\t          \"col_label\": \"QALY - SG\"\n2561\t        },\n2562\t        {\n2563\t          \"raw\": \"0.5947\",\n2564\t          \"row\": 2,\n2565\t          \"row_label\": \"C-1-1\",\n2566\t          \"col_label\": \"ORD - V2\"\n2567\t        },\n2568\t        {\n2569\t          \"raw\": \"0.6713\",\n2570\t          \"row\": 2,\n2571\t          \"row_label\": \"C-1-1\",\n2572\t          \"col_label\": \"ORD - V7\"\n2573\t        },\n2574\t        {\n2575\t          \"raw\": \"0.15803722222222222\",\n2576\t          \"row\": 2,\n2577\t          \"row_label\": \"C-1-1\",\n2578\t          \"col_label\": \"QALY - ORD\"\n2579\t        },\n2580\t        {\n2581\t          \"raw\": \"0.587\",\n2582\t          \"row\": 2,\n2583\t          \"row_label\": \"C-1-1\",\n2584\t          \"col_label\": \"Bpost - V2\"\n2585\t        },\n2586\t        {\n2587\t          \"raw\": \"0.6043\",\n2588\t          \"row\": 2,\n2589\t          \"row_label\": \"C-1-1\",\n2590\t          \"col_label\": \"Bpost - V7\"\n2591\t        },\n2592\t        {\n2593\t          \"raw\": \"0.14886444444444444\",\n2594\t          \"row\": 2,\n2595\t          \"row_label\": \"C-1-1\",\n2596\t          \"col_label\": \"QALY - Bpost\"\n2597\t        },\n2598\t        {\n2599\t          \"raw\": \"Cerebrolysin\",\n2600\t          \"row\": 3,\n2601\t          \"row_label\": \"C-1-2\",\n2602\t          \"col_label\": \"Group\"\n2603\t        },\n2604\t        {\n2605\t          \"raw\": \"0.609999999999999\",\n2606\t          \"row\": 3,\n2607\t          \"row_label\": \"C-1-2\",\n2608\t          \"col_label\": \"SG - V2\"\n2609\t        },\n2610\t        {\n2611\t          \"raw\": \"0.587\",\n2612\t          \"row\": 3,\n2613\t          \"row_label\": \"C-1-2\",\n2614\t          \"col_label\": \"SG - V7\"\n2615\t        },\n2616\t        {\n2617\t          \"raw\": \"0.14968888888888876\",\n2618\t          \"row\": 3,\n2619\t          \"row_label\": \"C-1-2\",\n2620\t          \"col_label\": \"QALY - SG\"\n2621\t        },\n2622\t        {\n2623\t          \"raw\": \"0.5758\",\n2624\t          \"row\": 3,\n2625\t          \"row_label\": \"C-1-2\",\n2626\t          \"col_label\": \"ORD - V2\"\n2627\t        },\n2628\t        {\n2629\t          \"raw\": \"0.530899999999999\",",
+    "result_truncated": false,
+    "result_chars": 1977,
+    "is_error": false
+  },
+  {
+    "seq": 26,
+    "tool": "mcp__forensic_metascience__detect_duplication",
+    "tool_short": "detect_duplication",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Ts2yqKz7jGBxqf6RJSDwyN",
+    "input": {
+      "blocks": [
+        {
+          "label": "Table 1 - total medical cost (EUR)",
+          "sample_id": "CARS-193",
+          "independent": false,
+          "cells": [
+            {
+              "label": "Cerebrolysin mean cost",
+              "value": 1458,
+              "sd": 106
+            },
+            {
+              "label": "Standard treatment mean cost",
+              "value": 1050,
+              "sd": 101
+            }
+          ]
+        },
+        {
+          "label": "Table 2 - mean QALYs by valuation technique",
+          "sample_id": "CARS-193",
+          "independent": false,
+          "cells": [
+            {
+              "label": "Bayesian posterior Cerebrolysin",
+              "value": 0.166
+            },
+            {
+              "label": "Bayesian posterior Standard",
+              "value": 0.156
+            },
+            {
+              "label": "Ordinal Cerebrolysin",
+              "value": 0.182
+            },
+            {
+              "label": "Ordinal Standard",
+              "value": 0.168
+            },
+            {
+              "label": "Standard gamble Cerebrolysin",
+              "value": 0.186
+            },
+            {
+              "label": "Standard gamble Standard",
+              "value": 0.171
+            }
+          ]
+        }
+      ],
+      "source_locator": "Table 1 and Table 2",
+      "source_quote": "Descriptive values of total medical cost (EUR) used in the analysis."
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"No duplicated summary statistics detected.\",\n  \"n_blocks\": 2,\n  \"n_cells_total\": 8,\n  \"n_comparisons\": 0,\n  \"max_identical_pairs\": 0,\n  \"chance_probability\": null,\n  \"duplicate_groups\": [],\n  \"assumptions\": {\n    \"span_mean\": 1457.844,\n    \"span_sd\": 5,\n    \"decimals\": [\n      2,\n      2\n    ],\n    \"p_pair\": 1.3718888989494075e-08,\n    \"note\": \"spans inferred from observed values; assumes independent cells and mean\\u22a5SD (slightly conservative).\"\n  },\n  \"caveats\": [\n    \"Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly.\"\n  ],\n  \"methodology\": \"Compared 0 cross-source (mean, SD) pairs across 2 blocks plus within-table rows/columns. Strongest independent overlap: 0 identical pair(s); coincidence probability \\u2248 n/a after correcting for the number of comparisons.\",\n  \"source_quote\": \"Descriptive values of total medical cost (EUR) used in the analysis.\",\n  \"source_locator\": \"Table 1 and Table 2\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1142,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 27,
+    "tool": "mcp__forensic_metascience__flag_round_n",
+    "tool_short": "flag_round_n",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01RzNfqhiy27Ls56WdnjzYnC",
+    "input": {
+      "ns": [
+        208,
+        198,
+        193,
+        100,
+        93
+      ],
+      "source_locator": "Methods 2.1, sample derivation",
+      "source_quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo)."
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"Sample sizes show some non-round variation ([93, 100, 193, 198, 208]); no round-N flag.\",\n  \"ns\": [\n    208,\n    198,\n    193,\n    100,\n    93\n  ],\n  \"n_unique\": 5,\n  \"all_divisible_by_moderate\": false,\n  \"all_divisible_by_strong\": false,\n  \"breakdown\": [\n    {\n      \"n\": 208,\n      \"divisible_by_10\": false,\n      \"divisible_by_moderate\": false,\n      \"divisible_by_strong\": false\n    },\n    {\n      \"n\": 198,\n      \"divisible_by_10\": false,\n      \"divisible_by_moderate\": false,\n      \"divisible_by_strong\": false\n    },\n    {\n      \"n\": 193,\n      \"divisible_by_10\": false,\n      \"divisible_by_moderate\": false,\n      \"divisible_by_strong\": false\n    },\n    {\n      \"n\": 100,\n      \"divisible_by_10\": true,\n      \"divisible_by_moderate\": true,\n      \"divisible_by_strong\": true\n    },\n    {\n      \"n\": 93,\n      \"divisible_by_10\": false,\n      \"divisible_by_moderate\": false,\n      \"divisible_by_strong\": false\n    }\n  ],\n  \"moderate_modulus\": 50,\n  \"strong_modulus\": 100,\n  \"methodology\": \"Heuristic only -- descriptive, not diagnostic, so its ceiling is `suspicious` (rule 8: round ns are individually weak signals that escalate only on co-occurrence). Flags when at least 3 reported ns (2+ distinct) are all divisible by 50 (or 100); fewer all-round sizes are `indeterminate`, because an honest designed recruitment target produces the same pattern. Pattern noted in Heathers (2025) \\u00a7'Big round sample sizes'.\",\n  \"source_quote\": \"Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\\u2014Cerebrolysin; 93\\u2014placebo).\",\n  \"source_locator\": \"Methods 2.1, sample derivation\",\n  \"source_quote_supplied\": true\n}",
+    "result_truncated": false,
+    "result_chars": 1748,
+    "is_error": false,
+    "source_quote_verified": "verbatim",
+    "source_quote_source": "the paper's text"
+  },
+  {
+    "seq": 28,
+    "tool": "StructuredOutput",
+    "tool_short": "StructuredOutput",
+    "surface": "harness",
+    "validated": false,
+    "tool_use_id": "toolu_01KRBkssmTn8gqz1WsiBD3ud",
+    "input": {
+      "schema_version": "1.0",
+      "paper_id": "10.3390--healthcare11101497",
+      "paper_title": "Cost-Effectiveness of Cerebrolysin after Ischemic Stroke: Secondary Analysis of the CARS Study",
+      "paper_metadata": {
+        "authors": "Stefan Strilciuc, Constantin Radu, Diana-Alecsandra Grad, Adina Dora Stan, Cristian Vladescu, Anca Dana Buzoianu, Dafin Muresanu",
+        "journal": "Healthcare",
+        "year": "2023",
+        "doi": "10.3390/healthcare11101497",
+        "study_design": "Secondary cost-utility (economic) analysis of individual patient data from the 2016 CARS randomised trial; deterministic ICER plus 10,000-iteration probabilistic sensitivity analysis, payer perspective, Romania"
+      },
+      "anatomy": {
+        "studies": [
+          {
+            "id": "s1",
+            "label": "Cost-utility analysis of Cerebrolysin add-on therapy using CARS trial individual patient data",
+            "design": "secondary_analysis",
+            "n": 193,
+            "n_per_group": [
+              {
+                "label": "Cerebrolysin",
+                "n": 100
+              },
+              {
+                "label": "Placebo / standard treatment",
+                "n": 93
+              }
+            ],
+            "sample_flow": [
+              {
+                "stage": "SF-36 records and demographics transferred from CARS principal investigators",
+                "n": 208,
+                "unit": "participants"
+              },
+              {
+                "stage": "excluded, missing values on more than 3 SF-36 subscales on either visit",
+                "n": 10,
+                "unit": "participants",
+                "reason": "missing SF-36 subscale data at visit 2 or visit 7"
+              },
+              {
+                "stage": "resulting database",
+                "n": 198,
+                "unit": "participants"
+              },
+              {
+                "stage": "missing entries recoded as 9 (retained, not excluded)",
+                "n": 13,
+                "unit": "participants",
+                "reason": "per SF-36 to SF-6D converter instructions"
+              },
+              {
+                "stage": "excluded by SF-6D converter for missing values",
+                "n": 5,
+                "unit": "participants"
+              },
+              {
+                "stage": "final analytic sample",
+                "n": 193,
+                "unit": "participants"
+              }
+            ],
+            "clustered": false,
+            "preregistered": false,
+            "unit_of_analysis": "individual patient"
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "h1",
+            "statement": "Cerebrolysin as an add-on therapy for moderate-severe acute ischemic stroke is cost-effective versus standard care at a willingness-to-pay threshold of 50,000 EUR per QALY over a 90-day horizon.",
+            "status": "exploratory",
+            "study_id": "s1",
+            "appears_in_abstract": true,
+            "confidence": "high",
+            "provenance_quote": "Probabilistic sensitivity analysis results indicate an 80% chance probability of cost-effectiveness of Cerebrolysin as an add-on therapy for acute ischemic stroke, considering a willingness-to-pay threshold of 50,000 EUR in a 90-day timeframe after stroke."
+          },
+          {
+            "id": "h2",
+            "statement": "The Cerebrolysin and placebo arms of the retained 193-patient subsample are comparable at baseline.",
+            "status": "unstated",
+            "study_id": "s1",
+            "appears_in_abstract": false,
+            "confidence": "high",
+            "provenance_quote": "No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups."
+          }
+        ],
+        "variables": [
+          {
+            "id": "v_cost_eur",
+            "name": "Total medical cost per patient",
+            "measurement_level": "ratio",
+            "discreteness": "continuous",
+            "family": "continuous",
+            "units": "EUR",
+            "lower_bound": 0,
+            "derivation": "measured",
+            "derived_from": "actual acute-care costs reported by Romanian public hospitals for reimbursement, converted from RON at 1 EUR = 4.95 RON",
+            "confidence": "high",
+            "provenance_quote": "Descriptive values of total medical cost (EUR) used in the analysis."
+          },
+          {
+            "id": "v_cost_ron",
+            "name": "Total medical cost per patient (national currency)",
+            "measurement_level": "ratio",
+            "discreteness": "continuous",
+            "family": "continuous",
+            "units": "RON",
+            "lower_bound": 0,
+            "derivation": "measured",
+            "confidence": "high",
+            "provenance_quote": "Average total costs per patient were 7214 RON (1458 EUR) for Cerebrolysin and 5197 RON (1050 EUR) for placebo."
+          },
+          {
+            "id": "v_qaly",
+            "name": "Quality-adjusted life years over the 90-day trial horizon",
+            "measurement_level": "ratio",
+            "discreteness": "continuous",
+            "family": "continuous",
+            "lower_bound": 0,
+            "upper_bound": 0.25,
+            "derivation": "other",
+            "derived_from": "(2*D2 + 88*AVERAGE(D2,D90))/90 * 0.25, where D2 and D90 are SF-6D utility scores at day 2 and day 90",
+            "confidence": "medium",
+            "provenance_quote": "The formula used to calculate QALYs for each individual patient was:2 * D 2 + 88 * A V E R A G E D 2 , D 90 / 90 * 0.25 where D2 is the utility score for day 2 and D90 is the utility score for day 90."
+          },
+          {
+            "id": "v_utility_sf6d",
+            "name": "SF-6D health utility score (standard gamble, ordinal and Bayesian posterior mean variants)",
+            "measurement_level": "interval",
+            "discreteness": "discrete",
+            "family": "continuous",
+            "derivation": "recoded",
+            "derived_from": "SF-36 subscale scores mapped through the ScHARR (University of Sheffield) SF-36 to SF-6D converter; the converter emits a finite lookup set of utility values",
+            "confidence": "high",
+            "provenance_quote": "SF-36 values were converted to health utility scores using converters [[37]] developed by School of Health and Related Research (ScHARR) at the University of Sheffield."
+          },
+          {
+            "id": "v_icer",
+            "name": "Deterministic incremental cost-effectiveness ratio",
+            "measurement_level": "ratio",
+            "discreteness": "continuous",
+            "family": "continuous",
+            "units": "EUR per QALY",
+            "derivation": "ratio",
+            "derived_from": "incremental cost (Cerebrolysin minus standard treatment) divided by incremental QALYs",
+            "confidence": "high",
+            "provenance_quote": "We calculated three ICER values, one for each of the three different health state valuation models used for generating health utilities based on which QALYs were calculated."
+          },
+          {
+            "id": "v_group",
+            "name": "Treatment allocation",
+            "measurement_level": "nominal",
+            "discreteness": "discrete",
+            "family": "binary",
+            "levels": [
+              "Cerebrolysin",
+              "Placebo / standard treatment"
+            ],
+            "n_categories": 2,
+            "derivation": "measured",
+            "confidence": "high",
+            "provenance_quote": "resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo)"
+          },
+          {
+            "id": "v_prob_ce",
+            "name": "Probability that Cerebrolysin is cost-effective at a given willingness-to-pay threshold",
+            "measurement_level": "ratio",
+            "discreteness": "continuous",
+            "family": "proportion",
+            "lower_bound": 0,
+            "upper_bound": 1,
+            "derivation": "proportion",
+            "derived_from": "share of 10,000 Monte Carlo ICER simulations falling below the threshold",
+            "confidence": "high",
+            "provenance_quote": "We used a custom MS Excel spreadsheet to perform 10,000 ICER simulations per patient pathway and represented these on cost-effectiveness planes."
+          }
+        ],
+        "tests": [
+          {
+            "id": "t1",
+            "test_type": "other",
+            "location": "Results, paragraph 1",
+            "study_id": "s1",
+            "hypothesis_id": "h2",
+            "outcome_var": "baseline demographics, stroke severity, social and medical history",
+            "grouping_var": "v_group",
+            "n": 193,
+            "confidence": "high",
+            "is_stated_primary_outcome": false,
+            "appears_in_abstract": false,
+            "appears_in_conclusions": false,
+            "assumption_checks_reported": [],
+            "provenance_quote": "We compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.",
+            "correction_applied": "none"
+          },
+          {
+            "id": "t2",
+            "test_type": "other",
+            "location": "Table 2, Deterministic ICER column",
+            "study_id": "s1",
+            "hypothesis_id": "h1",
+            "outcome_var": "v_icer",
+            "predictor_vars": [
+              "v_group"
+            ],
+            "n": 193,
+            "confidence": "high",
+            "is_stated_primary_outcome": true,
+            "appears_in_abstract": true,
+            "appears_in_conclusions": true,
+            "assumption_checks_reported": [],
+            "provenance_quote": "The lowest ICER values were determined based on the ordinal valuation (18,788 EUR/QALY), while the highest were concluded for the Bayesian posterior valuation method (26,981 EUR/QALY)."
+          },
+          {
+            "id": "t3",
+            "test_type": "other",
+            "location": "Results, Probabilistic Sensitivity Analysis",
+            "study_id": "s1",
+            "hypothesis_id": "h1",
+            "outcome_var": "v_prob_ce",
+            "n": 193,
+            "confidence": "high",
+            "is_stated_primary_outcome": true,
+            "appears_in_abstract": true,
+            "appears_in_conclusions": true,
+            "assumption_checks_reported": [],
+            "provenance_quote": "Based on the CARS trial patient pathway, the Cerebrolysin add-on treatment was cost-effective in roughly 80% of cases for an ICER threshold set at 50,000 EUR (Figure 2 and Figure 3), considering only the 90-day timeframe of the CARS-study."
+          }
+        ]
+      },
+      "figures": [
+        {
+          "label": "Figure 1",
+          "page": 4,
+          "caption": "Methodological flow describing steps taken in the analysis. CE: Cerebrolysin, CEACs: Cost-effectiveness acceptability curves, CARS: Cerebrolysin and Recovery After Stroke, QALY: Quality-adjusted life years",
+          "is_data_figure": false,
+          "n_panels": 1,
+          "carries_unique_values": false,
+          "panels": [
+            {
+              "panel": "A",
+              "chart_type": "flow_diagram",
+              "shows": "The predefined sequence of analytic steps from CARS individual patient data through SF-6D conversion, QALY calculation, costing and deterministic then probabilistic ICER estimation."
+            }
+          ]
+        },
+        {
+          "label": "Figure 2",
+          "page": 6,
+          "caption": "Cost-effectiveness plane, highlighting the favorable cost-effectiveness of Cerebrolysin",
+          "is_data_figure": true,
+          "n_panels": 1,
+          "carries_unique_values": true,
+          "panels": [
+            {
+              "panel": "A",
+              "chart_type": "scatter",
+              "shows": "The cloud of 10,000 simulated incremental cost versus incremental QALY pairs from the probabilistic sensitivity analysis."
+            }
+          ]
+        },
+        {
+          "label": "Figure 3",
+          "page": 7,
+          "caption": "Cost-effectiveness acceptability curve (CEAC), highlighting probability of cost-effectiveness (vertical axis, percentual) at various monetary thresholds (horizontal axis, EUR",
+          "is_data_figure": true,
+          "n_panels": 1,
+          "carries_unique_values": true,
+          "panels": [
+            {
+              "panel": "A",
+              "chart_type": "line",
+              "shows": "Probability that Cerebrolysin is cost-effective plotted against willingness-to-pay thresholds up to 50,000 EUR; only the single value at the 50,000 EUR threshold (roughly 80%) is stated numerically in the text."
+            }
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "placebo_median_incompatible_with_mean_sd",
+          "location": "Table 1, Standard Treatment column (Median row against Mean, Standard deviation and Sample size rows)",
+          "technique": "check_proportion_from_normal",
+          "consistent": false,
+          "severity": "highly_suspicious",
+          "quote": "Median\t1466 EUR\t1767 EUR",
+          "inputs": {
+            "reported_proportion": 0.5,
+            "mean": 1050,
+            "sd": 101,
+            "n": 93,
+            "threshold": 1767,
+            "direction": "below"
+          },
+          "reported": {
+            "median_standard_treatment_eur": 1767,
+            "mean_standard_treatment_eur": 1050,
+            "sd_standard_treatment_eur": 101,
+            "n_standard_treatment": 93,
+            "lower_threshold_95_eur": 1029,
+            "upper_threshold_95_eur": 1070
+          },
+          "computed": {
+            "theoretical_proportion_below_threshold": 0.9999999999993717,
+            "distribution_free_bound_95": [
+              0.9805432108184402,
+              1
+            ],
+            "distribution_free_violation": true,
+            "binomial_p_two_sided": 0,
+            "z_score": 7.099009900990099,
+            "observed_count_implied": 46
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The reported placebo median (1767 EUR) exceeds the reported Cerebrolysin median (1466 EUR), reversing the direction of the paper's central cost comparison -- that Cerebrolysin costs 408 EUR more per patient than standard care -- which is the numerator of every ICER reported."
+          },
+          "notes": "This is the strongest finding in the paper. A median of 1767 requires at least half the sample to sit at or above 1767, i.e. at or above 7.10 standard deviations above the reported mean of 1050. Cantelli's inequality caps the achievable share at 0.0195, so no distribution whatsoever -- not merely no normal one -- can carry mean 1050, SD 101 and median 1767 simultaneously; the tool reports distribution_free_violation = true, so the verdict does NOT rest on a normality assumption about skewed cost data. Inputs were re-read from the get_table grid before flagging. The remaining Table 1 statistics are mutually coherent (see cerebrolysin_median_consistent, ci_consistency_both_arms), which isolates this single cell: SD 101 with n = 93 reproduces the printed 95% bounds almost exactly, so the mean, SD and interval agree and only the median dissents. The most economical explanation is a transcription error (e.g. 1067 mis-set as 1767), but as printed the row is not internally satisfiable. I have recorded the tool's own severity of highly_suspicious rather than escalating to impossible: the Cantelli contradiction is exact arithmetic, and the editorial stage may reasonably treat it as such. The supplementary Cost worksheet contains the per-patient costs that would settle this immediately.",
+          "reproduction": "metascience prop-from-normal --reported-proportion 0.5 --mean 1050 --sd 101 --n 93 --threshold 1767 --direction below"
+        },
+        {
+          "id": "cerebrolysin_median_consistent",
+          "location": "Table 1, Cerebrolysin column (Median row against Mean, Standard deviation and Sample size rows)",
+          "technique": "check_proportion_from_normal",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Standard deviation\t106 EUR\t101 EUR",
+          "inputs": {
+            "reported_proportion": 0.5,
+            "mean": 1458,
+            "sd": 106,
+            "n": 100,
+            "threshold": 1466,
+            "direction": "below"
+          },
+          "reported": {
+            "median_cerebrolysin_eur": 1466,
+            "mean_cerebrolysin_eur": 1458,
+            "sd_cerebrolysin_eur": 106,
+            "n_cerebrolysin": 100
+          },
+          "computed": {
+            "theoretical_proportion_below_threshold": 0.5300802925340248,
+            "binomial_p_two_sided": 0.5497216869790649,
+            "distribution_free_violation": false,
+            "z_score": 0.07547169811320754
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected; this is the control that establishes the check behaves correctly on this table."
+          },
+          "notes": "Deliberate control for the placebo-median finding. The identical check on the other arm of the same table returns p = 0.55 and no distribution-free violation, which demonstrates that the method is not simply rejecting skewed cost data and that the anomaly is specific to the Standard Treatment median cell.",
+          "reproduction": "metascience prop-from-normal --reported-proportion 0.5 --mean 1458 --sd 106 --n 100 --threshold 1466 --direction below"
+        },
+        {
+          "id": "ci_consistency_cerebrolysin",
+          "location": "Table 1, Cerebrolysin column (Mean, Lower threshold (95%), Upper threshold (95%))",
+          "technique": "check_estimate_ci",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Mean\t1458 EUR\t1050 EUR",
+          "inputs": {
+            "estimate": 1458,
+            "ci_low": 1437,
+            "ci_high": 1478
+          },
+          "reported": {
+            "mean_eur": 1458,
+            "ci_low_eur": 1437,
+            "ci_high_eur": 1478
+          },
+          "computed": {
+            "implied_centre": 1457.5,
+            "recovered_se": 10.459375866955407,
+            "scale": "linear"
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected; the interval reconciles with its own point estimate."
+          },
+          "notes": "The recovered SE of 10.46 is consistent with the printed SD of 106 over n = 100, so mean, SD and interval cohere in this arm. The first attempt returned a TypeError when decimals was passed as the string \"0\"; re-run without decimals, which widens the tolerance and is therefore conservative.",
+          "reproduction": "metascience check-ci --estimate 1458 --ci-low 1437 --ci-high 1478"
+        },
+        {
+          "id": "ci_consistency_standard_treatment",
+          "location": "Table 1, Standard Treatment column (Mean, Lower threshold (95%), Upper threshold (95%))",
+          "technique": "check_estimate_ci",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Lower threshold (95%)\t1437 EUR\t1029 EUR",
+          "inputs": {
+            "estimate": 1050,
+            "ci_low": 1029,
+            "ci_high": 1070
+          },
+          "reported": {
+            "mean_eur": 1050,
+            "ci_low_eur": 1029,
+            "ci_high_eur": 1070
+          },
+          "computed": {
+            "implied_centre": 1049.5,
+            "recovered_se": 10.459375866955407,
+            "scale": "linear"
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected, but this is what pins the placebo-median anomaly on the median rather than on the mean or SD."
+          },
+          "notes": "Materially important as corroboration: the recovered SE of 10.46 matches the printed SD of 101 over n = 93, so the mean, SD and 95% bounds of the placebo arm form a coherent set. The median is the only Table 1 value in that column that does not fit, which narrows the anomaly to one cell.",
+          "reproduction": "metascience check-ci --estimate 1050 --ci-low 1029 --ci-high 1070"
+        },
+        {
+          "id": "sample_flow_and_cost_arithmetic",
+          "location": "Methods 2.1 (sample derivation), Results paragraph 2 (costs), Table 1 and Table 2",
+          "technique": "check_summation",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+          "inputs": {
+            "rows": [
+              {
+                "values": [
+                  198,
+                  10
+                ],
+                "expected_sum": 208,
+                "tolerance": 0
+              },
+              {
+                "values": [
+                  193,
+                  5
+                ],
+                "expected_sum": 198,
+                "tolerance": 0
+              },
+              {
+                "values": [
+                  100,
+                  93
+                ],
+                "expected_sum": 193,
+                "tolerance": 0
+              },
+              {
+                "values": [
+                  5197,
+                  2017
+                ],
+                "expected_sum": 7214,
+                "tolerance": 0
+              },
+              {
+                "values": [
+                  1050,
+                  408
+                ],
+                "expected_sum": 1458,
+                "tolerance": 0
+              },
+              {
+                "values": [
+                  0.156,
+                  0.01
+                ],
+                "expected_sum": 0.166,
+                "decimals": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "values": [
+                  0.171,
+                  0.015
+                ],
+                "expected_sum": 0.186,
+                "decimals": [
+                  3,
+                  3
+                ]
+              }
+            ]
+          },
+          "reported": {
+            "n_transferred": 208,
+            "n_after_subscale_exclusion": 198,
+            "n_final": 193,
+            "n_cerebrolysin": 100,
+            "n_placebo": 93,
+            "cost_ron": [
+              7214,
+              5197,
+              2017
+            ],
+            "cost_eur": [
+              1458,
+              1050,
+              408
+            ],
+            "stated_qaly_increment_range": "0.01-0.015"
+          },
+          "computed": {
+            "n_rows": 7,
+            "n_evaluated": 7,
+            "n_inconsistent": 0,
+            "n_indeterminate": 0
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is undermined; the participant flow and the cost arithmetic that forms the ICER numerator reconcile exactly."
+          },
+          "notes": "All 7 sums reconcile with zero difference. The participant flow is fully auditable (208 - 10 = 198, 198 - 5 = 193, 100 + 93 = 193) and the group sizes in Table 1 match the text. Cost arithmetic reconciles in both currencies. The last two rows verify the Results sentence 'a mean increment in QALYs between 0.01-0.015' against Table 2 using only printed values: the Bayesian row's increment is exactly 0.01 and the standard gamble row's exactly 0.015, so the stated range correctly describes the table's endpoints. This is what makes the separate 0.051 claim in the Discussion contradictory (see qaly_increment_contradiction).",
+          "reproduction": "metascience summation-batch --rows '[{\"values\":[198,10],\"expected_sum\":208,\"decimals\":0,\"tolerance\":0},{\"values\":[193,5],\"expected_sum\":198,\"decimals\":0,\"tolerance\":0},{\"values\":[100,93],\"expected_sum\":193,\"decimals\":0,\"tolerance\":0},{\"values\":[5197,2017],\"expected_sum\":7214,\"decimals\":0,\"tolerance\":0},{\"values\":[1050,408],\"expected_sum\":1458,\"decimals\":0,\"tolerance\":0},{\"values\":[0.156,0.01],\"expected_sum\":0.166,\"decimals\":[3,2]},{\"values\":[0.171,0.015],\"expected_sum\":0.186,\"decimals\":[3,3]}]'"
+        },
+        {
+          "id": "supplement_duplicated_participant_rows",
+          "location": "Supplementary dataverse workbook, QALY worksheet, rows 119 and 120 (patient_ID P-2-29 and P-2-32)",
+          "technique": "raw_duplication",
+          "consistent": false,
+          "severity": "suspicious",
+          "quote": "P-2-29\tPlacebo\t0.751\t0.637\t0.17381666666666667\t0.747599999999999\t0.618499999999999\t0.17112111111111086\t0.6228\t0.6242\t0.1558711111111111",
+          "inputs": {
+            "path": "10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx",
+            "data_context": "raw_participant_level",
+            "exclude_columns": "none supplied"
+          },
+          "reported": {
+            "n_tables": 2,
+            "sheets": [
+              "QALY",
+              "Cost"
+            ],
+            "n_numeric_cells": 4053
+          },
+          "computed": {
+            "tool_severity": "highly_suspicious",
+            "n_duplicate_groups": 149,
+            "duplicated_row_pairs": 75,
+            "repeated_column_sequences": 1,
+            "repeated_high_precision_values": 73,
+            "verified_pair_shared_columns": 9,
+            "verified_pair_distinct_values": 9,
+            "row_pair_coverage": "partial (comparison budget of 5000 pairs exhausted)",
+            "columns_auto_excluded": [
+              "Discount/year (constant column)"
+            ]
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "If duplicated records are genuine rather than tied health states, the placebo-arm QALY mean of 0.156-0.171 that forms every ICER denominator rests on a sample containing repeated observations."
+          },
+          "notes": "Recorded at suspicious although the tool returned highly_suspicious, and the reason is specific. The aggregate count is inflated by two classes of legitimate repetition that rulebook rule 11 requires me to discount first: (a) design constants -- the value 207.9 recurs 93 times in a single contiguous run in Cost column K, and 93 is exactly the placebo arm size, so this is an arm-level constant I should have passed in exclude_columns; and (b) finite-lookup ties -- SF-6D utilities come from a discrete converter, so single values recur heavily by construction (0.6166 appears 27 times in one column, 0.6228 and 0.7476 four times each). What those guards do NOT explain is the row-pair signal, which I verified directly against the raw grid rather than trusting the aggregate: patients P-2-29 and P-2-32, two distinct placebo IDs, carry identical values in all nine numeric columns -- six independent utility lookups at two separate visits plus three derived QALYs agreeing to 17 significant figures. That is possible innocently only if both patients returned the same SF-6D health state at BOTH visit 2 and visit 7. 75 such pairs were flagged and row-pair coverage is PARTIAL, so 75 is a floor, not a count. Adjudicating this needs the underlying SF-36 item responses, which are not in the workbook. Only one pair was individually verified; the other 74 are asserted by the tool and unexamined.",
+          "reproduction": "metascience raw-duplication-detect --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497_linked_data_dataverse_PCRGJE_Strilciuc_CEA_CARS.xlsx --data-context raw_participant_level"
+        },
+        {
+          "id": "abstract_icer_upper_bound_mismatch",
+          "location": "Abstract, versus Results paragraph 3 and Table 2 (Deterministic ICER column)",
+          "technique": "manual",
+          "consistent": false,
+          "severity": "suspicious",
+          "quote": "Deterministic analysis based on sample mean values indicates Cerebrolysin would be cost-effective at a threshold between roughly 18.8 and 29.9 thousand EUR, depending on valuation techniques.",
+          "inputs": {
+            "abstract_range_thousand_eur": [
+              18.8,
+              29.9
+            ],
+            "table2_icer_values_eur": [
+              18788,
+              20618,
+              26981
+            ]
+          },
+          "reported": {
+            "abstract_upper_bound": "29.9 thousand EUR",
+            "results_and_table2_maximum": "26,981 EUR/QALY"
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The abstract overstates the upper cost-effectiveness threshold by roughly 2,900 EUR/QALY, and the abstract is the only part of the paper most readers will see."
+          },
+          "notes": "Textual comparison of printed values only; no arithmetic performed. The abstract's lower bound (18.8 thousand) matches Table 2's ordinal ICER of 18,788 EUR exactly, so the range is clearly meant to span the three tabulated ICERs -- but the upper bound of 29.9 thousand corresponds to no value anywhere in the paper. The Results text and Table 2 both give 26,981 EUR as the maximum. Recorded as a descriptive reporting flag per rulebook section 7, capped at suspicious.",
+          "reproduction": "metascience get-table /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml 2"
+        },
+        {
+          "id": "qaly_values_text_versus_table2",
+          "location": "Results paragraph 2, versus Table 2 (QALYs Derived from CARS columns)",
+          "technique": "manual",
+          "consistent": false,
+          "severity": "suspicious",
+          "quote": "The QALYs calculated using the utilities resulting from SF-36 to SF-6D conversion were aggregated by health state valuation model: standard gamble (0.698 Cerebrolysin vs. 0.643 placebo), ordinal (0.704 Cerebrolysin vs. 0.647 placebo) and Bayesian posterior mean (0.653 Cerebrolysin vs. 0.613 placebo).",
+          "inputs": {
+            "results_text_values": {
+              "standard_gamble": [
+                0.698,
+                0.643
+              ],
+              "ordinal": [
+                0.704,
+                0.647
+              ],
+              "bayesian": [
+                0.653,
+                0.613
+              ]
+            },
+            "table2_values": {
+              "standard_gamble": [
+                0.186,
+                0.171
+              ],
+              "ordinal": [
+                0.182,
+                0.168
+              ],
+              "bayesian": [
+                0.166,
+                0.156
+              ]
+            }
+          },
+          "reported": {
+            "text_label": "QALYs ... aggregated by health state valuation model",
+            "table_label": "Mean QALYs derived from CARS SF-36 data for 90 days after stroke by valuation technique"
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 2,
+            "explanation": "The paper presents two different sets of numbers under the same label (QALYs by valuation model), and the reader cannot tell which set the ICERs were computed from."
+          },
+          "notes": "Textual comparison of printed values only. Both the Results sentence and the Table 2 caption describe QALYs aggregated by health state valuation model, but they report values differing by roughly a factor of four in the same rank order. The text figures are on the scale of raw SF-6D utilities and the table figures on the scale of a 90-day QALY (the stated formula multiplies by 0.25), so the text has most likely printed utilities under a QALY label. This is not merely cosmetic: it is the proximate cause of the contradictory increment claims recorded in qaly_increment_contradiction.",
+          "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml"
+        },
+        {
+          "id": "qaly_increment_contradiction",
+          "location": "Results paragraph 2 versus Discussion paragraph 4",
+          "technique": "manual",
+          "consistent": false,
+          "severity": "suspicious",
+          "quote": "Aggregated QALYs for the Cerebrolysin group were higher than those for the placebo group (0.051 average difference across the three health state valuation models), indicating that the Cerebrolysin add-on scheme has a beneficial impact on quality of life of ischemic stroke patients.",
+          "inputs": {
+            "results_stated_increment_range": [
+              0.01,
+              0.015
+            ],
+            "discussion_stated_average_difference": 0.051
+          },
+          "reported": {
+            "results_claim": "a mean increment in QALYs between 0.01\u20130.015, depending on the valuation technique (Table 2)",
+            "discussion_claim": "0.051 average difference across the three health state valuation models"
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The paper's headline effect -- how many QALYs Cerebrolysin actually gains -- is stated at two values differing more than threefold, and that quantity is the denominator of every ICER."
+          },
+          "notes": "Textual comparison only; 0.051 simply lies outside the interval [0.01, 0.015] the paper itself states, so no arithmetic is needed to see the contradiction. The separate summation check confirmed the Results range is the one that correctly describes Table 2 (Bayesian increment exactly 0.01, standard gamble exactly 0.015). The Discussion's 0.051 is consistent instead with the differences between the utility-scale figures printed in the Results text, which is what ties this finding to qaly_values_text_versus_table2: the paper appears to have carried its narrative forward on the utility scale while tabulating on the QALY scale.",
+          "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml"
+        },
+        {
+          "id": "no_inferential_statistics_reported",
+          "location": "Whole body text; Results paragraph 1 (baseline comparability claim)",
+          "technique": "statcheck",
+          "consistent": true,
+          "severity": "indeterminate",
+          "quote": "We compared baseline characteristics (demographics, stroke severity, social and medical history) of the 193 patients for whom we calculated QALYs. No major differences were found, allowing for a relevant comparison of health outcomes between the Cerebrolysin and placebo groups.",
+          "inputs": {
+            "text": "Results and Discussion body text as returned by extract_xml"
+          },
+          "reported": {
+            "baseline_comparison_claim": "No major differences were found",
+            "baseline_table_presented": false,
+            "test_statistics_reported": 0,
+            "p_values_reported": 0
+          },
+          "computed": {
+            "stats_found": 0
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The baseline-comparability claim that licenses comparing the two arms is unsupported by any reported statistic, and cannot be checked by any tool."
+          },
+          "notes": "statcheck recovered zero NHST statistics from the entire body text, which is consistent with this being an economic evaluation rather than a hypothesis-testing paper -- the absence is not itself misconduct. It is recorded because of what it makes uncheckable. The paper asserts baseline equivalence between the 100 Cerebrolysin and 93 placebo patients of its re-derived subsample but presents no baseline table, no test statistics, no p-values and no confidence intervals, so absence_of_evidence cannot be run and the Carlisle/CSF and Table-1 dispersion checks have nothing to operate on. Note that this subsample (193 of the original CARS participants, after 15 exclusions) is not the randomised population, so baseline balance does not follow from the parent trial's randomisation and genuinely needed demonstrating here.",
+          "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.pdf"
+        },
+        {
+          "id": "check_table_coverage_refusal",
+          "location": "Table 1 (12 cells) and Table 2 (9 cells)",
+          "technique": "reconcile",
+          "consistent": true,
+          "severity": "indeterminate",
+          "quote": "Descriptive values of total medical cost (EUR) used in the analysis.",
+          "inputs": {
+            "table1_cells": 12,
+            "table2_cells": 9,
+            "variables_declared": [
+              "cost_eur",
+              "n_group",
+              "qaly",
+              "icer_eur"
+            ]
+          },
+          "reported": {
+            "table1_footnotes": 0,
+            "table2_footnotes": 0,
+            "alignment_uncertain": false,
+            "image_only": false
+          },
+          "computed": {
+            "table1_checks_run": 0,
+            "table1_checks_refused": 12,
+            "table2_checks_run": 0,
+            "table2_checks_refused": 9,
+            "refusal_reason_table1": "a bare count contributes to table-level checks only",
+            "refusal_reason_table2": "a bare number carries no dispersion or denominator to check"
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected; this records how much of the two tables the automated per-cell sweep could reach, which is none of it."
+          },
+          "notes": "Reported so the denominator is visible: 0 of 21 automated per-cell checks ran. Both tables are transposed relative to the usual layout -- each statistic (mean, median, SD, bounds) occupies its own ROW rather than being packed into a mean (SD) cell -- so no cell carries an estimate together with its dispersion and the per-cell dispatcher has nothing to bind. This is a limitation of the table shape, not evidence about the paper. The statistics were therefore checked by reassembling them across rows by hand into check_estimate_ci and check_proportion_from_normal calls, which is what produced the placebo-median finding. Separately, parse_cells_typed initially refused 10 of 12 Table 1 cells and 3 of 9 Table 2 cells as non_numeric because of the trailing 'EUR' token and leading euro sign; since the caption states the unit, I passed unit-stripped values with declared variables, which is a normalisation rather than a re-typing.",
+          "reproduction": "metascience check-table --cells '[{\"raw\":\"1458\",\"row_label\":\"Mean\",\"col_label\":\"Cerebrolysin\"},{\"raw\":\"1050\",\"row_label\":\"Mean\",\"col_label\":\"Standard Treatment\"}]' --variables '[{\"id\":\"cost_eur\",\"name\":\"Total medical cost\",\"measurement_level\":\"ratio\",\"discreteness\":\"continuous\",\"family\":\"continuous\",\"confidence\":\"high\"}]' --bindings '{\"Mean\":\"cost_eur\"}'"
+        },
+        {
+          "id": "main_table_duplication_clean",
+          "location": "Table 1 and Table 2",
+          "technique": "duplication",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Descriptive values of total medical cost (EUR) used in the analysis.",
+          "inputs": {
+            "blocks": [
+              {
+                "label": "Table 1 - total medical cost (EUR)",
+                "sample_id": "CARS-193",
+                "cells": [
+                  {
+                    "value": 1458,
+                    "sd": 106
+                  },
+                  {
+                    "value": 1050,
+                    "sd": 101
+                  }
+                ]
+              },
+              {
+                "label": "Table 2 - mean QALYs by valuation technique",
+                "sample_id": "CARS-193",
+                "cells": [
+                  {
+                    "value": 0.166
+                  },
+                  {
+                    "value": 0.156
+                  },
+                  {
+                    "value": 0.182
+                  },
+                  {
+                    "value": 0.168
+                  },
+                  {
+                    "value": 0.186
+                  },
+                  {
+                    "value": 0.171
+                  }
+                ]
+              }
+            ]
+          },
+          "reported": {
+            "n_blocks": 2,
+            "n_cells_total": 8
+          },
+          "computed": {
+            "n_comparisons": 0,
+            "max_identical_pairs": 0
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected; no duplicated summary statistics were found between the paper's two tables."
+          },
+          "notes": "Run for completeness per rulebook rule 11 because the paper has two tables, but with low expected yield and this should be read accordingly: the two tables report different quantities in different units (EUR versus QALYs), only Table 1 carries SDs at all, and both describe the SAME 193 participants, so they were given a shared sample_id and 0 cross-source comparisons were performed. This result is close to vacuous and is not evidence that the paper is clean.",
+          "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Table 1\",\"sample_id\":\"CARS-193\",\"independent\":false,\"cells\":[{\"label\":\"Cerebrolysin mean cost\",\"value\":1458,\"sd\":106},{\"label\":\"Standard treatment mean cost\",\"value\":1050,\"sd\":101}]},{\"label\":\"Table 2\",\"sample_id\":\"CARS-193\",\"independent\":false,\"cells\":[{\"label\":\"Bayesian Cerebrolysin\",\"value\":0.166},{\"label\":\"Bayesian Standard\",\"value\":0.156},{\"label\":\"Ordinal Cerebrolysin\",\"value\":0.182},{\"label\":\"Ordinal Standard\",\"value\":0.168},{\"label\":\"SG Cerebrolysin\",\"value\":0.186},{\"label\":\"SG Standard\",\"value\":0.171}]}]'"
+        },
+        {
+          "id": "sample_sizes_not_round",
+          "location": "Methods 2.1, sample derivation",
+          "technique": "flag_round_n",
+          "consistent": true,
+          "severity": "consistent",
+          "quote": "Due to missing values, the converter excluded an additional 5 cases, resulting in 193 patients included in the final analysis (100\u2014Cerebrolysin; 93\u2014placebo).",
+          "inputs": {
+            "ns": [
+              208,
+              198,
+              193,
+              100,
+              93
+            ]
+          },
+          "reported": {
+            "n_values": [
+              208,
+              198,
+              193,
+              100,
+              93
+            ]
+          },
+          "computed": {
+            "n_unique": 5,
+            "all_divisible_by_moderate": false,
+            "all_divisible_by_strong": false
+          },
+          "consequence": {
+            "basis": "computed",
+            "flips_significance": null,
+            "claims_affected": 0,
+            "explanation": "No claim is affected; the reported sample sizes show ordinary non-round variation."
+          },
+          "notes": "No round-N flag. Only the Cerebrolysin arm's n = 100 is round, and it arises from a documented exclusion sequence rather than being asserted, so it carries no weight on its own (rulebook rule 8).",
+          "reproduction": "metascience flag-round-n --ns 208 --ns 198 --ns 193 --ns 100 --ns 93"
+        },
+        {
+          "id": "overreaching_claim_about_valuation_models",
+          "location": "Discussion, paragraph 4 (final sentence of the health-state valuation passage)",
+          "technique": "manual",
+          "consistent": false,
+          "severity": "suspicious",
+          "quote": "By doing so, we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis.",
+          "inputs": {
+            "claim": "no potential variations in preferences and risk attitudes",
+            "observed_icer_spread_eur": [
+              18788,
+              20618,
+              26981
+            ]
+          },
+          "reported": {
+            "sentence_as_printed": "we can assert that there are no potential variations in preferences and risk attitudes which may impact the overall cost-effectiveness analysis"
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The sentence claims the choice of valuation model does not matter, when the paper's own three ICERs span roughly 8,200 EUR/QALY and the abstract presents that spread as its headline range."
+          },
+          "notes": "Recorded as a textual flag in a load-bearing sentence (rulebook section 7), not as an arithmetic finding. Running three valuation models cannot establish that no variation in preferences exists; at most it shows the direction of the conclusion is stable. The paper's own results contradict the sentence directly, since the three models produce the range the abstract reports as 18.8 to 29.9 thousand EUR. The preceding sentence in the same paragraph states the opposite intent ('can offer valuable insights into the robustness and sensitivity of the derived utility scores'), which suggests a drafting inversion rather than a substantive claim. Two smaller errors sit nearby and are noted only because they co-occur: 'we argue the threshold itself if not relevant' (Discussion, for 'is not relevant'), and the incident-stroke count written as 'n = 37.225' with a decimal point used as a thousands separator in an otherwise English-convention paper.",
+          "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml"
+        },
+        {
+          "id": "romanian_reperfusion_denominator_tension",
+          "location": "Discussion, paragraphs 5 and 6 (Romanian stroke care statistics)",
+          "technique": "manual",
+          "consistent": false,
+          "severity": "indeterminate",
+          "quote": "By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients.",
+          "inputs": {
+            "statement_a": "incident strokes reported by the Romanian Society of Neurology in 2022 (n = 37.225), around 80% of cases would fit the ischemic indication",
+            "statement_b": "By 2022, 3242 patients received reperfusion treatment, accounting for 7.8% of all ischemic stroke patients"
+          },
+          "reported": {
+            "incident_strokes_2022": "37.225",
+            "assumed_ischemic_share": "around 80%",
+            "reperfusion_patients_2022": 3242,
+            "reperfusion_share_of_ischemic": "7.8%"
+          },
+          "consequence": {
+            "basis": "asserted",
+            "flips_significance": null,
+            "claims_affected": 1,
+            "explanation": "The two statements imply different national ischemic-stroke denominators for the same year, which feeds the budget-impact estimate of roughly 8.5 million EUR."
+          },
+          "notes": "Recorded as indeterminate rather than as an inconsistency, because establishing that the two denominators genuinely conflict requires dividing 3242 by 0.078 and comparing that against 80% of 37,225 -- arithmetic no validated tool in this toolkit performs, and which I have deliberately not carried out. Both statements are quoted so a reader can check them directly. These figures are contextual background rather than inputs to the ICER, but they do feed the budget-impact estimate, which is separately unchecked. Note also that 'n = 37.225' uses a decimal point where the paper elsewhere uses it as a decimal separator, so even the intended magnitude is ambiguous as printed.",
+          "reproduction": "metascience extract-xml /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3390--healthcare11101497/10.3390--healthcare11101497.xml"
+        }
+      ],
+      "coverage": {
+        "stats_found": 46,
+        "tables_checked": [
+          "Table 1 (Descriptive values of total medical cost (EUR)) - 12 cells, 0 footnotes, no alignment_uncertain, no image_only",
+          "Table 2 (Mean QALYs derived from CARS SF-36 data by valuation technique) - 9 cells, 0 footnotes, 3 header-only merged spans",
+          "Supplementary xlsx worksheet 'QALY' - participant-level, 11 columns",
+          "Supplementary xlsx worksheet 'Cost' - participant-level"
+        ],
+        "tools_run": [
+          "extract_xml",
+          "get_table",
+          "parse_cells_typed",
+          "check_table",
+          "statcheck",
+          "check_estimate_ci",
+          "check_proportion_from_normal",
+          "check_summation_batch",
+          "extract_figures",
+          "extract_supplement",
+          "detect_raw_duplication",
+          "detect_duplication",
+          "flag_round_n"
+        ]
+      },
+      "unchecked": [
+        {
+          "location": "Table 2, Deterministic ICER column (18,788 / 20,618 / 26,981 EUR per QALY)",
+          "reason": "No validated tool in this toolkit computes or verifies an incremental cost-effectiveness ratio. Reproducing these three values from the stated incremental cost of 408 EUR and the Table 2 QALY increments would require hand division, which I have not performed. This is the paper's primary outcome and it is therefore the largest hole in this review. A reader should specifically check two things: whether 408 EUR divided by each printed QALY increment reproduces the printed ICER, and whether the ordering is internally coherent -- the ordinal row has a SMALLER Cerebrolysin-minus-placebo QALY increment than the standard gamble row (0.182 vs 0.168, against 0.186 vs 0.171) yet is reported with the LOWER ICER (18,788 vs 20,618), which cannot hold if all three ICERs share the same 408 EUR numerator."
+        },
+        {
+          "location": "Results paragraph 2 / Methods 2.2 - currency conversion of 7214 RON to 1458 EUR at 1 EUR = 4.95 RON",
+          "reason": "Verifying a currency conversion requires hand division and no validated tool covers it. Flagged for a reader because the placebo figure (5197 RON to 1050 EUR) and the Cerebrolysin figure appear to round in different directions at the same stated rate."
+        },
+        {
+          "location": "Discussion, paragraph 6 - budget impact 'roughly 8.5 million EUR per year'",
+          "reason": "This is a product of a national incident count, two assumed proportions (80% ischemic, two-thirds moderate-severe) and a unit cost. No validated tool multiplies counts by unit costs, and performing the arithmetic by hand is outside the tool discipline for this stage."
+        },
+        {
+          "location": "Figure 2 (cost-effectiveness plane) and Figure 3 (cost-effectiveness acceptability curve)",
+          "reason": "Both carry numeric content that appears nowhere in the text or tables -- the full cloud of 10,000 simulated cost/QALY pairs, and the entire CEAC across thresholds from 0 to 50,000 EUR. Only the single point 'roughly 80% at 50,000 EUR' is stated numerically. Anything read off the plotted marks would be figure_pixels provenance and barred from the exact-arithmetic checks, so the probabilistic sensitivity analysis -- which supports the abstract's headline claim -- is essentially unverifiable from the published article. Neither caption states what any error or dispersion marking represents."
+        },
+        {
+          "location": "Supplementary dataverse workbook, 'Cost' worksheet - per-patient cost values",
+          "reason": "The worksheet contains the individual patient costs that would settle the Table 1 median anomaly outright, but computing a median from 93 raw values is hand arithmetic with no validated tool, so it was not attempted. This is the single most valuable follow-up available: the raw data needed to resolve the headline finding is already public. The worksheet's full column list was also not enumerated, so design-constant columns beyond the auto-excluded 'Discount/year' were not passed to exclude_columns."
+        },
+        {
+          "location": "Supplementary dataverse workbook, QALY worksheet - 74 of 75 flagged duplicate row pairs",
+          "reason": "Only the pair at rows 119/120 (P-2-29, P-2-32) was individually verified against the raw grid. The remaining 74 are asserted by detect_raw_duplication and were not examined cell by cell. Row-pair coverage was itself PARTIAL: the tool's 5,000-pair comparison budget was exhausted, so the true number of duplicate pairs may exceed 75."
+        },
+        {
+          "location": "Results paragraph 1 - baseline comparability of the 193-patient subsample",
+          "reason": "The paper presents no baseline table, no test statistics, no p-values and no confidence intervals for this claim. absence_of_evidence requires an interval and cannot run; csf_test and bayesian_table1_dispersion require baseline p-values or group means/SDs and have nothing to operate on. The claim is therefore unverifiable as published."
+        },
+        {
+          "location": "Whole paper - a-priori power analysis",
+          "reason": "None is stated. verify_power_analysis is not applicable to a secondary cost-utility analysis of a fixed existing sample, and its absence is not a reporting defect here."
+        },
+        {
+          "location": "Whole paper - multiple-comparisons correction",
+          "reason": "multiplicity_report is not applicable: statcheck recovered zero NHST statistics, so there is no family of p-values to correct."
+        },
+        {
+          "location": "Whole paper - effect-size plausibility benchmarking",
+          "reason": "check_effect_plausibility was not run. The headline quantity is an ICER, not a standardised effect size, and no dispersion is reported for the QALY difference, so no Cohen's d can be formed and no field benchmark applies."
+        },
+        {
+          "location": "PDF cross-check of Table 1 and Table 2",
+          "reason": "Pass 2 purposes (a) and (b) were moot: extract_xml reported alignment_uncertain false and image_only false for both tables, and Table 2's only merged spans are header cells, so there was no ragged-row or picture-table reconciliation to perform. extract_figures (local, caption-anchored) was used instead of a full extract_pdf re-sweep to obtain the three figure captions, all at high crop confidence. No statistic already checked in Pass 1 was re-checked, to avoid double-counting."
+        }
+      ]
+    },
+    "result": "Structured output provided successfully",
+    "result_truncated": false,
+    "result_chars": 39,
+    "is_error": false
+  }
+]

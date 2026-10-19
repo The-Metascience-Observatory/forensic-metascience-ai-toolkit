@@ -1,0 +1,103 @@
+{
+  "paper_id": "10.1002--ajcp.70049",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 8.9261885,
+      "input_tokens": 34,
+      "output_tokens": 117559,
+      "wall_seconds": 1235.67,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.00089
+        },
+        "claude-opus-5": {
+          "costUSD": 8.9252985
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 36
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.5333305,
+      "input_tokens": 14,
+      "output_tokens": 35045,
+      "wall_seconds": 441.11,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.030153
+        },
+        "claude-opus-5": {
+          "costUSD": 2.5031774999999996
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 11.459519,
+  "total_wall_seconds": 1676.78,
+  "reproducibility": {
+    "n_findings": 45,
+    "n_valid": 15,
+    "n_invalid": 30,
+    "problems": [
+      "finding[1] (statcheck_no_inline_nhst): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[7] (table1_whole_table_sweep): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[13] (communication_scale_contradiction): must invoke `metascience`, got 'Not'",
+      "finding[14] (t2_constant_p_below_attainable): must invoke `metascience`, got 'Not'",
+      "finding[15] (t3_ctc_p_below_attainable): must invoke `metascience`, got 'Not'",
+      "finding[16] (ctc_text_vs_table_discrepancy): must invoke `metascience`, got 'Not'",
+      "finding[17] (t3_p_reported_as_zero): must invoke `metascience`, got 'Not'",
+      "finding[18] (t3_identical_inputs_different_p): must invoke `metascience`, got 'Not'",
+      "finding[19] (t2_ta_identical_inputs_two_ps): must invoke `metascience`, got 'Not'",
+      "finding[20] (t2_headline_predictors_reproduce): must invoke `metascience`, got 'Not'",
+      "finding[21] (t3_headline_predictors_reproduce): must invoke `metascience`, got 'Not'",
+      "finding[22] (t4_headline_nulls_reproduce): must invoke `metascience`, got 'Not'",
+      "finding[23] (all_covariates_reproduce): must invoke `metascience`, got 'Not'",
+      "finding[24] (t2_baseline_ebp_stalt): contains placeholder '<' -- not runnable as written",
+      "finding[25] (regression_table_headers_mislabelled): must invoke `metascience`, got 'Not'",
+      "finding[26] (duplication_across_coefficient_tables): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[28] (fidelity_null_claim_uninterpretable): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[29] (multiplicity_uncorrected): must invoke `metascience`, got 'Not'",
+      "finding[31] (level2_units_for_fidelity): must invoke `metascience`, got 'Not'",
+      "finding[32] (ebp_adherence_row_denominator_unknown): contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "finding[33] (ta_coding_contradicts_design): must invoke `metascience`, got 'Not'",
+      "finding[34] (data_availability_on_request): must invoke `metascience`, got 'Not'",
+      "finding[35] (randomisation_baseline_not_reportable): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[1] (1): must invoke `metascience`, got 'No'",
+      "finding[2] (2): must invoke `metascience`, got 'The'",
+      "finding[3] (3): must invoke `metascience`, got 'No'",
+      "finding[4] (4): must invoke `metascience`, got 'Not'",
+      "finding[5] (5): must invoke `metascience`, got 'No'",
+      "finding[6] (6): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written; must invoke `metascience`, got 'The'",
+      "finding[7] (7): contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written"
+    ]
+  }
+}

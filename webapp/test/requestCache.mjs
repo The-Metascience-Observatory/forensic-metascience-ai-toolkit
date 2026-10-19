@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import { RequestCache } from '../lib/requestCache.ts';
+const cache=new RequestCache(2);let count=0,resolve,signal;
+const a=cache.subscribe('a',()=>{}),b=cache.subscribe('a',()=>{});
+const fetcher=s=>{count++;signal=s;return new Promise(r=>resolve=r);};
+const first=cache.load('a',fetcher),second=cache.load('a',fetcher);
+assert.equal(first,second);assert.equal(count,1);
+a();await Promise.resolve();assert.equal(signal.aborted,false);
+b();await Promise.resolve();assert.equal(signal.aborted,true);
+resolve('obsolete');await first;assert.equal(cache.entry('a').data,undefined);
+const active=cache.subscribe('a',()=>{});
+const stale=cache.load('a',fetcher),staleResolve=resolve;
+await cache.load('a',async()=> 'current',true);
+staleResolve('obsolete');await stale;assert.equal(cache.entry('a').data,'current');
+active();cache.entry('b');cache.entry('c');assert.equal(cache.entries.size,2);
+console.log('request cache: deduplication, cancellation, stale responses, and eviction passed');

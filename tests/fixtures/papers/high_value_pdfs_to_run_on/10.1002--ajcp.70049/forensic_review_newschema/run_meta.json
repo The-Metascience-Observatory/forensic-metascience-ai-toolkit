@@ -1,0 +1,86 @@
+{
+  "paper_id": "10.1002--ajcp.70049",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 9.1343315,
+      "input_tokens": 34,
+      "output_tokens": 90078,
+      "wall_seconds": 971.2,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.000895
+        },
+        "claude-opus-5": {
+          "costUSD": 9.1334365
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 36
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.293228,
+      "input_tokens": 6,
+      "output_tokens": 23865,
+      "wall_seconds": 297.35,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.03038
+        },
+        "claude-opus-5": {
+          "costUSD": 2.262848
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "medium"
+    }
+  },
+  "total_cost_usd": 11.427559500000001,
+  "total_wall_seconds": 1268.55,
+  "reproducibility": {
+    "n_findings": 42,
+    "n_valid": 29,
+    "n_invalid": 13,
+    "problems": [
+      "finding[1] (t2_constant_m1_p_below_threshold): must invoke `metascience`, got 'MCP-only'",
+      "finding[2] (t3_ctc_m1_p_below_threshold): must invoke `metascience`, got 'MCP-only'",
+      "finding[3] (t3_idm_p_rounding): must invoke `metascience`, got 'MCP-only'",
+      "finding[4] (t3_p_reported_as_zero): must invoke `metascience`, got 'MCP-only'",
+      "finding[5] (t3_baseline_precision_uninformative): must invoke `metascience`, got 'MCP-only'",
+      "finding[6] (t2_ta_p97_vs_p98): must invoke `metascience`, got 'MCP-only'",
+      "finding[7] (regression_cells_reproduce): must invoke `metascience`, got 'MCP-only'",
+      "finding[24] (table1_cell_typing_refusals): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[26] (duplication_across_tables): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[30] (statcheck_no_apa_statistics): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[32] (fidelity_null_claim_no_interval): contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "finding[33] (multiplicity_uncorrected): must invoke `metascience`, got 'No'",
+      "finding[34] (data_dependent_covariate_selection): must invoke `metascience`, got 'No'"
+    ]
+  }
+}

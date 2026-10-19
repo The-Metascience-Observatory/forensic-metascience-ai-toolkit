@@ -1,0 +1,1667 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "anatomy": {
+    "studies": [
+      {
+        "id": "pilot",
+        "label": "Pilot study (mood manipulation check on self-evaluations)",
+        "design": "rct",
+        "n": 45,
+        "n_per_group": [
+          {
+            "label": "positive mood",
+            "n": 15
+          },
+          {
+            "label": "negative mood",
+            "n": 15
+          },
+          {
+            "label": "control/filler",
+            "n": 15
+          }
+        ],
+        "unit_of_analysis": "participant",
+        "preregistered": false
+      },
+      {
+        "id": "exp1",
+        "label": "Experiment 1 (shared birthday x direction, positive mood only)",
+        "design": "rct",
+        "n": 47,
+        "unit_of_analysis": "participant",
+        "preregistered": false
+      },
+      {
+        "id": "exp2",
+        "label": "Experiment 2 (mood x direction x shared-birthday cue, plus control)",
+        "design": "rct",
+        "n": 141,
+        "n_per_group": [
+          {
+            "label": "factorial (8 cells)",
+            "n": 126
+          },
+          {
+            "label": "no-mood no-comparison control",
+            "n": 15
+          }
+        ],
+        "unit_of_analysis": "participant",
+        "preregistered": false
+      },
+      {
+        "id": "exp3",
+        "label": "Experiment 3 (mood x direction x ambiguity of similarity cue)",
+        "design": "rct",
+        "n": 96,
+        "unit_of_analysis": "participant",
+        "preregistered": false
+      },
+      {
+        "id": "exp4",
+        "label": "Experiment 4 (mood x direction x cognitive load, plus control)",
+        "design": "rct",
+        "n": 193,
+        "n_per_group": [
+          {
+            "label": "factorial (8 cells)",
+            "n": 118
+          },
+          {
+            "label": "no-mood no-comparison no-load control",
+            "n": 75
+          }
+        ],
+        "unit_of_analysis": "participant",
+        "preregistered": false
+      }
+    ],
+    "variables": [
+      {
+        "id": "mood_index_pilot",
+        "name": "Mood index (pilot)",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "mean_of_items",
+        "derived_from": "4 bipolar 9-point items (negative-positive, sad-happy, unpleasant-pleasant, bad-good)",
+        "n_items": 4,
+        "lower_bound": 1,
+        "upper_bound": 9,
+        "confidence": "high",
+        "provenance_quote": "Participants were asked to indicate, on bipolar scales, which word best described them (1) 1 = negative mood, 9 = positive mood... The four mood items were averaged to create an index of mood (Cronbach\u2019s alpha = .91)",
+        "provenance_verdict": "elided"
+      },
+      {
+        "id": "selfeval_index_pilot",
+        "name": "Self-evaluation index (pilot)",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "mean_of_items",
+        "derived_from": "3 nine-point items (intelligent, competent, successful)",
+        "n_items": 3,
+        "lower_bound": 1,
+        "upper_bound": 9,
+        "confidence": "high",
+        "provenance_quote": "they rated how well each of the following words described them on nine-point Likert scales (1 = not at all me, 9 = very much me): intelligent, competent, and successful... the three self-ratings were averaged to create an index of self-evaluations (Cronbach\u2019s alpha = .71)",
+        "provenance_verdict": "elided"
+      },
+      {
+        "id": "self_evaluation_exp1_2_3_4",
+        "name": "Self-evaluation (own attractiveness rating)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "derivation": "measured",
+        "lower_bound": 1,
+        "upper_bound": 7,
+        "confidence": "high",
+        "provenance_quote": "rated their own attractiveness and the target\u2019s attractiveness on seven-point scales (1 = not at all attractive and 7 = extremely attractive)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "target_attractiveness",
+        "name": "Target attractiveness rating (manipulation check)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "derivation": "measured",
+        "lower_bound": 1,
+        "upper_bound": 7,
+        "confidence": "high",
+        "provenance_quote": "rated their own attractiveness and the target\u2019s attractiveness on seven-point scales (1 = not at all attractive and 7 = extremely attractive)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "mood_single_item_exp2",
+        "name": "Mood (single item, Exp 2)",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_item",
+        "derivation": "measured",
+        "lower_bound": 1,
+        "upper_bound": 7,
+        "confidence": "high",
+        "provenance_quote": "Participants also reported how positive or negative they felt at that moment (1 = negative mood and 7 = positive mood)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "similarity_index_exp3",
+        "name": "Similarity index (Exp 3)",
+        "measurement_level": "interval",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "mean_of_items",
+        "derived_from": "3 nine-point items (general similarity, special bond, aesthetic-preference similarity)",
+        "n_items": 3,
+        "lower_bound": 1,
+        "upper_bound": 9,
+        "confidence": "high",
+        "provenance_quote": "participant responses to the three similarity questions were averaged (alpha = .87) and this similarity index was submitted to a 2(mood...)",
+        "provenance_verdict": "stitched"
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h1_positive_mood_asymmetric",
+        "statement": "Compared to negative or neutral mood, positive mood leads to asymmetric, self-serving responses to ambiguous social comparison targets (assimilation to upward, contrast from downward).",
+        "status": "confirmatory",
+        "appears_in_abstract": true
+      },
+      {
+        "id": "h2_ambiguity_required",
+        "statement": "Self-serving asymmetric responding requires ambiguous similarity information; in its absence responses are symmetric.",
+        "status": "confirmatory",
+        "appears_in_abstract": false
+      },
+      {
+        "id": "h3_negative_mood_symmetric",
+        "statement": "Negative mood is associated with symmetric, objective (non-self-serving) responding.",
+        "status": "confirmatory",
+        "appears_in_abstract": false
+      },
+      {
+        "id": "h4_effortful_load_dependent",
+        "statement": "Self-serving reinterpretation under positive mood is effortful and is disrupted by cognitive load.",
+        "status": "confirmatory",
+        "appears_in_abstract": false
+      }
+    ],
+    "tests": [
+      {
+        "id": "pilot_mood_anova",
+        "study_id": "pilot",
+        "test_type": "one_way_anova",
+        "location": "Pilot study, Results paragraph 1",
+        "statistic_value": 18.44,
+        "df": "2,42",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "is_stated_primary_outcome": false,
+        "provenance_quote": "F(2, 42) = 18.44, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "pilot_t_pos_vs_control",
+        "study_id": "pilot",
+        "test_type": "independent_t",
+        "location": "Pilot study, Results paragraph 1",
+        "statistic_value": 3.43,
+        "df": "42",
+        "p_value": 0.001,
+        "provenance_quote": "t(42) = 3.43, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "pilot_t_neg_vs_control",
+        "study_id": "pilot",
+        "test_type": "independent_t",
+        "location": "Pilot study, Results paragraph 1",
+        "statistic_value": -3.8,
+        "df": "42",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "t(42) = -3.80, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "pilot_selfeval_anova",
+        "study_id": "pilot",
+        "test_type": "one_way_anova",
+        "location": "Pilot study, Results paragraph 2",
+        "statistic_value": 0.27,
+        "df": "1,42",
+        "p_value": 0.76,
+        "is_stated_primary_outcome": false,
+        "provenance_quote": "did not differ F(1, 42) = .27, p = .76",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp1_manip_check",
+        "study_id": "exp1",
+        "test_type": "one_way_anova",
+        "location": "Experiment 1, Manipulation check",
+        "statistic_value": 38.8,
+        "df": "1,43",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,43) = 38.80, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp1_main_cue_direction",
+        "study_id": "exp1",
+        "test_type": "one_way_anova",
+        "location": "Experiment 1, Self-evaluations",
+        "statistic_value": 7.77,
+        "df": "1,43",
+        "p_value": 0.008,
+        "is_stated_primary_outcome": true,
+        "provenance_quote": "F(1, 43) = 7.77, p = .008",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp1_interaction",
+        "study_id": "exp1",
+        "test_type": "one_way_anova",
+        "location": "Experiment 1, Self-evaluations",
+        "statistic_value": 5.99,
+        "df": "1,43",
+        "p_value": 0.019,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h1_positive_mood_asymmetric",
+        "provenance_quote": "F(1, 43) = 5.99, p = .019",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp1_unshared_simple_effect",
+        "study_id": "exp1",
+        "test_type": "one_way_anova",
+        "location": "Experiment 1, Self-evaluations (unshared-birthday simple effect)",
+        "statistic_value": 6.95,
+        "df": "1,46",
+        "p_value": 0.011,
+        "provenance_quote": "F(1, 46) = 6.95, p = 011",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_mood_manip",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Manipulation check",
+        "statistic_value": 340.44,
+        "df": "1,132",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 132) = 340.44, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_t_pos_vs_control",
+        "study_id": "exp2",
+        "test_type": "independent_t",
+        "location": "Experiment 2, Manipulation check",
+        "statistic_value": 5.61,
+        "df": "138",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "t(138) = 5.61, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_t_neg_vs_control",
+        "study_id": "exp2",
+        "test_type": "independent_t",
+        "location": "Experiment 2, Manipulation check",
+        "statistic_value": -5.97,
+        "df": "138",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "t(138) = -5.97, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_direction_manip",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Manipulation check",
+        "statistic_value": 716.92,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,118) = 716.92, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_3way_interaction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 5.13,
+        "df": "1,118",
+        "p_value": 0.03,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h1_positive_mood_asymmetric",
+        "provenance_quote": "F(1, 118) = 5.13, p = .03",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_main_cue",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 21.84,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 118) = 21.84, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_main_direction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 131.87,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 118) = 131.87, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_main_mood",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 14.48,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 118) = 14.48, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_mood_x_cue",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 18.84,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 118) = 18.84, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_mood_x_direction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 11.74,
+        "df": "1,118",
+        "p_value": 0.001,
+        "provenance_quote": "F(1, 118) = 11.74, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_cue_x_direction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Self-evaluations",
+        "statistic_value": 14.11,
+        "df": "1,118",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 118) = 14.11, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_pos_direction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 14.79,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 124) = 14.79, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_pos_cue",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 18.61,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 124) = 18.61, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_pos_interaction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 9.39,
+        "df": "1,124",
+        "p_value": 0.003,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h1_positive_mood_asymmetric",
+        "provenance_quote": "F(1, 124) = 9.39, p = .003",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_contrast_up_vs_control",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 13.76,
+        "df": "1,132",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,132) = 13.76, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_contrast_down_vs_control",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 21.53,
+        "df": "1,132",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,132) = 21.53, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_unshared_up_vs_control",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 14.06,
+        "df": "1,132",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,132) = 14.06, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_unshared_down_vs_control",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Positive mood paragraph",
+        "statistic_value": 10.69,
+        "df": "1,132",
+        "p_value": 0.001,
+        "provenance_quote": "F(1,132) = 10.69, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp2_neg_direction",
+        "study_id": "exp2",
+        "test_type": "one_way_anova",
+        "location": "Experiment 2, Negative mood paragraph",
+        "statistic_value": 56.97,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 124) = 56.97, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_mood_manip",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Manipulation check",
+        "statistic_value": 104.58,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 88) = 104.58, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_direction_manip",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Manipulation check",
+        "statistic_value": 170.34,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,88) = 170.34, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_main_cue",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Self-evaluations",
+        "statistic_value": 11.4,
+        "df": "1,88",
+        "p_value": 0.001,
+        "is_stated_primary_outcome": true,
+        "provenance_quote": "F(1, 88) = 11.40, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_main_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Self-evaluations",
+        "statistic_value": 67.88,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 88) = 67.88, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_main_mood",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Self-evaluations",
+        "statistic_value": 9.65,
+        "df": "1,88",
+        "p_value": 0.003,
+        "provenance_quote": "F(1, 88) = 9.65, p = .003",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_cue_x_mood",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Self-evaluations",
+        "statistic_value": 19.87,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h2_ambiguity_required",
+        "provenance_quote": "F(1, 88) = 19.87, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_cue_x_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Self-evaluations",
+        "statistic_value": 59.27,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 88) = 59.27, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_ambig_mood_contrast",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Similarity cue and mood",
+        "statistic_value": 11.82,
+        "df": "1,94",
+        "p_value": 0.001,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h1_positive_mood_asymmetric",
+        "provenance_quote": "F(1,94) = 11.82, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_unambig_direction_contrast",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Similarity cue and direction",
+        "statistic_value": 92.47,
+        "df": "1,94",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 94) = 92.47, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_main_cue",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 55.38,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,88) = 55.38, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_main_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 22.8,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 88) = 22.80, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_direction_x_mood",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 18.14,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,88) = 18.14, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_cue_x_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 26.2,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,88) = 26.20, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_3way",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 15.32,
+        "df": "1,88",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "is_stated_primary_outcome": true,
+        "provenance_quote": "F(1, 88) = 15.32, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_ambig_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 53.17,
+        "df": "1,94",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 94) = 53.17, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_unambig_direction",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 1,
+        "df": "1,94",
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 94) = 1.00, p > .05",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_neutral_ambig",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 0.31,
+        "df": "1,94",
+        "p_value": 0.58,
+        "provenance_quote": "F(1, 94) = .31, p = .58",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_sim_neutral_unambig",
+        "study_id": "exp3",
+        "test_type": "one_way_anova",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 1.5,
+        "df": "1,94",
+        "p_value": 0.83,
+        "provenance_quote": "F(1, 94) = 1.50, p = .83",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_corr_positive",
+        "study_id": "exp3",
+        "test_type": "pearson_correlation",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 0.87,
+        "df": "24",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "r(24) = .87, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp3_corr_neutral",
+        "study_id": "exp3",
+        "test_type": "pearson_correlation",
+        "location": "Experiment 3, Perceptions of similarity",
+        "statistic_value": 0.53,
+        "df": "24",
+        "p_value": 0.008,
+        "provenance_quote": "r(24) = .53, p = .008",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_mood_manip",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Manipulation check",
+        "statistic_value": 14.94,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 124) = 14.94, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_direction_manip",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Manipulation check",
+        "statistic_value": 259.08,
+        "df": "1,110",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,110) = 259.08, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_3way",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 11.23,
+        "df": "1,110",
+        "p_value": 0.001,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h4_effortful_load_dependent",
+        "provenance_quote": "F(1, 110) = 11.23, p = 001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_main_load",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 8,
+        "df": "1,110",
+        "p_value": 0.006,
+        "provenance_quote": "F(1, 110) = 8.00, p = .006",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_main_mood",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 9.83,
+        "df": "1,110",
+        "p_value": 0.002,
+        "provenance_quote": "F(1, 110) = 9.83, p = .002",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_main_direction",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 135.31,
+        "df": "1,110",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1, 110) = 135.31, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_x_mood",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 10.97,
+        "df": "1,110",
+        "p_value": 0.001,
+        "provenance_quote": "F(1, 110) = 10.97, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_x_direction",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 10.44,
+        "df": "1,110",
+        "p_value": 0.002,
+        "provenance_quote": "F(1, 110) = 10.44, p = .002",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_mood_x_direction",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Self-evaluations",
+        "statistic_value": 4.14,
+        "df": "1,110",
+        "p_value": 0.04,
+        "provenance_quote": "F(1, 110) = 4.14, p = .04",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_noload_up_vs_control",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, No load conditions",
+        "statistic_value": 17.39,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,124) = 17.39, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_noload_down_vs_control",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, No load conditions",
+        "statistic_value": 11.9,
+        "df": "1,124",
+        "p_value": 0.001,
+        "provenance_quote": "F(1,124) = 11.90, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_noload_neutral_up",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, No load conditions",
+        "statistic_value": 17.89,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,124) = 17.89, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_noload_neutral_down",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, No load conditions",
+        "statistic_value": 10.37,
+        "df": "1,124",
+        "p_value": 0.002,
+        "provenance_quote": "F(1,124) = 10.37, p = .002",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_pos_up",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Cognitive load conditions",
+        "statistic_value": 23.14,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,124) = 23.14, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_pos_down",
+        "study_id": "exp4",
+        "test_type": "independent_t",
+        "location": "Experiment 4, Cognitive load conditions",
+        "statistic_value": -3.3,
+        "df": "124",
+        "p_value": 0.001,
+        "is_stated_primary_outcome": true,
+        "hypothesis_id": "h4_effortful_load_dependent",
+        "provenance_quote": "t(124) = -3.30, p = .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_neutral_up",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Cognitive load conditions",
+        "statistic_value": 18.83,
+        "df": "1,124",
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "provenance_quote": "F(1,124) = 18.83, p < .001",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "exp4_load_neutral_down",
+        "study_id": "exp4",
+        "test_type": "one_way_anova",
+        "location": "Experiment 4, Cognitive load conditions",
+        "statistic_value": 7.84,
+        "df": "1,124",
+        "p_value": 0.006,
+        "provenance_quote": "F(1,124) = 7.84, p = .006",
+        "confidence": "high",
+        "provenance_verdict": "verbatim"
+      }
+    ]
+  },
+  "coverage": {
+    "stats_found": 86,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "parse_cells_typed",
+      "parse_cells_as_declared",
+      "statcheck",
+      "recalc_anova",
+      "recalc_f_to_p",
+      "recalc_stat_to_p",
+      "grimmer_check",
+      "detect_duplication",
+      "multiplicity_report",
+      "extract_figures"
+    ],
+    "tables_checked": [
+      "Table 1 (Experiment 2)",
+      "Table 2 (Experiment 3)"
+    ]
+  },
+  "figures": [
+    {
+      "label": "Figure 1",
+      "page": 3,
+      "caption": "Social comparison processes in neutral and negative mood (with the extra steps associated with positive mood inside the shaded box)",
+      "is_data_figure": false,
+      "n_panels": 1,
+      "panels": [
+        {
+          "chart_type": "schematic",
+          "shows": "Theoretical model diagram of the steps leading to symmetric vs. asymmetric comparison responses"
+        }
+      ],
+      "carries_unique_values": false
+    },
+    {
+      "label": "Figure 2",
+      "page": 11,
+      "caption": "In the presence of ambiguous distinctiveness information, positive mood leads to more positive self-evaluations, across upward and downward comparisons, than does neutral mood (from Experiment 3)",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "panels": [
+        {
+          "chart_type": "bar",
+          "shows": "Self-evaluation means by mood x ambiguity x direction, Experiment 3"
+        }
+      ],
+      "carries_unique_values": false
+    },
+    {
+      "label": "Figure 3",
+      "page": 13,
+      "caption": "Asymmetric responses to comparisons in positive mood are moderated by cognitive load; responses without mood induction are not. From Experiment 4",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "panels": [
+        {
+          "chart_type": "bar",
+          "shows": "Self-evaluation means by mood x load x direction, Experiment 4"
+        }
+      ],
+      "carries_unique_values": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "exp1_df_impossible_subset",
+      "location": "Experiment 1, Self-evaluations paragraph",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "highly_suspicious",
+      "quote": "Exposure to the upward comparison target led to lowered self-evaluations (M = 3.33, SD = .65) compared to the downward comparison target (M = 4.64, SD = 1.50), F(1, 46) = 6.95, p = 011.",
+      "reproduction": "n/a (cross-reference of two printed df values; no CLI command applies)",
+      "reproduction_kind": "no_command_applies",
+      "computed": {
+        "stated_total_n": 47,
+        "stated_design": "2(direction) x 2(cue) factorial, all participants received the positive mood manipulation",
+        "omnibus_df2_from_same_paper": 43,
+        "omnibus_cells": 4,
+        "implied_omnibus_n": 47,
+        "reported_df2_for_2group_subset_test": 46,
+        "max_theoretically_possible_df2_for_any_2group_test_within_n47": 45,
+        "derivation": "For a 2-group comparison, residual df cannot exceed N-2 under ANY convention (recomputed on the subset, or reusing the omnibus's pooled error df=43). Female university (N = 47) students participated is explicitly stated; the omnibus manipulation-check and self-evaluation tests in the same experiment (F(1,43)=38.80; F(1,43)=7.77; F(1,43)=5.99) all confirm a 4-cell/N=47/df2=43 model. The 'unshared birthday' simple effect, drawn from only 2 of those 4 cells (a strict subset of the 47 participants, since shared-birthday-condition results are also reported), cannot have MORE residual degrees of freedom (46) than the absolute ceiling for any 2-group test on the full N=47 sample (45), let alone more than the omnibus's own df2=43."
+      },
+      "notes": "This is a cross-reference contradiction between two df values printed in the same paragraph/section of the same paper, not an assumed external bound -- N=47 and the 4-cell design (df2=43) are both explicitly stated. Rated highly_suspicious rather than impossible because it rests on the standard ANOVA residual-df formula (df2 = n - cells), which the paper does not state explicitly, though it is the only convention consistent with every OTHER df in Experiment 1. An innocent explanation is a typo (e.g. df2=46 for an intended 26, or a copy-paste from an unrelated analysis).",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "exp2_df_impossible_subset_positive",
+      "location": "Experiment 2, Positive mood paragraph and Self-evaluations paragraph",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "highly_suspicious",
+      "quote": "As can be seen in Table 1, in the positive mood conditions, direction of comparison, F(1, 124) = 14.79, p < .001; presence of similarity cue (shared birthday or not), F(1, 124) = 18.61, p < .001; and the interaction effect of direction of comparison and similarity information, F(1, 124) = 9.39, p = .003, all significantly influenced self-ratings.",
+      "reproduction": "n/a (cross-reference of two printed df values; no CLI command applies)",
+      "reproduction_kind": "no_command_applies",
+      "computed": {
+        "omnibus_3way_df2": 118,
+        "omnibus_cells": 8,
+        "implied_total_factorial_n": 126,
+        "positive_mood_subset_design": "2(cue) x 2(direction), 4 cells, within positive mood only",
+        "positive_mood_subset_df2": 124,
+        "implied_n_positive": 128,
+        "implied_n_negative_from_same_paragraph_pattern": 128,
+        "sum_of_subset_ns_if_both_128": 256,
+        "derivation": "The omnibus 3-way ANOVA (mood x direction x cue) on the factorial-only data (excluding the separately-reported no-mood control) reports df2=118 for an 8-cell model, implying total factorial N=126 (118+8). The positive-mood-only 2x2 subset ANOVA reports df2=124 for a 4-cell model (124+4=128). Since n_positive + n_negative = 126 and both moods have participants (negative-mood results are also reported, so n_negative>0), n_positive must be STRICTLY LESS than 126, and in fact at most 122 given df2=124 requires n_positive>=128 alone -- exceeding the total factorial pool by at least 2, and exceeding the loosest theoretical ceiling (122, if n_negative approached 0) by 2 as well. The parallel negative-mood-only subset (F(1,124)=56.97 for direction) implies the identical n_negative=128 under the same logic."
+      },
+      "notes": "Same class of finding as exp1_df_impossible_subset: two df values printed within the same section of the same paper (118 for the 8-cell omnibus, 124 for both 4-cell mood subsets) are mutually inconsistent under the standard ANOVA residual-df formula. Capped at highly_suspicious rather than impossible for the same reason -- reliance on the unstated but standard df=n-cells convention -- and because a subset-ANOVA using a separately-recomputed (not pooled) error term is one of several plausible reporting conventions this paper does not specify.",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "pilot_selfeval_df1_notation_error",
+      "location": "Pilot study, Results paragraph 2",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Those in the negative mood (M = 6.98, SD = .53), positive mood (M = 6.98, SD = .80), and the control condition (M = 6.82, SD = .67), did not differ F(1, 42) = .27, p = .76.",
+      "reproduction": "metascience f-to-p --f 0.27 --df1 1 --df2 42 --reported-p 0.76",
+      "inputs": {
+        "f_value": 0.27,
+        "df1": 1,
+        "df2": 42,
+        "reported_p": 0.76,
+        "decimals_p": 2,
+        "decimals_f": 2
+      },
+      "computed": {
+        "p_at_df1_1": 0.60606,
+        "achievable_p_interval_df1_1": [
+          0.6028,
+          0.6094
+        ],
+        "p_at_df1_2": 0.764694,
+        "achievable_p_interval_df1_2": [
+          0.7609,
+          0.7685
+        ]
+      },
+      "reported": {
+        "F": 0.27,
+        "df1": 1,
+        "df2": 42,
+        "p": 0.76
+      },
+      "notes": "The three-group (negative/positive/control) mood-ANOVA one sentence earlier is correctly reported as F(2, 42) = 18.44 -- df1=2, matching the 3 groups. The self-evaluations ANOVA on the SAME 3 groups is printed with df1=1, which is the wrong numerator df for a 3-group one-way ANOVA and does not reproduce the printed p=.76 (computed p=.606 at df1=1, outside the achievable interval). Recomputed at the correct df1=2 for 3 groups, F=.27 gives p=.765, which matches the printed p=.76 exactly. This reads as a transcription/typo error (df1 printed as 1 instead of 2) rather than a fabricated statistic, but it is a genuine, verifiable inconsistency in a load-bearing sentence (the paper's own justification that the mood manipulations, alone, did not affect self-evaluations).",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --f    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "exp3_f194_p_mismatch",
+      "location": "Experiment 3, Perceptions of similarity paragraph",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Identical effects emerged when the information was unambiguous, F(1, 94) = 1.50, p = .83.",
+      "reproduction": "metascience f-to-p --f 1.50 --df1 1 --df2 94 --reported-p 0.83",
+      "inputs": {
+        "f_value": 1.5,
+        "df1": 1,
+        "df2": 94,
+        "reported_p": 0.83,
+        "decimals_p": 2,
+        "decimals_f": 2
+      },
+      "computed": {
+        "calculated_p": 0.223732,
+        "achievable_p_interval": [
+          0.22297,
+          0.2245
+        ],
+        "one_tailed_equivalent_p": 0.111866
+      },
+      "reported": {
+        "F": 1.5,
+        "df1": 1,
+        "df2": 94,
+        "p": 0.83
+      },
+      "notes": "Reported p=.83 does not match the F(1,94)=1.50 statistic under any standard convention: two-tailed gives p=.224, and even the one-tailed halved value (.112, which would require the paper to state directional testing, which it does not) is nowhere near .83. Both readings are non-significant so no decision is reversed, but the magnitude gap (.224 vs .83, roughly 3.7x) is unexplained by rounding or tail convention.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience f-to-p [OPTIONS] F_VALUE DF1 DF2\nTry 'metascience f-to-p --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --f    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "exp3_correlation_r53_consistent",
+      "location": "Experiment 3, Perceptions of similarity paragraph",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "self and other attractiveness were significantly related in the positive, r(24) = .87, p < .001, and neutral mood, r(24) = .53, p = .008",
+      "reproduction": "metascience stat-to-p --statistic 0.53 --kind r --n 26 --reported-p 0.008",
+      "inputs": {
+        "statistic": 0.53,
+        "kind": "r",
+        "n": 26,
+        "reported_p": 0.008,
+        "decimals_stat": 2,
+        "decimals_p": 3
+      },
+      "computed": {
+        "computed_p": 0.005355,
+        "achievable_p_interval": [
+          0.004406,
+          0.00589
+        ]
+      },
+      "reported": {
+        "r": 0.53,
+        "df": 24,
+        "p": 0.008
+      },
+      "notes": "statcheck flagged this as an error (reported p=.008 vs computed p=.0054), but the printed p is MORE conservative than the statistic supports (an under-claim), not an over-claim -- the tool's directional design only flags inflated significance. This reads as ordinary reporting imprecision, not an anomaly. (Recorded under technique=statcheck as the closest enum match; the actual tool call used was recalc_stat_to_p, a single-statistic p-value recomputation not separately enumerated.)",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "table2_grimmer_selfeval_consistent_6of8",
+      "location": "Table 2, Self-evaluation row (6 of 8 cells)",
+      "technique": "grimmer",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "6.58 (.90)",
+      "reproduction": "metascience grimmer --mean 6.58 --sd 0.90 --n 12 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "inputs": {
+        "cells_tested": [
+          "Positive|Ambiguous|Upward: 6.58(.90)",
+          "Positive|Ambiguous|Downward: 6.50(.80)",
+          "Neutral|Ambiguous|Upward: 5.42(.79)",
+          "Neutral|Ambiguous|Downward: 5.33(.78)",
+          "Neutral|Unambiguous|Upward: 6.75(.87)",
+          "Neutral|Unambiguous|Downward: 4.33(.78)"
+        ],
+        "n_assumed": 12,
+        "scale": "1-7 stated"
+      },
+      "computed": {
+        "all_found_valid_S_Q_combinations": true
+      },
+      "reported": {
+        "note": "see individual cell means/SDs in inputs"
+      },
+      "notes": "n=12 per cell is ASSUMED, not stated by the paper: derived from the omnibus 2x2x2 ANOVA's own df2=88 (96 participants - 8 cells = 88), which divides evenly (96/8=12). This is a strong but unstated inference. Scale bounds (1-7) ARE stated in the Method. bound_source=assumed for n; discreteness_source=assumed (single-item Likert response, reasonably but not explicitly stated as integer-valued).",
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table2_grimmer_selfeval_suspicious_2of8",
+      "location": "Table 2, Self-evaluation row, Positive|Unambiguous columns",
+      "technique": "grimmer",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "6.58 (.52)",
+      "reproduction": "metascience grimmer --mean 6.58 --sd 0.52 --n 12 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "inputs": {
+        "cell_1": {
+          "mean": 6.58,
+          "sd": 0.52,
+          "n": 12,
+          "label": "Positive|Unambiguous|Upward"
+        },
+        "cell_2": {
+          "mean": 4.08,
+          "sd": 0.52,
+          "n": 12,
+          "label": "Positive|Unambiguous|Downward"
+        },
+        "scale": "1-7 stated",
+        "sensitivity_tested_n": [
+          11,
+          13
+        ]
+      },
+      "computed": {
+        "cell_1_n12": "no valid (S,Q) combination",
+        "cell_1_n11": "fails GRIM itself (no integer sum rounds to 6.58 at n=11)",
+        "cell_1_n13": "fails GRIM itself (no integer sum rounds to 6.58 at n=13)",
+        "cell_2_n12": "no valid (S,Q) combination",
+        "cell_2_n11": "fails GRIM itself (no integer sum rounds to 4.08 at n=11)",
+        "cell_2_n13": "grim-consistent but no valid sum-of-squares"
+      },
+      "reported": {
+        "cell_1": "M=6.58, SD=.52",
+        "cell_2": "M=4.08, SD=.52"
+      },
+      "notes": "Both cells in the 'Positive mood, Unambiguous cue' column of Table 2 fail GRIMMER at n=12 (the value implied by the omnibus ANOVA's own df2=88), and the failure is NOT an artifact of a slightly-wrong n guess: it persists at n=11 and n=13 too. Capped at suspicious rather than impossible because (a) n=12 is an assumed, not stated, per-cell size, and (b) discreteness of the single-item Likert response is assumed rather than explicitly stated as integer-valued by the paper. If per-cell n were confirmed as 12 and the item explicitly confirmed integer-valued, this would warrant escalation toward highly_suspicious or impossible.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "rated their own attractiveness and the target's attractiveness on seven-point scales (1 = not at all attractive and 7 = extremely attractive)",
+        "source_locator": "Experiment 2, Dependent measures; Table 2, Self-evaluation row, Positive|Ambiguous|Upward",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "table1_grim_unchecked_no_reliable_n",
+      "location": "Table 1, Self-evaluation row (Experiment 2, 8 cells)",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "Self-evaluation 5.25 (.93) 5.53 (.52) 3.17 (.98) 5.13 (.72) 3.33 (.90) 5.20 (.68) 3.07 (.62) 5.35 (.70)",
+      "reproduction": "n/a -- no reliable per-cell n could be derived",
+      "reproduction_kind": "no_command_applies",
+      "computed": {},
+      "reported": {},
+      "notes": "No per-cell sample size is printed for Table 1's 8 conditions (2x2x2 factorial), and the paper's own internal df values for this experiment are mutually inconsistent (see exp2_df_impossible_subset_positive), so no candidate n could be derived with confidence sufficient to run GRIM/GRIMMER without manufacturing a false accusation from an unreliable denominator. Recorded as an explicit coverage gap rather than silently skipped.",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "pilot_anova_recalc_assumed_equal_n",
+      "location": "Pilot study, Results paragraph 1",
+      "technique": "recalc_anova",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001.",
+      "reproduction": "metascience anova --means 7.2,6.15,4.98 --sds 0.93,0.52,0.98 --ns 15,15,15 --reported-f 18.44 --reported-p 0.001 --decimals-mean 2 --decimals-sd 2 --decimals-p 3",
+      "inputs": {
+        "means": [
+          7.2,
+          6.15,
+          4.98
+        ],
+        "sds": [
+          0.93,
+          0.52,
+          0.98
+        ],
+        "ns": [
+          15,
+          15,
+          15
+        ],
+        "reported_f": 18.44,
+        "reported_p": 0.001
+      },
+      "computed": {
+        "calculated_f": 26.48,
+        "achievable_f_interval": [
+          25.86,
+          27.12
+        ],
+        "calculated_p": 3.6e-08,
+        "achievable_p_interval": [
+          2.74e-08,
+          4.79e-08
+        ]
+      },
+      "reported": {
+        "F": 18.44,
+        "p": 0.001
+      },
+      "notes": "Under the ASSUMPTION of exactly equal group sizes (n=15 each, derived only from total N=45 split 3 ways -- the paper never states the per-group split), the recomputed F (25.9-27.1) does not match the reported F=18.44, though the reported p<.001 is still directionally consistent (both far below .001). Recorded as indeterminate rather than suspicious because the n=15/15/15 split is an assumption, not a stated value; unequal group sizes could reconcile the F discrepancy while leaving p<.001 correct.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience anova [OPTIONS]\nTry 'metascience anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --decimals-mean          ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "severity_source": {
+        "model": "indeterminate",
+        "tool": "suspicious",
+        "direction": "downgraded",
+        "explained": true,
+        "note": "The tool returned `suspicious`; this finding records `indeterminate`. A reason is stated in the finding."
+      },
+      "source": {
+        "source_quote": "A one-way Analysis of Variance (ANOVA) revealed that the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001.",
+        "source_locator": "Pilot study, Results paragraph",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "tables_no_duplication",
+      "location": "Table 1 (Experiment 2) vs Table 2 (Experiment 3)",
+      "technique": "duplication",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Self-evaluation 5.25 (.93) 5.53 (.52) 3.17 (.98) 5.13 (.72) 3.33 (.90) 5.20 (.68) 3.07 (.62) 5.35 (.70)",
+      "reproduction": "metascience duplication-detect --blocks-file <table1_table2_cells.json>",
+      "inputs": {
+        "n_blocks": 2,
+        "n_cells_total": 24,
+        "n_comparisons": 128
+      },
+      "computed": {
+        "max_identical_pairs": 0
+      },
+      "reported": {},
+      "notes": "No duplicated (mean, SD) pairs found between the two independent-sample tables (Experiment 2, N=126 factorial, and Experiment 3, N=96), nor within either table. This is a genuine consistent finding, not merely an absence of testing.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "exp2_control_contrasts_multiplicity",
+      "location": "Experiment 2, Positive mood paragraph (4 planned contrasts vs. control)",
+      "technique": "multiplicity_report",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Compared to the control condition, participants in both the upward, F(1,132) = 13.76, p < .001, and downward, F(1,132) = 21.53, p < .001, comparison conditions rated themselves more positively.",
+      "reproduction": "metascience multiplicity --family-label \"Experiment 2 contrasts vs control\" --tests <4 p-values>",
+      "inputs": {
+        "n_tests": 4,
+        "p_values": [
+          0.0003052,
+          8.3e-06,
+          0.0002639,
+          0.0013739
+        ]
+      },
+      "computed": {
+        "n_surviving_floor": 4,
+        "n_surviving_ceiling": 4,
+        "n_claims_lost_to_correction": 0,
+        "fwer_if_independent": 0.1855
+      },
+      "reported": {},
+      "notes": "All four single-df contrasts against the control condition survive every correction method (Bonferroni through Benjamini-Yekutieli); no correction was reported as applied, but none of these four specific claims is undermined by multiplicity. This does not extend to the larger, uncorrected family of all significant effects reported across the paper's four experiments.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written; contains placeholder '>' -- not runnable as written",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 0,
+        "basis": "computed",
+        "explanation": "Computed from 0 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      }
+    },
+    {
+      "id": "exp4_mood_manip_df_anomaly_unresolved",
+      "location": "Experiment 4, Manipulation check paragraph",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "As expected, there was a main effect of mood induction on mood, F(1, 124) = 14.94, p < .001.",
+      "reproduction": "n/a -- exploratory cross-reference, design not fully resolved",
+      "reproduction_kind": "no_command_applies",
+      "computed": {
+        "omnibus_3way_df2": 110,
+        "omnibus_cells": 8,
+        "implied_factorial_n": 118,
+        "mood_manip_check_df2": 124,
+        "implied_n_for_2group_test": 126
+      },
+      "reported": {},
+      "notes": "Similar pattern to the Experiment 1 and 2 df anomalies, but NOT resolved with the same confidence: the mood-manipulation-check test could plausibly use a different subsample (e.g. pooling across a factor the 3-way omnibus does not, or a different exclusion set) that is not fully specified in the available text. Recorded as suspicious rather than highly_suspicious given the greater uncertainty about which participants were included in this specific test.",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "similarity_composite_no_tool",
+      "location": "Table 2, Similarity row (8 cells); Experiment 3 similarity index",
+      "technique": "no_tool_exists",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "participant responses to the three similarity questions were averaged (alpha = .87) and this similarity index was submitted to a 2(mood...)",
+      "reproduction": "n/a -- no registered tool accepts a composite (mean-of-k-items) granularity denominator",
+      "reproduction_kind": "no_command_applies",
+      "computed": {
+        "method": "GRIM-style granularity check would need denominator 1/(3*n), not 1/n, since the similarity index is the mean of 3 nine-point items per participant; no exposed tool parameter accepts an items multiplier for grimmer_check/grim_check"
+      },
+      "reported": {},
+      "notes": "The 8 Similarity-row cells of Table 2 were typed and confirmed as mean_sd cells but could not be forensically checked: applying grim_check/grimmer_check with the standard 1/n granularity to a 3-item composite mean would manufacture false impossibilities, since the true attainable granularity is 1/(3n). Recorded as a toolkit gap rather than silently omitted.",
+      "reproduction_valid": null,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "per_cell_n_never_reported",
+      "location": "Experiments 2, 3, and 4 (all factorial tables and prose)",
+      "technique": "not_computational",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "University (N = 141, 75 women) students participated in the study for monetary compensation. A 2(mood: positive vs. negative) \u00d7 2(direction of comparison: upward vs. downward) \u00d7 2(similarity cue: shared birthday vs. different birthday) factorial design was used, with an additional no-mood, no comparison control condition.",
+      "reproduction": "n/a -- reporting-completeness observation",
+      "reproduction_kind": "no_command_applies",
+      "computed": {},
+      "reported": {},
+      "notes": "Across Experiments 2, 3 and 4, only a single total N is given per experiment; no per-cell or per-condition sample size is printed anywhere (text, tables, or figure captions) despite unbalanced designs with an added control condition. This materially limits independent GRIM/GRIMMER verification of Tables 1 and 2 (see table1_grim_unchecked_no_reliable_n) and is itself worth recording as a reporting-completeness gap, independent of any specific numeric anomaly.",
+      "reproduction_valid": null,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    }
+  ],
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "paper_title": "RETRACTED ARTICLE: Happiness as alchemy: Positive mood leads to self-serving responses to social comparisons",
+  "paper_metadata": {
+    "authors": "Camille S. Johnson, Diederik A. Stapel",
+    "journal": "Motivation and Emotion",
+    "year": "2011",
+    "doi": "10.1007/s11031-011-9216-y",
+    "study_design": "Four lab experiments plus a pilot study; between-subjects factorial designs with random assignment to mood/comparison conditions. Article formally RETRACTED (data fabrication by second author, per Levelt Committee findings)."
+  },
+  "unchecked": [
+    {
+      "location": "Table 1 (Experiment 2), Self-evaluation row, all 8 cells",
+      "reason": "No reliable per-cell n could be derived; the paper's own printed df values for Experiment 2 are internally inconsistent (see finding exp2_df_impossible_subset_positive), so any candidate n would be a guess presented as fact."
+    },
+    {
+      "location": "Table 2, Similarity row, all 8 cells",
+      "reason": "Similarity is a mean of 3 nine-point items (composite); no exposed tool parameter supports the resulting 1/(3n) granularity, so GRIM/GRIMMER cannot be validly applied without manufacturing false positives."
+    },
+    {
+      "location": "Pilot study Cronbach's alphas (.91, .71) and Experiment 3 alpha (.87)",
+      "reason": "No registered tool evaluates internal-consistency reliability coefficients for plausibility."
+    },
+    {
+      "location": "Figure 2 and Figure 3 bar charts",
+      "reason": "Error bar meaning is not stated in either caption, so no dispersion or effect size could be read off the marks even if pixel-level extraction were attempted; both figures appear to replicate means already given in the text/tables rather than carrying unique values."
+    },
+    {
+      "location": "Experiment 4 self-evaluation means/SDs (no table provided)",
+      "reason": "All Experiment 4 self-evaluation statistics are reported only in prose (captured in the tests array and statcheck run); no per-cell n given, same limitation as Table 1."
+    },
+    {
+      "location": "Sex-composition breakdowns (e.g. '30 female' of N=45, '75 women' of N=141, '103 female' of N=193)",
+      "reason": "Reported as simple counts with no associated test or percentage claim requiring forensic verification."
+    }
+  ],
+  "schema_version": "1.0",
+  "second_look": {
+    "n_accusatory": 8,
+    "n_flagged": 8,
+    "by_marker": {
+      "quote_not_located": 8,
+      "model_computed": 1
+    },
+    "items": [
+      {
+        "id": "exp1_df_impossible_subset",
+        "severity": "highly_suspicious",
+        "location": "Experiment 1, Self-evaluations paragraph",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "exp2_df_impossible_subset_positive",
+        "severity": "highly_suspicious",
+        "location": "Experiment 2, Positive mood paragraph and Self-evaluations paragraph",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "pilot_selfeval_df1_notation_error",
+        "severity": "suspicious",
+        "location": "Pilot study, Results paragraph 2",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "exp3_f194_p_mismatch",
+        "severity": "suspicious",
+        "location": "Experiment 3, Perceptions of similarity paragraph",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "table2_grimmer_selfeval_suspicious_2of8",
+        "severity": "suspicious",
+        "location": "Table 2, Self-evaluation row, Positive|Unambiguous columns",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "exp4_mood_manip_df_anomaly_unresolved",
+        "severity": "suspicious",
+        "location": "Experiment 4, Manipulation check paragraph",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "similarity_composite_no_tool",
+        "severity": "suspicious",
+        "location": "Table 2, Similarity row (8 cells); Experiment 3 similarity index",
+        "markers": [
+          "model_computed",
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "no registered tool produced this number -- the model did the arithmetic itself, so it has not been through the guards that make a severity safe to state. If a tool covers this check, re-run it with the tool. If none does, say in `triage` what you did to satisfy yourself the arithmetic is right, or drop the finding to `indeterminate`.",
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      },
+      {
+        "id": "per_cell_n_never_reported",
+        "severity": "suspicious",
+        "location": "Experiments 2, 3, and 4 (all factorial tables and prose)",
+        "markers": [
+          "quote_not_located"
+        ],
+        "what_to_do": [
+          "the quoted passage could not be found in the paper. Either the values were transcribed rather than copied, or our extraction differs from what the model read. Re-read the source span before keeping this."
+        ]
+      }
+    ],
+    "note": "8 of 8 accusation(s) carry a named weakness in their evidence. Each is listed with what would settle it. This is a worklist, not a verdict: none of these is wrong because it is listed, and a marker you resolve should be recorded in `triage` like any other triage decision."
+  }
+}

@@ -1,0 +1,14 @@
+# The complete review with the tools agent on `tool_access: skill`: no MCP
+# server; it runs `metascience tool run` in a shell fenced by skill_guard.py
+# (docs/specs/tool_access.md). Claude backend only. An experiment arm.
+schema_version: 1
+name: full_skill
+description: Complete review; the tools agent calls its tools as `metascience tool run` in a fenced shell (claude only).
+modules:
+  - use: tools_agent
+    tools: all
+    tool_access: skill
+  - use: scientific_proofreading_agent
+  - use: image_analysis
+  - use: text_forensics
+  - use: adjudicator

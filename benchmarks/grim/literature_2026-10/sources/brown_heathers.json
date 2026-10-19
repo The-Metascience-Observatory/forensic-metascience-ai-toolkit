@@ -1,0 +1,315 @@
+{
+  "scope": "GRIM ground truth outside the Wansink/Cornell lab. Covers: (1) Brown & Heathers (2017) GRIM survey and its data requests; (2) Brown & Heathers' work on Nicolas Gueguen and the notices that followed; (3) other named papers with GRIM failures on Nick Brown's blog (all 100 posts read from the Blogger JSON feed, 2007 to 2026-04), James Heathers' Medium posts on Gueguen and GRIM, and Jordan Anaya's GRIMMER preprint; (4) notices and critiques that cite GRIM by name, found through Retraction Watch, Crossref update metadata, PubPeer, Europe PMC full-text search and web search. Compiled 2026-10-17. Every mean_as_printed was copied from a source I read: the article table reproduced as an image on the critic's blog, the notice text, or the critic's own transcription. None comes from memory. Each grim_cells entry was recomputed with a stdlib GRIM check (round-half-up and round-half-even, at the stated n and k); the 'recompute' field gives the result. OSF was down for scheduled maintenance from 2026-10-17 until 2026-10-19 09:00 EDT, so three critic files hosted there could not be read: osf.io/3fcbr (the GRIM project and its list of 260 articles), osf.io/98nzj (Brown & Heathers' 10-article Gueguen report) and osf.io/ngwn8 (the Mueller & Dweck reanalysis). The affected entries say so. The Wansink/Cornell lab is excluded.",
+  "papers": [
+    {
+      "doi": "10.1177/0956797611398497",
+      "title": "A bad taste in the mouth: Gustatory disgust influences moral judgment",
+      "year": 2011,
+      "journal": "Psychological Science 22(3), 295-299",
+      "authors": "Eskine, K. J., Kacinik, N. A., & Prinz, J. J.",
+      "fulltext_url": "https://journals.sagepub.com/doi/10.1177/0956797611398497 (Brown's annotated copy is at http://nickbrown.fr/blog/eskine/)",
+      "outcome": "none",
+      "outcome_url": "",
+      "outcome_mentions_statistics": false,
+      "confirmation": "authors_data",
+      "confirmation_detail": "This is one of the 21 articles from the GRIM survey whose authors Brown & Heathers asked for data. The lead author's Gmail address bounced. The dataset (SPSS) later reached Brown through a colleague. It reproduces every Table 1 mean exactly, and shows the condition sizes were swapped in the text: Sweet n = 21 and Water/control n = 18, where the text says Sweet 18 and control 21. The GRIM failures are therefore real against the printed n, and the cause is a reporting error in n. I confirmed this myself by recomputing the means from Brown's posted CSV: Water n = 18 gives 1.1667, 1.3333, 6.6111, 1.8889; Sweet n = 21 gives 1.7619, 5.5238, 1.8095, 1.3810. No correction has been published (Crossref shows no update).",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "http://nickbrown.fr/blog/eskine/", "kind": "blog", "author": "Nick Brown (dataset CSV/SAV, R code, annotated PDF)"},
+        {"url": "https://pubpeer.com/publications/625A9192268F5B4B75FCC8081EF5EB", "kind": "pubpeer", "author": "various"},
+        {"url": "https://web.archive.org/web/20211230205650/https://peerj.com/preprints/2064.pdf", "kind": "preprint", "author": "Brown & Heathers (anonymised account of the bounced data request)"}
+      ],
+      "grim_cells": [
+        {"location": "Table 1 (Participants' Mean Taste Ratings of the Three Drinks), row 'Bitter taste', column 'Sweet drink'", "mean_as_printed": "1.76", "n": 18, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "Single-item rating. Brown: '1.76 * 18 = 31.68 ... 32 / 18 = 1.7777 which should be reported as 1.78'. The dataset holds integer ratings.", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n. The dataset shows the true n is 21; 37/21 = 1.7619, which rounds to 1.76.", "recompute": "FAIL at n=18; OK at n=21"},
+        {"location": "Table 1, row 'Sweet taste', column 'Sweet drink'", "mean_as_printed": "5.52", "n": 18, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 21.", "recompute": "FAIL at n=18"},
+        {"location": "Table 1, row 'Neutral taste', column 'Sweet drink'", "mean_as_printed": "1.81", "n": 18, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 21.", "recompute": "FAIL at n=18"},
+        {"location": "Table 1, row 'Disgusting taste', column 'Sweet drink'", "mean_as_printed": "1.38", "n": 18, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 21.", "recompute": "FAIL at n=18"},
+        {"location": "Table 1, row 'Bitter taste', column 'Water'", "mean_as_printed": "1.17", "n": 21, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 18.", "recompute": "FAIL at n=21; OK at n=18"},
+        {"location": "Table 1, row 'Neutral taste', column 'Water'", "mean_as_printed": "6.61", "n": 21, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 18.", "recompute": "FAIL at n=21"},
+        {"location": "Table 1, row 'Disgusting taste', column 'Water'", "mean_as_printed": "1.89", "n": 21, "n_basis": "stated per cell", "decimals": 2, "scale": "taste rating, integers 1-7 in the authors' dataset", "items_k": 1, "why_integer": "single-item rating; dataset integer", "source_url": "https://steamtraen.blogspot.com/2025/02/from-grim-archive-eskine-et-al-2011.html", "critic_verdict": "Inconsistent with the printed n (highlighted). Resolved by the true n of 18.", "recompute": "FAIL at n=21"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "Not GRIM: an 'appalling' item was measured but never reported; Cronbach's alpha is anomalous, and negative for conservatives in the Bitter condition; the two contrasts in the last Results paragraph do not reproduce (t slightly off, df one larger than reported).",
+      "n_question": "Yes. The article text gives 'bitter condition: n = 15; sweet condition: n = 18; control condition: n = 21'. The data show Sweet n = 21 and Water n = 18. A checker using the printed n should flag all 7 cells; the truth is a misreported n, not wrong means. Five cells pass at both n: the four Bitter-drink means at n = 15 (6.40, 1.07, 2.00, 6.13) and Water 'Sweet taste' 1.33.",
+      "notes": "Cell values were read from Brown's highlighted image of the article's Table 1 (blog post), not from the article PDF. The Table 1 column is labelled 'Water'; the text calls this condition 'control'. Brown counts '7 GRIM problems out of 12 means'."
+    },
+    {
+      "doi": "10.1177/0956797611432497",
+      "title": "Is It Light or Dark? Recalling Moral Behavior Changes Perception of Brightness",
+      "year": 2012,
+      "journal": "Psychological Science 23(4), 407-409",
+      "authors": "Banerjee, P., Chatterjee, P., & Sinha, J.",
+      "fulltext_url": "https://journals.sagepub.com/doi/10.1177/0956797611432497",
+      "outcome": "expression of concern (2021-11-09)",
+      "outcome_url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727",
+      "outcome_mentions_statistics": true,
+      "confirmation": "critique_only",
+      "confirmation_detail": "Journal-endorsed. The editor (Bauer) and statistical adviser (Gregory Francis) published an Expression of Concern that names GRIM and itemises the means in its own Table 1. Francis found two means impossible under any division of participants between conditions. The authors could not find their data. No correction or retraction. 'critique_only' is the nearest value in the enum; this case is stronger than critique alone, because the journal's own analysis confirmed it.",
+      "sources": [
+        {"url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727", "kind": "notice", "author": "Patricia J. Bauer & Gregory Francis (Psychological Science EoC)"},
+        {"url": "https://retractionwatch.com/2021/11/16/i-have-zero-complaints-about-the-process-post-publication-analysis-earns-perception-paper-a-flag/", "kind": "blog", "author": "Retraction Watch"},
+        {"url": "https://web.archive.org/web/20211205010256/https://blog.openmktg.org/2021/11/about-that-metaphor-priming-paper.html", "kind": "blog", "author": "Aaron Charlton"},
+        {"url": "https://pubpeer.com/publications/2DEBD2B0284D6F35886962D0D081AB", "kind": "pubpeer", "author": "various"}
+      ],
+      "grim_cells": [
+        {"location": "Study 1, room-brightness rating, Unethical condition", "mean_as_printed": "4.71", "n": 20, "n_basis": "critic's assumption", "decimals": 2, "scale": "7-point scale (1 = low, 7 = high), as the EoC describes the article", "items_k": 1, "why_integer": "EoC: brightness was 'reported to have been judged on a 7-point scale'.", "source_url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727", "critic_verdict": "Charlton: impossible at the equal split (20/20 of N = 40). EoC: resolvable if the split were 23 ethical / 17 unethical. NOT robust to n.", "recompute": "FAIL at n=20; OK at n=17"},
+        {"location": "Study 2, preference for lamp, Ethical condition", "mean_as_printed": "2.34", "n": 37, "n_basis": "critic's assumption", "decimals": 2, "scale": "7-point scale (1 = low, 7 = high)", "items_k": 1, "why_integer": "EoC: product preferences 'reported to have been judged on a 7-point scale'.", "source_url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727", "critic_verdict": "Impossible at the equal split (37/37 of N = 74). EoC: an exhaustive search of all splits leaves at least two of the six Study 2 means inconsistent.", "recompute": "FAIL at n=37"},
+        {"location": "Study 2, preference for candle, Ethical condition", "mean_as_printed": "2.37", "n": 37, "n_basis": "critic's assumption", "decimals": 2, "scale": "7-point scale (1 = low, 7 = high)", "items_k": 1, "why_integer": "as above", "source_url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727", "critic_verdict": "Impossible at the equal split. Under any split at least two Study 2 means fail.", "recompute": "FAIL at n=37"},
+        {"location": "Study 2, preference for flashlight, Unethical condition", "mean_as_printed": "4.33", "n": 37, "n_basis": "critic's assumption", "decimals": 2, "scale": "7-point scale (1 = low, 7 = high)", "items_k": 1, "why_integer": "as above", "source_url": "https://journals.sagepub.com/doi/full/10.1177/09567976211058727", "critic_verdict": "Impossible at the equal split. Under any split at least two Study 2 means fail.", "recompute": "FAIL at n=37"}
+      ],
+      "grim_cells_not_itemised": "Charlton counted 5 of 10 means inconsistent; the EoC table shows 4 at the equal split. The fifth is not identified in any source I read. It may be a Study 2 brightness-in-watts mean, which the EoC excluded because watts may not be integers.",
+      "other_tests_flagged": "Very large effect sizes (PubPeer: .64 SD for brightness, 1.23/.79/1.33 SD for lamp/candle/flashlight liking; Quentin Andre).",
+      "n_question": "Per-condition n is not reported (only N = 40 and N = 74). Every n above is the equal-split assumption. The Study 1 cell is resolvable with 23/17. For Study 2, the journal's exhaustive search says no split rescues all six means; at 35/39 two remain inconsistent.",
+      "notes": "Consistent cells listed in the EoC Table 1 (useful negatives): Study 1 Ethical '5.3' (n=20 or 23); Study 2 Unethical-lamp '4.16', Unethical-candle '3.62', Ethical-flashlight '2.35' (n=37). The EoC prints the Study 1 Ethical mean as '5.3'."
+    },
+    {
+      "doi": "10.5178/lebs.2012.17",
+      "title": "Risk taking and Women's Menstrual Cycle: Near Ovulation, Women Avoid a Doubtful Man",
+      "year": 2012,
+      "journal": "Letters on Evolutionary Behavioral Science 3(1), 1-3",
+      "authors": "Gueguen, N.",
+      "fulltext_url": "https://lebs.hbesj.org/index.php/lebs/article/view/lebs.2012.17",
+      "outcome": "expression of concern (2020-03-15)",
+      "outcome_url": "https://lebs.hbesj.org/index.php/lebs/article/view/335",
+      "outcome_mentions_statistics": true,
+      "confirmation": "critique_only",
+      "confirmation_detail": "Journal-endorsed. The LEBS expression of concern (doi 10.5178/lebs.2020.74, Yamamoto & Ohtsubo) reports a journal investigation committee's finding that two Table 1 means are impossible for their n. It responds to Brown & Heathers' (2017) commentary, which covered 10 Gueguen articles. The author did not respond, no erratum was submitted, and the paper was not retracted. 'critique_only' is the nearest enum value.",
+      "sources": [
+        {"url": "https://lebs.hbesj.org/index.php/lebs/article/download/lebs.2020.74/275/", "kind": "notice", "author": "Shinya Yamamoto & Yohsuke Ohtsubo (LEBS editors)"},
+        {"url": "https://steamtraen.blogspot.com/2017/12/a-review-of-research-of-dr-nicolas.html", "kind": "blog", "author": "Nick Brown & James Heathers"},
+        {"url": "https://osf.io/98nzj/", "kind": "blog", "author": "Brown & Heathers, '20190425 NB-JH analysis of Gueguen articles.pdf' (not read: OSF down)"},
+        {"url": "https://pubpeer.com/publications/E307E6066A2E300503D3924F548E9B", "kind": "pubpeer", "author": "various"}
+      ],
+      "grim_cells": [
+        {"location": "Table 1, variable 'gaze-smile during interaction', high fertility risk group", "mean_as_printed": "0.32", "n": 15, "n_basis": "stated per cell", "decimals": 2, "scale": "count of gaze-smiles during the interaction (non-negative integer count)", "items_k": 1, "why_integer": "EoC: 'Assuming that the variable labeled \"gaze-smile during interaction\" is a count variable, and thus takes only integer values ... it is impossible to obtain this mean from 15 integer values.'", "source_url": "https://lebs.hbesj.org/index.php/lebs/article/download/lebs.2020.74/275/", "critic_verdict": "Impossible. Nearest possible is 0.33 (ten 0s, five 1s), but that gives SD 0.49, above the reported 0.45. Also impossible under a two-coder average (k=2).", "recompute": "FAIL at n=15, k=1; FAIL at k=2"},
+        {"location": "Table 1, variable 'gaze-smile during interaction', moderate fertility risk group", "mean_as_printed": "0.58", "n": 20, "n_basis": "stated per cell", "decimals": 2, "scale": "count of gaze-smiles (integer count)", "items_k": 1, "why_integer": "EoC: count variable; 'the reported mean of 0.58 implies that the sum of the count data was 11.6'.", "source_url": "https://lebs.hbesj.org/index.php/lebs/article/download/lebs.2020.74/275/", "critic_verdict": "Impossible at k=1. The EoC also says it is impossible under a two-coder average (0.58 x 40 = 23.2).", "recompute": "FAIL at n=20, k=1; OK at k=2 (23/40 = 0.575 rounds to 0.58), which contradicts the EoC's k=2 claim"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "GRIMMER/SD: mean 0.33 with SD 0.45 is impossible (minimum SD 0.49). The p value for F(2, 93) = 7.09 should be .0014, not the reported .002.",
+      "n_question": "F(2, 93) implies N = 96 across three fertility-risk groups. The EoC gives n = 15 (high) and n = 20 (moderate). Whether the measure is a single count or an average of two coders is an assumption; under the two-coder reading only the 0.32 cell stays inconsistent.",
+      "notes": "Cell values are taken from the EoC text; I did not read the article. This is the only Gueguen article where a journal notice itemises specific GRIM cells."
+    },
+    {
+      "doi": "10.1111/j.1540-4560.2005.00405.x",
+      "title": "This Old Stereotype: The Pervasiveness and Persistence of the Elderly Stereotype",
+      "year": 2005,
+      "journal": "Journal of Social Issues 61(2), 267-285",
+      "authors": "Cuddy, A. J. C., Norton, M. I., & Fiske, S. T.",
+      "fulltext_url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1540-4560.2005.00405.x",
+      "outcome": "corrected (Corrigendum 2016) -- t statistics only, means left unchanged",
+      "outcome_url": "https://doi.org/10.1111/josi.12185",
+      "outcome_mentions_statistics": true,
+      "confirmation": "critique_only",
+      "confirmation_detail": "A corrigendum exists, but it corrects only the two t tests (5.03 to 1.79 and 11.14 to 3.29) and leaves the GRIM-inconsistent means as printed. The GRIM claim itself is critique only. I read the corrigendum wording as quoted on PubPeer; Wiley's bot check blocked the publisher page.",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2016/07/old-stereotypes.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "https://pubpeer.com/publications/E043DD982C3CC7F4B2CB4980522684", "kind": "pubpeer", "author": "various (includes the drafted correction text)"}
+      ],
+      "grim_cells": [
+        {"location": "Results (p. 275), warmth composite, high-incompetence condition: 'M = 7.47, SD = .73'", "mean_as_printed": "7.47", "n": 18, "n_basis": "derived from total", "decimals": 2, "scale": "mean of three warmth items (warm, friendly, good-natured), each rated 1-9", "items_k": 3, "why_integer": "Each item is an integer from 1 to 9. The composite averages 3 items, so the sum over n participants moves in steps of 1/3. Brown: 134.333/18 = 7.46296 and 134.666/18 = 7.48148; neither gives 7.47.", "source_url": "https://steamtraen.blogspot.com/2016/07/old-stereotypes.html", "critic_verdict": "Inconsistent, given the n implied by the reported dfs.", "recompute": "FAIL at n=18, k=3; OK at n=19, k=3"},
+        {"location": "Results (p. 275), warmth composite, low-incompetence condition: 'M = 6.85, SD = 1.28'", "mean_as_printed": "6.85", "n": 19, "n_basis": "derived from total", "decimals": 2, "scale": "mean of three warmth items, each 1-9", "items_k": 3, "why_integer": "As above. Brown: 130.000/19 = 6.84211 and 130.333/19 = 6.85956; neither rounds to 6.85.", "source_url": "https://steamtraen.blogspot.com/2016/07/old-stereotypes.html", "critic_verdict": "Inconsistent, given the n implied by the reported dfs.", "recompute": "FAIL at n=19, k=3; OK at n=18, k=3"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "The t statistics were badly wrong (correct values per the correction: t(35) = 1.79, p = .08; t(34) = 3.29). PubPeer recomputes the omnibus F as about 3.73 against the reported 3.93.",
+      "n_question": "Weak label. Per-cell n is not reported. Brown derives nHigh = 18, nLow = 19, nControl = 18 from N = 55, t(35) and t(34). Brown also notes that if t(35) is a typo for t(34), the split becomes 19/18/18 and both means are consistent; I confirmed this. The cells are inconsistent only if the reported dfs are right.",
+      "notes": "The control mean 6.59 (n = 18) is consistent. Brown's 2016-07-09 update fixed an error in his post after a comment by John Bullock; the figures above are from the current version."
+    },
+    {
+      "doi": "10.1037/h0041593",
+      "title": "Cognitive consequences of forced compliance",
+      "year": 1959,
+      "journal": "Journal of Abnormal and Social Psychology 58(2), 203-210",
+      "authors": "Festinger & Carlsmith",
+      "fulltext_url": "http://psychclassics.yorku.ca/Festinger/index.htm",
+      "outcome": "none",
+      "outcome_url": "",
+      "outcome_mentions_statistics": false,
+      "confirmation": "critique_only",
+      "confirmation_detail": "Blog critique by Matti Heino (2016), cited by Brown (2017-01-14). The data are long gone.",
+      "sources": [
+        {"url": "https://mattiheino.com/2016/11/13/legacy-of-psychology/", "kind": "blog", "author": "Matti Heino"},
+        {"url": "https://steamtraen.blogspot.com/2017/01/in-which-science-actually-self-corrects.html", "kind": "blog", "author": "Nick Brown (cites the Heino analysis)"}
+      ],
+      "grim_cells": [
+        {"location": "Table 1 (Average Ratings on Interview Questions for Each Condition), row 'How much they learned (rated from 0 to 10)', column 'Control (N = 20)'", "mean_as_printed": "3.08", "n": 20, "n_basis": "stated per cell", "decimals": 2, "scale": "0 to 10 rating", "items_k": 1, "why_integer": "The critic assumes whole-number ratings on the stated scale. With n = 20 every mean must be a multiple of .05.", "source_url": "https://mattiheino.com/2016/11/13/legacy-of-psychology/", "critic_verdict": "Circled as 'mathematically impossible given the reported sample sizes'.", "recompute": "FAIL at n=20"},
+        {"location": "Table 1, row 'Scientific importance (rated from 0 to 10)', column 'Twenty Dollars (N = 20)'", "mean_as_printed": "5.18", "n": 20, "n_basis": "stated per cell", "decimals": 2, "scale": "0 to 10 rating", "items_k": 1, "why_integer": "as above", "source_url": "https://mattiheino.com/2016/11/13/legacy-of-psychology/", "critic_verdict": "Circled as impossible.", "recompute": "FAIL at n=20"},
+        {"location": "Table 1, row 'Participate in similar exp. (rated from -5 to +5)', column 'Control (N = 20)'", "mean_as_printed": "-.62", "n": 20, "n_basis": "stated per cell", "decimals": 2, "scale": "-5 to +5 rating", "items_k": 1, "why_integer": "as above", "source_url": "https://mattiheino.com/2016/11/13/legacy-of-psychology/", "critic_verdict": "Circled as impossible.", "recompute": "FAIL at n=20"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "none",
+      "n_question": "Each column is headed N = 20. Whether interviewers recorded only whole-number ratings is the critic's assumption; half-point answers would break the label. Heino blames 'shoddy reporting of means or accidental misreporting of sample sizes'.",
+      "notes": "Values were read from Heino's image of the original Table 1, with the three cells circled. The '-.62' is printed with a minus sign and no leading zero. Of the 12 means, 3 fail ('a quarter'). The other 9 are consistent negatives: -.45, +1.35, -.05, 2.80, 3.15, 5.60, 6.45, +1.20, -.25."
+    },
+    {
+      "doi": "10.1016/0191-8869(92)90072-W",
+      "title": "Life-history comparisons between orientals and whites at a Canadian university",
+      "year": 1992,
+      "journal": "Personality and Individual Differences 13(4), 439-442",
+      "authors": "Rushton, J. P.",
+      "fulltext_url": "http://philipperushton.net/wp-content/uploads/2015/02/iq-race-brain-size-r-k-theory-sex-rushton-personality-individual-differences-4-1992.pdf",
+      "outcome": "none",
+      "outcome_url": "",
+      "outcome_mentions_statistics": false,
+      "confirmation": "critique_only",
+      "confirmation_detail": "Blog critique only. The author is deceased and no data are available.",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "https://osf.io/4zjba/", "kind": "blog", "author": "Nick Brown (Excel + R; not read, OSF down)"},
+        {"url": "https://pubpeer.com/publications/BAE9A8C41B712535D737A3E1E02C69", "kind": "pubpeer", "author": "various"}
+      ],
+      "grim_cells": [
+        {"location": "Table 2 (Ranking of races on various dimensions by Orientals and Whites), row 'Intelligence', column 'Oriental ranking of: Whites'", "mean_as_printed": "1.98", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3 (each participant ranked Blacks, Orientals, Whites)", "items_k": 1, "why_integer": "Brown: 'each student ranked Blacks, Whites, and Orientals from 1 to 3 ... the means of those integers were reported'.", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent at n = 73 (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Anxiety', column 'Oriental ranking of: Orientals'", "mean_as_printed": "1.50", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Sociability', column 'Oriental ranking of: Whites'", "mean_as_printed": "1.20", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Aggressiveness', column 'Oriental ranking of: Blacks'", "mean_as_printed": "2.02", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Aggressiveness', column 'Oriental ranking of: Whites'", "mean_as_printed": "1.76", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Size of genitalia', column 'Oriental ranking of: Whites'", "mean_as_printed": "1.83", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"},
+        {"location": "Table 2, row 'Size of genitalia', column 'Oriental ranking of: Orientals'", "mean_as_printed": "2.87", "n": 73, "n_basis": "derived from total", "decimals": 2, "scale": "rank 1-3", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2019/07/applying-some-error-detection.html", "critic_verdict": "GRIM-inconsistent (highlighted)", "recompute": "FAIL at n=73"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "Most Oriental-ranking row sums fall below 6.00 (e.g. Intelligence 5.92). White-ranking rows for Anxiety (6.03) and Rule-following (6.02) exceed 6.00 by more than rounding allows. Two significance stars are missing in Table 1 (implied t of 5.1 and 2.8). The final-digit distribution gives chi-square 15.907, p = .069.",
+      "n_question": "Weak as evidence of error. n = 73 is the total Oriental sample; missing answers per item are not reported. Brown himself notes that at n = 73 about 27% of random 2-dp values are GRIM-inconsistent by chance, and that 7 or more of 30 happens about 58.5% of the time: 'close to a toss-up'. The 7 cells are mechanically inconsistent at the stated n, so they are valid recall targets for a checker. They are not established errors.",
+      "notes": "Cells were read from Brown's highlighted copy of Table 2 (blog image). I recomputed all 30 Oriental-ranking means at n = 73: exactly these 7 fail. White rankings (n = 211) cannot be tested at 2 dp."
+    },
+    {
+      "doi": "10.1037/0022-3514.75.1.33",
+      "title": "Praise for intelligence can undermine children's motivation and performance",
+      "year": 1998,
+      "journal": "Journal of Personality and Social Psychology 75(1), 33-52",
+      "authors": "Claudia Mueller & Carol Dweck",
+      "fulltext_url": "http://www.uky.edu/~eushe2/mrg/MuellerDweck1998.pdf (Brown's link; now returns a redirect) or https://doi.org/10.1037/0022-3514.75.1.33",
+      "outcome": "none",
+      "outcome_url": "",
+      "outcome_mentions_statistics": false,
+      "confirmation": "authors_data",
+      "confirmation_detail": "Dweck and Mueller, with David Yeager, sent a 16-page line-by-line reply within four weeks. Two study datasets were still available. Several inconsistencies had conclusive explanations (unclear or omitted reporting); others were recorded as probable typos or transcription errors; one mean Brown flagged outside the main table was not wrong. Crossref shows no correction.",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2017/01/in-which-science-actually-self-corrects.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "https://osf.io/ngwn8/", "kind": "blog", "author": "David S. Yeager, 'Re-analysis of descriptive statistics from Mueller & Dweck (1998)' (Files/Output; not read, OSF down)"}
+      ],
+      "grim_cells": [],
+      "grim_cells_not_itemised": "Brown: 17 GRIM inconsistencies among the 50 means in the tables on p. 38, after allowing for measures with two items. He also flagged one mean outside that table, which proved correct. The cell-by-cell list and the authors' reply are on OSF (osf.io/ngwn8, Files/Output), which was down for maintenance until 2026-10-19 09:00 EDT. Re-check then.",
+      "other_tests_flagged": "'a couple of the standard deviations' inconsistent (SD checks / GRIMMER-type), count only.",
+      "n_question": "Some measures had two items (k = 2), which 'effectively doubles the sample size'. The authors also explained some inconsistencies by unclear reporting of who was analysed.",
+      "notes": "Outside the 2011-2015 GRIM-survey sample. This is the best 'authors confirmed' case after Eskine, but the cells must be pulled from OSF."
+    },
+    {
+      "doi": "10.1080/00224545.2011.605398",
+      "title": "Color and Women Attractiveness: When Red Clothed Women Are Perceived to Have More Intense Sexual Intent",
+      "year": 2012,
+      "journal": "The Journal of Social Psychology 152(3), 261-265",
+      "authors": "Gueguen, N.",
+      "fulltext_url": "https://doi.org/10.1080/00224545.2011.605398",
+      "outcome": "retracted (2023-03-21)",
+      "outcome_url": "https://doi.org/10.1080/00224545.2022.2151704",
+      "outcome_mentions_statistics": true,
+      "confirmation": "retraction",
+      "confirmation_detail": "Retraction notice (quoted in full on PubPeer): 'table one in the manuscript had four combinations of means and standard deviations that were impossible given the reported sample sizes (of eight combinations reported in the table)'. The journal's Scientific Integrity Committee ran simulations and could not find an explanation, and the author did not reply.",
+      "sources": [
+        {"url": "https://pubpeer.com/publications/8B8ADA0675786B7E302CAA7CFD2C14", "kind": "pubpeer", "author": "various (full notice text)"},
+        {"url": "https://retractionwatch.com/2022/12/02/paper-about-sexual-intent-of-women-wearing-red-retracted-seven-years-after-sleuths-raised-concerns/", "kind": "blog", "author": "Retraction Watch"},
+        {"url": "https://steamtraen.blogspot.com/2017/12/a-review-of-research-of-dr-nicolas.html", "kind": "blog", "author": "Nick Brown & James Heathers"},
+        {"url": "https://osf.io/98nzj/", "kind": "blog", "author": "Brown & Heathers 10-article report (not read: OSF down)"}
+      ],
+      "grim_cells": [],
+      "grim_cells_not_itemised": "The notice gives a count only: 4 of 8 mean/SD combinations in Table 1 are impossible. It does not say whether the failures are of the means alone (GRIM) or only of the mean-SD pairs (GRIMMER/SPRITE-type). The cells are probably in Brown & Heathers' report at osf.io/98nzj ('20190425 NB-JH analysis of Gueguen articles.pdf'); the 2018 Dropbox copy is deleted and was never archived.",
+      "other_tests_flagged": "4 impossible mean/SD combinations (test type unspecified in the notice).",
+      "n_question": "unknown until the table is read",
+      "notes": "This may not be a GRIM case at all. Keep it out of a GRIM-only recall denominator until the OSF report shows whether the means alone fail."
+    },
+    {
+      "doi": "10.1086/661890",
+      "title": "Super Size Me: Product Size as a Signal of Status",
+      "year": 2012,
+      "journal": "Journal of Consumer Research 38(6), 1047-1062",
+      "authors": "David Dubois, Derek Rucker, Adam Galinsky",
+      "fulltext_url": "https://doi.org/10.1086/661890",
+      "outcome": "retracted (2023-10-29), after an expression of concern (2023-06-08)",
+      "outcome_url": "https://doi.org/10.1093/jcr/ucad055",
+      "outcome_mentions_statistics": true,
+      "confirmation": "retraction",
+      "confirmation_detail": "All three authors asked for retraction in October 2022 after Aaron Charlton's report, which included GRIM. The notice: 'retracted following the discovery of a set of statistical errors in studies 1 and 6, which cannot be explained as the authors no longer have the data'. It does not name GRIM. Study 1 is the study that contains the GRIM issues.",
+      "sources": [
+        {"url": "https://academic.oup.com/jcr/article/51/2/441/7325344", "kind": "notice", "author": "Journal of Consumer Research"},
+        {"url": "https://retractionwatch.com/wp-content/uploads/2023/04/Numerical-inconsistencies-in-Dubois-et-al.-2012-v2.pdf", "kind": "blog", "author": "Aaron Charlton (report v2, 2022-05-30)"},
+        {"url": "https://retractionwatch.com/2023/04/12/journal-hasnt-retracted-super-size-me-paper-six-months-after-authors-request/", "kind": "blog", "author": "Retraction Watch"},
+        {"url": "https://pubpeer.com/publications/153A05324CBB3C147AF86F890A7517", "kind": "pubpeer", "author": "various"}
+      ],
+      "grim_cells": [],
+      "grim_cells_not_itemised": "Study 1, Table 1: 45 means (9 cells: small/medium/large x coffee/pizza/smoothie; 5 single-item 1-7 DVs each), N = 183, per-cell n unknown (average 20.33). Charlton tested every n from 15 to 25. Share of means that work individually for some n: 82% with regular rounding, 73% with downrounding, 91% mixed. So about 8 of 45 fail at every plausible n under regular rounding. Requiring one n per cell, 40-80% of a cell's 5 means work. The individual failing cells are not named, and his supplement table of means did not survive text extraction from the PDF. Study 3 GRIM issues were explained by the author's habit of downrounding (dataset provided).",
+      "other_tests_flagged": "Widespread p-value errors; an impossible mediation model in Study 6 (CI asymmetry; c' impossible given a, b, c); Study 2 F test does not reproduce (recomputed F(2,139) = 2.845 vs reported F(1,135) = 10.54); effect-size errors (Ziano et al. replication).",
+      "n_question": "Cell sizes are not reported, and the author is known to downround (Study 3). Any GRIM label here depends on assumed n and rounding.",
+      "notes": "Critic is Charlton, not Brown or Heathers. Included under scope item 4 because it is a retraction that followed a GRIM report. A weak target for a cell-level recall benchmark."
+    },
+    {
+      "doi": "10.1016/j.rbmo.2014.03.011",
+      "title": "Combined coenzyme Q10 and clomiphene citrate for ovulation induction in clomiphene-citrate-resistant polycystic ovary syndrome",
+      "year": 2014,
+      "journal": "Reproductive BioMedicine Online 29(1), 119-124",
+      "authors": "El Refaeey; Selem; Badawy (family names from Crossref)",
+      "fulltext_url": "https://doi.org/10.1016/j.rbmo.2014.03.011",
+      "outcome": "retracted (2023-09-06), after an expression of concern (2023)",
+      "outcome_url": "https://doi.org/10.1016/j.rbmo.2023.103389",
+      "outcome_mentions_statistics": false,
+      "confirmation": "critique_only",
+      "confirmation_detail": "The retraction gives these reasons: trial data no longer available, prior duplicate publication (Egyptian J Fertil Steril 2013), and concerns about 'the accuracy of analysis and data presentation'. It does not mention means or GRIM. The GRIM cells are critique only.",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "http://nickbrown.fr/blog/mansoura/", "kind": "blog", "author": "Nick Brown (main-analyses .xls with his transcription of each table)"},
+        {"url": "https://pubpeer.com/publications/62FB83679D72FF0C00BCEFBBC49C4D", "kind": "pubpeer", "author": "retraction notice text"}
+      ],
+      "grim_cells": [
+        {"location": "Baseline characteristics table, 'Age', CoQ10 + clomiphene group (column 1 of Brown's transcription)", "mean_as_printed": "27.54", "n": 51, "n_basis": "stated per cell", "decimals": 2, "scale": "age in years", "items_k": 1, "why_integer": "Critic's assumption that age was recorded in whole years. Brown calls these 'signs of possible inconsistencies'.", "source_url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "critic_verdict": "possible GRIM inconsistency ('Age' (both groups))", "recompute": "FAIL at n=51"},
+        {"location": "Baseline characteristics table, 'Age', control (clomiphene-only) group (column 2)", "mean_as_printed": "29.23", "n": 50, "n_basis": "stated per cell", "decimals": 2, "scale": "age in years", "items_k": 1, "why_integer": "as above", "source_url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "critic_verdict": "possible GRIM inconsistency", "recompute": "FAIL at n=50"},
+        {"location": "Baseline characteristics table, 'Infertility' (duration, years), control group (column 2)", "mean_as_printed": "4.43", "n": 50, "n_basis": "stated per cell", "decimals": 2, "scale": "duration of infertility in years", "items_k": 1, "why_integer": "Critic's assumption that duration was recorded in whole years.", "source_url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "critic_verdict": "possible GRIM inconsistency ('Infertility' (control group))", "recompute": "FAIL at n=50"}
+      ],
+      "grim_cells_not_itemised": "",
+      "other_tests_flagged": "Wrong p values ('Couple of wrong p values', per Brown's summary sheet). The paper is in the Bordewijk et al. (2020) duplication analysis.",
+      "n_question": "Uses the group n's from Brown's spreadsheet (51 and 50). The group labels are inferred: Brown says the failing 'Infertility' mean is in the control group, which is column 2 (n = 50).",
+      "notes": "LOW CONFIDENCE label. Ages and infertility durations are often recorded with fractional years, which breaks the integer premise; this project's own measurements found GRIM on age fields mostly false. Values come from Brown's transcription in his .xls, not from the article."
+    },
+    {
+      "doi": "10.1111/j.1447-0756.2012.02016.x",
+      "title": "Endometrial scratching to improve pregnancy rate in couples with unexplained subfertility: A randomized controlled trial",
+      "year": 2012,
+      "journal": "Journal of Obstetrics and Gynaecology Research 39(3), 680-684",
+      "authors": "Gibreel; Badawy; El-Refai; El-Adawi (family names from Crossref)",
+      "fulltext_url": "https://doi.org/10.1111/j.1447-0756.2012.02016.x",
+      "outcome": "erratum/'Notification' (2021); content not read (Wiley bot check)",
+      "outcome_url": "https://doi.org/10.1111/jog.14919",
+      "outcome_mentions_statistics": false,
+      "confirmation": "critique_only",
+      "confirmation_detail": "Blog critique only. The 2021 'Notification' (Crossref type erratum) was not readable. Not retracted per Crossref.",
+      "sources": [
+        {"url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "kind": "blog", "author": "Nick Brown"},
+        {"url": "http://nickbrown.fr/blog/mansoura/", "kind": "blog", "author": "Nick Brown (.xls)"}
+      ],
+      "grim_cells": [
+        {"location": "Baseline characteristics table, 'Age', group in column 2 of Brown's transcription (n = 51)", "mean_as_printed": "31.38", "n": 51, "n_basis": "stated per cell", "decimals": 2, "scale": "age in years", "items_k": 1, "why_integer": "Critic's assumption of whole-year ages.", "source_url": "https://steamtraen.blogspot.com/2021/10/a-catastrophic-failure-of-peer-review.html", "critic_verdict": "possible GRIM inconsistency ('Age' (both groups))", "recompute": "FAIL at n=51"}
+      ],
+      "grim_cells_not_itemised": "Brown says 'Age (both groups)', but the other group's age, '30.56' at n = 54 (his transcription), is GRIM-consistent by my recomputation (1650/54 = 30.556). Either Brown used a different n for that group or he erred. Only the n = 51 cell is recorded.",
+      "other_tests_flagged": "Three of four t-test p values wrong; two of six Fisher-test p values wrong (Brown's summary sheet).",
+      "n_question": "Which arm is n = 54 and which n = 51 was not checked against the article.",
+      "notes": "LOW CONFIDENCE (age premise; see the El Refaeey notes). Values come from Brown's transcription."
+    }
+  ],
+  "searched_but_unusable": [
+    {"what": "Brown & Heathers (2017) GRIM survey, SPPS 8(4):363-369, doi 10.1177/1948550616673876: 260 articles (PS, JEP:G, JPSP, 2011-2015), 71 testable, 36 with at least one inconsistent mean (15 rated 1, 5 rated 2, 16 rated 4), 21 data requests, 9 datasets or explanations received.", "why": "Anonymised by design. The preprint says the authors 'refrained from mentioning the titles, authors or any identifying features', and its footnote 7 says details of the nine datasets were deliberately altered (e.g. 'Sixty' is a changed number). The only article later identified is Eskine et al. (2011) (see papers). A note on the PeerJ preprint page, seen only as a search-result snippet, says the full list of the 260 examined articles was later posted at osf.io/3fcbr; I could not check whether it carries per-article ratings or cells (OSF down until 2026-10-19). Of the 9 datasets: (1) 2 inconsistent means caused by a cell n differing from the column n; (2) the article already had a correction that left most problems unaddressed; (3) Excel formulas selected the wrong cells, and a correction was promised; (4) an early version of the data; (5) Ns from SPSS listwise deletion plus a misreported exclusion count; (6) a misreported total N; (7) wrong dfs and an impossible difference score of 1.5; (8) the author confirmed exclusions were not subtracted from N; (9) missing values and copy errors. None are identifiable."},
+    {"what": "Gueguen (2015) 'High heels increase women's attractiveness', Arch Sex Behav 44:2227-2235, doi 10.1007/s10508-014-0422-z. Retracted 2019-10-11 (10.1007/s10508-019-01558-0).", "why": "No GRIM claim. Brown's 2017-12-04 post (Study 4) uses SPRITE-style simulation of time-to-approach (a continuous variable) and a wrong F statistic (7.18 vs 8.06-8.16). The notice cites 'serious methodological weaknesses and statistical errors' at the university's request, with no cells."},
+    {"what": "Gueguen (2012) 'Color and women hitchhikers' attractiveness: Gentlemen drivers prefer red', Color Res Appl 37:76-78, doi 10.1002/col.20651.", "why": "No GRIM claim (N mismatch 5,250 vs 4,800, HSL colours, an impossible inter-rater r). The university agreement required retraction, but Crossref shows no notice as of 2026-10."},
+    {"what": "Gueguen (2015) 'Women's hairstyle and men's behavior', Scand J Psychol 56:637-640, doi 10.1111/sjop.12253. Expression of concern 2022 (10.1111/sjop.12809).", "why": "No GRIM failure. Heathers ('Long Hair, Don't Care') notes all six means end in 0 at n = 30, which is GRIM-consistent, and reconstructs a unique dataset (all counts multiples of 6; the author's data confirmed the reconstruction). Usable only as a GRIM-consistent negative. The EoC concerns data and attribution, not specific cells."},
+    {"what": "Gueguen (2012) 'Dead indoor plants strengthen belief in global warming', J Environ Psychol, doi 10.1016/j.jenvp.2011.12.002 (Heathers, 'Life in the Tinderbox').", "why": "No GRIM failure. The means at n = 30 are consistent; the issues are a wrong df (28 vs 58), implausibly small SDs (SPRITE gives a unique solution) and huge effect sizes."},
+    {"what": "Gueguen et al. (2014) 'Men's music ability and attractiveness to women...', Psychology of Music, doi 10.1177/0305735613482025. EoC 2020, retracted 2020-10-08.", "why": "No GRIM content in any source read (concerns are about plausibility of the fieldwork, raised by Samuel Mehr)."},
+    {"what": "Gueguen, five Perceptual and Motor Skills papers (2002-2009), retracted 2025-02-25 (10.1177/00315125241311636) after a 2023 EoC; three Psychological Reports EoCs (2023); Social Influence 2011 'love' paper retracted 2024 (10.1080/15534510.2024.2431421: 'incorrectly calculated effect sizes'); Soc Psychol Educ 2004 touching paper retracted 2025 (10.1007/s11218-025-10118-5: 'methodological weaknesses and statistical errors').", "why": "Notices read; none names means, sample-size impossibility or GRIM, and no critic itemises GRIM cells for these papers."},
+    {"what": "International Review of Social Psychology: six Gueguen papers (2002-2011), 5 EoCs and 1 erratum (doi 10.5334/irsp.304; erratum 10.5334/irsp.303), based on Hans IJzerman's commissioned report.", "why": "The notice says errors were found in all six but itemises none. The IJzerman report is not public. The Pascual erratum corrects sample descriptions and two t tests, not means."},
+    {"what": "Brown & Heathers' 10-article Gueguen commentary ('A commentary on some articles by Dr. Nicolas Gueguen', 2017/2018).", "why": "The 2018 Dropbox copy is deleted and was never archived. The 2019 version ('20190425 NB-JH analysis of Gueguen articles.pdf') is at osf.io/98nzj, down until 2026-10-19. This is the most likely source of itemised GRIM cells for the remaining Gueguen articles (and the JSP red-clothing Table 1). Re-check when OSF returns."},
+    {"what": "Martini, Gueguen, Jacob & Fischer-Lokou (2024), Eur J Public Health Studies 7(2), doi 10.46827/ejphs.v7i2.176 (Brown 2024-08-09).", "why": "Brown used GRIM only to infer that control n is 25, not the stated 26 (Table 2 df = 48 vs Table 1 df = 49), so the means are consistent at the df-implied n. The flagged problems are two GRIMMER (SD) failures. No GRIM cells are itemised; the means are in a blog image I did not transcribe."},
+    {"what": "Jacob, Gueguen & Delfosse (2024) 'Oh my darling Clementine', Eur J Mgmt Mktg Studies 8(4), doi 10.46827/ejmms.v8i4.1712 (Brown 2024-09-22).", "why": "Brown: all 10 published means pass GRIM and all 10 SDs pass GRIMMER. The GRIM/GRIMMER inconsistencies were in the 2016 student coursework report, which is not a publication."},
+    {"what": "Bos & Cuddy (2013) iPosture study (Brown 2015-12-13, 'Digging further into the Bos and Cuddy study').", "why": "A Harvard Business School working paper, not a journal article. The analysis is of percentages (50%, 71%, 88%, 94%) not obtainable with any plausible group sizes summing to 75. GRIM on proportions, pre-dating the GRIM name."},
+    {"what": "Anaya (2016) GRIMMER preprint (PeerJ Preprints 4:e2400v1); Anaya's GRIMMEST post (omnesres.com/research/grimmest/); Heathers, Anaya, van der Zee & Brown (2018) SPRITE preprint (e26968).", "why": "Methods papers. GRIMMER and GRIMMEST concern SDs and test statistics, not means; the GRIMMEST page now renders empty. The SPRITE preprint's worked examples were not checked cell by cell (the PDF was not text-searchable in the browser), and SPRITE is not GRIM."},
+    {"what": "Heathers, 'The GRIM test - a method for evaluating published research' (Medium, 2016-05-23).", "why": "Its only example is fictional (the 'University of Relevant Errors', n = 12, M = 20.95). The motivating 'certainly fraudulent' dataset is deliberately not named."},
+    {"what": "Other Brown blog posts with GRIM mentions: Carlisle RCT analysis (2017-06), 'identical numbers' (2018-07), RIVETS, the ultra-processed food study, Lee et al. (2019), Zhang/Gino/Norton (2016), Ivermectin/Elgazzar, Nitazoxanide, Etindele Sosso (2020).", "why": "No GRIM-failing means are itemised in any of these posts (searched the full text of all 100 posts in the feed). Wansink posts were excluded as out of scope."},
+    {"what": "Third-party GRIM work found via Europe PMC full-text search, outside this scope: Kelly (2021) 'A GRIM Survey of Parent-Child Interaction Therapy Research' (PsyArXiv 10.31234/osf.io/5m8qf; 17 of 24 PCIT papers with anomalies, 4 authors responded); De Cassai et al. (2024) GRIM analysis of erector spinae plane block trials (Can J Anaesth, 10.1007/s12630-024-02772-8); Schumm & Crawford (2020) critique of transgender-children studies (Linacre Q, 10.1177/0024363919884799); Jane & Mvududu (2026-10-12) audit of Singh et al. (1997) recommending retraction (zenodo.org/records/23331179; includes a 'singh_table_4_grim_annotated.png').", "why": "Not Brown/Heathers/Anaya and not notices, so not itemised here. Possible leads for another pass; the PCIT survey may name papers with confirmed errors."},
+    {"what": "Retraction Watch database (Crossref Labs export, 73,283 records) and Europe PMC full-text search for retraction/correction/EoC notices citing 'GRIM', 'granularity-related inconsistency', 'impossible given the sample size' or 'not possible given the sample size'.", "why": "The RW database Notes/Reason fields never mention GRIM (all hits were the GRIM-19 gene or 'granularity'). Europe PMC returned no notices in PMC; the only notice-level hits found anywhere are the three included above: the Banerjee EoC, the LEBS EoC and the JSP retraction. Notices outside PMC full text may still exist."}
+  ]
+}

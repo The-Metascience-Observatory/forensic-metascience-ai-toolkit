@@ -1,0 +1,9 @@
+# Image duplication detection ALONE: no AI review, no LLM at all. Every
+# candidate is filed unscreened -- quarantined, never the headline, never
+# published (modules/image_analysis/MODULE.md).
+schema_version: 1
+name: image_detect
+description: Image detection only, no AI; candidates are filed unscreened and unpublishable.
+modules:
+  - use: image_analysis
+    options: {ai_screening: false}

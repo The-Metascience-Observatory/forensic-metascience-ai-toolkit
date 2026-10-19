@@ -1,0 +1,115 @@
+{
+  "paper_id": "10.3349--ymj.2009.50.1.55",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-07 19:53 UTC",
+  "version": "0.1.0",
+  "effort": "max",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 2.0524335000000002,
+      "input_tokens": 14,
+      "output_tokens": 41336,
+      "wall_seconds": 495.58,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001376
+        },
+        "claude-opus-5": {
+          "costUSD": 2.0510574999999998
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 18
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 1.4828584999999999,
+      "input_tokens": 8,
+      "output_tokens": 24378,
+      "wall_seconds": 310.72,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.015398
+        },
+        "claude-opus-5": {
+          "costUSD": 1.4674605
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 3.535292,
+  "total_wall_seconds": 806.31,
+  "title_quality": {
+    "pass": false,
+    "n": 6,
+    "n_sentence_shaped": 0,
+    "n_joined": 0,
+    "n_overlong": 4,
+    "examples": [],
+    "problems": [
+      "4 title(s) exceed 90 characters"
+    ],
+    "detail": "4 title(s) exceed 90 characters"
+  },
+  "reproducibility": {
+    "n_findings": 24,
+    "n_valid": 18,
+    "n_invalid": 6,
+    "problems": [
+      "finding[14] (power_analysis_not_reproducible): must invoke `metascience`, got 'Not'",
+      "finding[15] (negative_conclusion_without_interval): must invoke `metascience`, got 'Not'",
+      "finding[16] (unblinded_subjective_outcome_assessment): must invoke `metascience`, got 'Not'",
+      "finding[17] (no_attrition_or_flow_reporting): must invoke `metascience`, got 'Not'",
+      "finding[4] (4): must invoke `metascience`, got 'No'",
+      "finding[5] (5): must invoke `metascience`, got 'No'"
+    ]
+  },
+  "consequence": {
+    "n_sweep": 18,
+    "n_report": 6,
+    "n_computed": 0,
+    "n_asserted": 24,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 12,
+    "n_diverged": 2,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 18,
+    "n_unjoined": 2,
+    "n_manual": 4,
+    "divergences": [
+      "age_sd_minimum_span_bracket: tool=consistent model=indeterminate (upgraded, explained)",
+      "chi_squared_expected_counts_below_five: tool=consistent model=suspicious (upgraded, explained)"
+    ]
+  }
+}

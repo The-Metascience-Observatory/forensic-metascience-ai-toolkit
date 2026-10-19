@@ -1,0 +1,1879 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "paper_id": "10.1371--journal.pone.0254493",
+  "schema_version": "1.0",
+  "paper_title": "Neuroprotective action of Cortexin, Cerebrolysin and Actovegin in acute or chronic brain ischemia in rats",
+  "paper_metadata": {
+    "authors": "Denis V. Kurkin, Dmitry A. Bakulin, Evgeny I. Morkovin, Anna V. Kalatanova, Igor E. Makarenko, Artem R. Dorotenko, Nikolay S. Kovalev, Marina A. Dubrovina, Dmitry V. Verkholyak, Elizaveta E. Abrosimova, Alexey V. Smirnov, Maksim V. Shmidt, Ivan N. Tyurenkov",
+    "journal": "PLoS ONE",
+    "year": "2021",
+    "doi": "10.1371/journal.pone.0254493",
+    "study_design": "Randomised controlled animal experiments (rat models of acute and chronic brain ischemia) plus in vivo mouse biodistribution and in vitro receptor binding"
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "s1_acute_10d",
+        "label": "Acute brain ischemia (MCAO), 10-day treatment follow-up",
+        "design": "rct",
+        "n": 87,
+        "unit_of_analysis": "rat",
+        "clustered": false,
+        "preregistered": false,
+        "registry_id": "protocols.io http://dx.doi.org/10.17504/protocols.io.brgam3se (method protocol deposit, not a hypothesis pre-registration)",
+        "n_per_group": [
+          {
+            "label": "Intact",
+            "n": 15
+          },
+          {
+            "label": "Placebo (D-mannitol)",
+            "n": 12
+          },
+          {
+            "label": "Cortexin 1 mg/kg",
+            "n": 12
+          },
+          {
+            "label": "Cortexin 3 mg/kg",
+            "n": 12
+          },
+          {
+            "label": "Cerebrolysin 538 mg/kg",
+            "n": 12
+          },
+          {
+            "label": "Cerebrolysin 1614 mg/kg",
+            "n": 12
+          },
+          {
+            "label": "Actovegin 200 mg/kg",
+            "n": 12
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "rats in 10-day acute series (S1 File)",
+            "n": 87,
+            "unit": "rats",
+            "inferred": true,
+            "reason": "column total of S1 File Table A; the paper prints only the per-group counts and the 224 grand total"
+          }
+        ]
+      },
+      {
+        "id": "s2_acute_3d",
+        "label": "Acute brain ischemia, additional 3-day follow-up experiment (brain necrosis volume)",
+        "design": "rct",
+        "n": 37,
+        "unit_of_analysis": "rat",
+        "clustered": false,
+        "preregistered": false,
+        "n_per_group": [
+          {
+            "label": "Intact",
+            "n": 10
+          },
+          {
+            "label": "Placebo",
+            "n": 9
+          },
+          {
+            "label": "Cortexin 3 mg/kg",
+            "n": 9
+          },
+          {
+            "label": "Cerebrolysin 538 mg/kg",
+            "n": 9
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "randomly assigned to 4 groups",
+            "n": 37,
+            "unit": "rats"
+          }
+        ]
+      },
+      {
+        "id": "s3_chronic",
+        "label": "Chronic brain ischemia (50% bilateral common carotid stenosis), two 10-day treatment courses",
+        "design": "rct",
+        "n": 100,
+        "unit_of_analysis": "rat",
+        "clustered": false,
+        "preregistered": false,
+        "n_per_group": [
+          {
+            "label": "Intact",
+            "n": 15
+          },
+          {
+            "label": "Placebo",
+            "n": 13
+          },
+          {
+            "label": "Cortexin 1 mg/kg",
+            "n": 15
+          },
+          {
+            "label": "Cortexin 3 mg/kg",
+            "n": 14
+          },
+          {
+            "label": "Cerebrolysin 538 mg/kg",
+            "n": 15
+          },
+          {
+            "label": "Cerebrolysin 1614 mg/kg",
+            "n": 13
+          },
+          {
+            "label": "Actovegin 200 mg/kg",
+            "n": 15
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "rats in chronic series (S1 File)",
+            "n": 100,
+            "unit": "rats",
+            "inferred": true,
+            "reason": "column total of S1 File Table A"
+          }
+        ]
+      },
+      {
+        "id": "s4_mouse_biodistribution",
+        "label": "Mouse tissue distribution of 125I-labelled Cortexin, Cerebrolysin and albumin",
+        "design": "rct",
+        "n": 15,
+        "unit_of_analysis": "mouse",
+        "clustered": false,
+        "preregistered": false,
+        "sample_flow": [
+          {
+            "stage": "per treatment group",
+            "n": 15,
+            "unit": "mice"
+          },
+          {
+            "stage": "killed at each of 3 timepoints (0.5, 2, 4 h)",
+            "n": 5,
+            "unit": "mice"
+          }
+        ]
+      },
+      {
+        "id": "s5_receptor_binding",
+        "label": "In vitro receptor binding panel for Cortexin at 10 ug/mL",
+        "design": "unknown",
+        "n": 2,
+        "unit_of_analysis": "assay replicate",
+        "clustered": false,
+        "preregistered": false
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h1",
+        "study_id": "s1_acute_10d",
+        "statement": "Cortexin and Cerebrolysin reduce neurological deficit, sensorimotor and cognitive impairment after acute brain ischemia relative to placebo",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Cortexin\u00ae or Cerebrolysin\u00ae and, to a lesser extent, Actovegin\u00ae improved the recovery of neurological functions, reduced the severity of sensorimotor and cognitive impairments in rats.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "h2",
+        "study_id": "s3_chronic",
+        "statement": "Cortexin improves antioxidant system functioning and prevents severe neurodegenerative change in chronic brain ischemia",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Cortexin\u00ae reduced the size of necrosis of brain tissue in acute ischemia, improved functioning of the antioxidant system and prevented the development of severe neurodegenerative changes in chronic ischemia model.",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "h3",
+        "study_id": "s1_acute_10d",
+        "statement": "Cortexin (1 or 3 mg/kg) and Cerebrolysin (538 or 1614 mg/kg) are comparably effective - an equivalence claim carried in the Conclusions",
+        "status": "unstated",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Cortexin\u00ae (1 or 3 mg/kg) as well as Cerebrolysin\u00ae (538 or 1614 mg/kg) were comparable effective in models acute and chronic brain ischemia in rats.",
+        "provenance_verdict": "stitched"
+      }
+    ],
+    "variables": [
+      {
+        "id": "garcia",
+        "name": "Garcia neurological deficit score",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "upper_bound": 18,
+        "derivation": "sum_of_items",
+        "derived_from": "muscle tone, motor activity, basic physiological reflexes, coordination of movement, sensitivity to touch",
+        "confidence": "high",
+        "provenance_quote": "The neurological deficit was assessed with 9 point stroke-index scale, described by Combs & D\u2019Alecy [[9]], and with 18 point scale, described by Garcia [[10]] in rats with acute or chronic brain ischemia.",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "combs",
+        "name": "Combs & D'Alecy stroke-index score",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "upper_bound": 9,
+        "derivation": "sum_of_items",
+        "derived_from": "muscle strength, tenacity, traction and balance",
+        "confidence": "high",
+        "provenance_quote": "Combs & D\u2019Alecy scale allows to reveal extrapyramidal disorders and include tests that evaluate muscle strength, tenacity, traction and balance of animals. A lower total score corresponded to more pronounced neurological impairment in rats.",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "adhesive_discovery",
+        "name": "Latency to discover adhesive tape (per paw)",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "seconds",
+        "lower_bound": 0,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "(A) The time discovered and (B) removed a foreign object during the adhesive tape test periods of experiments (after chronic brain ischemia) (s).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "adhesive_categorical",
+        "name": "Adhesive tape test outcome category",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "levels": [
+          "did not find the duct tape",
+          "found it but did not try to remove it",
+          "discovered and removed the adhesive tape"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "During adhesive test 5 of 12 animals from placebo group did not find the duct tape, and 4 of 12 found it, but subsequently did not try to remove it.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "rotarod",
+        "name": "Latency to fall off the rotarod",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "seconds",
+        "lower_bound": 0,
+        "upper_bound": 180,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "The latency to fall off the rotarod within 3 minutes (25 rpm) is recorded [[15]].",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "open_field_distance",
+        "name": "Total distance travelled in open field",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "metres",
+        "lower_bound": 0,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Total distance passed was assessed in open field test within 3-min session [[16]].",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "mwm_latency",
+        "name": "Morris water maze platform search latency, averaged over 4 daily trials",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "seconds",
+        "lower_bound": 0,
+        "upper_bound": 60,
+        "n_items": 4,
+        "derivation": "mean_of_items",
+        "derived_from": "four daily placements of the animal in the pool, each capped at 1 min",
+        "confidence": "high",
+        "provenance_quote": "Each animal was placed in the apparatus 4 times for a maximum of 1 min with a break between sets of 30 s. If the rat did not find the platform for 1 min, it was placed on the platform and left for 15 s, after which the training was continued according to the above-indicated pattern [[17]].",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "necrosis_volume",
+        "name": "Brain necrosis volume as a percentage of the intact hemisphere",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "proportion",
+        "units": "% of hemisphere volume",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "derivation": "percentage",
+        "derived_from": "adjusted infarct-zone volume divided by the volume of the intact hemisphere",
+        "confidence": "high",
+        "provenance_quote": "The adjusted volume of the infarct zone was calculated as a percentage of the volume of the intact hemisphere [[18]].",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "antioxidant_markers",
+        "name": "Brain homogenate biochemistry (lactate, pyruvate, glutathione, MDA, catalase, SOD)",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "lower_bound": 0,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Malonic dialdehyde (MDA) concentration in brain homogenates was assessed with thiobarbituric acid reaction [[19]]; the reduced glutathione levels were assessed in the reaction with 5,5-dinitrobis-(2-nitrobenzoic acid) [[20]]; catalase activity and the concentrations of lactate and pyruvate were assessed with commercially available reagents.",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "lactate_pyruvate_ratio",
+        "name": "Lactate to pyruvate ratio in brain tissue",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "lower_bound": 0,
+        "derivation": "ratio",
+        "derived_from": "brain lactate level divided by brain pyruvate level",
+        "confidence": "high",
+        "provenance_quote": "(C) the relation of lactate to pyruvate in brain tissue",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "neuron_density",
+        "name": "Relative numerical density of unchanged / mildly changed / roughly altered neurons",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "proportion",
+        "lower_bound": 0,
+        "upper_bound": 100,
+        "derivation": "proportion",
+        "derived_from": "counts of neurons in each morphological class as a share of neurons counted",
+        "confidence": "high",
+        "provenance_quote": "The relative numerical density of unchanged neurons and neurons with mild and pronounced changes was determined.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "brain_radioactivity",
+        "name": "Brain content of 125I label as a percentage of whole-blood concentration",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "proportion",
+        "units": "% of whole blood",
+        "lower_bound": 0,
+        "derivation": "percentage",
+        "derived_from": "scintillometric label content in brain divided by that in whole blood",
+        "confidence": "high",
+        "provenance_quote": "the level of radioactivity in the brain tissues was 6\u20138% of that in whole blood (Fig 13), which indicates the ability of the drug to cross the blood-brain barrier of healthy animals.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "receptor_binding_pct",
+        "name": "Receptor binding expressed as % inhibition of specific radioligand binding",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "% inhibition of control binding",
+        "derivation": "percentage",
+        "derived_from": "inhibition of the binding of a radioactively labelled ligand specific for each target",
+        "confidence": "high",
+        "provenance_quote": "Compound binding was calculated as a % inhibition of the binding of a radioactively labeled ligand specific for each target.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "n_group",
+        "name": "Number of rats per group",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 0,
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "The number of rats in groups with acute and chronic cerebral ischemia is presented in S1 File.",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "tests": [
+      {
+        "id": "t_garcia_3h_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Garcia 3 h",
+        "outcome_var": "garcia",
+        "grouping_var": "treatment group",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [
+          "Shapiro-Wilk test of normality"
+        ],
+        "appears_in_abstract": false,
+        "appears_in_conclusions": false,
+        "is_stated_primary_outcome": false,
+        "confidence": "high",
+        "provenance_quote": "#\u2013p <0.05 compared to Intact",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_garcia_24h_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Garcia 24 h",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_garcia_10d_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Garcia 10 days",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_3h_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Combs & D'Alecy 3 h",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_24h_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Combs & D'Alecy 24 h",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_10d_placebo",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Placebo row, Combs & D'Alecy 10 days",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_garcia_10d_cortexin1",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cortexin 1 mg/kg, Garcia 10 days",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "In the groups receiving 1 or and 3 mg/kg/day Cortexin\u00ae, as well as 538 or 1614 mg/kg/day Cerebrolysin\u00ae, the median score of neurological deficit was significantly lower (p<0.05 for both scales), which indicates a pronounced neuroprotective effect of these drugs.",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_garcia_10d_cortexin3",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cortexin 3 mg/kg, Garcia 10 days",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_garcia_10d_cereb538",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cerebrolysin 538 mg/kg, Garcia 10 days",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_garcia_10d_cereb1614",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cerebrolysin 1614 mg/kg, Garcia 10 days",
+        "outcome_var": "garcia",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_10d_cortexin1",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cortexin 1 mg/kg, Combs & D'Alecy 10 days",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_10d_cortexin3",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cortexin 3 mg/kg, Combs & D'Alecy 10 days",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_10d_cereb538",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cerebrolysin 538 mg/kg, Combs & D'Alecy 10 days",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_combs_10d_cereb1614",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Table 1, Cerebrolysin 1614 mg/kg, Combs & D'Alecy 10 days",
+        "outcome_var": "combs",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_adhesive_chi2_acute10",
+        "study_id": "s1_acute_10d",
+        "test_type": "chi_squared",
+        "location": "Fig 3A caption and Results 3.2.1",
+        "outcome_var": "adhesive_categorical",
+        "grouping_var": "treatment group",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "#\u2013p <0.05 compared to Intact; *\u2013p <0.05 compared to placebo (\u03c7\u00b2 test); data shown as the number of animals that discovered and removed the adhesive tape in the group (in %).",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_adhesive_chi2_acute3",
+        "study_id": "s2_acute_3d",
+        "test_type": "chi_squared",
+        "location": "Fig 3B and Results 3.2.2",
+        "outcome_var": "adhesive_categorical",
+        "n": 37,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "medium"
+      },
+      {
+        "id": "t_adhesive_chronic",
+        "study_id": "s3_chronic",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 4A/4B and Results 3.2.3",
+        "outcome_var": "adhesive_discovery",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "#\u2013p <0.05 compared to Intact; *\u2013p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean \u00b1 SEM.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_rotarod_acute",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 5A and Results 3.3.1 (acute)",
+        "outcome_var": "rotarod",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_rotarod_chronic",
+        "study_id": "s3_chronic",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 5B and Results 3.3.1 (chronic)",
+        "outcome_var": "rotarod",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_openfield_acute10",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 6A and Results 3.4.1",
+        "outcome_var": "open_field_distance",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_openfield_acute3",
+        "study_id": "s2_acute_3d",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 6B and Results 3.4.2",
+        "outcome_var": "open_field_distance",
+        "n": 37,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "In animals administered Cortexin\u00ae at a dose of 3 mg/kg/day or Cerebrolysin\u00ae at a dose of 538 mg/kg/day for 3 days, the motor activity was significantly higher compared to placebo group (p <0.05)",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "t_openfield_chronic",
+        "study_id": "s3_chronic",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 6C and Results 3.4.3",
+        "outcome_var": "open_field_distance",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "t_mwm_acute_day1",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 7 and Results 3.5.1, day 1 of training",
+        "outcome_var": "mwm_latency",
+        "n": 87,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "On the 1\u02e2\u1d57 day of training, when the animals first appeared in different parts of the pool, the average time spent on the platform for 4 attempts did not significantly differ between groups.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_mwm_acute_days2_4",
+        "study_id": "s1_acute_10d",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 7 and Results 3.5.1, days 2-4 of training",
+        "outcome_var": "mwm_latency",
+        "n": 87,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_mwm_chronic",
+        "study_id": "s3_chronic",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 8 and Results 3.5.2",
+        "outcome_var": "mwm_latency",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_lactate_placebo_vs_intact",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9A and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "In animals with chronic brain ischemia given a placebo, a statistically significant decrease in the content of lactate and pyruvate was recorded (p <0.001 when compared with the corresponding parameters recorded in rats from the control group)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_pyruvate_placebo_vs_intact",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9B and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high"
+      },
+      {
+        "id": "t_lac_pyr_ratio",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9C and Results 3.6.1",
+        "outcome_var": "lactate_pyruvate_ratio",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "which was not accompanied by a significant decrease in their ratio (p> 0.05; Fig 9)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_glutathione",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9D and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high"
+      },
+      {
+        "id": "t_mda",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9E and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_catalase",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9F and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high"
+      },
+      {
+        "id": "t_sod",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Fig 9G and Results 3.6.1",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "appears_in_abstract": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t_cortexin3_vs_intact_ns",
+        "study_id": "s3_chronic",
+        "test_type": "one_way_anova",
+        "location": "Results 3.6.1, Cortexin 3 mg/kg vs intact across antioxidant markers",
+        "outcome_var": "antioxidant_markers",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "the average values of most indicators (except for the lactate content) did not statistically significantly differ from those of intact (p> 0.05 in each case)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_necrosis_volume",
+        "study_id": "s2_acute_3d",
+        "test_type": "one_way_anova",
+        "location": "Fig 10 and Results 3.7.1",
+        "outcome_var": "necrosis_volume",
+        "n": 27,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "bonferroni",
+        "appears_in_abstract": true,
+        "is_stated_primary_outcome": false,
+        "confidence": "high",
+        "provenance_quote": "Brain necrosis volume at 3 days (n = 9); *\u2013p <0.05 compared to placebo (1-way ANOVA, t-student test with Bonferroni correction); data shown as the mean \u00b1 SEM.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "t_morphometry_hippocampus",
+        "study_id": "s3_chronic",
+        "test_type": "kruskal_wallis",
+        "location": "Fig 12 and Results 3.7.2",
+        "outcome_var": "neuron_density",
+        "n": 100,
+        "p_value": 0.05,
+        "p_is_threshold": true,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "NN\u2013normal or unchanged neurons; MN\u2013slightly modified neurons; AN\u2013roughly altered neurons; #\u2013p <0.05 compared to Intact; *\u2013p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean \u00b1 SEM.",
+        "provenance_verdict": "verbatim"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "table1_zero_checkable_cells",
+      "location": "Table 1 (severity of neurological deficit), all 49 cells",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "*\u2013p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as median and interquartile range [Q1;Q3].",
+      "reported": {
+        "n_cells": 49,
+        "kind_counts": {
+          "count": 7,
+          "median_iqr": 42
+        },
+        "parse_coverage": 1
+      },
+      "computed": {
+        "n_checks_run": 0,
+        "n_not_run": 49,
+        "reason_median": "median summaries carry no mean/SD granularity",
+        "reason_count": "a bare count contributes to table-level checks only"
+      },
+      "inputs": {
+        "tool_used": "check_table (no matching value in the technique enum, so recorded as manual)",
+        "cells": "49 typed cells from get_table(table_num=1)",
+        "variables": [
+          "garcia (ordinal, upper_bound 18)",
+          "combs (ordinal, upper_bound 9)",
+          "n_group (count)"
+        ]
+      },
+      "reproduction": "metascience check-table --cells-file table1_cells.json --variables-file table1_vars.json",
+      "notes": "Produced by check_table, recorded under technique 'manual' only because the findings schema's technique enum has no check_table value. The paper's ONLY table is reported entirely as median [Q1;Q3] on ordinal scales plus a bare n column. GRIM, GRIMMER, SPRITE and DEBIT all require a mean and SD, so the denominator here is zero: not one of the 49 cells admits a granularity check, and the tool returned 0 checks run against 49 refusals. Every median does lie inside its own reported IQR, and every value lies within the scale bounds the paper states (Garcia 18-point, Combs 9-point), so nothing is out of range - but that is the absence of a contradiction, not a verification. No validated tool in this toolkit checks the attainable-value set of a median or quartile of integer data at n=12/n=15, so the quartile granularity (values printed as .3/.8/.5) was deliberately NOT hand-derived. This is the single most important coverage fact about the paper: its tabular data is arithmetically unfalsifiable.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 14,
+        "basis": "asserted",
+        "explanation": "The 14 neurological-deficit comparisons that Table 1 carries - including the abstract's central claim that Cortexin and Cerebrolysin lowered neurological deficit - cannot be arithmetically checked from what is printed."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-table [OPTIONS] {json_path}\nTry 'metascience check-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "n_accounting_reconciles_exactly",
+      "location": "S1 File Table A (Number of rats per group); Methods 2.2, 2.3, 2.10; Table 1 n column",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "The study used 224 male albino rats (300\u2013350 g), purchased from laboratory animal house Stolbovaya (Moscow oblast, Russian Federation).",
+      "reported": {
+        "stated_total_rats": 224,
+        "stated_additional_experiment_n": 37,
+        "stated_mice_per_group": 15
+      },
+      "computed": {
+        "sum_all_18_group_counts": 224,
+        "sum_3day_groups": 37,
+        "sum_mice_timepoints": 15,
+        "sum_table1_n_column": 87,
+        "n_rows_evaluated": 4,
+        "n_inconsistent": 0
+      },
+      "inputs": {
+        "rows": "4 summation rows: [10,9,9,9]=37; [10,9,9,9,15,12,12,12,12,12,12,15,13,15,14,15,13,15]=224; [5,5,5]=15; [15,12,12,12,12,12,12]=87",
+        "tolerance": 0,
+        "decimals": 0
+      },
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[10,9,9,9],\"expected_sum\":37,\"decimals\":0,\"tolerance\":0},{\"values\":[10,9,9,9,15,12,12,12,12,12,12,15,13,15,14,15,13,15],\"expected_sum\":224,\"decimals\":0,\"tolerance\":0},{\"values\":[5,5,5],\"expected_sum\":15,\"decimals\":0,\"tolerance\":0},{\"values\":[15,12,12,12,12,12,12],\"expected_sum\":87,\"decimals\":0,\"tolerance\":0}]'",
+      "notes": "A genuine strength of this paper, and worth stating plainly. The per-group counts in S1 File sum exactly to the 224 rats claimed in Methods, with zero slack (tolerance set to 0 because counts must hold exactly). The 3-day sub-experiment's four groups sum exactly to its stated n=37; the mouse biodistribution's 3 timepoints x 5 animals sum exactly to the stated n=15 per group. The Table 1 n column agrees cell-for-cell with the S1 File 10-day column (15/12/12/12/12/12/12), so the two independent sources of group size do not disagree anywhere.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing is affected; this is a clean pass that raises confidence in the sample-size reporting."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The study used 224 male albino rats (300\u2013350 g), purchased from laboratory animal house Stolbovaya (Moscow oblast, Russian Federation).",
+        "source_locator": "S1 File Table A (Number of rats per group); Methods 2.2 Animals; Methods 2.3 Study design; Methods 2.10",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "raw_data_repeated_quarter_fractions",
+      "location": "Linked figshare spreadsheet, sheets 'acute brain ischemia 10 days' and 'chronic brain ischemia', Morris water maze average-search-time columns",
+      "technique": "raw_duplication",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "information on the weight of rats during the experiment as well as the main data of this study is available in a public repository (https://doi.org/10.6084/m9.figshare.13599776)",
+      "reported": {
+        "tool_severity": "suspicious",
+        "n_duplicate_groups": 35,
+        "n_repeated_high_precision_values": 34,
+        "n_numeric_cells": 12201,
+        "n_sheets": 3
+      },
+      "computed": {
+        "downgraded_to": "indeterminate",
+        "guard_applied": "rulebook 11(b) transformation artifact",
+        "flagged_values_all_end_in": [
+          ".25",
+          ".5",
+          ".75"
+        ],
+        "flagged_column_stride": 5,
+        "top_adjusted_score": 3.66
+      },
+      "inputs": {
+        "path": "10.1371--journal.pone.0254493_linked_data_figshare_13599776_PLOS_one_data_file.xlsx",
+        "data_context": "raw_participant_level",
+        "exclude_columns": "none supplied; tool auto-excluded 3 index/ID columns"
+      },
+      "reproduction": "metascience raw-duplication-detect --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493_linked_data_figshare_13599776_PLOS_one_data_file.xlsx' --data-context raw_participant_level",
+      "notes": "DOWNGRADED FROM THE TOOL'S 'suspicious' AND REPORTED AS NO ANOMALY. Every one of the 34 flagged repeated values (33.75, 32.25, 37.75, 44.75, 48.25, 28.75, 35.25, 47.25, 102.5 ...) terminates in .25, .5 or .75, and the flagged columns sit at a stride of exactly 5 (26/31/36/41, 58/63/68/73, 79/84/89/94). The tool's own row-pair output names the column layout: '1st d - e', '1st d - n', '1st d - nw', '1st d - se', '1st d average search time' - four quadrant-entry trials per day plus their average. The Methods confirm 'Each animal was placed in the apparatus 4 times', so every average-search-time value is a mean of four integer-second latencies and is therefore a multiple of 0.25 BY CONSTRUCTION. Its apparent 4-significant-digit precision is an artifact of dividing by 4; it carries roughly two digits of real information, and collisions among such values across 12,201 cells are expected rather than surprising. This is squarely rulebook rule 11(b). Reporting it as duplication would be a false accusation manufactured by the granularity of a derived column.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected: the flagged values are an arithmetic property of averaging four trials, not evidence about how the data were produced."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "raw_data_row_pair_ceiling_driven",
+      "location": "Linked figshare spreadsheet, sheet 'acute brain ischemia 10 days', rows 32 and 101",
+      "technique": "raw_duplication",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "information on the weight of rats during the experiment as well as the main data of this study is available in a public repository (https://doi.org/10.6084/m9.figshare.13599776)",
+      "reported": {
+        "n_shared_columns": 20,
+        "n_distinct_values": 16,
+        "information_score": 5,
+        "adjusted_score": 1.22,
+        "tool_severity_for_this_group": "indeterminate"
+      },
+      "computed": {
+        "verdict": "not an anomaly",
+        "guard_applied": "rulebook 11(c) tight distributions and ceiling stacking",
+        "dominant_shared_value": 60,
+        "occurrences_of_60_in_file": 1131
+      },
+      "inputs": {
+        "path": "10.1371--journal.pone.0254493_linked_data_figshare_13599776_PLOS_one_data_file.xlsx",
+        "data_context": "raw_participant_level"
+      },
+      "reproduction": "metascience raw-duplication-detect --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493_linked_data_figshare_13599776_PLOS_one_data_file.xlsx' --data-context raw_participant_level",
+      "notes": "The single flagged duplicated row pair was rated `indeterminate` by the tool itself (adjusted score 1.22 against an information score of 5.0), and inspection of its shared values confirms why: they are dominated by the Morris water maze 60-second ceiling (60.0, which recurs 1,131 times file-wide) plus small integers on tight bounded scales (9, 15, 3, 4, 2, 0.6). Twenty columns agreeing on only 16 distinct values, most of them a ceiling or a single-digit score, is what a censored bounded measure produces by chance. No anomaly reported.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim depends on these two rows; the agreement is attributable to ceiling and small-integer scales."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "mwm_ceiling_censoring",
+      "location": "Linked figshare spreadsheet, Morris water maze trial columns; analysed in Fig 7 and Fig 8",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Each animal was placed in the apparatus 4 times for a maximum of 1 min with a break between sets of 30 s. If the rat did not find the platform for 1 min, it was placed on the platform and left for 15 s, after which the training was continued according to the above-indicated pattern [[17]].",
+      "reported": {
+        "analysis_stated": "Kruskal-Wallis rank analysis and the Dunn post-hoc test; data shown as the mean \u00b1 SEM",
+        "trial_cap_seconds": 60
+      },
+      "computed": {
+        "occurrences_of_60_0_in_file": 1131,
+        "occurrences_in_column_1st_d_e": 120,
+        "occurrences_in_column_2nd_d_se": 108,
+        "occurrences_in_column_1st_d_se": 95,
+        "occurrences_in_column_2nd_d_n": 61
+      },
+      "inputs": {
+        "source": "occurrence counts reported by detect_raw_duplication over the linked figshare spreadsheet"
+      },
+      "reproduction": "metascience raw-duplication-detect --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493_linked_data_figshare_13599776_PLOS_one_data_file.xlsx' --data-context raw_participant_level",
+      "notes": "The value 60.0 - the trial cutoff - occurs 1,131 times across the data file, and in individual water-maze trial columns it recurs 120, 108, 95 and 61 times. The primary cognitive outcome is therefore heavily right-censored: in several early-training columns the large majority of animals never found the platform and were assigned the ceiling. The paper nonetheless plots these as mean \u00b1 SEM (Figs 7 and 8) and analyses them with Kruskal-Wallis. A mean computed over a censored variable understates the true latency by an amount that depends on how many animals hit the cap, which differs by group and by day, so between-group mean differences in the early days are confounded with differential censoring. Kruskal-Wallis is at least rank-based and so partially robust, but the plotted means and SEMs - which are what a reader interprets - are not. Counts are read from the tool's occurrence tally; I did not independently recount them, and the exact per-column denominators were not verified because the 2.6 MB grid could not be read without sampling.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Affects the Morris water maze conclusions for both the acute (Fig 7) and chronic (Fig 8) series, which carry the abstract's claim of reduced cognitive impairment."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "no_test_statistics_anywhere",
+      "location": "Whole paper (all 23 PDF pages, including figure captions)",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The differences were considered statistically significant at p <0.05.",
+      "reported": {
+        "significance_claims_made": "approximately 30+ across Table 1 and Figs 3-12",
+        "p_values_printed": "thresholds only: p<0.05, p<0.001, p>0.05"
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in PDF"
+      },
+      "inputs": {
+        "pdf_path": "10.1371--journal.pone.0254493.pdf"
+      },
+      "reproduction": "metascience statcheck --pdf-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.pdf'",
+      "notes": "statcheck recovered ZERO NHST statistics from the entire 23-page paper. This is not a tool failure - it is an accurate description of the reporting. The paper makes on the order of thirty significance claims and reports, for every one of them: no test statistic (no H, no chi-squared, no t, no F), no degrees of freedom, no exact p-value, no effect size, and no confidence interval. Not one inferential claim in the paper can be independently recalculated or verified by any reader. Combined with the finding that all 49 Table 1 cells refuse granularity checks, essentially the paper's entire inferential content is unfalsifiable from what is printed.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 30,
+        "basis": "asserted",
+        "explanation": "Every significance claim in the paper, including all abstract claims, is stated without a recomputable statistic."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [input_path]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "source": {
+        "source_quote": "The differences were considered statistically significant at p <0.05.",
+        "source_locator": "Whole paper (PDF text layer), all sections and figure captions",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      }
+    },
+    {
+      "id": "multiplicity_not_computable",
+      "location": "Table 1 footnotes; family of 14 neurological-deficit post-hoc comparisons",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "*\u2013p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as median and interquartile range [Q1;Q3].",
+      "reported": {
+        "comparisons_submitted": 14,
+        "all_p_reported_as": "p<0.05 threshold"
+      },
+      "computed": {
+        "n_tests": 0,
+        "note": "no uncorrected tests",
+        "n_dropped_as_threshold": 14
+      },
+      "inputs": {
+        "family_label": "Table 1 neurological-deficit post-hoc comparisons, acute ischemia 10-day series",
+        "tests": "14 comparisons, each p_is_threshold=true, correction_applied=none",
+        "alpha": 0.05
+      },
+      "reproduction": "metascience multiplicity --family-label 'Table 1 neurological-deficit post-hoc comparisons, acute ischemia 10-day series' --tests-file table1_family.json --alpha 0.05",
+      "notes": "The multiplicity arithmetic returned n_tests = 0: all 14 comparisons were dropped rather than coerced, because every p is printed as a bound rather than a value. So no family-wise or false-discovery correction can be computed for this paper at all, and no surviving-claims interval can be quoted. To be fair to the authors, this is NOT a case of uncorrected testing: Dunn's post-hoc (used for the nonparametric families) and the stated Bonferroni correction (used for the ANOVA families) both do control multiplicity. The finding is that the reporting makes the correction impossible to verify, not that it is absent.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 14,
+        "basis": "asserted",
+        "explanation": "No correction arithmetic can be performed on the Table 1 family, so the multiplicity burden of the paper's main neurological result cannot be quantified either way."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests-fil",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "*\u2013p &lt;0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as median and interquartile range [Q1;Q3].",
+        "source_locator": "Table 1 footnotes",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "necrosis_dispersion_sd_or_se",
+      "location": "Results 3.7.1, brain necrosis volume in placebo group; n and dispersion type from the Fig 10 caption",
+      "technique": "check_sd_or_se",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "During morphometry, the average volume of necrosis in the placebo group was 26 \u00b1 5% of the size of the left hemisphere.",
+      "reported": {
+        "mean": 26,
+        "dispersion": 5,
+        "labelled_as": "SEM (per Fig 10 caption)",
+        "n": 9
+      },
+      "computed": {
+        "implied_sd_if_se": 15,
+        "implied_se_if_sd": 1.667,
+        "ceiling_max_possible_sd": 53.03,
+        "as_sd_plausible": true,
+        "as_se_plausible": true,
+        "likely_interpretation": "SD"
+      },
+      "inputs": {
+        "reported_value": 5,
+        "n": 9,
+        "reported_as": "SE",
+        "variable_range_min": 0,
+        "variable_range_max": 100,
+        "bound_source": "logically_necessary"
+      },
+      "reproduction": "metascience sd-or-se --reported-value 5 --n 9 --reported-as SE --variable-range-min 0 --variable-range-max 100 --bound-source logically_necessary",
+      "notes": "WEAK FLAG - read the caveat before using it. Both readings clear the plausibility ceiling comfortably (SD=5 is 9.4% of the maximum possible; SD=15 is 28.3%), so there is no arithmetic violation here at all. The `suspicious` verdict comes solely from the tool's preference heuristic favouring the SD reading. I judge that heuristic to be pointing the wrong way in this instance: a coefficient of variation of 19% (the SD reading) would be unusually tight for infarct volume in a filament MCAO model, where 30-50% is typical, whereas the SEM reading (SD=15, CV 58%) is the biologically ordinary one and is what the Fig 10 caption actually states. Recorded for completeness rather than as a concern. A first attempt at this call errored with a TypeError on the `decimals` argument; it was re-run without it, so the ceiling used a flat 1% margin rather than the printed precision.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Would affect only the reader's sense of spread around the 26% placebo necrosis volume; the reported group difference does not depend on which label is correct."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience sd-or-se [OPTIONS] {reported_value} {n}\nTry 'metascience sd-or-se --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "equivalence_claim_without_interval",
+      "location": "Conclusions; Abstract; Discussion",
+      "technique": "absence_of_evidence",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "Cortexin\u00ae (1 or 3 mg/kg) as well as Cerebrolysin\u00ae (538 or 1614 mg/kg) were comparable effective in models acute and chronic brain ischemia in rats.",
+      "reported": {
+        "claim_type": "equivalence / comparable effectiveness",
+        "supporting_statistics": "none - no CI, no test statistic, no exact p, no stated SESOI"
+      },
+      "computed": {
+        "check_could_not_run": true,
+        "reason": "absence_of_evidence requires ci_low and ci_high; the paper reports no confidence interval for any outcome"
+      },
+      "inputs": {
+        "attempted": "absence_of_evidence on the Cortexin-vs-Cerebrolysin comparison",
+        "blocked_by": "no interval estimate exists anywhere in the paper"
+      },
+      "reproduction": "metascience extract-xml --xml-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.xml'",
+      "notes": "The tool could not be run, and that refusal is the result. The paper's headline conclusion is an equivalence claim, but no head-to-head Cortexin-versus-Cerebrolysin test is reported anywhere: both drugs were separately compared against placebo, and 'comparable effective' is inferred from both being significant against placebo. That is an affirming-the-null inference - two drugs each beating placebo does not establish that they are equivalent to each other. Because no confidence interval is reported for any outcome in this paper, the largest true difference between Cortexin and Cerebrolysin that the data still permit cannot be bounded, and no smallest effect size of interest is stated against which equivalence could be tested. The same pattern applies to the several other no-difference statements ('did not significantly differ between groups', 'p> 0.05 in each case', 'indistinguishable from the animals in placebo group').",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The Conclusions' central comparative claim rests on an inference the reported statistics do not support and which cannot be checked."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "repeated_measures_analysed_as_independent",
+      "location": "Methods 2.13 Statistical analysis; Table 1; Figs 5B, 6C, 7, 8",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Parametric data were compared using one-way analysis of variance (One-Way ANOVA) and t-student test with Bonferroni correction. Nonparametric data were compared using the Kruskal-Wallis rank analysis and the Dunn post-hoc test.",
+      "reported": {
+        "tests_used": [
+          "one-way ANOVA",
+          "t-test with Bonferroni",
+          "Kruskal-Wallis",
+          "Dunn post-hoc",
+          "chi-squared"
+        ],
+        "repeated_measures_model_mentioned": false
+      },
+      "computed": {
+        "repeated_designs_identified": [
+          "Table 1: same rats scored at 3 h, 24 h and 10 days",
+          "Fig 7: same rats over 4 training days",
+          "Fig 8: same rats over 3 treatment periods x multiple days",
+          "Figs 5B/6C: chronic-ischemia animals measured before and after treatment"
+        ]
+      },
+      "inputs": {
+        "source": "Methods 2.13 read against the design described in Methods 2.3 and the figure captions"
+      },
+      "reproduction": "metascience extract-xml --xml-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.xml'",
+      "notes": "Rulebook rule 5, design validity. The study is repeatedly a groups-by-time design - Table 1 scores the same 87 rats at three timepoints; the water maze follows the same animals across four training days and, in the chronic series, across three treatment periods; rotarod and open field are measured before and after treatment in the chronic animals. The Methods list only between-groups procedures: one-way ANOVA, independent t-tests with Bonferroni, Kruskal-Wallis and Dunn. No repeated-measures ANOVA, mixed model, Friedman test or within-animal adjustment is mentioned anywhere. Treating repeated observations on the same animal as independent understates the standard errors for within-animal contrasts. Note the counter-consideration: if every reported comparison is strictly between groups at a single timepoint (which the figure captions are consistent with, since all reference marks are 'compared to Intact' or 'compared to placebo'), then the between-groups tests are appropriate at each timepoint and the problem reduces to unmodelled multiplicity across timepoints rather than a violated independence assumption. The paper does not say which, so this cannot be resolved from the text.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 5,
+        "basis": "asserted",
+        "explanation": "Bears on Table 1 and the four figure-based longitudinal outcomes (rotarod, open field, and both Morris water maze series)."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "cerebrolysin_dose_1641_vs_1614",
+      "location": "Results 3.3.1 (chronic) and Results 3.4.3 (chronic); PDF page 9",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "In the groups of animals with chronic brain ischemia treated with Cortexin\u00ae at a dose of 1 mg/kg, Cerebrolysin\u00ae at doses of 538 and 1641 mg/kg, as well as Actovegin\u00ae, the performance on a rotating rod was statistically better than in the group receiving a placebo",
+      "reported": {
+        "dose_in_these_two_passages": "1641 mg/kg",
+        "dose_everywhere_else": "1614 mg/kg"
+      },
+      "computed": {
+        "occurrences_of_1641": 2,
+        "occurrences_of_1614": "Abstract, Methods 2.12, Table 1 row label, Results 3.5.2, Results 3.6.1, Discussion, Conclusions",
+        "confirmed_in_both_sources": true
+      },
+      "inputs": {
+        "xml": "extract_xml body text",
+        "pdf": "extract_pdf pages 9-14 for cross-check"
+      },
+      "reproduction": "metascience extract --pdf-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.pdf' --first-page 9 --last-page 14",
+      "notes": "A digit transposition in a drug dose, appearing twice in the Results (rotarod and open-field sections for the chronic model) against 1614 mg/kg in the Abstract, Methods, Table 1, the other Results sections, the Discussion and the Conclusions. Verified independently in BOTH the XML and the PDF version of record, so it is a genuine error in the published text and not an extraction artifact. Recorded under the rulebook's 'errors in a load-bearing sentence' heading: a dose is not incidental, and the two affected sentences are the ones stating which Cerebrolysin arms improved rotarod and locomotor performance. Stated as an observation only; I make no inference about how it arose.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Two efficacy sentences name a dose group that does not exist in the study design, leaving ambiguous which Cerebrolysin arm they describe."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "dangling_reference_to_nonexistent_table",
+      "location": "Discussion, paragraph 3",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Also, the protective role of amino acids, the molecular mechanisms of which are listed in the table, cannot be ruled out.",
+      "reported": {
+        "referenced_object": "the table (of amino-acid molecular mechanisms)"
+      },
+      "computed": {
+        "tables_in_paper": 1,
+        "table_1_content": "severity of neurological deficit by Garcia and Combs & D'Alecy scales",
+        "matching_table_found": false,
+        "supplementary_tables": [
+          "S1 File: number of rats per group",
+          "S2 File: in vitro binding assay conditions"
+        ]
+      },
+      "inputs": {
+        "source": "extract_xml table index (n_tables=1) plus extract_supplement on S1 and S2"
+      },
+      "reproduction": "metascience extract-xml --xml-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.xml'",
+      "notes": "The Discussion refers the reader to 'the table' listing molecular mechanisms of amino acids. No such table exists: the paper contains exactly one table (neurological deficit scores), and neither supplementary file contains it - S1 File is a group-size table and S2 File is a list of radioligand assay conditions. The sentence points at content that was never included. Recorded descriptively; I do not speculate about the cause.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "A Discussion claim about amino-acid protective mechanisms is supported by a reference to material absent from the paper."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "duplicate_section_number",
+      "location": "Section 3.3 Motor coordination - both subsections numbered 3.3.1; PDF page 9",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "3.3.1Acutebrainischemia(10-dayfollow-up). InthegroupstreatedwithCortexin1and",
+      "reported": {
+        "subsection_numbering": "3.3.1 Acute brain ischemia (10-day follow-up), then 3.3.1 Chronic brain ischemia"
+      },
+      "computed": {
+        "expected_second_number": "3.3.2",
+        "confirmed_in_pdf": true,
+        "confirmed_in_xml": true
+      },
+      "inputs": {
+        "xml": "extract_xml section list",
+        "pdf": "extract_pdf page 9"
+      },
+      "reproduction": "metascience extract --pdf-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.pdf' --first-page 9 --last-page 9",
+      "notes": "Minor and non-numeric, recorded only because it co-occurs with the dose transposition on the same page and in the same pair of subsections. Both subsections under 3.3 Motor coordination carry the number 3.3.1; every other results subsection is numbered correctly. Present in both XML and PDF. On its own this carries essentially no forensic weight.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this is a copy-editing observation only."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "receptor_binding_n_of_2",
+      "location": "Fig 14 caption; Abstract; Results 3.9",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Cortexin\u00ae receptor binding in vitro.Data shown as the median and range (n = 2).",
+      "reported": {
+        "n": 2,
+        "summary_statistic": "median and range",
+        "values_in_abstract": {
+          "AMPA": 80.1,
+          "kainate": 73.5,
+          "mGluR1": 49,
+          "GABAA1": 44,
+          "mGluR5": 39.7
+        }
+      },
+      "computed": {
+        "assays_in_S2_File_panel": 28,
+        "targets_reported_in_abstract": 5,
+        "median_of_n2_equals_mean_of_the_two_values": true
+      },
+      "inputs": {
+        "source": "Fig 14 caption from extract_xml; S2 File assay list from extract_supplement"
+      },
+      "reproduction": "metascience extract-supplement --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493_supplementary_info_2_pone.0254493.s002.docx'",
+      "notes": "The receptor-binding result reaches the Abstract and the Conclusions, and it rests on n = 2. A 'median and range' summary of two observations is uninformative - the median is just the midpoint of the two values and the range is the pair itself - yet the binding percentages are carried into the Abstract to one decimal place (80.1%, 73.5%, 49.0%, 44.0%, 39.7%), a precision the design cannot support. No dispersion, no replication beyond duplicate, and no statistical test accompanies these numbers. GRIM-percentage was deliberately NOT applied: these are percent inhibition of radioligand binding, a continuous ratio, not a share of a sample, so the granularity argument does not hold and running it would manufacture a false impossibility. Separately, S2 File documents a 28-assay panel while the narrative reports 5 targets; whether the other 23 appear in Fig 14 cannot be determined, because the figure could not be read.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The Abstract's and Conclusions' mechanistic claim that Cortexin acts on AMPA, kainate, mGluR1, GABAA1 and mGluR5 rests entirely on duplicate assays."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "biodistribution_n_ambiguity",
+      "location": "Fig 13 caption against Methods 2.10",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "Brain content of \u00b9\u00b2\u2075I-labeled Cortexin\u00ae, Cerebrolysin\u00ae and albumin in mice.Data shown as geometric mean (n = 15).",
+      "reported": {
+        "figure_caption_n": 15,
+        "methods_per_group_n": 15,
+        "methods_per_timepoint_n": 5,
+        "timepoints": 3
+      },
+      "computed": {
+        "5_x_3_equals_15": true,
+        "per_plotted_point_n_if_points_are_timepoints": 5
+      },
+      "inputs": {
+        "source": "Fig 13 caption and Methods 2.10 from extract_xml"
+      },
+      "reproduction": "metascience extract-xml --xml-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.xml'",
+      "notes": "The Methods are explicit that 15 mice per group were split across three timepoints with 'animals (5 animals from each group) were killed by decapitation' at each of 0.5, 2 and 4 hours - a destructive sampling design, so each timepoint rests on 5 animals, not 15. The figure caption states a bare 'n = 15', which a reader will naturally take as the n behind each plotted point. Whether this is an overstatement or a legitimate statement of the group total depends on how Fig 13 is laid out, and the figure could not be read. Left INDETERMINATE rather than flagged, because resolving it requires the figure. Noted because the abstract's blood-brain-barrier claim ('concentrations equal to 6-8% of concentrations found in whole blood') derives from these points and would rest on n = 5 per timepoint.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Bears on the precision behind the Abstract's blood-brain-barrier penetration claim, but cannot be resolved without seeing the figure."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "necrosis_group_n_consistent",
+      "location": "Fig 10 caption against S1 File Table A and the spreadsheet's necrosis column",
+      "technique": "reconcile",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Brain necrosis volume at 3 days (n = 9); *\u2013p <0.05 compared to placebo (1-way ANOVA, t-student test with Bonferroni correction); data shown as the mean \u00b1 SEM.",
+      "reported": {
+        "fig10_n": 9,
+        "s1_file_3day_groups": {
+          "Intact": 10,
+          "Placebo": 9,
+          "Cortexin 3 mg/kg": 9,
+          "Cerebrolysin 538 mg/kg": 9
+        }
+      },
+      "computed": {
+        "agreement": true,
+        "explanation": "n=9 matches the three surgical groups; the intact group (n=10) is legitimately absent from a necrosis comparison, and the spreadsheet's 'Brain necrosis volume, %' column is blank for the Intact rows"
+      },
+      "inputs": {
+        "fig_caption": "extract_xml",
+        "s1_file": "extract_supplement on pone.0254493.s001.docx",
+        "spreadsheet_header": "sheet 'acute brain ischemia 3 days' column list"
+      },
+      "reproduction": "metascience extract-supplement --path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493_supplementary_info_1_pone.0254493.s001.docx'",
+      "notes": "Cross-source check across three independent places the number appears. Fig 10's n = 9 initially looks inconsistent with the 3-day experiment's 37 animals, but it reconciles cleanly: the intact group (n = 10) contributes no infarct and is excluded from the necrosis comparison, leaving three groups of 9. The spreadsheet corroborates this directly - its 'Brain necrosis volume, %' column is empty for the Intact rows visible in the header region. No anomaly.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing affected; a clean cross-source reconciliation."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "severity_source": {
+        "model": "consistent",
+        "tool": "indeterminate",
+        "direction": "downgraded",
+        "explained": true,
+        "note": "The tool returned `indeterminate`; this finding records `consistent`. A reason is stated in the finding."
+      },
+      "quote_verified": "verbatim",
+      "quote_source": "a figure caption",
+      "source": {
+        "source_quote": "*\u2013p &lt;0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as median and interquartile range [Q1;Q3].",
+        "source_locator": "Table 1 (severity of neurological deficit), footnote",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "table1_xml_pdf_structure_clean",
+      "location": "Table 1, structural flags from extract_xml",
+      "technique": "reconcile",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "The severity of neurological deficit according to the Garcia and Combs & D\u2019Alecy scales, observed 3 and 24 hours after acute brain ischemia modeling, as well as after 10 days of treatment.",
+      "reported": {
+        "n_rows": 7,
+        "width": 8,
+        "n_header_rows": 2,
+        "n_footnotes": 3,
+        "spans_total": 4
+      },
+      "computed": {
+        "image_only": false,
+        "alignment_uncertain": false,
+        "warnings": [],
+        "data_is_complete": true,
+        "merged_cells_all_in_header_region": true
+      },
+      "inputs": {
+        "xml_path": "10.1371--journal.pone.0254493.xml",
+        "table_num": 1
+      },
+      "reproduction": "metascience get-table --xml-path '/mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run_2026-08-09/10.1371--journal.pone.0254493/10.1371--journal.pone.0254493.xml' --table-num 1",
+      "notes": "Recorded so the coverage claim is auditable. The table is neither image_only nor alignment_uncertain, carries no extraction warnings, and its four merged cells are all in the two-row header region ('Group' and 'n' spanning both header rows; 'Garcia' and 'Combs & D'Alecy' each spanning three columns). No body cell is merged, so no value was placed once and left with empty continuations, and there was no risk of a fabricated duplication from the parser. Because the XML table was structurally clean, the PDF was NOT used to re-derive any Table 1 value - per the brief, the PDF pass was restricted to figure captions and textual cross-checking.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Nothing affected; this records that the extraction was sound."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "quote_verified": "verbatim",
+      "quote_source": "a table",
+      "source": {
+        "source_quote": "*\u2013p &lt;0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as median and interquartile range [Q1;Q3].",
+        "source_locator": "Table 1 (severity of neurological deficit), footnote",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    }
+  ],
+  "figures": [
+    {
+      "label": "Fig 1",
+      "is_data_figure": false,
+      "n_panels": 3,
+      "carries_unique_values": false,
+      "caption": "(A) Study design, (B) the principle of experimental modelling of chronic and (C) acute brain ischemia (Fig 1B Republished from Tyurenkov IN et al. (2020) [11] under a CC BY license, with permission from OOO \"Media Sphere Publishing House\", original copyright 2020). CCA-common carotid artery; ECA-external carotid artery; ICA-internal carotid artery; MCA-middle cerebral artery; MCAO-middle cerebral artery occlusion.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "schematic",
+          "shows": "Overall study design and treatment timeline"
+        },
+        {
+          "panel": "B",
+          "chart_type": "schematic",
+          "shows": "Surgical principle of chronic brain ischemia modelling"
+        },
+        {
+          "panel": "C",
+          "chart_type": "schematic",
+          "shows": "Surgical principle of acute middle cerebral artery occlusion"
+        }
+      ]
+    },
+    {
+      "label": "Fig 2",
+      "is_data_figure": false,
+      "n_panels": 1,
+      "carries_unique_values": false,
+      "caption": "The schematic representation of Morris water maze apparatus and the order of animal testing.",
+      "panels": [
+        {
+          "chart_type": "schematic",
+          "shows": "Water maze layout and the four daily entry positions"
+        }
+      ]
+    },
+    {
+      "label": "Fig 3",
+      "is_data_figure": true,
+      "n_panels": 2,
+      "carries_unique_values": true,
+      "caption": "The number of animals that discovered and removed a foreign object during the adhesive tape test in 10- and 3-day follow-up experiments in acute brain ischemia model (A and B, correspondingly) (%).#-p <0.05 compared to Intact; *-p <0.05 compared to placebo (chi-squared test); data shown as the number of animals that discovered and removed the adhesive tape in the group (in %).",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Percentage of animals discovering and removing the tape, 10-day acute series, by group"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Same outcome in the 3-day acute series"
+        }
+      ]
+    },
+    {
+      "label": "Fig 4",
+      "is_data_figure": true,
+      "n_panels": 2,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "(A) The time discovered and (B) removed a foreign object during the adhesive tape test periods of experiments (after chronic brain ischemia) (s). #-p <0.05 compared to Intact; *-p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Latency to discover the tape, chronic ischemia, by group"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Latency to remove the tape, chronic ischemia, by group"
+        }
+      ]
+    },
+    {
+      "label": "Fig 5",
+      "is_data_figure": true,
+      "n_panels": 2,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "(A) Rotating rod performance in rats with acute and (B) chronic brain ischemia. #-p <0.05 compared to Intact; *-p < 0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Rotarod latency, acute ischemia, by group"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Rotarod latency, chronic ischemia, before and after treatment"
+        }
+      ]
+    },
+    {
+      "label": "Fig 6",
+      "is_data_figure": true,
+      "n_panels": 3,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "Motor activity in Open field test in rats with acute brain ischemia (after 10 (A) or 3 (B) days of treatment) and in rats with chronic brain ischemia (C). #-p <0.05 compared to Intact; *-p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Total distance travelled, acute 10-day series"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Total distance travelled, acute 3-day series"
+        },
+        {
+          "panel": "C",
+          "chart_type": "bar",
+          "shows": "Total distance travelled, chronic series across treatment periods"
+        }
+      ]
+    },
+    {
+      "label": "Fig 7",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "Morris water maze performance in rats during the course of therapy after left middle cerebral artery occlusion.#-p <0.05 compared to Intact; *-p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "chart_type": "line",
+          "shows": "Mean platform search latency across the four training days, by group, acute ischemia"
+        }
+      ]
+    },
+    {
+      "label": "Fig 8",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "Morris water maze performance in rats with chronic brain ischemia.#-p <0.05 compared to Intact; *-p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM).",
+      "panels": [
+        {
+          "chart_type": "line",
+          "shows": "Mean search latency across three treatment periods (first course, washout, second course), by group"
+        }
+      ]
+    },
+    {
+      "label": "Fig 9",
+      "is_data_figure": true,
+      "n_panels": 7,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "The activity of brain antioxidant systems in rats with chronic brain ischemia.(A) brain lactate levels; (B) brain pyruvate levels; (C) the relation of lactate to pyruvate in brain tissue; (D) brain glutathione levels; (E) malonic dialdehyde brain levels; (F) brain catalase activity; (G) brain superoxide dismutase activity; #-p <0.05 compared to Intact; *-p <0.05 compared to placebo (1-way ANOVA, t-student test with Bonferroni correction); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Brain lactate by group"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Brain pyruvate by group"
+        },
+        {
+          "panel": "C",
+          "chart_type": "bar",
+          "shows": "Lactate/pyruvate ratio by group"
+        },
+        {
+          "panel": "D",
+          "chart_type": "bar",
+          "shows": "Brain reduced glutathione by group"
+        },
+        {
+          "panel": "E",
+          "chart_type": "bar",
+          "shows": "Brain malonic dialdehyde by group"
+        },
+        {
+          "panel": "F",
+          "chart_type": "bar",
+          "shows": "Brain catalase activity by group"
+        },
+        {
+          "panel": "G",
+          "chart_type": "bar",
+          "shows": "Brain superoxide dismutase activity by group"
+        }
+      ]
+    },
+    {
+      "label": "Fig 10",
+      "is_data_figure": true,
+      "n_panels": 2,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "Representative photographs of brain slices obtained from animals with acute brain ischemia.Brain necrosis volume at 3 days (n = 9); *-p <0.05 compared to placebo (1-way ANOVA, t-student test with Bonferroni correction); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "photograph",
+          "shows": "TTC-stained brain slices by group"
+        },
+        {
+          "panel": "B",
+          "chart_type": "bar",
+          "shows": "Brain necrosis volume as % of hemisphere, by group; only the placebo mean (26 +/- 5%) appears in the text"
+        }
+      ]
+    },
+    {
+      "label": "Fig 11",
+      "is_data_figure": false,
+      "n_panels": 1,
+      "carries_unique_values": false,
+      "caption": "Representative microphotographs of hippocampal slices in animals with chronic brain ischemia.Arrows indicate the cells with roughly altered morphology, e.g. hyperchromia, triangular or polygonal form of perikaryon.",
+      "panels": [
+        {
+          "chart_type": "photograph",
+          "shows": "Nissl-stained hippocampal histology by group"
+        }
+      ]
+    },
+    {
+      "label": "Fig 12",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "error_bars": "SEM",
+      "caption": "Hippocampal morphology in animals with chronic brain ischemia.NN-normal or unchanged neurons; MN-slightly modified neurons; AN-roughly altered neurons; #-p <0.05 compared to Intact; *-p <0.05 compared to placebo (Kruskal-Wallis rank analysis and the Dunn post-hoc test); data shown as the mean +/- SEM.",
+      "panels": [
+        {
+          "chart_type": "bar",
+          "shows": "Relative numerical density of normal, mildly changed and roughly altered neurons in CA1/CA3, by group"
+        }
+      ]
+    },
+    {
+      "label": "Fig 13",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "caption": "Brain content of 125I-labeled Cortexin, Cerebrolysin and albumin in mice.Data shown as geometric mean (n = 15).",
+      "panels": [
+        {
+          "chart_type": "line",
+          "shows": "Brain radioactivity as % of whole blood over 0.5, 2 and 4 h for Cortexin, Cerebrolysin and albumin; only the 6-8% / ~5% / ~3% summary reaches the text"
+        }
+      ]
+    },
+    {
+      "label": "Fig 14",
+      "is_data_figure": true,
+      "n_panels": 1,
+      "carries_unique_values": true,
+      "error_bars": "range",
+      "caption": "Cortexin receptor binding in vitro.Data shown as the median and range (n = 2).",
+      "panels": [
+        {
+          "chart_type": "bar",
+          "shows": "% inhibition of specific radioligand binding across the receptor panel; only 5 of the 28 assayed targets are named in the text"
+        }
+      ]
+    }
+  ],
+  "unchecked": [
+    {
+      "location": "Figs 3-14 (all quantitative results other than Table 1)",
+      "reason": "Every numeric outcome in this paper apart from the Table 1 neurological scores exists ONLY as a bar or line in a figure. The group means, SEMs and ns behind Figs 3, 4, 5, 6, 7, 8, 9, 12, 13 and 14 are printed nowhere in the text, the table or the supplements. No forensic tool can reach them without reading pixels, which would be tier-2 provenance barred from GRIM/GRIMMER/SPRITE/DEBIT anyway. This is the largest single blind spot in this review: the antioxidant panel (7 outcomes), both water-maze series, rotarod, open field, adhesive latency and hippocampal morphometry were all left unchecked for this reason."
+    },
+    {
+      "location": "Linked figshare spreadsheet, cell-by-cell typed sweep of all 12,201 numeric cells",
+      "reason": "extract_supplement returned 2,600,690 characters across 124,730 lines, which exceeds what can be read without sampling by line offset. Per the brief, a check built on a sampled table is worse than no check, so no per-cell parse_cells_typed/check_table sweep was attempted. The file was NOT left unswept, however: detect_raw_duplication loaded the entire grid itself and covered all 12,201 numeric cells across all 3 sheets, and only the header region was read directly (to confirm the column layout on which the duplication verdict depends)."
+    },
+    {
+      "location": "Table 1 quartile granularity (Q1/Q3 values printed as .3, .5, .8 for n=12 and n=15 integer-scale data)",
+      "reason": "The attainable-value set of a quartile of integer data at a given n is constrained, and the printed values are suggestive of a specific interpolation convention. But no validated tool in this toolkit checks median or quartile granularity - GRIM, GRIMMER, SPRITE and DEBIT all require a mean and an SD. Deliberately NOT hand-derived: computing the attainable quartile set myself would be exactly the unauditable arithmetic the brief forbids."
+    },
+    {
+      "location": "Brain necrosis volume, effect size of the 45% and 38% reductions (Results 3.7.1)",
+      "reason": "check_effect_plausibility was considered and rejected. Only the placebo mean (26 +/- 5%, n=9) is printed; the Cortexin and Cerebrolysin group means are given only as relative reductions ('smaller by 45% and 38%') and their dispersions appear only in Fig 10. Deriving mean2 = 26 x 0.55 and inventing an SD would be fabricating the tool's inputs, so no effect size was computed."
+    },
+    {
+      "location": "Adhesive tape test chi-squared (Fig 3A/3B)",
+      "reason": "recalc_chi_squared could not be run. The text gives only the placebo group's breakdown ('5 of 12 ... did not find the duct tape, and 4 of 12 found it, but subsequently did not try to remove it'); the comparator group counts appear only as percentages inside Fig 3, and no chi-squared statistic or df is reported for reconstruction."
+    },
+    {
+      "location": "Receptor binding percentages (80.1%, 73.5%, 49.0%, 44.0%, 39.7%)",
+      "reason": "grim_percentage was considered and deliberately NOT applied. These are percent inhibition of radioligand binding - a continuous ratio measurement, not 100*k/n for an integer count of sample units. GRIM's granularity argument does not hold for them, and applying it would manufacture a false impossibility. Recorded here so the omission is a visible decision rather than a silence."
+    },
+    {
+      "location": "All p-values in the paper, for GRIM-U rank-sum granularity",
+      "reason": "grimu_check is applicable only to Mann-Whitney U / Wilcoxon rank-sum p-values with stated group sizes. This paper uses Kruskal-Wallis with Dunn post-hoc, one-way ANOVA with Bonferroni t-tests, and chi-squared - none of which is a rank-sum test - and in any case reports no exact p-values, only thresholds. Not applicable on two independent grounds."
+    },
+    {
+      "location": "Baseline similarity across treatment groups (csf_test / bayesian_table1_dispersion)",
+      "reason": "No baseline table exists. Table 1's 3-hour column is a post-ischemia severity measure rather than a pre-randomisation baseline, it is reported as median/IQR rather than mean/SD/n, and no baseline p-values are printed anywhere. Neither the Carlisle-Stouffer-Fisher test nor the Table 1 dispersion test has the inputs it requires."
+    },
+    {
+      "location": "Stated a-priori power analysis",
+      "reason": "verify_power_analysis could not be run because the paper states no power calculation, no target power, no assumed effect size and no sample-size justification anywhere. Group sizes of 12-15 per arm across 7 arms are asserted without rationale. The absence is itself the reporting finding."
+    },
+    {
+      "location": "detect_duplication across tables (summary-statistic level)",
+      "reason": "Not applicable: the paper contains exactly one table, and its cells are median [Q1;Q3], not the (mean, SD) pairs detect_duplication compares. Several Table 1 cells are identical across groups (for example '4 [3;4]' appears in four different treatment rows in the Combs 3 h column), but on a 9-point integer scale with n=12 and near-identical post-ischemia severity, identical medians and IQRs are the expected result of a tight bounded distribution (rulebook 11c) and were not flagged."
+    },
+    {
+      "location": "S2 File in vitro binding assay table (28 rows x 7 columns)",
+      "reason": "Swept and found to contain no checkable statistics. Every cell is a protocol parameter - assay source, radioligand, ligand concentration, Kd, non-specific binding compound, incubation time - not a study result. No forensic technique applies to a methods-conditions table."
+    },
+    {
+      "location": "flag_round_n on group sizes",
+      "reason": "Considered and skipped as uninformative rather than run for appearance. The group sizes (15/12/12/12/12/12/12; 10/9/9/9; 15/13/15/14/15/13/15) and the 224 total are not round numbers under any modulus the tool tests, so the check could only return a null result."
+    }
+  ],
+  "coverage": {
+    "stats_found": 34,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "parse_cells_typed",
+      "check_table",
+      "statcheck",
+      "check_summation_batch",
+      "extract_supplement",
+      "detect_raw_duplication",
+      "multiplicity_report",
+      "check_sd_or_se",
+      "extract_pdf"
+    ],
+    "tables_checked": [
+      "Table 1 (main, XML) - 49 cells typed at 100% coverage, 0 checkable",
+      "S1 File Table A (Number of rats per group) - group Ns reconciled against Methods",
+      "S2 File Table B (In vitro binding assays) - 28 rows, protocol parameters only, no statistics",
+      "Linked figshare spreadsheet - 3 sheets, 12,201 numeric cells, swept by detect_raw_duplication"
+    ]
+  }
+}

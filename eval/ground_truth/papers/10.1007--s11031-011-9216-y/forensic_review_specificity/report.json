@@ -1,0 +1,426 @@
+{
+  "headline": {
+    "statement": "Experiment 4's control condition is reported as M = 4.20, SD = .21 on a single whole-number 1-7 rating, and no set of whole-number responses can produce that pair at any sample size -- yet it is the baseline every one of that experiment's eight results is measured against.",
+    "severity": "impossible",
+    "rests_on": "logical_necessity",
+    "evidence": "\"Higher levels of self-evaluations relative to the control condition (M = 4.20, SD = .21) were found\" and, in the next section, \"Compared to a control condition (M = 4.20, SD = .21)\". The measure is stated as a single item: \"Participants also rated their own attractiveness (How attractive are you?) on a seven-point scale (1 = not at all, 7 = extremely)\" (Experiment 1), and Experiment 4 states participants \"completed the same measures of mood, own attractiveness, and other attractiveness as in Experiments 1 and 2\". For integer responses averaging exactly 4.20, the smallest attainable SD is approximately 0.41.",
+    "reproduction": "metascience sprite --mean 4.2 --sd 0.21 --n 15 --scale-min 1 --scale-max 7 --decimals-mean 2 --decimals-sd 2 --data-type likert",
+    "plain": "Experiment 4 says its comparison group averaged 4.20 out of 7 on a single whole-number rating, with the responses spread by only 0.21 around that average -- but whole numbers cannot cluster that tightly around 4.20, because the closest they can get is a spread of about 0.41, roughly twice as wide. The baseline that all eight of that experiment's results are measured against therefore cannot be a real set of answers from real people."
+  },
+  "verdict": "untrustworthy",
+  "confidence": "high",
+  "findings": [
+    {
+      "rank": 1,
+      "title": "Control-condition mean and SD in Experiment 4 unreconstructable from any whole-number sample",
+      "severity": "impossible",
+      "confidence": "high",
+      "location": "Experiment 4, 'No load conditions' and 'Cognitive load conditions' (the same control statistics printed twice)",
+      "reported": "M = 4.20, SD = .21 for the no-mood, no-comparison, no-load hanging control, on the single-item seven-point self-attractiveness rating carried over from Experiments 1 and 2.",
+      "computed": "SPRITE returns no_solution_proven at n = 15 and n = 30; the sweep additionally proved infeasibility at n = 20 and n = 60. R's rsprite2 independently returns infeasible=true, and does so even when the scale is widened to 1-9, so the result does not depend on the scale bound at all. At n = 15 the only whole-number total consistent with a mean of 4.20 is 63, and no integer sum-of-squares of the required parity falls in the window [265.19, 265.25] implied by SD = 0.21. The smallest SD attainable for an integer mean of exactly 4.20 is approximately 0.41.",
+      "assumptions": "That the self-evaluation measure is the single whole-number item the paper describes ('How attractive are you?'), which Experiment 4 states by explicit cross-reference to Experiments 1 and 2. The control group's size is not printed; the finding does not depend on it, having been tested at four values. No scale bound is required.",
+      "reproduction": "metascience sprite --mean 4.2 --sd 0.21 --n 15 --scale-min 1 --scale-max 7 --decimals-mean 2 --decimals-sd 2 --data-type likert",
+      "stage1_finding_ids": [
+        "e4_control_sd_impossible",
+        "e2_control_sd_reconstructable"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 8,
+        "basis": "asserted",
+        "explanation": "All eight of Experiment 4's self-evaluation contrasts are tested against this control mean, so the paper's mechanistic conclusion -- that cognitive load abolishes self-serving reinterpretation -- is computed against a baseline that cannot exist."
+      },
+      "plain": "The comparison group in the fourth experiment is described as averaging 4.20 out of 7 with the individual answers falling within about 0.21 of that. Since people could only pick whole numbers, their answers cannot bunch that tightly around 4.20; the tightest possible is roughly double. Two separate pieces of software, one of them the standard published tool for this check, agree that no group of people answering that question could have produced these two numbers. Every result in that experiment is stated as a comparison against this group.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 2,
+      "title": "Two Table 2 self-evaluation cells impossible at the cell size the paper's own design fixes",
+      "severity": "impossible",
+      "confidence": "high",
+      "location": "Table 2, Self-evaluation row, Positive/Unambiguous/Upward and Positive/Unambiguous/Downward columns (Experiment 3)",
+      "reported": "6.58 (.52) and 4.08 (.52), among eight cells of twelve participants each.",
+      "computed": "GRIMMER returns impossible for both cells at n = 12. Both means pass the granularity check (candidate integer totals 79 and 49 respectively), so the failure is in the SD: no integer sum-of-squares of the required parity yields an SD rounding to 0.52. Re-run at scale 1-9 as well as 1-7, both cells remain impossible, so the finding survives the alternative scale reading Experiment 3 raises elsewhere. The sweep independently confirmed both with R's rsprite2. Denominator: 24 checks over the eight self-evaluation cells produced 4 impossible results and 20 consistent ones.",
+      "assumptions": "That the cell size is 12. This is fixed rather than inferred: the paper states N = 96, states a balanced 2x2x2 design, and reports df_error = 88, which is 96 minus 8 cells. That the self-evaluation item is a single whole-number rating, which the paper states by cross-reference. No scale bound is needed -- the result holds at both 1-7 and 1-9.",
+      "reproduction": "metascience grimmer --mean 6.58 --sd 0.52 --n 12 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "stage1_finding_ids": [
+        "e3_table2_selfeval_two_cells_impossible"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Both cells sit in the unambiguous-cue condition that Experiment 3 uses as its comparison baseline for the claim that self-serving responding requires ambiguity."
+      },
+      "plain": "Two of the eight groups in the third experiment report averages and spreads that no twelve people answering a whole-number question could have produced. Unlike most such checks, the group size here is not a guess -- the paper's stated total of 96 people split evenly across eight groups fixes it at twelve. These two groups are the comparison condition for that experiment's central claim, that the effect only appears when the information is ambiguous.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 3,
+      "title": "Experiment 3 target-attractiveness mean of 7.33 above the seven-point maximum the paper cross-references",
+      "severity": "highly_suspicious",
+      "confidence": "medium",
+      "location": "Experiment 3, Manipulation check",
+      "reported": "\"the upward comparison target was rated more attractive (M = 7.33, SD = 1.19) than the downward target (M = 4.17, SD = 1.19), F(1,88) = 170.34, p < .001\"",
+      "computed": "GRIM with bound_source=stated returns failure_mode 'out_of_range': the granularity is fine (352/48 = 7.3333 rounds back to 7.33) but the implied total of 352 exceeds the maximum possible total of 336 for 48 whole-number responses on a 1-7 scale. No sample size rescues it. Separately, rivets_anova confirms the reported F of 170.34 is internally consistent with the two printed means and SDs -- so the F reconciles with a number that cannot be a mean of the stated scale.",
+      "assumptions": "Downgraded from the sweep's 'impossible' deliberately. The seven-point bound reaches Experiment 3 only by cross-reference -- 'rated their own attractiveness (on the seam [same] measures used in Experiments 1 and 2)', where both those experiments define a seven-point target-attractiveness scale. Two things weaken a hard call: the target-rating sentence that follows does not restate the scale, and the immediately preceding paragraph reports the mood check as M = 7.33 as well, so a nine-point reading would reconcile both values at once. Either the mean is wrong or the description of the scale is wrong; the arithmetic cannot say which.",
+      "reproduction": "metascience grim --mean 7.33 --n 48 --scale-min 1 --scale-max 7 --decimals 2 --data-type likert --bound-source stated",
+      "stage1_finding_ids": [
+        "e3_target_attractiveness_out_of_range",
+        "e3_attractiveness_f_consistent"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects Experiment 3's direction-of-comparison manipulation check, which licenses reading the whole experiment as an upward-versus-downward comparison; the check is significant under either reading of the scale."
+      },
+      "plain": "Experiment 3 reports an average rating of 7.33 on what it describes as a scale running from 1 to 7 -- an average cannot exceed the top of its own scale. The most likely innocent explanation is that this experiment actually used a nine-point scale and the methods section describes it wrongly, which would also explain the identical value 7.33 reported two sentences earlier for a different measure. Either way, one of the two statements is incorrect, and the paper does not say which.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 4,
+      "title": "Six Experiment 4 cell means unreconstructable at both candidate cell sizes",
+      "severity": "highly_suspicious",
+      "confidence": "medium",
+      "location": "Experiment 4, 'No load conditions' and 'Cognitive load conditions' (prose cell statistics)",
+      "reported": "5.64 (.78), 5.15 (.81), 5.47 (.51), 3.24 (1.09), 3.09 (.94) and 5.53 (.87), among eight factorial cells.",
+      "computed": "GRIMMER over the eight cells returns 19 impossible of 24 checks at n = 15 and 20 of 24 at n = 14; six cells fail at both candidate sizes. Two further cells, 5.71 (.83) and 3.33 (1.05), pass at one size only.",
+      "assumptions": "Cell size is derived, not printed. It rests on a factorial N of 118 implied by df_error = 110 across eight cells, giving 14 or 15 per cell. That derived N is itself contradicted by the paper's stated N = 193 (see the sample-size finding), and the two cannot both be right. If the true cells held roughly 22-23 participants, this check would have far less power and these values might be reconstructable. The finding is therefore conditional on the reported degrees of freedom being correct.",
+      "reproduction": "metascience grimmer --mean 5.15 --sd 0.81 --n 15 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "stage1_finding_ids": [
+        "e4_six_cells_impossible"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 6,
+        "basis": "asserted",
+        "explanation": "These six cells carry the whole of Experiment 4's cognitive-load moderation claim, the paper's mechanistic conclusion."
+      },
+      "plain": "Six of the eight group averages in the fourth experiment cannot be produced by any set of whole-number answers, at either of the two group sizes the paper's own statistics imply. This check is less certain than the others because the paper never prints how many people were in each group -- the sizes had to be worked back from the analysis, and those workings conflict with the total the paper states. If the groups were substantially larger than they appear, some of these averages could be genuine.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 5,
+      "title": "Four further single-item cell means unreconstructable at both candidate cell sizes in Experiments 1 and 2",
+      "severity": "highly_suspicious",
+      "confidence": "medium",
+      "location": "Table 1, Self-evaluation row (Experiment 2), three cells; and Experiment 1, Self-evaluations, shared-birthday/upward cell",
+      "reported": "Table 1: 3.17 (.98), 3.07 (.62) and 5.35 (.70). Experiment 1: \"asymmetric assimilation towards the upward comparison target (M = 5.08, SD = .52)\".",
+      "computed": "For Table 1, GRIMMER over the eight cells returns 18 impossible of 24 checks at n = 16 and 13 of 24 at n = 15; three cells fail at both. For Experiment 1, SPRITE returns no_solution_proven at n = 12 and GRIM failure at n = 11, so the pair is unreconstructable at both; R's rsprite2 independently returns infeasible=true at n = 12.",
+      "assumptions": "Neither experiment prints cell sizes. Experiment 2's factorial N of 126 is implied by df_error = 118 across eight cells and reconciles exactly with the stated N = 141 once the df-implied control of 15 is added, giving cells of 15 or 16. Experiment 1's N = 47 across four cells (df_error = 43 confirms four) gives 11 or 12. Only cells failing under both candidates are reported. A markedly unbalanced allocation, which the paper does not report, would weaken these results.",
+      "reproduction": "metascience grimmer --mean 3.17 --sd 0.98 --n 15 --scale-min 1 --scale-max 7 --decimals 2 --decimals-sd 2 --data-type likert",
+      "stage1_finding_ids": [
+        "e2_table1_three_cells_impossible",
+        "e1_shared_upward_cell_impossible"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "The Experiment 1 cell is the one carrying that experiment's headline claim of assimilation to an upward target under a shared-birthday cue, and two of the three Table 1 cells carry Experiment 2's claim that negative mood produces symmetric contrast."
+      },
+      "plain": "Four more group averages, in the first two experiments, cannot have come from whole-number answers at either group size the paper's statistics allow. One of them is the single result on which the first experiment's main conclusion rests. As with the fourth experiment, the group sizes had to be reconstructed because the paper never prints them, so these are strong signals rather than certainties.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 6,
+      "title": "Experiment 4's claim of an identical response pattern contradicted by the means printed in the same sentence",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Experiment 4, Cognitive load conditions",
+      "reported": "\"upward comparison led to more positive self-ratings (M = 5.71, SD = .83) ... and downward comparison led to less positive self-ratings (M = 3.09, SD = .94) ... This pattern was identical to the neutral mood condition, in which upward comparison led to more positive self-ratings (M = 3.33, SD = 1.05) ... and downward comparison led to less positive self-ratings (M = 5.53, SD = .87), relative to the control condition.\" The control mean is 4.20.",
+      "computed": "No forensic tool covers a contradiction between prose and the numbers beside it; this is a direct reading of four printed means against the printed control mean of 4.20. The value called 'more positive' than the 4.20 control is 3.33, which is lower; the value called 'less positive' is 5.53, which is higher. The two conditions the paper calls identical are exactly inverted: positive-mood-under-load runs 5.71 up / 3.09 down, neutral-mood-under-load runs 3.33 up / 5.53 down. The three parallel comparisons elsewhere in Experiment 4 (positive no-load 5.64/5.15, neutral no-load 5.47/3.24, positive load 5.71/3.09) all describe their means correctly, so this is not a labelling convention.",
+      "assumptions": "None beyond the paper's own statements. The sweep confirmed the sentence reads identically in the XML and in the PDF version of record, so it is not an extraction artefact.",
+      "reproduction": "Not reproducible as a CLI command: this is a direct reading of four printed means (5.71, 3.09, 3.33, 5.53) against the printed control mean of 4.20 and the sentence describing them. No forensic tool evaluates a text-versus-number direction contradiction.",
+      "stage1_finding_ids": [
+        "e4_direction_contradiction"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Experiment 4's mechanistic conclusion is that cognitive load makes positive-mood participants behave like neutral-mood participants; the printed means make those two conditions opposite rather than identical."
+      },
+      "plain": "The fourth experiment's key conclusion is that when people are mentally taxed, those in a good mood stop responding self-servingly and start behaving like everyone else. The sentence stating this describes two groups as showing an identical pattern -- but the numbers printed inside that same sentence show the opposite patterns, each one described backwards relative to the comparison group's score of 4.20. Two numbers appear to have been swapped. Until the authors say which is correct, the experiment's conclusion is not supported by the numbers offered for it.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'"
+    },
+    {
+      "rank": 7,
+      "title": "Sixty of Experiment 4's stated 193 participants absent from every analysis it reports",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Experiment 4, Participants and design, versus Results and discussion",
+      "reported": "\"University (N = 193, 103 female) students participated in the study for monetary compensation.\" The factorial ANOVA reports df_error = 110 and the contrasts against the control report df_error = 124.",
+      "computed": "check_summation with tolerance 0: df_error = 110 across eight factorial cells implies 118 participants; df_error = 124 across nine groups implies 133 in total, leaving a control of 15. 118 + 15 = 133, against a stated 193 -- a shortfall of 60. The paper reports no exclusions, attrition or missing data. The same arithmetic reconciles exactly for the other four studies: pilot 42+3 = 45, Experiment 1 43+4 = 47, Experiment 2 126+15 = 141, Experiment 3 eight cells of 12 = 96.",
+      "assumptions": "That the reported degrees of freedom correspond to the models the paper describes, which they do in all four other studies. None beyond the paper's own statements.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[118,15],\"expected_sum\":193,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0,\"description\":\"Experiment 4 df-implied N vs stated N\"}]'",
+      "stage1_finding_ids": [
+        "e4_sample_size_discrepancy",
+        "sample_size_reconciliation"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Roughly a third of Experiment 4's stated sample is unaccounted for in every analysis it reports, and the ambiguity also blocks verification of that experiment's cell statistics."
+      },
+      "plain": "Experiment 4 says 193 people took part, but the statistics it reports only account for about 133 of them. No dropouts, exclusions or missing data are mentioned anywhere. The other four studies in the paper add up exactly, which is what makes this one stand out rather than looking like a house style. It also means nobody can check that experiment's group averages, because the group sizes depend on which of the two totals is right.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 8,
+      "title": "Pilot mood ANOVA F below every value its own group statistics permit",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Pilot study, paragraph 2",
+      "reported": "\"the mood manipulation significantly affected participant mood, F(2, 42) = 18.44, p < .001\", with group means 7.20, 6.15 and 4.98 and SDs .93, .52 and .98.",
+      "computed": "RIVETS one-way ANOVA over the rounding intervals of the printed means and SDs gives an achievable F range of [26.01, 26.98] at equal allocation, with the reported 18.44 outside it and zero Monte Carlo hits in 5000 samples. The sweep tested two lopsided allocations as well, 10/25/10 and 19/7/19, giving ranges [22.20, 23.07] and [28.03, 29.05]; the reported F is below all three.",
+      "assumptions": "Group sizes are not stated. This is a genuine one-way ANOVA on three groups -- df(2, 42) matches N = 45 exactly -- so unlike Experiment 2's manipulation check there is no factorial-residual explanation available. Graded suspicious rather than higher because some extreme unequal allocation not tested might reconcile it, and because the significance decision is unaffected. The tool itself returned highly_suspicious; the downgrade is mine.",
+      "reproduction": "metascience rivets-anova --means '[7.2,6.15,4.98]' --sds '[0.93,0.52,0.98]' --ns '[15,15,15]' --reported-f 18.44 --decimals-mean 2 --decimals-sd 2 --decimals-f 2",
+      "stage1_finding_ids": [
+        "pilot_mood_anova_f_out_of_range",
+        "e2_attractiveness_f_model_mismatch"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Affects the pilot's demonstration that the mood induction worked; the reported F is smaller than the group statistics imply, so the conclusion of a significant effect stands."
+      },
+      "plain": "The pilot study's test statistic is smaller than the group averages and spreads printed beside it can produce, under equal group sizes and two unequal ones. The effect it reports would have been larger, not smaller, so this does not change the conclusion that the mood manipulation worked -- but the number does not follow from the numbers given for it.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 9,
+      "title": "Two dependent measures named in Table 1's caption reported nowhere in Experiment 2",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 1 caption versus Table 1 body and Experiment 2 text",
+      "reported": "The caption promises \"effects ... on self-evaluations, ratings of target similarity, and use of information to benefit the self\". The table contains exactly one data row, Self-evaluation.",
+      "computed": "Table 1 returns one data row of eight cells in both the XML grid and, per the sweep, the PDF. Neither 'ratings of target similarity' nor 'use of information to benefit the self' appears anywhere in Experiment 2's text or table, and Experiment 2's Dependent measures section never describes a similarity measure, although Experiment 3 does.",
+      "assumptions": "None beyond the paper's own statements. This may be a caption inherited from a fuller table that was cut, rather than measures collected and suppressed; the paper gives no way to tell.",
+      "reproduction": "metascience get-table --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.xml --table-num 1",
+      "stage1_finding_ids": [
+        "table1_caption_promises_absent_rows"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Two dependent measures named in the table's own caption are never reported in Experiment 2, so their results cannot be evaluated at all."
+      },
+      "plain": "The title above Table 1 says it shows results for three different measures. The table shows one. The other two -- how similar participants rated the comparison person, and whether they used the information to their own benefit -- appear nowhere in that experiment. Either they were measured and not reported, or the table's title was left over from an earlier version.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 10,
+      "title": "Data-availability offer with no data deposited",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Experiment 3, footnote 4",
+      "reported": "\"Complete data and results available from the first author.\"",
+      "computed": "No supplementary files accompany the record; nothing could be read. Two dependent measures named in Table 1's caption are also never reported.",
+      "assumptions": "This records the presence of an availability claim and the absence of deposited data. It is not evidence about the authors' willingness to supply data on request, which was not tested.",
+      "reproduction": "Not reproducible as a CLI command: this records the presence of a data-availability claim in the text and the absence of any deposited data file alongside the article. No forensic tool evaluates it.",
+      "stage1_finding_ids": [
+        "data_availability_state_but_withhold"
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Every impossibility recorded above could be settled immediately by the raw data this footnote offers; none of it is deposited, and the offer is attached to one footnote in one experiment rather than to the paper."
+      },
+      "plain": "A footnote in the third experiment says complete data are available from the first author, but no data accompany the article. Every one of the arithmetic problems in this review could be resolved -- in either direction -- by seeing the actual responses.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'"
+    },
+    {
+      "rank": 11,
+      "title": "Two degrees-of-freedom values inconsistent with the designs they are attributed to",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Experiment 1, Self-evaluations; and Experiment 3, Perceptions of similarity",
+      "reported": "Experiment 1: \"F(1, 46) = 6.95, p = 011\" for a simple effect, where every other test in that experiment uses df_error = 43. Experiment 3: three correlations reported as r(24), e.g. \"r(24) = .87, p < .001\".",
+      "computed": "For Experiment 1, N = 47 in a 2x2 design gives df_error = 43; the printed 46 equals N - 1 and corresponds to no error term in the stated design. The p-value is unaffected: F(1,46) = 6.95 gives p = .0114 and F(1,43) = 6.95 gives p = .0116, both printing as .011. For Experiment 3, each correlation is computed within one mood-by-ambiguity combination spanning two cells of twelve, so 24 participants and df = 22; the printed df = 24 implies n = 26.",
+      "assumptions": "That the correlations were computed within a single mood-by-ambiguity combination, which is how the text describes them. The Experiment 3 discrepancy could be a convention slip of reporting n rather than n - 2.",
+      "reproduction": "Not reproducible as a CLI command: these compare printed degrees-of-freedom values against the sample sizes implied by the stated designs, which no forensic tool evaluates.",
+      "stage1_finding_ids": [
+        "e1_simple_effect_df_inconsistent",
+        "e3_correlation_df_inconsistent"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 4,
+        "basis": "asserted",
+        "explanation": "Affects Experiment 1's symmetric-contrast simple effect and the three Experiment 3 correlations used to argue similarity ratings mediate the effect; no significance decision changes."
+      },
+      "plain": "Two places in the paper report a technical number that describes how many people went into a test, and in both cases it does not match the design described. Neither changes whether the result is statistically significant, but both suggest the analyses were not all run on the samples the paper describes.",
+      "reproduction_valid": false,
+      "reproduction_problem": "must invoke `metascience`, got 'Not'"
+    },
+    {
+      "rank": 12,
+      "title": "Three of sixty-five reported test statistics inconsistent with their own p-values",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Whole body text (Pilot and Experiments 1-4)",
+      "reported": "\"F(1, 94) = 1.50, p = .83\" (Experiment 3), \"F(1, 42) = .27, p = .76\" (Pilot), and \"r(24) = .53, p = .008\" (Experiment 3).",
+      "computed": "statcheck over all 65 NHST results recomputes p = .2237, .6061 and .0054 respectively; zero decision errors. Two have benign explanations: rivets_anova independently confirms the pilot F of .27 reconciles with its group statistics and yields p = .757 once the numerator df is read as 2 rather than 1, which the three-group design requires; and .83 for F = 1.50 may be a transposition of .23. The paper also prints two malformed p-values, 'p = 011' and 'p = 001', normalised to .011 and .001 for the run.",
+      "assumptions": "Three out of sixty-five is a low rate and unremarkable on its own -- roughly half of clean control papers contain at least one such mismatch. Reported for completeness rather than as a substantive charge.",
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.1007--s11031-011-9216-y/10.1007--s11031-011-9216-y.pdf",
+      "stage1_finding_ids": [
+        "statcheck_body",
+        "pilot_selfeval_anova_consistent"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "computed",
+        "explanation": "None of the three inconsistencies crosses the paper's significance threshold, so no reported conclusion changes. None of the three inconsistencies crosses alpha, so no reported conclusion changes; all three affected results are non-significant or already significant either way. Computed from 0 statistic(s) whose recomputed p crosses the paper's alpha."
+      },
+      "plain": "Three of the paper's sixty-five statistical results do not match the probability values printed beside them. This is an ordinary rate of typographical slippage -- about half of error-free papers have at least one -- and none of the three changes whether a result counts as significant. It is recorded so the reader knows it was checked, not as a criticism.",
+      "reproduction_valid": true
+    },
+    {
+      "rank": 13,
+      "title": "Repeated summary values across independent samples, below the threshold at which duplication checking flags them",
+      "severity": "indeterminate",
+      "confidence": "low",
+      "location": "Pilot study versus Table 1 (Experiment 2); Experiment 3 Manipulation check; Table 2 Similarity row",
+      "reported": "The pilot's three mood-condition SDs are .93, .52 and .98; Table 1's first three self-evaluation SDs are .93, .52 and .98, in the same order. Separately: two attractiveness SDs identical at 1.19 in one sentence; two Table 2 similarity means identical at 6.81; two pilot self-evaluation means identical at 6.98; the value 7.33 reported for two different Experiment 3 measures; and the control mean of exactly 4.20 in both Experiment 2 and Experiment 4.",
+      "computed": "detect_duplication over 1407 cross-source comparisons of 58 (mean, SD) cells found zero identical pairs between independent samples; three flagged items were digit transpositions between 5.35 and 5.53, which is weak. Re-run in stage 2 on the pilot and Table 1 blocks specifically, it again returned consistent with zero identical pairs, because it matches mean-and-SD together and only the SDs coincide. The SD-sequence observation therefore has NO tool backing and is recorded as a reading.",
+      "assumptions": "Repeated values are ordinary in small samples and prove nothing on their own (rulebook rule 8). The pilot and Experiment 2 involve different participants and different measures on different scales -- a four-item nine-point composite versus a single seven-point item -- which is what makes three SDs coinciding in sequence worth noting, but I could not quantify how improbable it is with any validated tool.",
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Pilot mood by condition\",\"sample_id\":\"pilot\",\"independent\":true,\"cells\":[{\"label\":\"positive\",\"value\":7.2,\"sd\":0.93},{\"label\":\"control\",\"value\":6.15,\"sd\":0.52},{\"label\":\"negative\",\"value\":4.98,\"sd\":0.98}]},{\"label\":\"Exp 2 Table 1 first three cells\",\"sample_id\":\"exp2\",\"independent\":true,\"cells\":[{\"label\":\"pos/same/up\",\"value\":5.25,\"sd\":0.93},{\"label\":\"pos/same/down\",\"value\":5.53,\"sd\":0.52},{\"label\":\"pos/diff/up\",\"value\":3.17,\"sd\":0.98}]}]' --decimals-mean 2 --decimals-sd 2",
+      "stage1_finding_ids": [
+        "identical_sds_weak_signal",
+        "control_mean_4_20_recurrence",
+        "duplication_sweep"
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim depends on this; it is recorded as a weak corroborating pattern and as a record of what duplication checking ruled out."
+      },
+      "plain": "Several numbers recur across studies that used different people and different questionnaires -- most noticeably, the three spread values from the pilot study reappear in the same order in the first three columns of Experiment 2's table. The automated check for copied statistics found nothing, because it looks for averages and spreads matching together and here only the spreads match. This is an observation, not a finding: repeated values happen by chance, and I could not measure how likely this particular coincidence is.",
+      "reproduction_valid": true
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Table 2, Similarity row (8 cells)",
+      "reason": "The similarity index is a mean of three nine-point items, so it moves in steps of 1/(3n) rather than 1/n, and the granularity tools have no items parameter. Running them with 1/n would manufacture impossibilities, and hand-checking the 1/36 granularity would be unvalidated arithmetic."
+    },
+    {
+      "location": "Pilot study mood and self-evaluation means (six values)",
+      "reason": "Both are means of multi-item composites (four nine-point items and three nine-point items), so the granularity tools do not apply for the same reason. The ANOVAs computed from them were checked with rivets_anova instead."
+    },
+    {
+      "location": "Figures 1, 2 and 3",
+      "reason": "Neither data figure carries values absent from the text: Figure 2 replots Table 2's self-evaluation row and Figure 3 replots Experiment 4's prose cell means, all checked directly. No error-bar meaning is stated in either caption, so no dispersion could have been read off them in any case."
+    },
+    {
+      "location": "Experiment 2 contrast tests reported with df_error = 124 (four tests)",
+      "reason": "The error df of 124 corresponds to neither the factorial model (118) nor the contrast model (132) used elsewhere in the same experiment. Without knowing which sub-model produced it, the group sizes could not be reconstructed, so these F values were left unverified rather than checked against a guessed model."
+    },
+    {
+      "location": "Per-group sample sizes throughout",
+      "reason": "The paper prints no cell sizes anywhere. Every n used here except Experiment 3's was derived from reported degrees of freedom and the stated design; where two candidates were possible, checks were run at both and only results failing under both are reported."
+    },
+    {
+      "location": "Supplementary materials",
+      "reason": "None were provided with the paper. Footnote 4 states 'Complete data and results available from the first author', but no data file accompanies the record. This is 'not provided', distinct from 'present but unreadable'."
+    },
+    {
+      "location": "Effect-size plausibility benchmarking",
+      "reason": "check_effect_plausibility was not run. The paper reports no effect sizes, several key contrasts lack dispersion, and the group statistics that do exist are themselves the object of the impossibility findings; benchmarking an effect computed from values that no integer sample can produce would not be informative."
+    },
+    {
+      "location": "Table 1 footnote giving Experiment 2's control statistics",
+      "reason": "The XML extraction reported zero footnotes for Table 1; the sweep recovered the footnote (M = 4.20, SD = .86) from the PDF. All 24 table cell values agreed exactly between the two sources, but a reader working from the XML alone would have missed these control statistics entirely. Recorded against the extraction tooling, not the authors."
+    }
+  ],
+  "limitations": [
+    "This agent reads text and tables only. It does not see figures: Figures 1, 2 and 3 were not read, and any value appearing only in their artwork was not checked.",
+    "No cell sizes are printed anywhere in the paper. Except in Experiment 3, where N = 96 and a stated balanced 2x2x2 design fix the cells at 12, every group size used here was derived from reported degrees of freedom. Findings resting on a derived n are graded highly_suspicious rather than impossible for that reason, and each names its candidate sizes.",
+    "Experiment 4's cell-level findings are conditional in a way the others are not: they rest on a factorial N of 118 implied by df_error = 110, and that derived N is contradicted by the paper's own stated N = 193. Both cannot be right, and the paper offers no basis for choosing.",
+    "The seven-point scale bound for Experiment 3 reaches that experiment only through a cross-reference to Experiments 1 and 2. The out-of-range finding for the mean of 7.33 is graded accordingly and is not the headline.",
+    "The observation that the pilot's three SDs recur in order in Table 1 has no validated tool behind it. The duplication check, run twice, returned no identical mean-and-SD pairs; it is recorded as a reading, not a result.",
+    "The article is published as retracted, and the second author's corpus was retracted following the 2011 Levelt investigations. No finding in this review rests on that fact; every one was derived from the printed numbers alone."
+  ],
+  "coverage_summary": {
+    "stats_found": 65,
+    "stats_checked": 65,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "parse_cells_typed",
+      "check_table",
+      "statcheck",
+      "grim_check",
+      "grimmer_check",
+      "sprite_reconstruct",
+      "r_sprite_ground_truth",
+      "rivets_anova",
+      "detect_duplication",
+      "check_summation_batch",
+      "multiplicity_report",
+      "extract_figures",
+      "extract_pdf"
+    ],
+    "tables_checked": [
+      "Table 1 (Experiment 2, self-evaluation, 8 cells)",
+      "Table 2 (Experiment 3, self-evaluation and similarity, 16 cells)",
+      "Experiment 1 prose cell means (4 cells, treated as a table)",
+      "Experiment 4 prose cell means (8 cells, treated as a table)"
+    ]
+  },
+  "questions_for_authors": [
+    {
+      "question": "Experiment 4 reports the hanging control condition twice as M = 4.20, SD = .21 on the single seven-point self-attractiveness item. For whole-number responses averaging exactly 4.20, the smallest attainable standard deviation is about 0.41 at any sample size. Could you confirm the control group's size and the standard deviation as computed, or supply the individual responses?",
+      "why": "This is the paper's strongest arithmetic contradiction and it is the baseline for all eight of Experiment 4's contrasts. Only the raw responses or a corrected value can settle it.",
+      "finding_ids": [
+        "e4_control_sd_impossible"
+      ]
+    },
+    {
+      "question": "Experiment 4 states N = 193, but df_error = 110 for the factorial ANOVA implies 118 participants across the eight cells and df_error = 124 for the contrasts implies 133 in total. Were participants excluded, and if so how many and on what grounds? The pilot and Experiments 1-3 all reconcile exactly against their stated Ns.",
+      "why": "Sixty participants, roughly a third of the stated sample, are unaccounted for, and the ambiguity blocks any verification of Experiment 4's cell statistics.",
+      "finding_ids": [
+        "e4_sample_size_discrepancy"
+      ]
+    },
+    {
+      "question": "In the cognitive-load section of Experiment 4, the neutral-mood upward condition is described as 'more positive' with M = 3.33 and the downward condition as 'less positive' with M = 5.53, against a control of M = 4.20; the pattern is then called identical to the positive-mood condition, which runs 5.71 upward and 3.09 downward. Have these two means been transposed?",
+      "why": "As printed, the two conditions the paper calls identical are exactly inverted, which is the comparison Experiment 4's mechanistic conclusion depends on.",
+      "finding_ids": [
+        "e4_direction_contradiction"
+      ]
+    },
+    {
+      "question": "Table 2 reports the Positive/Unambiguous/Upward and Positive/Unambiguous/Downward self-evaluation cells as 6.58 (.52) and 4.08 (.52). With twelve participants per cell -- as N = 96 across a balanced 2x2x2 design and df_error = 88 imply -- neither mean and standard deviation can arise from whole-number responses, on either a seven-point or a nine-point scale. Could you confirm the cell sizes and these two standard deviations?",
+      "why": "This is the only impossibility in the paper whose group size is fixed by stated values rather than derived, and both cells sit in Experiment 3's baseline condition.",
+      "finding_ids": [
+        "e3_table2_selfeval_two_cells_impossible"
+      ]
+    },
+    {
+      "question": "Experiment 3 reports an upward-target attractiveness mean of 7.33 and describes the measure as 'the seam [same] measures used in Experiments 1 and 2', both of which specify a seven-point scale; the mood check in the preceding paragraph also reports 7.33. Which scale range was used for attractiveness and for mood in Experiment 3?",
+      "why": "A mean of 7.33 cannot arise on a 1-7 scale, but a nine-point scale would reconcile both values at once; only the authors can say which statement is the erroneous one.",
+      "finding_ids": [
+        "e3_target_attractiveness_out_of_range"
+      ]
+    },
+    {
+      "question": "Table 1's caption describes effects on 'self-evaluations, ratings of target similarity, and use of information to benefit the self', but the table contains only a Self-evaluation row and neither of the other two measures appears anywhere in Experiment 2. Were target similarity and use of information collected in Experiment 2, and if so are those results available?",
+      "why": "Distinguishes a caption left over from an earlier draft from measures collected but not reported.",
+      "finding_ids": [
+        "table1_caption_promises_absent_rows"
+      ]
+    }
+  ],
+  "report_markdown": "## What the paper claims\n\nA pilot study and four between-subjects experiments argue that positive mood lets people reinterpret ambiguous similarity information in whatever direction flatters them: assimilating towards more attractive comparison targets and contrasting away from less attractive ones. Experiment 1 establishes the asymmetry using a shared-birthday cue; Experiment 2 rules out a mood-congruency explanation by showing negative mood does not produce it; Experiment 3 shows the effect requires the similarity cue to be ambiguous; Experiment 4 shows it is abolished by cognitive load, which is the mechanistic conclusion the paper builds towards. Self-evaluation is throughout a single whole-number rating, \"How attractive are you?\", on a seven-point scale.\n\n## A note on the record, and why it changes nothing here\n\nThe article is published as retracted, and the second author's corpus was retracted following the 2011 Levelt, Noort and Drenth investigations. No finding in this review rests on that. Every result below was derived from the printed numbers, and each names whether it depends on a sample size the paper states or one that had to be worked backwards from reported degrees of freedom. The arithmetic was checkable without knowing how the story ended.\n\n## Why the impossibility findings carry the weight they do\n\nBecause self-evaluation is a single whole-number item, the printed means and standard deviations are heavily constrained: only certain combinations can arise from any set of responses at all. Two of the paper's combinations cannot arise from any set.\n\nThe stronger of the two is Experiment 4's control condition, printed twice as M = 4.20, SD = .21. Whole numbers averaging exactly 4.20 must sit at least as far apart as a mix of 4s and 5s allows, which forces a standard deviation of roughly 0.41 or more. This holds at every sample size, and it does not depend on the scale at all -- I re-ran it at 1-9 as well as 1-7, and against R's `rsprite2`, which is the published reference implementation. Both engines agree no such sample exists. The immediate contrast is Experiment 2's control condition, M = 4.20, SD = .86, which reconstructs cleanly at n = 15. That is the control on the method: the same check, the same scale, the same nominal mean, and one passes.\n\nThe second is Table 2. Two cells in the unambiguous-cue condition of Experiment 3, 6.58 (.52) and 4.08 (.52), admit no whole-number sample at twelve per cell -- and twelve is not a guess here. The paper states N = 96, states a balanced 2x2x2 design, and reports df_error = 88, which is 96 minus 8. I re-ran both cells at 1-9 as well as 1-7 in case Experiment 3 used a wider scale than the methods describe, and they fail either way.\n\nTen further cells across Experiments 1, 2 and 4 fail the same checks, but only at cell sizes reconstructed from degrees of freedom rather than stated. Those are reported one grade lower for that reason, and Experiment 4's are lower again in confidence, because the degrees of freedom they rest on contradict that experiment's own stated N.\n\n## What I dropped or softened from the numeric sweep\n\nFour sweep findings I did not carry forward as defects. The sweep had already downgraded Experiment 2's manipulation-check F of 716.92 to indeterminate, correctly: the tool recomputes a one-way ANOVA while the paper's df_error of 118 comes from the full factorial residual, which accounts for nearly all of the apparent gap. The XML-versus-PDF reconciliation is a gap in our extraction tooling -- the XML dropped Table 1's footnote -- and belongs in limitations, not against the authors. The duplication sweep and the multiplicity check are negative results and are recorded as such: across 1407 comparisons there is not one identical mean-and-SD pair between independent samples, and no Experiment 4 claim is lost to correction for multiple testing. Whatever is wrong here, wholesale copy-paste and undisclosed multiplicity are not it.\n\nTwo I softened. The Experiment 3 mean of 7.33 on a stated seven-point scale is graded highly_suspicious rather than impossible: the seven-point bound reaches Experiment 3 only by cross-reference, and the same paragraph reports the mood check at 7.33 too, so a nine-point scale would reconcile both at once. Either the mean or the methods description is wrong; the arithmetic cannot say which, and a finding this contingent should not lead a review. The pilot ANOVA I kept at suspicious rather than the tool's own highly_suspicious, because group sizes are unstated and some extreme allocation I did not test might reconcile it.\n\nOne I have handled more carefully than the sweep did. The pilot's three mood SDs -- .93, .52, .98 -- reappear in that exact order as the first three SDs of Table 1, in a different experiment, on different participants, measuring something else on a different scale. The duplication tool does not flag this, because it matches means and SDs together and here only the SDs coincide. I ran it again specifically on those two blocks and it returned nothing. So this is a reading with no tool behind it, and it is recorded at indeterminate. It is not evidence; it is a thing worth asking about.\n\n## The reasoning the sweep could not do\n\nExperiment 4 contradicts itself in the sentence carrying its conclusion. The paper's mechanistic claim is that load makes positive-mood participants behave like neutral-mood ones. The printed means make those two conditions opposite: positive-under-load runs 5.71 upward and 3.09 downward against a control of 4.20, while neutral-under-load runs 3.33 upward and 5.53 downward -- each described backwards relative to the control, in a paragraph that then calls the patterns identical. The three parallel comparisons elsewhere in the same experiment get the arithmetic right, so this is not a labelling convention. Two numbers look transposed. Until that is confirmed, the experiment's conclusion is unsupported by the numbers offered for it -- and it sits on top of a control condition that cannot exist and a sample sixty participants short of the one stated.\n\nAround this: a footnote offers complete data that are not deposited, and Table 1's caption names two dependent measures that appear nowhere in Experiment 2. Both are recoverable by the authors in an afternoon.\n\nVerification coverage was broad -- all 65 reported test statistics, all 24 table cells, and both reported sample-flow reconciliations -- and most of it passed.\n\n## Trust verdict\n\nThe two experiments carrying the paper's central mechanistic claims each report at least one summary statistic that no dataset could have produced, and Experiment 4 additionally contradicts its own conclusion and cannot account for a third of its stated sample. I have no confidence in the accuracy of the reported statistics, and the results should not be relied upon without the raw data."
+}

@@ -1,0 +1,14 @@
+# The complete review with the tools agent on `tool_access: mcp_brief`: each
+# MCP tool description cut to its first sentence, the rest one `describe_tool`
+# call away (docs/specs/tool_access.md). An experiment arm against `full`.
+schema_version: 1
+name: full_brief
+description: Complete review; the tools agent sees one-line tool descriptions plus describe_tool.
+modules:
+  - use: tools_agent
+    tools: all
+    tool_access: mcp_brief
+  - use: scientific_proofreading_agent
+  - use: image_analysis
+  - use: text_forensics
+  - use: adjudicator

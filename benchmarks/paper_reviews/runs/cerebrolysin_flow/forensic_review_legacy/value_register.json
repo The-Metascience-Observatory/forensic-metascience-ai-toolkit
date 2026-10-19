@@ -1,0 +1,1437 @@
+{
+  "n_groups": 24,
+  "n_values": 24,
+  "n_design_values": 0,
+  "n_groups_with_a_design_input": 0,
+  "design_values": [],
+  "n_values_bound_to_a_variable": 0,
+  "n_groups_with_no_applicable_tool": 24,
+  "n_cells_with_no_value": 191,
+  "no_value_because": {
+    "n_cells": 191,
+    "n_blank": 0,
+    "n_marker": 13,
+    "n_unparsed_with_digits": 53,
+    "n_text": 125,
+    "examples": [
+      "0.04 - 0.05 mg/kg",
+      "(0,0704 to 0,7296)",
+      "10 / 3",
+      "(0,0704 to 0,7296)",
+      "10 / 3"
+    ],
+    "note": "`n_marker` and `n_text` are the PAPER saying it has no number there. `n_unparsed_with_digits` is OURS: a cell that prints digits and yielded no value, which on this corpus is a table row collapsed into one cell by the extractor. Those numbers are lost, not absent, and they are NOT parsed here -- a glued cell cannot say which column each number belongs to, and guessing would attach a value to a heading it was never printed under."
+  },
+  "n_untyped_groups": 2,
+  "ambiguous_columns": {
+    "n_groups": 0,
+    "n_groups_total": 24,
+    "n_unknown": 0,
+    "share": 0.0,
+    "tables": {},
+    "note": "values whose column label is shared with another column of the same table. Reported, not suppressed: a check on such a value may be pairing it with a quantity from a different column, which is how a reading error becomes an accusation. Look at the named tables before reporting anything drawn from them."
+  },
+  "groups": [
+    {
+      "id": "grp:Table-2:r2:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4000",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 2,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXDIAM",
+      "values": [
+        {
+          "id": "val:Table-2:r2:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.4",
+          "value": 0.4,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 2,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r2:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r2:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4146",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 2,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXDIAM",
+      "values": [
+        {
+          "id": "val:Table-2:r2:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.4146",
+          "value": 0.4146,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 2,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r2:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r3:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4000",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 3,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXAREA",
+      "values": [
+        {
+          "id": "val:Table-2:r3:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.4",
+          "value": 0.4,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 3,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r3:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r3:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4936",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 3,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXAREA",
+      "values": [
+        {
+          "id": "val:Table-2:r3:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.4936",
+          "value": 0.4936,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 3,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r3:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r4:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,6667",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 4,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXAXON",
+      "values": [
+        {
+          "id": "val:Table-2:r4:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.6667",
+          "value": 0.6667,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 4,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r4:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r4:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,1928",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 4,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXAXON",
+      "values": [
+        {
+          "id": "val:Table-2:r4:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.1928",
+          "value": 0.1928,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 4,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r4:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r5:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,7333",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 5,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMYELIN",
+      "values": [
+        {
+          "id": "val:Table-2:r5:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.7333",
+          "value": 0.7333,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 5,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r5:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r5:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,1020",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 5,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMYELIN",
+      "values": [
+        {
+          "id": "val:Table-2:r5:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.102",
+          "value": 0.102,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 5,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r5:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r6:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,7667",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 6,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMIN",
+      "values": [
+        {
+          "id": "val:Table-2:r6:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.7667",
+          "value": 0.7667,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 6,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r6:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r6:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,7533",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 6,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMIN",
+      "values": [
+        {
+          "id": "val:Table-2:r6:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.7533",
+          "value": 0.7533,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 6,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r6:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r7:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,8000",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 7,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMAX",
+      "values": [
+        {
+          "id": "val:Table-2:r7:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.8",
+          "value": 0.8,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 7,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r7:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r7:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,9017",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 7,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXMAX",
+      "values": [
+        {
+          "id": "val:Table-2:r7:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.9017",
+          "value": 0.9017,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 7,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r7:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r8:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,5667",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 8,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXTOTAL",
+      "values": [
+        {
+          "id": "val:Table-2:r8:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.5667",
+          "value": 0.5667,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 8,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r8:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r8:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,2347",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 8,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXTOTAL",
+      "values": [
+        {
+          "id": "val:Table-2:r8:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.2347",
+          "value": 0.2347,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 8,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r8:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r9:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,6333",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 9,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXCUMUL",
+      "values": [
+        {
+          "id": "val:Table-2:r9:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.6333",
+          "value": 0.6333,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 9,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r9:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r9:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,3505",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 9,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "NNTXCUMUL",
+      "values": [
+        {
+          "id": "val:Table-2:r9:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.3505",
+          "value": 0.3505,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 9,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r9:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r10:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,5611",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 10,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "Combined (Wei-Lachin)",
+      "values": [
+        {
+          "id": "val:Table-2:r10:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.5611",
+          "value": 0.5611,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 10,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r10:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:Table-2:r10:c5",
+      "kind": "censored",
+      "variable_id": null,
+      "quote": "<0.0001",
+      "anchor": {
+        "where": "table",
+        "table": "Table 2",
+        "row": 10,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "Combined (Wei-Lachin)",
+      "values": [
+        {
+          "id": "val:Table-2:r10:c5:p#0",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.0001",
+          "value": 0.0001,
+          "decimals": 4,
+          "component": 0,
+          "n_components": 1,
+          "anchor": {
+            "where": "table",
+            "table": "Table 2",
+            "row": 10,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:Table-2:r10:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "typing": "untyped",
+      "form": "single",
+      "censored": "<",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r2:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,6250",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 2,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "Muscle Marlene",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r2:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.625",
+          "value": 0.625,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 2,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r2:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r2:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4146",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 2,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "Muscle Marlene",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r2:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.4146",
+          "value": 0.4146,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 2,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r2:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r3:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,8182",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 3,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "Muscle Catoi",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r3:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.8182",
+          "value": 0.8182,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 3,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r3:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r3:c5",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,4936",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 3,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "Muscle Catoi",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r3:c5:p",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.4936",
+          "value": 0.4936,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 3,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r3:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r4:c2",
+      "kind": "numeric",
+      "variable_id": null,
+      "quote": "0,5611",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 4,
+        "col": 2,
+        "ordinal": 0,
+        "col_label": "MW",
+        "col_label_is_unique": true
+      },
+      "row_label": "Combined (Wei-Lachin)",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r4:c2:unknown",
+          "role": "unknown",
+          "role_class": "unknown",
+          "printed": "0.5611",
+          "value": 0.5611,
+          "decimals": null,
+          "printed_is_reconstructed": true,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 4,
+            "col": 2,
+            "ordinal": 0,
+            "col_label": "MW",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r4:c2",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "form": "unclassified",
+      "design_inputs": []
+    },
+    {
+      "id": "grp:cref-texts-88:r4:c5",
+      "kind": "censored",
+      "variable_id": null,
+      "quote": "<0.0001",
+      "anchor": {
+        "where": "table",
+        "table": "cref='#/texts/88'",
+        "row": 4,
+        "col": 5,
+        "ordinal": 3,
+        "col_label": "P",
+        "col_label_is_unique": true
+      },
+      "row_label": "Combined (Wei-Lachin)",
+      "values": [
+        {
+          "id": "val:cref-texts-88:r4:c5:p#0",
+          "role": "p",
+          "role_class": "inferential",
+          "printed": "0.0001",
+          "value": 0.0001,
+          "decimals": 4,
+          "component": 0,
+          "n_components": 1,
+          "anchor": {
+            "where": "table",
+            "table": "cref='#/texts/88'",
+            "row": 4,
+            "col": 5,
+            "ordinal": 3,
+            "col_label": "P",
+            "col_label_is_unique": true
+          },
+          "group": "grp:cref-texts-88:r4:c5",
+          "variable_id": null
+        }
+      ],
+      "applicable_tools": [],
+      "dispatch_considered": false,
+      "checks": [],
+      "typing": "untyped",
+      "form": "single",
+      "censored": "<",
+      "design_inputs": []
+    }
+  ],
+  "_section_n": {},
+  "_section_disputed": {},
+  "same_value": {
+    "val:Table-2:r2:c2:unknown": [
+      "val:Table-2:r2:c2:unknown",
+      "val:Table-2:r3:c2:unknown"
+    ],
+    "val:Table-2:r2:c5:p": [
+      "val:Table-2:r2:c5:p",
+      "val:cref-texts-88:r2:c5:p"
+    ],
+    "val:Table-2:r3:c5:p": [
+      "val:Table-2:r3:c5:p",
+      "val:cref-texts-88:r3:c5:p"
+    ],
+    "val:Table-2:r10:c2:unknown": [
+      "val:Table-2:r10:c2:unknown",
+      "val:cref-texts-88:r4:c2:unknown"
+    ],
+    "val:Table-2:r10:c5:p#0": [
+      "val:Table-2:r10:c5:p#0",
+      "val:cref-texts-88:r4:c5:p#0"
+    ]
+  },
+  "is_a_floor": "Counts only what the extractor could see and the typer could name. An image-only table, an unfetched supplement and a prose statistic whose components could not be joined all contribute less here than they do in the paper, so every count is a LOWER BOUND.",
+  "paper": "paper",
+  "auto_bound_rows": {
+    "rule": "a row label and a variable name where one contains the other, and only where exactly one variable matches",
+    "n": 0,
+    "rows": {}
+  },
+  "n_tables": 4,
+  "problems": [
+    "no file is declared the article, so cerebrolysin_rat_sci.pdf was read as one -- it is the only PDF here. Declare it with `metascience inputs` to be sure.",
+    "this paper writes decimals with a COMMA (57 number(s) of the form `0,nnn`, which a thousands reading cannot explain, against 27 point-decimal(s)), so 0 cell(s) of the form `n,nnn` are read as decimals rather than as thousands groups"
+  ],
+  "unbound_rows": [
+    {
+      "row_label": "Combined (Wei-Lachin)",
+      "matched_against": "Combined (Wei-Lachin)",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "Muscle Catoi",
+      "matched_against": "Muscle Catoi",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "Muscle Marlene",
+      "matched_against": "Muscle Marlene",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXAREA",
+      "matched_against": "NNTXAREA",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXAXON",
+      "matched_against": "NNTXAXON",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXCUMUL",
+      "matched_against": "NNTXCUMUL",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXDIAM",
+      "matched_against": "NNTXDIAM",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXMAX",
+      "matched_against": "NNTXMAX",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXMIN",
+      "matched_against": "NNTXMIN",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXMYELIN",
+      "matched_against": "NNTXMYELIN",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    },
+    {
+      "row_label": "NNTXTOTAL",
+      "matched_against": "NNTXTOTAL",
+      "n_candidates": 0,
+      "candidates": [],
+      "status": "unmatched",
+      "note": "No declared variable's name relates to this row label."
+    }
+  ],
+  "n_per_cell_checks_joined": 0,
+  "n_per_cell_checks_unmatched": 49,
+  "n_calls_with_no_matchable_value": 38,
+  "n_checks_attached_to_two_groups": 0,
+  "n_non_check_calls": 14,
+  "n_per_cell_checks_ambiguous": 0,
+  "n_duplicate_checks_removed": 0,
+  "n_check_table_calls_unmatched": 1,
+  "n_check_table_calls_joined": 0,
+  "calls": {
+    "n_calls": 88,
+    "n_joined": 0,
+    "n_unmatched": 88,
+    "n_unreadable": 0,
+    "n_unaccounted": 0,
+    "accounted": true,
+    "note": "`n_unaccounted` counts calls that ended in NO recorded state: not attached to a value, not counted as unmatchable, not marked unreadable. Any number other than zero is a defect in this bookkeeping, never a fact about the paper. A negative number means two counters are counting the same call."
+  },
+  "bindings": {
+    "rule": "row label equals variable name, exactly",
+    "n_variables_declared": 10,
+    "n_row_labels_matched": 0,
+    "note": "Zero matches does not mean the paper has no typed variables. It means no table row label equalled a declared variable name, which is the common case when the anatomy describes a variable rather than naming the row it sits in."
+  },
+  "stated_denominator_checks": {
+    "n_ran": 0,
+    "n_attached": 0,
+    "n_skipped": 0,
+    "by_severity": {},
+    "skipped_because": {},
+    "note": "Deterministic. The denominator is the one this cell's own column header states, never a model's choice and never an outer level's. A percentage the stated n misses but a denominator a few smaller reproduces exactly is recorded `indeterminate`, because that is a fact about our pairing rather than about the paper."
+  },
+  "coverage": {
+    "n_table_groups": 24,
+    "n_checked": 0,
+    "n_refused_with_a_reason": 0,
+    "n_no_applicable_tool": 24,
+    "n_silent": 0,
+    "no_applicable_tool_because": {
+      "a check exists for this shape, but nothing declared the variable's type, and the check is only valid once it is": 0,
+      "no check applies to this shape at all": 24
+    },
+    "silent_because": {
+      "no check was run on this value": 0,
+      "a verdict was computed and could not be attached to one cell": 0
+    },
+    "reported": {
+      "n_groups": 24,
+      "n_checked": 0,
+      "coverage": 0.0
+    },
+    "raw_data": {
+      "n_groups": 0,
+      "n_checked": 0,
+      "note": "deposited raw data, not statistics the paper reported. `detect_raw_duplication` consumes these; the per-cell checks are not expected to, and counting them in one denominator with the reported values understates coverage by however large the spreadsheet happens to be."
+    },
+    "states_are_exclusive": true,
+    "note": "`n_silent` is a gap in THIS bookkeeping, not a fact about the paper: a group with an applicable tool, no verdict and no recorded refusal means a check neither ran nor said why. Any number above zero is a bug here, not a finding there."
+  },
+  "invariants": {
+    "reported": {
+      "n_groups": 24,
+      "n_rules_evaluated": 12,
+      "n_violations": 0,
+      "by_rule": {},
+      "examples": {}
+    },
+    "deposited": {
+      "n_groups": 0,
+      "n_rules_evaluated": 0,
+      "n_violations": 0,
+      "by_rule": {},
+      "examples": {}
+    },
+    "note": "Arithmetic that must hold whatever the paper is about. A violation says these numbers cannot all be right AS WE READ THEM -- which is as likely to be our extraction as the paper's arithmetic, and deciding which is a human's job. Counts are exact; examples are capped. A rule that could not be evaluated is reported as such and is NOT a pass."
+  },
+  "classification": {
+    "paper": "paper",
+    "n_numerals_total": 0,
+    "n_residue": 0,
+    "n_excluded_as_furniture": 0,
+    "vocabulary": {
+      "role": [
+        "mean",
+        "sd",
+        "se",
+        "median",
+        "iqr_low",
+        "iqr_high",
+        "count",
+        "denominator",
+        "percentage",
+        "estimate",
+        "ci_low",
+        "ci_high",
+        "n",
+        "df",
+        "df2",
+        "statistic",
+        "p",
+        "effect_size",
+        "unknown"
+      ],
+      "role_class": [
+        "descriptive",
+        "inferential",
+        "design",
+        "unknown"
+      ]
+    },
+    "variables": [
+      {
+        "id": "group",
+        "name": "treatment group",
+        "family": "nominal_category",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "lower_bound": null,
+        "upper_bound": null,
+        "units": null,
+        "n_items": null,
+        "derivation": "measured"
+      },
+      {
+        "id": "cmap_positive",
+        "name": "compound muscle action potential present at 2nd Op",
+        "family": "binary",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "lower_bound": null,
+        "upper_bound": null,
+        "units": null,
+        "n_items": null,
+        "derivation": "measured"
+      },
+      {
+        "id": "mw_histometric",
+        "name": "Mann-Whitney effect size on histometric nerve measures",
+        "family": "proportion",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "units": "P(X<Y)+0.5P(X=Y)",
+        "n_items": null,
+        "derivation": "other"
+      },
+      {
+        "id": "muscle_fiber_diameter",
+        "name": "IOAM muscle fibre diameter",
+        "family": "continuous",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "lower_bound": null,
+        "upper_bound": null,
+        "units": "\u00b5m, also as percent of contralateral",
+        "n_items": null,
+        "derivation": "measured"
+      },
+      {
+        "id": "axon_regen_score",
+        "name": "axonal regeneration/sprouting grade",
+        "family": "ordinal_category",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "units": null,
+        "n_items": null,
+        "derivation": "mean_of_items"
+      },
+      {
+        "id": "ang_score",
+        "name": "angiogenesis grade in/around SNG",
+        "family": "ordinal_category",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "units": null,
+        "n_items": null,
+        "derivation": "mean_of_items"
+      },
+      {
+        "id": "gc_score",
+        "name": "Gitter cell grade",
+        "family": "ordinal_category",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "units": null,
+        "n_items": null,
+        "derivation": "mean_of_items"
+      },
+      {
+        "id": "sng_depth",
+        "name": "nerve-graft insertion depth",
+        "family": "continuous",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "lower_bound": null,
+        "upper_bound": null,
+        "units": "mm",
+        "n_items": null,
+        "derivation": "measured"
+      },
+      {
+        "id": "body_weight",
+        "name": "body weight at enrolment",
+        "family": "continuous",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "lower_bound": 220,
+        "upper_bound": 280,
+        "units": "g",
+        "n_items": null,
+        "derivation": "measured"
+      },
+      {
+        "id": "fb_positive",
+        "name": "Fast Blue labelled spinal neurons",
+        "family": "count",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "lower_bound": null,
+        "upper_bound": null,
+        "units": null,
+        "n_items": null,
+        "derivation": "measured"
+      }
+    ],
+    "ready": true,
+    "items": [],
+    "n_items": 0,
+    "context_is_on": "numerals.rows, joined by `id` -- not duplicated here"
+  }
+}

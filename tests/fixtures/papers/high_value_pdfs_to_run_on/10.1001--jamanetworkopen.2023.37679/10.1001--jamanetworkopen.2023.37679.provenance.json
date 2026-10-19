@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "identifier": "10.1001/jamanetworkopen.2023.37679",
+  "target_task": "extraction",
+  "flags": {
+    "prioritize_xml": true,
+    "xml_only": false,
+    "upgrade_existing": false,
+    "legalonly": false
+  },
+  "started_at": "2026-07-31T14:12:02Z",
+  "completed_at": "2026-07-31T14:12:06Z",
+  "identifiers_resolved": {
+    "doi": "10.1001/jamanetworkopen.2023.37679",
+    "pmid": "37831452",
+    "pmcid": "PMC10576218"
+  },
+  "resolution_chain": [
+    {
+      "step": "cache",
+      "url": null,
+      "http_status": null,
+      "yielded": {
+        "pmid": "37831452",
+        "pmcid": "PMC10576218"
+      },
+      "note": "stage 0 hit",
+      "timestamp": 1785507122.1655138
+    },
+    {
+      "step": "europepmc.search",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "http_status": 200,
+      "yielded": {
+        "license": "cc by"
+      },
+      "note": "availability flags",
+      "timestamp": 1785507123.1861918
+    }
+  ],
+  "attempts": [
+    {
+      "source": "europepmc_xml",
+      "tier_attempted": "T1_XML",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10576218/fullTextXML?email=dan%40metascienceobservatory.org",
+      "http_status": 200,
+      "served_content_type": "application/xml",
+      "accepted": true,
+      "outcome": "accepted",
+      "checks_passed": [
+        "parses",
+        "not-a-denial-stub",
+        "body-populated",
+        "min-chars>=5000"
+      ],
+      "timestamp": "2026-07-31T14:12:06Z"
+    }
+  ],
+  "artifact": {
+    "path": "10.1001--jamanetworkopen.2023.37679.xml",
+    "source": "europepmc_xml",
+    "tier": "T1_XML",
+    "tier_value": 1,
+    "tier_declared_by_source": "T1_XML",
+    "tier_assigned_by": "content inspection",
+    "why_this_tier": {
+      "checks_passed": [
+        "parses",
+        "not-a-denial-stub",
+        "body-populated",
+        "min-chars>=5000"
+      ],
+      "reason": ""
+    },
+    "served_content_type": "application/xml",
+    "identifier_used": "PMC10576218",
+    "request_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10576218/fullTextXML?email=dan%40metascienceobservatory.org",
+    "http_status": 200,
+    "retrieved_at": "2026-07-31T14:12:06Z",
+    "content_hash": "sha256:d1fc0f6b2a187bf5559d0a5b7fbeb0e3742b80e3311c99566b2bdd5b785dd23d",
+    "content_bytes": 141211,
+    "license": "cc by",
+    "table_count": 3,
+    "footnote_count": 17,
+    "populated_cell_count": 548,
+    "canonical_token_count": 1240,
+    "tables_unavailable": false,
+    "normalization_failures": []
+  },
+  "artifacts": [
+    {
+      "path": "10.1001--jamanetworkopen.2023.37679.xml",
+      "source": "europepmc_xml",
+      "tier": "T1_XML",
+      "tier_value": 1,
+      "tier_declared_by_source": "T1_XML",
+      "tier_assigned_by": "content inspection",
+      "why_this_tier": {
+        "checks_passed": [
+          "parses",
+          "not-a-denial-stub",
+          "body-populated",
+          "min-chars>=5000"
+        ],
+        "reason": ""
+      },
+      "served_content_type": "application/xml",
+      "identifier_used": "PMC10576218",
+      "request_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10576218/fullTextXML?email=dan%40metascienceobservatory.org",
+      "http_status": 200,
+      "retrieved_at": "2026-07-31T14:12:06Z",
+      "content_hash": "sha256:d1fc0f6b2a187bf5559d0a5b7fbeb0e3742b80e3311c99566b2bdd5b785dd23d",
+      "content_bytes": 141211,
+      "license": "cc by",
+      "table_count": 3,
+      "footnote_count": 17,
+      "populated_cell_count": 548,
+      "canonical_token_count": 1240,
+      "tables_unavailable": false,
+      "normalization_failures": []
+    }
+  ],
+  "tables": [
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t1",
+      "label": "Table 1.",
+      "caption": "Sociodemographic and Clinical Characteristics of 231 099 Respondents, Representing 236 551 727 US Adults, by Veteran Status",
+      "footnotes": [
+        "Abbreviation: ED, emergency department. a Participants could self-report any combination of racial identities, including American Indian or Alaska Native, Asian, Black or African American, Guamanian or Chamorro, Samoan, Native Hawaiian, Other Pacific Islander, White, and Other. The National Survey on Drug Use and Health public use data combines this information with Hispanic origin to recode and create the 7-level race and ethnicity variable reported here. Those who identified as more than 1 race were categorized as 2 or more.",
+        "Abbreviation: ED, emergency department.",
+        "a Participants could self-report any combination of racial identities, including American Indian or Alaska Native, Asian, Black or African American, Guamanian or Chamorro, Samoan, Native Hawaiian, Other Pacific Islander, White, and Other. The National Survey on Drug Use and Health public use data combines this information with Hispanic origin to recode and create the 7-level race and ethnicity variable reported here. Those who identified as more than 1 race were categorized as 2 or more."
+      ],
+      "n_footnotes": 3,
+      "token_count": 510,
+      "normalization_failures": []
+    },
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t2",
+      "label": "Table 2.",
+      "caption": "Adjusted Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Statusa",
+      "footnotes": [
+        "Abbreviations: AME, average marginal effect; AOR, adjusted odds ratio; NA, not applicable. a Adjusted for age, sex, race and ethnicity, marital status, education, employment status, household income, insurance status, urbanization, smoking status, alcohol dependence, illicit drug dependence, health status, number of emergency department visits, number of comorbidities, depressive episode, and year of survey. b Reference group. c P ≤ .05.",
+        "Abbreviations: AME, average marginal effect; AOR, adjusted odds ratio; NA, not applicable.",
+        "a Adjusted for age, sex, race and ethnicity, marital status, education, employment status, household income, insurance status, urbanization, smoking status, alcohol dependence, illicit drug dependence, health status, number of emergency department visits, number of comorbidities, depressive episode, and year of survey.",
+        "b Reference group.",
+        "c P ≤ .05."
+      ],
+      "n_footnotes": 5,
+      "token_count": 403,
+      "normalization_failures": []
+    },
+    {
+      "chunk_id": "europepmc_xml:T1_XML:t3",
+      "label": "Table 3.",
+      "caption": "Adjusted Multinomial Logistic Regression Model of Suicide-Related Outcomes by Disability and Veteran Status Among Those With Suicidal Ideationa",
+      "footnotes": [
+        "Abbreviations: AME, average marginal effect; AOR, adjusted odds ratio; NA, not applicable. a Adjusted for age, sex, race and ethnicity, marital status, education, employment status, household income, insurance status, urbanization, smoking status, alcohol dependence, illicit drug dependence, health status, number of emergency department visits, number of comorbidities, depressive episode, and year of survey. b Reference group. c P ≤ .05.",
+        "Abbreviations: AME, average marginal effect; AOR, adjusted odds ratio; NA, not applicable.",
+        "a Adjusted for age, sex, race and ethnicity, marital status, education, employment status, household income, insurance status, urbanization, smoking status, alcohol dependence, illicit drug dependence, health status, number of emergency department visits, number of comorbidities, depressive episode, and year of survey.",
+        "b Reference group.",
+        "c P ≤ .05."
+      ],
+      "n_footnotes": 5,
+      "token_count": 327,
+      "normalization_failures": []
+    }
+  ],
+  "notes": [
+    "supersedes 10.1001--jamanetworkopen.2023.37679.pdf (T5_PDF); superseded file left on disk"
+  ]
+}

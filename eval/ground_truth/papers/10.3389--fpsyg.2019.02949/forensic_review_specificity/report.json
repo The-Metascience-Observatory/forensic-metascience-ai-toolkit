@@ -1,0 +1,294 @@
+{
+  "headline": {
+    "statement": "The corrigendum states that Experiment 4's fatalism mean should read 3.53 instead of 3.54, then reprints the \"corrected\" paragraph with 3.54 still in it and 3.53 nowhere in it.",
+    "severity": "suspicious",
+    "rests_on": "logical_necessity",
+    "evidence": "Page 2, erratum note: \"In Experiment 4, there was an error in reporting participants' mean agreement with the biased scale in the Fatalism condition. 'M_Fatalism = 3.54' was incorrectly provided instead of 'M_Fatalism = 3.53.'\" Page 2, immediately below, under \"A correction has been made to Experiment 4, Results section, paragraph one\": \"[M_Fatalism = 3.54, M_PersonalControl = 3.67, M_NegotiatingWithFate = 3.90; F(2,136) = 2.89, p = 0.06]\". The three means printed in the corrected paragraph are 3.54, 3.67 and 3.90; the value 3.53 does not appear.",
+    "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3389--fpsyg.2019.02949/10.3389--fpsyg.2019.02949.pdf --first-page 2 --last-page 2",
+    "plain": "A correction notice exists to replace wrong numbers with right ones. This one announces that a particular average was misprinted as 3.54 and should be 3.53, and then prints the supposedly corrected passage with 3.54 still in it. Whichever of the three averages in that passage belongs to the condition in question, the number the authors say should be there is not there, so a reader cannot tell which figure now stands."
+  },
+  "verdict": "questionable",
+  "confidence": "high",
+  "findings": [
+    {
+      "rank": 2,
+      "title": "Three significant results across two test families, no correction for multiplicity",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Corrected Experiment 2 Results paragraph two (six contrasts) and corrected Experiment 5 Results paragraph three (four contrasts)",
+      "reported": "Experiment 2 reports six regression contrasts on the same 200 participants (p = 0.29, 0.77, 0.10, 0.11, 0.03, 0.04) and concludes \"the belief in negotiating with fate was stronger in the no-choice condition than in either the neutral ... or choice ... conditions ... This result replicates the finding from Experiment 1.\" Experiment 5 reports four contrasts on the same 194 participants (p = 0.03, 0.10, 0.07, 0.84) and concludes \"participants reported significantly greater positive reappraisal of the event after negotiating with fate was activated compared to activating fatalism.\" No correction is applied or mentioned in either.",
+      "computed": "Experiment 2: 6 uncorrected tests, family-wise error rate up to 26.5%, Bonferroni threshold 0.0083; 2 results significant uncorrected, 0 surviving under all four of Bonferroni, Holm, Benjamini-Hochberg and Benjamini-Yekutieli; n_claims_lost_to_correction = 2. Experiment 5: 4 uncorrected tests, family-wise error rate up to 18.5%, Bonferroni threshold 0.0125; 1 significant uncorrected, 0 surviving under all four methods; n_claims_lost_to_correction = 1. The surviving interval is 0 to 0 in both families, so the result does not depend on which correction one prefers.",
+      "assumptions": "That the six Experiment 2 contrasts (three belief scales x two comparisons against the same no-choice reference group, all bearing on one hypothesis) form one family, and the four Experiment 5 contrasts (two coping outcomes x two comparison conditions) form another. Family definition is a judgement the tool cannot make. Uncorrected testing is ordinary practice in this literature and this is deterministic arithmetic, not an allegation. The Experiment 5 count is a floor: Table 4 shows denial and behavioral disengagement were also measured in that study but their contrasts are not reported in this document.",
+      "reproduction": "metascience multiplicity --family-label 'Experiment 2: six regression contrasts (3 lay beliefs x 2 condition comparisons vs no-choice reference) on the same 200 participants' --tests '[{\"id\":\"e2_fat_neutral\",\"p_value\":0.29,\"correction_applied\":\"none\"},{\"id\":\"e2_fat_choice\",\"p_value\":0.77,\"correction_applied\":\"none\"},{\"id\":\"e2_pc_neutral\",\"p_value\":0.10,\"correction_applied\":\"none\"},{\"id\":\"e2_pc_choice\",\"p_value\":0.11,\"correction_applied\":\"none\"},{\"id\":\"e2_nwf_neutral\",\"p_value\":0.03,\"correction_applied\":\"none\"},{\"id\":\"e2_nwf_choice\",\"p_value\":0.04,\"correction_applied\":\"none\"}]'",
+      "stage1_finding_ids": [
+        "multiplicity_exp2_family",
+        "multiplicity_exp5_family"
+      ],
+      "plain": "In both of the experiments that carry the paper's main conclusions, the authors ran several statistical comparisons at once but judged each one on its own, as if it were the only test they had done. Run enough comparisons and some will look impressive by luck alone. Once you account for the number of comparisons actually reported, none of the three results the authors call significant clears the bar any more -- and that holds under every standard method for making the adjustment. This does not show the effects are absent; it shows the evidence presented for them is weaker than the paper states.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 2,
+        "basis": "computed",
+        "explanation": "The stated replication of Hypothesis 1 in Experiment 2 rests on the only two significant p-values among six reported contrasts, and the adaptive-coping claim in Experiment 5 on the only significant p-value among four; none survives correction within its own family. The sentence 'the belief in negotiating with fate was stronger in the no-choice condition than in either the neutral or choice conditions ... This result replicates the finding from Experiment 1' rests on the only two significant p-values in the family, and neither survives correction for the six tests reported alongside them. Computed from 2 result(s) significant uncorrected do not survive correction (a correction the paper did not apply, over a family we chose)."
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 3,
+      "title": "Experiment 2 headline contrast: t of 2.02 irreconcilable with the B and SE printed beside it",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Corrected Experiment 2 Results paragraph two, negotiating-with-fate choice vs no-choice contrast",
+      "reported": "\"or choice [B = -0.20, SE = 0.09, t(194) = 2.02, p = 0.04, d = 0.29) conditions (see Figure 2). This result replicates the finding from Experiment 1.\" The corrigendum's own erratum note revised this p-value: \"incorrectly reported as p = 0.05 and p = 0.03, respectively. The p-values should have been p = 0.03 and p = 0.04, respectively.\"",
+      "computed": "t = B/SE = -0.20/0.09 = -2.222. Allowing the full rounding range of both printed values (B in [0.195, 0.205], SE in [0.085, 0.095]), the achievable magnitude interval is [2.053, 2.412]. The printed 2.02 falls below it. The p-value implied by the printed B and SE is 0.0274, which rounds to 0.03 -- the value the corrigendum changed away from. The reported p of 0.04 was NOT flagged: it sits inside its achievable interval [0.0168, 0.0415], though at the extreme upper edge.",
+      "assumptions": "That B and SE are the unstandardized coefficient and its standard error, so t = B/SE. This holds for 11 of the other 12 coefficients in the document, so it is the authors' own convention. All values read at two decimals as printed. No scale bound or external range was supplied.",
+      "reproduction": "metascience regression-batch --rows '[{\"label\":\"Exp2 NWF choice vs no-choice\",\"b\":-0.20,\"se\":0.09,\"reported_t\":2.02,\"reported_p\":0.04,\"df\":194,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2}]'",
+      "stage1_finding_ids": [
+        "exp2_nwf_choice_t_outside_interval",
+        "regression_batch_consistent_rows"
+      ],
+      "plain": "For one of the two results the paper calls its main replication, the effect size and its margin of error, divided out, cannot produce the test statistic printed next to them -- not even allowing for rounding. The gap is small, and a single mistyped digit in any one of the three numbers would explain it. What makes it worth asking about is that this correction notice was issued partly to revise this very result's p-value from 0.03 to 0.04, and 0.03 is what the effect size and margin of error actually imply.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The result stays significant at the 0.05 level on any reading, but this contrast is half of the sentence \"the belief in negotiating with fate was stronger in the no-choice condition than in either the neutral or choice conditions ... This result replicates the finding from Experiment 1.\""
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 1,
+      "title": "Experiment 4's stated correction absent from the paragraph reprinted as corrected",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Page 2: Experiment 4 erratum note and the corrected Results paragraph one printed directly beneath it",
+      "reported": "Erratum: \"'M_Fatalism = 3.54' was incorrectly provided instead of 'M_Fatalism = 3.53.'\" Corrected paragraph: \"[M_Fatalism = 3.54, M_PersonalControl = 3.67, M_NegotiatingWithFate = 3.90; F(2,136) = 2.89, p = 0.06]\"",
+      "computed": "The three means in the corrected paragraph are 3.54, 3.67 and 3.90. The value 3.53 appears nowhere in it. The two printed statements cannot both stand. By contrast, the structurally identical Experiment 5 correction (M_NegotiateWithFate \"3.10\" should be \"3.09\") IS applied in its corrected paragraph, which prints 3.09 -- so this is not a systematic artifact of how the document was read.",
+      "assumptions": "None beyond the paper's own statements. The finding does not depend on resolving which mean carries which subscript: the erratum says the fatalism mean should read 3.53, and 3.53 is not among the three values printed, whichever position fatalism occupies. Caveat on provenance: this passage sits in a two-column region that the PDF text layer interleaves, scrambling the subscript labels; the digit strings 3.54, 3.67 and 3.90 are unambiguous, but the label-to-value mapping cannot be verified from the text layer, and the publisher XML for this article carries only the title and three tables, with no body text to reconcile against.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3389--fpsyg.2019.02949/10.3389--fpsyg.2019.02949.pdf --first-page 2 --last-page 2",
+      "stage1_finding_ids": [
+        "exp4_mfatalism_correction_not_applied"
+      ],
+      "plain": "The document announces that one average was misprinted and gives the right value, then reprints the passage it says it has fixed with the wrong value still in place and the right value nowhere to be seen. The number itself is a descriptive average from a manipulation check and no conclusion turns on it, but a correction notice that does not carry out its own correction cannot be relied on to have carried out the others either.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "No inferential conclusion depends on this descriptive mean, but a reader cannot determine which of 3.53 and 3.54 is now the value of record for Experiment 4's fatalism-condition manipulation check."
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 4,
+      "title": "Sample sizes for Experiments 1, 2 and 4 not reconcilable with the degrees of freedom reported for them",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 1 (all six study columns) against the corrected Results paragraphs for Experiments 1, 2 and 4",
+      "reported": "Table 1 Study 4: gender 48 + 90 = 138; religion 68 + 22 + 21 + 17 + 10 + 0 = 138; education 2 + 14 + 42 + 18 + 46 + 15 + 2 + 0. Experiment 4 reports F(2,136) and t(135); Experiment 1 reports F(2,117) against a Study 1 total of 121; Experiment 2 reports t(194) against a Study 2 total of 200. The corrigendum's stated reason for reprinting Table 1 is \"to ensure that the sample size reported in the text matched the table.\"",
+      "computed": "Study 4's education column sums to 139, not the 138 given by both its gender and its religion blocks. For a three-group one-way ANOVA, df1 + df2 + 1 = N, so F(2,136) implies N = 139; with a covariate, t(135) + 4 parameters also implies N = 139. Two routes give 139 and two give 138. Experiment 1: F(2,117) implies N = 120 against Table 1's 121. Experiment 2: t(194) implies N = 197 with a three-parameter model or 198 with a covariate, against Table 1's 200. Experiments 3, 5 and 6 reconcile exactly (217, 194, 158), as does Experiment 5's regression df. Seventeen of the eighteen demographic column sums in Table 1 reconcile at zero tolerance; the Study 5 religion block that the corrigendum says it fixed now totals 194 correctly.",
+      "assumptions": "That each manipulation-check F is a one-way ANOVA over three conditions (four in Experiment 6), which the reported df1 of 2 (and 3) confirms, and that the regression models contain an intercept, two condition dummies and at most one covariate -- which is what the text describes and what Experiments 4 and 5 obey exactly. The corrigendum explicitly corrects Experiment 3's df2 from 216 to 214 against N = 217, confirming N - 3 as the authors' own convention. Innocent explanations exist (listwise deletion of one case, a participant counted in demographics but dropped from one analysis) but none is stated.",
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[2,14,42,18,46,15,2,0],\"expected_sum\":138,\"decimals\":0,\"tolerance\":0,\"description\":\"Study 4 education vs gender/religion total 138\"},{\"values\":[2,136,1],\"expected_sum\":138,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 4 F(2,136) df-implied N vs 138\"},{\"values\":[135,4],\"expected_sum\":138,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 4 t(135) + 4 params vs 138\"},{\"values\":[2,117,1],\"expected_sum\":121,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 1 F(2,117) df-implied N vs 121\"},{\"values\":[194,4],\"expected_sum\":200,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 2 t(194) + 4 params vs 200\"},{\"values\":[2,214,1],\"expected_sum\":217,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 3 reconciles\"},{\"values\":[2,191,1],\"expected_sum\":194,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 5 reconciles\"},{\"values\":[3,154,1],\"expected_sum\":158,\"decimals\":0,\"tolerance\":0,\"description\":\"Exp 6 reconciles\"}]'",
+      "stage1_finding_ids": [
+        "study4_education_column_oversums",
+        "study4_df_implies_n139",
+        "study1_df_implies_n120",
+        "table1_demographic_sums_reconcile"
+      ],
+      "plain": "How many people took part in three of the six experiments cannot be pinned down. In Study 4 the education breakdown counts 139 people while the gender and religion breakdowns count 138, and the statistics reported for that experiment were computed on 139. Study 1's numbers imply one person fewer than the table lists, and Study 2's imply two or three fewer than the 200 stated. The other three experiments add up exactly. This matters more than a one-person discrepancy usually would, because the authors say they reprinted this very table in order to make the table and the text agree on sample size -- and for Study 4 it still does not.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No individual significance verdict turns on one participant, but the analytic sample for Experiments 1, 2 and 4 cannot be determined from the document, and Study 4's is the table the corrigendum was issued to reconcile with the text."
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 5,
+      "title": "Experiment 5 acceptance contrast: t of -1.81 irreconcilable with B = -0.22 and SE = 0.11",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Corrected Experiment 5 Results paragraph three, acceptance negotiating-with-fate vs fatalism contrast",
+      "reported": "\"For acceptance, participants reported marginally greater acceptance of the event after negotiating with fate was activated compared to activating fatalism [B = -0.22, SE = 0.11, t(190) = -1.81, p = 0.07, d = 0.10].\"",
+      "computed": "t = B/SE = -0.22/0.11 = exactly -2.000. The achievable interval given two-decimal rounding of both inputs is [-2.143, -1.870]; the printed -1.81 falls outside it. Unlike five other flagged rows, the signs here agree, so this is a magnitude failure, not a sign convention. The reported p of 0.07 was NOT flagged: it lies inside its achievable interval, and t = -1.81 with df = 190 gives p = 0.072, so t and p are mutually consistent. The discrepancy is confined to the relationship between the coefficient, its standard error and the t.",
+      "assumptions": "That B and SE are the unstandardized coefficient and its standard error. All values read at two decimals as printed. Note that the neighbouring contrast in the same sentence prints SE = 0.14 with the same B = -0.22, and the adjacent acceptance row prints SE = 0.11 with B = -0.02, so a transposition between adjacent rows would account for it.",
+      "reproduction": "metascience regression-batch --rows '[{\"label\":\"Exp5 Acceptance NWF vs fatalism\",\"b\":-0.22,\"se\":0.11,\"reported_t\":-1.81,\"reported_p\":0.07,\"df\":190,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2}]'",
+      "stage1_finding_ids": [
+        "exp5_acceptance_t_outside_interval",
+        "regression_batch_consistent_rows"
+      ],
+      "plain": "For the acceptance result in Experiment 5, dividing the reported effect by its reported margin of error gives exactly -2.00, but the paper prints -1.81 beside them. One of those three numbers must be a misprint. The p-value the paper reports is consistent with the -1.81, so the significance verdict is unaffected; what cannot be determined is which of the three printed figures is the correct one.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper describes this as \"marginally greater acceptance\"; the effect and its standard error as printed would imply a stronger result than the reported t and p do, but which figure is the misprint cannot be determined, so whether any significance verdict changes is unknown."
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 6,
+      "title": "Experiment 5 erratum sentence that names an error but omits both the wrong and the corrected value",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Page 2, Experiment 5 erratum note",
+      "reported": "\"Furthermore, the mean agreement with the biased scale across all conditions was in correctly provided as in reporting the t-test statistic when comparing the effects of activating negotiating with fate vs. personal control on positively reappraising the event [incorrectly reported as t(190) = 2.26, which should have been t(190) = -1.64]\"",
+      "computed": "The clause announces that a value \"was in correctly provided as\" and then supplies neither the erroneous value nor the corrected one, running directly into an unrelated clause about a t statistic. No corrective value is present anywhere in the surrounding text. This passage is in a clean single-column region of the page and the extraction is not in doubt. The same page also prints \"we tested if there is a difference in the mean agreement with the biased scales differed across conditions\".",
+      "assumptions": "None beyond the paper's own text; this is a reading of printed literals and no forensic tool applies.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/eval/ground_truth/papers/10.3389--fpsyg.2019.02949/10.3389--fpsyg.2019.02949.pdf --first-page 2 --last-page 2",
+      "stage1_finding_ids": [
+        "exp5_erratum_sentence_incomplete"
+      ],
+      "plain": "One of the corrections in this notice says a number was reported incorrectly but never says what the number was or what it should be, the sentence breaking off mid-clause. A reader has no way to act on it. Together with a garbled sentence elsewhere on the same page, this suggests the notice was not carefully proofread.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "One of the corrigendum's own stated corrections cannot be applied by a reader because the corrected value is absent from the text."
+      },
+      "reproduction_valid": true
+    },
+    {
+      "rank": 7,
+      "title": "Negative coefficients printed beside positive t statistics, inconsistently within single paragraphs",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Corrected Results paragraphs for Experiments 2, 4 and 5",
+      "reported": "Five coefficients print a negative B with a positive t: Experiment 2 negotiating-with-fate neutral contrast (B = -0.24, t = 2.18); Experiment 4 identify-own-behavior vs fatalism (B = -0.45, t = 1.91) and vs personal control (B = -0.52, t = 2.26); Experiment 4 fatalism vs personal control (B = -0.05, t = 0.24); Experiment 5 positive reappraisal vs fatalism (B = -0.31, t = 2.26).",
+      "computed": "In all five rows the magnitude |t| falls inside the interval implied by |B|/SE at the printed precision, so only the sign is discordant. The convention is not applied consistently: within Experiment 2's single paragraph, the personal-control rows print B and t both negative while the negotiating-with-fate rows print B negative and t positive, and within Experiment 5's paragraph the positive-reappraisal-vs-fatalism row prints t positive while the acceptance-vs-fatalism row prints t negative for a coefficient of the same sign.",
+      "assumptions": "That reporting |t| rather than signed t is the intended convention. The surrounding prose states the direction of each effect unambiguously in words, so no reader is misled about direction.",
+      "reproduction": "metascience regression-batch --rows '[{\"label\":\"Exp2 NWF neutral\",\"b\":-0.24,\"se\":0.11,\"reported_t\":2.18,\"reported_p\":0.03,\"df\":194,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2},{\"label\":\"Exp4 idb vs fatalism\",\"b\":-0.45,\"se\":0.23,\"reported_t\":1.91,\"reported_p\":0.06,\"df\":135,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2},{\"label\":\"Exp4 idb vs personal control\",\"b\":-0.52,\"se\":0.23,\"reported_t\":2.26,\"reported_p\":0.03,\"df\":135,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2},{\"label\":\"Exp4 fatalism vs personal control\",\"b\":-0.05,\"se\":0.22,\"reported_t\":0.24,\"reported_p\":0.81,\"df\":90,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2},{\"label\":\"Exp5 posreap vs fatalism\",\"b\":-0.31,\"se\":0.14,\"reported_t\":2.26,\"reported_p\":0.03,\"df\":190,\"decimals_b\":2,\"decimals_se\":2,\"decimals_t\":2,\"decimals_p\":2}]'",
+      "stage1_finding_ids": [
+        "regression_sign_convention"
+      ],
+      "plain": "In five places the paper prints a negative effect next to a positive test statistic, which is arithmetically impossible if you take both at face value -- but the sizes match, so the authors are evidently dropping the minus sign from the test statistic. That would be an acceptable house style if it were applied consistently, and it is not: within the same paragraph some rows keep the minus sign and others drop it. Nothing about the paper's conclusions changes, because the direction of every effect is stated in words alongside.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No conclusion changes; the direction of every affected effect is stated in words in the adjacent text."
+      },
+      "reproduction_valid": true
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Table 3 (correlations between fate beliefs by condition), cited in the corrected Experiment 1 Results paragraph",
+      "reason": "Referenced by the corrigendum but not reprinted in it. The XML index lists only Tables 1, 2 and 4, and all four PDF pages contain only those three. The table exists in the original article (Front. Psychol. 10:2354), which is outside this document. No correlation matrix could be checked for values outside [-1, 1], positive-definiteness, or internal consistency."
+    },
+    {
+      "location": "Figures 2 and 4, cited in the corrected Experiment 2 and Experiment 4 Results paragraphs",
+      "reason": "Cited in the corrected text (\"see Figure 2\", \"see Figure 4\") but this corrigendum contains no figures at all; all four pages are text and tables. The figures live in the original article. Any statistic appearing only there is outside this review."
+    },
+    {
+      "location": "Tables 2 and 4: 30 of the 39 estimate/confidence-interval triples",
+      "reason": "Both tables place the mean, the SD and the two CI bounds in four separate columns, so every cell arrives as a bare scalar and the batch table checker correctly refused all of them; reassembled into estimate(CI) form it typed them all but reported no check defined for that cell kind on Likert data. check_estimate_ci has no batch form. Nine triples were checked individually -- the three values the corrigendum claims to have corrected plus their row-mates as comparators -- and all nine passed. The other thirty are unchecked."
+    },
+    {
+      "location": "Manipulation-check ANOVAs for Experiments 3, 4 and 5: F(2,214) = 1.45, F(2,136) = 2.89, F(2,191) = 6.10",
+      "reason": "Recomputing an F from group statistics requires per-group means, SDs and ns. The corrigendum prints the three group means for each but no SDs and no per-cell sample sizes. These F values were verified only as F-to-p conversions, which does not test whether the F is consistent with the means it is printed beside."
+    },
+    {
+      "location": "Five explicit no-difference claims: Experiment 2 fatalism (p = 0.29, p = 0.77) and personal control (p = 0.10, p = 0.11); Experiment 5 acceptance vs personal control (p = 0.84)",
+      "reason": "Testing whether a null result survives its own interval requires a confidence interval, and the corrigendum prints B and SE for these coefficients but no CIs. Constructing them by hand would be arithmetic outside the validated tool surface. The largest effect these intervals still permit is therefore unknown, and \"did not differ\" should not be read as \"no effect\". No smallest effect size of interest is stated anywhere, so equivalence could not have been claimed even with intervals."
+    },
+    {
+      "location": "Experiment 6 correlation r = 0.33, p < 0.001, n = 158",
+      "reason": "No tool in the validated set converts a Pearson correlation and its sample size to a p-value, so the thresholded p could not be recovered and checked for concealed extremity the way F(2,117) = 10.19 could."
+    },
+    {
+      "location": "Per-arm sample sizes for all six experiments",
+      "reason": "The corrigendum reports only total N per study, via Table 1, and never states how many participants fell in each condition. Without per-arm ns, no granularity test could be applied to any cell of Table 2 or Table 4. The per-group n of 65 used in the two effect-size recomputations is an even split of Experiment 5's N = 194 and is an assumption; Cohen's d is essentially insensitive to it."
+    },
+    {
+      "location": "GRIM / GRIMMER / SPRITE / DEBIT on Tables 2 and 4",
+      "reason": "Deliberately not run. Every mean in these tables averages 8, 10 or more Likert items, so the granularity of a group mean is far finer than 1/n and the tests have no power; and the response-scale bounds are never stated in the corrigendum, so any range would have been invented. Age in Table 1 is a continuous measure in years and is outside GRIM's applicability. Running these would have manufactured impossibilities out of ordinary numbers."
+    },
+    {
+      "location": "A-priori power analysis",
+      "reason": "No power calculation, target effect size or sample-size justification appears anywhere in this corrigendum, so there were no inputs to reproduce. Whether the original article states one could not be determined from this document."
+    },
+    {
+      "location": "Baseline-similarity tests on Table 1",
+      "reason": "Not applicable rather than skipped. Table 1 reports demographics for six separate samples side by side, not baseline characteristics of randomised arms within one trial, and no baseline p-values are reported anywhere. There is no allocation to test for excess similarity, so the uniformity checks that apply to trial baseline tables do not bite here."
+    },
+    {
+      "location": "The original article, Au & Savani (2019), Front. Psychol. 10:2354",
+      "reason": "Only the corrigendum was supplied. Everything this document does not reprint -- the methods, the response scales and their bounds, the model specifications, Table 3, all figures, and any data availability statement -- is outside this review. The corrigendum states \"the original article has been updated\", so the version of record now differs from both documents."
+    }
+  ],
+  "limitations": [
+    "This agent reads text and tables only. It does not see figures. This document contains no figures at all, but it cites Figures 2 and 4 in the original article, and nothing shown only there could be examined.",
+    "The publisher XML for this article carries only the title and the three tables -- no body text. Every statistic in the corrected Results and Methods paragraphs therefore rests on a single extraction, the PDF text layer, with no second source to reconcile against. The three tables were cross-checked between XML and PDF and agree exactly, cell for cell.",
+    "One passage, Experiment 4's corrected mean-agreement sentence, sits in a two-column region that the PDF text layer interleaves badly, scrambling the subscript labels around the three means. The digit strings 3.54, 3.67 and 3.90 are unambiguous, but which subscript attaches to which value cannot be verified. The headline finding was constructed so as not to depend on that mapping.",
+    "This is a four-page correction notice, not the article it corrects. Judgements about model specification, measurement scales and analytic decisions are made from what this document prints, which is partial by design. Several findings would likely be resolved by the original article's methods section.",
+    "No raw data are referenced anywhere in this document, so none of the irreconcilable statistics can be settled from what is published here. This is normal for a corrigendum and is not itself a criticism.",
+    "Whether the six Experiment 2 contrasts and the four Experiment 5 contrasts each constitute one family for multiplicity purposes is a judgement, not a computation. A reader who regards each belief scale or each coping outcome as a separate pre-specified family would reach a different conclusion about how many results survive."
+  ],
+  "coverage_summary": {
+    "stats_found": 340,
+    "stats_checked": 124,
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "extract_pdf",
+      "check_summation_batch",
+      "check_regression_batch",
+      "statcheck",
+      "stalt_check",
+      "check_table",
+      "detect_duplication",
+      "check_estimate_ci",
+      "multiplicity_report",
+      "check_effect_plausibility",
+      "flag_round_n"
+    ],
+    "tables_checked": [
+      "Table 1 (Demographic information for all six samples) -- 114 data cells; all 18 demographic column sums checked at zero tolerance; cross-verified XML against PDF",
+      "Table 2 (Means, SDs and 95% CIs for the three lay beliefs, Experiments 1-2) -- 72 numbers, 18 estimate/CI triples typed, 3 checked directly; cross-verified XML against PDF",
+      "Table 4 (Means, SDs and 95% CIs for Experiments 3-6) -- 84 numbers, 21 estimate/CI triples typed, 6 checked directly; cross-verified XML against PDF"
+    ]
+  },
+  "questions_for_authors": [
+    {
+      "question": "The Experiment 4 erratum states that \"M_Fatalism = 3.54\" was incorrectly provided instead of \"M_Fatalism = 3.53\", but the corrected Results paragraph printed immediately below it reads \"[M_Fatalism = 3.54, M_PersonalControl = 3.67, M_NegotiatingWithFate = 3.90; F(2,136) = 2.89, p = 0.06]\". Which value now stands for the fatalism condition, 3.53 or 3.54?",
+      "why": "Settles the headline contradiction and tells a reader whether the notice's other corrections were applied to the reprinted text.",
+      "finding_ids": [
+        "exp4_mfatalism_correction_not_applied"
+      ]
+    },
+    {
+      "question": "In the Experiment 5 erratum the sentence beginning \"Furthermore, the mean agreement with the biased scale across all conditions was in correctly provided as ...\" does not give either the erroneous value or the corrected one. What value was affected, and what should it read?",
+      "why": "One stated correction is currently unusable; only the authors can supply the missing figures.",
+      "finding_ids": [
+        "exp5_erratum_sentence_incomplete"
+      ]
+    },
+    {
+      "question": "Two reported coefficients cannot be reconciled with the t statistics printed beside them: Experiment 2's negotiating-with-fate choice contrast (B = -0.20, SE = 0.09, t(194) = 2.02, where B/SE = 2.22) and Experiment 5's acceptance vs fatalism contrast (B = -0.22, SE = 0.11, t(190) = -1.81, where B/SE = -2.00). For each, which of B, SE and t is the correct figure? We note the corrigendum revised the first of these p-values from 0.03 to 0.04, and that B = -0.20 with SE = 0.09 implies p = 0.027.",
+      "why": "Resolves the two genuine arithmetic inconsistencies among the thirteen reported coefficients, one of which sits on the paper's stated replication claim.",
+      "finding_ids": [
+        "exp2_nwf_choice_t_outside_interval",
+        "exp5_acceptance_t_outside_interval"
+      ]
+    },
+    {
+      "question": "For Study 4, Table 1's education block sums to 139 while its gender block (48 + 90) and religion block (68 + 22 + 21 + 17 + 10 + 0) each sum to 138, and Experiment 4 reports F(2,136) and t(135), both of which imply N = 139. What was the analytic sample size for Experiment 4, and were any participants excluded? Relatedly, Experiment 1 reports F(2,117) against a Study 1 total of 121, and Experiment 2 reports t(194) against a Study 2 total of 200 -- could you confirm the sample sizes and, for Experiment 2, the covariates entered in the regression model?",
+      "why": "Three of the six experiments have degrees of freedom that do not reconcile with Table 1; the other three reconcile exactly, so this is not a general reporting convention.",
+      "finding_ids": [
+        "study4_education_column_oversums",
+        "study4_df_implies_n139",
+        "study1_df_implies_n120"
+      ]
+    },
+    {
+      "question": "Experiment 2 reports six regression contrasts on the same 200 participants and Experiment 5 reports four on the same 194, with no correction for multiple comparisons mentioned. Were these families pre-specified, and would the conclusions be stated the same way under a correction for the number of contrasts reported? For reference, the two significant Experiment 2 results (p = 0.03, p = 0.04) and the one significant Experiment 5 result (p = 0.03) do not survive Bonferroni, Holm, Benjamini-Hochberg or Benjamini-Yekutieli within their own families.",
+      "why": "The corrigendum asserts that its corrections \"do not change the scientific conclusions of the article in any way\"; this establishes how much of the original conclusion the reported p-values support in the first place.",
+      "finding_ids": [
+        "multiplicity_exp2_family",
+        "multiplicity_exp5_family"
+      ]
+    }
+  ],
+  "report_markdown": "## What this document is\n\nAu and Savani (2020) is a four-page correction notice to a six-experiment social-psychology paper (Front. Psychol. 10:2354) arguing that a lay belief in \"negotiating with fate\" strengthens under constraint and promotes adaptive responses to uncontrollable negative events. The corrigendum is not the article. It reprints Tables 1, 2 and 4 in corrected form, reprints seven Results and Methods paragraphs, lists about a dozen individual values it says were wrong, and closes: \"The authors apologize for these errors and state that these corrections do not change the scientific conclusions of the article in any way.\"\n\nThat closing sentence sets the standard against which this document should be read, and it is the right standard. A correction notice is judged on whether it corrects.\n\n## What verifies\n\nA good deal, and it should be said plainly before the problems. Both extractions of Tables 1, 2 and 4 -- the publisher XML and the PDF -- agree cell for cell, so nothing below turns on a disputed reading of a table. Seventeen of the eighteen demographic column sums in Table 1 reconcile exactly at zero tolerance, including the Study 5 religion block whose missing \"Unreported = 1\" row was the stated reason for reprinting the table. All three of the corrigendum's table corrections were applied and each reconciles with its own confidence interval: Table 2's Study 1 negotiating-with-fate mean now reads 4.41, Table 4's Study 4 personal-control mean 3.33, and Table 4's Study 5 positive-reappraisal upper bound 2.98. Across 594 cross-sample comparisons of 39 mean/SD pairs from six independent samples there is not one identical pair -- no sign of recycled summary statistics. Sample sizes are unround. The largest effect anywhere in the paper is d = 0.47, and the headline d = 0.29 sits just below the social-psychology median of 0.36 (Lovakov & Agadullina 2021, 12,170 effects), so there is no implausibly large effect to explain. Of eighteen reported NHST results, none is a decision error, and every p-value the corrigendum says it corrected recomputes correctly -- F(2,214) = 1.45 gives 0.237, F(2,136) = 2.89 gives 0.059, F(2,191) = 6.10 gives 0.0027, F(3,154) = 0.944 gives 0.421. Eleven of thirteen regression coefficients reconcile with their test statistics, including both t values the corrigendum itself revised.\n\n## Where the sweep was moved\n\nThree of the numeric sweep's flags do not survive scrutiny and are not carried forward.\n\nThe residual statcheck hit -- t(190) = 2.26 printed with p = 0.03 where the exact value is 0.024956 -- sits 0.000044 below the rounding boundary, on a t that is itself rounded to two decimals. The identical t(135) = 2.26 elsewhere in the paper gives 0.025423 and rounds correctly. That is a boundary artifact, not evidence.\n\nThe sweep raised the apparent incoherence of the reported Cohen's d values, in particular Experiment 5 assigning d = 0.28 to a contrast with |t| = 1.64 and d = 0.10 to one with |t| = 1.81 at the same degrees of freedom. Recomputing from Table 4's raw group statistics resolves it: acceptance differs by 3.30 versus 3.22, giving Hedges' g = 0.12 against the reported 0.10, while positive reappraisal differs by 2.80 versus 2.57, giving g = 0.30 against the reported 0.39. The d values track the raw group means; the t statistics track the covariate-adjusted coefficients. Those need not move together, and the pattern is explained.\n\nThe sweep also asked a human to look at Table 4's Study 4 personal-control cell, where the interval-implied centre is 3.355 against a printed 3.33 while both row-mates are exactly symmetric. Re-run individually, all three cells pass. It is not reportable.\n\nOne sweep claim is narrowed rather than dropped. On the Experiment 5 acceptance contrast the sweep held that both the t and the p lie outside their achievable intervals; the p does not, and only the t discrepancy is carried forward.\n\n## What the balance leaves\n\nThe findings that survive divide into two kinds. One is a set of ordinary reporting inconsistencies -- two coefficients irreconcilable with their own t statistics, three experiments whose degrees of freedom do not match Table 1, a sign convention applied unevenly. Individually each has an innocent explanation, and a single mistyped digit accounts for most of them. What gives them weight here is where they sit: in a document whose sole purpose was to catch exactly this class of error, and which reprints the affected paragraphs as authoritative.\n\nThe other is the multiplicity arithmetic, which is a statement about the original analysis rather than about the corrections. It is the finding with the largest bearing on what the paper claims, and it is deterministic: the three results the paper calls significant in Experiments 2 and 5 are the only significant results among ten reported contrasts, and none survives correction within its own family under any of the four standard methods. Uncorrected testing is normal practice in this literature, and this is not an accusation. It does mean that the sentence \"This result replicates the finding from Experiment 1\" is carrying more weight than the reported p-values of 0.03 and 0.04 can bear once the five and three companion tests reported beside them are counted.\n\nNone of this is arithmetically impossible, and nothing here suggests fabrication. The tables are clean, the effect sizes are unremarkable, and there is no duplication. What is in doubt is whether the corrected record can be relied on: the notice does not apply one of its own corrections, leaves another with the value missing, and moves a headline p-value away from what the coefficient and standard error printed beside it imply. Several of the discrepancies would be settled in a sentence by the authors, and the questions below are framed so they can be.\n\nThe reported statistics mostly verify, but this correction notice does not reliably correct, and I would not treat its numbers as settled without the authors' clarification."
+}

@@ -1,0 +1,108 @@
+# Gold-standard fixture: Apple cider vinegar weight-loss RCT.
+# Source review: benchmarks/paper_reviews/papers/Apple cidar vinegar.md
+paper: apple_cider
+pdf: benchmarks/paper_reviews/papers/Apple cider vinegar.pdf
+gold_review: benchmarks/paper_reviews/papers/Apple cidar vinegar.md
+verdict_expected: does_not_reconcile
+# The tortured-phrases track runs locally (free) during the eval and
+# must report ran with zero guarded fingerprints on this gold paper.
+tortured_expected: none
+
+key_findings:
+  - id: baseline_uniformity
+    weight: critical
+    description: >
+      Extreme baseline uniformity between the four randomized groups
+      (recalculated 1-way ANOVA p-values for age/height/weight ≈ 0.93, 0.99,
+      0.99). This uniformity likely represents a failure of randomization or
+      non-random allocation. High baseline p-values must be treated as the
+      red flag, not as reassurance of balance.
+    aliases: ["CSF", "Carlisle", "Stouffer", "under-dispersion", "too similar",
+              "suspiciously similar", "uniform baseline", "randomization failure"]
+    reachable: true
+    # Interval labels encode the LABEL AUTHOR's uncertainty about the right
+    # severity, not the run's; a wide interval means "I am not sure either".
+    # confidence: low rows are reported but excluded from the aggregates.
+    # Integers on the 1-9 errorlevels ladder (severity9.py): 3 = major
+    # correction, 5 = the whole-paper pattern rung a merged CSF finding earns.
+    severity_expected: [3, 5]
+    confidence: high
+
+  - id: data_availability
+    weight: major
+    description: >
+      The paper claims "All data relevant to the study are included in the
+      article or uploaded as supplementary information" but no data is
+      actually available (supplement is a press release) — the
+      state-but-withhold pattern.
+    aliases: ["state-but-withhold", "data not available", "no data provided"]
+    reachable: true
+    # 3 = correction-worthy misstatement; 4 = results in doubt if the claimed
+    # data never existed.
+    severity_expected: [3, 4]
+    confidence: high
+
+  - id: effect_size_implausible
+    weight: major
+    description: >
+      ~9% body-mass loss in 12 weeks in the highest vinegar group exceeds
+      semaglutide (~6% at 12 weeks); an unpatentable cheap intervention
+      beating GLP-1 agonists by 50% is highly implausible.
+    aliases: ["semaglutide", "GLP-1", "Ozempic", "effect size", "too large",
+              "implausible weight loss"]
+    reachable: true
+    # check_effect_plausibility caps at suspicious by design; a legitimate
+    # landing for this row is outcome: undecided.
+    severity_expected: [2, 3]
+    allow_undecided: true
+    confidence: medium
+
+  - id: sprite_boundary_stacking
+    weight: major
+    description: >
+      SPRITE reconstruction of BMI (range 27-34, mean 30.6, SD 3.1, n=30) and
+      age (range 12-25) shows unrealistic distributions stacked at the range
+      boundaries (many 27s and 34s; pile-up at age 12) across all groups.
+    aliases: ["SPRITE", "bimodal", "boundary", "stacked at extremes"]
+    reachable: true
+    # SPRITE stacking is improbability, not impossibility: 2 alone, 5 as part
+    # of the paper-wide pattern; undecided is a legitimate landing.
+    severity_expected: [2, 5]
+    allow_undecided: true
+    confidence: medium
+
+  - id: design_mislabel
+    weight: minor
+    description: >
+      A between-within (groups × time) design analyzed only with independent
+      t-tests, with all within-group results hidden behind "p<0.05".
+    aliases: ["between-within", "independent t-test", "repeated measures",
+              "paired"]
+    reachable: true
+
+  - id: feasibility_oddities
+    weight: minor
+    description: >
+      A 12-week, 120-person RCT run with no funding; zero dropout; a full
+      dietary diary collected but never analyzed.
+    aliases: ["no funding", "zero dropout", "no participants were lost",
+              "dietary diary"]
+    reachable: true
+    # "Can't tell" bucket: real oddities, but the right severity is genuinely
+    # unclear — scored for the record, excluded from pass/fail aggregates.
+    severity_expected: [1, 3]
+    confidence: low
+
+must_not_say:
+  # "dispersion" and both -isation/-ization spellings joined the nets after
+  # the 2026-08-21 run shipped "Table 1 baseline dispersion ... consistent
+  # with randomisation" straight through the old patterns.
+  - "baseline (characteristics|values|comparisons|dispersion|similarity)[^.]*\\bconsistent\\b"
+  - "no suspicious uniformity"
+  - "groups (were|are) well[- ]balanced"
+  - "consistent with random (allocation|assignment)"
+  - "consistent with randomi[sz]ation"
+  # The paper states no height/weight range; calling their SDs "impossible"
+  # on an assumed range is the invented-constraint failure mode (rulebook 4).
+  - "(height|weight)[^.\\n]{0,90}(exceeds|impossible|beyond)[^.\\n]{0,50}(maximum|achievable|possible sd|mathematical)"
+  - "(anthropometric data|table 1)[^.\\n]{0,60}(internally )?impossible"

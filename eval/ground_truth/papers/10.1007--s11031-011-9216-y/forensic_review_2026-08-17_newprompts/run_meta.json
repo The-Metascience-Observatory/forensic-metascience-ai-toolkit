@@ -1,0 +1,236 @@
+{
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-17 21:11 UTC",
+  "version": "0.1.0",
+  "effort": "high",
+  "git_dirty": false,
+  "git_sha": "74b31169bd21",
+  "prompt_sha256": "09d351811c30d0dd",
+  "registry_sha256": "95687062d36d7532",
+  "text_provenance": {
+    "by_file": {
+      "10.1007--s11031-011-9216-y.pdf": {
+        "extractor": "docling",
+        "n_chars": 78483
+      }
+    },
+    "docling_version": "2.119.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  },
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 7.3072555,
+      "input_tokens": 32,
+      "output_tokens": 129895,
+      "cache_creation_input_tokens": 279316,
+      "cache_read_input_tokens": 2530389,
+      "wall_seconds": 1266.47,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001366
+        },
+        "claude-opus-5": {
+          "costUSD": 7.305889499999999
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 21
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 3.4547100000000004,
+      "input_tokens": 14,
+      "output_tokens": 35517,
+      "cache_creation_input_tokens": 199918,
+      "cache_read_input_tokens": 1039848,
+      "wall_seconds": 443.16,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.047611
+        },
+        "claude-opus-5": {
+          "costUSD": 3.407099
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "unresolved",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 10.7619655,
+  "total_wall_seconds": 1709.63,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 0
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Johnson et al. 2011",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 12,
+    "n_sentence_shaped": 3,
+    "sentence_shape_enforced": false,
+    "n_joined": 1,
+    "joined_enforced": false,
+    "n_overlong": 2,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [
+      "Table 1's caption names three dependent measures; the table reports one and the text reports none of the other two",
+      "Sixty of Experiment 4's 193 stated participants appear in no reported analysis, with no exclusions or attrition disclosed",
+      "Two contrasts presented as significant in the main text fail the authors' own Tukey correction, disclosed only in footnotes"
+    ],
+    "n_examples_omitted": 0,
+    "problems": [],
+    "detail": "all 12 title(s) name a defect rather than a method. 2 run past 120 characters and 1 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 33,
+    "n_headline": 1,
+    "n_targets": 34,
+    "n_valid": 7,
+    "n_invalid": 17,
+    "n_no_command_applies": 10,
+    "n_command_expected": 24,
+    "n_unparseable": 0,
+    "executed": true,
+    "n_ran_ok": 16,
+    "n_ran_failed": 8,
+    "problems": [
+      "finding[pilot_mood_anova_f_unreachable]: exited 2: Usage: metascience rivets-anova [OPTIONS]\nTry 'metascience rivets-anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --p-is-thre",
+      "finding[exp3_target_attractiveness_exceeds_scale]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `highly_suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[exp4_sample_size_vs_degrees_of_freedom]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[table2_selfeval_grimmer_sprite_failures]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[statcheck_reported_p_inconsistencies]: exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "finding[df_do_not_reconcile_exp1_exp2_exp3]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[exp4_multiplicity_contrast_family]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[exp4_control_sd_dispersion]: exited 2: Usage: metascience sd-or-se [OPTIONS] REPORTED_VALUE N\nTry 'metascience sd-or-se --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "finding[exp3_design_sensitivity]: exited 2: Usage: metascience required-n [OPTIONS] TEST_TYPE EFFECT_SIZE\nTry 'metascience required-n --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "finding[headline]: exited 2: Usage: metascience rivets-anova [OPTIONS]\nTry 'metascience rivets-anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --p-is-thre",
+      "finding[0]: exited 2: Usage: metascience rivets-anova [OPTIONS]\nTry 'metascience rivets-anova --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --p-is-thre",
+      "finding[1]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[2]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[4]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[5]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "finding[8]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[11]: THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `indeterminate`. The command ran perfectly well -- that is the point. Re-read the finding before the paper."
+    ],
+    "n_disagreed": 9
+  },
+  "exhaustive_checks": {
+    "n_tables": 2,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 0,
+      "n_blocks": 0,
+      "ran": false,
+      "severity": "indeterminate",
+      "why_not": "The paper prints no (mean, SD) pair in any table, so there was nothing to compare. This is a refusal, not a clean result."
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 0,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 0,
+      "results": [],
+      "worst": null
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_sweep": 21,
+    "n_report": 12,
+    "n_computed": 2,
+    "n_asserted": 24,
+    "n_absent": 7,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 9,
+    "n_diverged": 2,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 28,
+    "n_unjoined": 12,
+    "n_manual": 0,
+    "divergences": [
+      "exp3_target_attractiveness_exceeds_scale: tool=impossible model=highly_suspicious (downgraded, explained)",
+      "pilot_selfeval_df_typo: tool=consistent model=suspicious (upgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 12,
+    "n_uncomputed": 0,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 12,
+    "n_supplied": 2,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "logical": 10,
+      "field_norm": 2
+    }
+  },
+  "sourcing": {
+    "findings": 21,
+    "joinable": 21,
+    "traced_to_a_passage": 11
+  },
+  "delivery": {
+    "ok": true,
+    "n_calls": 32,
+    "n_undelivered": 0,
+    "n_extraction": 0,
+    "n_unrecovered": 0,
+    "lost": [],
+    "note": "every tool call returned a usable payload."
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 8 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 8,
+    "n_off_allowlist": 3
+  }
+}

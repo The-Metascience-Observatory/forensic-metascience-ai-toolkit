@@ -1,0 +1,193 @@
+{
+  "headline": {
+    "statement": "The paper's primary predictor is described on two mutually incompatible scales in the same article, so the \"one-unit increase\" that every headline coefficient is expressed per has no defined meaning.",
+    "severity": "suspicious",
+    "rests_on": "stated_constraint",
+    "evidence": "Measures (p. 594): engaging communication is \"the mean of member responses to four items ... (response options 1 = Needs a lot of work, 2 = Needs a little work, 3 = Good, 4 = Outstanding; Cronbach's alpha = 0.93)\" -- a four-item mean on 1-4 cannot exceed 4. Results (p. 595): \"the mean level of engaging communication was 3.83 on a 1.25-5 scale, corresponding to 'good' for such facets as frequency.\" Table 1 gives Communication 3.83 (0.42), n = 64. Table 2 reports the effect of this measure as b = 1.01 (0.38), p = .01, and Table 3 as b = 3.91 (1.78), p = .03, both per one-unit increase.",
+    "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 5 --last-page 8"
+  },
+  "verdict": "questionable",
+  "confidence": "medium",
+  "findings": [
+    {
+      "rank": 1,
+      "title": "Engaging communication is given two incompatible scales (1-4 in Measures, 1.25-5 in Results), leaving the headline coefficients' unit undefined",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Measures, 'Engaging communication' (p. 594) vs Results paragraph 1 (p. 595); Table 1 Communication row; Table 2 and Table 3 Communication rows",
+      "reported": "Measures: mean of four items scored 1 = Needs a lot of work to 4 = Outstanding. Results: \"the mean level of engaging communication was 3.83 on a 1.25-5 scale, corresponding to 'good'\". Table 1: Communication 3.83 (0.42). Effects reported per one-unit increase: b = 1.01 (0.38), p = .01 (number of EBPs); b = 3.91 (1.78), p = .03 (reach).",
+      "computed": "The two stated bounds cannot both hold: a mean of four integer items scored 1-4 has a maximum of 4, so a '1.25-5 scale' is not attainable. Dispersion cannot adjudicate between the readings -- check_sd_range returns consistent under both: SD 0.42 is 27.8% of the maximum possible (1.5119) for a 1-4 range at n = 64, and 22.2% of the maximum possible (1.8898) for a 1.25-5 range. Note that 1.25 = 5/4 is exactly attainable as the mean of four 1-4 items, which supports reading '1.25-5' as an observed range with a typo in the upper value. The interpretive gloss is also off: on the 1-4 anchors 3.83 sits close to 'Outstanding' (4), not 'good' (3).",
+      "assumptions": "None beyond the paper's own statements -- both bounds are stated by the paper (rulebook rule 4: stated constraint, not assumed). Stage 1 confirmed both strings verbatim against the source PDF, so this is not a markdown-extraction artifact. The sd-range corroboration assumes the reported SD refers to the coalition-level composite in Table 1.",
+      "reproduction": "metascience sd-range --sd 0.42 --min-val 1 --max-val 4 --n 64 && metascience sd-range --sd 0.42 --min-val 1.25 --max-val 5 --n 64 && metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 5 --last-page 8",
+      "stage1_finding_ids": [
+        "comm_scale_contradiction",
+        "table1_comm_sd_range_measures_bounds",
+        "table1_comm_sd_range_results_bounds"
+      ],
+      "reproduction_valid": true
+    },
+    {
+      "rank": 2,
+      "title": "All three regression tables label coefficient/standard-error columns as 'M (SD)' and gloss SD as 'standard deviation'",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Tables 2, 3 and 4, column sub-headers and footnotes (pp. 596-598); 63 estimate cells",
+      "reported": "Each table prints a group header 'Coefficient' over a sub-header row reading '| Variable | M (SD) | p | M (SD) | p | M (SD) | p |', with the footnote 'Abbreviations: EBP, evidence-based programs; SD, standard deviation.'",
+      "computed": "The parenthetical values are standard errors, not standard deviations: check_regression reproduces the printed p from b/SE in 59 of 63 cells (e.g. 1.01/0.38 gives p = 0.0079 against a printed .01; 0.85/0.47 gives p = 0.0705 against a printed .07; 8.57/3.03 gives p = 0.0047). A mean/SD reading is not compatible with the printed p-values. Three tables and 63 cells are affected, and Table 1 uses the same '(mean, SD)' notation for a genuinely different quantity.",
+      "assumptions": "Assumes Stata's normal reference for Poisson, negative binomial and mixed-model output (emulated with df = 1000000). Confirmed verbatim in the source PDF by Stage 1, so this is the published text rather than an extraction artifact.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 7 --last-page 8",
+      "stage1_finding_ids": [
+        "table_header_mislabelled",
+        "regression_cells_reproduce"
+      ],
+      "reproduction_valid": true
+    },
+    {
+      "rank": 3,
+      "title": "Nine correlated primary tests with no multiplicity correction, on models whose covariates were selected by screening against the same outcomes",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Methods, Covariates paragraph (p. 595); Tables 2-4; Results paragraph 3",
+      "reported": "\"Variables were retained in the final models as covariates only if bivariate associations had p values under 0.10.\" Nine primary tests (3 leadership facets x 3 EBP outcomes) with p = .01, .03, .07, .03, .01, .03, .38, .96, .89. No correction is described anywhere. Eight candidate covariates are named; four appear in the final models.",
+      "computed": "Five of nine primary tests reach p < .05 and none is stronger than p = .01. The three predictors are facets of one construct from the same member survey and the three outcomes are functions of the same coalitions' EBP portfolios, so the tests are far from independent. Four named candidates (community poverty, state, coalition age, service-area population) were dropped and their bivariate statistics appear nowhere, so the number of tests actually performed is not recoverable. State was dropped despite an 85.94%/14.06% Pennsylvania-Missouri split, and service-area population despite being motivated in the text as needed 'to contextualize EBP reach'.",
+      "assumptions": "No forensic tool adjudicates multiplicity or data-dependent model selection; this is a structural reading of the enumerated test inventory and the stated Methods procedure. The reproduction command surfaces the text and tables, not a verdict.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 5 --last-page 8",
+      "stage1_finding_ids": [
+        "multiplicity_uncorrected",
+        "data_dependent_covariate_selection"
+      ],
+      "reproduction_valid": true
+    },
+    {
+      "rank": 4,
+      "title": "Internally inconsistent p-value rendering: a p printed as exactly '0', and two '<.001' cells that recompute above .001",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Table 2 Constant model 1; Table 3 Communities That Care model 1; Table 3 Number of EBP at baseline model 2; Table 3 Inclusive decision making model 2",
+      "reported": "'Constant | -4.51 (1.50) | <.001'; 'Communities That Care | 3.16 (0.98) | <.001'; 'Number of EBP at baseline | 0.01 (0.001) | 0'; 'Inclusive decision making | 8.57 (3.03) | .01'",
+      "computed": "check_regression on the printed b and SE gives p = 0.00264 for the constant (z = -3.007) and p = 0.00126 for Communities That Care (z = 3.224); both exceed the printed bound of .001, and Stage 1 found the discrepancy survives the most extreme corner of the rounding intervals (0.0025 and 0.0012 respectively). A p-value printed as exactly '0' is not an attainable value for a probability, and the adjacent model in the same row uses '<.001' for the same quantity. The Inclusive decision making cell recomputes to p = 0.0047, which at the table's two-decimal precision would print as .00 rather than .01.",
+      "assumptions": "Assumes a normal reference (df = 1000000), matching Stata's reporting for Poisson and negative binomial; Stage 1 checked t(57) as a sensitivity and the constant still gives 0.0039, above .001. Note that check_regression's own p_matches flag returned true and severity 'consistent' for the two '<.001' cells because its tolerance is lenient -- the judgment rests on the computed p exceeding the printed bound, not on the flag. All four cells are intercepts, covariates or conservative roundings, so none changes an inferential conclusion. check_regression is exposed only through the MCP server; there is no metascience CLI verb, so the reproduction command below retrieves the printed values rather than recomputing them.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 7 --last-page 7",
+      "stage1_finding_ids": [
+        "t2_constant_m1_p_below_threshold",
+        "t3_ctc_m1_p_below_threshold",
+        "t3_p_reported_as_zero",
+        "t3_idm_p_rounding"
+      ],
+      "reproduction_valid": true
+    },
+    {
+      "rank": 5,
+      "title": "The fidelity null is stated as an absence of association, with no confidence intervals and no equivalence threshold to support it",
+      "severity": "indeterminate",
+      "confidence": "medium",
+      "location": "Abstract, Results paragraph 3, Discussion and Conclusion; Table 4 (n = 101 programs in 35 coalitions)",
+      "reported": "\"none of the inclusive leadership practices that we examined was associated with subsequent EBP fidelity\" and \"Contrary to expectation, no facet of inclusive leadership was associated with EBP intervention fidelity.\" Table 4: Communication 0.53 (0.60), p = .38; Inclusive decision making -0.05 (0.98), p = .96; Inclusion of community residents -0.10 (0.72), p = .89.",
+      "computed": "Not computable from the published numbers. absence_of_evidence requires ci_low and ci_high and the paper reports no confidence interval for any coefficient in any table; no smallest effect size of interest is stated, so the tool would decline to judge equivalence even with an interval. What is visible on the face of Table 4 is that the standard errors (0.60, 0.98, 0.72) are large relative to a 1-7 fidelity outcome, and that this analysis rests on 35 of the 64 coalitions.",
+      "assumptions": "Deriving an interval from b and SE would be unvalidated hand arithmetic and was not done. Recorded as indeterminate rather than as a pass: 'not significant' has been reported as 'not associated', and the paper supplies nothing that lets a reader distinguish the two. The paper's own Highlights are more careful -- 'It is not yet clear how inclusive leadership improves evidence-based practice fidelity.'",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 8 --last-page 8",
+      "stage1_finding_ids": [
+        "fidelity_null_claim_no_interval"
+      ],
+      "reproduction_valid": true
+    },
+    {
+      "rank": 6,
+      "title": "An embedded randomized trial whose allocation balance is never shown",
+      "severity": "indeterminate",
+      "confidence": "medium",
+      "location": "Methods, sample paragraph (p. 593); Table 1",
+      "reported": "\"The sample began with 68 Pennsylvania and Missouri youth substance misuse prevention coalitions. Half of these coalitions were randomly assigned to participate in the Coalition Check-Up technical assistance (TA).\" All models include a binary Coalition Check-Up assignment indicator. Table 1 reports a single pooled column headed 'All coalitions n = 64'.",
+      "computed": "Not testable. csf_test and bayesian_table1_dispersion require baseline characteristics reported separately by arm with per-arm ns; no by-arm baseline summaries or p-values exist in the paper, so neither baseline uniformity nor baseline imbalance can be assessed in either direction. No claim about randomization quality is made here.",
+      "assumptions": "This is a secondary observational analysis rather than a report of the trial itself, so a by-arm Table 1 is not strictly required by reporting convention; it is nonetheless a gap given that treatment assignment is a covariate in all nine models and that TA level -- which the paper says 'varied between coalitions assigned to the Coalition Check-Up process and those that were not' -- is a second covariate on the same causal pathway. No stage-1 tool backs this entry; it is a design observation.",
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 3 --last-page 6",
+      "stage1_finding_ids": [],
+      "reproduction_valid": true
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Table 4 null results (fidelity) -- equivalence / precision assessment",
+      "reason": "absence_of_evidence requires ci_low and ci_high, and the paper reports no confidence intervals for any coefficient in any table. Deriving an interval from b and SE would be unvalidated hand arithmetic. No smallest effect size of interest is stated either, so the tool would decline to judge equivalence even with an interval."
+    },
+    {
+      "location": "Methods -- statistical power",
+      "reason": "The paper states no a-priori power analysis: no target power, no assumed effect size, no alpha. verify_power_analysis returns indeterminate unless every input was actually stated, so it was not run rather than run on invented inputs. This is itself a reporting gap for a study with 64 clusters and nine primary tests."
+    },
+    {
+      "location": "Baseline comparability between the randomized Coalition Check-Up arm and the TA-as-usual arm",
+      "reason": "csf_test and bayesian_table1_dispersion require baseline characteristics reported separately by arm with per-arm ns. Table 1 pools all 64 coalitions into a single column, so no by-arm baseline p-values or summaries exist to test. Randomization balance cannot be assessed in either direction."
+    },
+    {
+      "location": "Table 1 -- Population of service area, mean 84,299 (SD 108,353)",
+      "reason": "Continuous, unbounded measure with no stated range. GRIM/GRIMMER/SPRITE are inapplicable to continuous data, and check_sd_range needs bounds the paper does not give. Inventing a plausible population range would violate rulebook rule 4. An SD exceeding the mean is unremarkable for a right-skewed population count."
+    },
+    {
+      "location": "Table 1 -- Number of coalition members, mean 35.78 (SD 33.74)",
+      "reason": "A count with no stated upper bound. check_table refused GRIMMER and SPRITE here because the default 1-7 Likert fallback would manufacture an impossibility for an unbounded variable. No stated or logically necessary maximum exists, so no granularity check is admissible."
+    },
+    {
+      "location": "Table 1 -- 'EBP adherence 5.23 (1.13)': denominator and cell type",
+      "reason": "The row is printed in a column headed 'All coalitions n = 64' but fidelity is a program-level measure (Table 4 reports 101 programs). The paper does not state the n for this row, it is the only continuous row carrying no '(mean, SD)' annotation, and it types as ambiguous on syntax alone. The SD-range check was run and is insensitive to the choice of n, but no n-dependent check could be applied."
+    },
+    {
+      "location": "Table 1 -- 'Use at least one EBP' (38, 59%) reconciled against 'Number of EBPs' (1.67, 2.15)",
+      "reason": "38 of 64 implies exactly 26 coalitions with a count of zero. The Python SPRITE sampler produced 36-38 zeros in all 300 reconstructions, but the rsprite2 cross-check returned valid distributions with markedly fewer zeros. Engine disagreement is an instrumentation problem, not evidence about the paper, so no anomaly is claimed. A reader with the raw data could settle it."
+    },
+    {
+      "location": "Supporting Information S1: Tables S1 and S2 (registry hierarchy used to classify programs as EBPs)",
+      "reason": "Cited in Methods as the source of the predetermined ordering of EBP registries but not provided with the paper files supplied for this analysis. The EBP classification drives both primary outcomes, so this is a material dependency that could not be inspected."
+    },
+    {
+      "location": "Bivariate covariate-screening tests (Methods, Covariates paragraph)",
+      "reason": "The paper states that candidate covariates were screened at bivariate p < 0.10 but reports none of the resulting statistics. With no coefficients, test statistics or p-values printed, there is nothing to recalculate and the number of tests performed is not recoverable."
+    },
+    {
+      "location": "Reported reliability statistics (Cronbach's alpha 0.93 and 0.88; inter-item correlations 0.80 and 0.76) and the unconditional ICC of 0.10",
+      "reason": "No tool in this toolkit verifies internal-consistency coefficients or an ICC against item-level data, and the item-level data are not reported. All values are within ordinary ranges and none is out of bounds on its face."
+    },
+    {
+      "location": "Figures",
+      "reason": "The article contains no data figures; the image placeholders in the extraction are journal furniture (logos, rules, section ornaments). No figure-derived quantities were used anywhere in this review."
+    }
+  ],
+  "limitations": [
+    "This agent reads text and tables only and does not see figures. In this paper that costs nothing, because the article contains no data figures -- every reported statistic lives in the text or in Tables 1-4.",
+    "Nothing in this paper is mathematically impossible. Every finding above is a reporting, interpretation or design concern, not an arithmetic contradiction, and none of them rules out the paper's conclusions.",
+    "The regression recomputations assume Stata reports Poisson, negative binomial and mixed-model coefficients against a normal reference (emulated with df = 1000000). A t reference with 57 degrees of freedom was checked as a sensitivity on the flagged cells and did not change any verdict.",
+    "check_regression, the tool that carries most of the verification here, is reachable only through the MCP server; there is no metascience CLI verb for it, so the reproduction strings on those findings retrieve the printed values rather than recomputing them.",
+    "Multiplicity, data-dependent covariate selection and the missing by-arm baseline table are structural readings of the Methods and the reported test inventory. No forensic tool adjudicates them, and they are reported as judgments rather than as tool outputs.",
+    "The zero-count reconciliation between Table 1's '38 (59%) use at least one EBP' and its 'Number of EBPs 1.67 (2.15)' could not be settled: the Python SPRITE engine and rsprite2 disagreed about which zero-counts are attainable, and engine disagreement is treated as an instrumentation problem, not evidence about the paper.",
+    "All numbers quoted here were cross-checked against the source PDF by the numeric sweep, which found zero discrepancies against the markdown extraction. That reduces but does not eliminate the risk that an anomaly reported here originates in extraction rather than in the paper."
+  ],
+  "coverage_summary": {
+    "stats_found": 91,
+    "stats_checked": 79,
+    "tools_run": [
+      "parse_table",
+      "parse_cells_typed",
+      "check_table",
+      "statcheck",
+      "extract_pdf",
+      "grim_sweep",
+      "grim_check",
+      "grim_percentage",
+      "grimmer_check",
+      "sprite_reconstruct",
+      "r_sprite_ground_truth",
+      "check_sd_range",
+      "check_summation",
+      "check_regression",
+      "stalt_check",
+      "flag_round_n",
+      "detect_duplication"
+    ],
+    "tables_checked": [
+      "Table 1 (coalition EBPs, inclusive leadership and other attributes, n=64)",
+      "Table 2 (number of EBPs, Poisson, n=64)",
+      "Table 3 (EBP reach, negative binomial, n=64)",
+      "Table 4 (EBP fidelity, HLM, n=101 programs in 35 coalitions)"
+    ]
+  },
+  "report_markdown": "## What the paper claims\n\nWells and colleagues report a one-year lagged observational analysis of 64 youth substance-misuse prevention coalitions in Pennsylvania and Missouri, drawn from an ongoing randomized technical-assistance trial. Three facets of \"inclusive leadership\" measured at baseline from member surveys -- engaging communication, inclusive decision making, and inclusion of community residents -- are used to predict three evidence-based-practice outcomes a year later: the number of EBPs a coalition runs (Poisson), the number of youth and parents those EBPs reach (negative binomial), and implementation fidelity (a hierarchical linear model over 101 programs in 35 coalitions). The abstract concludes that inclusive leadership was positively associated with the first two outcomes but not the third.\n\n## The arithmetic mostly holds\n\nThis deserves saying plainly before anything else. Fifty-nine of the 63 coefficient/SE/p triples in Tables 2-4 reproduce their printed p-value from b/SE, and critically **all nine** headline inclusive-leadership tests -- the ones carrying every claim in the abstract and conclusion -- recompute correctly. Table 1 is fully self-consistent: all seven two-decimal percentages simultaneously admit n = 64 and the counts GRIM recovers at that denominator (55, 9, 26, 41, 23, 21, 20) are exactly the counts printed beside them; the technical-assistance categories sum to 64 and to 100%; GRIM, GRIMMER and SPRITE all pass on the one Table 1 mean to which they legitimately apply. There is no duplication across tables, no round-N pattern, and the survey participation rates (1108/1851 and 945/1695) reconcile with their printed percentages. Feasibility checks out too -- NIDA R01 funding, $40 incentives, a documented IRB approval, and 4 of 68 coalitions lost over a year, which is ordinary rather than implausibly low attrition.\n\n## What I set aside from the numeric sweep\n\nFour sweep signals do not survive scrutiny and I have dropped or downgraded them.\n\nThe STALT check recovered p-values around 1e-15 to 1e-23 behind the \"<.001\" printed for *number of EBPs at baseline*, and the tool returned `highly_suspicious`. That verdict does not transfer: these are autoregressive stability coefficients, where a strongly autocorrelated measure predicting itself a year later should produce exactly this. Rulebook rule 2 targets a *headline* effect hidden behind a threshold; this is neither headline nor implausible.\n\nThe apparent contradiction of two Table 2 cells printing identical estimates (-0.01, 0.17) with different p-values (.97, .98) dissolves once precision is accounted for -- these are different models whose estimates merely round alike, and the rounding intervals admit p from 0.953 to 0.977.\n\nThe Table 3 baseline coefficient 0.01 (0.002) is too coarsely printed to check at all: its rounding intervals admit p anywhere from 0.046 to 1e-23. That is uninformative, not inconsistent, and treating it as a hit would be a false accusation.\n\nFinally, a promising-looking clash between Table 1's \"38 (59%) use at least one EBP\" and its EBP count distribution could not be settled because the two SPRITE engines disagreed about which zero-counts are attainable. Engine disagreement is our problem, not the authors'.\n\n## What actually limits confidence\n\nThe residual problems are interpretive rather than arithmetic, and they compound. The paper's own methodological note is revealing: \"Results in Tables 2-4 are shown as coefficients, and do not include effect sizes, as effects are multiplicative and unit increases in key independent variables are idiosyncratic and scale-dependent.\" That is an accurate description of a real problem, but declining to report effect sizes does not solve it. The three predictors have observed SDs of 0.42, 0.29 and 0.32 (Table 1), so the \"one-unit increase\" in which every coefficient is expressed spans several times the entire spread of the observed data -- and under the Measures-stated 1-4 scale, with a mean of 3.83, there is less than one scale point of headroom above the average coalition at all. A reader cannot size these associations, and the contradictory scale statement makes it worse rather than better.\n\nLayered on that: nine correlated tests, uncorrected, none of the five positive results stronger than p = .01, in models whose covariates were retained by screening bivariate associations against the same outcomes at p < 0.10 -- with the screening statistics never reported, so the number of tests performed is unrecoverable. The paper's Highlights and Discussion hedge appropriately (\"may improve\", \"may promote\"); the abstract and Conclusion do not.\n\nThe data availability statement -- \"available from Drs. Brown and Chilenski upon reasonable request\" -- is standard journal boilerplate rather than a state-but-withhold claim, but combined with the missing Supporting Information tables that define the EBP registry hierarchy, the two quantities that drive both primary outcomes cannot be independently reconstructed.\n\n## Verdict\n\nNothing here is impossible and the authors' computations largely check out; what I cannot verify is the interpretation built on top of them, and the tables that carry it are mislabelled and internally inconsistent in ways that should have been caught. The findings are plausible but the reporting needs correction before they can be relied on."
+}

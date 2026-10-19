@@ -1,0 +1,191 @@
+{
+  "level": "surface",
+  "verdict": "BREACH (surface): 2 call(s) extended the tool surface at runtime, but no statistic was computed off-tool",
+  "n_unvalidated_total": 2,
+  "n_severe_total": 0,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 45,
+      "n_validated": 43,
+      "n_unvalidated": 1,
+      "n_severe": 0,
+      "n_surface": 1,
+      "level": "surface",
+      "calls_by_tool": {
+        "Read": 1,
+        "extract_pdf": 1,
+        "statcheck": 2,
+        "parse_table": 1,
+        "parse_cells_typed": 1,
+        "check_table": 1,
+        "grim_check": 2,
+        "grimmer_check": 1,
+        "grim_sweep": 1,
+        "check_proportion_from_normal": 1,
+        "flag_round_n": 1,
+        "check_summation": 4,
+        "check_sd_range": 6,
+        "check_regression": 16,
+        "detect_duplication": 1,
+        "required_n": 1,
+        "stalt_check": 3,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [
+        {
+          "seq": 45,
+          "tool": "StructuredOutput",
+          "severity": "surface",
+          "input_preview": "{'paper_id': '10.1002--ajcp.70049', 'schema_version': '1.0', 'paper_title': 'Associations between inclusive community coalition leadership and use of evidence-based practices', 'paper_metadata': {'aut"
+        }
+      ],
+      "verdict": "BREACH (surface): 1 call(s) extended the tool surface at runtime. No statistic was computed off-tool, but the declared allowlist was not the whole story.",
+      "guards": {
+        "n_guarded_calls": 4,
+        "n_guard_slots": 10,
+        "n_supplied": 10,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "check_table": {
+            "supplied": 3,
+            "defaulted": 0
+          },
+          "grim_check": {
+            "supplied": 4,
+            "defaulted": 0
+          },
+          "grimmer_check": {
+            "supplied": 3,
+            "defaulted": 0
+          }
+        },
+        "defaulted_calls": [],
+        "verdict": "10/10 guard slots were supplied (100%). Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 14,
+      "n_validated": 12,
+      "n_unvalidated": 1,
+      "n_severe": 0,
+      "n_surface": 1,
+      "level": "surface",
+      "calls_by_tool": {
+        "Read": 1,
+        "check_proportion_from_normal": 1,
+        "check_sd_range": 1,
+        "check_regression": 5,
+        "grim_sweep": 1,
+        "statcheck": 1,
+        "stalt_check": 2,
+        "flag_round_n": 1,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [
+        {
+          "seq": 14,
+          "tool": "StructuredOutput",
+          "severity": "surface",
+          "input_preview": "{'headline': {'statement': \"The paper states two mutually exclusive response scales for its lead predictor -- Measures defines engaging communication on a four-point scale topping out at 4 = 'Outstand"
+        }
+      ],
+      "verdict": "BREACH (surface): 1 call(s) extended the tool surface at runtime. No statistic was computed off-tool, but the declared allowlist was not the whole story.",
+      "guards": {
+        "n_guarded_calls": 0,
+        "n_guard_slots": 0,
+        "n_supplied": 0,
+        "n_defaulted": 0,
+        "supplied_rate": null,
+        "per_tool": {},
+        "defaulted_calls": [],
+        "verdict": "no guarded tools were called"
+      }
+    }
+  }
+}

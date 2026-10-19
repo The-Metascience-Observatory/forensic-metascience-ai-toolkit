@@ -1,0 +1,1801 @@
+{
+  "paper_id": "10.1002--ajcp.70049",
+  "schema_version": "1.0",
+  "paper_title": "Associations between inclusive community coalition leadership and use of evidence-based practices",
+  "paper_metadata": {
+    "authors": "Wells, R., Ranjit, N., Brown, L. D., Chilenski, S. M., & Gaddy, Y. M.",
+    "year": "2026",
+    "journal": "American Journal of Community Psychology, 77, 590-601",
+    "doi": "10.1002/ajcp.70049",
+    "study_design": "Lagged observational analysis (1-year lag) of 64 youth substance misuse prevention coalitions in Pennsylvania and Missouri, nested within a randomized technical-assistance trial; Poisson, negative binomial and hierarchical linear regressions. Funded by NIDA R01DA045815."
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "s1",
+        "label": "Coalition Check-Up lagged cohort: 64 PA/MO youth substance misuse prevention coalitions, Wave 1 (2020-2021) to Wave 2 (2021-2022)",
+        "design": "cohort",
+        "n": 64,
+        "clustered": true,
+        "preregistered": false,
+        "unit_of_analysis": "Coalition for Tables 1-3 (n=64); program nested within coalition for Table 4 (101 programs in 35 coalitions, coalition as random intercept)"
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "h1",
+        "study_id": "s1",
+        "statement": "Greater engaging communication by coalition leaders at baseline predicts greater coalition use of EBPs one year later (number of EBPs, EBP reach, and EBP fidelity).",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "we expected that engaging communication and including both agency representatives and community residents in decision making would improve coalition use of EBPs"
+      },
+      {
+        "id": "h2",
+        "study_id": "s1",
+        "statement": "Greater inclusive decision making at baseline predicts greater coalition use of EBPs one year later (number, reach, fidelity).",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "we expected that engaging communication and including both agency representatives and community residents in decision making would improve coalition use of EBPs"
+      },
+      {
+        "id": "h3",
+        "study_id": "s1",
+        "statement": "Greater inclusion of community residents at baseline predicts greater coalition use of EBPs one year later (number, reach, fidelity).",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Including local residents in decision making may also improve the use of evidence -based practices."
+      },
+      {
+        "id": "h4",
+        "study_id": "s1",
+        "statement": "The three inclusive leadership practices predict EBP implementation fidelity. This prediction was explicitly not supported and is reported as a null result.",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "It is not yet clear how inclusive leadership improves evidence -based practice fi delity."
+      }
+    ],
+    "variables": [
+      {
+        "id": "v_n_ebp",
+        "name": "Number of evidence-based programs implemented (Wave 2 outcome; Wave 1 covariate)",
+        "role": "primary_outcome",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 0,
+        "upper_bound": 9,
+        "units": "programs",
+        "confidence": "high",
+        "provenance_quote": "The number of EBPs reported ranged from 0 to 9."
+      },
+      {
+        "id": "v_reach",
+        "name": "EBP reach (total unduplicated annual youth and parents served)",
+        "role": "primary_outcome",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 0,
+        "upper_bound": 5370,
+        "units": "persons",
+        "confidence": "high",
+        "provenance_quote": "The range of EBP reach was 0 to 5370, but highly skewed, with a mean of 224."
+      },
+      {
+        "id": "v_fidelity",
+        "name": "EBP fidelity / adherence (mean of 2 items, youth and parent versions)",
+        "role": "primary_outcome",
+        "measurement_level": "ordinal",
+        "discreteness": "continuous",
+        "family": "likert_composite",
+        "n_items": 2,
+        "lower_bound": 1,
+        "upper_bound": 7,
+        "confidence": "high",
+        "provenance_quote": "response options 1 = None, 2 = A little, 3 = Less than half, 4 = About half, 5 = More than half, 6 = Almost all, 7 = All; correlation = 0.76"
+      },
+      {
+        "id": "v_comm",
+        "name": "Engaging communication (coalition-level mean of member responses to 4 items). NOTE: scale bounds are internally contested - Measures states 1-4, Results states a 1.25-5 scale.",
+        "role": "exposure",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "likert_composite",
+        "n_items": 4,
+        "lower_bound": 1,
+        "upper_bound": 4,
+        "confidence": "medium",
+        "provenance_quote": "response options 1 = Needs a lot of work, 2 = Needs a little work, 3 = Good, 4 = Outstanding; Cronbach's alpha =0.93"
+      },
+      {
+        "id": "v_idm",
+        "name": "Inclusive decision making (coalition-level mean of member responses to 3 items)",
+        "role": "exposure",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "likert_composite",
+        "n_items": 3,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "confidence": "high",
+        "provenance_quote": "response options 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly agree; Cronbach's alpha =0.88"
+      },
+      {
+        "id": "v_icr",
+        "name": "Inclusion of community residents (coalition-level mean of member responses to 2 items)",
+        "role": "exposure",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "likert_composite",
+        "n_items": 2,
+        "lower_bound": 1,
+        "upper_bound": 5,
+        "confidence": "high",
+        "provenance_quote": "response options 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly agree; correlation = 0.80"
+      },
+      {
+        "id": "v_use_ebp",
+        "name": "Use at least one evidence-based program",
+        "role": "baseline_characteristic",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "confidence": "high",
+        "provenance_quote": "Use at least one evidence - based program ( n , %) | 38 (59%)"
+      },
+      {
+        "id": "v_ctc",
+        "name": "Follows the Communities That Care model",
+        "role": "covariate",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "confidence": "high",
+        "provenance_quote": "Communities That Care: A 1/0 measure indicated whether each coalition followed the CTC model"
+      },
+      {
+        "id": "v_funded",
+        "name": "Received any external funding at baseline",
+        "role": "covariate",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "confidence": "high",
+        "provenance_quote": "Funding: We used a 1/0 indicator of whether coalition leaders indicated receiving any external funding at baseline."
+      },
+      {
+        "id": "v_ta",
+        "name": "Level of technical assistance received",
+        "role": "covariate",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "ordinal_category",
+        "lower_bound": 0,
+        "upper_bound": 3,
+        "n_categories": 4,
+        "confidence": "high",
+        "provenance_quote": "an ordinal measure of whether each coalition received 0 = Little to no TA, 1 = Regular noncustomized assistance in groups, 2 = Regular (monthly) one -on -one monitoring, or 3 = Regular (monthly) one -on -one capacity building assistance"
+      },
+      {
+        "id": "v_members",
+        "name": "Number of active coalition members (entered in 10s in models)",
+        "role": "covariate",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 0,
+        "units": "members",
+        "confidence": "high",
+        "provenance_quote": "Coalition size: This was measured through a count of the number of active members in a given coalition, as reported by coalition leaders."
+      },
+      {
+        "id": "v_state",
+        "name": "State (Pennsylvania vs Missouri)",
+        "role": "baseline_characteristic",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "confidence": "high",
+        "provenance_quote": "Pennsylvania ( n , %) | 55 (85.94%)"
+      },
+      {
+        "id": "v_pop",
+        "name": "Population of coalition service area",
+        "role": "baseline_characteristic",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "lower_bound": 0,
+        "units": "persons",
+        "confidence": "medium",
+        "provenance_quote": "Population of service area (mean, SD) | 84,299 (108,353)"
+      },
+      {
+        "id": "v_treat",
+        "name": "Assigned to full Coalition Check-Up TA (randomized binary). Stated as included in every model but never reported in any table.",
+        "role": "covariate",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "lower_bound": 0,
+        "upper_bound": 1,
+        "confidence": "high",
+        "provenance_quote": "Additionally, all models included a binary variable indicating whether the coalition was assigned to receive the full Coalition Check Up TA"
+      }
+    ],
+    "tests": [
+      {
+        "id": "t2_comm",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "other",
+        "location": "Table 2, Communication row, column 1 (Poisson regression)",
+        "n": 64,
+        "outcome_var": "v_n_ebp",
+        "predictor_vars": [
+          "v_comm",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 1.01,
+        "p_value": 0.01,
+        "p_is_threshold": false,
+        "effect_size": "B = 1.01 (SE 0.38); log-rate ratio, no standardized effect size reported",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Communication | 1.01 (0.38) | .01"
+      },
+      {
+        "id": "t2_idm",
+        "study_id": "s1",
+        "hypothesis_id": "h2",
+        "test_type": "other",
+        "location": "Table 2, Inclusive decision making row, column 2 (Poisson regression)",
+        "n": 64,
+        "outcome_var": "v_n_ebp",
+        "predictor_vars": [
+          "v_idm",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 1.34,
+        "p_value": 0.03,
+        "p_is_threshold": false,
+        "effect_size": "B = 1.34 (SE 0.60)",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusive decision making | 1.34 (0.60) | .03"
+      },
+      {
+        "id": "t2_icr",
+        "study_id": "s1",
+        "hypothesis_id": "h3",
+        "test_type": "other",
+        "location": "Table 2, Inclusion of community residents row, column 3 (Poisson regression)",
+        "n": 64,
+        "outcome_var": "v_n_ebp",
+        "predictor_vars": [
+          "v_icr",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 0.85,
+        "p_value": 0.07,
+        "p_is_threshold": false,
+        "effect_size": "B = 0.85 (SE 0.47)",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusion of community residents | 0.85 (0.47) | .07"
+      },
+      {
+        "id": "t3_comm",
+        "study_id": "s1",
+        "hypothesis_id": "h1",
+        "test_type": "other",
+        "location": "Table 3, Communication row, column 1 (negative binomial regression)",
+        "n": 64,
+        "outcome_var": "v_reach",
+        "predictor_vars": [
+          "v_comm",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 3.91,
+        "p_value": 0.03,
+        "p_is_threshold": false,
+        "effect_size": "B = 3.91 (SE 1.78)",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Communication | 3.91 (1.78) | .03"
+      },
+      {
+        "id": "t3_idm",
+        "study_id": "s1",
+        "hypothesis_id": "h2",
+        "test_type": "other",
+        "location": "Table 3, Inclusive decision making row, column 2 (negative binomial regression)",
+        "n": 64,
+        "outcome_var": "v_reach",
+        "predictor_vars": [
+          "v_idm",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 8.57,
+        "p_value": 0.01,
+        "p_is_threshold": false,
+        "effect_size": "B = 8.57 (SE 3.03)",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusive decision making | 8.57 (3.03) | .01"
+      },
+      {
+        "id": "t3_icr",
+        "study_id": "s1",
+        "hypothesis_id": "h3",
+        "test_type": "other",
+        "location": "Table 3, Inclusion of community residents row, column 3 (negative binomial regression)",
+        "n": 64,
+        "outcome_var": "v_reach",
+        "predictor_vars": [
+          "v_icr",
+          "v_n_ebp",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 4.53,
+        "p_value": 0.03,
+        "p_is_threshold": false,
+        "effect_size": "B = 4.53 (SE 2.05)",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusion of community residents | 4.53 (2.05) | .03"
+      },
+      {
+        "id": "t4_comm",
+        "study_id": "s1",
+        "hypothesis_id": "h4",
+        "test_type": "mixed_model",
+        "location": "Table 4, Communication row, column 1 (hierarchical linear model, programs nested in coalitions)",
+        "n": 101,
+        "outcome_var": "v_fidelity",
+        "predictor_vars": [
+          "v_comm",
+          "v_fidelity",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": 0.53,
+        "p_value": 0.38,
+        "p_is_threshold": false,
+        "effect_size": "B = 0.53 (SE 0.60); no CI reported",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [
+          "unconditional intraclass correlation coefficient of 0.10 for fidelity at Time 2 reported as justification for the multilevel model"
+        ],
+        "confidence": "high",
+        "provenance_quote": "Communication | 0.53 (0.60) | .38"
+      },
+      {
+        "id": "t4_idm",
+        "study_id": "s1",
+        "hypothesis_id": "h4",
+        "test_type": "mixed_model",
+        "location": "Table 4, Inclusive decision making row, column 2",
+        "n": 101,
+        "outcome_var": "v_fidelity",
+        "predictor_vars": [
+          "v_idm",
+          "v_fidelity",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": -0.05,
+        "p_value": 0.96,
+        "p_is_threshold": false,
+        "effect_size": "B = -0.05 (SE 0.98); no CI reported",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusive decision making | - 0.05 (0.98) | .96"
+      },
+      {
+        "id": "t4_icr",
+        "study_id": "s1",
+        "hypothesis_id": "h4",
+        "test_type": "mixed_model",
+        "location": "Table 4, Inclusion of community residents row, column 3",
+        "n": 101,
+        "outcome_var": "v_fidelity",
+        "predictor_vars": [
+          "v_icr",
+          "v_fidelity",
+          "v_ctc",
+          "v_funded",
+          "v_ta",
+          "v_members",
+          "v_treat"
+        ],
+        "statistic_value": -0.1,
+        "p_value": 0.89,
+        "p_is_threshold": false,
+        "effect_size": "B = -0.10 (SE 0.72); no CI reported",
+        "is_stated_primary_outcome": true,
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "correction_applied": "none",
+        "assumption_checks_reported": [],
+        "confidence": "high",
+        "provenance_quote": "Inclusion of community residents | - 0.10 (0.72) | .89"
+      },
+      {
+        "id": "t2_c1_base",
+        "test_type": "other",
+        "location": "Table 2 col 1, Number of EBP at baseline",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_base",
+        "test_type": "other",
+        "location": "Table 2 col 2, Number of EBP at baseline",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_base",
+        "test_type": "other",
+        "location": "Table 2 col 3, Number of EBP at baseline",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c1_ctc",
+        "test_type": "other",
+        "location": "Table 2 col 1, Communities That Care",
+        "n": 64,
+        "p_value": 0.15,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_ctc",
+        "test_type": "other",
+        "location": "Table 2 col 2, Communities That Care",
+        "n": 64,
+        "p_value": 0.59,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_ctc",
+        "test_type": "other",
+        "location": "Table 2 col 3, Communities That Care",
+        "n": 64,
+        "p_value": 0.63,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c1_fund",
+        "test_type": "other",
+        "location": "Table 2 col 1, Externally funded",
+        "n": 64,
+        "p_value": 0.24,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_fund",
+        "test_type": "other",
+        "location": "Table 2 col 2, Externally funded",
+        "n": 64,
+        "p_value": 0.72,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_fund",
+        "test_type": "other",
+        "location": "Table 2 col 3, Externally funded",
+        "n": 64,
+        "p_value": 0.41,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c1_ta",
+        "test_type": "other",
+        "location": "Table 2 col 1, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.97,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_ta",
+        "test_type": "other",
+        "location": "Table 2 col 2, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.98,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_ta",
+        "test_type": "other",
+        "location": "Table 2 col 3, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.55,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c1_mem",
+        "test_type": "other",
+        "location": "Table 2 col 1, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.45,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_mem",
+        "test_type": "other",
+        "location": "Table 2 col 2, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.66,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_mem",
+        "test_type": "other",
+        "location": "Table 2 col 3, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.72,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c1_const",
+        "test_type": "other",
+        "location": "Table 2 col 1, Constant",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c2_const",
+        "test_type": "other",
+        "location": "Table 2 col 2, Constant",
+        "n": 64,
+        "p_value": 0.01,
+        "confidence": "high"
+      },
+      {
+        "id": "t2_c3_const",
+        "test_type": "other",
+        "location": "Table 2 col 3, Constant",
+        "n": 64,
+        "p_value": 0.03,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_base",
+        "test_type": "other",
+        "location": "Table 3 col 1, Number of EBP at baseline",
+        "n": 64,
+        "p_value": 0.01,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_base",
+        "test_type": "other",
+        "location": "Table 3 col 2, Number of EBP at baseline (p printed literally as '0')",
+        "n": 64,
+        "p_value": 0,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_base",
+        "test_type": "other",
+        "location": "Table 3 col 3, Number of EBP at baseline",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_ctc",
+        "test_type": "other",
+        "location": "Table 3 col 1, Communities That Care",
+        "n": 64,
+        "p_value": 0.001,
+        "p_is_threshold": true,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_ctc",
+        "test_type": "other",
+        "location": "Table 3 col 2, Communities That Care",
+        "n": 64,
+        "p_value": 0.01,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_ctc",
+        "test_type": "other",
+        "location": "Table 3 col 3, Communities That Care",
+        "n": 64,
+        "p_value": 0.13,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_fund",
+        "test_type": "other",
+        "location": "Table 3 col 1, Externally funded",
+        "n": 64,
+        "p_value": 0.27,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_fund",
+        "test_type": "other",
+        "location": "Table 3 col 2, Externally funded",
+        "n": 64,
+        "p_value": 0.03,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_fund",
+        "test_type": "other",
+        "location": "Table 3 col 3, Externally funded",
+        "n": 64,
+        "p_value": 0.2,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_ta",
+        "test_type": "other",
+        "location": "Table 3 col 1, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.59,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_ta",
+        "test_type": "other",
+        "location": "Table 3 col 2, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.1,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_ta",
+        "test_type": "other",
+        "location": "Table 3 col 3, Level of technical assistance",
+        "n": 64,
+        "p_value": 0.7,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_mem",
+        "test_type": "other",
+        "location": "Table 3 col 1, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.39,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_mem",
+        "test_type": "other",
+        "location": "Table 3 col 2, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.6,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_mem",
+        "test_type": "other",
+        "location": "Table 3 col 3, Number of members (in 10's)",
+        "n": 64,
+        "p_value": 0.27,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c1_const",
+        "test_type": "other",
+        "location": "Table 3 col 1, Constant",
+        "n": 64,
+        "p_value": 0.05,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c2_const",
+        "test_type": "other",
+        "location": "Table 3 col 2, Constant",
+        "n": 64,
+        "p_value": 0.01,
+        "confidence": "high"
+      },
+      {
+        "id": "t3_c3_const",
+        "test_type": "other",
+        "location": "Table 3 col 3, Constant",
+        "n": 64,
+        "p_value": 0.05,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_base",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Quality of EBP at baseline",
+        "n": 101,
+        "p_value": 0.06,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_base",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Quality of EBP at baseline",
+        "n": 101,
+        "p_value": 0.08,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_base",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Quality of EBP at baseline",
+        "n": 101,
+        "p_value": 0.08,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_ctc",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Communities That Care",
+        "n": 101,
+        "p_value": 0.83,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_ctc",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Communities That Care",
+        "n": 101,
+        "p_value": 0.43,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_ctc",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Communities That Care",
+        "n": 101,
+        "p_value": 0.43,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_fund",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Externally funded",
+        "n": 101,
+        "p_value": 0.61,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_fund",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Externally funded",
+        "n": 101,
+        "p_value": 0.8,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_fund",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Externally funded",
+        "n": 101,
+        "p_value": 0.84,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_ta",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Level of technical assistance",
+        "n": 101,
+        "p_value": 0.28,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_ta",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Level of technical assistance",
+        "n": 101,
+        "p_value": 0.23,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_ta",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Level of technical assistance",
+        "n": 101,
+        "p_value": 0.2,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_mem",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Number of members (in 10's)",
+        "n": 101,
+        "p_value": 0.8,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_mem",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Number of members (in 10's)",
+        "n": 101,
+        "p_value": 0.82,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_mem",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Number of members (in 10's)",
+        "n": 101,
+        "p_value": 0.8,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c1_const",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 1, Constant",
+        "n": 101,
+        "p_value": 0.48,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c2_const",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 2, Constant",
+        "n": 101,
+        "p_value": 0.33,
+        "confidence": "high"
+      },
+      {
+        "id": "t4_c3_const",
+        "test_type": "mixed_model",
+        "location": "Table 4 col 3, Constant",
+        "n": 101,
+        "p_value": 0.15,
+        "confidence": "high"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "comm_scale_bounds_contradiction",
+      "location": "Results para 1 vs Measures, Engaging communication; Table 1 Communication row",
+      "technique": "check_proportion_from_normal",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Measures: 'response options 1 = Needs a lot of work, 2 = Needs a little work, 3 = Good, 4 = Outstanding; Cronbach's alpha =0.93'. Results: 'the mean level of engaging communication was 3.83 on a 1.25 -5 scale, corresponding to \"good\" for such facets as frequency.' Table 1: 'Communication (mean, SD) | 3.83 (0.42)'.",
+      "inputs": {
+        "reported_proportion": 0,
+        "mean": 3.83,
+        "sd": 0.42,
+        "n": 64,
+        "threshold": 4,
+        "direction": "above"
+      },
+      "computed": {
+        "theoretical_proportion_above_4": 0.3428,
+        "binomial_p_two_sided": 3.03e-12,
+        "tool_severity_returned": "highly_suspicious",
+        "binomial_ci_95": [
+          0,
+          0.056
+        ]
+      },
+      "reported": {
+        "mean": 3.83,
+        "sd": 0.42,
+        "stated_scale_measures": "1-4",
+        "stated_scale_results": "1.25-5"
+      },
+      "reproduction": "metascience prop-from-normal --reported-proportion 0 --mean 3.83 --sd 0.42 --n 64 --threshold 4 --direction above",
+      "notes": "The paper states two mutually exclusive scale ranges for its lead predictor. The Measures section defines four response options topping out at 4 = 'Outstanding'; the Results section describes the same variable as sitting on a '1.25-5 scale'. Under the Measures reading, NO coalition can exceed 4, so the proportion above 4 is necessarily 0/64; the tool shows that is very hard to reconcile with mean 3.83 / SD 0.42 (expected 34.3% above 4, binomial p = 3.0e-12). The interpretive gloss compounds the conflict: on a 1-4 scale a mean of 3.83 sits between 'Good' and 'Outstanding', much nearer the latter, yet the text glosses it as 'good' - which reads naturally only on a 1-5 scale. I have DOWNGRADED the tool's own 'highly_suspicious' to 'suspicious' because the test assumes normality, and a ceiling-bounded aggregate would be left-skewed, which weakens (though does not remove) the inference. Note also that check_sd_range finds SD 0.42 admissible under BOTH readings, so dispersion alone does not resolve which scale is correct. This is a documentary contradiction between two stated constraints, not an invented bound; it warrants clarification because it changes how the headline predictor should be interpreted.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table2_constant_p_below_threshold_unreachable",
+      "location": "Table 2, Constant row, column 1 (Poisson model with Communication as predictor)",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Constant | - 4.51 (1.50) | <.001",
+      "inputs": {
+        "z": 3.01,
+        "reported_p": "<.001",
+        "rounding_boundary_z_also_tested": 3.02,
+        "b": -4.51,
+        "se": 1.5
+      },
+      "computed": {
+        "computed_p_at_z_3_01": 0.002612,
+        "computed_p_at_most_favourable_rounding_z_3_02": 0.002528,
+        "statcheck_error": true,
+        "correct_at_printed_precision": false
+      },
+      "reported": {
+        "p": "<.001"
+      },
+      "reproduction": "metascience statcheck --text \"Constant column 1: z = 3.01, p < .001. Constant column 1 most favourable rounding: z = 3.02, p < .001.\"",
+      "notes": "The z was produced by check_regression (t = B/SE = -4.51/1.50 = -3.0067), an MCP-only tool with no CLI form; statcheck then recomputed p. Reported 'p<.001' but the coefficient and its SE imply p = .0026, about 2.6x the claimed threshold. I deliberately also tested the most favourable rounding of the printed 2-dp inputs (z = 3.02), which still gives p = .0025, so the discrepancy is NOT explained by rounding - statcheck's own correct_at_printed_precision field returns false. This is an intercept, not a substantive claim, so it changes no conclusion; it is a reporting error.",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table3_idm_p_inconsistent",
+      "location": "Table 3, Inclusive decision making row, column 2 (negative binomial, EBP reach)",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Inclusive decision making | 8.57 (3.03) | .01",
+      "inputs": {
+        "z": 2.83,
+        "reported_p": 0.01,
+        "b": 8.57,
+        "se": 3.03
+      },
+      "computed": {
+        "computed_p": 0.004655,
+        "statcheck_error": true,
+        "correct_at_printed_precision": false
+      },
+      "reported": {
+        "p": 0.01
+      },
+      "reproduction": "metascience statcheck --text \"Inclusive decision making: z = 2.83, p = .01\"",
+      "notes": "z from check_regression (8.57/3.03 = 2.828); statcheck recomputes p = .0047, which at 2 dp prints as .00, not .01. statcheck's correct_at_printed_precision is false, so this is not a rounding artefact. This matters more than the intercept errors because it is one of the paper's three headline positive findings (inclusive decision making -> EBP reach). The direction of the error is CONSERVATIVE - the true p is smaller than reported - so the substantive claim is unaffected and no significance decision changes. Most likely an inconsistent display convention (elsewhere in the same table '.01' corresponds to p = .0063 and p = .0128).",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table2_ta_identical_coefficients_different_p",
+      "location": "Table 2, Level of technical assistance row, columns 1 and 2",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Level of technical assistance | - 0.01 (0.17) | .97 | - 0.01 (0.17) | .98",
+      "inputs": {
+        "z_col1": 0.06,
+        "reported_p_col1": 0.97,
+        "z_col2": 0.06,
+        "reported_p_col2": 0.98,
+        "b_both": -0.01,
+        "se_both": 0.17
+      },
+      "computed": {
+        "computed_p_both": 0.952156,
+        "statcheck_error_col1": true,
+        "statcheck_error_col2": true,
+        "correct_at_printed_precision": false
+      },
+      "reported": {
+        "p_col1": 0.97,
+        "p_col2": 0.98
+      },
+      "reproduction": "metascience statcheck --text \"Level of technical assistance column 1: z = 0.06, p = .97. Level of technical assistance column 2: z = 0.06, p = .98.\"",
+      "notes": "Two adjacent columns print an IDENTICAL coefficient and an identical SE (-0.01, 0.17) but two different p-values (.97 and .98). Identical inputs cannot yield different p-values, so as printed the table is internally inconsistent. The ordinary explanation is benign: the underlying unrounded coefficients differ slightly and both round to -0.01 at 2 dp. Both cells nonetheless disagree with the recomputed p = .952 at the point estimate. No conclusion depends on this covariate.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table3_p_value_printed_as_zero",
+      "location": "Table 3, Number of EBP at baseline row, column 2",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Number of EBP at baseline | 0.01 (0.002) | .01 | 0.01 (0.001) | 0 | 0.01 (0.002) | <.001",
+      "inputs": {
+        "cell_as_printed": "0",
+        "verified_in_markdown": true,
+        "verified_in_pdf": true
+      },
+      "computed": {
+        "p_value_cannot_equal_zero": true
+      },
+      "reported": {
+        "p": 0
+      },
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 7 --last-page 7",
+      "notes": "The p-value column for this cell reads literally '0'. A p-value is never exactly zero. Confirmed identically in the clean markdown extraction and in the PDF, so this is not a transcription artefact. Almost certainly a formatting slip (Stata's '0.000' stripped to '0'), but as printed it is not a possible value. No forensic tool adjudicates a bare printed '0', so this is recorded as a manual observation; the reproduction command re-surfaces the cell rather than testing it.",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table3_ebp_baseline_uninformative_precision",
+      "location": "Table 3, Number of EBP at baseline row, all three columns",
+      "technique": "statcheck",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Number of EBP at baseline | 0.01 (0.002) | .01 | 0.01 (0.001) | 0 | 0.01 (0.002) | <.001",
+      "inputs": {
+        "z_col1": 5,
+        "reported_p_col1": 0.01,
+        "b": 0.01,
+        "se_col1": 0.002
+      },
+      "computed": {
+        "computed_p_col1": 1e-06,
+        "statcheck_error": true,
+        "correct_at_printed_precision": false,
+        "identical_printed_b_se_in_cols_1_and_3": true,
+        "distinct_reported_p_across_three_columns": [
+          0.01,
+          0,
+          "<.001"
+        ]
+      },
+      "reported": {
+        "p_col1": 0.01,
+        "p_col2": 0,
+        "p_col3": "<.001"
+      },
+      "reproduction": "metascience statcheck --text \"Number of EBP at baseline column 1: z = 5.00, p = .01. Number of EBP at baseline column 3: z = 5.00, p < .001.\"",
+      "notes": "Columns 1 and 3 print an IDENTICAL coefficient and SE (0.01, 0.002) yet report p = .01 and p < .001 respectively - the same inputs cannot give both. At the point estimate z = 5.00 implies p = 1e-6, so the '.01' in column 1 is off by roughly four orders of magnitude and statcheck flags it. IMPORTANT COUNTERWEIGHT, which is why I hold this at 'suspicious' and not higher: the coefficient is printed to only ONE significant figure (0.01), so its rounding interval [0.005, 0.015] against an SE interval of [0.0015, 0.0025] admits z anywhere from 2.0 to 10.0, and p = .01 IS reachable inside that range. The real problem here is uninformative reported precision - as printed, this row cannot be verified at all - compounded by three different p-values attached to essentially one printed estimate.",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written",
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table3_ctc_p_threshold_rounding_explained",
+      "location": "Table 3, Communities That Care row, column 1",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "Communities That Care | 3.16 (0.98) | <.001",
+      "inputs": {
+        "z": 3.22,
+        "reported_p": "<.001",
+        "rounding_boundary_z_also_tested": 3.25,
+        "b": 3.16,
+        "se": 0.98
+      },
+      "computed": {
+        "computed_p_at_z_3_22": 0.001282,
+        "computed_p_at_most_favourable_rounding_z_3_25": 0.001154,
+        "statcheck_flagged": true,
+        "correct_at_printed_precision": true
+      },
+      "reported": {
+        "p": "<.001"
+      },
+      "reproduction": "metascience statcheck --text \"Communities That Care column 1: z = 3.22, p < .001. Communities That Care column 1 most favourable rounding: z = 3.25, p < .001.\"",
+      "notes": "Recorded for completeness and NOT as an anomaly. The recomputed p = .00128 is marginally above the claimed .001 threshold, and remains so at the most favourable rounding of the printed inputs. However statcheck's own adjudication returns correct_at_printed_precision = TRUE (p = .00128 prints as 0.001 at three decimals), and it excludes this cell from its error count as rounding-explained. I therefore decline to call it an inconsistency; severity indeterminate. Note the text separately describes this result as 'p<.01', which is compatible.",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '<' -- not runnable as written",
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table4_quality_baseline_within_rounding",
+      "location": "Table 4, Quality of EBP at baseline row, column 2",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "Quality of EBP at baseline | 0.24 (0.14) | .08",
+      "inputs": {
+        "z": 1.71,
+        "reported_p": 0.08,
+        "b": 0.24,
+        "se": 0.14
+      },
+      "computed": {
+        "computed_p": 0.087266,
+        "statcheck_error": true,
+        "correct_at_printed_precision": false
+      },
+      "reported": {
+        "p": 0.08
+      },
+      "reproduction": "metascience statcheck --text \"Quality of EBP at baseline column 2: z = 1.71, p = .08\"",
+      "notes": "statcheck flags a point-estimate mismatch (.08 reported vs .087 computed), but the printed 2-dp precision of B = 0.24 and SE = 0.14 admits a range of z that comfortably contains a p of .08. I record this as indeterminate rather than an anomaly - flagging it would be exactly the precision-blind error the RIVETS guidance warns against. No conclusion depends on it.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "statcheck_no_decision_errors",
+      "location": "Tables 2, 3 and 4, all reconstructed z-tests",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Results in Tables 2 -4 are shown as coef fi cients, and do not include effect sizes",
+      "inputs": {
+        "n_statistics_submitted": 24,
+        "source_of_z": "check_regression t = B/SE on each printed coefficient and SE"
+      },
+      "computed": {
+        "stats_found": 24,
+        "errors_found": 7,
+        "errors_explained_by_rounding": 2,
+        "decision_errors": 0
+      },
+      "reported": {},
+      "reproduction": "metascience statcheck --text \"Communication: z = 2.66, p = .01. Inclusive decision making: z = 2.23, p = .03. Inclusion of community residents: z = 1.81, p = .07. Communication: z = 2.20, p = .03. Inclusion of community residents: z = 2.21, p = .03. Communication: z = 0.88, p = .38. Inclusive decision making: z = 0.05, p = .96. Inclusion of community residents: z = 0.14, p = .89.\"",
+      "notes": "The single most important counterweight in this sweep. Across 24 reconstructed tests statcheck found ZERO decision errors - no p-value falls on the wrong side of .05, so not one of the paper's significance calls flips. All nine headline predictor tests (three leadership measures x three outcomes) recompute correctly from their own coefficients and standard errors, with the one exception logged separately at table3_idm_p_inconsistent, whose error runs in the conservative direction. This also CONFIRMS that the parenthesised values in Tables 2-4 are standard errors, not the SDs the column headers claim (see table_headers_mislabelled).",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table_headers_mislabelled",
+      "location": "Tables 2, 3 and 4, column headers",
+      "technique": "reconcile",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "| Variable | M (SD) | p | M (SD) | p | M (SD) | p |",
+      "inputs": {
+        "header_as_printed": "M (SD)",
+        "text_claim": "Results in Tables 2-4 are shown as coefficients"
+      },
+      "computed": {
+        "se_reading_confirmed_by": "17 of 24 reconstructed z-tests reproduce the reported p exactly under the B/SE reading; 0 decision errors"
+      },
+      "reported": {
+        "header": "M (SD)"
+      },
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 7 --last-page 7",
+      "notes": "All three results tables head their estimate columns 'M (SD)' - mean and standard deviation - when the cells are in fact regression coefficients and their standard errors, as the Results text states. Verified as printed in both the markdown and the PDF. This is a labelling error rather than a numerical one, but a consequential one: a reader taking the header at face value would misread every effect estimate in the paper. The B/SE reading is confirmed empirically, since it reproduces the reported p-values across the tables.",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "treatment_assignment_covariate_absent",
+      "location": "Methods, Covariates para vs Tables 2, 3 and 4",
+      "technique": "reconcile",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Additionally, all models included a binary variable indicating whether the coalition was assigned to receive the full Coalition Check Up TA, versus the regional training, group -based training, and TA by phone available to all coalitions.",
+      "inputs": {
+        "stated_covariate": "Coalition Check-Up treatment assignment (binary, randomized)",
+        "rows_present_in_tables": [
+          "key predictor",
+          "Number of EBP at baseline",
+          "Communities That Care",
+          "Externally funded",
+          "Level of technical assistance",
+          "Number of members",
+          "Constant"
+        ]
+      },
+      "computed": {
+        "treatment_assignment_row_present": false
+      },
+      "reported": {},
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 7 --last-page 7",
+      "notes": "The Methods state explicitly that EVERY model included the randomized Check-Up assignment indicator, and the covariate list is introduced as 'apart from Coalition Check Up treatment assignment status'. No such row appears in Table 2, 3 or 4. The randomized comparison embedded in this study - half of 68 coalitions were randomly assigned to the Check-Up TA - is therefore never reported anywhere in the paper. This is a reporting gap rather than a numerical inconsistency, but it means a stated model term cannot be checked and the trial's own randomization is invisible.",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "multiplicity_uncorrected",
+      "location": "Analyses section; Tables 2-4 key predictor rows",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Variables were retained in the fi nal models as covariates only if bivariate associations had p values under 0.10.",
+      "inputs": {
+        "n_primary_tests": 9,
+        "structure": "3 leadership measures x 3 EBP outcomes",
+        "reported_primary_p_values": [
+          0.01,
+          0.03,
+          0.07,
+          0.03,
+          0.01,
+          0.03,
+          0.38,
+          0.96,
+          0.89
+        ],
+        "correction_stated": "none"
+      },
+      "computed": {
+        "bonferroni_alpha_for_9_tests": 0.00556,
+        "primary_p_values_surviving_bonferroni": 0
+      },
+      "reported": {},
+      "reproduction": "Not independently reproducible as a tool call: no validated multiplicity tool is exposed in this toolset. The inputs are the nine primary p-values transcribed from Tables 2-4 and verified via `metascience statcheck`.",
+      "reproduction_problem": "must invoke `metascience`, got 'Not'",
+      "notes": "Nine primary tests are run (three leadership measures x three outcomes) with no correction stated, and covariates are additionally selected by a data-driven bivariate screen at p<0.10. The five nominally significant primary results have p-values between .01 and .03; none would survive a Bonferroni-type adjustment across the nine-test family. I am flagging the ABSENCE of a stated correction, which is a design/reporting observation - it is not an arithmetic error and is entirely ordinary in this literature. The Bonferroni figure is context only and was not produced by a tool.",
+      "reproduction_valid": false,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_percentages_grim",
+      "location": "Table 1, all count/percentage rows (n=64)",
+      "technique": "grim_sweep",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Pennsylvania ( n , %) | 55 (85.94%) ... Missouri ( n , %) | 9 (14.06%) ... Communities That Care ( n , %) | 26 (40.63%) ... Externally funded ( n , %) | 41 (64.06%) ... None | 23 (35.94%) | 1 | 21 (32.81%) | 2 or 3 | 20 (31.25%)",
+      "inputs": {
+        "values": [
+          85.94,
+          14.06,
+          40.63,
+          64.06,
+          35.94,
+          32.81,
+          31.25
+        ],
+        "n_min": 2,
+        "n_max": 200,
+        "decimals": 2,
+        "value_type": "percentage"
+      },
+      "computed": {
+        "joint_viable_ns": [
+          64,
+          128,
+          192
+        ],
+        "all_reproduce_stated_counts_at_n_64": true
+      },
+      "reported": {
+        "stated_n": 64
+      },
+      "reproduction": "metascience grim-sweep --values 85.94,14.06,40.63,64.06,35.94,32.81,31.25 --n-min 2 --n-max 200 --decimals 2 --value-type percentage",
+      "notes": "All seven two-decimal percentages jointly admit only n = 64, 128 or 192 as denominators, and each recovers exactly the count printed alongside it at n = 64 (55/64, 9/64, 26/64, 41/64, 23/64, 21/64, 20/64). This is a clean pass: the percentages cannot have come from a different sample size than the one stated. Eight individual grim_percentage checks inside check_table returned consistent as well.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_summations",
+      "location": "Table 1, State rows and Level of technical assistance rows",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Pennsylvania 55 (85.94%); Missouri 9 (14.06%); None 23 (35.94%); 1: 21 (32.81%); 2 or 3: 20 (31.25%)",
+      "inputs": {
+        "state_percentages": [
+          85.94,
+          14.06
+        ],
+        "ta_percentages": [
+          35.94,
+          32.81,
+          31.25
+        ],
+        "state_counts": [
+          55,
+          9
+        ],
+        "ta_counts": [
+          23,
+          21,
+          20
+        ],
+        "expected_percent_sum": 100,
+        "expected_count_sum": 64
+      },
+      "computed": {
+        "state_percent_sum": 100,
+        "ta_percent_sum": 100,
+        "state_count_sum": 64,
+        "ta_count_sum": 64,
+        "all_consistent": true
+      },
+      "reported": {},
+      "reproduction": "metascience summation --values 35.94,32.81,31.25 --expected-sum 100 --description \"Table 1 Level of TA percentages\"",
+      "notes": "Four separate summation checks, all exact. This also resolves a text claim: 'Forty-one (64%) of the coalitions received TA' reconciles with Table 1, since 64 minus the 23 coalitions reporting no TA leaves exactly 41 (64.06%). The coincidence that 41 (64.06%) is also the externally-funded count is just that - both rows independently check out.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_number_of_ebps",
+      "location": "Table 1, Number of evidence-based programs row",
+      "technique": "grim",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Number of evidence - based programs (mean, SD) | 1.67 (2.15)",
+      "inputs": {
+        "mean": 1.67,
+        "sd": 2.15,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 9,
+        "decimals": 2,
+        "data_type": "count",
+        "bound_source": "stated"
+      },
+      "computed": {
+        "grim_consistent": true,
+        "implied_sum": 106.88,
+        "rounded_sum": 107,
+        "sum_in_range": true,
+        "grimmer_consistent": true,
+        "sprite_outcome": "found"
+      },
+      "reported": {
+        "mean": 1.67,
+        "sd": 2.15
+      },
+      "reproduction": "metascience grim --mean 1.67 --n 64 --scale-min 0 --scale-max 9 --decimals 2 --data-type count --bound-source stated",
+      "notes": "The paper's own stated range (0 to 9) makes this a genuine bounded integer count, so GRIM, GRIMMER and SPRITE all legitimately apply. All three pass: the mean implies a total of 107 EBPs across the 64 coalitions, the SD is attainable, and SPRITE reconstructed a valid integer sample. Consistent with the separately reported 38 (59%) coalitions using at least one EBP.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "table1_members_default_scale_artifact",
+      "location": "Table 1, Number of coalition members row",
+      "technique": "grimmer",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Number of coalition members (mean, SD) | 35.78 (33.74)",
+      "inputs": {
+        "mean": 35.78,
+        "sd": 33.74,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 1000,
+        "decimals": 2,
+        "decimals_sd": 2,
+        "data_type": "count"
+      },
+      "computed": {
+        "grim_consistent": true,
+        "grimmer_consistent": true,
+        "implied_sum": 2289.92,
+        "rounded_sum": 2290,
+        "example_working_combination": {
+          "sum": 2290,
+          "sum_squares": 153638,
+          "exact_mean": 35.78125,
+          "exact_sd": 33.735417
+        }
+      },
+      "reported": {
+        "mean": 35.78,
+        "sd": 33.74
+      },
+      "reproduction": "metascience grimmer --mean 35.78 --sd 33.74 --n 64 --scale-min 0 --scale-max 1000 --decimals 2 --decimals-sd 2 --data-type count",
+      "notes": "RECORDED AS A NEAR-MISS FALSE ACCUSATION. On the first pass, check_table returned 'impossible' for both GRIMMER and SPRITE on this row. Inspecting the methodology strings showed why: I had declared no upper bound for coalition size, so the tools fell back to a DEFAULT 1-7 scale, on which a mean of 35.78 is trivially out of range. The granularity test had actually passed (grim_consistent: true); only the range test failed, and on an assumed bound. Re-run with a defensible bound, the row is fully GRIM- and GRIMMER-consistent and a valid integer sample exists. The paper states no maximum coalition size, so no range-based claim should be made about this row at all.",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "table1_sd_ranges",
+      "location": "Table 1, all continuous rows with a stated or instrument-defined range",
+      "technique": "check_sd_range",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Communication 3.83 (0.42); Inclusive decision making 4.06 (0.29); Inclusion of community residents 4.01 (0.32); Number of EBPs 1.67 (2.15); EBP reach 223.5 (410.75)",
+      "inputs": {
+        "checks": [
+          {
+            "sd": 0.42,
+            "min": 1,
+            "max": 4,
+            "n": 64
+          },
+          {
+            "sd": 0.42,
+            "min": 1.25,
+            "max": 5,
+            "n": 64
+          },
+          {
+            "sd": 2.15,
+            "min": 0,
+            "max": 9,
+            "n": 64
+          },
+          {
+            "sd": 410.75,
+            "min": 0,
+            "max": 5370,
+            "n": 64
+          },
+          {
+            "sd": 0.29,
+            "min": 1,
+            "max": 5,
+            "n": 64
+          },
+          {
+            "sd": 0.32,
+            "min": 1,
+            "max": 5,
+            "n": 64
+          }
+        ]
+      },
+      "computed": {
+        "all_six_plausible": true,
+        "sd_as_fraction_of_max": [
+          0.278,
+          0.222,
+          0.474,
+          0.152,
+          0.144,
+          0.159
+        ]
+      },
+      "reported": {},
+      "reproduction": "metascience sd-range --sd 2.15 --min-val 0 --max-val 9 --n 64",
+      "notes": "Six dispersion checks against ranges the paper itself states (EBP count 0-9, reach 0-5370) or that the response options define (Likert bounds). All pass with room to spare. Note the Communication SD was tested under BOTH contested scale readings (1-4 and 1.25-5) and is admissible under each, so dispersion cannot adjudicate the scale contradiction logged at comm_scale_bounds_contradiction.",
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "duplication_across_tables",
+      "location": "Tables 2, 3 and 4 (all 63 coefficient/SE pairs)",
+      "technique": "duplication",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Tables 2-4, all coefficient (SE) cells",
+      "inputs": {
+        "n_blocks": 3,
+        "n_cells_total": 63,
+        "decimals_mean": 2,
+        "decimals_sd": 3,
+        "near_match": true,
+        "sample_ids": [
+          "coalitions_n64_outcome_nEBP",
+          "coalitions_n64_outcome_reach",
+          "programs_n101"
+        ]
+      },
+      "computed": {
+        "n_comparisons": 1160,
+        "max_identical_pairs": 0,
+        "near_matches": 6,
+        "near_match_relation": "digit_transposition"
+      },
+      "reported": {},
+      "reproduction": "metascience duplication-detect --blocks '[{\"label\":\"Table 2\",\"sample_id\":\"coalitions_n64_outcome_nEBP\",\"independent\":true,\"cells\":[{\"label\":\"Communication\",\"value\":1.01,\"sd\":0.38}]},{\"label\":\"Table 3\",\"sample_id\":\"coalitions_n64_outcome_reach\",\"independent\":true,\"cells\":[{\"label\":\"Communication\",\"value\":3.91,\"sd\":1.78}]}]' --decimals-mean 2 --decimals-sd 3",
+      "notes": "Zero identical (mean, SD) pairs across 1160 comparisons - a clean pass on the copy-paste check. The six flagged near-matches are all 'digit_transposition' relations between trivially small round values (0.1 vs 0.01, -0.01 vs -0.1, 0.35 vs 0.53) that recur by chance, which rulebook rule 11(b) directs me to discount. I gave the three tables distinct sample_ids precisely so a genuine cross-table copy-paste WOULD have been flagged; none was. Note that within each table the three columns are nested models on the same coalitions differing only in which leadership predictor is entered, so similar covariate coefficients there are expected, not anomalous. The reproduction command is abbreviated to two blocks for length; the full run used all 63 cells.",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "pdf_markdown_reconciliation",
+      "location": "Tables 1-3 (PDF pages 6-7) vs body.md",
+      "technique": "reconcile",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Number of EBP at baseline 0.01 (0.002) .01 0.01 (0.001) 0 0.01 (0.002) <.001",
+      "inputs": {
+        "sources": [
+          "body.md markdown extraction",
+          "PDF pages 4-7 via pdfplumber"
+        ]
+      },
+      "computed": {
+        "discrepancies_found": 0
+      },
+      "reported": {},
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf --first-page 4 --last-page 7",
+      "notes": "Every value in Tables 1, 2 and 3 matches between the clean markdown extraction and the independent PDF extraction, including the two oddities logged elsewhere (the literal p = '0' in Table 3 and the 'M (SD)' column headers). Transcription error is therefore ruled out as an explanation for any finding in this sweep.",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "sprite_reach_search_exhausted",
+      "location": "Table 1, EBP reach row",
+      "technique": "sprite",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "EBP reach (mean, SD) | 223.5 (410.75)",
+      "inputs": {
+        "mean": 223.5,
+        "sd": 410.75,
+        "n": 64,
+        "scale_min": 0,
+        "scale_max": 5370,
+        "decimals_sd": 2,
+        "data_type": "count"
+      },
+      "computed": {
+        "outcome": "search_exhausted",
+        "restarts": 100,
+        "iterations_per_restart": 10000,
+        "no_solution_proven": false
+      },
+      "reported": {
+        "mean": 223.5,
+        "sd": 410.75
+      },
+      "reproduction": "metascience sprite --mean 223.5 --sd 410.75 --n 64 --scale-min 0 --scale-max 5370 --decimals-sd 2 --data-type count",
+      "notes": "EXPLICITLY NOT A FINDING. SPRITE's stochastic search failed to reconstruct a matching sample over a 0-5370 integer range, but the outcome is 'search_exhausted', not 'no_solution_proven'. Only the latter is evidence. Over a range this wide the search space is enormous and failure tells us about the search, not the data. GRIM and GRIMMER both passed on this same row inside check_table. Recorded so that the failed search is visible and cannot be mistaken for an anomaly.",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "ebp_adherence_cell_ambiguous",
+      "location": "Table 1, EBP adherence row",
+      "technique": "manual",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "EBP adherence | 5.23 (1.13)",
+      "inputs": {
+        "raw_cell": "5.23 (1.13)",
+        "column_header_n": 64
+      },
+      "computed": {
+        "parse_cells_typed_kind": "ambiguous",
+        "candidates": [
+          "mean_sd",
+          "n_percent",
+          "estimate_ci"
+        ],
+        "denominator_resolvable": false
+      },
+      "reported": {
+        "value": 5.23,
+        "paren": 1.13
+      },
+      "reproduction": "metascience parse-cells --cells '[{\"raw\":\"5.23 (1.13)\",\"row_label\":\"EBP adherence\",\"col_label\":\"All coalitions n=64\"}]'",
+      "notes": "NO TOOL WAS RUN ON THIS CELL, by design. parse_cells_typed returned kind='ambiguous' because - alone among Table 1's continuous rows - this row label omits the '(mean, SD)' annotation that disambiguates every other one. Running a check on a value of unknown meaning is the cheapest route to a false accusation, so it is refused. A second, independent problem compounds it: the cell sits under a column headed n=64, but adherence/fidelity exists only where an EBP was delivered - Table 1 reports just 38 coalitions using any EBP, and Table 4 analyses 101 programs in 35 coalitions. The denominator for 5.23 (1.13) is therefore genuinely unknown, so even under the mean/SD reading no GRIM-family check could be given a trustworthy n. The construct is also named three ways across the paper ('EBP adherence' in Table 1, 'EBP fidelity' in Measures, 'Quality of EBP at baseline' in Table 4).",
+      "reproduction_valid": false,
+      "reproduction_problem": "contains placeholder '{' -- not runnable as written; contains placeholder '}' -- not runnable as written",
+      "quote_verified": "verbatim",
+      "quote_source": "a table"
+    },
+    {
+      "id": "no_apa_statistics_in_body",
+      "location": "Full body text",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "engaging communication and inclusive decision making showed signi fi cant associations ( p &lt;.05) with the number of EBPs a year later",
+      "inputs": {
+        "text": "Results and Measures sections of body.md"
+      },
+      "computed": {
+        "stats_found": 0
+      },
+      "reported": {},
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/high_value_pdfs_to_run_on/10.1002--ajcp.70049/10.1002--ajcp.70049.pdf",
+      "notes": "Run over the body text as instructed; zero APA-format statistics were found. This is a true property of the paper, not a tool failure: the narrative reports significance only as bare thresholds ('p<.05', 'p<.01') with no accompanying test statistic or df, and every verifiable number lives in the tables. It is why the NHST verification in this sweep had to be routed through coefficient/SE reconstruction instead.",
+      "reproduction_valid": true,
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "round_n_check",
+      "location": "Methods and Tables 1-4, all reported sample sizes",
+      "technique": "flag_round_n",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Coalition member survey participation rates were 60% in Year 1 (1108/1851, across 68 coalitions) and 56% in Year 2 (945/1695, among 64 coalitions).",
+      "inputs": {
+        "ns": [
+          68,
+          64,
+          101,
+          35,
+          1851,
+          1695,
+          1108,
+          945
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "computed": {
+        "all_divisible_by_moderate": false,
+        "all_divisible_by_strong": false,
+        "n_unique": 8
+      },
+      "reported": {},
+      "reproduction": "metascience flag-round-n --ns 68,64,101,35,1851,1695,1108,945",
+      "notes": "No round-N signature. Every reported sample size shows natural non-round variation, consistent with real recruitment and attrition (68 coalitions at Wave 1, 4 dropped, 64 at Wave 2).",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "power_not_reported",
+      "location": "Analyses section (absent); Tables 2-4",
+      "technique": "manual",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "including coalitions without EBPs increased the sample size and hence statistical power and consistency of the estimates",
+      "inputs": {
+        "test_type": "correlation",
+        "effect_size": 0.3,
+        "alpha": 0.05,
+        "power": 0.8,
+        "tails": 2
+      },
+      "computed": {
+        "required_n_total": 85,
+        "achieved_power_at_that_n": 0.8003,
+        "actual_n_coalitions": 64
+      },
+      "reported": {
+        "stated_power_analysis": "none"
+      },
+      "reproduction": "metascience required-n --test-type correlation --effect-size 0.3 --alpha 0.05 --power 0.8 --tails 2",
+      "notes": "The paper states no a-priori power analysis, so verify_power_analysis has nothing to reproduce and was not run - that absence is itself the reporting finding. For context only, required_n shows that detecting a moderate association (r = 0.30) at 80% power would need 85 units, against the 64 coalitions actually analysed. The comparison is indicative rather than exact, since the coalition-level models are Poisson and negative binomial with six covariates, not a simple correlation. The paper does invoke power informally to justify retaining zero-EBP coalitions.",
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    }
+  ],
+  "coverage": {
+    "stats_found": 89,
+    "tools_run": [
+      "extract_pdf",
+      "statcheck",
+      "parse_table",
+      "parse_cells_typed",
+      "check_table",
+      "grim_check",
+      "grim_percentage",
+      "grimmer_check",
+      "grim_sweep",
+      "sprite_reconstruct",
+      "check_proportion_from_normal",
+      "check_summation",
+      "check_sd_range",
+      "check_regression",
+      "detect_duplication",
+      "required_n",
+      "stalt_check",
+      "flag_round_n"
+    ],
+    "tables_checked": [
+      "Table 1 (coalition EBPs, inclusive leadership and other attributes, n=64)",
+      "Table 2 (inclusive leadership -> number of EBPs, Poisson, n=64)",
+      "Table 3 (inclusive leadership -> EBP reach, negative binomial, n=64)",
+      "Table 4 (inclusive leadership -> EBP fidelity, mixed model, 101 programs in 35 coalitions)"
+    ]
+  },
+  "unchecked": [
+    {
+      "location": "Table 4, all three null results (Communication B=0.53 SE=0.60; IDM B=-0.05 SE=0.98; ICR B=-0.10 SE=0.72)",
+      "reason": "The paper's headline null claim - 'none of the inclusive leadership practices that we examined was associated with subsequent EBP fidelity' - could not be evaluated with absence_of_evidence because the paper reports NO confidence intervals anywhere, and that tool requires ci_low/ci_high. Deriving a CI from B and SE would be interval arithmetic performed by hand, which is barred. This is a substantive gap: on a 1-7 fidelity scale, standard errors of 0.60-0.98 around estimates near zero are wide, so the data are compatible with effects that would be practically meaningful in either direction, yet the paper states the null without quantifying that uncertainty. No SESOI is stated either, so equivalence could not have been claimed even with intervals."
+    },
+    {
+      "location": "Effect sizes for all nine primary tests",
+      "reason": "check_effect_plausibility could not be run because the paper explicitly declines to report standardized effect sizes: 'Results in Tables 2-4 are shown as coefficients, and do not include effect sizes, as effects are multiplicative and unit increases in key independent variables are idiosyncratic and scale-dependent.' Poisson/negative-binomial log coefficients on idiosyncratic Likert units cannot be benchmarked against the empirical field distributions the tool uses without a units mismatch."
+    },
+    {
+      "location": "Baseline balance across the randomized Coalition Check-Up TA arms",
+      "reason": "csf_test and bayesian_table1_dispersion were not run because the paper reports no by-arm baseline table and no baseline p-values. Table 1 has a single 'All coalitions' column. Although half of the 68 coalitions were randomly assigned to the Check-Up TA, the randomized comparison is never described, so there is nothing for a baseline-similarity test to consume. Recorded rather than forced: running either tool would have required inventing the arm-level data."
+    },
+    {
+      "location": "Table 1, Population of service area 84,299 (108,353)",
+      "reason": "parse_table warned of an ambiguous thousands/decimal separator and parse_cells_typed mis-typed the cell as estimate_ci (low=108, high=353). The row label does establish it as mean/SD, but it is an unbounded continuous-scale population count with no stated range, so GRIM, GRIMMER and SPRITE are all inapplicable and check_sd_range has no defensible bound. The SD exceeding the mean is unremarkable for a right-skewed population variable."
+    },
+    {
+      "location": "Table 1, EBP adherence 5.23 (1.13)",
+      "reason": "Typed as 'ambiguous' by parse_cells_typed and additionally lacking a resolvable denominator. Logged in full as finding ebp_adherence_cell_ambiguous; repeated here because no forensic tool was run on it."
+    },
+    {
+      "location": "Reliability and association coefficients: Cronbach's alpha 0.93 (communication) and 0.88 (inclusive decision making); item correlations 0.76 (fidelity) and 0.80 (inclusion of community residents); unconditional ICC 0.10 for fidelity",
+      "reason": "No validated tool in this toolset verifies internal-consistency or reliability coefficients from summary statistics alone; doing so would require the item covariance matrix, which is not reported. All five values are in ordinary ranges and none is out of bounds on its face."
+    },
+    {
+      "location": "Survey response rates: 60% (1108/1851) in Year 1 and 56% (945/1695) in Year 2",
+      "reason": "Both percentages are printed to zero decimals against denominators near 1700-1850, where GRIM has effectively no discriminating power - almost any numerator passes - so grim_percentage would return a vacuous 'consistent'. Verifying the specific numerator-to-percentage division is plain arithmetic with no tool that performs it, so it was not asserted either way."
+    },
+    {
+      "location": "Supporting Information S1, Tables S1 and S2 (registry hierarchy used to classify programs as EBPs)",
+      "reason": "Referenced by the paper but not supplied with the PDF or the markdown body, so the EBP coding rules that determine the primary outcome could not be inspected."
+    },
+    {
+      "location": "Sensitivity analyses omitting coalitions without EBPs",
+      "reason": "The paper states 'Sensitivity analyses omitting these coalitions yielded very similar associations to those reported here' but reports no numbers from them. With no coefficients, standard errors or p-values, there is nothing to check."
+    },
+    {
+      "location": "STALT direction check on the two 'p<.001' claims (Table 2 Constant col 1; Table 3 CTC col 1)",
+      "reason": "stalt_check was run on both (calculated_p 0.002612 and 0.001282 against threshold p<0.001) and returned 'consistent' in each case, but that verdict is a DIRECTION ARTEFACT and must not be read as endorsing the threshold claims. STALT detects p-values suspiciously SMALLER than a stated threshold; here the recomputed p-values are LARGER than the threshold (the tool's own orders_of_magnitude_smaller field is negative, -0.42 and -0.11). The tool is simply not built for this direction, so its output carries no information about these cells. statcheck is the authority for them and its results are logged separately."
+    }
+  ]
+}

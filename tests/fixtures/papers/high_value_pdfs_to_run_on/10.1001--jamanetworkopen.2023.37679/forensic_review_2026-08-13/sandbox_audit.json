@@ -1,0 +1,325 @@
+{
+  "level": "unbacked",
+  "verdict": "BREACH (unbacked): 9 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+  "n_unbacked_findings": 9,
+  "unbacked_finding_ids": [
+    "data_availability_code_withheld",
+    "etable1_inverted_ci",
+    "etable4_no_stated_n",
+    "etable_crossreference_mismatch",
+    "no_preregistration",
+    "or_to_percent_translations",
+    "t2_corrupted_ame_cell",
+    "text_direction_contradicts_etable4",
+    "xml_pdf_table1_reconciliation"
+  ],
+  "n_unvalidated_total": 0,
+  "n_severe_total": 0,
+  "n_off_allowlist_total": 0,
+  "stages": {
+    "stage1": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_table",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__extract_figures",
+        "mcp__forensic_metascience__absence_of_evidence",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_regression",
+        "mcp__forensic_metascience__check_sd_or_se",
+        "mcp__forensic_metascience__check_summation",
+        "mcp__forensic_metascience__check_regression_batch",
+        "mcp__forensic_metascience__check_summation_batch",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__debit_check_batch",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__flag_uninformative_stat",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grim_percentage",
+        "mcp__forensic_metascience__grim_sweep",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__rivets_anova",
+        "mcp__forensic_metascience__rivets_independent_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck",
+        "mcp__forensic_metascience__verify_power_analysis"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 73,
+      "by_surface": {
+        "forensic_mcp": 71,
+        "harness": 2
+      },
+      "n_validated": 71,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 0,
+      "off_allowlist_calls": [],
+      "n_unbacked_findings": 9,
+      "unbacked_findings": [
+        {
+          "id": "etable1_inverted_ci",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "eTable 1 (Supplement 1), Number of chronic conditions row '1', fourth outcome column"
+        },
+        {
+          "id": "text_direction_contradicts_etable4",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Results, 'Suicide Planning and Attempt Among Those Reporting Suicide Ideation', final sentence; vs eTable 4 (Supplement 1)"
+        },
+        {
+          "id": "etable_crossreference_mismatch",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Results, 'Suicide Ideation, Planning, and Attempt and Disability Status', final paragraph"
+        },
+        {
+          "id": "t2_corrupted_ame_cell",
+          "technique": "not_computational",
+          "severity": "indeterminate",
+          "location": "Table 2, 1 Limitation / Veteran row, Suicidal ideation AME (95% CI) cell"
+        },
+        {
+          "id": "etable4_no_stated_n",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "eTable 4 (Supplement 1), title and header"
+        },
+        {
+          "id": "xml_pdf_table1_reconciliation",
+          "technique": "not_computational",
+          "severity": "consistent",
+          "location": "Table 1, XML rendering vs published PDF pages 5-6"
+        },
+        {
+          "id": "or_to_percent_translations",
+          "technique": "no_tool_exists",
+          "severity": "consistent",
+          "location": "Results, all narrative percentage-change statements"
+        },
+        {
+          "id": "data_availability_code_withheld",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Supplement 2, Data Sharing Statement"
+        },
+        {
+          "id": "no_preregistration",
+          "technique": "not_computational",
+          "severity": "suspicious",
+          "location": "Statistical Analysis section and article metadata"
+        }
+      ],
+      "level": "unbacked",
+      "calls_by_tool": {
+        "extract_xml": 1,
+        "get_table": 7,
+        "check_summation_batch": 2,
+        "check_table": 4,
+        "check_estimate_ci": 38,
+        "extract_pdf": 6,
+        "check_count_percent": 10,
+        "multiplicity_report": 2,
+        "statcheck": 1,
+        "StructuredOutput": 2
+      },
+      "unvalidated_calls": [],
+      "verdict": "BREACH (unbacked): 9 finding(s) name a check that never ran. No forbidden tool was called -- the arithmetic was asserted rather than performed, which is the likelier failure and the one a tool-surface check cannot see. Treat those findings as unverified.",
+      "findings_scored": "the sweep's own findings (findings.schema.json), which is the only schema carrying a `technique` to check a tool against",
+      "guards": {
+        "n_guarded_calls": 44,
+        "n_guard_slots": 48,
+        "n_supplied": 48,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "check_table": {
+            "supplied": 8,
+            "defaulted": 0,
+            "excused": 4
+          },
+          "check_estimate_ci": {
+            "supplied": 38,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "multiplicity_report": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 4,
+        "excused_calls": [
+          {
+            "seq": 10,
+            "tool": "check_table",
+            "guard": "provenance",
+            "default": "printed_table",
+            "why_sound": "`cells` is a table of printed literals, so `printed_table` is the correct reading; the only thing this guard changes is whether the exact-arithmetic checks are refused, and on printed values they should run."
+          },
+          {
+            "seq": 11,
+            "tool": "check_table",
+            "guard": "provenance",
+            "default": "printed_table",
+            "why_sound": "`cells` is a table of printed literals, so `printed_table` is the correct reading; the only thing this guard changes is whether the exact-arithmetic checks are refused, and on printed values they should run."
+          },
+          {
+            "seq": 54,
+            "tool": "check_table",
+            "guard": "provenance",
+            "default": "printed_table",
+            "why_sound": "`cells` is a table of printed literals, so `printed_table` is the correct reading; the only thing this guard changes is whether the exact-arithmetic checks are refused, and on printed values they should run."
+          },
+          {
+            "seq": 56,
+            "tool": "check_table",
+            "guard": "provenance",
+            "default": "printed_table",
+            "why_sound": "`cells` is a table of printed literals, so `printed_table` is the correct reading; the only thing this guard changes is whether the exact-arithmetic checks are refused, and on printed values they should run."
+          }
+        ],
+        "verdict": "48/48 guard slots were supplied (100%); a further 4 took a default that is correct for the input and is not counted against the run. Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    },
+    "stage2": {
+      "declared_allowlist": [
+        "Read",
+        "mcp__forensic_metascience__check_effect_plausibility",
+        "mcp__forensic_metascience__bayesian_table1_dispersion",
+        "mcp__forensic_metascience__check_estimate_ci",
+        "mcp__forensic_metascience__check_proportion_from_normal",
+        "mcp__forensic_metascience__multiplicity_report",
+        "mcp__forensic_metascience__csf_test",
+        "mcp__forensic_metascience__debit_check",
+        "mcp__forensic_metascience__detect_duplication",
+        "mcp__forensic_metascience__detect_raw_duplication",
+        "mcp__forensic_metascience__extract_pdf",
+        "mcp__forensic_metascience__extract_xml",
+        "mcp__forensic_metascience__get_table",
+        "mcp__forensic_metascience__extract_html",
+        "mcp__forensic_metascience__extract_supplement",
+        "mcp__forensic_metascience__recalc_stat_to_p",
+        "mcp__forensic_metascience__check_statistic_bounds",
+        "mcp__forensic_metascience__check_count_percent",
+        "mcp__forensic_metascience__get_supplement_table",
+        "mcp__forensic_metascience__grim_check",
+        "mcp__forensic_metascience__grimmer_check",
+        "mcp__forensic_metascience__grimu_check",
+        "mcp__forensic_metascience__grimu_coexistence",
+        "mcp__forensic_metascience__parse_cells_typed",
+        "mcp__forensic_metascience__parse_cells_as_declared",
+        "mcp__forensic_metascience__parse_table",
+        "mcp__forensic_metascience__r_grim_ground_truth",
+        "mcp__forensic_metascience__r_sprite_ground_truth",
+        "mcp__forensic_metascience__recalc_anova",
+        "mcp__forensic_metascience__recalc_chi_squared",
+        "mcp__forensic_metascience__recalc_f_to_p",
+        "mcp__forensic_metascience__recalc_independent_t",
+        "mcp__forensic_metascience__recalc_within_subjects_t",
+        "mcp__forensic_metascience__sprite_reconstruct",
+        "mcp__forensic_metascience__stalt_check",
+        "mcp__forensic_metascience__statcheck"
+      ],
+      "denied_tools": [
+        "Bash",
+        "Edit",
+        "Write",
+        "NotebookEdit",
+        "WebFetch",
+        "WebSearch",
+        "Task",
+        "ToolSearch"
+      ],
+      "n_calls": 14,
+      "by_surface": {
+        "forensic_mcp": 13,
+        "harness": 1
+      },
+      "n_validated": 13,
+      "n_unvalidated": 0,
+      "n_severe": 0,
+      "n_surface": 0,
+      "n_off_allowlist": 0,
+      "off_allowlist_calls": [],
+      "n_unbacked_findings": 0,
+      "unbacked_findings": [],
+      "level": "clean",
+      "calls_by_tool": {
+        "extract_xml": 1,
+        "get_table": 1,
+        "extract_supplement": 2,
+        "check_estimate_ci": 2,
+        "multiplicity_report": 4,
+        "get_supplement_table": 2,
+        "extract_pdf": 1,
+        "StructuredOutput": 1
+      },
+      "unvalidated_calls": [],
+      "verdict": "clean: every tool call was on the validated forensic surface",
+      "findings_scored": "the editorial report's own findings (report.schema.json). That schema has no `technique` field, so a stage-2 finding names no check and none can be scored unbacked; the count is 0 by construction, not by verification",
+      "guards": {
+        "n_guarded_calls": 6,
+        "n_guard_slots": 6,
+        "n_supplied": 6,
+        "n_defaulted": 0,
+        "supplied_rate": 1.0,
+        "per_tool": {
+          "check_estimate_ci": {
+            "supplied": 2,
+            "defaulted": 0,
+            "excused": 0
+          },
+          "multiplicity_report": {
+            "supplied": 4,
+            "defaulted": 0,
+            "excused": 0
+          }
+        },
+        "defaulted_calls": [],
+        "n_excused": 0,
+        "excused_calls": [],
+        "verdict": "6/6 guard slots were supplied (100%). Guards were supplied consistently; a declared run-spec would add little here."
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+# CONSORT/science-agent regression fixture: Cerebrolysin rat spinal-cord
+# injury study (DOI 10.4172/2155-9562.1000450). Built from the validated
+# parallel-pipeline run of 2026-08-21 (verdict does_not_reconcile, paper
+# severity 6) — the plan's Phase-7 CONSORT-rich fixture. Unlike the three
+# human-gold fixtures, the labels here pin what the pipeline itself
+# demonstrably found once, so the science agent's flow/contradiction
+# coverage cannot silently regress.
+paper: cerebrolysin_flow
+pdf: benchmarks/paper_reviews/papers/cerebrolysin_rat_sci.pdf
+verdict_expected: does_not_reconcile
+# The tortured-phrases track ran on the validated run and retained nothing.
+tortured_expected: none
+
+key_findings:
+  - id: flow_second_op_contradiction
+    weight: critical
+    description: >
+      The animal-flow arithmetic does not reconcile: the abstract says 16
+      rats reached the second operation at day 90 while the Results cascade
+      (30 randomized minus stated deaths/exclusions) yields 21. This is the
+      science agent's CONSORT/patient-flow territory
+      (check_flow_arithmetic).
+    aliases: ["16 rats", "21 rats", "second operation", "2nd Op",
+              "patient flow", "animal flow", "attrition", "flow arithmetic",
+              "does not reconcile", "survivor"]
+    reachable: true
+    # In the validated run this row MERGED into a parent contradiction
+    # finding (severity carried by the parent), so interval scoring may
+    # land on the parent or on nothing scoreable; coverage is the guard.
+    severity_expected: [2, 5]
+    allow_undecided: true
+    confidence: medium
+
+  - id: table3_duplicates_table2
+    weight: critical
+    description: >
+      Table 3's combined result and p-values duplicate Table 2's at an
+      incompatible N — the validated run's headline finding.
+    aliases: ["Table 3", "Table 2", "duplicate", "combined", "incompatible N",
+              "copied"]
+    reachable: true
+    severity_expected: [4, 6]
+    confidence: high
+
+  - id: p_vs_ci_contradiction
+    weight: major
+    description: >
+      Printed p-values disagree with their own confidence intervals across
+      both treatment tables (intervals excluding the null beside
+      non-significant p-values, and vice versa).
+    aliases: ["confidence interval", "CI excludes", "p-value disagrees",
+              "check_estimate_ci"]
+    reachable: true
+    severity_expected: [3, 5]
+    confidence: high
+
+  - id: emg_denominator_drift
+    weight: major
+    description: >
+      The grouping variable of the paper's only significant test
+      (EMG-positive animals) is counted four different ways across the
+      abstract, Results and tables — denominator drift on the load-bearing
+      comparison.
+    aliases: ["EMG", "denominator", "counted differently", "n varies"]
+    reachable: true
+    severity_expected: [3, 5]
+    confidence: medium
+
+  - id: randomization_coin_flip
+    weight: major
+    description: >
+      Coin-flip randomization of two arms is reported as producing three
+      groups of exactly 10 — the stated allocation mechanism cannot produce
+      the reported design.
+    aliases: ["coin flip", "coin-flip", "randomization", "three groups",
+              "10, 10, 10", "allocation"]
+    reachable: true
+    severity_expected: [3, 5]
+    confidence: medium
+
+  - id: roster_survivor_mismatch
+    weight: minor
+    description: >
+      Table 4 analyses 17 rats, four of which are not on the stated survivor
+      list — analyzed animals exceed the accounted-for survivors.
+    aliases: ["17 rats", "survivor list", "Table 4", "not among survivors",
+              "analyzed exceeds"]
+    reachable: true
+    severity_expected: [3, 5]
+    confidence: medium
+
+must_not_say:
+  # The Results cascade itself reconciles; the defect is the ABSTRACT's 16
+  # against the Results' 21. A review claiming the flow is fine regresses
+  # the whole reason this fixture exists.
+  - "(animal|patient) flow[^.\\n]{0,60}(reconciles|consistent|accounted for)\\b"

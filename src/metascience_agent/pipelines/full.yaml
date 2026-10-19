@@ -1,0 +1,12 @@
+# The complete review: both analysts, image and text tracks, adjudication.
+# Reproduces `metascience analyze` as it ran before pipelines existed.
+schema_version: 1
+name: full
+description: Complete forensic review (both analysts, image and text tracks, adjudicator).
+modules:
+  - use: tools_agent
+    tools: all
+  - use: scientific_proofreading_agent
+  - use: image_analysis
+  - use: text_forensics
+  - use: adjudicator

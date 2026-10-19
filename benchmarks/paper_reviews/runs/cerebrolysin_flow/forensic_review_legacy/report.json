@@ -1,0 +1,1716 @@
+{
+  "headline": {
+    "statement": "Table 3's muscle p-values 0.4146 and 0.4936, and its Combined Wei-Lachin line (MW=0.5611, 95% CI 0.5456-0.5766, N1/N2=10/3, p<0.0001), are digit-for-digit Table 2's histology numbers, not results of the muscle tests printed beside them.",
+    "severity": "highly_suspicious",
+    "rests_on": "logical_necessity",
+    "evidence": "Table 3 Muscle Marlene p=0.4146 (N1/N2=16/5, MW=0.6250) and Muscle Catoi p=0.4936 (N1/N2=11/2, MW=0.8182, 95% CI 0.5578 to 1.0000); Table 2 NNTXDIAM p=0.4146 and NNTXAREA p=0.4936; both Combined rows MW=0.5611, 95% CI 0.5456-0.5766, N1/N2=10/3, p<0.0001.",
+    "reproduction": "metascience check-ci --estimate 0.8182 --ci-low 0.5578 --ci-high 1.0000 --measure md --reported-p 0.4936 --reported-p-operator = --null-value 0.5 --decimals 4 --confidence-level 0.95",
+    "plain": "The muscle table reuses the nerve-histology table's p-values and its combined 'significant' line, including a sample size that belongs to a different analysis. One pasted p-value says 'not significant' while that row's own interval already rules out no difference.",
+    "reproduction_kind": "command",
+    "reproduction_valid": true
+  },
+  "findings": [
+    {
+      "rank": 1,
+      "title": "Table 3 muscle p-values and Combined row are Table 2's histology numbers",
+      "severity": "highly_suspicious",
+      "confidence": "high",
+      "location": "Table 3 versus Table 2",
+      "reported": "Table 3 Muscle Marlene: MW=0.6250, 95% CI 0.3993 to 0.8507, N1/N2=16/5, p=0.4146. Muscle Catoi: MW=0.8182, 95% CI 0.5578 to 1.0000, N1/N2=11/2, p=0.4936. Combined (Wei-Lachin): MW=0.5611, 95% CI 0.5456 to 0.5766, N1/N2=10/3, p<0.0001. Table 2 NNTXDIAM p=0.4146 and NNTXAREA p=0.4936; Table 2 Combined is the same MW, CI, N1/N2 and p as Table 3 Combined.",
+      "computed": "detect_duplication: two identical (0.4146, 0.4936) and (0.5611, 0.5456) pairs across Table 2 and Table 3 (coincidence probability about 1.6e-13). grimu_check: p=0.4146 matches no U for 16 versus 5 (nearest U=29.5 p=0.409, U=30 p=0.4328); p=0.4936 matches no U for 11 versus 2 (nearest U=7 p=0.4897 and 0.5128). check_estimate_ci on Muscle Catoi: CI excludes the Mann-Whitney null of 0.5 while p=0.4936 is not significant (recovered Wald p=0.0048; lower bound 0.5578 does not depend on the truncated upper bound of 1.0000). Table 3 Combined MW=0.5611 with N1/N2=10/3 lies below both printed muscle MWs (0.6250 and 0.8182) and does not use 16/5 or 11/2.",
+      "assumptions": "Table 2 (nerve histometrics) and Table 3 (muscle fibre diameter) are different outcome families, so identical p-values, Combined MW/CI and N1/N2 are not a legitimate reuse of one analysis. Muscle fibre diameter is a continuous micrometre measure, so the GRIM-U lattice is the untied one. Mann-Whitney null is 0.5 as implied by the paper's MW definition P(X<Y)+0.5P(X=Y). The modal innocent cause is a forest-plot template copied from Table 2 into Table 3 without recomputing.",
+      "warrant": "logical",
+      "reproduction": "metascience grimu --n1 16 --n2 5 --reported_p 0.4146 --decimals 4 --method both --test_type mann_whitney",
+      "stage1_finding_ids": [
+        "table3_p_values_copied_from_table2",
+        "table3_combined_copied_from_table2",
+        "table3_catoi_ci_excludes_null"
+      ],
+      "plain": "The muscle results table reuses the nerve-histology table's p-values and its combined 'significant' line, right down to a 10-versus-3 sample size that is not the muscle rows' 16-versus-5 or 11-versus-2. For one muscle comparison the printed interval already excludes no difference, so that comparison would be significant, but the pasted p-value says it is not. The likely slip is a copied figure template; as printed, Table 3 does not report the muscle tests it names.",
+      "passages": [
+        {
+          "quote": "| Muscle Marlene        |                                   | 0,6250 | (0,3993 to 0,8507) | 16 / 5  | 0,4146  |",
+          "id": "a",
+          "role": "said",
+          "label": "Table 3, Muscle Marlene"
+        },
+        {
+          "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+          "id": "b",
+          "role": "against",
+          "label": "Table 2, NNTXDIAM"
+        }
+      ],
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Table 3's Combined p<0.0001 is Table 2's histology combination, not a combination of the muscle rows; Muscle Catoi's own interval excludes 0.5 while the pasted p=0.4936 is non-significant."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `suspicious` where the finding claims `highly_suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 2,
+      "title": "NNTXMAX interval excludes no difference while p=0.9017 does not",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, NNTXMAX row",
+      "reported": "NNTXMAX MW=0.8000, 95% CI 0.5362 to 1.0000, N1/N2=10/3, p=0.9017. Methods: alpha=0.05 and two-sided 95% CIs.",
+      "computed": "check_estimate_ci: CI excludes the null of 0.5 while reported p=0.9017 is not significant; recovered Wald p=0.0112 (upper bound truncated at 1.0000, so that recovered p is not a trustworthy point estimate). The printed lower bound 0.5362>0.5 does not depend on that truncation. grimu_check: p=0.9017 matches no U for 10 versus 3 (nearest U=13.5 p=0.8658, U=14 p=0.9326), which is the p of a near-null rank sum, not of MW=0.8000.",
+      "assumptions": "The paper's MW null is 0.5. A two-sided 95% CI that does not contain 0.5 and a two-sided p>0.05 cannot both be from the same test of that null. Wald inversion of a CI truncated at 1.0 is not used as the primary evidence; the printed lower bound is. Interval construction is not named beyond 'two-sided 95% CI' of the Mann-Whitney statistic, so an exact or bootstrap interval remains an open innocent reading for the recovered Wald p, not for the lower bound versus 0.5.",
+      "warrant": "paper_commitment",
+      "reproduction": "metascience check-ci --estimate 0.8000 --ci-low 0.5362 --ci-high 1.0000 --measure md --reported-p 0.9017 --reported-p-operator = --null-value 0.5 --decimals 4 --confidence-level 0.95",
+      "stage1_finding_ids": [
+        "table2_nntxmax_ci_excludes_null"
+      ],
+      "plain": "For one nerve-fibre measure the authors print an interval that already rules out no difference, which at their stated 5% threshold would be a significant result, and a p-value of 0.9017 that says the opposite. Those two numbers cannot both describe the same test.",
+      "passages": [
+        {
+          "quote": "| NNTXMAX                      |                                   | 0,8000 | (0,5362 to 1,0000) | 10 / 3  | 0,9017  |",
+          "id": "a",
+          "role": "source",
+          "label": "Table 2, NNTXMAX"
+        },
+        {
+          "quote": "The level of alpha was defined as alpha=0.05, and a two-sided test was used for superiority.",
+          "id": "b",
+          "role": "said",
+          "label": "Statistical Methods"
+        }
+      ],
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "This component would be significant at the paper's alpha=0.05 if the printed 95% CI is believed, but the printed p=0.9017 is not."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": true,
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 3,
+      "title": "None of Table 2's eight component p-values is a Mann-Whitney p for 10 versus 3 animals",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 2, P column",
+      "reported": "Eight component rows at N1/N2=10/3 with p=0.4146, 0.4936, 0.1928, 0.1020, 0.7533, 0.9017, 0.2347, 0.3505, attributed to the Wilcoxon-Mann-Whitney / Wei-Lachin family. NNTXDIAM and NNTXAREA share MW=0.4000 and 95% CI 0.0704 to 0.7296 but not the same p. NNTXTOTAL MW=0.5667, 95% CI 0.2855 to 0.8479, p=0.2347.",
+      "computed": "grimu_coexistence: 8 of 8 p-values individually flagged; none matches an achievable U under exact, normal, or continuity-corrected conventions; no pairwise co-existence violation; floor p exact=0.00699; 45 achievable p-values at 4 dp. One-sided re-run of p=0.4146 also unmatched. check_estimate_ci on NNTXTOTAL (interval symmetric about the printed MW, so not truncated): recovered p=0.642 versus printed 0.2347. Shared NNTXDIAM/NNTXAREA CI recovers Wald p=0.552, which matches neither printed p.",
+      "assumptions": "The paper attributes these p-values to Wilcoxon-Mann-Whitney tests at the printed 10/3. Diameter, area, myelin and related histometrics are continuous, so the default is no ties; a tie-corrected lattice was not used. Rule 12 caps a granularity miss at suspicious. Rank-sum packages can shift a p in the fourth decimal; they do not print eight unachievable values. Different tie corrections could split two p-values but would not be expected to leave MW and the 95% CI identical to four decimals.",
+      "warrant": "paper_commitment",
+      "reproduction": "metascience grimu-coexist --n1 10 --n2 3 --p-values 0.4146,0.4936,0.1928,0.1020,0.7533,0.9017,0.2347,0.3505 --decimals 4 --method both --test-type mann_whitney --p-source unspecified --ties-possible false",
+      "stage1_finding_ids": [
+        "table2_grimu_all_component_p_miss_lattice",
+        "table2_nntxtotal_p_vs_ci",
+        "table2_nntxdiam_nntxarea_same_mw_ci_different_p"
+      ],
+      "plain": "The eight individual nerve-fibre p-values are presented as rank-sum tests on 10 versus 3 animals, but none of those eight numbers is a p-value that a rank-sum test on 10 versus 3 can produce. Two rows even share the same effect size and the same interval yet print different p-values. These component tests were all called non-significant, so the mismatch does not flip those calls; it means the printed p-column is not the test the methods describe.",
+      "passages": [
+        {
+          "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+          "id": "a",
+          "role": "source",
+          "label": "Table 2, NNTXDIAM"
+        },
+        {
+          "quote": "The analysis was performed by means of the highly efficient Wei-Lachin procedure, a multivariate generalization of the Wilcoxon-Mann-Whitney test.",
+          "id": "b",
+          "role": "said",
+          "label": "Statistical Methods"
+        }
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "All eight component tests remain non-significant under the printed p-values; the lattice misses do not flip those NS calls."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience grimu-coexist [OPTIONS] N1 N2\nTry 'metascience grimu-coexist --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --p",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 4,
+      "title": "Day-90 n and CMAP-positive counts do not agree across Abstract, Results, figures and Table 4",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Abstract; Results, Surgery; Figure 4 caption; Discussion after Figure 12; Table 4; Table 2 N1/N2",
+      "reported": "Abstract: 2nd Op at day 90 in 16 surviving rats; eight rats showed positive CMAPs. Results: 21 rats underwent the 2nd Op; electro-stimulation of the PNG transplant in 21 rats was positive in only 8 rats. Figure 4: 8 of 16 rats. Discussion after Figure 12: 7 out of the 14 surviving animals. Table 4 lists seven (+) cases and ten (\u2212) cases. Table 2 Combined and components use N1/N2=10/3.",
+      "computed": "Stage-1 check_summation_batch: randomized 12+11+7=30, completers 5+7+3=15, and the Results early-death addends summing to 9 are internally additive (30\u22129=21). Abstract 16 is not that cascade. Table 4 7+10=17; tissues from No 21 and No 28 (died at the 2nd Op) are said to have been saved, which can explain 15+2=17 rows but not 8 versus 7 positives. Table 2's 10/3 matches none of 8 vs 8, 8 vs 13, 7 vs 10, or 16 vs 5.",
+      "assumptions": "Stimulus yes versus no is the grouping for Tables 2 and 3. Completer identities in Results (15 named animals) plus saved 2nd-Op deaths (No 21, 28) are the paper's own accounting. Direct check_summation was denied at this stage; additive identities are taken from Stage-1 check_summation_batch, which found those identities consistent.",
+      "warrant": "logical",
+      "reproduction": "metascience summation --values 21 --expected-sum 16 --decimals 0 --tolerance 0",
+      "stage1_finding_ids": [
+        "second_op_n_abstract_vs_results",
+        "cmap_positive_count_conflict"
+      ],
+      "plain": "The authors never settle how many rats reached the day-90 operation (16 in the abstract, 21 in the Results) or how many had a positive muscle signal (eight in the abstract and Results, eight of 16 on one figure, seven of 14 in the Discussion, seven plus-cases in Table 4). The only significant combined test is run as 10 versus 3, which matches none of those splits. The Results death tally adds up on its own; the abstract's 16 does not.",
+      "passages": [
+        {
+          "quote": "2nd Op at day 90 (16 surviving rats) for open proof of reinnervation",
+          "id": "a",
+          "role": "said",
+          "label": "Abstract"
+        },
+        {
+          "quote": "Consequently, 21 rats underwent the 2 nd Op for transplant revision",
+          "id": "b",
+          "role": "against",
+          "label": "Results, Surgery"
+        }
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Stimulus yes versus no is the grouping for the paper's only significant combined test, but the paper never pins down how many animals were yes."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 5,
+      "title": "Vecuronium dose is 0.04\u20130.05 mg/kg in Table 1 and 80 \u00b5g/kg in Figure 5",
+      "severity": "suspicious",
+      "confidence": "high",
+      "location": "Table 1, Vecuronium row versus Figure 5 caption",
+      "reported": "Table 1: Vecuronium 0.04 - 0.05 mg/kg IV. Figure 5: Vecuronium IV (80 \u00b5g/kg). Four CMAP-positive rats received it.",
+      "computed": "check_ratio: 80/1000=0.08, so 80 \u00b5g/kg is 0.08 mg/kg, which sits outside Table 1's 0.04-0.05 mg/kg range. Equivalently, Table 1's range is 40-50 \u00b5g/kg.",
+      "assumptions": "1000 \u00b5g=1 mg is a unit identity, not a scale the paper had to state. The two printed doses are different quantities; four CMAP-positive rats are the subset that received the drug.",
+      "warrant": "logical",
+      "reproduction": "metascience check-ratio --numerator 80 --denominator 1000 --reported-ratio 0.08 --decimals-numerator 0 --decimals-denominator 0 --decimals-ratio 2",
+      "stage1_finding_ids": [
+        "vecuronium_dose_table1_vs_figure5"
+      ],
+      "plain": "The drug used to show mixed nerve-to-muscle signalling is given as 0.04 to 0.05 milligrams per kilogram in the dosing table and as 80 micrograms per kilogram on the figure, which is 0.08 milligrams per kilogram. Those are not the same dose.",
+      "passages": [
+        {
+          "quote": "0.04 - 0.05 mg/kg",
+          "id": "a",
+          "role": "said",
+          "label": "Table 1, Vecuronium row"
+        },
+        {
+          "quote": "Vecuronium \u00ae IV (80 \u00b5g/kg) application during artificial ventilation of the rat",
+          "id": "b",
+          "role": "against",
+          "label": "Figure 5 caption"
+        }
+      ],
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Vecuronium response is the functional proof offered for mixed cholinergic/glutamatergic transmission; the dose used is not a single printed number."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 6,
+      "title": "EMG-positive angiogenesis scores of '2 and 3' versus Table 4 case 6 scored 1",
+      "severity": "suspicious",
+      "confidence": "medium",
+      "location": "Figure 9 caption versus Table 4, case 6 ang cell",
+      "reported": "Angiogenesis was more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3). Table 4 case 6 (+) lists ang (1); case 28 (+) has no ang grade printed. Methods grade angiogenesis 0-3.",
+      "computed": "check_ratio: EMG-negative average 1.3 follows from Table 4 grades summing to 13 over 10 cases. grim_check: mean 2.57 is attainable at n=7 on a 0-3 integer scale (18/7=2.57). Stage-1: no combination of the printed positive ang grades (2, 1, 3, 3, 2, 3) averages to 2.57. Case 6 (+) scored 1 contradicts 'individual final scores of 2 and 3'.",
+      "assumptions": "Table 4 integer ang grades are the 'individual final scores' the caption describes. n=7 for GRIM is the count of (+) cases in Table 4, which the caption does not print beside 2.57. Final scores are means over high-power fields, so 2.57 could in principle be a mean of means rather than an average of integer grades; the caption's 'individual final scores of 2 and 3' is what collides with case 6.",
+      "warrant": "logical",
+      "reproduction": "metascience check-ratio --numerator 13 --denominator 10 --reported-ratio 1.3 --decimals-numerator 0 --decimals-denominator 0 --decimals-ratio 1",
+      "stage1_finding_ids": [
+        "angiogenesis_score_prose_vs_table4"
+      ],
+      "plain": "The authors say EMG-positive animals had only angiogenesis scores of 2 and 3, averaging 2.57, but Table 4 gives case 6, which is EMG-positive, a score of 1. The EMG-negative average of 1.3 does match that table. This is a descriptive contrast, not a hypothesis test.",
+      "passages": [
+        {
+          "quote": "was more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+          "id": "a",
+          "role": "said",
+          "label": "Figure 9 caption / Angiogenesis"
+        },
+        {
+          "quote": "Gc (1); fibr (3); Sc in SC (1), ang (1); Npres (1).",
+          "id": "b",
+          "role": "against",
+          "label": "Table 4, case 6 (+)"
+        }
+      ],
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A descriptive contrast of angiogenesis by EMG group, not a hypothesis test."
+      },
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "THE COMMAND DISAGREES WITH THE FINDING: it reports `consistent` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    },
+    {
+      "rank": 7,
+      "title": "Methods specify a two-sided test; table captions specify a directional test",
+      "severity": "indeterminate",
+      "confidence": "high",
+      "location": "Statistical Methods versus Table 2/3 captions and Statistical Evaluation",
+      "reported": "Methods: 'The level of alpha was defined as alpha=0.05, and a two-sided test was used for superiority' and 'two-sided 95% confidence intervals'. Table 3 caption and Statistical Evaluation: 'Wei-Lachin procedure, directional test, exploratory interpretation.'",
+      "computed": "grimu_check one-sided on p=0.4146 at 10 versus 3 still unmatched. Which tail produced the p-column is not recoverable, because those p-values miss both the two-sided and one-sided 10-versus-3 lattices.",
+      "assumptions": "The paper also labels the analysis exploratory and warns about small n. Both phrases cannot be the procedure that produced the p-column; the printed p-values do not adjudicate which phrase was used.",
+      "warrant": "logical",
+      "reproduction": "metascience grimu --n1 10 --n2 3 --reported_p 0.4146 --decimals 4 --one_sided true --method both --test_type mann_whitney",
+      "stage1_finding_ids": [
+        "two_sided_methods_vs_directional_caption"
+      ],
+      "plain": "The methods say tests were two-sided; the table captions say the combined test was directional. The printed p-values do not match either version of a 10-versus-3 rank-sum test, so a reader cannot tell which rule was used.",
+      "passages": [
+        {
+          "quote": "The level of alpha was defined as alpha=0.05, and a two-sided test was used for superiority.",
+          "id": "a",
+          "role": "said",
+          "label": "Statistical Methods"
+        },
+        {
+          "quote": "Wei-Lachin procedure, directional test, exploratory interpretation",
+          "id": "b",
+          "role": "against",
+          "label": "Statistical Evaluation"
+        }
+      ],
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience grimu [OPTIONS] N1 N2 REPORTED_P\nTry 'metascience grimu --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Got unexpected extra arg",
+      "anchor": "sweep_ancestor",
+      "anchored": true
+    }
+  ],
+  "not_checked": [
+    {
+      "location": "Figure 12 muscle-fibre-diameter chart",
+      "reason": "extract_figures was denied; group averages appear only as black squares on the figure and are not printed as numbers in the caption. Values needed for effect-size reconstruction of the CERE versus NaCl/nil contrast are unread.",
+      "n_cells": 1
+    },
+    {
+      "location": "CONSORT-style flow",
+      "reason": "check_flow_arithmetic was denied. Additive identities were checked with Stage-1 check_summation_batch; the abstract-versus-results n clash is reported from the two quoted counts.",
+      "n_cells": 1
+    },
+    {
+      "location": "Table 4 axon-diameter mean (range) and axon-count cells",
+      "reason": "No registered tool tests whether a printed mean lies inside a printed min\u2013max range. Fourteen mean (range) cells and associated counts were not fed to GRIM/SPRITE (continuous \u00b5m).",
+      "n_cells": 28
+    },
+    {
+      "location": "CERE versus NaCl/nil muscle-fibre comparison",
+      "reason": "Authors say the CERE effect was not statistically significant but show no CI or p for that three-arm contrast. Table 3 CIs are stimulus yes/no, not treatment arm.",
+      "n_cells": 1
+    },
+    {
+      "location": "Western blot Figure 6",
+      "reason": "Qualitative band presence/absence; no optical-density means, SDs or n printed.",
+      "n_cells": 1
+    },
+    {
+      "location": "Publisher XML / supplements",
+      "reason": "No JATS XML and no supplementary data files were in the paper directory. Sweep used extract_pdf plus body.md. Table 1 is a drug list, not a results table.",
+      "n_cells": 0
+    },
+    {
+      "location": "Wei-Lachin combined SE versus components",
+      "reason": "No registered tool reconstructs a Wei-Lachin multivariate standard error from component MW intervals and a correlation. Combined MW/CI/p are internally consistent on a Wald reading; whether that interval can arise from n=10/3 given the wide component intervals was not adjudicated.",
+      "n_cells": 1
+    }
+  ],
+  "limitations": [
+    "Stage-1 quote_not_located fired on all 12 accusations. Cause: markdown table pipes and European decimal commas (0,4146) versus the PDF text layer. Every cited span was found verbatim in body.md on re-read; this is a fact about the two extractions, not about missing numbers.",
+    "Figure images were not read (extract_figures was denied). Captions in the text layer were read for unique counts (Figure 4: 8 of 16; Figure 5: 80 \u00b5g/kg). Group-average marks on Figure 12 were not digitized.",
+    "Direct check_summation was denied at this stage. Additive identities 12+11+7=30, 5+7+3=15, and early-death addends=9 are taken from Stage-1 check_summation_batch, which found them consistent.",
+    "No registered tool reconstructs a Wei-Lachin multivariate standard error from component intervals. The Combined estimate, interval and p<0.0001 are internally consistent; the apparent tightness of that interval relative to the component intervals is therefore unsettleable here and was not carried as an accusation.",
+    "No JATS XML and no deposited raw data were available. Histometric outcomes in Table 2 are continuous micrometre measures except where named as counts; GRIM was not applied to those means.",
+    "This pipeline does not search other papers by the same authors or other studies of Brunelli-type grafting, so any interpretation of the copied Table 3 block that needs that comparison is the reader's."
+  ],
+  "coverage_summary": {
+    "stats_found": 72,
+    "stats_checked": 58,
+    "tools_run": [
+      "extract_pdf",
+      "statcheck",
+      "check_estimate_ci",
+      "grimu_check",
+      "grimu_coexistence",
+      "check_summation_batch",
+      "check_count_percent",
+      "stalt_check",
+      "multiplicity_report",
+      "parse_table",
+      "parse_cells_typed",
+      "check_table",
+      "detect_duplication",
+      "check_ratio",
+      "check_statistic_bounds",
+      "absence_of_evidence",
+      "required_n",
+      "flag_round_n",
+      "grim_check"
+    ],
+    "tables_checked": [
+      "Table 1",
+      "Table 2",
+      "Table 3",
+      "Table 4"
+    ],
+    "completeness": {
+      "n_items": 215,
+      "n_refused": 215,
+      "n_outstanding": 0,
+      "by_disposition": {
+        "refused:not_a_statistic": 213,
+        "refused:no_applicable_check": 2
+      },
+      "complete": true,
+      "n_table_items": 215,
+      "n_body_items": 0,
+      "n_supplement_items": 0,
+      "n_supplement_table_items": 0,
+      "n_supplement_body_items": 0,
+      "n_checked": null,
+      "n_checked_measurable": false,
+      "n_checked_unmeasured_because": "no persisted item identity joins a tool call back to a manifest row, so how many items were CHECKED cannot be counted. This is not a count of zero.",
+      "gate_passed": true,
+      "gate_enforced": false,
+      "gate_message": "All 215 checkable item(s) carry a disposition: 0 checked, 215 refused with a stated reason.",
+      "note": "215 checkable item(s) enumerated (0 checked, 0.0%; 215 refused; 0 outstanding).\n    213  refused: not_a_statistic -- a row or column label, a heading, or prose -- correctly not checked\n      2  refused: no_applicable_check -- the item's kind routes to no check in the dispatch table -- a gap in the toolkit, not a property of the paper"
+    },
+    "computation_audit": {
+      "n_findings": 23,
+      "by_kind": {
+        "tool": 15,
+        "not_computational": 7,
+        "no_tool_exists": 1
+      },
+      "n_unauditable": 7,
+      "unauditable": [
+        {
+          "id": "table3_p_values_copied_from_table2",
+          "severity": "highly_suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 14 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "table2_nntxdiam_nntxarea_same_mw_ci_different_p",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 1 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "second_op_n_abstract_vs_results",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 1 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "cmap_positive_count_conflict",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 6 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "vecuronium_dose_table1_vs_figure5",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 5 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "angiogenesis_score_prose_vs_table4",
+          "severity": "suspicious",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 15 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        },
+        {
+          "id": "two_sided_methods_vs_directional_caption",
+          "severity": "indeterminate",
+          "kind": "not_computational",
+          "codes": [
+            "number_under_not_computational"
+          ],
+          "problems": [
+            "declared `not_computational` and yet presents 1 number(s) in `computed`. Either the finding rests on arithmetic -- in which case say which of no_tool_exists / tool_existed_unused applies -- or the numbers do not belong here."
+          ],
+          "auditable": false,
+          "transcribed": false
+        }
+      ],
+      "n_ledger": 1,
+      "ledger": [
+        {
+          "id": "weillachin_combined_ci_implausibly_tight",
+          "severity": "suspicious",
+          "kind": "no_tool_exists",
+          "codes": [
+            "number_derived"
+          ],
+          "problems": [
+            "5 of its 8 figure(s) appear nowhere in the paper -- 0.007908308582332144, 1.1102230246251565, -14, 7.726051577767566, 0.16816635540236594 -- so the agent produced them, with no registered tool to answer for the arithmetic. Show the derivation."
+          ],
+          "auditable": true,
+          "transcribed": false
+        }
+      ],
+      "by_code": {
+        "number_under_not_computational": 7,
+        "number_derived": 1
+      },
+      "code_meanings": {
+        "number_under_not_computational": "declared no arithmetic and then presented some",
+        "number_derived": "presents a figure that is NOT in the paper, so the agent produced it -- the derivation is what a reader has to be shown"
+      },
+      "paper_readable": true,
+      "n_transcribed": 0,
+      "n_derived": 1,
+      "note": "23 finding(s): 15 computed by a registered tool, 7 resting on no arithmetic at all, 1 on arithmetic no tool covers, 0 on arithmetic a tool could have done, 0 on the legacy `manual` label. 1 present a figure that is NOT in the paper, so the agent produced it -- each one is named, and its derivation is what to check; 7 declare no arithmetic and then present some. Nothing here is deleted: an unrecorded number is not a fabricated one, and the pattern of what needed rescuing is itself worth reading."
+    },
+    "statistics_register": {
+      "absent": false,
+      "rows": [
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "n": 30
+          },
+          "quote": "Randomized double blind controlled study in rat, which was limited to 30 animals (Charles River, 220 to 280 g).",
+          "checkable": {
+            "tools": [
+              "check_summation_batch",
+              "flag_round_n"
+            ]
+          },
+          "id": "abs_n30",
+          "location": "Abstract, Methods",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "other",
+          "values": {
+            "min_g": 220,
+            "max_g": 280
+          },
+          "quote": "limited to 30 animals (Charles River, 220 to 280 g).",
+          "checkable": {
+            "tools": [
+              "check_statistic_bounds"
+            ]
+          },
+          "id": "abs_weight",
+          "location": "Abstract",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "CERE": 12,
+            "NaCl": 11,
+            "controls": 7
+          },
+          "quote": "a) verum Cerebrolysin \u00ae  IP=12-b) shams NaCl 0.9% IP=11, and c) 7 controls (nil).",
+          "checkable": {
+            "tools": [
+              "check_summation_batch"
+            ]
+          },
+          "id": "abs_arms",
+          "location": "Abstract",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "n": 16
+          },
+          "quote": "2nd Op at day 90 (16 surviving rats) for open proof of reinnervation",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "abs_n16",
+          "location": "Abstract",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "n": 15
+          },
+          "quote": "10 days later, on the 3rd Op N=15, euthanasia and organ fixation were performed.",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "abs_n15",
+          "location": "Abstract",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "n_positive": 8
+          },
+          "quote": "Eight rats showed positive CMAPs.",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "abs_cmap8",
+          "location": "Abstract, Results",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "abstract",
+          "kind": "count",
+          "values": {
+            "n_vecuronium": 4
+          },
+          "quote": "Four CAMP- positive- rats received Vecuronium \u00ae",
+          "checkable": {
+            "tools": [],
+            "reason": "count of a subset with no percentage or test statistic attached"
+          },
+          "id": "abs_vec4",
+          "location": "Abstract",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "CERE": 12,
+            "NaCl": 11,
+            "controls": 7
+          },
+          "quote": "they were 12 Cere (verum), 11 NaCl (placebo) well randomized, and 7 controls (nil)",
+          "checkable": {
+            "tools": [
+              "check_summation_batch"
+            ]
+          },
+          "id": "meth_arms",
+          "location": "Methods, Synopsis of the medication",
+          "duplicate_of": "abs_arms",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "alpha": 0.05
+          },
+          "quote": "The level of alpha was defined as alpha=0.05, and a two-sided test was used for superiority.",
+          "checkable": {
+            "tools": [
+              "check_statistic_bounds"
+            ]
+          },
+          "id": "meth_alpha",
+          "location": "Statistical Methods",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.4,
+            "ci_low": 0.0704,
+            "ci_high": 0.7296,
+            "p": 0.4146,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXDIAM                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4146  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_diam",
+          "location": "Table 2, NNTXDIAM",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.4,
+            "ci_low": 0.0704,
+            "ci_high": 0.7296,
+            "p": 0.4936,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXAREA                     |                                   | 0,4000 | (0,0704 to 0,7296) | 10 / 3  | 0,4936  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_area",
+          "location": "Table 2, NNTXAREA",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.6667,
+            "ci_low": 0.3738,
+            "ci_high": 0.9596,
+            "p": 0.1928,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXAXON                     |                                   | 0,6667 | (0,3738 to 0,9596) | 10 / 3  | 0,1928  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_axon",
+          "location": "Table 2, NNTXAXON",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.7333,
+            "ci_low": 0.466,
+            "ci_high": 1.0,
+            "p": 0.102,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXMYELIN                   |                                   | 0,7333 | (0,4660 to 1,0000) | 10 / 3  | 0,1020  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_myelin",
+          "location": "Table 2, NNTXMYELIN",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.7667,
+            "ci_low": 0.4988,
+            "ci_high": 1.0,
+            "p": 0.7533,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXMIN                      |                                   | 0,7667 | (0,4988 to 1,0000) | 10 / 3  | 0,7533  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_min",
+          "location": "Table 2, NNTXMIN",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.8,
+            "ci_low": 0.5362,
+            "ci_high": 1.0,
+            "p": 0.9017,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXMAX                      |                                   | 0,8000 | (0,5362 to 1,0000) | 10 / 3  | 0,9017  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_max",
+          "location": "Table 2, NNTXMAX",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.5667,
+            "ci_low": 0.2855,
+            "ci_high": 0.8479,
+            "p": 0.2347,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXTOTAL                    |                                   | 0,5667 | (0,2855 to 0,8479) | 10 / 3  | 0,2347  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_total",
+          "location": "Table 2, NNTXTOTAL",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.6333,
+            "ci_low": 0.3476,
+            "ci_high": 0.9191,
+            "p": 0.3505,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| NNTXCUMUL                    |                                   | 0,6333 | (0,3476 to 0,9191) | 10 / 3  | 0,3505  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t2_cumul",
+          "location": "Table 2, NNTXCUMUL",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.5611,
+            "ci_low": 0.5456,
+            "ci_high": 0.5766,
+            "p": 0.0001,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| Combined (Wei-Lachin)        |                                   | 0,5611 | (0,5456 to 0,5766) | 10 / 3  | <0.0001 |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "stalt_check"
+            ]
+          },
+          "id": "t2_combined",
+          "location": "Table 2, Combined (Wei-Lachin)",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.625,
+            "ci_low": 0.3993,
+            "ci_high": 0.8507,
+            "p": 0.4146,
+            "n1": 16,
+            "n2": 5
+          },
+          "quote": "| Muscle Marlene        |                                   | 0,6250 | (0,3993 to 0,8507) | 16 / 5  | 0,4146  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t3_marlene",
+          "location": "Table 3, Muscle Marlene",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.8182,
+            "ci_low": 0.5578,
+            "ci_high": 1.0,
+            "p": 0.4936,
+            "n1": 11,
+            "n2": 2
+          },
+          "quote": "| Muscle Catoi          |                                   | 0,8182 | (0,5578 to 1,0000) | 11 / 2  | 0,4936  |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "grimu_check"
+            ]
+          },
+          "id": "t3_catoi",
+          "location": "Table 3, Muscle Catoi",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.5611,
+            "ci_low": 0.5456,
+            "ci_high": 0.5766,
+            "p": 0.0001,
+            "n1": 10,
+            "n2": 3
+          },
+          "quote": "| Combined (Wei-Lachin) |                                   | 0,5611 | (0,5456 to 0,5766) | 10 / 3  | <0.0001 |",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci",
+              "detect_duplication"
+            ]
+          },
+          "id": "t3_combined",
+          "location": "Table 3, Combined (Wei-Lachin)",
+          "duplicate_of": "t2_combined",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "estimate_ci",
+          "values": {
+            "MW": 0.5611,
+            "ci_low": 0.5456,
+            "ci_high": 0.5766
+          },
+          "quote": "(MW=0.5611, 95%CI 0.5456-0.5766, Wei-Lachin procedure, directional test, exploratory interpretation.",
+          "checkable": {
+            "tools": [
+              "check_estimate_ci"
+            ]
+          },
+          "id": "t2_caption_mw",
+          "location": "Table 2 caption",
+          "duplicate_of": "t2_combined",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "percentage",
+          "values": {
+            "pct": 50
+          },
+          "quote": "the overall mortality of 50% was still high",
+          "checkable": {
+            "tools": [
+              "check_count_percent",
+              "grim_percentage"
+            ]
+          },
+          "id": "res_mort50",
+          "location": "Results, Surgery",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n": 21
+          },
+          "quote": "Consequently, 21 rats underwent the 2 nd Op for transplant revision",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "res_n21",
+          "location": "Results, Surgery",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "CERE": 5,
+            "NaCl": 7,
+            "controls": 3
+          },
+          "quote": "They were 5 out of 12 CERE (No 10, 11, 17, 24, 27), 7 out of 11 NaCl ( No 9,12, 13, 18, 25, 26, 29), and 3 out of 7 controls (No. 5, 6, 7).",
+          "checkable": {
+            "tools": [
+              "check_summation_batch"
+            ]
+          },
+          "id": "res_completers",
+          "location": "Results, Surgery",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_positive": 8,
+            "n_tested": 21
+          },
+          "quote": "electro-stimulation of the PNG transplant in 21 rats was positive in only 8 rats.",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "res_cmap_8of21",
+          "location": "Results, Direct electrical muscle stimulation",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "figure",
+          "kind": "count",
+          "values": {
+            "n_positive": 8,
+            "n": 16
+          },
+          "quote": "as it was the case in 8 of 16 rats t3 months after the grafting procedure.",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "fig4_8of16",
+          "location": "Figure 4 caption",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "figure",
+          "kind": "count",
+          "values": {
+            "n_positive": 7,
+            "n": 14
+          },
+          "quote": "Positive EMG potentials were observed in 7 out of the 14 surviving animals.",
+          "checkable": {
+            "tools": [
+              "check_count_percent"
+            ]
+          },
+          "id": "fig12_7of14",
+          "location": "Figure 12 caption",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "mean_pos": 2.57,
+            "mean_neg": 1.3
+          },
+          "quote": "was more intense in EMG-positive cases (individual final scores of 2 and 3; score average 2.57) than in EMG-negative cases (individual final scores of 1 and 2; score average 1.3)",
+          "checkable": {
+            "tools": [
+              "check_ratio"
+            ]
+          },
+          "id": "ang_means",
+          "location": "Figure 9 caption / Angiogenesis",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "percentage",
+          "values": {
+            "pct": 75
+          },
+          "quote": "the EMG-positive cases exhibited a larger average muscle fiber diameter compared with the EMG-negative cases, reaching nearly 75% of the contralateral muscle fiber diameter.",
+          "checkable": {
+            "tools": [],
+            "reason": "approximate ('nearly 75%') with no integer count or n printed beside it"
+          },
+          "id": "res_75pct",
+          "location": "Results, Histometric examination",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_2nd_op_deaths_immediate": 4,
+            "n_next_day": 2
+          },
+          "quote": "four more animals died immediately after the surgery (No 8, 21, 23, 28), and another two (No 2 and No 3) on the first postoperative day.",
+          "checkable": {
+            "tools": [
+              "check_summation_batch"
+            ]
+          },
+          "id": "res_2nd_op_deaths",
+          "location": "Results, Surgery",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_fb_cases": 4
+          },
+          "quote": "SC examination revealed four cases (three EMG-positive and one EMG-negative case) of neurotracer accumulation (FB+)",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "res_fb4",
+          "location": "Results, Fluorescence microscopy",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "figure",
+          "kind": "other",
+          "values": {
+            "dose_ug_kg": 80
+          },
+          "quote": "Vecuronium \u00ae IV (80 \u00b5g/kg) application during artificial ventilation of the rat",
+          "checkable": {
+            "tools": [],
+            "reason": "dose comparison with Table 1 is a unit conversion across passages, recorded as not_computational"
+          },
+          "id": "fig5_vec_dose",
+          "location": "Figure 5 caption",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "other",
+          "values": {
+            "dose_mg_kg_low": 0.04,
+            "dose_mg_kg_high": 0.05
+          },
+          "quote": "| Competitive ACh- neuromuscular blocking                                              | Vecuronium Inresa \u00ae 10 mg/5 ml                                                              | Vecuronium bromid 10 mg/5 ml=Vecuronium Kation 8.75 mg/5 ml                                  | 0.04 - 0.05 mg/kg                                                                      | IV                       | Inresa Arzneimittel GmbH Freiburg, D            |",
+          "checkable": {
+            "tools": [],
+            "reason": "dosing table, not a sample statistic"
+          },
+          "id": "t1_vecuronium",
+          "location": "Table 1, Vecuronium row",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "depth_pos_min": 0.52,
+            "depth_pos_max": 1.53,
+            "depth_neg_min": 0.12,
+            "depth_neg_max": 1.91
+          },
+          "quote": "NG positions varied in both depth (ranging from 0.52 mm to 1.53 mm in electromyography (emg) positive cases, respectively, from 0.12 mm to 1.91 mm in emg negative cases",
+          "checkable": {
+            "tools": [],
+            "reason": "ranges of a continuous millimetre measurement; no mean/SD/n for GRIM or SD-range"
+          },
+          "id": "fig7_depths",
+          "location": "Figure 7 caption",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "angle_pos_min": 9,
+            "angle_pos_max": 40,
+            "angle_neg_min": 0,
+            "angle_neg_max": 43
+          },
+          "quote": "ranging from 9\u00b0 to 40\u00b0 in emg positive cases and from 0\u00b0 to 43\u00b0 in emg negative cases",
+          "checkable": {
+            "tools": [],
+            "reason": "angular ranges, no distributional summary"
+          },
+          "id": "fig7_angles",
+          "location": "Figure 7 caption",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "table",
+          "kind": "count",
+          "values": {
+            "n_plus": 7,
+            "n_minus": 10
+          },
+          "quote": "| 5 (+)  | 40 o , 1.16 mm Rxl 7-9",
+          "checkable": {
+            "tools": [
+              "check_summation_batch"
+            ]
+          },
+          "id": "t4_n_plus_minus",
+          "location": "Table 4 case column",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "count",
+          "values": {
+            "n_unexplained_deaths": 14
+          },
+          "quote": "sudden insult and death of the 14 rats, both intra- or postoperatively",
+          "checkable": {
+            "tools": [
+              "check_summation"
+            ]
+          },
+          "id": "res_14deaths",
+          "location": "Results, Unpredictable sudden deaths",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        },
+        {
+          "source": "prose",
+          "kind": "other",
+          "values": {
+            "pmax_mbar": 18,
+            "freq": 50,
+            "flow_l_min": 1.5,
+            "FiO2": 0.7
+          },
+          "quote": "Pmax: 18 mbar, ventilation frequency-50/min, flow-1.5 l/",
+          "checkable": {
+            "tools": [],
+            "reason": "equipment settings, not sample statistics"
+          },
+          "id": "meth_ventilator",
+          "location": "Methods, Surgical equipment",
+          "problems": [],
+          "verification": {
+            "quote_located": null,
+            "values_in_quote": null,
+            "problems": [
+              "no paper text was available, so this row is unverified BY US -- our gap, not a defect in the row"
+            ]
+          }
+        }
+      ],
+      "n_rows": 39,
+      "n_duplicates": 3,
+      "n_unique": 36,
+      "n_checkable": 29,
+      "n_verified": 0,
+      "n_malformed": 0,
+      "by_source": {
+        "abstract": 7,
+        "prose": 13,
+        "table": 13,
+        "figure": 3
+      },
+      "floor": {
+        "ok": true,
+        "n_floor": 0,
+        "n_unmatched": 0,
+        "unmatched": [],
+        "note": "every statistic the independent enumerator found is accounted for in the register"
+      },
+      "provenance": {
+        "by_file": {
+          "cerebrolysin_rat_sci.pdf": {
+            "extractor": "docling",
+            "n_chars": 119202
+          }
+        },
+        "docling_version": "2.115.0",
+        "n_docling": 1,
+        "n_pdfplumber": 0,
+        "all_high_fidelity": true,
+        "note": "1 file(s) read by docling, 0 by pdfplumber."
+      },
+      "note": "`n_unique` is the count of statistics THE AGENT LOCATED, not of statistics the paper contains. Enumeration recall is unmeasured; the floor below is a lower bound on it, not an estimate of it."
+    },
+    "text_integrity": {
+      "quarantine": false,
+      "note": "No character-level corruption detected in the extracted text.",
+      "patterns": []
+    },
+    "extraction": {
+      "checked": [
+        {
+          "file": "cerebrolysin_rat_sci.pdf",
+          "path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/cerebrolysin_rat_sci.pdf",
+          "role": "article",
+          "status": "cached",
+          "seconds": 0.0,
+          "error": null
+        }
+      ],
+      "n_cached": 1,
+      "n_extracted": 0,
+      "failed": [],
+      "seconds": 0.005545948981307447,
+      "note": "1 PDF(s) available to the review (1 already extracted, 0 extracted now).",
+      "skipped_article_pdf": null,
+      "markdown": {
+        "paper": "paper",
+        "action": "current",
+        "body_md": {
+          "state": "match",
+          "n_repairs": 0,
+          "path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/cerebrolysin_flow/paper/markdown/body.md"
+        },
+        "source_channel": "pdf",
+        "n_chars": 119202
+      }
+    },
+    "undelivered": {
+      "ok": true,
+      "n_files": 0,
+      "n_unread": 0,
+      "n_partial": 0,
+      "files": [],
+      "note": "every file this review reached for arrived."
+    },
+    "stage1_reconciliation": {
+      "n_stage1": 23,
+      "n_carried": 12,
+      "n_dropped": 11,
+      "dropped_by_severity": {
+        "suspicious": 1,
+        "consistent": 9,
+        "indeterminate": 1
+      },
+      "n_accusatory_dropped": 1,
+      "accusatory_dropped": [
+        {
+          "id": "weillachin_combined_ci_implausibly_tight",
+          "severity": "suspicious",
+          "location": "Table 2, Combined (Wei-Lachin) row",
+          "explained": true,
+          "disposition": "discarded",
+          "reason": "check_estimate_ci re-run: Combined MW/CI/p are internally consistent (recovered SE=0.0079, recovered p=1.11e-14). No registered tool compares a Wei-Lachin SE with its components; the factor-of-twenty comparison was model_computed, and the paper is silent on the covariance, so the innocent multivariate-tightening reading cannot be ruled out."
+        }
+      ],
+      "n_accusatory_unexplained": 0,
+      "accusatory_unexplained": [],
+      "clean": true,
+      "reconcilable": true,
+      "note": "11 of 23 stage-1 findings are not cited by any editorial finding. A `consistent` result belongs nowhere in a findings report, so most of this is ordinary editorial work. None of the dropped findings was accusatory."
+    },
+    "harness_sweep": {
+      "n_tables": 4,
+      "duplication_targets": 0,
+      "duplication_ran": false,
+      "duplication_why_not": "The paper prints no (mean, SD) pair in any table, so there was nothing to compare. This is a refusal, not a clean result.",
+      "sd_range_targets": 0,
+      "sd_range_checked": 0,
+      "sd_range_skipped_undeclared": 0,
+      "n_accusatory": 0,
+      "accusatory": [],
+      "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets."
+    }
+  },
+  "verdict": "does_not_reconcile",
+  "confidence": "high",
+  "report_markdown": "This study randomises 30 rats to Cerebrolysin, saline, or no injection after a T10 sural-nerve graft into the internal oblique, and asks whether the graft reinnervates muscle with mixed cholinergic and glutamatergic transmission. The only statistically significant test the authors report is a Wei-Lachin combination of histometric nerve measures comparing 'stimulus yes' with 'stimulus no' (MW=0.5611, 95% CI 0.5456-0.5766, p<0.0001). They call the analysis exploratory, skip multiplicity adjustment, and warn about small samples.\n\nTwenty of the thirty-four checks that ran on printed values passed. The randomisation split 12+11+7 sums to 30, the completers 5+7+3 sum to 15, 15 deaths among 30 print as 50%, all eleven Mann-Whitney point estimates sit inside their printed intervals, and the Combined estimate, interval and p<0.0001 agree with one another on a Wald reading. That is the part that holds.\n\nWhat does not hold is the rest of those same tables, and it reaches the result the paper depends on. Table 3 is offered as muscle-fibre evidence of reinnervation. Its first two p-values are Table 2's first two p-values, and its Combined line is Table 2's Combined line, including N1/N2=10/3 rather than the muscle rows' 16/5 and 11/2. Table 3's caption even describes 'the combined result of the two histological assessments' while sitting on a muscle table. The ordinary reading is a forest-plot template reused without recomputing. As printed, Table 3 does not report the muscle tests it names. Muscle Catoi's own interval already excludes no difference (lower bound 0.5578), so that comparison would be significant at the authors' 5% threshold; the pasted p=0.4936 is not. A rank-sum p of 0.4146 is also not a possible value for 16 versus 5 animals, nor is 0.4936 possible for 11 versus 2.\n\nThe source table is not internally coherent either. None of the eight Table 2 component p-values is an achievable Mann-Whitney p for 10 versus 3 animals, two-sided or one-sided. Rank-sum software can move a p in the fourth decimal; it does not emit eight unachievable values. Two rows share MW=0.4000 and the same 95% CI to four decimals yet print different p-values. NNTXMAX's interval starts at 0.5362, which already excludes 0.5, while p=0.9017 does not. NNTXTOTAL's interval is symmetric about its MW and recovers p\u22480.642 against a printed 0.2347. Methods promise two-sided tests and two-sided 95% CIs of the Mann-Whitney statistic; the captions say 'directional test'. The printed p-values miss both lattices, so the tail convention cannot be recovered from the numbers.\n\nThe grouping for the Combined test is never one number. The abstract has 16 rats at the day-90 operation and eight positive muscle signals; Results has 21 rats at that operation and eight positives of 21; one figure has 8 of 16; the Discussion has 7 of 14; Table 4 lists seven plus-cases and ten minus-cases. Table 2's 10 versus 3 matches none of those splits. Results' own death cascade adds up (nine early deaths, 30\u22129=21, then six further deaths to 15 completers); the abstract's 16 does not. Tissues saved from two animals that died at revision can explain Table 4's 17 rows. They cannot explain eight versus seven positives.\n\nTwo lesser inconsistencies sit outside those tables. Vecuronium, used as functional proof of mixed transmission, is 0.04-0.05 mg/kg in the dosing table and 80 \u00b5g/kg (0.08 mg/kg) on the figure. Angiogenesis is said to average 2.57 in EMG-positive cases with individual scores of only 2 and 3, but Table 4 scores EMG-positive case 6 as 1; the EMG-negative average 1.3 does match that table.\n\nThe Combined Wei-Lachin interval is internally consistent with p<0.0001. Whether an interval that tight can come from n=10/3 given the wide component intervals is a question this toolkit cannot settle, and it is not treated as an accusation. The descriptive surgical and histological narrative is a different kind of evidence and is not what these checks speak to.\n\nI have no confidence in the accuracy of the statistical tables as printed.",
+  "questions_for_authors": [
+    {
+      "question": "Table 3 prints Muscle Marlene p=0.4146 (N1/N2=16/5, MW=0.6250) and Muscle Catoi p=0.4936 (N1/N2=11/2, MW=0.8182), which are the same digits as Table 2 NNTXDIAM and NNTXAREA, and Table 3 Combined is MW=0.5611, 95% CI 0.5456-0.5766, N1/N2=10/3, p<0.0001 \u2014 identical to Table 2 Combined. Could you send the Mann-Whitney / Wei-Lachin output actually computed for the two muscle rows and for their combination?",
+      "why": "Settles whether Table 3 is a copied forest-plot template and what the muscle tests were.",
+      "finding_ids": [
+        "table3_p_values_copied_from_table2",
+        "table3_combined_copied_from_table2",
+        "table3_catoi_ci_excludes_null"
+      ]
+    },
+    {
+      "question": "Table 2 NNTXMAX prints MW=0.8000, 95% CI 0.5362 to 1.0000, p=0.9017 at N1/N2=10/3. Could you send the test output that produced that p-value and interval, including the U (or equivalent) and whether the test was two-sided or directional?",
+      "why": "The interval excludes 0.5 while p=0.9017 does not, and 0.9017 is not an achievable Mann-Whitney p for 10 versus 3.",
+      "finding_ids": [
+        "table2_nntxmax_ci_excludes_null",
+        "table2_grimu_all_component_p_miss_lattice"
+      ]
+    },
+    {
+      "question": "The abstract has 16 rats at the day-90 operation and eight positive CMAPs; Results has 21 rats at that operation and eight positives of 21; Figure 4 has 8 of 16; the Discussion has 7 of 14; Table 4 lists seven (+) and ten (\u2212) cases; Table 2 uses 10/3. Could you send the analysis n for stimulus yes versus no used in Tables 2 and 3, and which animals were counted as CMAP-positive?",
+      "why": "The grouping for the only significant combined test is not a single printed number.",
+      "finding_ids": [
+        "second_op_n_abstract_vs_results",
+        "cmap_positive_count_conflict"
+      ]
+    },
+    {
+      "question": "Table 1 lists Vecuronium 0.04-0.05 mg/kg IV and Figure 5 lists 80 \u00b5g/kg. Could you send the dose actually given to rats 19, 21, 28 and 29?",
+      "why": "The functional proof of mixed transmission uses this dose, and the two printed values are different quantities.",
+      "finding_ids": [
+        "vecuronium_dose_table1_vs_figure5"
+      ]
+    }
+  ],
+  "triage": [
+    {
+      "stage1_finding_id": "table3_combined_copied_from_table2",
+      "disposition": "merged",
+      "reason": "Folded into the Table 3 copy-paste finding; Combined MW/CI/N/p identity is part of the same template reuse as the two copied p-values. quote_not_located on all 12 accusations was a markdown-pipe / European-comma mismatch; the spans are in body.md."
+    },
+    {
+      "stage1_finding_id": "table3_catoi_ci_excludes_null",
+      "disposition": "merged",
+      "reason": "Same Muscle Catoi cell as the copied p=0.4936; the CI-versus-p significance flip is the consequence of that paste, not a separate defect."
+    },
+    {
+      "stage1_finding_id": "table2_nntxtotal_p_vs_ci",
+      "disposition": "merged",
+      "reason": "Folded into the Table 2 p-column finding with the eight lattice misses and the shared NNTXDIAM/NNTXAREA MW/CI."
+    },
+    {
+      "stage1_finding_id": "table2_nntxdiam_nntxarea_same_mw_ci_different_p",
+      "disposition": "merged",
+      "reason": "Folded into the Table 2 p-column finding; same P column, same 10/3 n."
+    },
+    {
+      "stage1_finding_id": "table2_grimu_all_component_p_miss_lattice",
+      "disposition": "merged",
+      "reason": "Survives as the Table 2 p-column finding after adding the NNTXTOTAL and NNTXDIAM/AREA contradictions to the same family."
+    },
+    {
+      "stage1_finding_id": "weillachin_combined_ci_implausibly_tight",
+      "disposition": "discarded",
+      "reason": "check_estimate_ci re-run: Combined MW/CI/p are internally consistent (recovered SE=0.0079, recovered p=1.11e-14). No registered tool compares a Wei-Lachin SE with its components; the factor-of-twenty comparison was model_computed, and the paper is silent on the covariance, so the innocent multivariate-tightening reading cannot be ruled out."
+    },
+    {
+      "stage1_finding_id": "second_op_n_abstract_vs_results",
+      "disposition": "merged",
+      "reason": "Folded with the CMAP 8-versus-7 conflict into one sample-flow finding; both are about the n behind stimulus yes/no."
+    },
+    {
+      "stage1_finding_id": "cmap_positive_count_conflict",
+      "disposition": "merged",
+      "reason": "Folded with abstract 16 versus Results 21 into one sample-flow finding."
+    }
+  ]
+}

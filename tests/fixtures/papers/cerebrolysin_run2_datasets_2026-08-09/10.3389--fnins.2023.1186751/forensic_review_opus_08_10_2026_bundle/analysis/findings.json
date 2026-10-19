@@ -1,0 +1,2175 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "paper_id": "10.3389--fnins.2023.1186751",
+  "schema_version": "1.0",
+  "paper_title": "Cerebrolysin and repetitive transcranial magnetic stimulation (rTMS) in patients with traumatic brain injury: a three-arm randomized trial",
+  "paper_metadata": {
+    "authors": "Olivia Verisezan Rosu, Nicoleta Jemna, Elian Hapca, Irina Benedek, Iulia Vadan, Ioana Muresanu, Diana Chira, Constantin Radu, Razvan Chereches, Stefan Strilciuc, Dafin Muresanu",
+    "journal": "Frontiers in Neuroscience",
+    "year": "2023",
+    "doi": "10.3389/fnins.2023.1186751",
+    "study_design": "Phase II single-centre three-arm parallel-group randomized double-blind placebo-controlled trial; non-parametric (Kruskal-Wallis + Dunn/Bonferroni) analysis of composite z-score cognitive outcomes at Day 101 and Day 180"
+  },
+  "anatomy": {
+    "studies": [
+      {
+        "id": "S1",
+        "label": "Three-arm RCT of Cerebrolysin + rTMS vs Cerebrolysin + sham vs placebo + sham in moderate-severe TBI",
+        "design": "rct",
+        "n": 93,
+        "clustered": false,
+        "preregistered": true,
+        "registry_id": "ISRCTN registry cited without a registration number",
+        "unit_of_analysis": "individual patient",
+        "n_per_group": [
+          {
+            "label": "PLC + SHM (composite complete-case)",
+            "n": 24
+          },
+          {
+            "label": "CRB + SHM (composite complete-case)",
+            "n": 20
+          },
+          {
+            "label": "CRB + rTMS (composite complete-case)",
+            "n": 20
+          }
+        ],
+        "sample_flow": [
+          {
+            "stage": "enrolled/randomized",
+            "n": 93,
+            "unit": "participants"
+          },
+          {
+            "stage": "intention-to-treat (efficacy) population",
+            "n": 86,
+            "unit": "participants"
+          },
+          {
+            "stage": "safety population",
+            "n": 86,
+            "unit": "participants"
+          },
+          {
+            "stage": "per-protocol population",
+            "n": 84,
+            "unit": "participants"
+          },
+          {
+            "stage": "premature discontinuation, loss to follow-up",
+            "n": 9,
+            "unit": "participants",
+            "reason": "loss to follow-up; stated as 9.6% of the sample"
+          },
+          {
+            "stage": "excluded from ITT",
+            "n": 7,
+            "unit": "participants",
+            "inferred": true,
+            "reason": "derived as 93 minus 86; the paper does not state this count directly"
+          },
+          {
+            "stage": "lost to follow-up from ITT to PP",
+            "n": 2,
+            "unit": "participants",
+            "reason": "CRB + SHM: 1, PLC + SHM: 1"
+          },
+          {
+            "stage": "composite outcome analysis, complete cases",
+            "n": 64,
+            "unit": "participants",
+            "reason": "less than total sample size due to missing data"
+          },
+          {
+            "stage": "COVID-19 lockdown visit delays included in PP analysis",
+            "n": 16,
+            "unit": "participants",
+            "reason": "15 for Visit 2, 1 for Visit 3"
+          }
+        ]
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "study_id": "S1",
+        "statement": "Combining rTMS with Cerebrolysin is feasible, efficacious and safe versus Cerebrolysin alone on a battery of co-primary neurocognitive outcomes at 3 and 6 months after TBI.",
+        "status": "exploratory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "The primary objective of this clinical study was to explore the feasibility, efficacy, and safety of combining rTMS and Cerebrolysin treatment versus CRB alone on a battery of co-primary neurocognitive outcomes at 3 and 6 months after TBI.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "H2",
+        "study_id": "S1",
+        "statement": "The three groups differ on the composite cognitive outcome (z-score change from baseline) at Day 101 and at Day 180.",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "The primary analysis compared the three groups\u2019 baseline changes in composite neurocognitive outcomes.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "H3",
+        "study_id": "S1",
+        "statement": "The combined intervention does not increase adverse or serious adverse events relative to the comparators.",
+        "status": "confirmatory",
+        "appears_in_abstract": true,
+        "confidence": "high",
+        "provenance_quote": "Safety analyses were conducted on the ITT population and included the incidence of adverse events and serious adverse events.",
+        "provenance_verdict": "verbatim"
+      }
+    ],
+    "variables": [
+      {
+        "id": "V_composite",
+        "name": "Composite cognitive outcome (z-score of change from baseline)",
+        "measurement_level": "interval",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "standardized",
+        "derived_from": "z-scores of the baseline differences of each individual outcome scale, summed into a composite cognitive total score",
+        "confidence": "high",
+        "provenance_quote": "For each patient, we calculated the differences between Visit 1 (Day 101) and baseline and Visit 2 (Day 180) and baseline across all variables and used z-scores to create a composite cognitive total score",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_moca",
+        "name": "Montreal Cognitive Assessment (MoCA) total score",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "confidence": "medium",
+        "provenance_quote": "Montreal Cognitive Assessment (MoCA) ([Hobson, 2015])",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "V_ds",
+        "name": "Wechsler Digit Span, forward and backward",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "sum_of_items",
+        "confidence": "medium",
+        "provenance_quote": "two subscales of the Wechsler adult intelligence scale (3rd edition): Processing Speed Index (PSI) and Digit Span",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_stroop",
+        "name": "Stroop Color-Word Test completion times and derived word-difference / colour-difference scores",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "difference",
+        "derived_from": "Stroop trial completion times",
+        "confidence": "medium",
+        "provenance_quote": "the Stroop Color-Word Test ([Scarpina and Tagini, 2017])",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "V_tmt",
+        "name": "Trail Making Test parts 1 and 2 completion time",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "measured",
+        "units": "seconds",
+        "confidence": "medium",
+        "provenance_quote": "Trail Making Test ([Bucks, 2013])",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "V_hdrs",
+        "name": "Hamilton Rating Scale for Depression (HDRS) total",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "confidence": "medium",
+        "provenance_quote": "the Hamilton Rating Scale for Depression (HDRS) ([Hamilton, 1960])",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "V_hars",
+        "name": "Hamilton Anxiety Rating Scale (HARS) total; labelled HADS in Supplementary Annex 1 and HARTS in the deposited dataset",
+        "measurement_level": "ordinal",
+        "discreteness": "discrete",
+        "family": "likert_composite",
+        "derivation": "sum_of_items",
+        "confidence": "high",
+        "provenance_quote": "the Hamilton Anxiety Rating Scale (HARS) ([Hamilton, 1959])",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "V_cantab",
+        "name": "CANTAB subscales: One Touch Stockings of Cambridge, Multitasking Test, Reaction Time",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "three subscales of the Cambridge Neuropsychological Test Automated Battery (CANTAB): One Touch Stockings of Cambridge, The Multitasking Test, and Reaction Time",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_ae",
+        "name": "Adverse event count per patient",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "measured",
+        "lower_bound": 0,
+        "confidence": "high",
+        "provenance_quote": "In total, 21 adverse events (AE) were reported during this trial for 7 patients in the CRB + SHM group, 6 in the CRB + rTMS group, and 8 in the PLC + SHM group.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_sae",
+        "name": "Serious adverse event count per patient",
+        "measurement_level": "ratio",
+        "discreteness": "discrete",
+        "family": "count",
+        "derivation": "measured",
+        "lower_bound": 0,
+        "confidence": "high",
+        "provenance_quote": "One serious adverse event (SAE) was reported for the CRB + SHM group.",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_age",
+        "name": "Age at enrolment",
+        "measurement_level": "ratio",
+        "discreteness": "continuous",
+        "family": "continuous",
+        "units": "years",
+        "derivation": "other",
+        "derived_from": "computed from birth date (BRTHDT) and presentation date (PRESDT) columns in the deposited dataset",
+        "lower_bound": 18,
+        "upper_bound": 80,
+        "confidence": "high",
+        "provenance_quote": "age 18\u201370 years (updated 28/02/2020: 18\u201380 years)",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_sex",
+        "name": "Sex (2 = female, 1 = male)",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "binary",
+        "levels": [
+          "male",
+          "female"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Gender distribution of study groups (2-female; 1-male).",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "V_group",
+        "name": "Treatment allocation",
+        "measurement_level": "nominal",
+        "discreteness": "discrete",
+        "family": "nominal_category",
+        "n_categories": 3,
+        "levels": [
+          "Cerebrolysin + rTMS",
+          "Cerebrolysin + sham",
+          "Placebo + sham"
+        ],
+        "derivation": "measured",
+        "confidence": "high",
+        "provenance_quote": "Group Reference: \u2022 1 = Cerebrolysin + rTMS \u2022 2 = Cerebrolysin + sham \u2022 3 = Placebo + sham",
+        "provenance_verdict": "stitched"
+      }
+    ],
+    "tests": [
+      {
+        "id": "T_ae_kw",
+        "test_type": "kruskal_wallis",
+        "location": "Results, adverse events paragraph",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_ae",
+        "grouping_var": "V_group",
+        "statistic_value": 0.57734,
+        "df": "2",
+        "p_value": 0.7493,
+        "n": 86,
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": false,
+        "confidence": "high",
+        "provenance_quote": "Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T_sae_kw",
+        "test_type": "kruskal_wallis",
+        "location": "Results, adverse events paragraph",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_sae",
+        "grouping_var": "V_group",
+        "statistic_value": 2.0714,
+        "df": "2",
+        "p_value": 0.355,
+        "n": 86,
+        "correction_applied": "none",
+        "appears_in_abstract": false,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": false,
+        "confidence": "high",
+        "provenance_quote": "Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T_comp_d101_kw",
+        "test_type": "kruskal_wallis",
+        "location": "Results, composite outcome paragraph",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "grouping_var": "V_group",
+        "statistic_value": 5.732,
+        "df": "2",
+        "p_value": 0.06,
+        "n": 64,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "Day 101\u2013\u03c7\u00b2 = 5.732, p = 0.06",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T_comp_d180_kw",
+        "test_type": "kruskal_wallis",
+        "location": "Results, composite outcome paragraph",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "grouping_var": "V_group",
+        "statistic_value": 5.833,
+        "df": "2",
+        "p_value": 0.54,
+        "n": 64,
+        "correction_applied": "none",
+        "appears_in_abstract": true,
+        "appears_in_conclusions": true,
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "Day 180 \u03c7\u00b2 = 5.833, p = 0.54",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T1_ae_1v2",
+        "test_type": "other",
+        "location": "Table 1, AE, CRB + rTMS\u2013CRB + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_ae",
+        "statistic_value": -0.4403399,
+        "p_value": 0.659691,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "CRB + rTMS\u2013CRB + SHM\t-0.4403399\t0.6596910\t1",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T1_ae_1v3",
+        "test_type": "other",
+        "location": "Table 1, AE, CRB + rTMS\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_ae",
+        "statistic_value": -0.7548684,
+        "p_value": 0.450328,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "CRB + rTMS\u2013PLC + SHM\t-0.7548684\t0.4503280\t1",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T1_ae_2v3",
+        "test_type": "other",
+        "location": "Table 1, AE, CRB + SHM\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_ae",
+        "statistic_value": -0.3092419,
+        "p_value": 0.7571375,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "CRB + SHM\u2013PLC + SHM\t-0.3092419\t0.7571375\t1",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T1_sae_1v2",
+        "test_type": "other",
+        "location": "Table 1, SAE, CRB + rTMS\u2013CRB + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_sae",
+        "statistic_value": -1.260425,
+        "p_value": 0.2075163,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "-1.260425\t0.2075163\t0.6225488",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T1_sae_1v3",
+        "test_type": "other",
+        "location": "Table 1, SAE, CRB + rTMS\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_sae",
+        "statistic_value": 0,
+        "p_value": 1,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "0.000000\t1.0000000\t1.0000000",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T1_sae_2v3",
+        "test_type": "other",
+        "location": "Table 1, SAE, CRB + SHM\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H3",
+        "outcome_var": "V_sae",
+        "statistic_value": 1.239239,
+        "p_value": 0.2152569,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "1.239239\t0.2152569\t0.6457706",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_d101_1v2",
+        "test_type": "other",
+        "location": "Table 2, Day 101, CRB + rTMS\u2013CRB + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 1.6688222,
+        "p_value": 0.09515263,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "CRB + rTMS\u2013CRB + SHM\t1.6688222\t0.09515263\t0.28545788",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T2_d101_1v3",
+        "test_type": "other",
+        "location": "Table 2, Day 101, CRB + rTMS\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 2.3373784,
+        "p_value": 0.01941951,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "CRB + rTMS\u2013PLC + SHM\t2.3373784\t0.01941951\t0.05825854",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T2_d101_2v3",
+        "test_type": "other",
+        "location": "Table 2, Day 101, CRB + SHM\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 0.6413424,
+        "p_value": 0.52130024,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "CRB + SHM\u2013PLC + SHM\t0.6413424\t0.52130024\t1.00000000",
+        "provenance_verdict": "stitched"
+      },
+      {
+        "id": "T2_d180_1v2",
+        "test_type": "other",
+        "location": "Table 2, Day 180, CRB + rTMS\u2013CRB + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 1.8430467,
+        "p_value": 0.06532219,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "1.8430467\t0.06532219\t0.19596658",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_d180_1v3",
+        "test_type": "other",
+        "location": "Table 2, Day 180, CRB + rTMS\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 2.2295095,
+        "p_value": 0.02578002,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "2.2295095\t0.02578002\t0.07734006",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "T2_d180_2v3",
+        "test_type": "other",
+        "location": "Table 2, Day 180, CRB + SHM\u2013PLC + SHM",
+        "study_id": "S1",
+        "hypothesis_id": "H2",
+        "outcome_var": "V_composite",
+        "statistic_value": 0.3799672,
+        "p_value": 0.70396976,
+        "n": 64,
+        "correction_applied": "bonferroni",
+        "is_stated_primary_outcome": true,
+        "confidence": "high",
+        "provenance_quote": "0.3799672\t0.70396976\t1.00000000",
+        "provenance_verdict": "verbatim"
+      },
+      {
+        "id": "SI_itt_moca_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, MOCA_v1-baseline, ITT",
+        "statistic_value": 2.9946,
+        "df": "2",
+        "p_value": 0.2237,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_moca_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, MOCA_v2-baseline, ITT",
+        "statistic_value": 2.954,
+        "df": "2",
+        "p_value": 0.2283,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_psidsc_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_DSC_v1-baseline, ITT",
+        "statistic_value": 1.5716,
+        "df": "2",
+        "p_value": 0.4557,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_psidsc_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_DSC_v2-baseline, ITT",
+        "statistic_value": 0.17898,
+        "df": "2",
+        "p_value": 0.9144,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_psiss_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_SS_v1-baseline, ITT",
+        "statistic_value": 5.7111,
+        "df": "2",
+        "p_value": 0.05752,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Kruskal-Wallis chi-squared = 5.7111, df = 2, p-value = 0.05752",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_itt_psiss_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_SS_v2-baseline, ITT",
+        "statistic_value": 3.4516,
+        "df": "2",
+        "p_value": 0.178,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_scwtwd_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_W-D_v1-baseline, ITT",
+        "statistic_value": 0.43139,
+        "df": "2",
+        "p_value": 0.806,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_scwtwd_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_W-D_v2-baseline, ITT",
+        "statistic_value": 0.19297,
+        "df": "2",
+        "p_value": 0.908,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_scwtcd_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_C-D_v1-baseline, ITT",
+        "statistic_value": 1.0735,
+        "df": "2",
+        "p_value": 0.5846,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_scwtcd_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_C-D_v2-baseline, ITT",
+        "statistic_value": 1.8311,
+        "df": "2",
+        "p_value": 0.4003,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_dsf_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_F_v1-baseline, ITT",
+        "statistic_value": 0.77618,
+        "df": "2",
+        "p_value": 0.6784,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_dsf_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_F_v2-baseline, ITT",
+        "statistic_value": 4.4426,
+        "df": "2",
+        "p_value": 0.1085,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_dsb_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_B_v1-baseline, ITT",
+        "statistic_value": 3.368,
+        "df": "2",
+        "p_value": 0.1856,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_dsb_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_B_v2-baseline, ITT",
+        "statistic_value": 7.2622,
+        "df": "2",
+        "p_value": 0.02649,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Kruskal-Wallis chi-squared = 7.2622, df = 2, p-value = 0.02649",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_itt_tmt1_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT1_v1-baseline, ITT",
+        "statistic_value": 1.979,
+        "df": "2",
+        "p_value": 0.3718,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_tmt1_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT1_v2-baseline, ITT",
+        "statistic_value": 6.4319,
+        "df": "2",
+        "p_value": 0.04012,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Kruskal-Wallis chi-squared = 6.4319, df = 2, p-value = 0.04012",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_itt_tmt2_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT2_v1-baseline, ITT",
+        "statistic_value": 0.26422,
+        "df": "2",
+        "p_value": 0.8762,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_tmt2_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT2_v2-baseline, ITT",
+        "statistic_value": 2.469,
+        "df": "2",
+        "p_value": 0.291,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_hdrs_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HDRS_v1-baseline, ITT",
+        "statistic_value": 3.1861,
+        "df": "2",
+        "p_value": 0.2033,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_hdrs_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HDRS_v2-baseline, ITT",
+        "statistic_value": 2.4418,
+        "df": "2",
+        "p_value": 0.295,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_hads_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HADS_v1-baseline, ITT",
+        "statistic_value": 1.0283,
+        "df": "2",
+        "p_value": 0.598,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_itt_hads_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HADS_v2-baseline, ITT",
+        "statistic_value": 0.42942,
+        "df": "2",
+        "p_value": 0.8068,
+        "n": 86,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_moca_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, MOCA_v1-baseline, PP",
+        "statistic_value": 1.1016,
+        "df": "2",
+        "p_value": 0.5765,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_moca_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, MOCA_v2-baseline, PP",
+        "statistic_value": 1.5472,
+        "df": "2",
+        "p_value": 0.4614,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_psidsc_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_DSC_v1-baseline, PP",
+        "statistic_value": 1.5482,
+        "df": "2",
+        "p_value": 0.4611,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_psidsc_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_DSC_v2-baseline, PP",
+        "statistic_value": 2.9083,
+        "df": "2",
+        "p_value": 0.2336,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_psiss_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_SS_v1-baseline, PP",
+        "statistic_value": 3.5939,
+        "df": "2",
+        "p_value": 0.1658,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_psiss_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, PSI_SS_v2-baseline, PP",
+        "statistic_value": 1.4536,
+        "df": "2",
+        "p_value": 0.4835,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_scwtwd_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_W-D_v1-baseline, PP",
+        "statistic_value": 0.76864,
+        "df": "2",
+        "p_value": 0.6809,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_scwtwd_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_W-D_v2-baseline, PP",
+        "statistic_value": 1.3469,
+        "df": "2",
+        "p_value": 0.5099,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_scwtcd_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_C-D_v1-baseline, PP",
+        "statistic_value": 1.9222,
+        "df": "2",
+        "p_value": 0.3825,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_scwtcd_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, SCWT_C-D_v2-baseline, PP",
+        "statistic_value": 1.2103,
+        "df": "2",
+        "p_value": 0.546,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_dsf_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_F_v1-baseline, PP",
+        "statistic_value": 3.4141,
+        "df": "2",
+        "p_value": 0.1814,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_dsf_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_F_v2-baseline, PP",
+        "statistic_value": 3.4781,
+        "df": "2",
+        "p_value": 0.1757,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_dsb_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_B_v1-baseline, PP",
+        "statistic_value": 1.1998,
+        "df": "2",
+        "p_value": 0.5489,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_dsb_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, DS_B_v2-baseline, PP",
+        "statistic_value": 6.082,
+        "df": "2",
+        "p_value": 0.04779,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high",
+        "provenance_quote": "Kruskal-Wallis chi-squared = 6.082, df = 2, p-value = 0.04779",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_pp_tmt1_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT1_v1-baseline, PP",
+        "statistic_value": 2.6055,
+        "df": "2",
+        "p_value": 0.2718,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_tmt1_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT1_v2-baseline, PP",
+        "statistic_value": 2.782,
+        "df": "2",
+        "p_value": 0.2488,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_tmt2_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT2_v1-baseline, PP",
+        "statistic_value": 1.4481,
+        "df": "2",
+        "p_value": 0.4848,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_tmt2_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, TMT2_v2-baseline, PP",
+        "statistic_value": 2.8738,
+        "df": "2",
+        "p_value": 0.2377,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_hdrs_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HDRS_v1-baseline, PP",
+        "statistic_value": 2.2428,
+        "df": "2",
+        "p_value": 0.3258,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_hdrs_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HDRS_v2-baseline, PP",
+        "statistic_value": 1.1329,
+        "df": "2",
+        "p_value": 0.5675,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_hads_v1",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HADS_v1-baseline, PP",
+        "statistic_value": 1.31,
+        "df": "2",
+        "p_value": 0.5194,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_pp_hads_v2",
+        "test_type": "kruskal_wallis",
+        "location": "Supplementary Annex 1, HADS_v2-baseline, PP",
+        "statistic_value": 1.1456,
+        "df": "2",
+        "p_value": 0.5639,
+        "n": 84,
+        "correction_applied": "none",
+        "confidence": "high"
+      },
+      {
+        "id": "SI_dunn_itt_dsb_v2_1v3",
+        "test_type": "other",
+        "location": "Supplementary Annex 1, DS_B_v2-baseline, ITT, comparison 1-3",
+        "p_value": 0.0227401,
+        "n": 86,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "1-3 0.0227401",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_dunn_pp_dsb_v2_1v3",
+        "test_type": "other",
+        "location": "Supplementary Annex 1, DS_B_v2-baseline, PP, comparison 1-3",
+        "p_value": 0.0423081,
+        "n": 84,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "1-3 0.0423081",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_dunn_itt_tmt1_v2_1v3",
+        "test_type": "other",
+        "location": "Supplementary Annex 1, TMT1_v2-baseline, ITT, comparison 1-3",
+        "p_value": 0.0617833,
+        "n": 86,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "1-3 0.0617833",
+        "provenance_verdict": "unverified"
+      },
+      {
+        "id": "SI_dunn_itt_psiss_v1_1v2",
+        "test_type": "other",
+        "location": "Supplementary Annex 1, PSI_SS_v1-baseline, ITT, comparison 1-2",
+        "p_value": 0.050796,
+        "n": 86,
+        "correction_applied": "bonferroni",
+        "confidence": "high",
+        "provenance_quote": "1-2 0.0507960",
+        "provenance_verdict": "unverified"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "dropout_percentage_grim",
+      "location": "Results, paragraph 1",
+      "technique": "grim_percentage",
+      "consistent": false,
+      "severity": "impossible",
+      "quote": "Premature discontinuations were reported in 9 patients due to loss to follow-up (9.6%).",
+      "reported": {
+        "count": 9,
+        "percentage": 9.6,
+        "stated_total_enrolled": 93
+      },
+      "computed": {
+        "grim_percentage_severity": "impossible",
+        "implied_count_at_9.6pct": 8.928,
+        "nearest_possible_percentages": [
+          8.6,
+          9.7,
+          10.8
+        ],
+        "exact_value_for_9_of_93": "9.677% (rounds to 9.7)",
+        "grim_sweep_viable_ns_for_9.6pct": [
+          52,
+          73,
+          83
+        ],
+        "grim_sweep_viable_ks": [
+          5,
+          7,
+          8
+        ]
+      },
+      "inputs": {
+        "percentage": 9.6,
+        "n": 93,
+        "decimals": 1,
+        "data_type": "proportion"
+      },
+      "reproduction": "metascience grim-sweep --values 9.6 --n-min 2 --n-max 93 --decimals 1 --value-type percentage --n-max-source stated",
+      "notes": "grim_percentage returned `impossible`: 9 of 93 is 9.677%, which rounds to 9.7%, not 9.6%. A corroborating grim_sweep over every denominator up to the paper's own stated enrolment of 93 found 9.6% attainable only at n=52 (k=5), n=73 (k=7) and n=83 (k=8) -- so no denominator consistent with this trial reconciles a count of 9 with 9.6%. Both the numerator (9) and the denominator (93) are stated verbatim in the same paragraph, so no bound was assumed. grim_percentage is MCP-only and has no CLI verb, hence the reproduction command is the equivalent sweep. This GRIM-family `impossible` awaits the stage-2 R (`scrutiny`) cross-check. The consequence is nil: this is a one-digit rounding slip in a descriptive dropout figure and no claim depends on it.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A descriptive dropout percentage only; no inferential claim in the paper rests on it."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "Premature discontinuations were reported in 9 patients due to loss to follow-up (9.6%).",
+        "source_locator": "Results, paragraph 1",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "day180_composite_p_value",
+      "location": "Results, composite outcome paragraph (primary endpoint)",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Day 101\u2013\u03c7\u00b2 = 5.732, p = 0.06; Day 180 \u03c7\u00b2 = 5.833, p = 0.54",
+      "reported": {
+        "day101_chi2": 5.732,
+        "day101_p": 0.06,
+        "day180_chi2": 5.833,
+        "day180_p": 0.54,
+        "df": 2
+      },
+      "computed": {
+        "bracketing_from_paper_own_SI": "SI Annex 1 prints chi2=5.7111 -> p=0.05752 and chi2=6.082 -> p=0.04779, both at df=2",
+        "implied_p_range_for_chi2_5.833": "between 0.04779 and 0.05752",
+        "reported_p_over_implied": "approximately 10x too large",
+        "day101_check": "consistent -- chi2=5.732 sits just above SI's 5.7111 (p=0.05752), so p just under 0.0575 rounds to 0.06 as printed"
+      },
+      "inputs": {
+        "main_text_pair": [
+          5.833,
+          0.54
+        ],
+        "si_bracketing_pairs": [
+          [
+            5.7111,
+            0.05752
+          ],
+          [
+            6.082,
+            0.04779
+          ]
+        ],
+        "df": 2
+      },
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "notes": "This is a READING of printed values, not a recomputation -- no tool in this kit converts a chi-squared plus df to a p-value, and I did not compute one myself. The argument needs no arithmetic: with 3 groups, df=2 for both timepoints, and p is strictly decreasing in chi-squared. The paper's own Supplementary Annex 1 prints 44 chi-squared/p pairs from the same software at df=2, two of which bracket 5.833 -- chi2=5.7111 gives p=0.05752 and chi2=6.082 gives p=0.04779. A chi-squared of 5.833 must therefore yield p between 0.048 and 0.058, most likely ~0.054. The printed 0.54 is a factor-of-ten discrepancy consistent with a lost decimal point. Verified identical in BOTH the XML and the PDF (page 5), so it is not an extraction artifact. Note the companion Day 101 value is internally consistent, which isolates the error to the Day 180 figure.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The paper's conclusion of 'no significant differences' at Day 180 survives at the corrected p of ~0.054, but the printed 0.54 misstates the strength of evidence on a co-primary endpoint by an order of magnitude, making a borderline result look decisively null."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "si_significant_results_contradict_narrative",
+      "location": "Supplementary Annex 1 (DS_B_v2-baseline, TMT1_v2-baseline) vs Discussion paragraph 2 and Results final paragraph",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "While primary outcomes and their subscales did not show statistically significant differences, the descriptive trends in this study support existing literature on the efficacy and safety of both rTMS and Cerebrolysin",
+      "reported": {
+        "narrative_claim": "no subscale showed statistically significant differences; individual outcome scales similar to composite findings",
+        "si_dsb_v2_itt": {
+          "chi2": 7.2622,
+          "p": 0.02649,
+          "dunn_bonferroni_1v3": 0.0227401
+        },
+        "si_dsb_v2_pp": {
+          "chi2": 6.082,
+          "p": 0.04779,
+          "dunn_bonferroni_1v3": 0.0423081
+        },
+        "si_tmt1_v2_itt": {
+          "chi2": 6.4319,
+          "p": 0.04012
+        }
+      },
+      "computed": {
+        "si_omnibus_tests_below_0.05_itt": 2,
+        "si_omnibus_tests_below_0.05_pp": 1,
+        "surviving_bonferroni_within_outcome": "Digit Span Backward at Day 180, group 1 (CRB+rTMS) vs group 3 (PLC+SHM), significant in BOTH ITT (0.0227) and PP (0.0423)"
+      },
+      "inputs": {
+        "narrative_location": "Discussion paragraph 2; Results final paragraph",
+        "si_location": "Supplementary Annex 1, DS_B_v2-baseline and TMT1_v2-baseline rows"
+      },
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "notes": "The main text states twice that no subscale reached significance ('Individual outcomes scales are similar to composite findings'). The supplementary annex reports otherwise: Digit Span Backward at Day 180 is significant on the omnibus test in both the ITT (p=0.02649) and per-protocol (p=0.04779) populations, and the CRB+rTMS vs placebo contrast survives the paper's own Bonferroni adjustment in both (0.0227 and 0.0423). Trail Making Test 1 at Day 180 is also significant on the ITT omnibus (p=0.04012). Two framings both deserve weight and the editorial stage should carry both: (a) the narrative claim is inaccurate as printed; (b) 2-3 results below 0.05 out of 22 uncorrected outcome tests is close to what chance alone predicts, so the underlying inference of 'no effect' may well be right even though the sentence describing it is wrong. Note the direction is conservative -- the paper understates its own positive findings rather than overstating them.",
+      "consequence": {
+        "flips_significance": true,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The Discussion's claim that no subscale showed a statistically significant difference is contradicted by the paper's own supplementary annex, where Digit Span Backward at Day 180 is significant both before and after Bonferroni adjustment in ITT and PP."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "missing_cantab_outcome_reporting",
+      "location": "Materials and methods, primary outcome list vs Supplementary Annex 1",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "three subscales of the Cambridge Neuropsychological Test Automated Battery (CANTAB): One Touch Stockings of Cambridge, The Multitasking Test, and Reaction Time",
+      "reported": {
+        "stated_primary_instruments": 10,
+        "instruments_with_group_difference_analysis_in_SI": [
+          "MOCA",
+          "PSI_DSC",
+          "PSI_SS",
+          "SCWT_W-D",
+          "SCWT_C-D",
+          "DS_F",
+          "DS_B",
+          "TMT1",
+          "TMT2",
+          "HDRS",
+          "HADS"
+        ],
+        "instruments_absent_from_SI": [
+          "One Touch Stockings of Cambridge (OTS)",
+          "Multitasking Test (MTT)",
+          "Reaction Time (RTI)"
+        ]
+      },
+      "computed": {
+        "n_stated_coprimary_instruments_unreported": 3,
+        "dataset_columns_present_but_unreported": [
+          "OTS01_1/2/3",
+          "OTS02_1/2/3",
+          "MTTTC01_1/2/3",
+          "MTTTC02_1/2/3",
+          "RTISMRT_1/2/3",
+          "RTIFMRT_1/2/3"
+        ],
+        "note": "the corresponding z_ columns exist and feed the composite score"
+      },
+      "inputs": {
+        "methods_instrument_list": "10 cognitive function tests",
+        "si_outcome_blocks": 22
+      },
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+      "notes": "The Methods name 10 co-primary cognitive instruments. Supplementary Annex 1, offered as the complete individual-outcome reporting ('More information is available in the Supplementary Annex 1'), reports group differences for only 11 outcome families covering 7 of those instruments. The three CANTAB subscales -- One Touch Stockings, Multitasking Test and Reaction Time -- have no group-difference analysis anywhere in the paper or the annex, even though their columns are present in the deposited ITT dataset at all three visits AND their z-scores contribute to the composite primary endpoint. So these measures influenced the headline result while never being reported individually. This is a selective-reporting gap, not an arithmetic error.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "Three of ten stated co-primary instruments contribute to the composite endpoint but have no reported individual analysis, so the claim that individual scales resemble the composite cannot be verified for them."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "raw_duplication_saturation",
+      "location": "Linked replication dataset (Harvard Dataverse DOFCIV), sheet 'ITT_analysis set'",
+      "technique": "raw_duplication",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV.",
+      "reported": {
+        "dataset": "ITT_analysis set, one row per ITT patient, ~120 columns"
+      },
+      "computed": {
+        "tool_severity_returned": "highly_suspicious",
+        "duplicated_row_pairs": 2260,
+        "repeated_column_sequences": 0,
+        "repeated_high_precision_values": 0,
+        "n_numeric_cells": 7738,
+        "n_columns_excluded": 0,
+        "possible_row_pairs_at_n86": 3655,
+        "share_of_all_possible_pairs_flagged": "approximately 62%"
+      },
+      "inputs": {
+        "path": "10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+        "data_context": "raw_participant_level",
+        "exclude_columns_requested": [
+          "SUBJECT",
+          "GROUP",
+          "SEX",
+          "PRESDT",
+          "BRTHDT",
+          "VISDTC_1",
+          "VISDTC_2",
+          "VISDTC_3",
+          "D_PRESDT_VISDTC_2",
+          "D_PRESDT_VISDTC_3",
+          "VISDTC_2_PROTOCOL_DIFF",
+          "VISDTC_3_PROTOCOL_DIFF"
+        ]
+      },
+      "reproduction": "metascience raw-duplication-detect --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx --data-context raw_participant_level",
+      "notes": "DELIBERATE DOWNGRADE from the tool's `highly_suspicious` to `indeterminate`; the divergence is recorded rather than silent. Three reasons. (1) The `exclude_columns` argument did not take effect: I passed it twice, as a JSON array and as a comma-separated string, and both runs returned n_columns_excluded=0, excluded_columns=[] and byte-identical output (467,991 characters). So the verdict was computed with SUBJECT ID, GROUP code, SEX and all six date columns INCLUDED -- columns that repeat across patients by design (rulebook rule 11a). (2) The flagged share is a saturation signature, not a duplication signature: 2,260 pairs out of the 3,655 possible pairs among 86 patients is roughly 62% of the entire pair space. A genuine copy-paste artifact is rare and localised; a detector firing on the majority of all pairs is describing the data type. (3) The sheet is a wide table of bounded low-cardinality cognitive scores (MoCA, digit span forward/backward, Hamilton depression and anxiety totals) alongside z-score transforms of those very columns, so every raw-score collision is counted again in its derived column (rule 11b, 11c). Notably the tool found ZERO repeated column sequences and ZERO repeated high-precision values -- the two signals that would indicate real copy-paste. No duplication finding is asserted against this paper.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No claim is affected; this records that the raw-data duplication check could not be run under correct exclusions and returns no evidence against the paper."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience raw-duplication-detect [OPTIONS] {path}\nTry 'metascience raw-duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "dataset_duplicate_column_names_visit3",
+      "location": "Linked replication dataset, sheet 'ITT_analysis set', header row, Visit 3 column block",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Replication data for this analysis is published in the Harvard Dataverse, accessible at https://doi.org/10.7910/DVN/DOFCIV.",
+      "reported": {
+        "visit2_block_columns": [
+          "CWTTM1_2",
+          "CWTTM2_2",
+          "CWTTM3_2",
+          "SCWT_W-D_2",
+          "SCWT_C-D_2",
+          "DGFRES_2",
+          "DGBRES_2"
+        ],
+        "visit3_block_columns": [
+          "CWTTM1_3",
+          "CWTTM2_3",
+          "CWTTM3_3",
+          "SCWT_W-D_2",
+          "SCWT_C-D_2",
+          "DGFRES_3",
+          "DGBRES_3"
+        ]
+      },
+      "computed": {
+        "duplicated_header_names": [
+          "SCWT_W-D_2",
+          "SCWT_C-D_2"
+        ],
+        "expected_names_in_visit3_block": [
+          "SCWT_W-D_3",
+          "SCWT_C-D_3"
+        ],
+        "paired_z_columns_also_mislabelled": [
+          "z_SCWT_W-D_2",
+          "z_SCWT_C-D_2"
+        ]
+      },
+      "inputs": {
+        "sheet": "ITT_analysis set",
+        "header_positions_visit2": "columns named *_2",
+        "header_positions_visit3": "columns named *_3 except the two Stroop derived scores"
+      },
+      "reproduction": "metascience extract-supplement --path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_linked_data_dataverse_DOFCIV_rTMS_ITT.xlsx",
+      "notes": "In the deposited dataset the Visit-3 column block runs CWTTM1_3, CWTTM2_3, CWTTM3_3, then SCWT_W-D_2 and SCWT_C-D_2, then DGFRES_3, DGBRES_3 -- the two Stroop derived scores carry the Visit-2 suffix inside the Visit-3 block, and so do their z-score companions. Both names therefore appear twice in the header. This is consistent with a copy-paste when the Visit-3 block was built. IMPORTANT LIMIT: I have established a labelling defect, NOT duplicated content -- detect_raw_duplication reported zero repeated column sequences, so the two same-named columns are not verbatim copies of each other. It matters because the composite primary endpoint at Day 180 is assembled from these z_ columns, so if the values behind the mislabelled pair are Visit 2 rather than Visit 3 the Day-180 composite would incorporate two stale measurements. Warrants clarification from the authors rather than any stronger inference.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "If the mislabelled columns hold Visit-2 values, the Day-180 composite primary endpoint would be built partly from Visit-2 data; the naming alone does not establish this."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-supplement [OPTIONS] {path}\nTry 'metascience extract-supplement --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "power_analysis_not_reproducible",
+      "location": "Materials and methods, power paragraph",
+      "technique": "verify_power_analysis",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The total required sample size for the study was determined to be 30 patients per group, including a 10% enhancement for potential dropouts. This sample size allows for the detection of a medium-sized difference between groups with an 80% power.",
+      "reported": {
+        "alpha": 0.05,
+        "alpha_sidedness": "one-sided",
+        "beta": 0.2,
+        "effect_size": "medium according to Cohen",
+        "rho_among_outcome_scales": 0.4,
+        "n_per_group": 30,
+        "software": "Nnpar 1.0"
+      },
+      "computed": {
+        "anova_oneway_f0.25_required_n_per_group": 53,
+        "anova_oneway_achieved_power_at_30": 0.5396,
+        "two_sample_t_d0.5_required_n_per_group": 64,
+        "two_sample_t_achieved_power_at_30": 0.4779,
+        "two_sample_t_note": "tool reports the one-tailed requirement does not reconcile either"
+      },
+      "inputs": {
+        "test_type": "anova_oneway",
+        "effect_size": 0.25,
+        "alpha": 0.05,
+        "target_power": 0.8,
+        "groups": 3,
+        "n_reported": 30,
+        "n_reported_is_per_group": true,
+        "allows_attrition_inflation": true
+      },
+      "reproduction": "metascience power-check --test-type anova_oneway --effect-size 0.25 --alpha 0.05 --target-power 0.8 --groups 3 --n-reported 30 --n-reported-is-per-group",
+      "notes": "Recomputed under the two standard readings of 'a medium-sized difference between groups': a three-group one-way ANOVA at Cohen's f=0.25 requires 53 per group (achieved power 0.54 at n=30), and a two-group comparison at d=0.5 requires 64 per group (achieved power 0.48). Neither reconciles with 30 per group, and the tool explicitly checked and rejected the one-tailed reading for the t-test case. STATED CAVEAT, which the editorial stage must carry: the paper did not use either procedure. It used Nnpar 1.0, a non-parametric MULTIVARIATE sample-size method that pools information across 10 correlated outcome scales at rho=0.4, and such a method can legitimately require fewer subjects than a univariate test. So this is a finding that the published power statement cannot be reproduced from the parameters given, not a demonstration that it is arithmetically wrong. Mitigating context: the paper repeatedly concedes the point itself -- 'Given the low sample size of the trial that would inherently lead to the low power of reported analyses' -- so the underpowering is disclosed rather than hidden.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claim that 30 per group affords 80% power to detect a medium effect cannot be reproduced under any standard univariate reading of the stated parameters."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience power-check [OPTIONS] {test_type}\nTry 'metascience power-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "These included a one-sided type I error of alpha = 0.05, a type II error of \u03b2 = 0.2, and a medium-sized effect size according to Cohen.",
+        "source_locator": "Materials and methods, power paragraph",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the PDF text layer"
+      }
+    },
+    {
+      "id": "sae_test_on_single_event",
+      "location": "Results, adverse events paragraph and Table 1, SAE columns",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "One serious adverse event (SAE) was reported for the CRB + SHM group.",
+      "reported": {
+        "total_saes": 1,
+        "n_analysed": 86,
+        "kw_chi2": 2.0714,
+        "kw_df": 2,
+        "kw_p": 0.355,
+        "dunn_z_values": [
+          -1.260425,
+          0,
+          1.239239
+        ],
+        "dunn_adjusted_p": [
+          0.6225488,
+          1,
+          0.6457706
+        ]
+      },
+      "computed": {
+        "non_zero_observations": 1,
+        "zero_observations": 85,
+        "interpretation": "a Kruskal-Wallis omnibus plus three Dunn post-hoc contrasts computed on a variable taking value 1 for exactly one patient and 0 for the other 85"
+      },
+      "inputs": {
+        "table": "Table 1, SAE Z / P.unadj / P.adj columns",
+        "text_statistic": "Kruskal-Wallis chi-squared = 2.0714, df = 2, p-value = 0.355"
+      },
+      "reproduction": "metascience get-table --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml --table-num 1",
+      "notes": "A design/analysis observation, not an arithmetic error -- the numbers are internally consistent (the Dunn Z of exactly 0.000000 with p=1.0 for CRB+rTMS vs PLC+SHM correctly reflects both arms having zero SAEs). The point is that a rank-based omnibus test and three post-hoc contrasts on a variable with a single non-zero observation among 86 patients cannot detect any difference whatever, so the reported p=0.355 carries no evidential content about comparative safety. This matters because tolerability is a headline conclusion of the paper ('safe and well-tolerated'), and it rests on tests that were incapable of returning any other answer. Compounding this, the paper reports no confidence intervals anywhere, so the largest harm difference still compatible with the data cannot be bounded (see the absence_of_evidence entry in `unchecked`).",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The abstract and Discussion conclusion that the combined intervention is safe and well tolerated rests partly on a significance test that a single event renders uninformative."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience get-table [OPTIONS] {xml_path} {table_num}\nTry 'metascience get-table --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such op",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "no_baseline_characteristics_table",
+      "location": "Whole paper; Materials and methods, analysis populations paragraph",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Homogeneity analyses for baseline were performed based on the ITT population. In case of heterogeneities, stratified analyses were performed as second-line analyses.",
+      "reported": {
+        "baseline_table_present": false,
+        "baseline_data_reported": [
+          "mean age per arm in prose (55.46, 51.04, 49.87)",
+          "gender distribution in Figure 1 only",
+          "overall male-to-female ratio 4:1"
+        ],
+        "acknowledged_imbalance": "the Cerebrolysin and sham group was roughly five years older, on average"
+      },
+      "computed": {
+        "baseline_p_values_available": 0,
+        "csf_test_runnable": false,
+        "table1_dispersion_runnable": false,
+        "stratified_second_line_analyses_reported": 0
+      },
+      "inputs": {
+        "searched": "main text, Tables 1-2, Supplementary Annex 1"
+      },
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "notes": "The trial states it is reported per the CONSORT 2010 extension for multi-arm trials, but there is no baseline characteristics table (CONSORT item 15). Only mean ages in prose and a gender figure are given -- no SDs, no per-arm ns, no baseline comparisons. Two consequences. First, the two Table-1-integrity checks this toolkit exists to run, csf_test and bayesian_table1_dispersion, have no input and cannot be run at all; the usual baseline-similarity forensics are therefore unavailable for this trial, which is a hole in this review rather than a clean result. Second, the paper pre-specifies stratified second-line analyses 'in case of heterogeneities' and then acknowledges a heterogeneity -- an age imbalance of roughly five years -- in the Discussion, yet no stratified or age-adjusted analysis is reported anywhere. That is an unexplained departure from the stated analysis plan.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The pre-specified stratified analysis triggered by the acknowledged age imbalance is not reported, so the primary comparison is never adjusted for the one baseline difference the authors themselves flag."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "per_arm_randomised_ns_never_reported",
+      "location": "Results, paragraphs 1 and 4",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The study enrolled 93 individuals who had suffered traumatic brain injury 30 days before screening.",
+      "reported": {
+        "total_randomised": 93,
+        "itt": 86,
+        "pp": 84,
+        "safety": 86,
+        "composite_complete_case": 64,
+        "per_arm_ns_given": "only for the composite complete-case subset: PLC + SHM 24, CRB + SHM 20, CRB + rTMS 20"
+      },
+      "computed": {
+        "arms": 3,
+        "per_arm_randomised_ns_reported": 0,
+        "per_arm_itt_ns_reported": 0,
+        "per_arm_pp_ns_reported": 0
+      },
+      "inputs": {
+        "searched": "Results, Methods, Tables 1-2, Supplementary Annex 1, figure captions"
+      },
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "notes": "A three-arm parallel-group RCT reported under CONSORT never states how many patients were randomised to each arm, nor the per-arm ITT or per-protocol sizes (CONSORT items 13a and 16). The only per-arm ns anywhere are 24/20/20 for the 64-patient complete-case subset used in the composite analysis. This has a direct forensic cost: without per-arm denominators, most percentage- and proportion-based checks (GRIM on any per-arm rate, reconstruct_2x2 on the adverse-event distribution) cannot be run at all, and a reader cannot judge whether allocation was balanced. It also means the 22 ITT patients dropped from the composite analysis (26% of the ITT set) cannot be located by arm.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Absent per-arm denominators, neither allocation balance nor differential attrition across the three arms can be assessed by any reader or tool."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "instrument_mislabel_hads_hars",
+      "location": "Supplementary Annex 1, HADS_v1-baseline and HADS_v2-baseline rows",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "the Hamilton Anxiety Rating Scale (HARS) ([Hamilton, 1959])",
+      "reported": {
+        "methods_name": "Hamilton Anxiety Rating Scale (HARS)",
+        "supplementary_annex_label": "HADS_v1-baseline, HADS_v2-baseline",
+        "dataset_column_name": "HARTS_1, HARTS_2, HARTS_3"
+      },
+      "computed": {
+        "distinct_instruments_conflated": [
+          "Hamilton Anxiety Rating Scale (HARS)",
+          "Hospital Anxiety and Depression Scale (HADS)"
+        ],
+        "sources_in_agreement": 2,
+        "sources_in_disagreement": 1
+      },
+      "inputs": {
+        "methods_quote": "the Hamilton Anxiety Rating Scale (HARS)",
+        "si_label": "HADS",
+        "dataset_column": "HARTS"
+      },
+      "reproduction": "metascience extract --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751_supplementary_info_1_Data_Sheet_1.pdf --max-chars 30000",
+      "notes": "The Methods specify the Hamilton Anxiety Rating Scale (HARS) and the deposited dataset column is HARTS, consistent with it. Supplementary Annex 1 labels the same outcome HADS, which is the Hospital Anxiety and Depression Scale -- a different instrument with different content and scoring. Two of three sources agree, so the most likely reading is a labelling slip in the annex rather than a different measure having been analysed. Recorded because it occurs in a co-primary outcome definition, where an incorrect instrument name is the kind of error that suggests the passage was not checked; a reader relying on the annex alone would attribute the anxiety results to the wrong scale.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The anxiety outcome is attributed to the wrong instrument in the only document that reports its group differences."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract [OPTIONS] {pdf_path}\nTry 'metascience extract --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pdf-path",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing."
+    },
+    {
+      "id": "figure_caption_visit_numbering",
+      "location": "Figure 3 and Figure 4 captions; Methods study-schedule paragraph vs Results",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "Baseline difference composite cognitive outcome (z-scores) in the ITT population after the second visit on study day 180 across study groups",
+      "reported": {
+        "figure3_caption": "after the second visit on study day 101",
+        "figure4_caption": "after the second visit on study day 180",
+        "methods_schedule": "Screening and Baseline at Study Day 30, Visit 1 at Study Day 101, and Visit 2 at Study Day 180",
+        "results_text": "Composite outcomes in the ITT population for Visit 2 and Visit 3",
+        "dataset_suffixes": "_1, _2, _3",
+        "si_suffixes": "v1, v2"
+      },
+      "computed": {
+        "figures_describing_different_days_as_the_same_visit": 2,
+        "distinct_visit_numbering_schemes_in_use": 4
+      },
+      "inputs": {
+        "figure_captions": [
+          "Figure 3",
+          "Figure 4"
+        ],
+        "sections_compared": [
+          "Materials and methods",
+          "Results",
+          "Supplementary Annex 1",
+          "deposited dataset"
+        ]
+      },
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "notes": "Figures 3 and 4 present the two timepoints of the primary endpoint, and both captions call their timepoint 'the second visit' -- one for Day 101 and one for Day 180, which cannot both be true. The wider paper carries four incompatible visit-numbering schemes: Methods says Visit 1 = Day 101 and Visit 2 = Day 180; Results calls the same two timepoints Visit 2 and Visit 3; the dataset uses _1/_2/_3; the annex uses v1/v2. Reported as duplicated caption boilerplate affecting the primary-outcome figures, per the textual-flag guidance. No number is wrong; the labelling makes the two headline figures ambiguous to a reader, and it is what makes the mislabelled Visit-3 dataset columns hard to adjudicate independently.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "The two primary-outcome figures cannot be unambiguously mapped to their timepoints from their captions alone."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "trial_registration_number_absent",
+      "location": "Materials and methods, paragraph 1",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The protocol and subsequent trial information may be found in the ISRCTN clinical trial registry ([ISRCTN, n.d.]).",
+      "reported": {
+        "registry_named": "ISRCTN",
+        "registration_number": "not given",
+        "citation_form": "ISRCTN, n.d."
+      },
+      "computed": {
+        "consort_item_23_satisfied": false
+      },
+      "inputs": {
+        "searched": "Materials and methods, Data availability statement, whole body text"
+      },
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "notes": "The paper states it follows the CONSORT 2010 multi-arm extension, which requires the trial registration number (item 23). The registry is named but no ISRCTN identifier appears anywhere in the body text, and the citation is undated ('n.d.'). Without the number the pre-registered protocol, its outcome list and its analysis plan cannot be retrieved, so none of the pre-specification claims in this review -- including the pre-specified stratified second-line analyses that were not reported -- can be independently verified against the registered protocol.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Pre-specification of outcomes and analyses cannot be checked against the registry, so no claim in the paper can be confirmed as pre-planned."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "unverified",
+      "quote_problem": "WE could not locate this text in what we read. That is a statement about this search, not about the paper: it happens when the paper spells a number in words, when the value lives in a figure we can only see as an image, or when the quote is a table header rendered differently by each extractor. Do not read it as evidence that the authors did not write this."
+    },
+    {
+      "id": "malformed_protocol_amendment_date",
+      "location": "Materials and methods, paragraph 1",
+      "technique": "manual",
+      "consistent": false,
+      "severity": "suspicious",
+      "quote": "The protocol was amended on 171/02.04.2018 (ref. no. 133/15.03.2018) and on 30/05/2019 (ref. no. 118/23.04.2019), extending the inclusion criteria and study end date to facilitate the inclusion of patients.",
+      "reported": {
+        "malformed_date": "171/02.04.2018",
+        "amendments_listed": 2,
+        "amendment_dates_listed": [
+          "171/02.04.2018",
+          "30/05/2019"
+        ],
+        "third_amendment_implied_elsewhere": "updated 28/02/2020: 18-80 years"
+      },
+      "computed": {
+        "malformed_date_tokens": 1,
+        "amendments_listed_vs_implied": "2 listed, at least 3 implied"
+      },
+      "inputs": {
+        "ethics_paragraph": "Materials and methods paragraph 1",
+        "inclusion_criteria_paragraph": "Materials and methods paragraph 2"
+      },
+      "reproduction": "metascience extract-xml --xml-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.xml",
+      "notes": "'171/02.04.2018' is not a well-formed date. Separately, two protocol amendments are listed (2018 and 2019) but the inclusion criteria record a third change dated 28/02/2020 raising the upper age limit from 70 to 80 years, which does not correspond to either listed amendment. Recorded as a textual flag in a load-bearing passage -- the protocol amendment record governs which eligibility criteria applied to which patients, and the age criterion is the one the Discussion later identifies as imbalanced between arms. Verified identical in the XML; no arithmetic claim rests on it.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "A record-keeping defect in the protocol amendment history; no reported statistic depends on it."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience extract-xml [OPTIONS] {xml_path}\nTry 'metascience extract-xml --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "bonferroni_adjustment_tables_1_2",
+      "location": "Table 1 and Table 2, P.unadj and P.adj columns",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Composite outcomes in the ITT population for Visit 2 and Visit 3 were compiled based on z-scores of each outcome scale baseline differences (n = 64: PLC + SHM: 24, CRB + SHM:20, CRB + rTMS:20, less than the total sample size due to missing data).",
+      "reported": {
+        "pairs_checked": [
+          [
+            0.2075163,
+            0.6225488
+          ],
+          [
+            0.2152569,
+            0.6457706
+          ],
+          [
+            0.09515263,
+            0.28545788
+          ],
+          [
+            0.01941951,
+            0.05825854
+          ],
+          [
+            0.06532219,
+            0.19596658
+          ],
+          [
+            0.02578002,
+            0.07734006
+          ]
+        ],
+        "capped_at_1_not_checked": 6
+      },
+      "computed": {
+        "n_relations_evaluated": 6,
+        "n_consistent": 6,
+        "n_inconsistent": 0,
+        "max_absolute_difference": 1e-07,
+        "tolerance_basis": "printed precision"
+      },
+      "inputs": {
+        "relation_tested": "P.adj = 3 x P.unadj for m=3 pairwise comparisons",
+        "decimals": [
+          7,
+          8
+        ],
+        "batch_rows": 10
+      },
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[0.2075163,0.2075163,0.2075163],\"expected_sum\":0.6225488,\"decimals\":7,\"decimals_total\":7},{\"values\":[0.2152569,0.2152569,0.2152569],\"expected_sum\":0.6457706,\"decimals\":7,\"decimals_total\":7},{\"values\":[0.09515263,0.09515263,0.09515263],\"expected_sum\":0.28545788,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.01941951,0.01941951,0.01941951],\"expected_sum\":0.05825854,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.06532219,0.06532219,0.06532219],\"expected_sum\":0.19596658,\"decimals\":8,\"decimals_total\":8},{\"values\":[0.02578002,0.02578002,0.02578002],\"expected_sum\":0.07734006,\"decimals\":8,\"decimals_total\":8}]'",
+      "notes": "Every Bonferroni relation in both tables that is not capped at 1 reproduces exactly at the printed precision (largest discrepancy 1e-07, inside the rounding window). The six remaining cells are P.adj = 1, the correct cap where 3 x P.unadj exceeds 1, and were not testable as sums. This confirms m=3 comparisons per family and that the adjustment was applied as described. Denominator: 6 of 12 adjustment relations evaluable, 6 consistent, 0 inconsistent.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Confirms the reported multiple-comparison adjustment within each table is arithmetically correct."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer"
+    },
+    {
+      "id": "sample_flow_and_count_sums",
+      "location": "Results paragraphs 1-4; Materials and methods COVID paragraph",
+      "technique": "check_summation",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "In contrast, the PP population comprises 84 patients (loss to follow-up from ITT\u2013CRB + SHM: 1, PLC + SHM: 1).",
+      "reported": {
+        "enrolled": 93,
+        "itt": 86,
+        "pp": 84,
+        "composite_complete_case": 64,
+        "composite_subgroups": [
+          24,
+          20,
+          20
+        ],
+        "ae_per_arm": [
+          7,
+          6,
+          8
+        ],
+        "ae_total": 21,
+        "visit_delays": [
+          15,
+          1
+        ],
+        "visit_delay_total": 16
+      },
+      "computed": {
+        "n_sums_evaluated": 6,
+        "n_consistent": 6,
+        "n_inconsistent": 0,
+        "checks": [
+          "24+20+20=64",
+          "7+6+8=21",
+          "86+7=93",
+          "84+1+1=86",
+          "15+1=16",
+          "64+22=86"
+        ]
+      },
+      "inputs": {
+        "tolerance": 0,
+        "decimals": 0,
+        "batch_rows": 6
+      },
+      "reproduction": "metascience summation-batch --rows '[{\"values\":[24,20,20],\"expected_sum\":64,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[7,6,8],\"expected_sum\":21,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[86,7],\"expected_sum\":93,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[84,1,1],\"expected_sum\":86,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[15,1],\"expected_sum\":16,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0},{\"values\":[64,22],\"expected_sum\":86,\"decimals\":0,\"decimals_total\":0,\"tolerance\":0}]'",
+      "notes": "The whole participant-flow arithmetic reconciles exactly: the three composite subgroups sum to 64, the per-arm adverse event counts sum to the stated 21, ITT plus the 7 excluded equals the 93 enrolled, PP plus the two named losses equals ITT, and the COVID visit delays sum to 16. The 9 premature discontinuations decompose consistently as the 7 excluded before ITT plus the 2 lost between ITT and PP. Note this is the arithmetic only -- the 7 excluded from ITT are never stated as a number by the paper (I derived it) and are never explained, and 22 ITT patients (26%) are missing from the composite analysis with no reason given beyond 'missing data'.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Participant-flow counts are internally consistent; no claim is undermined."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience summation-batch [OPTIONS] {json_path}\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such o",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "round_n_check",
+      "location": "Results, paragraphs 1 and 4",
+      "technique": "flag_round_n",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "The ITT population is comprised of 86 TBI patients.",
+      "reported": {
+        "ns": [
+          93,
+          86,
+          84,
+          64,
+          24,
+          20,
+          20
+        ]
+      },
+      "computed": {
+        "severity": "consistent",
+        "all_divisible_by_50": false,
+        "all_divisible_by_100": false,
+        "n_unique": 6,
+        "explanation": "Sample sizes show some non-round variation; no round-N flag"
+      },
+      "inputs": {
+        "ns": [
+          93,
+          86,
+          84,
+          64,
+          24,
+          20,
+          20
+        ],
+        "moderate_modulus": 50,
+        "strong_modulus": 100
+      },
+      "reproduction": "metascience flag-round-n --ns 93,86,84,64,24,20,20",
+      "notes": "The analysed sample sizes carry the irregular structure of real recruitment and attrition. Nothing to flag. The planned 30 per group is a designed recruitment target, which the heuristic correctly does not treat as suspicious.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "No round-number anomaly in the reported sample sizes."
+      },
+      "reproduction_valid": true,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "source": {
+        "source_quote": "The ITT population is comprised of 86 TBI patients.",
+        "source_locator": "Results, paragraphs 1 and 4",
+        "source_quote_verified": "verbatim",
+        "source_quote_source": "the paper's text"
+      }
+    },
+    {
+      "id": "statcheck_no_apa_statistics",
+      "location": "Whole body text (Materials and methods, Results)",
+      "technique": "statcheck",
+      "consistent": true,
+      "severity": "indeterminate",
+      "quote": "Non-parametric group differences were not statistically significant (Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE, and Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE).",
+      "reported": {
+        "nhst_results_present_in_text": 4,
+        "format_used": "Kruskal-Wallis chi-squared = X, df = 2, p-value = Y"
+      },
+      "computed": {
+        "stats_found": 0,
+        "message": "No statistics found in text"
+      },
+      "inputs": {
+        "text": "Materials and methods statistical paragraphs plus the full Results section"
+      },
+      "reproduction": "metascience statcheck --pdf-path /mnt/c/Users/gregs/agent_for_forensic_metascience/cerebrolysin_run2_datasets_2026-08-09/10.3389--fnins.2023.1186751/10.3389--fnins.2023.1186751.pdf",
+      "notes": "statcheck recovered zero statistics and this is a fact about the REPORTING FORMAT, not evidence the paper is clean. statcheck matches APA-style inline results such as 'chi2(2) = 0.58, p = .75'; this paper writes 'Kruskal-Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493', which the parser does not recognise. Recorded explicitly so that a zero return is not read as a clean bill of health: the automated NHST consistency check contributed nothing to this review, and the four in-text test results plus the 44 supplementary ones had to be adjudicated by other means.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "No automated NHST verification was obtained for this paper; coverage came from manual and other tool routes."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience statcheck [OPTIONS] [input_path]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "source": {
+        "source_quote": "Non-parametric group differences were not statistically significant (Kruskal\u2013Wallis chi-squared = 0.57734, df = 2, p-value = 0.7493 for AE, and Kruskal\u2013Wallis chi-squared = 2.0714, df = 2, p-value = 0.355 for SAE).",
+        "source_locator": "Results and Materials and methods, statistical analysis",
+        "source_quote_verified": "stitched",
+        "source_quote_source": "assembled from values in the paper"
+      }
+    },
+    {
+      "id": "table_cell_typing_coverage",
+      "location": "Table 1 and Table 2 (all 36 body cells)",
+      "technique": "manual",
+      "consistent": true,
+      "severity": "consistent",
+      "quote": "Multiple pairwise comparisons between study group composite cognitive outcome (z-scores) using Dunn\u2019s test.",
+      "reported": {
+        "table1_cells": 18,
+        "table2_cells": 18
+      },
+      "computed": {
+        "coverage": 1,
+        "n_unusable": 0,
+        "n_ambiguous": 0,
+        "table1_kinds": {
+          "numeric": 12,
+          "count": 6
+        },
+        "table2_kinds": {
+          "numeric": 16,
+          "count": 2
+        },
+        "merged_cells_respected": 4
+      },
+      "inputs": {
+        "source": "get_table cells passed directly to parse_cells_typed",
+        "footnotes": "none in either table"
+      },
+      "reproduction": "metascience parse-cells --cells '[{\"raw\":\"1.6688222\",\"row_label\":\"CRB + rTMS-CRB + SHM\",\"col_label\":\"Day 101 Z\"},{\"raw\":\"0.09515263\",\"row_label\":\"CRB + rTMS-CRB + SHM\",\"col_label\":\"Day 101 P.unadj\"}]'",
+      "notes": "Both tables typed at 100% coverage with no ambiguous cells. Neither table carries footnotes, and neither contains a single mean, SD, count-with-percentage or confidence interval -- every cell is a Dunn Z statistic or a p-value. That is why the granularity family of checks (GRIM, GRIMMER, DEBIT, SPRITE) has no purchase anywhere in this paper: those tools require integer-bounded observations reported as means, and this paper reports no means at all for any outcome. The four merged header cells recorded in `spans` (the AE/SAE and Day 101/Day 180 column groups) were left as anchors and not copied across their continuations. Denominator for the whole paper: 36 main-table cells available, 36 typed, 0 eligible for granularity testing.",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 0,
+        "basis": "asserted",
+        "explanation": "Records what was extractable from the two main tables and why the granularity checks do not apply."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience parse-cells [OPTIONS] {json_path}\nTry 'metascience parse-cells --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: -",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    },
+    {
+      "id": "multiplicity_uncorrected_across_outcomes",
+      "location": "Supplementary Annex 1 (44 omnibus tests) and Results, final paragraph",
+      "technique": "multiplicity_report",
+      "consistent": false,
+      "severity": "indeterminate",
+      "quote": "Given the low sample size of the trial that would inherently lead to the low power of reported analyses, no further hypothesis testing was performed.",
+      "reported": {
+        "si_omnibus_tests_itt": 22,
+        "si_omnibus_tests_pp": 22,
+        "si_dunn_adjusted_p_values": 132,
+        "in_text_omnibus_tests": 4,
+        "correction_applied": "Bonferroni within each outcome's 3 pairwise comparisons only; none across the 22 outcomes or 2 timepoints"
+      },
+      "computed": {
+        "tool_returned": "n_tests: 0, note: no uncorrected tests",
+        "tool_status": "payload not parsed; verified with a minimal 3-element probe which also returned 0",
+        "counted_by_reading_only": {
+          "itt_omnibus_p_below_0.05": 2,
+          "pp_omnibus_p_below_0.05": 1,
+          "itt_omnibus_p_below_0.10": 4
+        }
+      },
+      "inputs": {
+        "family_label": "Individual cognitive outcome scales, ITT population, Kruskal-Wallis omnibus tests (Supplementary Annex 1)",
+        "n_tests_submitted": 22,
+        "alpha": 0.05
+      },
+      "reproduction": "metascience multiplicity --family-label 'Individual cognitive outcome scales, ITT, Kruskal-Wallis omnibus' --tests '[{\"id\":\"si_itt_dsb_v2\",\"p_value\":0.02649,\"test_type\":\"other\",\"location\":\"SI Annex 1\",\"correction_applied\":\"none\"},{\"id\":\"si_itt_tmt1_v2\",\"p_value\":0.04012,\"test_type\":\"other\",\"location\":\"SI Annex 1\",\"correction_applied\":\"none\"}]'",
+      "notes": "NOT COMPUTED -- recorded as indeterminate because the tool would not run, and I did not substitute my own correction arithmetic. multiplicity_report returned n_tests=0 for the 22-test ITT family and again for the 22-test PP family; a minimal probe of three bare {p_value} objects also returned 0, which identifies a payload-parsing defect in the tool rather than anything about this paper. What can be stated from reading alone: the paper performs at least 48 omnibus tests (22 ITT + 22 PP in the annex, plus 2 composite and 2 safety in the text) and 132 supplementary pairwise comparisons. Bonferroni is applied only WITHIN each outcome's three pairwise contrasts; nothing corrects across the 22 outcome-by-timepoint families or across the two analysis populations. Two of the 22 ITT omnibus tests fall below 0.05, which is close to the 1.1 expected by chance -- so the multiplicity burden here most likely argues AGAINST reading the significant Digit Span Backward result as real, and the editorial stage should weigh it that way rather than as an additional problem. Separately, the Results state that 'no further hypothesis testing was performed', which is contradicted by the 176 tests reported in the supplement.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The number of surviving claims under correction could not be computed; the count of tests bears directly on how the one Bonferroni-surviving subscale result should be interpreted."
+      },
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --tests    ",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text"
+    }
+  ],
+  "figures": [
+    {
+      "label": "Figure 1",
+      "page": 4,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "caption": "Gender distribution of study groups (2-female; 1-male). CRB, Cerebrolysin; SHM, sham repetitive transcranial magnetic stimulation; rTMS, repetitive transcranial magnetic stimulation; PLC, placebo.",
+      "carries_unique_values": true,
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "bar",
+          "shows": "Counts of male and female participants within each of the three study arms."
+        }
+      ]
+    },
+    {
+      "label": "Figure 2",
+      "page": 5,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "error_bars": "range",
+      "caption": "Distribution of age distribution across study groups using boxplots (boxes represent the middle 50% of the data; horizontal lines\u2013means; squares\u2013medians; whiskers\u20131.5\u00d7 interquartile range from the upper and lower quartiles). CRB, Cerebrolysin; SHM, sham repetitive transcranial magnetic stimulation; rTMS, repetitive transcranial magnetic stimulation; PLC, placebo.",
+      "carries_unique_values": true,
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "box",
+          "shows": "Age distribution per study arm; only the three arm means (55.46, 51.04, 49.87) appear in the text, so medians, quartiles and spread exist only here."
+        }
+      ]
+    },
+    {
+      "label": "Figure 3",
+      "page": 6,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "error_bars": "CI",
+      "caption": "Baseline difference composite cognitive outcome (z-scores) in the ITT population after the second visit on study day 101 across study groups (colors represent study groups; boxes represent the middle 50% of the data; horizontal lines\u2013means; whiskers\u20131.5\u00d7 interquartile range from the upper and lower quartiles; notches represent 95% confidence intervals; 0 = sample mean z-score). CRB, Cerebrolysin; SHM, sham repetitive transcranial magnetic stimulation; rTMS, repetitive transcranial magnetic stimulation; PLC, placebo.",
+      "carries_unique_values": true,
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "box",
+          "shows": "Day 101 composite cognitive z-score change by arm; the notched 95% confidence intervals are the ONLY interval estimates anywhere in the paper and appear in no table or text."
+        }
+      ]
+    },
+    {
+      "label": "Figure 4",
+      "page": 6,
+      "is_data_figure": true,
+      "n_panels": 1,
+      "error_bars": "CI",
+      "caption": "Baseline difference composite cognitive outcome (z-scores) in the ITT population after the second visit on study day 180 across study groups (colors represent study groups; boxes represent the middle 50% of the data; horizontal lines\u2013means; whiskers\u20131.5\u00d7 interquartile range from the upper and lower quartiles; notches represent 95% confidence intervals; 0 = sample mean z-score). CRB, Cerebrolysin; SHM, sham repetitive transcranial magnetic stimulation; rTMS, repetitive transcranial magnetic stimulation; PLC, placebo.",
+      "carries_unique_values": true,
+      "panels": [
+        {
+          "panel": "A",
+          "chart_type": "box",
+          "shows": "Day 180 composite cognitive z-score change by arm; carries the only interval estimates for the timepoint whose reported p-value (0.54) is inconsistent with its reported chi-squared."
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "stats_found": 291,
+    "tables_checked": [
+      "Table 1 (Dunn's test, AEs and SAEs) - XML, 18 body cells, typed at 100% coverage",
+      "Table 2 (Dunn's test, composite cognitive outcome z-scores) - XML, 18 body cells, typed at 100% coverage",
+      "Supplementary Annex 1 (Data Sheet 1, 3 pages) - 44 Kruskal-Wallis omnibus results and 132 Dunn Bonferroni-adjusted p-values, read from the SI PDF",
+      "Linked replication dataset (Harvard Dataverse DOFCIV), sheet 'ITT_analysis set' - participant-level, ~120 columns, 7,738 numeric cells, swept via detect_raw_duplication"
+    ],
+    "tools_run": [
+      "extract_xml",
+      "get_table",
+      "parse_cells_typed",
+      "statcheck",
+      "grim_percentage",
+      "grim_sweep",
+      "check_summation_batch",
+      "verify_power_analysis",
+      "flag_round_n",
+      "multiplicity_report",
+      "detect_raw_duplication",
+      "extract_pdf",
+      "extract_supplement"
+    ]
+  },
+  "unchecked": [
+    {
+      "location": "Table 1 and Table 2, Dunn's test Z statistics (12 values) vs their unadjusted p-values",
+      "reason": "No validated tool in this kit converts a standard-normal Z to a two-sided p-value. check_regression could be coerced by passing Z as b and 1 as SE, but that is an improvised substitute rather than a fitted check, so it was not run. The Bonferroni relation between P.unadj and P.adj WAS verified for all six non-capped cells."
+    },
+    {
+      "location": "Results, composite outcome paragraph: Kruskal-Wallis chi-squared 5.732 and 5.833; Supplementary Annex 1, all 44 chi-squared/df/p triples",
+      "reason": "No tool converts a chi-squared statistic plus df to a p-value. recalc_chi_squared requires a contingency table (unavailable -- these are rank statistics) and recalc_f_to_p would require me to divide the chi-squared by its df, which is computing an F myself. The Day 180 discrepancy was therefore adjudicated by bracketing against the paper's OWN printed chi-squared/p pairs at df=2, and is recorded as a reading rather than a recomputation."
+    },
+    {
+      "location": "Baseline characteristics (csf_test, bayesian_table1_dispersion)",
+      "reason": "The paper contains no baseline characteristics table and reports no baseline comparison p-values, so the baseline-similarity forensics have no input at all. This is the single largest blind spot in this review: the Carlisle/Fujii-style checks that would normally be the strongest evidence about a randomized trial could not be run."
+    },
+    {
+      "location": "All efficacy outcomes (check_effect_plausibility, absence_of_evidence, check_estimate_ci, check_sd_range, check_sd_or_se)",
+      "reason": "The paper reports no group means, no standard deviations and no confidence intervals for any outcome -- results are given only as Kruskal-Wallis chi-squared values, Dunn Z statistics and p-values. No effect size can be computed and the 'no significant difference' and 'safe and well tolerated' conclusions cannot be bounded, because absence_of_evidence requires an interval and none exists. The only interval estimates in the paper are the notched 95% CIs drawn in Figures 3 and 4, which are not printed numerically anywhere."
+    },
+    {
+      "location": "Mean ages per arm (55.46, 51.04, 49.87 years)",
+      "reason": "GRIM deliberately NOT applied. Age here is continuous, not integer: the deposited dataset derives AGE from BRTHDT and PRESDT date columns. GRIM applies only to integer-valued observations, and running it on a continuous measure is the most common route to a false accusation. Independently, the per-arm ns needed for GRIM are never reported."
+    },
+    {
+      "location": "All p-values in Tables 1 and 2 and Supplementary Annex 1 (GRIM-U rank-sum granularity)",
+      "reason": "Deliberately not applied. GRIM-U is valid only for Mann-Whitney U / Wilcoxon rank-sum p-values with stated group sizes n1 and n2. These are Kruskal-Wallis omnibus and Dunn post-hoc p-values, which use the pooled rank variance across all three groups, so the granularity argument does not hold. Applying it here would be the top false-accusation risk for this paper."
+    },
+    {
+      "location": "Multiplicity correction across the 22 outcome-by-timepoint families (multiplicity_report)",
+      "reason": "TOOL DEFECT, not a property of the paper. multiplicity_report returned n_tests=0 for both the 22-test ITT family and the 22-test PP family; a minimal probe of three bare {p_value} objects also returned 0, confirming the tests payload is not being deserialized. Family-wise error rate, Bonferroni/Holm/BH/BY thresholds and the surviving-claims interval could not be computed, and I did not substitute hand arithmetic."
+    },
+    {
+      "location": "Linked replication dataset, duplication analysis under correct column exclusions (detect_raw_duplication)",
+      "reason": "TOOL DEFECT. exclude_columns had no effect when passed as a JSON array or as a comma-separated string -- both runs reported n_columns_excluded=0 and excluded_columns=[] and produced byte-identical 467,991-character output. The verdict could only be obtained with SUBJECT, GROUP, SEX and six date columns included, which repeat across patients by design, so no trustworthy duplication verdict is available for this dataset."
+    },
+    {
+      "location": "Supplementary Annex 1, 132 Dunn Bonferroni-adjusted p-values",
+      "reason": "The annex prints only ADJUSTED p-values, not the unadjusted ones, so the P.adj = 3 x P.unadj relation verified for the main tables cannot be checked here. The adjusted values were read and used for interpretation but the adjustment arithmetic is unverifiable as printed."
+    },
+    {
+      "location": "Figures 1-4, all plotted values",
+      "reason": "Figure extraction was not run; values were not read off the plots. All four figures carry numbers that appear nowhere in the text or tables -- per-arm sex counts (Fig 1), age medians and quartiles (Fig 2), and the composite primary endpoint's distribution and notched 95% confidence intervals at both timepoints (Figs 3, 4). The primary endpoint's interval estimates therefore went unchecked in this review."
+    },
+    {
+      "location": "Secondary outcomes: eye tracking (Tobii Pro TX300) and EEG",
+      "reason": "Collected but explicitly deferred: 'Since these secondary measures require distinct data processing and specialized analysis, they will be reported in subsequent manuscripts.' No statistics are given, so nothing is checkable. Noted because measures collected but never analysed are a reporting pattern worth an editor's attention."
+    },
+    {
+      "location": "Per-arm randomized, ITT and per-protocol sample sizes",
+      "reason": "Never reported by the paper for any of the three arms, so percentage-based checks (grim_percentage on per-arm rates, reconstruct_2x2 on the adverse-event distribution across arms) had no denominator and could not be run."
+    }
+  ]
+}

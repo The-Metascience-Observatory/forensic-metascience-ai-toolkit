@@ -1,0 +1,319 @@
+{
+  "paper_id": "paper",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-09-02 13:11 UTC",
+  "version": "1.15.0",
+  "effort": "high",
+  "git_dirty": true,
+  "git_sha": "4a7971102983",
+  "prompt_sha256": "161c6d7ed4d52b7e",
+  "registry_sha256": "0b06c178cea5ee68",
+  "llm_backend": "grok",
+  "backend_binary_version": "grok 1.0.13 (5e9a58528b76) [stable]",
+  "backend_default_model": "grok-4.6",
+  "sandbox_limitation": "Grok's `search_tool` cannot be denied: it is the only route to the forensic MCP tools. This run's sandbox is weaker than a Claude run's.",
+  "text_provenance": {
+    "by_file": {
+      "air_force.pdf": {
+        "extractor": "docling",
+        "n_chars": 40052
+      }
+    },
+    "docling_version": "2.115.0",
+    "n_docling": 1,
+    "n_pdfplumber": 0,
+    "all_high_fidelity": true,
+    "note": "1 file(s) read by docling, 0 by pdfplumber."
+  },
+  "stages": {
+    "sweep": {
+      "model": "grok-4.6",
+      "cost_usd": 0.51510646,
+      "input_tokens": 846776,
+      "output_tokens": 57479,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 1473920,
+      "wall_seconds": 968.35,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "detect_duplication",
+      "tool_calls": 91,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.51510646,
+          "outputTokens": 57479,
+          "inputTokens": 846776
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 26
+    },
+    "editorial": {
+      "model": "grok-4.6",
+      "cost_usd": 0.2242453,
+      "input_tokens": 371110,
+      "output_tokens": 30769,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 784512,
+      "wall_seconds": 503.25,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "truncated_by_timeout": false,
+      "current_tool": "recalc_independent_t",
+      "tool_calls": 67,
+      "llm_backend": "grok",
+      "mcp_discovery": {
+        "declared": true,
+        "status_is_live": false,
+        "status": "connected",
+        "servers": [
+          "forensic_metascience"
+        ],
+        "foreign": [],
+        "ok": true
+      },
+      "usage_guard": "unsupported_for_backend",
+      "models_resolved": [
+        "grok-4.6",
+        "grok-4.6-build"
+      ],
+      "model_usage": {
+        "grok-4.6-build": {
+          "costUSD": 0.2242453,
+          "outputTokens": 30769,
+          "inputTokens": 371110
+        }
+      },
+      "primary_billed_model": "grok-4.6-build",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "unresolved",
+      "confidence": "high"
+    },
+    "text_forensics": {
+      "cost_usd": 0.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "ran": true,
+      "is_error": false,
+      "error_subtype": "ran_clean",
+      "return_code": 0,
+      "wall_seconds": 0.36,
+      "n_findings_injected": 0,
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 4115 words"
+    }
+  },
+  "total_cost_usd": 0.73935176,
+  "total_wall_seconds": 1471.6,
+  "author_questions": {
+    "supplement_request_added": false,
+    "uneditable_asks": [],
+    "promoted_refusals": 1
+  },
+  "title_resolution": {
+    "resolved": true,
+    "citation": "Kasper et al. 2024",
+    "reason": ""
+  },
+  "title_quality": {
+    "pass": true,
+    "n": 5,
+    "n_sentence_shaped": 4,
+    "sentence_shape_enforced": false,
+    "n_joined": 0,
+    "joined_enforced": false,
+    "n_overlong": 0,
+    "overlong_enforced": false,
+    "n_named_method": 0,
+    "length_guidance": 120,
+    "examples_first_3": [],
+    "n_examples_omitted": 0,
+    "problems": [],
+    "detail": "all 5 title(s) name a defect rather than a method. 0 run past 120 characters and 0 read as two clauses; both are reported, neither is a failure -- measured, those patterns flag good headings as often as bad ones."
+  },
+  "reproducibility": {
+    "n_findings": 31,
+    "n_headline": 1,
+    "n_targets": 32,
+    "n_valid": 8,
+    "n_invalid": 17,
+    "n_no_command_applies": 7,
+    "n_command_expected": 25,
+    "n_unparseable": 0,
+    "executed": true,
+    "n_ran_ok": 14,
+    "n_ran_failed": 11,
+    "problems": [
+      "finding[table3_survey_denominators_grim_sweep]: THE COMMAND DISAGREES WITH THE FINDING: it reports `impossible` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[table3_survey_pct_vs_enrolled_n]: THE COMMAND DISAGREES WITH THE FINDING: it reports `impossible` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[table3_medical_hold_video_127]: THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `impossible`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[table3_mski_chi2]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--observed' / '-o'.        ",
+      "finding[table3_bsi_chi2]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--observed' / '-o'.        ",
+      "finding[table3_survey_chi2_at_implied_n]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--observed' / '-o'.        ",
+      "finding[table3_training_delay_chi2]: exited 2: Usage: metascience chi2 [OPTIONS]\nTry 'metascience chi2 --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--observed' / '-o'.        ",
+      "finding[table3_injury_grim_consistent]: THE COMMAND DISAGREES WITH THE FINDING: it reports `impossible` where the finding claims `consistent`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[table2_bmi_ttest]: exited 2: Usage: metascience ttest [OPTIONS] MEAN1 SD1 N1 MEAN2 SD2 N2\nTry 'metascience ttest --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option:",
+      "finding[table2_duplication]: exited 2: Usage: metascience duplication-detect [OPTIONS] JSON_PATH\nTry 'metascience duplication-detect --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missi",
+      "finding[cohort_n_sum]: exited 2: Usage: metascience summation-batch [OPTIONS] JSON_PATH\nTry 'metascience summation-batch --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing arg",
+      "finding[multiplicity_table3_all_chi2]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "finding[multiplicity_injury_family]: exited 2: Usage: metascience multiplicity [OPTIONS]\nTry 'metascience multiplicity --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--p-values'",
+      "finding[power_analysis_not_reproducible]: exited 2: Usage: metascience power-check [OPTIONS] TEST_TYPE\nTry 'metascience power-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --n",
+      "finding[statcheck_no_apa]: exited 2: Usage: metascience statcheck [OPTIONS] [INPUT_PATH]\nTry 'metascience statcheck --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 No such option: --pd",
+      "finding[0]: THE COMMAND DISAGREES WITH THE FINDING: it reports `indeterminate` where the finding claims `impossible`. The command ran perfectly well -- that is the point. Re-read the finding before the paper.",
+      "finding[1]: THE COMMAND DISAGREES WITH THE FINDING: it reports `impossible` where the finding claims `suspicious`. The command ran perfectly well -- that is the point. Re-read the finding before the paper."
+    ],
+    "n_disagreed": 6
+  },
+  "exhaustive_checks": {
+    "n_tables": 3,
+    "duplication": {
+      "tool": "detect_duplication",
+      "targets_enumerated": 4,
+      "n_blocks": 1,
+      "ran": true,
+      "severity": "consistent",
+      "max_identical_pairs": 0,
+      "n_duplicate_groups": 0,
+      "result": {
+        "severity": "consistent",
+        "explanation": "No duplicated summary statistics detected.",
+        "n_blocks": 1,
+        "n_cells_total": 4,
+        "n_comparisons": 0,
+        "max_identical_pairs": 0,
+        "chance_probability": null,
+        "duplicate_groups": [],
+        "assumptions": {
+          "span_mean": 3.1,
+          "span_sd": 2.4,
+          "decimals": [
+            2,
+            2
+          ],
+          "p_pair": 1.3440860215053758e-05,
+          "note": "spans inferred from observed values; assumes independent cells and mean\u22a5SD (slightly conservative)."
+        },
+        "caveats": [
+          "Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly."
+        ],
+        "methodology": "Compared 0 cross-source (mean, SD) pairs across 1 blocks plus within-table rows/columns. Strongest independent overlap: 0 identical pair(s); coincidence probability \u2248 n/a after correcting for the number of comparisons."
+      }
+    },
+    "sd_range": {
+      "tool": "check_sd_range",
+      "targets_enumerated": 4,
+      "n_checked": 0,
+      "n_skipped_undeclared": 0,
+      "n_skipped_unstated_bounds": 4,
+      "n_skipped_model_output": 0,
+      "skipped_model_output_why": {},
+      "results": [],
+      "worst": null,
+      "n_bound_by_name": 4
+    },
+    "claims": {
+      "check": "claim_vs_printed_p",
+      "alpha": null,
+      "methodology": "Compares a paper's own description of a single test's result against that test's printed p-value and the paper's stated alpha. Fires only when an unhedged claim that an effect was found accompanies p > alpha, with no multiplicity correction in play. Reports the two quotes so a reader adjudicates the sentence, not the tool.",
+      "n_interpretations": 0,
+      "n_checked": 0,
+      "n_refused": 0,
+      "refusals": {},
+      "results": [],
+      "worst": null,
+      "why": "the paper's alpha was not stated, so no claim can be judged against it",
+      "n_contradictions": 0
+    },
+    "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets.",
+    "n_accusatory": 0,
+    "accusatory": []
+  },
+  "consequence": {
+    "n_sweep": 26,
+    "n_report": 5,
+    "n_computed": 2,
+    "n_asserted": 13,
+    "n_absent": 16,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 12,
+    "n_diverged": 2,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 84,
+    "n_unjoined": 14,
+    "n_manual": 0,
+    "divergences": [
+      "table3_survey_denominators_grim_sweep: tool=impossible model=suspicious (downgraded, explained)",
+      "table2_bmi_ttest: tool=indeterminate model=consistent (downgraded, explained)"
+    ]
+  },
+  "uncomputed_severity_clamp": {
+    "n_findings": 5,
+    "n_uncomputed": 0,
+    "n_clamped": 0,
+    "clamps": []
+  },
+  "supplied_norm_clamp": {
+    "n_findings": 5,
+    "n_supplied": 1,
+    "n_inferred": 0,
+    "n_clamped": 0,
+    "clamps": [],
+    "by_warrant": {
+      "paper_commitment": 2,
+      "named_guideline": 1,
+      "field_norm": 1,
+      "logical": 1
+    }
+  },
+  "sourcing": {
+    "findings": 26,
+    "joinable": 26,
+    "traced_to_a_passage": 14
+  },
+  "delivery": {
+    "ok": true,
+    "n_calls": 91,
+    "n_undelivered": 0,
+    "n_extraction": 0,
+    "n_unrecovered": 0,
+    "lost": [],
+    "note": "every tool call returned a usable payload."
+  },
+  "sandbox": {
+    "verdict": "BREACH (unbacked): 5 finding(s) name a check that never ran -- the arithmetic was asserted, not performed",
+    "level": "unbacked",
+    "n_unvalidated": 0,
+    "n_severe": 0,
+    "n_unbacked_findings": 5,
+    "n_off_allowlist": 11
+  }
+}

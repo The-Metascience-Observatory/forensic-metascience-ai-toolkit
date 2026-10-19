@@ -1,0 +1,238 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "forensic-metascience-ai-toolkit"
+# Read from src/metascience_agent/version.py, which is the single source of
+# truth. Declaring the number here too is how it silently drifted from the
+# package for months. See [tool.hatch.version] below.
+dynamic = ["version"]
+description = "Forensic Metascience AI Toolkit: statistical and image forensics for scientific papers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "PolyForm-Noncommercial-1.0.0 with additional terms; see LICENSE"}
+authors = [
+    { name = "Metascience Observatory" }
+]
+keywords = ["forensic", "metascience", "statistics", "research integrity", "GRIM", "SPRITE"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+  "tqdm>=4.66", "threadpoolctl>=3.1", "psutil>=5.9",
+    # Pinned below the next major lines. A fresh install (2026-10-01) resolved
+    # claude-agent-sdk 0.2.163 and mcp 2.2.0, under which `mcp_server` fails at
+    # import ('Server' object has no attribute 'list_tools'); every measurement
+    # here ran on 0.1.x and mcp 1.23.
+    "claude-agent-sdk>=0.1.0,<0.2",
+    "mcp>=1.23,<2",
+    # THE PDF READER. Docling is a REQUIREMENT, not an enhancement -- Greg,
+    # 2026-08-13: "I want docling to become a dependency for this project -- it
+    # dramatically improves the content that all downstream processes have to
+    # work with."
+    #
+    # MEASURED against publisher XML ground truth on the seven papers here that
+    # ship both formats: table recall 60.4% (pdfplumber) -> 95.8% (docling),
+    # precision 88.3% -> 92.0%. And on body TEXT the gap is starker still:
+    # pdfplumber renders operators as glyph references, so `t(28) = -3.33`
+    # reaches a checker as `t(28)3.33` once our debris filter strips them --
+    # comparator and MINUS SIGN removed. statcheck finds 0 statistics in
+    # pdfplumber's text of Ophir 2009 and 26 in docling's.
+    #
+    # It pulls torch and is not small. That is the price of reading the
+    # document rather than guessing at it.
+    #
+    # PINNED EXACTLY, to the version the on-disk extraction caches were built
+    # with (extractor_version 2.119.0 in the live cache entries; verified
+    # 2026-08-21 on 10.1073--pnas.1211286109). Docling shipped 29 releases
+    # between June 2026 and this pin, with deprecations mid-flight -- its table
+    # API has already moved under `_grid_of` once -- and a version skew between
+    # the extracting machine and this one makes the same PDF extract
+    # differently, which the cache would report as the paper having changed.
+    "docling==2.119.0",
+    # STILL REQUIRED, and not as a fallback in name only: page counts, table
+    # detection, the zero-page/scanned-paper guard and every page-range read
+    # still go through pdfplumber, and it serves the text whenever the docling
+    # cache is cold.
+    "pdfplumber>=0.10.0",
+    "scipy>=1.11.0",
+    "numpy>=1.24.0",
+    "pydantic>=2.0.0",
+    "rich>=13.0.0",
+    "typer>=0.9.0",
+    "pyyaml>=6.0",
+    "markdown>=3.4",
+    # Supplementary-material readers. XML needs no dependency (stdlib
+    # ElementTree); these two are what make .docx/.xlsx supplements readable.
+    "python-docx>=1.0",
+    "openpyxl>=3.1",
+    # HTML full-text extraction (extraction/html.py). lxml, not stdlib
+    # html.parser, because real publisher HTML is malformed often enough that
+    # html.parser silently loses table rows -- same reasoning fetchpdf already
+    # applied to its own T2 HTML tier.
+    "lxml>=4.9",
+    # DOI metadata cascade (paper_metadata.py / fetch_metadata_from_doi.py).
+    "requests>=2.31",
+    # NHST recomputation. A BASE dependency since 1.85.4: nearly every run uses
+    # the tools agent, and a missing statcheck does not fail -- the tool returns
+    # an empty result that reads as "this paper has no test statistics".
+    # 0.0.7 is the newest release on PyPI (2026-10-01) and the engine every
+    # measurement here used; the original `>=1.4.0` pin named a version that
+    # never existed.
+    "statcheck>=0.0.7",
+    # NOTE: `fetchpdf` was a BASE dependency here, pinned to
+    # file:///home/dan/Dropbox/... -- a path that exists on one machine on
+    # earth. Its own comment acknowledged the trade ("fragile off this machine
+    # by construction... this repo already assumes a specific single-machine
+    # dev environment"), and that was defensible while the repo had one
+    # machine. It is now an EXTRA, because the assumption stopped holding:
+    # `uv pip install -e .` failed on a second box on 2026-08-16 with
+    # "Distribution not found at: file:///home/dan/...", which blocks the GPU
+    # extraction machine, the Zotero generalisation corpus, and anyone Dan
+    # hands the branch to.
+    #
+    # Nothing is lost by moving it. The ONE call site --
+    # `extraction/html.py::_decoy_reason` -- already wraps the import in
+    # try/ImportError and falls back to `_looks_like_boilerplate`, so a machine
+    # without it degrades to the weaker landing-page check rather than
+    # crashing. Install with `.[html]` to get the stronger one (from PyPI since
+    # 1.85.4; the `file://` pin is gone).
+]
+
+[project.optional-dependencies]
+db = [
+    # The local findings database (docs/specs/webapp_db.md). Absent driver is
+    # a NAMED refusal in db_push.py, never a silent skip.
+    "psycopg[binary]>=3.1",
+    "watchfiles>=1.0",
+]
+html = [
+    # The single source of truth for landing-page / decoy-HTML detection
+    # (`fetchpdf.retrieval.validate.validate_t2`), reused rather than copied,
+    # and the supplement integrity auditor `metascience batch` reads back
+    # (`fetchpdf.retrieval.verify.audit_tree`). Both exist in 0.1.0 on PyPI.
+    "fetchpdf>=0.1.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-xdist>=3.5.0",
+    "ruff>=0.1.0",
+]
+# Kept, empty, so `pip install -e '.[statcheck]'` in old notes still resolves;
+# statcheck is a base dependency now.
+statcheck = []
+# Image-duplication track (image_forensics/panels.py, image_forensics/image_analysis.py).
+# PyMuPDF was imported lazily in 8 modules but never declared -- the statcheck
+# lesson (see preflight.py) is that an undeclared dependency whose absence
+# degrades silently must at least be DECLARED where installs can see it.
+# docling is pinned exactly, to the SAME version as the base dependency
+# (2.119.0, the version the on-disk extraction caches were built with -- see
+# the base pin's comment): 29 releases since June 2026 with deprecations
+# mid-flight, and here it is used only for the conditional figure-REGION tier
+# (never for pixels), so an unpinned or divergent version changes behavior
+# for no gain.
+images = [
+    "pymupdf>=1.24",
+    "opencv-python-headless==4.12.0.88",
+    "opencv-python==4.12.0.88",
+    "docling==2.119.0",
+]
+text-localization = ["easyocr==1.7.2"]
+pdf = [
+    # `report.pdf` rendering. Pure-Python, so it needs no separate system PDF
+    # engine -- which is the point. Before this, PDF output required pandoc PLUS
+    # an engine, and on a machine with pandoc and no engine every run printed
+    # "install wkhtmltopdf or pandoc" (advice to install what was already there)
+    # and produced no PDF. `report_render._render_weasyprint` drives it through
+    # the LIBRARY, not the console script: pandoc could not resolve the script
+    # even with it on PATH, which is what made the defect survive diagnosis.
+    "weasyprint>=60"
+]
+
+[project.scripts]
+metascience = "metascience_agent.cli:app"
+metascience-test = "metascience_agent.test_runner:main"
+copy-paste-detect = "copy_paste_detector.cli:main"
+copy-paste-batch = "copy_paste_detector.batch:main"
+copy-paste-dataset = "copy_paste_detector.datasets:main"
+copy-paste-benchmark = "copy_paste_detector.benchmark:main"
+
+[tool.hatch.build.targets.wheel]
+# The toolkit and the copy-paste detector, from their canonical source
+# directories. The image analysis package is distributed separately (a
+# private repository that depends on this one) and is NOT bundled; the
+# toolkit runs without it (`metascience_agent.image_plugin`).
+packages = ["src/metascience_agent", "copy_paste_detector/src/copy_paste_detector"]
+
+# The `html` extra below points at a sibling checkout via a `file://` URL
+# (fetchpdf is not on PyPI). Newer hatchling refuses to build ANY metadata
+# — even a plain `pip install -e .` with no extras requested — unless this
+# is set, because it validates every declared optional-dependency group
+# up front. Without it: "Dependency #1 of option `html` ... cannot be a
+# direct reference unless ... allow-direct-references is set to true".
+[tool.hatch.build.targets.wheel.force-include]
+"db/migrations/003_analysis_history.sql" = "metascience_agent/analysis_history.sql"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+# The `dynamic = ["version"]` above resolves here: hatchling reads the
+# `__version__` literal out of version.py at build time. One number, one file.
+[tool.hatch.version]
+path = "src/metascience_agent/version.py"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+# N818 wants every exception class to end in "Error". Eight public names
+# here do not (BudgetExhausted, WeeklyLimitReached, MCPUnavailable, ...);
+# renaming them is an API break for nothing, so the rule is off.
+ignore = ["N818"]
+
+[tool.ruff.lint.per-file-ignores]
+# A pytest fixture named `review` shadows the module-level `review` import
+# in every test that takes it as an argument. ruff reads that as F811
+# (84 hits on 2026-09-02, one of them real); the real ones are found by
+# eye, not by a rule that fires on the idiom.
+"tests/*" = ["F811"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "copy_paste_detector/tests"]
+# NOT parallel via addopts -- deliberately. `-n`/`--dist` are supplied by
+# the pytest-xdist plugin, and pytest parses `addopts` before any plugin or
+# conftest.py gets a chance to run, so hardcoding them here means bare
+# `pytest`/`python -m pytest` hard-crashes with "unrecognized arguments: -n"
+# on any machine (Mac, Linux, Windows) where pytest-xdist happens not to be
+# installed -- which is exactly what happened here: the dev extra never
+# declared it, so every invocation failed before collecting a single test.
+# Parallelism is applied later: `tests/conftest.py` turns xdist on (same
+# calibrated workers / loadfile default as `metascience-test`) once loaded,
+# and no-ops if it is not. `metascience-test` still auto-installs xdist
+# when it is missing.
+#
+# Dan asked on 2026-08-11 whether ~4,400 tests was excessive. Measured: 39,320
+# test lines against 54,216 of source is 0.73:1, which is lean for code that
+# accuses people of errors in their published work; 0 tests assert a literal,
+# 28 of 3,317 have no assertion (all "does not raise" smoke tests), and 12 are
+# duplicate bodies. The count was not the problem. The WALL CLOCK was, and it
+# is the thing `metascience-test` exists to keep attacking -- run
+# `metascience-test -p no:xdist` to debug a single test, and a named file or
+# `-k` while iterating rather than the whole suite.
+markers = [
+    "eval: live evaluation runs that call the claude CLI and cost money (gated on RUN_EVAL=1)",
+    "r_differential: quick Python-vs-R GRIM/SPRITE comparison; needs R (gated on RUN_R_DIFFERENTIAL=1)",
+]

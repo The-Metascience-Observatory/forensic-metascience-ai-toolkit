@@ -1,0 +1,13 @@
+# The complete review plus the raw-data copy-paste detector over the paper's
+# spreadsheets (opt-in; its rows are quarantined, modules/raw_data/MODULE.md).
+schema_version: 1
+name: full_raw_data
+description: Complete forensic review plus the raw-data copy-paste detector.
+modules:
+  - use: tools_agent
+    tools: all
+  - use: scientific_proofreading_agent
+  - use: image_analysis
+  - use: text_forensics
+  - use: raw_data
+  - use: adjudicator

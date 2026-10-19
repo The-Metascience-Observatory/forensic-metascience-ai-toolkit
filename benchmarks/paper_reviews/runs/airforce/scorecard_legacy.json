@@ -1,0 +1,105 @@
+{
+  "paper": "airforce",
+  "pipeline_version": "v1.15.0 (g4a7971102983, uncommitted changes)",
+  "mode": "two_stage_legacy",
+  "backend": "grok",
+  "model": "grok-4.6",
+  "verdict": "unresolved",
+  "verdict_expected": "does_not_reconcile",
+  "verdict_match": false,
+  "deterministic": {
+    "findings_json": {
+      "passed": true,
+      "problems": [],
+      "num_findings": 26
+    },
+    "no_preamble": {
+      "passed": true,
+      "first_line": "Forensic review -- Kasper et al. 2024",
+      "matched_patterns": []
+    },
+    "must_not_say": {
+      "passed": true,
+      "hits": []
+    },
+    "verdict": {
+      "passed": false,
+      "verdict": "unresolved",
+      "expected": "does_not_reconcile",
+      "valid_value": true
+    },
+    "tortured_track": {
+      "ran": true,
+      "k": 0,
+      "refusal_subtype": null,
+      "expected": "none",
+      "passed": true
+    },
+    "passed": false
+  },
+  "judge": {
+    "per_finding": [
+      {
+        "id": "grim_failures",
+        "weight": "critical",
+        "reachable": true,
+        "covered": true,
+        "evidence_quote": "Nine of ten two-decimal survey percentages are impossible at those ns. They are uniquely possible at 73 (briefing items) and 74 (compliance items) in the video-only arm and at 73 in the in-person arm",
+        "severity_expected": [
+          4,
+          6
+        ],
+        "confidence": "high",
+        "matched_finding_id": "table3_survey_pct_vs_enrolled_n",
+        "matched_severity": "suspicious",
+        "severity_in_interval": false,
+        "severity_direction": "incomparable_eras"
+      },
+      {
+        "id": "zero_cell_chi2",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "percentage_sum",
+        "weight": "major",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      },
+      {
+        "id": "single_item_multiplicity",
+        "weight": "minor",
+        "reachable": true,
+        "covered": false,
+        "evidence_quote": ""
+      }
+    ],
+    "false_positives": [],
+    "recall_weighted": 0.375,
+    "recall_weighted_reachable": 0.375,
+    "num_false_positives": 0,
+    "no_findings_produced": false,
+    "severity_calibration": {
+      "n_scored": 0,
+      "n_in_interval": 0,
+      "n_over_severity": 0,
+      "n_under_severity": 0,
+      "severity_bias": 0.0,
+      "n_excluded_low_confidence": 1,
+      "n_covered_but_unmatched": 0
+    },
+    "judge_notes": "GRIM coverage is strong (9/10 survey percentages fail at n=80/79; reconstructed at 73\u201374). The review reconstructs the 100% confidence cell as [73, 0] and matches Pearson chi-squared, but never flags chi-squared on a zero cell or missing Fisher. Compliance-category percentages are never checked as a sum-to-100%/mutually-exclusive partition. Three separate 2x2 compliance tests vs one 2x3 is not raised (only a generic note that uncorrected testing of ten Table III rows is ordinary). Extra findings (medical-hold GRIM, clustering, coarse age, vitamin C units) are real or reasonable, not invented severe claims.",
+    "judge_parse_path": "json_schema",
+    "cost_usd": 0.03532362
+  },
+  "recall_weighted": 0.375,
+  "recall_weighted_reachable": 0.375,
+  "num_false_positives": 0,
+  "cost_usd": {
+    "analysis": 0.73935176,
+    "judge": 0.03532362
+  }
+}

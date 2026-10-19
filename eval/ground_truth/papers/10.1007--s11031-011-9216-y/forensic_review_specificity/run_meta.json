@@ -1,0 +1,125 @@
+{
+  "paper_id": "10.1007--s11031-011-9216-y",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "analysed_at": "2026-08-07 20:18 UTC",
+  "version": "0.1.0",
+  "effort": "max",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 5.4871430000000005,
+      "input_tokens": 34,
+      "output_tokens": 90364,
+      "wall_seconds": 980.31,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.001371
+        },
+        "claude-opus-5": {
+          "costUSD": 5.485772
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 24
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.3582285,
+      "input_tokens": 12,
+      "output_tokens": 38268,
+      "wall_seconds": 487.32,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.033488000000000004
+        },
+        "claude-opus-5": {
+          "costUSD": 2.3247405
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "untrustworthy",
+      "confidence": "high"
+    }
+  },
+  "total_cost_usd": 7.845371500000001,
+  "total_wall_seconds": 1467.64,
+  "title_quality": {
+    "pass": false,
+    "n": 13,
+    "n_sentence_shaped": 2,
+    "n_joined": 0,
+    "n_overlong": 5,
+    "examples": [
+      "Sixty of Experiment 4's stated 193 participants absent from every analysis it reports",
+      "Two degrees-of-freedom values inconsistent with the designs they are attributed to"
+    ],
+    "problems": [
+      "2 of 13 titles read as sentences, not noun phrases",
+      "5 title(s) exceed 90 characters"
+    ],
+    "detail": "2 of 13 titles read as sentences, not noun phrases; 5 title(s) exceed 90 characters"
+  },
+  "reproducibility": {
+    "n_findings": 37,
+    "n_valid": 27,
+    "n_invalid": 10,
+    "problems": [
+      "finding[9] (e4_direction_contradiction): must invoke `metascience`, got 'Not'",
+      "finding[10] (control_mean_4_20_recurrence): must invoke `metascience`, got 'Not'",
+      "finding[19] (table1_caption_promises_absent_rows): must invoke `metascience`, got 'Not'",
+      "finding[20] (e3_correlation_df_inconsistent): must invoke `metascience`, got 'Not'",
+      "finding[21] (e1_simple_effect_df_inconsistent): must invoke `metascience`, got 'Not'",
+      "finding[22] (data_availability_state_but_withhold): must invoke `metascience`, got 'Not'",
+      "finding[23] (identical_sds_weak_signal): must invoke `metascience`, got 'Not'",
+      "finding[5] (5): must invoke `metascience`, got 'Not'",
+      "finding[9] (9): must invoke `metascience`, got 'Not'",
+      "finding[10] (10): must invoke `metascience`, got 'Not'"
+    ]
+  },
+  "consequence": {
+    "n_sweep": 24,
+    "n_report": 13,
+    "n_computed": 3,
+    "n_asserted": 34,
+    "n_absent": 0,
+    "corroborated": true
+  },
+  "severity_reconciliation": {
+    "n_compared": 12,
+    "n_diverged": 4,
+    "n_downgraded_unexplained": 0,
+    "n_upgraded_unexplained": 0,
+    "n_tool_severities_available": 111,
+    "n_unjoined": 5,
+    "n_manual": 7,
+    "divergences": [
+      "e2_table1_three_cells_impossible: tool=impossible model=highly_suspicious (downgraded, explained)",
+      "e4_six_cells_impossible: tool=impossible model=highly_suspicious (downgraded, explained)",
+      "pilot_mood_anova_f_out_of_range: tool=highly_suspicious model=suspicious (downgraded, explained)",
+      "e2_attractiveness_f_model_mismatch: tool=highly_suspicious model=indeterminate (downgraded, explained)"
+    ]
+  }
+}

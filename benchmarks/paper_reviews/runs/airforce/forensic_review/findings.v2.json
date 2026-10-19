@@ -1,0 +1,2823 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "2.0",
+  "paper_id": "paper",
+  "run_id": "r_efb46f129a408c14",
+  "paper_metadata": {
+    "metadata_status": "failed"
+  },
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": ""
+    },
+    "science_error": {
+      "state": "ran",
+      "detail": ""
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "image track disabled"
+    },
+    "tortured_phrases": {
+      "state": "ran",
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 4115 words"
+    }
+  },
+  "findings": [
+    {
+      "slug": "cluster_chi_square_ignores_flights",
+      "technique": "not_computational",
+      "title": "Four flights were randomized but analyzed as 159 people",
+      "description": "Methods assigned two female flights to each briefing arm, then compared injuries and survey items with a person-level chi-squared test. With only two clusters per arm, any shared flight-level injury risk (drill instructors, barracks, training load) makes the reported MSKI p=.047 and BSI p=.037 anti-conservative. Those two p-values are the basis for the abstract's 43% and 66% relative risk reductions. A cluster-level analysis cannot be reconstructed because flight-level counts are not printed.",
+      "location": "Methods, randomization and statistical analysis; Table III injury rows",
+      "outcome": "problem",
+      "provisional_severity": 5,
+      "quote": "These flights were randomly assigned to cohorts, which would receive one of two MVI-briefing modalities.",
+      "anchors": [
+        {
+          "anchor_id": "f_508122527018c39e:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_508122527018c39e:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, randomization",
+          "quote": "These flights were randomly assigned to cohorts, which would receive one of two MVI-briefing modalities.",
+          "quote_folded_sha1": "bc56743575a414c0c6018efb2dcbccb154568fe5",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 74.35659790039062,
+              "y0": 413.5060729980469,
+              "x1": 100.73628234863281,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 103.19625091552734,
+              "y0": 413.5060729980469,
+              "x1": 130.7059326171875,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 133.16590881347656,
+              "y0": 413.5060729980469,
+              "x1": 155.0956268310547,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 157.55560302734375,
+              "y0": 413.5060729980469,
+              "x1": 198.38510131835938,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 200.84507751464844,
+              "y0": 413.5060729980469,
+              "x1": 237.7846221923828,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 240.24459838867188,
+              "y0": 413.5060729980469,
+              "x1": 250.52447509765625,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 252.9844512939453,
+              "y0": 413.5060729980469,
+              "x1": 287.4240417480469,
+              "y1": 423.5059509277344,
+              "page": 3
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 425.4610595703125,
+              "x1": 284.924072265625,
+              "y1": 435.4609375,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 40.84700012207031,
+            "y0": 413.5060729980469,
+            "x1": 287.4240417480469,
+            "y1": 435.4609375,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_508122527018c39e:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_508122527018c39e:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Methods, statistical analysis",
+          "quote": "Associations between categorical variables were analyzed using the chi-squared test.",
+          "quote_folded_sha1": "3c740c3438f7e6c257c1920cdb1f9d48f9b4ff78",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 308.8420104980469,
+              "y0": 569.1901245117188,
+              "x1": 543.4691772460938,
+              "y1": 579.1900024414062,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 581.1450805664062,
+              "x1": 403.3757019042969,
+              "y1": 591.1449584960938,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 569.1901245117188,
+            "x1": 543.4691772460938,
+            "y1": 591.1449584960938,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_508122527018c39e:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_508122527018c39e:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Discussion, limitations",
+          "quote": "This study was limited in several ways: (1) it used block rather than individual randomization",
+          "quote_folded_sha1": "6796451a1919a82caa75a338b765887caff77f39",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 308.8420104980469,
+              "y0": 446.382080078125,
+              "x1": 543.46923828125,
+              "y1": 456.3819580078125,
+              "page": 4
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 458.3370666503906,
+              "x1": 442.66522216796875,
+              "y1": 468.3369445800781,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 446.382080078125,
+            "x1": 543.46923828125,
+            "y1": 468.3369445800781,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Quotes are contiguous Methods and Discussion spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_508122527018c39e",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 5,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Flights, not people, were randomized (two per briefing arm), yet MSKI p=.047 and BSI p=.037 are person-level Pearson chi-squares on 25/80 vs 14/79 and 12/80 vs 4/79. Those p-values underpin the abstract's 43% and 66% relative reductions. With two clusters per arm the tests are anti-conservative; a valid cluster analysis is essentially unidentified. Limitation (1) noted block randomization but did not change the analysis.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_508122527018c39e:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "title_mvi_causal_not_briefing_rct",
+      "technique": "not_computational",
+      "title": "Title credits MVI compliance; both arms received the MVI",
+      "description": "The title states that multivitamin compliance reduces injuries. The randomized contrast is briefing modality (video versus video plus in-person SME brief). Both cohorts received the same prenatal MVI. No unsupplemented control and no mediation test of compliance are reported. The Discussion infers that the brief improved compliance which in turn reduced injuries. That causal chain is not identified by the design, which the authors themselves list as limitation (2).",
+      "location": "Title vs Methods limitation (2) and Discussion paragraph 1",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "quote": "we infer that incorporating an in-person brief from SMEs improved compliance with the MVI which in turn significantly reduced injuries.",
+      "anchors": [
+        {
+          "anchor_id": "f_1278d0d275f8960c:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_1278d0d275f8960c:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Discussion, paragraph 1",
+          "quote": "we infer that incorporating an in-person brief from SMEs improved compliance with the MVI which in turn significantly reduced injuries.",
+          "quote_folded_sha1": "20320fe79094998ee427b2e45c778f4af5485e02",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 172.9954376220703,
+              "y0": 674.2991333007812,
+              "x1": 287.4240417480469,
+              "y1": 684.2990112304688,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 686.2540893554688,
+              "x1": 287.4340515136719,
+              "y1": 696.2539672851562,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 698.2091064453125,
+              "x1": 235.4646453857422,
+              "y1": 708.208984375,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 40.84700012207031,
+            "y0": 674.2991333007812,
+            "x1": 287.4340515136719,
+            "y1": 708.208984375,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_1278d0d275f8960c:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_1278d0d275f8960c:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Discussion, limitations",
+          "quote": "(2) all trainees received the MVI (because of the potential benefits of the MVI)",
+          "quote_folded_sha1": "0365be0734333c13781dfa12c9bd71ee1f5e7271",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 447.5851745605469,
+              "y0": 458.3370666503906,
+              "x1": 543.4739990234375,
+              "y1": 468.3369445800781,
+              "page": 4
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 470.2930603027344,
+              "x1": 523.4741821289062,
+              "y1": 480.2929382324219,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 458.3370666503906,
+            "x1": 543.4739990234375,
+            "y1": 480.2929382324219,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_1278d0d275f8960c:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_1278d0d275f8960c:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Title",
+          "quote": "Multivitamin Compliance Reduces Injuries of Female Recruits at Air Force Basic Training",
+          "quote_folded_sha1": "820386329b03fa6b7d5f0e3ea7c28e2d3055b6bd",
+          "file": "air_force.pdf",
+          "page": 1,
+          "boxes": [
+            {
+              "x0": 48.007999420166016,
+              "y0": 71.86112976074219,
+              "x1": 538.2583618164062,
+              "y1": 87.86094665527344,
+              "page": 1
+            },
+            {
+              "x0": 45.84000015258789,
+              "y0": 89.79411315917969,
+              "x1": 226.78204345703125,
+              "y1": 105.79393005371094,
+              "page": 1
+            }
+          ],
+          "region": {
+            "x0": 45.84000015258789,
+            "y0": 71.86112976074219,
+            "x1": 538.2583618164062,
+            "y1": 105.79393005371094,
+            "page": 1
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Title, Discussion inference, and limitation (2) are separate contiguous spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_1278d0d275f8960c",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 3,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "The title states that multivitamin compliance reduces injuries, but both arms received the same prenatal MVI and the randomized contrast is briefing modality. Limitation (2) already states that all trainees received the MVI, and no mediation test is reported. The Discussion infers a compliance-to-injury chain the design cannot identify. A title and causal-language correction is warranted; the briefing comparison remains the experiment that was run.",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_1278d0d275f8960c:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "survey_pcts_impossible_at_n159",
+      "technique": "reconstruct_2x2",
+      "title": "Table III survey percentages cannot come from n=80 and n=79",
+      "description": "Table III headers are n=80 and n=79 (total 159), but reconstruct_2x2 finds no column split summing to 159 that produces the paired survey percentages (daily MVI 14.86 vs 34.25, most days 37.84 vs 63.01, never 20.27 vs 8.22, found-brief-effective 95.89 vs 98.63). R GRIM agrees 14.86% is impossible at n=80. Unique recovered bases (video compliance 11/74, 28/74, 15/74; in-person 25/73, 46/73, 6/73; brief items on n=73) also reproduce the printed Pearson p-values (.0063, .0023, .037, .007). Methods still state that all trainees completed questionnaires. Compliance contrasts remain; the printed denominators and completeness claim do not.",
+      "location": "Table III survey block vs Methods questionnaire sentence",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "Furthermore, all trainees completed questionnaires regarding their perceptions regarding the usefulness and effectiveness of their MVI briefing and were asked to quantify their MVI compliance.",
+      "anchors": [
+        {
+          "anchor_id": "f_95a86369714ce8ef:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_95a86369714ce8ef:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, data sources",
+          "quote": "Furthermore, all trainees completed questionnaires regarding their perceptions regarding the usefulness and effectiveness of their MVI briefing and were asked to quantify their MVI compliance.",
+          "quote_folded_sha1": "9ec78e0358901a6e78a34707b9ff1044ea0a6519",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 440.6052551269531,
+              "y0": 401.81707763671875,
+              "x1": 493.0946044921875,
+              "y1": 411.81695556640625,
+              "page": 3
+            },
+            {
+              "x0": 496.6545715332031,
+              "y0": 401.81707763671875,
+              "x1": 506.6544494628906,
+              "y1": 411.81695556640625,
+              "page": 3
+            },
+            {
+              "x0": 509.8644104003906,
+              "y0": 401.81707763671875,
+              "x1": 540.9639892578125,
+              "y1": 411.81695556640625,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 413.7720642089844,
+              "x1": 338.5464782714844,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 341.2264404296875,
+              "y0": 413.7720642089844,
+              "x1": 398.9957275390625,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 401.6856994628906,
+              "y0": 413.7720642089844,
+              "x1": 439.81524658203125,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 442.4952087402344,
+              "y0": 413.7720642089844,
+              "x1": 460.8249816894531,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 463.51495361328125,
+              "y0": 413.7720642089844,
+              "x1": 509.6143798828125,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 512.2943725585938,
+              "y0": 413.7720642089844,
+              "x1": 540.9739990234375,
+              "y1": 423.7719421386719,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 425.72808837890625,
+              "x1": 309.6668395996094,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 311.8668212890625,
+              "y0": 425.72808837890625,
+              "x1": 324.086669921875,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 326.2866516113281,
+              "y0": 425.72808837890625,
+              "x1": 367.9461364746094,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 370.1461181640625,
+              "y0": 425.72808837890625,
+              "x1": 384.5859375,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 386.7859191894531,
+              "y0": 425.72808837890625,
+              "x1": 438.33526611328125,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 440.5352478027344,
+              "y0": 425.72808837890625,
+              "x1": 448.8651428222656,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 451.06512451171875,
+              "y0": 425.72808837890625,
+              "x1": 469.3948974609375,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 471.5848693847656,
+              "y0": 425.72808837890625,
+              "x1": 491.0246276855469,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 493.224609375,
+              "y0": 425.72808837890625,
+              "x1": 524.334228515625,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 526.5342407226562,
+              "y0": 425.72808837890625,
+              "x1": 540.9740600585938,
+              "y1": 435.72796630859375,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 437.6830749511719,
+              "x1": 316.3167419433594,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 319.2567138671875,
+              "y0": 437.6830749511719,
+              "x1": 341.9364318847656,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 344.87640380859375,
+              "y0": 437.6830749511719,
+              "x1": 352.65631103515625,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 355.5962829589844,
+              "y0": 437.6830749511719,
+              "x1": 388.9258728027344,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 391.8758239746094,
+              "y0": 437.6830749511719,
+              "x1": 410.2055969238281,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 413.14556884765625,
+              "y0": 437.6830749511719,
+              "x1": 432.5853271484375,
+              "y1": 447.6829528808594,
+              "page": 3
+            },
+            {
+              "x0": 435.5352783203125,
+              "y0": 437.6830749511719,
+              "x1": 484.1346740722656,
+              "y1": 447.6829528808594,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 401.81707763671875,
+            "x1": 540.9740600585938,
+            "y1": 447.6829528808594,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_95a86369714ce8ef:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_95a86369714ce8ef:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table III, Took MVI daily",
+          "quote": "Took MVI daily 14.86 34.25 .0063",
+          "quote_folded_sha1": "f6bece80fb11208f0d832a9f5dd76af7871db5de",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 51.30799865722656,
+              "y0": 220.95408630371094,
+              "x1": 103.107421875,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 141.00900268554688,
+              "y0": 220.95408630371094,
+              "x1": 159.00880432128906,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 206.32200622558594,
+              "y0": 220.95408630371094,
+              "x1": 224.32180786132812,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 262.135009765625,
+              "y0": 220.95408630371094,
+              "x1": 280.1348571777344,
+              "y1": 228.95399475097656,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 51.30799865722656,
+            "y0": 220.95408630371094,
+            "x1": 280.1348571777344,
+            "y1": 228.95399475097656,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_95a86369714ce8ef:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_95a86369714ce8ef:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table III column headers",
+          "quote": "Video- only cohort ( n = 80) (%) In-person cohort ( n = 79) (%)",
+          "quote_folded_sha1": "8cf0b37297a7ef96166f977e1c160d2b557a33b7",
+          "file": "air_force.pdf",
+          "page": 1,
+          "boxes": [],
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Completeness claim, table header, and daily-compliance row are separate spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_95a86369714ce8ef",
+      "finding_id_hasher": "1",
+      "provisional_severity_from": 4,
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Reconstruct_2x2 finds no n=80/n=79 split that can produce the paired survey percentages; R GRIM finds 14.86% impossible at n=80 and possible at n=74. Recovered bases (11/74, 28/74, 15/74 vs 25/73, 46/73, 6/73; brief items on n=73) also reproduce the printed Pearson p-values. Methods nonetheless state that all trainees completed questionnaires.",
+        "category": "none",
+        "description_was": "Table III headers are n=80 and n=79 (total 159). Reconstruct_2x2 finds no column split summing to 159 that can produce the paired survey percentages Took MVI daily 14.86 vs 34.25, most days 37.84 vs 63.01, never 20.27 vs 8.22, or found-brief-effective 95.89 vs 98.63 at two decimals. A search of n=60-80 recovers unique denominators: video brief items 70/73 and 66/73; video compliance 11/74, 28/74, 15/74; all in-person survey items at n=73. Methods nevertheless state that all trainees completed the questionnaire. Daily p=.0063 matches 11/74 vs 25/73, so the tests used the smaller n while the table header did not.",
+        "merged_from": [
+          "f_4d72b99b6aa7a1c9"
+        ]
+      },
+      "severity": 3,
+      "severity_is_provisional": false,
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_95a86369714ce8ef:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "medical_hold_127_not_from_n80",
+      "technique": "reconstruct_2x2",
+      "title": "Table III medical-hold 1.27% is not attainable at n=80",
+      "description": "Medical hold is printed as 1.27% in both columns, under headers n=80 and n=79, with p=.99. Reconstruct_2x2 finds no 2x2 whose column totals sum to 159 and that reproduces both 1.27% values at two decimals. Results state there were no losses of routinely collected data, so the injury/training denominators should be 80 and 79. One event in 79 is 1.27%; one event in 80 is 1.25%, which would print as 1.25 not 1.27. The video-only cell matches the in-person value rather than n=80. Recycle-fitness 2.50% and 2.53% do match 2/80 and 2/79.",
+      "location": "Table III, Medical hold row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "There were no losses or exclusions of routinely collected and linked data.",
+      "anchors": [
+        {
+          "anchor_id": "f_42a9dc58fd9c1bca:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_42a9dc58fd9c1bca:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Results, after Table III",
+          "quote": "There were no losses or exclusions of routinely collected and linked data.",
+          "quote_folded_sha1": "aba79b0c67d1f85cadd8ca3bd53d7a81c1137392",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 143.387939453125,
+              "y0": 364.986083984375,
+              "x1": 287.4361572265625,
+              "y1": 374.9859619140625,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 376.9410705566406,
+              "x1": 192.38516235351562,
+              "y1": 386.9409484863281,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 40.84700012207031,
+            "y0": 364.986083984375,
+            "x1": 287.4361572265625,
+            "y1": 386.9409484863281,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_42a9dc58fd9c1bca:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_42a9dc58fd9c1bca:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table III, Medical hold row",
+          "quote": "Medical hold 1.27 1.27 .99",
+          "quote_folded_sha1": "bf54e7fecb034c413805ad36a304246a3ce41527",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 51.30799865722656,
+              "y0": 290.6930847167969,
+              "x1": 93.74752807617188,
+              "y1": 298.6929931640625,
+              "page": 4
+            },
+            {
+              "x0": 145.00900268554688,
+              "y0": 290.6930847167969,
+              "x1": 159.00885009765625,
+              "y1": 298.6929931640625,
+              "page": 4
+            },
+            {
+              "x0": 210.32200622558594,
+              "y0": 290.6930847167969,
+              "x1": 224.3218536376953,
+              "y1": 298.6929931640625,
+              "page": 4
+            },
+            {
+              "x0": 262.135009765625,
+              "y0": 290.6930847167969,
+              "x1": 272.1349182128906,
+              "y1": 298.6929931640625,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 51.30799865722656,
+            "y0": 290.6930847167969,
+            "x1": 272.1349182128906,
+            "y1": 298.6929931640625,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_42a9dc58fd9c1bca:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_42a9dc58fd9c1bca:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Table III column headers",
+          "quote": "Video- only cohort ( n = 80) (%) In-person cohort ( n = 79) (%)",
+          "quote_folded_sha1": "8cf0b37297a7ef96166f977e1c160d2b557a33b7",
+          "file": "air_force.pdf",
+          "page": 1,
+          "boxes": [],
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Completeness claim, medical-hold row, and column headers are separate spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_42a9dc58fd9c1bca",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "Medical hold is printed as 1.27% under both n=80 and n=79. R GRIM finds 1.27% impossible at n=80 (1/80=1.25%) and possible at n=79 (1/79=1.27%). Reconstruct_2x2 finds no split summing to 159 that yields both 1.27% values. Results state there were no losses of routinely collected data. This is a one-cell error in a non-primary training-delay row (p=.99 either way).",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_42a9dc58fd9c1bca:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "vitamin_c_100ug_vs_83pct_dv",
+      "technique": "factual_claim",
+      "title": "Table I lists vitamin C as 100 \u03bcg at 83% daily value",
+      "description": "Table I prints vitamin C (ascorbic acid) as 100 \u03bcg and 83% daily value for pregnant and lactating women. NIH ODS RDAs for vitamin C are in milligrams: 85 mg in pregnancy and 120 mg in lactation. 100 mg of 120 mg is 83%, matching the printed percent; 100 \u03bcg of 120 mg is 0.08%. Typical prenatal labels use 100 mg ascorbic acid. Adjacent rows correctly use \u03bcg for vitamins A, D, folate, and B12 and mg for iron, calcium, and zinc, so the vitamin C unit is a 1000-fold error relative to the printed %DV.",
+      "location": "Table I, Vitamin C row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "basis": "web_lookup",
+      "reproduction": "metascience check-ratio",
+      "anchors": [
+        {
+          "anchor_id": "f_86b9513a407e5f23:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_86b9513a407e5f23:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Table I, Vitamin C row",
+          "quote": "Vitamin C (as ascorbic acid) 100 \u03bc g 83",
+          "quote_folded_sha1": "d652aa35d0a48f4e8d56cb5fc9c7d631d2b27b69",
+          "file": "air_force.pdf",
+          "page": 2,
+          "boxes": [],
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_86b9513a407e5f23:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_86b9513a407e5f23:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Table I column header",
+          "quote": "Percent daily value for pregnant and lactating women (%)",
+          "quote_folded_sha1": "01d1f24386f88d534828f325b5c1175f186f17fd",
+          "file": "air_force.pdf",
+          "page": 2,
+          "boxes": [
+            {
+              "x0": 471.80499267578125,
+              "y0": 94.42906951904297,
+              "x1": 538.7562255859375,
+              "y1": 102.4289779663086,
+              "page": 2
+            },
+            {
+              "x0": 471.80499267578125,
+              "y0": 104.39104461669922,
+              "x1": 531.6923217773438,
+              "y1": 112.39095306396484,
+              "page": 2
+            },
+            {
+              "x0": 471.80499267578125,
+              "y0": 114.35405731201172,
+              "x1": 543.2761840820312,
+              "y1": 122.35396575927734,
+              "page": 2
+            }
+          ],
+          "region": {
+            "x0": 471.80499267578125,
+            "y0": 94.42906951904297,
+            "x1": 543.2761840820312,
+            "y1": 122.35396575927734,
+            "page": 2
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Table I vitamin C row and %DV header are contiguous printed labels.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_86b9513a407e5f23",
+      "finding_id_hasher": "1",
+      "web_unbacked": "no_recorded_source",
+      "ledger_web_context": [
+        "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+      ],
+      "quote_verified": "absent",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-ratio [OPTIONS]\nTry 'metascience check-ratio --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing option '--numerator'.",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "Table I lists vitamin C as 100 \u03bcg at 83% daily value. Adjacent rows use \u03bcg correctly for vitamins A, D, folate, and B12; 83% matches 100 mg of a 120 mg lactation daily value, not 100 \u03bcg. This is a unit typo on a background composition table and does not enter the analyses.",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_86b9513a407e5f23:b:pdf",
+        "page": 2
+      }
+    },
+    {
+      "slug": "ref8_is_vitamin_d_not_iron_22mg",
+      "technique": "factual_claim",
+      "title": "Reference 8 does not support the 22 mg iron claim",
+      "description": "The Introduction states that 27 mg of iron approximates the estimated 22 mg daily requirement for females in military training and cites reference 8. Reference 8 is Martineau et al., BMJ 2017, an IPD meta-analysis of vitamin D for acute respiratory tract infections. It does not estimate iron requirements. The paper's own reference 17 (IOM mineral requirements for military personnel) is the work that would support a training-adjusted iron figure.",
+      "location": "Introduction, MVI contents paragraph; References 8 and 17",
+      "outcome": "problem",
+      "provisional_severity": 2,
+      "basis": "web_lookup",
+      "anchors": [
+        {
+          "anchor_id": "f_f34e54c3ff40cadf:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_f34e54c3ff40cadf:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Introduction, MVI paragraph",
+          "quote": "the 27 mg of iron approximates the estimated 22 mg daily requirement for females in military training. 8",
+          "quote_folded_sha1": "f50d64293ca4df852405538c0a634591d887d28b",
+          "file": "air_force.pdf",
+          "page": 2,
+          "boxes": [],
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "page",
+          "method": "quote_verbatim",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_f34e54c3ff40cadf:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_f34e54c3ff40cadf:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Reference 8",
+          "quote": "Martineau AR, Jolliffe DA, Hooper RL, et al: Vitamin D supplementation to prevent acute respiratory tract infections: systematic review and meta-analysis of individual participant data. BMJ 2017; 356: i6583.",
+          "quote_folded_sha1": "b6c4da52d25167f9539f7d3931add5fce6bbe2b6",
+          "file": "air_force.pdf",
+          "page": 6,
+          "boxes": [
+            {
+              "x0": 62.50699996948242,
+              "y0": 124.95903778076172,
+              "x1": 95.38664245605469,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 96.63462829589844,
+              "y0": 124.95903778076172,
+              "x1": 109.74647521972656,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 111.43445587158203,
+              "y0": 124.95903778076172,
+              "x1": 133.898193359375,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 135.586181640625,
+              "y0": 124.95903778076172,
+              "x1": 148.81805419921875,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 150.498046875,
+              "y0": 124.95903778076172,
+              "x1": 174.48977661132812,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 176.17776489257812,
+              "y0": 124.95903778076172,
+              "x1": 188.40162658691406,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 190.08961486816406,
+              "y0": 124.95903778076172,
+              "x1": 195.86553955078125,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 197.54600524902344,
+              "y0": 124.95903778076172,
+              "x1": 205.5458984375,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 206.93789672851562,
+              "y0": 124.95903778076172,
+              "x1": 232.6815948486328,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 234.3695831298828,
+              "y0": 124.95903778076172,
+              "x1": 240.14552307128906,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 241.83351135253906,
+              "y0": 124.95903778076172,
+              "x1": 284.93707275390625,
+              "y1": 132.9589385986328,
+              "page": 6
+            },
+            {
+              "x0": 62.50699996948242,
+              "y0": 134.9210662841797,
+              "x1": 74.9548568725586,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 76.48284149169922,
+              "y0": 134.9210662841797,
+              "x1": 82.70677185058594,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 84.22675323486328,
+              "y0": 134.9210662841797,
+              "x1": 107.89849853515625,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 109.4184799194336,
+              "y0": 134.9210662841797,
+              "x1": 126.29830169677734,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 127.82628631591797,
+              "y0": 134.9210662841797,
+              "x1": 162.48187255859375,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 164.00186157226562,
+              "y0": 134.9210662841797,
+              "x1": 178.21768188476562,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 179.7376708984375,
+              "y0": 134.9210662841797,
+              "x1": 213.5132598876953,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 215.19325256347656,
+              "y0": 134.9210662841797,
+              "x1": 248.96884155273438,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 250.496826171875,
+              "y0": 134.9210662841797,
+              "x1": 271.8645935058594,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 273.38458251953125,
+              "y0": 134.9210662841797,
+              "x1": 284.9364929199219,
+              "y1": 142.9209747314453,
+              "page": 6
+            },
+            {
+              "x0": 62.50699996948242,
+              "y0": 144.8840789794922,
+              "x1": 106.49851989746094,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 109.1304931640625,
+              "y0": 144.8840789794922,
+              "x1": 115.79441833496094,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 118.43438720703125,
+              "y0": 144.8840789794922,
+              "x1": 150.69000244140625,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 153.3219757080078,
+              "y0": 144.8840789794922,
+              "x1": 187.5375518798828,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 190.1775360107422,
+              "y0": 144.8840789794922,
+              "x1": 205.50535583496094,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 208.1453399658203,
+              "y0": 144.8840789794922,
+              "x1": 223.70516967773438,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 226.33714294433594,
+              "y0": 144.8840789794922,
+              "x1": 244.56092834472656,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 247.52090454101562,
+              "y0": 144.8840789794922,
+              "x1": 261.7447509765625,
+              "y1": 152.8839874267578,
+              "page": 6
+            },
+            {
+              "x0": 264.7047119140625,
+              "y0": 144.8840789794922,
+              "x1": 284.92852783203125,
+              "y1": 152.8839874267578,
+              "page": 6
+            }
+          ],
+          "region": {
+            "x0": 62.50699996948242,
+            "y0": 124.95903778076172,
+            "x1": 284.93707275390625,
+            "y1": 152.8839874267578,
+            "page": 6
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. The iron-requirement sentence and the full Reference 8 entry are separate contiguous spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_f34e54c3ff40cadf",
+      "finding_id_hasher": "1",
+      "web_unbacked": "no_recorded_source",
+      "ledger_web_context": [
+        "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+      ],
+      "quote_verified": "absent",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "The Introduction cites reference 8 for the claim that 27 mg of iron approximates a 22 mg daily requirement for females in military training. Reference 8 as printed is Martineau et al., BMJ 2017, an IPD meta-analysis of vitamin D for acute respiratory infections. Reference 17 (IOM mineral requirements for military personnel) is the work that would bear on that quantity.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_f34e54c3ff40cadf:b:pdf",
+        "page": 6
+      }
+    },
+    {
+      "slug": "age_means_contradict_no_difference",
+      "technique": "internal_contradiction",
+      "title": "Printed ages contradict the no-difference claim",
+      "description": "Results state that no significant differences in age or BMI were detected. Table II prints age 21\u00b13 years (n=80) versus 23\u00b15 (n=79). check_effect_plausibility on those printed means and SDs gives d=-0.48, 95% CI [-0.80, -0.17], which excludes zero. An equal-variance t on the same inputs is t=-3.06, df=157, p=0.0026. BMI 24.1\u00b12.6 versus 24.0\u00b12.8 is compatible with no difference (p=0.82). Age is printed to zero decimals, so unrounded means could be closer; the printed figures as they stand do not support the no-difference sentence.",
+      "location": "Results paragraph 1 vs Table II Age row",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "No significant differences in age or BMI between cohorts were detected.",
+      "anchors": [
+        {
+          "anchor_id": "f_d18037140345e14f:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_d18037140345e14f:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Results, paragraph 1",
+          "quote": "No significant differences in age or BMI between cohorts were detected.",
+          "quote_folded_sha1": "30e9f523854edf5b5f557f95dfa20d22ad2faaec",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 483.4829406738281,
+              "y0": 664.5640869140625,
+              "x1": 543.4622802734375,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 676.5191040039062,
+              "x1": 527.9441528320312,
+              "y1": 686.5189819335938,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 664.5640869140625,
+            "x1": 543.4622802734375,
+            "y1": 686.5189819335938,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_d18037140345e14f:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_d18037140345e14f:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table II, Age row",
+          "quote": "Age, year 21 \u00b1 3 23 \u00b1 5",
+          "quote_folded_sha1": "a071799adc8f4b8c97a3d8e487ab1aef77ebb773",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 307.34698486328125,
+              "y0": 121.32805633544922,
+              "x1": 338.44268798828125,
+              "y1": 129.3279571533203,
+              "page": 3
+            },
+            {
+              "x0": 394.05999755859375,
+              "y0": 121.32805633544922,
+              "x1": 402.0599365234375,
+              "y1": 129.3279571533203,
+              "page": 3
+            },
+            {
+              "x0": 402.0599365234375,
+              "y0": 120.34406280517578,
+              "x1": 409.616943359375,
+              "y1": 128.34397888183594,
+              "page": 3
+            },
+            {
+              "x0": 409.616943359375,
+              "y0": 121.32805633544922,
+              "x1": 414.9509582519531,
+              "y1": 129.3279571533203,
+              "page": 3
+            },
+            {
+              "x0": 480.7720031738281,
+              "y0": 121.32805633544922,
+              "x1": 488.7719421386719,
+              "y1": 129.3279571533203,
+              "page": 3
+            },
+            {
+              "x0": 488.7719421386719,
+              "y0": 120.34406280517578,
+              "x1": 496.3289489746094,
+              "y1": 128.34397888183594,
+              "page": 3
+            },
+            {
+              "x0": 496.3289489746094,
+              "y0": 121.32805633544922,
+              "x1": 501.6629638671875,
+              "y1": 129.3279571533203,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 307.34698486328125,
+            "y0": 120.34406280517578,
+            "x1": 501.6629638671875,
+            "y1": 129.3279571533203,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Results sentence and Table II age row are separate contiguous spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_d18037140345e14f",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 3,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Results state that no significant differences in age were detected. Table II prints 21\u00b13 years (n=80) versus 23\u00b15 (n=79). The implied Cohen's d is \u22120.48 (95% CI \u22120.80 to \u22120.17), which excludes no difference. BMI 24.1\u00b12.6 versus 24.0\u00b12.8 is compatible with the no-difference claim. The age sentence does not match the printed statistics and leaves a two-year imbalance unaddressed in the injury comparison.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_d18037140345e14f:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "power_99_relative_25_not_n77",
+      "technique": "not_computational",
+      "title": "Stated power analysis cannot produce n=77 per cohort",
+      "description": "Methods say alpha 0.05, power 0.99, and a 25% relatively greater daily MVI compliance yielded 77 trainees per cohort. A two-proportion calculation at power 0.99 for a 25% relative increase needs hundreds to thousands per arm across baselines 0.15-0.50 (e.g. 0.15 vs 0.1875 needs n=3655). Even at the conventional power 0.80 the same relative effect needs n=1562 at baseline 0.15. A 25 percentage-point increase at power 0.80 gives n=48-60, nearer 77, so the printed 'relatively greater' and 'power of 0.99' jointly do not produce the stated sample size.",
+      "location": "Methods, power analysis paragraph",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "a power analysis calculation was completed using \u03b1\u2264 0.05 for the significance level, a power of 0.99. We estimated a 25% relatively greater daily MVI compliance in trainees receiving the in-person brief compared to those viewing the video alone, which yielded a need for each cohort to have 77 trainees to demonstrate a significant difference.",
+      "anchors": [
+        {
+          "anchor_id": "f_c46b5dee1e54c4f8:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_c46b5dee1e54c4f8:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, power analysis",
+          "quote": "a power analysis calculation was completed using \u03b1\u2264 0.05 for the significance level, a power of 0.99. We estimated a 25% relatively greater daily MVI compliance in trainees receiving the in-person brief compared to those viewing the video alone, which yielded a need for each cohort to have 77 trainees to demonstrate a significant difference.",
+          "quote_folded_sha1": "8574f3ab21f1eec282102d3ef047c54e642f4c8d",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 536.539306640625,
+              "y0": 485.5030822753906,
+              "x1": 540.979248046875,
+              "y1": 495.5029602050781,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 497.4590759277344,
+              "x1": 321.6266784667969,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 324.1666564941406,
+              "y0": 497.4590759277344,
+              "x1": 356.3862609863281,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 358.9262390136719,
+              "y0": 497.4590759277344,
+              "x1": 402.8056945800781,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 405.3456726074219,
+              "y0": 497.4590759277344,
+              "x1": 420.80548095703125,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 423.33544921875,
+              "y0": 497.4590759277344,
+              "x1": 464.99493408203125,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 467.534912109375,
+              "y0": 497.4590759277344,
+              "x1": 489.20465087890625,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 529.310791015625,
+              "y0": 497.4590759277344,
+              "x1": 540.9706420898438,
+              "y1": 507.4589538574219,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 509.4140930175781,
+              "x1": 309.1068420410156,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 312.16680908203125,
+              "y0": 509.4140930175781,
+              "x1": 359.93621826171875,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 362.9961853027344,
+              "y0": 509.4140930175781,
+              "x1": 384.5459289550781,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 387.8758850097656,
+              "y0": 509.4140930175781,
+              "x1": 392.3158264160156,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 395.37579345703125,
+              "y0": 509.4140930175781,
+              "x1": 420.12548828125,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 423.1754455566406,
+              "y0": 509.4140930175781,
+              "x1": 431.5053405761719,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 434.5653076171875,
+              "y0": 509.4140930175781,
+              "x1": 454.5650634765625,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 457.60504150390625,
+              "y0": 509.4140930175781,
+              "x1": 470.69488525390625,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 473.7448425292969,
+              "y0": 509.4140930175781,
+              "x1": 512.0744018554688,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 515.1343994140625,
+              "y0": 509.4140930175781,
+              "x1": 519.5743408203125,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 522.6343383789062,
+              "y0": 509.4140930175781,
+              "x1": 540.964111328125,
+              "y1": 519.4140014648438,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 521.3690795898438,
+              "x1": 334.25653076171875,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 336.7665100097656,
+              "y0": 521.3690795898438,
+              "x1": 364.5261535644531,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 367.0361328125,
+              "y0": 521.3690795898438,
+              "x1": 387.035888671875,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 389.5458679199219,
+              "y0": 521.3690795898438,
+              "x1": 408.9856262207031,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 411.49560546875,
+              "y0": 521.3690795898438,
+              "x1": 457.59503173828125,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 460.1050109863281,
+              "y0": 521.3690795898438,
+              "x1": 467.8849182128906,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 470.3948974609375,
+              "y0": 521.3690795898438,
+              "x1": 501.4945068359375,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 504.0044860839844,
+              "y0": 521.3690795898438,
+              "x1": 540.9740600585938,
+              "y1": 531.3689575195312,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 533.3240966796875,
+              "x1": 309.1068420410156,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 310.92681884765625,
+              "y0": 533.3240966796875,
+              "x1": 348.69635009765625,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 350.5063171386719,
+              "y0": 533.3240966796875,
+              "x1": 369.3860778808594,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 371.2060546875,
+              "y0": 533.3240966796875,
+              "x1": 410.63555908203125,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 412.4455261230469,
+              "y0": 533.3240966796875,
+              "x1": 420.2254333496094,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 422.04541015625,
+              "y0": 533.3240966796875,
+              "x1": 443.1551513671875,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 444.9651184082031,
+              "y0": 533.3240966796875,
+              "x1": 476.9347229003906,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 478.74468994140625,
+              "y0": 533.3240966796875,
+              "x1": 490.96453857421875,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 492.7845153808594,
+              "y0": 533.3240966796875,
+              "x1": 515.0042724609375,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 516.8142700195312,
+              "y0": 533.3240966796875,
+              "x1": 540.9739990234375,
+              "y1": 543.323974609375,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 545.2791137695312,
+              "x1": 321.3266906738281,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 324.6066589355469,
+              "y0": 545.2791137695312,
+              "x1": 354.0462951660156,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 357.33624267578125,
+              "y0": 545.2791137695312,
+              "x1": 361.77618408203125,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 365.0661315917969,
+              "y0": 545.2791137695312,
+              "x1": 383.9458923339844,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 387.23583984375,
+              "y0": 545.2791137695312,
+              "x1": 398.89569091796875,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 402.1756591796875,
+              "y0": 545.2791137695312,
+              "x1": 420.50543212890625,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 423.785400390625,
+              "y0": 545.2791137695312,
+              "x1": 449.3350830078125,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 452.6250305175781,
+              "y0": 545.2791137695312,
+              "x1": 460.4049377441406,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 463.69488525390625,
+              "y0": 545.2791137695312,
+              "x1": 482.2346496582031,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 485.5146179199219,
+              "y0": 545.2791137695312,
+              "x1": 495.5144958496094,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 498.7944641113281,
+              "y0": 545.2791137695312,
+              "x1": 529.89404296875,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 533.1840209960938,
+              "y0": 545.2791137695312,
+              "x1": 540.9639282226562,
+              "y1": 555.2789916992188,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 557.2340698242188,
+              "x1": 345.7663879394531,
+              "y1": 567.2339477539062,
+              "page": 3
+            },
+            {
+              "x0": 348.266357421875,
+              "y0": 557.2340698242188,
+              "x1": 352.706298828125,
+              "y1": 567.2339477539062,
+              "page": 3
+            },
+            {
+              "x0": 355.2062683105469,
+              "y0": 557.2340698242188,
+              "x1": 396.8757629394531,
+              "y1": 567.2339477539062,
+              "page": 3
+            },
+            {
+              "x0": 399.375732421875,
+              "y0": 557.2340698242188,
+              "x1": 442.1551818847656,
+              "y1": 567.2339477539062,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 485.5030822753906,
+            "x1": 540.979248046875,
+            "y1": 567.2339477539062,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Single contiguous Methods power-analysis sentence.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_c46b5dee1e54c4f8",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "Methods say alpha 0.05, power 0.99, and a 25% relatively greater daily MVI compliance yielded n=77 per cohort. A two-proportion calculation at those inputs needs thousands per arm for a 25% relative lift from a 0.15 baseline (h\u22480.10 \u2192 about 3675/group). n=77 per group at 99% power corresponds to a large h\u22480.70, which the stated 25% relative change does not produce. The enrolled squadron was not sized by that calculation.",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_c46b5dee1e54c4f8:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "bsi_rrr_vs_lappe_benchmark",
+      "technique": "check_effect_plausibility",
+      "title": "BSI 66% relative reduction exceeds the Lappe Ca-D trial",
+      "description": "The paper reports a 66% relative and 10% absolute reduction in BSI (15% vs 5.06%) after a briefing that changed self-reported daily MVI use from 14.86% to 34.25%. Both arms received the same tablet (400 IU vitamin D and 200 mg calcium). Lappe et al., cited as the dose benchmark, randomized 5201 female Navy recruits to 2000 mg calcium plus 800 IU vitamin D versus placebo and found a 20% ITT reduction (5.3% vs 6.6%). Cohen's d on the reconstructed BSI proportions is 0.33 (95% CI 0.02-0.65), within usual medicine-RCT range; the relative-risk comparison to Lappe is the implausible piece. Magnitude is capped at suspicious.",
+      "location": "Discussion paragraph 1 vs Introduction Lappe citation",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "The relative and absolute risk reductions for diagnosis with BSI were 66% and 10%, respectively",
+      "anchors": [
+        {
+          "anchor_id": "f_059cea0d48446d17:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_059cea0d48446d17:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Discussion, paragraph 1",
+          "quote": "The relative and absolute risk reductions for diagnosis with BSI were 66% and 10%, respectively",
+          "quote_folded_sha1": "f8d2af17ec4e861289f54109fa613fcb8ca5a71a",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 321.2666931152344,
+              "y0": 111.63809967041016,
+              "x1": 543.4639282226562,
+              "y1": 121.63797760009766,
+              "page": 4
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 123.59305572509766,
+              "x1": 469.2449035644531,
+              "y1": 133.5929412841797,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 111.63809967041016,
+            "x1": 543.4639282226562,
+            "y1": 133.5929412841797,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_059cea0d48446d17:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_059cea0d48446d17:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Introduction, MVI contents",
+          "quote": "Though the vitamin D content (400 IU) is half the dose associated with decreased stress fractures among navy recruits reported by Lappe et al., 28 the 27 mg of iron approximates the estimated 22 mg daily requirement for females in military training. 8",
+          "quote_folded_sha1": "41184d9581476a238f90e567675e4bad604e9c85",
+          "file": "air_force.pdf",
+          "page": 2,
+          "boxes": [],
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "page",
+          "method": "quote_verbatim",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Discussion RRR sentence and Introduction Lappe-dose sentence are separate spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_059cea0d48446d17",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "The 66% relative BSI reduction (15% vs 5.06%) is the briefing contrast, not a supplement-versus-placebo effect; both arms received 400 IU vitamin D and 200 mg calcium. Relative to Lappe et al., cited as the dose benchmark, attributing that reduction to a modest compliance increment is a mechanistic-plausibility note, not an arithmetic error in the printed rates.",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_059cea0d48446d17:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "data_availability_no_survey_n",
+      "technique": "not_computational",
+      "title": "All-data-included claim omits survey denominators",
+      "description": "The data-availability statement says all relevant data are included in the manuscript. Table III prints survey percentages to two decimals without item-level n or cell counts. Those percentages are not recoverable from the only printed denominators (n=80 and n=79). Injury percentages are recoverable (25/80 MSKI, 14/79 MSKI, 12/80 BSI, 4/79 BSI), so the withheld pieces are specifically the survey response denominators that the completeness sentence also misstates.",
+      "location": "Data Availability vs Table III survey block",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "All relevant data are included in manuscript.",
+      "anchors": [
+        {
+          "anchor_id": "f_4d72b99b6aa7a1c9:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_4d72b99b6aa7a1c9:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Data Availability",
+          "quote": "All relevant data are included in manuscript.",
+          "quote_folded_sha1": "99b035a51ba67308405065140a685c25d7b3cdc2",
+          "file": "air_force.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 296.8869934082031,
+              "y0": 484.236083984375,
+              "x1": 438.90155029296875,
+              "y1": 492.2359924316406,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 484.236083984375,
+            "x1": 438.90155029296875,
+            "y1": 492.2359924316406,
+            "page": 5
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_4d72b99b6aa7a1c9:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_4d72b99b6aa7a1c9:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table III, Took MVI daily",
+          "quote": "Took MVI daily 14.86 34.25 .0063",
+          "quote_folded_sha1": "f6bece80fb11208f0d832a9f5dd76af7871db5de",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 51.30799865722656,
+              "y0": 220.95408630371094,
+              "x1": 103.107421875,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 141.00900268554688,
+              "y0": 220.95408630371094,
+              "x1": 159.00880432128906,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 206.32200622558594,
+              "y0": 220.95408630371094,
+              "x1": 224.32180786132812,
+              "y1": 228.95399475097656,
+              "page": 4
+            },
+            {
+              "x0": 262.135009765625,
+              "y0": 220.95408630371094,
+              "x1": 280.1348571777344,
+              "y1": 228.95399475097656,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 51.30799865722656,
+            "y0": 220.95408630371094,
+            "x1": 280.1348571777344,
+            "y1": 228.95399475097656,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Data-availability sentence and Table III daily-compliance row are separate spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_4d72b99b6aa7a1c9",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "merged",
+        "rationale": "The omitted survey item n is the same Table III reporting gap already captured by the reconstruct_2x2 finding; the data-availability sentence is a consequence of that gap, not a second defect.",
+        "category": "duplicate",
+        "merged_into": "f_95a86369714ce8ef"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_4d72b99b6aa7a1c9:a:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "results_repeated_inperson_clause",
+      "technique": "not_computational",
+      "title": "Results sentence repeats the in-person-cohort clause",
+      "description": "The compliance Results paragraph prints the same clause twice in succession: 'a significantly higher proportion within the in-person cohort, a significantly higher proportion within the in-person cohort'. The numbers that follow (63.01% vs 37.84%, p=.0023) are otherwise the Table III most-days row. Cosmetic duplication in a load-bearing Results sentence.",
+      "location": "Results, compliance paragraph",
+      "outcome": "problem",
+      "provisional_severity": 1,
+      "quote": "compared to the video-only cohort, a significantly higher proportion within the in-person cohort, a significantly higher proportion within the in-person cohort reported taking the MVI on most days (or more) (63.01% vs.  37.84%, P = .0023)",
+      "anchors": [
+        {
+          "anchor_id": "f_569ed9f20e8e75c3:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_569ed9f20e8e75c3:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Results, compliance paragraph",
+          "quote": "compared to the video-only cohort, a significantly higher proportion within the in-person cohort, a significantly higher proportion within the in-person cohort reported taking the MVI on most days (or more) (63.01% vs.  37.84%, P = .0023)",
+          "quote_folded_sha1": "3fefa09058b3ef964f2a3d2319d46bbe1f6b96a8",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 165.9406280517578,
+              "y0": 484.5380859375,
+              "x1": 207.87010192871094,
+              "y1": 494.5379638671875,
+              "page": 4
+            },
+            {
+              "x0": 210.78005981445312,
+              "y0": 484.5380859375,
+              "x1": 221.0599365234375,
+              "y1": 494.5379638671875,
+              "page": 4
+            },
+            {
+              "x0": 223.9698944091797,
+              "y0": 484.5380859375,
+              "x1": 238.68971252441406,
+              "y1": 494.5379638671875,
+              "page": 4
+            },
+            {
+              "x0": 241.59967041015625,
+              "y0": 484.5380859375,
+              "x1": 287.4291076660156,
+              "y1": 494.5379638671875,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 496.4930725097656,
+              "x1": 287.42401123046875,
+              "y1": 506.4929504394531,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 508.4480285644531,
+              "x1": 287.42401123046875,
+              "y1": 518.4479370117188,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 520.4031372070312,
+              "x1": 68.89665985107422,
+              "y1": 530.4030151367188,
+              "page": 4
+            },
+            {
+              "x0": 71.4166259765625,
+              "y0": 520.4031372070312,
+              "x1": 107.2362060546875,
+              "y1": 530.4030151367188,
+              "page": 4
+            },
+            {
+              "x0": 109.76617431640625,
+              "y0": 520.4031372070312,
+              "x1": 137.26585388183594,
+              "y1": 530.4030151367188,
+              "page": 4
+            },
+            {
+              "x0": 139.7958221435547,
+              "y0": 520.4031372070312,
+              "x1": 154.51564025878906,
+              "y1": 530.4030151367188,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 40.84700012207031,
+            "y0": 484.5380859375,
+            "x1": 287.4291076660156,
+            "y1": 530.4030151367188,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Single contiguous Results sentence containing the repeated clause.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_569ed9f20e8e75c3",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 1,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "The compliance Results paragraph repeats the clause \u201ca significantly higher proportion within the in-person cohort\u201d twice in succession. The following numbers (63.01% vs 37.84%, p=.0023) match Table III. Cosmetic duplication only.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_569ed9f20e8e75c3:a:pdf",
+        "page": 4
+      }
+    },
+    {
+      "slug": "flow_80_plus_79_equals_159",
+      "technique": "check_flow_arithmetic",
+      "title": "Cohort sizes 80 and 79 sum to the stated 159",
+      "description": "The paper enrolls all female trainees from one December 2021 squadron, split as video-only n=80 and in-person n=79, total 159. It states there were no losses or exclusions of routinely collected data. check_flow_arithmetic on enrolled 159 with arms 80 and 79, then analyzed 159 with the same arms, reconciles exactly. Survey missingness is a separate Table III issue, not a flow-diagram identity on the routinely collected outcomes.",
+      "location": "Results paragraph 1 and Table II",
+      "outcome": "pass",
+      "quote": "Demographic characteristics of the 159 female trainees (80 in the video-only cohort,  and 79 in the in-person cohort) subjected to this study are provided in Table II.",
+      "anchors": [
+        {
+          "anchor_id": "f_0d2a7aed69a97820:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_0d2a7aed69a97820:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Results, paragraph 1",
+          "quote": "Demographic characteristics of the 159 female trainees (80 in the video-only cohort,  and 79 in the in-person cohort) subjected to this study are provided in Table II.",
+          "quote_folded_sha1": "bdc6f12c4de79b27555a0a8c94f384df7dc9118b",
+          "file": "air_force.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 296.8869934082031,
+              "y0": 640.6541137695312,
+              "x1": 351.3163146972656,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 353.50628662109375,
+              "y0": 640.6541137695312,
+              "x1": 410.70556640625,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 412.8955383300781,
+              "y0": 640.6541137695312,
+              "x1": 421.2254333496094,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 423.4053955078125,
+              "y0": 640.6541137695312,
+              "x1": 435.625244140625,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 437.8152160644531,
+              "y0": 640.6541137695312,
+              "x1": 452.8150329589844,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 454.9949951171875,
+              "y0": 640.6541137695312,
+              "x1": 482.20465087890625,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 484.3946228027344,
+              "y0": 640.6541137695312,
+              "x1": 515.4942626953125,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 517.6842651367188,
+              "y0": 640.6541137695312,
+              "x1": 531.0140991210938,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 533.194091796875,
+              "y0": 640.6541137695312,
+              "x1": 540.9739990234375,
+              "y1": 650.6539916992188,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 652.609130859375,
+              "x1": 309.1068420410156,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 312.6167907714844,
+              "y0": 652.609130859375,
+              "x1": 355.9462585449219,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 359.4662170410156,
+              "y0": 652.609130859375,
+              "x1": 387.515869140625,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 391.5458068847656,
+              "y0": 652.609130859375,
+              "x1": 405.9856262207031,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 409.5055847167969,
+              "y0": 652.609130859375,
+              "x1": 419.5054626464844,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 423.0254211425781,
+              "y0": 652.609130859375,
+              "x1": 430.8053283691406,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 434.3252868652344,
+              "y0": 652.609130859375,
+              "x1": 446.5451354980469,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 450.0650939941406,
+              "y0": 652.609130859375,
+              "x1": 487.8346252441406,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 491.3445739746094,
+              "y0": 652.609130859375,
+              "x1": 520.2242431640625,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 523.7442016601562,
+              "y0": 652.609130859375,
+              "x1": 540.9639892578125,
+              "y1": 662.6090087890625,
+              "page": 3
+            },
+            {
+              "x0": 296.8869934082031,
+              "y0": 664.5640869140625,
+              "x1": 320.7666931152344,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 324.3466491699219,
+              "y0": 664.5640869140625,
+              "x1": 332.1265563964844,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 335.7165222167969,
+              "y0": 664.5640869140625,
+              "x1": 350.1663513183594,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 353.7563171386719,
+              "y0": 664.5640869140625,
+              "x1": 375.4260559082031,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 379.0160217285156,
+              "y0": 664.5640869140625,
+              "x1": 391.2258605957031,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 394.8158264160156,
+              "y0": 664.5640869140625,
+              "x1": 430.22540283203125,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 433.80535888671875,
+              "y0": 664.5640869140625,
+              "x1": 441.58526611328125,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 445.1830139160156,
+              "y0": 664.5640869140625,
+              "x1": 467.1527404785156,
+              "y1": 674.56396484375,
+              "page": 3
+            },
+            {
+              "x0": 470.7427062988281,
+              "y0": 664.5640869140625,
+              "x1": 479.9029846191406,
+              "y1": 674.56396484375,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 296.8869934082031,
+            "y0": 640.6541137695312,
+            "x1": 540.9739990234375,
+            "y1": 674.56396484375,
+            "page": 3
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_0d2a7aed69a97820:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_0d2a7aed69a97820:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Results, after Table III",
+          "quote": "There were no losses or exclusions of routinely collected and linked data.",
+          "quote_folded_sha1": "aba79b0c67d1f85cadd8ca3bd53d7a81c1137392",
+          "file": "air_force.pdf",
+          "page": 4,
+          "boxes": [
+            {
+              "x0": 143.387939453125,
+              "y0": 364.986083984375,
+              "x1": 287.4361572265625,
+              "y1": 374.9859619140625,
+              "page": 4
+            },
+            {
+              "x0": 40.84700012207031,
+              "y0": 376.9410705566406,
+              "x1": 192.38516235351562,
+              "y1": 386.9409484863281,
+              "page": 4
+            }
+          ],
+          "region": {
+            "x0": 40.84700012207031,
+            "y0": 364.986083984375,
+            "x1": 287.4361572265625,
+            "y1": 386.9409484863281,
+            "page": 4
+          },
+          "media_box": {
+            "w": 583.93701171875,
+            "h": 782.3619995117188
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T13:56:30Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "None. Enrollment total and no-losses sentence are contiguous Results spans.nputs",
+      "producer": "science_error",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_flow_arithmetic",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_0d2a7aed69a97820",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_0d2a7aed69a97820:a:pdf",
+        "page": 3
+      }
+    }
+  ],
+  "adjudication": {
+    "ran": true,
+    "verdict": "does_not_reconcile",
+    "paper_severity": 5,
+    "headline_finding_id": "f_508122527018c39e",
+    "confidence": "medium",
+    "summary": "The abstract\u2019s significant MSKI and BSI reductions (p=.047 and p=.037; 43% and 66% relative reductions) are person-level chi-squared tests after randomizing four flights, two per arm. Those p-values match unadjusted Pearson tests on 25/80 versus 14/79 MSKI and 12/80 versus 4/79 BSI. With two clusters per arm the tests are anti-conservative, and a valid cluster analysis is essentially unidentified. Table III survey percentages such as daily MVI 14.86% versus 34.25% cannot be produced from n=80 and n=79; they and the printed p-values match recovered item n of 74 and 73, contrary to the claim that all trainees completed questionnaires. Medical-hold 1.27% is impossible at n=80 (R GRIM). Printed ages 21\u00b13 versus 23\u00b15 contradict the no-difference claim (d=\u22120.48, CI \u22120.80 to \u22120.17). Injury percentages at the stated n, their Pearson p-values, BMI, and the n=80+79 flow do reconcile. The title credits MVI compliance although both arms received the same tablet. A corrigendum should qualify or withdraw the injury significance claims, print survey denominators, and correct the age sentence, medical-hold cell, and title. Nothing here established intent.",
+    "n_kept": 6,
+    "n_merged": 1,
+    "n_discarded": 0,
+    "n_downgraded": 5,
+    "n_upgraded": 0,
+    "n_unknown_ids": 0,
+    "n_readonly_flip_attempts": 0,
+    "failure": null,
+    "n_not_adjudicated": 0
+  },
+  "coverage": {
+    "stats_found": 0,
+    "tools_run": []
+  },
+  "anatomy": {
+    "studies": [],
+    "variables": [],
+    "tests": []
+  },
+  "unchecked": [
+    {
+      "location": "Table III chi-squared p-values (MSKI .047, BSI .037, daily .0063)",
+      "reason": "Handoff to tool expert: reconstructed MSKI 25/80 vs 14/79 and BSI 12/80 vs 4/79 match the printed uncorrected chi-square p-values; Yates-corrected p=0.072 and 0.069 would both exceed 0.05. Daily p=.0063 matches 11/74 vs 25/73, i.e. the implied survey n not the table header."
+    },
+    {
+      "location": "Table III survey cell counts",
+      "reason": "Counts are not printed. Implied denominators come from analysis_code/001_implied_denominators_table3.py (unique n=73 or 74). grim_percentage was not available on this MCP; reconstruct_2x2 was used instead."
+    },
+    {
+      "location": "Flight-level injury counts",
+      "reason": "Four flights were the randomized units; per-flight MSKI/BSI counts are not reported, so ICC and a cluster-level test cannot be computed."
+    },
+    {
+      "location": "Age test details",
+      "reason": "No t, df, or p is printed for the 'no significant differences in age' claim. The contradiction uses printed means/SDs only; unrounded ages could differ."
+    },
+    {
+      "location": "Supplements",
+      "reason": "Instruction is not to read supplements; none were opened."
+    },
+    {
+      "location": "Unconsented exempt RCT",
+      "reason": "Trainees were not told they were in a randomized experiment; IRB number FWH20220101E is given as exempt QI. Disclosed, so not a withheld-ethics finding; journal ethics of publishing that design is outside this beat."
+    }
+  ],
+  "statistics_register": [],
+  "checks_tally": {
+    "checks_passed": 1,
+    "of_which_collapsed_by_check_table": 0,
+    "checks_refused_indeterminate": 0,
+    "checks_flagged": 11,
+    "checks_total": 12,
+    "by_severity": {
+      "5": 1,
+      "4": 1,
+      "3": 7,
+      "2": 1,
+      "1": 1,
+      "unknown": 1
+    },
+    "by_outcome": {
+      "flagged": 11,
+      "pass": 1
+    },
+    "rounding_convention": {
+      "n_fit_only_under_truncation": 0,
+      "n_granularity_checks": 0,
+      "note": "Values that fail the round-half convention but are consistent if the reporter TRUNCATES (SPSS's default, and several journal styles). NOT a finding and never counted as one: a single instance is a house style. The RATE is the signal -- this class of anomaly is commoner in papers with more serious problems, so a high proportion is grounds to look harder, not evidence in itself."
+    },
+    "grace": {
+      "n_items": 0,
+      "n_reconciled_strictly": 0,
+      "n_rescued": 0,
+      "by_grace": {},
+      "n_with_direction": 0,
+      "n_leaning_high": 0,
+      "n_leaning_low": 0,
+      "sign_test_p": null,
+      "reading": "Nothing needed an allowance; every item reconciled on its printed values."
+    },
+    "sd_convention": {
+      "n_fit_only_under_population_sd": 0,
+      "n_granularity_checks": 0,
+      "note": "Values that fail under the sample (Bessel, n-1) SD but are consistent under the POPULATION (n) SD -- numpy's std default and Excel's STDEVP. NOT a finding and never counted as one: choosing a convention is not fabrication. The RATE is the signal, on the same reasoning as the rounding convention above."
+    },
+    "harness_sweep": {
+      "n_tables": 3,
+      "n_accusatory": 0,
+      "accusatory": [],
+      "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets."
+    }
+  },
+  "producer_constraint_problems": [
+    {
+      "index": 2,
+      "slug": "survey_pcts_impossible_at_n159",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'reconstruct_2x2' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 3,
+      "slug": "medical_hold_127_not_from_n80",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'reconstruct_2x2' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    },
+    {
+      "index": 8,
+      "slug": "bsi_rrr_vs_lappe_benchmark",
+      "constraint": "tool_technique_without_inputs",
+      "problem": "technique 'check_effect_plausibility' names a registered tool but the row carries no `inputs`, so no ledger call can be joined to it and the tool's own verdict cannot reach the record",
+      "seen_at": "pre"
+    }
+  ]
+}

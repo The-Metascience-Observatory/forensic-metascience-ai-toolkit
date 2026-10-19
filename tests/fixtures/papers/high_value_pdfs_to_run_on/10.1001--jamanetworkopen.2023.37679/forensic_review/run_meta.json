@@ -1,0 +1,82 @@
+{
+  "paper_id": "10.1001--jamanetworkopen.2023.37679",
+  "mode": "two_stage",
+  "schema_version": "1.0",
+  "stages": {
+    "sweep": {
+      "model": "opus",
+      "cost_usd": 12.0583875,
+      "input_tokens": 34,
+      "output_tokens": 114235,
+      "wall_seconds": 1167.83,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.000925
+        },
+        "claude-opus-5": {
+          "costUSD": 12.0574625
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "num_findings": 27
+    },
+    "editorial": {
+      "model": "opus",
+      "cost_usd": 2.3246255000000002,
+      "input_tokens": 8,
+      "output_tokens": 25626,
+      "wall_seconds": 317.43,
+      "return_code": 0,
+      "is_error": false,
+      "error_subtype": null,
+      "truncated_by_budget": false,
+      "models_resolved": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "model_usage": {
+        "claude-haiku-4-5-20251001": {
+          "costUSD": 0.026772999999999998
+        },
+        "claude-opus-5": {
+          "costUSD": 2.2978525
+        }
+      },
+      "primary_billed_model": "claude-opus-5",
+      "fallbacks": [],
+      "model_switched": true,
+      "output_parse_path": "json_schema",
+      "verdict": "questionable",
+      "confidence": "medium"
+    }
+  },
+  "total_cost_usd": 14.383013,
+  "total_wall_seconds": 1485.26,
+  "reproducibility": {
+    "n_findings": 34,
+    "n_valid": 25,
+    "n_invalid": 9,
+    "problems": [
+      "finding[15] (table2_ame_precision_uninformative): must invoke `metascience`, got 'manual'",
+      "finding[19] (interaction_term_never_reported): must invoke `metascience`, got 'manual'",
+      "finding[20] (multiplicity_uncorrected): must invoke `metascience`, got 'manual'",
+      "finding[21] (no_power_analysis): must invoke `metascience`, got 'manual'",
+      "finding[22] (table1_baseline_similarity_not_applicable): must invoke `metascience`, got 'csf_test'",
+      "finding[23] (grim_family_not_applicable): must invoke `metascience`, got 'grim_percentage,'",
+      "finding[24] (derived_percentage_ratios_unverifiable): must invoke `metascience`, got 'no'",
+      "finding[4] (4): must invoke `metascience`, got 'No'",
+      "finding[5] (5): must invoke `metascience`, got 'No'"
+    ]
+  }
+}

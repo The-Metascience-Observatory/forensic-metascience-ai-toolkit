@@ -1,0 +1,50 @@
+{
+  "sources": [
+    {
+      "path": "~/.grok/config.toml",
+      "status": {
+        "status": "found",
+        "server_count": 1
+      }
+    },
+    {
+      "path": "/tmp/ms-grok-ctrl-sMZj/.grok/config.toml",
+      "status": {
+        "status": "found",
+        "server_count": 0
+      }
+    },
+    {
+      "path": "~/.claude.json",
+      "status": {
+        "status": "found",
+        "server_count": 0
+      }
+    },
+    {
+      "path": ".mcp.json",
+      "status": {
+        "status": "not_found"
+      }
+    }
+  ],
+  "servers": [
+    {
+      "name": "forensic_metascience",
+      "transport": "stdio",
+      "target": "/home/dan/anaconda3/bin/python -m metascience_agent.mcp_server",
+      "source": "config",
+      "checks": [
+        {
+          "label": "folder untrusted",
+          "passed": false,
+          "detail": "repo-local (project-scoped) server not started for an untrusted folder",
+          "hint": "re-run with --trust to allow repo-local servers"
+        }
+      ],
+      "healthy": false
+    }
+  ],
+  "healthy_count": 0,
+  "failing_count": 1
+}

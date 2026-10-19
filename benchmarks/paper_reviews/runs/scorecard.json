@@ -1,0 +1,157 @@
+[
+  {
+    "paper": "cerebrolysin_flow",
+    "pipeline_version": "v1.15.0 (gcd30cbac0c8a, uncommitted changes)",
+    "mode": "parallel",
+    "backend": "grok",
+    "model": "grok-4.6",
+    "verdict": "does_not_reconcile",
+    "verdict_expected": "does_not_reconcile",
+    "verdict_match": true,
+    "deterministic": {
+      "findings_json": {
+        "passed": true,
+        "problems": [],
+        "num_findings": 21,
+        "schema": "2.0"
+      },
+      "no_preamble": {
+        "passed": true,
+        "first_line": "Forensic review \u2014 paper",
+        "matched_patterns": []
+      },
+      "must_not_say": {
+        "passed": true,
+        "hits": []
+      },
+      "verdict": {
+        "passed": true,
+        "verdict": "does_not_reconcile",
+        "expected": "does_not_reconcile",
+        "valid_value": true
+      },
+      "tortured_track": {
+        "ran": true,
+        "k": 0,
+        "refusal_subtype": null,
+        "expected": "none",
+        "passed": true
+      },
+      "passed": true
+    },
+    "judge": {
+      "per_finding": [
+        {
+          "id": "flow_second_op_contradiction",
+          "weight": "critical",
+          "reachable": true,
+          "covered": false,
+          "evidence_quote": "",
+          "severity_expected": [
+            2,
+            5
+          ],
+          "confidence": "medium"
+        },
+        {
+          "id": "table3_duplicates_table2",
+          "weight": "critical",
+          "reachable": true,
+          "covered": true,
+          "evidence_quote": "Table 3 reprints Table 2's Combined Wei-Lachin row in full (MW=0.5611, CI 0.5456-0.5766, N1/N2=10/3, p<0.0001), and the caption repeats those figures. Table 3's own rows are Muscle Marlene (n=16/5) and Muscle Catoi (n=11/2), so 10/3 belongs to neither. Muscle Marlene p=0.4146 and Muscle Catoi p=0.4936 are identical to Table 2 NNTXDIAM and NNTXAREA.",
+          "severity_expected": [
+            4,
+            6
+          ],
+          "confidence": "high",
+          "matched_finding_id": "f_7931f5b108f6ebeb",
+          "matched_severity": 4,
+          "severity_in_interval": true,
+          "severity_direction": "in"
+        },
+        {
+          "id": "p_vs_ci_contradiction",
+          "weight": "major",
+          "reachable": true,
+          "covered": true,
+          "evidence_quote": "NNTXMAX reports MW=0.8000 with 95% CI 0.5362 to 1.0000 at n=10/3, which excludes the Mann-Whitney null of 0.5, but the printed p=0.9017 is non-significant.",
+          "severity_expected": [
+            3,
+            5
+          ],
+          "confidence": "high",
+          "matched_finding_id": "f_d9cb49e5289e5402",
+          "matched_severity": 3,
+          "severity_in_interval": true,
+          "severity_direction": "in"
+        },
+        {
+          "id": "emg_denominator_drift",
+          "weight": "major",
+          "reachable": true,
+          "covered": true,
+          "evidence_quote": "The abstract and Results say eight rats showed positive CMAPs, Figure 4 says 8 of 16, and Results also say stimulation in 21 rats was positive in only 8. Table 4 lists seven EMG-positive cases (5, 6, 10, 13, 19, 21, 28). Discussion later says positive EMG potentials in 7 of 14 surviving animals. The same binary outcome is given three different numerators and three different denominators.",
+          "severity_expected": [
+            3,
+            5
+          ],
+          "confidence": "medium",
+          "severity_in_interval": null
+        },
+        {
+          "id": "randomization_coin_flip",
+          "weight": "major",
+          "reachable": true,
+          "covered": false,
+          "evidence_quote": "",
+          "severity_expected": [
+            3,
+            5
+          ],
+          "confidence": "medium"
+        },
+        {
+          "id": "roster_survivor_mismatch",
+          "weight": "minor",
+          "reachable": true,
+          "covered": false,
+          "evidence_quote": "",
+          "severity_expected": [
+            3,
+            5
+          ],
+          "confidence": "medium"
+        }
+      ],
+      "false_positives": [
+        {
+          "claim": "The Combined Wei-Lachin CI (width 0.031) cannot come from the eight component intervals (widths ~0.66) at n=10/3, because independent averaging would shrink a Wald interval only about 2.8-fold, not 21-fold.",
+          "why_unsupported": "The gold review does not treat combined-versus-component CI width as an impossibility. The Level 5 does_not_reconcile verdict rests on modeling Wei-Lachin as independent Wald averaging of the printed univariate CIs, which is not the paper's procedure."
+        }
+      ],
+      "recall_weighted": 0.538,
+      "recall_weighted_reachable": 0.538,
+      "num_false_positives": 1,
+      "no_findings_produced": false,
+      "severity_calibration": {
+        "n_scored": 2,
+        "n_in_interval": 2,
+        "n_over_severity": 0,
+        "n_under_severity": 0,
+        "severity_bias": -2.0,
+        "n_excluded_low_confidence": 0,
+        "n_covered_but_unmatched": 1
+      },
+      "judge_notes": "Flow 16 vs 21 at 2nd Op is named only under What we could NOT check, and the report says the Results attrition cascade 30 to 21 to 15 reconciles, so it is not raised as a finding. EMG/CMAP count drift is in the prose report (Level 2) but the truncated findings.json does not include that finding's id. Coin-flip allocation and Table 4 animals off the survivor list are absent.",
+      "judge_parse_path": "json_schema",
+      "cost_usd": 0.0447287
+    },
+    "recall_weighted": 0.538,
+    "recall_weighted_reachable": 0.538,
+    "num_false_positives": 1,
+    "cost_usd": {
+      "analysis": 0.570354,
+      "judge": 0.0447287
+    }
+  }
+]

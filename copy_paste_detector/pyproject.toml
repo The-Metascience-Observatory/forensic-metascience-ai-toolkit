@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "copy-paste-detector"
+dynamic = ["version"]
+description = "Detect copy-paste signatures in raw participant data"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "PolyForm-Noncommercial-1.0.0 with additional terms; see LICENSE"}
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+    "openpyxl>=3.1",
+    "python-docx>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0.0", "ruff>=0.1.0", "build>=1.0"]
+
+[project.scripts]
+copy-paste-detect = "copy_paste_detector.cli:main"
+copy-paste-batch = "copy_paste_detector.batch:main"
+copy-paste-dataset = "copy_paste_detector.datasets:main"
+copy-paste-benchmark = "copy_paste_detector.benchmark:main"
+
+[tool.hatch.version]
+path = "src/copy_paste_detector/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/copy_paste_detector"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]

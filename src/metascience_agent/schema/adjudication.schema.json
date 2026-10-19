@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Findings adjudication",
+  "description": "The adjudicator's raw output (docs/specs/adjudicator.md section 6). Written verbatim to adjudication.json; findings.json carries the APPLIED result. Every bound here is re-enforced in adjudicate.apply() -- the schema is the first gate, never the only one.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdicts", "paper"],
+  "properties": {
+    "verdicts": {
+      "type": "array",
+      "description": "One entry per adjudicated finding, joined on finding_id -- NEVER by position. A finding you do not mention is kept at its provisional severity (the silence rule).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "action", "severity", "category", "rationale"],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "description": "The join key, copied exactly from the docket row."
+          },
+          "action": {
+            "type": "string",
+            "enum": ["kept", "merged", "downgraded", "upgraded", "discarded"]
+          },
+          "severity": {
+            "type": ["integer", "null"],
+            "minimum": 1,
+            "maximum": 9,
+            "description": "Final 1-9; null only when discarded. apply() clamps: quarantined rows to 3; an upgrade to at most provisional+2 unless the category is merged_pattern; an upgrade with an ineligible category reverts to the provisional. No ceiling: any rung 1-9 may be written."
+          },
+          "category": {
+            "type": "string",
+            "enum": ["duplicate", "misapplication", "innocent_explanation",
+                     "chance_expected", "merged_pattern",
+                     "consequence_reassessed", "manipulation",
+                     "insufficient_evidence", "none"]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "One or two sentences a named author could read."
+          },
+          "evidence_quote": {
+            "type": "string",
+            "description": "REQUIRED for innocent_explanation clears and discards: a verbatim span from the paper that supports the clearing. Verified against the text -- an unlocatable quote DEMOTES the clear to kept."
+          },
+          "merged_into": {
+            "type": "string",
+            "description": "Required iff action == merged: the surviving finding_id. No chains -- the target must itself be kept/downgraded/upgraded."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 160,
+            "description": "Optional rewrite, at most 90 characters; a longer one is accepted up to 160 but stored cut to 90 at a word boundary (the full text kept in the row's notes). The original is preserved as adjudication.title_was."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 700,
+            "description": "Optional rewrite; the original is preserved as adjudication.description_was."
+          }
+        }
+      }
+    },
+    "paper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "paper_severity", "confidence", "summary"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["reconciles", "unresolved", "does_not_reconcile"],
+          "description": "does_not_reconcile: a kept finding shows the printed record contradicts itself or cannot be true as printed, even if the cause may be innocent. unresolved: the checks could not settle it (probabilistic signals only, deciding values unreported, or an unstated premise). reconciles: every runnable check came out consistent."
+        },
+        "paper_severity": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 9,
+          "description": "The paper-level rung, 1-9; apply() only guards a malformed number. No ceiling (v1.14.0)."
+        },
+        "headline_finding_id": {
+          "type": "string",
+          "description": "Must name a kept/upgraded/downgraded problem row -- never discarded or merged; apply() falls back to severity order otherwise."
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 200,
+          "maxLength": 2000,
+          "description": "The bounded narrative that replaces report_markdown. Written in the register the published disclaimer can support."
+        }
+      }
+    }
+  }
+}

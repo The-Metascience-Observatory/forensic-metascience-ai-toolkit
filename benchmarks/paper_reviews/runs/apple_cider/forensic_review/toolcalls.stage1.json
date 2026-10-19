@@ -1,0 +1,882 @@
+[
+  {
+    "seq": 1,
+    "tool": "Read",
+    "tool_short": "Read",
+    "surface": "builtin_allowed",
+    "validated": false,
+    "tool_use_id": "toolu_01Epm4fRqfQ16m1rqRT1oTok",
+    "input": {
+      "file_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/apple_cider/paper/body.md"
+    },
+    "result": "1\t--- Page 1 ---\n2\tOpen access Original research\n3\tApple cider vinegar for weight\n4\tmanagement in Lebanese adolescents\n5\tand young adults with overweight and\n6\tobesity: a randomised, double-b lind,\n7\tplacebo- controlled study\n8\tRony Abou- Khalil ,1 Jeanne Andary,2 Elissar El- Hayek1\n9\tTo cite: Abou-K halil R, AbSTRACT\n10\tWHAT IS ALREADY KNOWN ON THIS TOPIC\n11\tAndary J, El- Hayek E. Apple background and aims Obesity and overweight have\n12\tcider vinegar for weight become significant health concerns worldwide, leading \u21d2 Recently, there has been increasing interest in al-\n13\tmanagement in Lebanese to an increased interest in finding natural remedies for ternative remedies to support weight management,\n14\tadolescents and young adults\n15\tweight reduction. One such remedy that has gained and one such remedy that has gained popularity is\n16\twith overweight and obesity:\n17\tpopularity is apple cider vinegar (ACV). apple cider vinegar (ACV).\n18\ta randomised, double- blind,\n19\tObjective To investigate the effects of ACV consumption \u21d2 A few small- scale studies conducted on humans\n20\tplacebo-c ontrolled study. BMJ\n21\tNutrition, Prevention & Health on weight, blood glucose, triglyceride and cholesterol have shown promising results, with ACV consump-\n22\t2024;0:e000823. doi:10.1136/ levels in a sample of the Lebanese population. tion leading to weight loss, reduced body fat and\n23\tbmjnph-2023-000823 Materials and methods 120 overweight and obese decreased waist circumference.\n24\t1Department of Biology, Holy individuals were recruited. Participants were randomly WHAT THIS STUDY ADDS\n25\tSpirit University of Kaslik, assigned to either an intervention group receiving 5, 10\n26\tJounieh, Lebanon or 15 mL of ACV or a control group receiving a placebo \u21d2 No study has been conducted to investigate the\n27\t2Nutrition and Food Science (group 4) over a 12- week period. Measurements of potential antiobesity effect of ACV in the Lebanese\n28\tDepartment, American University anthropometric parameters, fasting blood glucose, population. By conducting research in this demo-\n29\tof Science and Technology, triglyceride and cholesterol levels were taken at weeks 0, graphic, the study provides region- specific data and\n30\tBeirut, Lebanon 4, 8 and 12. offers a more comprehensive understanding of the\n31\timpact of ACV on weight loss and metabolic health.\n32\tResults Our findings showed that daily consumption of\n33\tCorrespondence to\n34\tDr Rony Abou-K halil, the three doses of ACV for a duration of between 4 and HOW THIS STUDY MIGHT AFFECT RESEARCH,\n35\tDepartment of Biology, Holy 12 weeks is associated with significant reductions in PRACTICE OR POLICY\n36\tSpirit University of Kaslik, anthropometric variables (weight, body mass index, waist/\n37\t\u21d2 The results might contribute to evidence- based\n38\tJounieh, Lebanon; hip circumferences and body fat ratio), blood glucose,\n39\trecommendations for the use of ACV as a dietary\n40\tr onyaboukhalil@ usek.e du. lb triglyceride and cholesterol levels. No significant risk\n41\tintervention in the management of obesity.\n42\tfactors were observed during the 12 weeks of ACV intake.\n43\t\u21d2 The study could stimulate further research in the\n44\tConclusion Consumption of ACV in people with\n45\tReceived 10 November 2023 field, prompting scientists to explore the underlying\n46\toverweight and obesity led to an improvement in the\n47\tAccepted 10 January 2024 mechanisms and conduct similar studies in other\n48\tanthropometric and metabolic parameters. ACV could be\n49\tpopulations.\n50\ta promising antiobesity supplement that does not produce\n51\tany side effects.\n52\tsince 1975.4 The World Obesity Federation\u2019s\n53\tINTRODUCTION 2023 Atlas predicts that by 2035 more than\n54\tObesity is a growing global health concern half of the world\u2019s population will be over-\n55\tcharacterised by excessive body fat accu- weight or obese.5\n56\tmulation, often resulting from a combina- According to the 2022 Global Nutrition\n57\ttion of genetic, environmental and lifestyle Report, Lebanon has",
+    "result_truncated": true,
+    "result_chars": 43837,
+    "is_error": false
+  },
+  {
+    "seq": 2,
+    "tool": "mcp__forensic_metascience__grim_sweep",
+    "tool_short": "grim_sweep",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_018Vjrq9JcQax9g3knUFCzng",
+    "input": {
+      "values": [
+        40,
+        60
+      ],
+      "n_max": 40,
+      "n_min": 5,
+      "decimals": 1
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"8 candidate ns satisfy GRIM for all reported values: [5, 10, 15, 20, 25, 30, 35, 40].\",\n  \"value_type\": \"percentage\",\n  \"decimals\": 1,\n  \"n_min\": 5,\n  \"n_max\": 40,\n  \"per_value\": [\n    {\n      \"value\": 40,\n      \"value_as_proportion\": 0.4,\n      \"viable_ns\": [\n        5,\n        10,\n        15,\n        20,\n        25,\n        30,\n        35,\n        40\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 5,\n          \"k\": 2,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 10,\n          \"k\": 4,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 15,\n          \"k\": 6,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 20,\n          \"k\": 8,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 25,\n          \"k\": 10,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 30,\n          \"k\": 12,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 35,\n          \"k\": 14,\n          \"exact_proportion\": 0.4\n        },\n        {\n          \"n\": 40,\n          \"k\": 16,\n          \"exact_proportion\": 0.4\n        }\n      ],\n      \"n_viable\": 8\n    },\n    {\n      \"value\": 60,\n      \"value_as_proportion\": 0.6,\n      \"viable_ns\": [\n        5,\n        10,\n        15,\n        20,\n        25,\n        30,\n        35,\n        40\n      ],\n      \"viable_with_k\": [\n        {\n          \"n\": 5,\n          \"k\": 3,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 10,\n          \"k\": 6,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 15,\n          \"k\": 9,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 20,\n          \"k\": 12,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 25,\n          \"k\": 15,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 30,\n          \"k\": 18,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 35,\n          \"k\": 21,\n          \"exact_proportion\": 0.6\n        },\n        {\n          \"n\": 40,\n          \"k\": 24,\n          \"exact_proportion\": 0.6\n        }\n      ],\n      \"n_viable\": 8\n    }\n  ],\n  \"joint_viable_ns\": [\n    5,\n    10,\n    15,\n    20,\n    25,\n    30,\n    35,\n    40\n  ],\n  \"methodology\": \"GRIM sweep: for each reported percentage v, enumerate all n in [5, 40] such that round(v\\u00b7n) is an integer in [0, n] AND round(v\\u00b7n)/n rounds back to v at 3 dp. Joint viable n-set is the intersection across all values.\"\n}",
+    "result_truncated": false,
+    "result_chars": 2535,
+    "is_error": false
+  },
+  {
+    "seq": 3,
+    "tool": "mcp__forensic_metascience__grim_sweep",
+    "tool_short": "grim_sweep",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WWYTLyUeYmJUMY5NqDF8f8",
+    "input": {
+      "values": [
+        36.6,
+        63.4
+      ],
+      "n_max": 40,
+      "n_min": 5,
+      "decimals": 1
+    },
+    "result": "{\n  \"severity\": \"impossible\",\n  \"explanation\": \"No n in [5, 40] passes GRIM for ALL 2 reported values simultaneously. They cannot share a common denominator at the stated precision.\",\n  \"value_type\": \"percentage\",\n  \"decimals\": 1,\n  \"n_min\": 5,\n  \"n_max\": 40,\n  \"per_value\": [\n    {\n      \"value\": 36.6,\n      \"value_as_proportion\": 0.366,\n      \"viable_ns\": [],\n      \"viable_with_k\": [],\n      \"n_viable\": 0\n    },\n    {\n      \"value\": 63.4,\n      \"value_as_proportion\": 0.634,\n      \"viable_ns\": [],\n      \"viable_with_k\": [],\n      \"n_viable\": 0\n    }\n  ],\n  \"joint_viable_ns\": [],\n  \"methodology\": \"GRIM sweep: for each reported percentage v, enumerate all n in [5, 40] such that round(v\\u00b7n) is an integer in [0, n] AND round(v\\u00b7n)/n rounds back to v at 3 dp. Joint viable n-set is the intersection across all values.\"\n}",
+    "result_truncated": false,
+    "result_chars": 833,
+    "is_error": false
+  },
+  {
+    "seq": 4,
+    "tool": "mcp__forensic_metascience__grim_percentage",
+    "tool_short": "grim_percentage",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01YFj67tv9abb2rJb9pTbPN1",
+    "input": {
+      "percentage": 36.6,
+      "n": 30,
+      "decimals": 1
+    },
+    "result": "{\n  \"consistent\": false,\n  \"severity\": \"impossible\",\n  \"reported_percentage\": 36.6,\n  \"n\": 30,\n  \"implied_count\": 10.98,\n  \"rounded_count\": 11,\n  \"possible_percentages_nearby\": [\n    26.7,\n    30.0,\n    33.3,\n    36.7,\n    40.0,\n    43.3,\n    46.7\n  ],\n  \"methodology\": \"GRIM test on percentage: For n=30, percentage must be expressible as 100*X/30 where X is an integer 0 to 30. Reported 36.6% implies count = 10.9800.\"\n}",
+    "result_truncated": false,
+    "result_chars": 422,
+    "is_error": false
+  },
+  {
+    "seq": 5,
+    "tool": "mcp__forensic_metascience__grim_percentage",
+    "tool_short": "grim_percentage",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01FAhcqZRwMfFfLLS64PKfKJ",
+    "input": {
+      "percentage": 63.4,
+      "n": 30,
+      "decimals": 1
+    },
+    "result": "{\n  \"consistent\": false,\n  \"severity\": \"impossible\",\n  \"reported_percentage\": 63.4,\n  \"n\": 30,\n  \"implied_count\": 19.02,\n  \"rounded_count\": 19,\n  \"possible_percentages_nearby\": [\n    53.3,\n    56.7,\n    60.0,\n    63.3,\n    66.7,\n    70.0,\n    73.3\n  ],\n  \"methodology\": \"GRIM test on percentage: For n=30, percentage must be expressible as 100*X/30 where X is an integer 0 to 30. Reported 63.4% implies count = 19.0200.\"\n}",
+    "result_truncated": false,
+    "result_chars": 422,
+    "is_error": false
+  },
+  {
+    "seq": 6,
+    "tool": "mcp__forensic_metascience__check_summation_batch",
+    "tool_short": "check_summation_batch",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01S9GdZoTm7DNsnHxM7DZrpU",
+    "input": {
+      "rows": [
+        {
+          "values": [
+            12,
+            10,
+            11,
+            13
+          ],
+          "expected_sum": 46,
+          "description": "Male counts across 4 groups vs stated 46 men"
+        },
+        {
+          "values": [
+            18,
+            20,
+            19,
+            17
+          ],
+          "expected_sum": 74,
+          "description": "Female counts across 4 groups vs stated 74 women"
+        },
+        {
+          "values": [
+            30,
+            30,
+            30,
+            30
+          ],
+          "expected_sum": 120,
+          "description": "Group ns vs stated N=120"
+        },
+        {
+          "values": [
+            40,
+            60
+          ],
+          "expected_sum": 100,
+          "description": "Group 1 gender percentages"
+        },
+        {
+          "values": [
+            33.3,
+            66.7
+          ],
+          "expected_sum": 100,
+          "description": "Group 2 gender percentages"
+        },
+        {
+          "values": [
+            36.6,
+            63.4
+          ],
+          "expected_sum": 100,
+          "description": "Group 3 gender percentages"
+        },
+        {
+          "values": [
+            43.3,
+            56.7
+          ],
+          "expected_sum": 100,
+          "description": "Group 4 gender percentages"
+        },
+        {
+          "values": [
+            12,
+            18
+          ],
+          "expected_sum": 30,
+          "description": "Group 1 male+female vs n=30"
+        },
+        {
+          "values": [
+            10,
+            20
+          ],
+          "expected_sum": 30,
+          "description": "Group 2 male+female vs n=30"
+        },
+        {
+          "values": [
+            11,
+            19
+          ],
+          "expected_sum": 30,
+          "description": "Group 3 male+female vs n=30"
+        },
+        {
+          "values": [
+            13,
+            17
+          ],
+          "expected_sum": 30,
+          "description": "Group 4 male+female vs n=30"
+        }
+      ]
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"n_rows\": 11,\n  \"n_evaluated\": 11,\n  \"n_indeterminate\": 0,\n  \"n_inconsistent\": 0,\n  \"results\": [\n    {\n      \"values\": [\n        12,\n        10,\n        11,\n        13\n      ],\n      \"actual_sum\": 46,\n      \"expected_sum\": 46,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Male counts across 4 groups vs stated 46 men sum to 46, expected 46, difference = 0\",\n      \"row\": 0,\n      \"description\": \"Male counts across 4 groups vs stated 46 men\"\n    },\n    {\n      \"values\": [\n        18,\n        20,\n        19,\n        17\n      ],\n      \"actual_sum\": 74,\n      \"expected_sum\": 74,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Female counts across 4 groups vs stated 74 women sum to 74, expected 74, difference = 0\",\n      \"row\": 1,\n      \"description\": \"Female counts across 4 groups vs stated 74 women\"\n    },\n    {\n      \"values\": [\n        30,\n        30,\n        30,\n        30\n      ],\n      \"actual_sum\": 120,\n      \"expected_sum\": 120,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group ns vs stated N=120 sum to 120, expected 120, difference = 0\",\n      \"row\": 2,\n      \"description\": \"Group ns vs stated N=120\"\n    },\n    {\n      \"values\": [\n        40,\n        60\n      ],\n      \"actual_sum\": 100,\n      \"expected_sum\": 100,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 1 gender percentages sum to 100, expected 100, difference = 0\",\n      \"row\": 3,\n      \"description\": \"Group 1 gender percentages\"\n    },\n    {\n      \"values\": [\n        33.3,\n        66.7\n      ],\n      \"actual_sum\": 100.0,\n      \"expected_sum\": 100,\n      \"difference\": 0.0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 2 gender percentages sum to 100.0, expected 100, difference = 0.0\",\n      \"row\": 4,\n      \"description\": \"Group 2 gender percentages\"\n    },\n    {\n      \"values\": [\n        36.6,\n        63.4\n      ],\n      \"actual_sum\": 100.0,\n      \"expected_sum\": 100,\n      \"difference\": 0.0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 3 gender percentages sum to 100.0, expected 100, difference = 0.0\",\n      \"row\": 5,\n      \"description\": \"Group 3 gender percentages\"\n    },\n    {\n      \"values\": [\n        43.3,\n        56.7\n      ],\n      \"actual_sum\": 100.0,\n      \"expected_sum\": 100,\n      \"difference\": 0.0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 4 gender percentages sum to 100.0, expected 100, difference = 0.0\",\n      \"row\": 6,\n      \"description\": \"Group 4 gender percentages\"\n    },\n    {\n      \"values\": [\n        12,\n        18\n      ],\n      \"actual_sum\": 30,\n      \"expected_sum\": 30,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 1 male+female vs n=30 sum to 30, expected 30, difference = 0\",\n      \"row\": 7,\n      \"description\": \"Group 1 male+female vs n=30\"\n    },\n    {\n      \"values\": [\n        10,\n        20\n      ],\n      \"actual_sum\": 30,\n      \"expected_sum\": 30,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 2 male+female vs n=30 sum to 30, expected 30, difference = 0\",\n      \"row\": 8,\n      \"description\": \"Group 2 male+female vs n=30\"\n    },\n    {\n      \"values\": [\n        11,\n        19\n      ],\n      \"actual_sum\": 30,\n      \"expected_sum\": 30,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 3 male+female vs n=30 sum to 30, expected 30, difference = 0\",\n      \"row\": 9,\n      \"description\": \"Group 3 male+female vs n=30\"\n    },\n    {\n      \"values\": [\n        13,\n        17\n      ],\n      \"actual_sum\": 30,\n      \"expected_sum\": 30,\n      \"difference\": 0,\n      \"is_consistent\": true,\n      \"severity\": \"consistent\",\n      \"methodology\": \"Summation check: Group 4 male+female vs n=30 sum to 30, expected 30, difference = 0\",\n      \"row\": 10,\n      \"description\": \"Group 4 male+female vs n=30\"\n    }\n  ],\n  \"explanation\": \"All 11 evaluated sums reconcile within tolerance.\",\n  \"methodology\": \"Batched summation. Each row is checked independently by check_summation; the aggregate severity is the worst row, and a batch in which nothing could be evaluated reports `indeterminate` rather than `consistent`.\"\n}",
+    "result_truncated": false,
+    "result_chars": 4718,
+    "is_error": false
+  },
+  {
+    "seq": 7,
+    "tool": "mcp__forensic_metascience__check_sd_or_se",
+    "tool_short": "check_sd_or_se",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_012Cq1ojHFuXsxZ5KGdKuCfk",
+    "input": {
+      "reported_value": 27.1,
+      "n": 30,
+      "reported_as": "SD",
+      "variable_range_min": 50,
+      "variable_range_max": 110
+    },
+    "result": "{\n  \"reported_value\": 27.1,\n  \"n\": 30,\n  \"reported_as\": \"SD\",\n  \"as_sd\": {\n    \"interpretation\": \"value is SD\",\n    \"implied_sd\": 27.1,\n    \"implied_se\": 4.947760436130001,\n    \"sd_plausible\": true,\n    \"sd_range_check\": {\n      \"reported_sd\": 27.1,\n      \"data_range\": 60.0,\n      \"max_possible_sd\": 30.51285766293647,\n      \"is_plausible\": true,\n      \"sd_as_fraction_of_max\": 0.8881501791593248,\n      \"severity\": \"consistent\",\n      \"explanation\": \"SD of 27.1 is 88.8% of the maximum possible (30.5129) for this range\",\n      \"methodology\": \"SD range check: For data in [50.0, 110.0], max SD \\u2248 range/2 = 60.0/2 = 30.0000. Reported SD = 27.1.\"\n    }\n  },\n  \"as_se\": {\n    \"interpretation\": \"value is SE (mislabeled)\",\n    \"implied_sd\": 148.43281308390002,\n    \"implied_se\": 27.1,\n    \"sd_plausible\": false,\n    \"sd_range_check\": {\n      \"reported_sd\": 148.43281308390002,\n      \"data_range\": 60.0,\n      \"max_possible_sd\": 30.51285766293647,\n      \"is_plausible\": false,\n      \"sd_as_fraction_of_max\": 4.864598875778168,\n      \"severity\": \"impossible\",\n      \"explanation\": \"SD of 148.43281308390002 exceeds maximum possible SD of 30.5129 for data ranging from 50.0 to 110.0\",\n      \"methodology\": \"SD range check: For data in [50.0, 110.0], max SD \\u2248 range/2 = 60.0/2 = 30.0000. Reported SD = 148.43281308390002.\"\n    }\n  },\n  \"plausibility_ceiling\": 30.51285766293647,\n  \"ceiling_source\": \"range/2 (from (50.0, 110.0))\",\n  \"likely_interpretation\": \"SD\",\n  \"severity\": \"consistent\",\n  \"explanation\": \"Labeled SD = 27.1 is plausible (\\u2264 30.51).\",\n  \"methodology\": \"SD/SE confusion check: SE = SD/\\u221an. For n = 30, \\u221an = 5.4772. As-SD interpretation: SD = 27.1, implied SE = 4.948. As-SE interpretation: SE = 27.1, implied SD = 148.4. Plausibility ceiling = 30.51.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1789,
+    "is_error": false
+  },
+  {
+    "seq": 8,
+    "tool": "mcp__forensic_metascience__csf_test",
+    "tool_short": "csf_test",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01K4u4hM4BJbyP24yfH3sYf6",
+    "input": {
+      "p_values": [
+        0.9,
+        0.95,
+        0.99,
+        0.93,
+        0.97,
+        0.92
+      ],
+      "design": "parallel_rct"
+    },
+    "result": "{\n  \"individual_p_values\": [\n    0.9,\n    0.95,\n    0.99,\n    0.93,\n    0.97,\n    0.92\n  ],\n  \"similarity_p\": 0.014432576504709903,\n  \"combined_p\": 0.014432576504709903,\n  \"similarity_p_under_independence\": 2.172116888157382e-05,\n  \"sensitivity_profile\": {\n    \"0.0\": 2.172116888157382e-05,\n    \"0.1\": 0.0004217116445485478,\n    \"0.2\": 0.001920634789181485,\n    \"0.3\": 0.004858941860166402,\n    \"0.5\": 0.014432576504709903,\n    \"0.7\": 0.026972748427666386\n  },\n  \"correlation_used\": 0.5,\n  \"correlation_assumed\": false,\n  \"direction\": \"normal\",\n  \"method\": \"stouffer\",\n  \"design\": \"parallel_rct\",\n  \"num_tests\": 6,\n  \"mean_p\": 0.9433333333333334,\n  \"severity\": \"indeterminate\",\n  \"explanation\": \"Under an INDEPENDENCE assumption these p-values would look too similar (p = 0.0000), but the result does NOT survive plausible correlation among baseline variables (p = 0.0144 at rho = 0.5). Table 1 rows are typically correlated, so this is not evidence of a randomisation problem without an estimate of that correlation.\",\n  \"caveat\": \"Baseline p-values within one table are usually correlated. Evaluated at rho = 0.5 (a conservative but realistic average for a clinical Table 1). Assuming independence inflates the false-positive rate to roughly 33% at rho = 0.6 and ~50% at rho = 0.75 with 25 rows, so a verdict that does not survive plausible correlation is reported as indeterminate rather than as a finding.\",\n  \"methodology\": \"Carlisle-Stouffer-Fisher (stouffer) with a correlation-aware null: Stouffer divided by sqrt(k + k(k-1)rho) (Strube 1985) over 6 baseline p-values. One-sided for EXCESS similarity: a small similarity_p means the groups are more alike than randomisation predicts, which is the signal of interest -- uniformly high baseline p-values are never reassurance.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1785,
+    "is_error": false
+  },
+  {
+    "seq": 9,
+    "tool": "mcp__forensic_metascience__bayesian_table1_dispersion",
+    "tool_short": "bayesian_table1_dispersion",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01MMvND5CoAMfXTsrbF4dvVp",
+    "input": {
+      "rows": [
+        {
+          "label": "Age",
+          "means": [
+            17.2,
+            18.1,
+            17.6,
+            17.8
+          ],
+          "sds": [
+            5.2,
+            5.5,
+            5.1,
+            5.7
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "Weight",
+          "means": [
+            79,
+            79.3,
+            77.2,
+            79.1
+          ],
+          "sds": [
+            27.1,
+            28.5,
+            27.2,
+            28.6
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "Height",
+          "means": [
+            157.4,
+            158.6,
+            157.1,
+            156.9
+          ],
+          "sds": [
+            20.1,
+            22.2,
+            20.8,
+            21.4
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "BMI",
+          "means": [
+            30.6,
+            30.2,
+            30,
+            30.7
+          ],
+          "sds": [
+            3.1,
+            2.8,
+            3,
+            3.2
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "Waist",
+          "means": [
+            85.9,
+            84.7,
+            85.3,
+            84.2
+          ],
+          "sds": [
+            3.8,
+            4.4,
+            4.8,
+            4.3
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "Hip",
+          "means": [
+            106.4,
+            105.8,
+            105.1,
+            106.6
+          ],
+          "sds": [
+            3.5,
+            3.4,
+            3.9,
+            3.7
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "BFR",
+          "means": [
+            29.8,
+            28.1,
+            30.4,
+            29.1
+          ],
+          "sds": [
+            6.7,
+            5.5,
+            6.3,
+            5.8
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "FBS",
+          "means": [
+            120.1,
+            118.9,
+            119.9,
+            113.6
+          ],
+          "sds": [
+            10.9,
+            13.1,
+            7.2,
+            12.5
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "TG",
+          "means": [
+            170.1,
+            167.2,
+            165.9,
+            168.1
+          ],
+          "sds": [
+            17.9,
+            13.2,
+            13.8,
+            18.2
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "TC",
+          "means": [
+            176,
+            173.6,
+            176.9,
+            178.5
+          ],
+          "sds": [
+            13.1,
+            16.3,
+            11.1,
+            11.5
+          ],
+          "ns": [
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "label": "Gender",
+          "counts": [
+            [
+              12,
+              18
+            ],
+            [
+              10,
+              20
+            ],
+            [
+              11,
+              19
+            ],
+            [
+              13,
+              17
+            ]
+          ]
+        }
+      ],
+      "design": "parallel_rct"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"\\u03c4\\u0302 = 1.44 (CI [0.76, 16.15]) is consistent with random allocation.\",\n  \"n_rows\": 11,\n  \"n_valid\": 11,\n  \"errors\": [],\n  \"per_row\": [\n    {\n      \"label\": \"Age\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.9309894936677411,\n      \"z_two_sided\": 0.08659996506979235,\n      \"z_squared\": 0.0074995539500892555\n    },\n    {\n      \"label\": \"Weight\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.9905376494163936,\n      \"z_two_sided\": 0.011859575760111424,\n      \"z_squared\": 0.00014064953720982246\n    },\n    {\n      \"label\": \"Height\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.9896889823095011,\n      \"z_two_sided\": 0.012923303956611754,\n      \"z_squared\": 0.000167011785154977\n    },\n    {\n      \"label\": \"BMI\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.7841280155726639,\n      \"z_two_sided\": 0.27394353387832837,\n      \"z_squared\": 0.07504505975374684\n    },\n    {\n      \"label\": \"Waist\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.4618826885140902,\n      \"z_two_sided\": 0.7357502733393052,\n      \"z_squared\": 0.5413284647188623\n    },\n    {\n      \"label\": \"Hip\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.37864735074185757,\n      \"z_two_sided\": 0.8803913316968532,\n      \"z_squared\": 0.7750888969269587\n    },\n    {\n      \"label\": \"BFR\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.5021874591439293,\n      \"z_two_sided\": 0.6710519129019582,\n      \"z_squared\": 0.4503106698093773\n    },\n    {\n      \"label\": \"FBS\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.08547385956006938,\n      \"z_two_sided\": 1.7197721903385355,\n      \"z_squared\": 2.9576163866618037\n    },\n    {\n      \"label\": \"TG\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.7763080078097476,\n      \"z_two_sided\": 0.2841335879014344,\n      \"z_squared\": 0.08073189577374214\n    },\n    {\n      \"label\": \"TC\",\n      \"kind\": \"continuous\",\n      \"p_value\": 0.538587868201738,\n      \"z_two_sided\": 0.6149498075787015,\n      \"z_squared\": 0.37816326584108206\n    },\n    {\n      \"label\": \"Gender\",\n      \"kind\": \"categorical\",\n      \"p_value\": 0.8720148222487981,\n      \"z_two_sided\": 0.16109976891252278,\n      \"z_squared\": 0.02595313554366824\n    }\n  ],\n  \"design\": \"parallel_rct\",\n  \"mean_z_squared\": 0.481094999118336,\n  \"precision_multiplier\": 1.4417321353765573,\n  \"precision_multiplier_ci\": [\n    0.7560429171288727,\n    16.151563379503564\n  ],\n  \"precision_multiplier_ci_under_independence\": [\n    1.0091705086293794,\n    2.649699111118512\n  ],\n  \"ci_sensitivity_profile\": {\n    \"0.0\": [\n      1.0091705086293794,\n      2.649699111118512\n    ],\n    \"0.1\": [\n      0.8856598870780116,\n      4.020087625642976\n    ],\n    \"0.2\": [\n      0.8616983369017882,\n      7.106342113419492\n    ],\n    \"0.3\": [\n      0.7660724646997871,\n      16.151563379503564\n    ],\n    \"0.5\": [\n      0.7560429171288727,\n      16.151563379503564\n    ],\n    \"0.7\": [\n      0.7660724646997871,\n      16.151563379503564\n    ]\n  },\n  \"correlation_used\": 0.5,\n  \"correlation_assumed\": false,\n  \"effective_rows\": 2,\n  \"csf_cross_check\": {\n    \"severity\": \"consistent\",\n    \"similarity_p\": 0.1892189716867479,\n    \"similarity_p_under_independence\": 0.01548504150584979\n  },\n  \"bootstrap_ci_level\": 0.9,\n  \"num_bootstrap\": 1000,\n  \"ks_p_value\": 0.16345542743722552,\n  \"ks_statistic\": 0.3217625532642931,\n  \"p_values\": [\n    0.9309894936677411,\n    0.9905376494163936,\n    0.9896889823095011,\n    0.7841280155726639,\n    0.4618826885140902,\n    0.37864735074185757,\n    0.5021874591439293,\n    0.08547385956006938,\n    0.7763080078097476,\n    0.538587868201738,\n    0.8720148222487981\n  ],\n  \"z_values\": [\n    0.08659996506979235,\n    0.011859575760111424,\n    0.012923303956611754,\n    0.27394353387832837,\n    0.7357502733393052,\n    0.8803913316968532,\n    0.6710519129019582,\n    1.7197721903385355,\n    0.2841335879014344,\n    0.6149498075787015,\n    0.16109976891252278\n  ],\n  \"methodology\": \"Bayesian Table 1 dispersion (Heathers/Bolland-style): each row \\u2192 test p-value (one-way ANOVA for continuous, \\u03c7\\u00b2 for categorical) \\u2192 two-sided z = \\u03a6\\u207b\\u00b9(1 \\u2212 p/2). Under proper randomization E[z\\u00b2] = 1; precision multiplier \\u03c4\\u0302 = \\u221a(1 / mean(z\\u00b2)) > 1 \\u21d2 under-dispersion (suspicious uniformity), \\u03c4\\u0302 < 1 \\u21d2 over-dispersion. Percentile bootstrap CI on \\u03c4\\u0302, resampling the 2 of 11 rows that are independent under equicorrelation \\u03c1 = 0.5 (design effect 1 + (k\\u22121)\\u03c1, the Strube 1985 identity csf_test uses); the CI across the whole \\u03c1 grid is reported. Independent K-S test of p-values against U(0, 1). `highly_suspicious` requires a stated design and a finding that survives csf_test's correlation-aware null on the same p-values. Approximate port of Bolland et al. 2022; for definitive analysis use the Bolland Shiny tool.\",\n  \"caveat\": \"Baseline rows within one table are usually correlated; assuming otherwise inflates the false-positive rate to roughly 33% at \\u03c1 = 0.6 and ~71% on cluster-randomised trials. Evaluated at \\u03c1 = 0.5 (a conservative but realistic average for a clinical Table 1). Under-dispersion that appears only under an independence assumption, or in a trial whose design was never stated, is reported below `highly_suspicious` rather than as a fabrication-grade finding.\"\n}",
+    "result_truncated": false,
+    "result_chars": 5312,
+    "is_error": false
+  },
+  {
+    "seq": 10,
+    "tool": "mcp__forensic_metascience__check_sd_or_se",
+    "tool_short": "check_sd_or_se",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01RiC9FVxWwFomhSqQx55HdP",
+    "input": {
+      "reported_value": 20.1,
+      "n": 30,
+      "reported_as": "SD",
+      "variable_range_min": 140,
+      "variable_range_max": 190
+    },
+    "result": "{\n  \"reported_value\": 20.1,\n  \"n\": 30,\n  \"reported_as\": \"SD\",\n  \"as_sd\": {\n    \"interpretation\": \"value is SD\",\n    \"implied_sd\": 20.1,\n    \"implied_se\": 3.669741135284613,\n    \"sd_plausible\": true,\n    \"sd_range_check\": {\n      \"reported_sd\": 20.1,\n      \"data_range\": 50.0,\n      \"max_possible_sd\": 25.42738138578039,\n      \"is_plausible\": true,\n      \"sd_as_fraction_of_max\": 0.7904864325211408,\n      \"severity\": \"consistent\",\n      \"explanation\": \"SD of 20.1 is 79.0% of the maximum possible (25.4274) for this range\",\n      \"methodology\": \"SD range check: For data in [140.0, 190.0], max SD \\u2248 range/2 = 50.0/2 = 25.0000. Reported SD = 20.1.\"\n    }\n  },\n  \"as_se\": {\n    \"interpretation\": \"value is SE (mislabeled)\",\n    \"implied_sd\": 110.0922340585384,\n    \"implied_se\": 20.1,\n    \"sd_plausible\": false,\n    \"sd_range_check\": {\n      \"reported_sd\": 110.0922340585384,\n      \"data_range\": 50.0,\n      \"max_possible_sd\": 25.42738138578039,\n      \"is_plausible\": false,\n      \"sd_as_fraction_of_max\": 4.329672504936141,\n      \"severity\": \"impossible\",\n      \"explanation\": \"SD of 110.0922340585384 exceeds maximum possible SD of 25.4274 for data ranging from 140.0 to 190.0\",\n      \"methodology\": \"SD range check: For data in [140.0, 190.0], max SD \\u2248 range/2 = 50.0/2 = 25.0000. Reported SD = 110.0922340585384.\"\n    }\n  },\n  \"plausibility_ceiling\": 25.42738138578039,\n  \"ceiling_source\": \"range/2 (from (140.0, 190.0))\",\n  \"likely_interpretation\": \"SD\",\n  \"severity\": \"consistent\",\n  \"explanation\": \"Labeled SD = 20.1 is plausible (\\u2264 25.43).\",\n  \"methodology\": \"SD/SE confusion check: SE = SD/\\u221an. For n = 30, \\u221an = 5.4772. As-SD interpretation: SD = 20.1, implied SE = 3.67. As-SE interpretation: SE = 20.1, implied SD = 110.1. Plausibility ceiling = 25.43.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1788,
+    "is_error": false
+  },
+  {
+    "seq": 11,
+    "tool": "mcp__forensic_metascience__check_sd_range",
+    "tool_short": "check_sd_range",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01EvaLsd9C1tvYXRWA36ot2H",
+    "input": {
+      "sd": 3.1,
+      "min_val": 27,
+      "max_val": 34,
+      "n": 30
+    },
+    "result": "{\n  \"reported_sd\": 3.1,\n  \"data_range\": 7,\n  \"max_possible_sd\": 3.559833394009255,\n  \"is_plausible\": true,\n  \"sd_as_fraction_of_max\": 0.8708272710787265,\n  \"severity\": \"consistent\",\n  \"explanation\": \"SD of 3.1 is 87.1% of the maximum possible (3.5598) for this range\",\n  \"methodology\": \"SD range check: For data in [27, 34], max SD \\u2248 range/2 = 7/2 = 3.5000. Reported SD = 3.1.\"\n}",
+    "result_truncated": false,
+    "result_chars": 384,
+    "is_error": false
+  },
+  {
+    "seq": 12,
+    "tool": "mcp__forensic_metascience__check_effect_plausibility",
+    "tool_short": "check_effect_plausibility",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Eo9xmJghL7QRHYE9hDqcxw",
+    "input": {
+      "mean1": 70.2,
+      "sd1": 25,
+      "n1": 30,
+      "mean2": 78.8,
+      "sd2": 28.6,
+      "n2": 30,
+      "field": "medicine_rct",
+      "design": "parallel_rct"
+    },
+    "result": "{\n  \"d\": -0.31601607159556433,\n  \"abs_d\": 0.31601607159556433,\n  \"field\": \"medicine_rct\",\n  \"design\": \"parallel_rct\",\n  \"provenance\": \"printed_text\",\n  \"computed_from_group_stats\": {\n    \"d\": -0.3201741778007691,\n    \"abs_d\": 0.3201741778007691,\n    \"pooled_sd\": 26.860379744151047,\n    \"df\": 58,\n    \"n_total\": 60,\n    \"severity\": \"consistent\",\n    \"methodology\": \"Cohen's d = (M1 - M2) / pooled SD, with pooled SD from the (n-1)-weighted variances. Hedges' g applies J = 1 - 3/(4*df - 1) = 0.9870, correcting d's upward small-sample bias.\",\n    \"hedges_g\": -0.31601607159556433,\n    \"hedges_correction_j\": 0.987012987012987\n  },\n  \"benchmark\": {\n    \"median\": 0.3,\n    \"p75\": 0.55,\n    \"p95\": 1.0,\n    \"source\": \"Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions.\"\n  },\n  \"benchmark_source\": \"Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions.\",\n  \"severity\": \"consistent\",\n  \"band\": \"within the usual range (field median 0.3)\",\n  \"explanation\": \"|d| = 0.32 is within the usual range (field median 0.3) for medicine_rct. Reported for context.\",\n  \"methodology\": \"Compared |d| against empirical benchmarks for medicine_rct. Source: Standardised mean differences in Cochrane reviews cluster well below 0.5; effects above ~1.0 in a clinical trial are uncommon outside acute, high-contrast interventions. These are distributions of PUBLISHED effects, themselves inflated by publication bias, so an effect at the 95th percentile of the published literature is more unusual still relative to the underlying truth. Severity is capped at `suspicious`: an effect size can be improbable but never arithmetically impossible.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1856,
+    "is_error": false
+  },
+  {
+    "seq": 13,
+    "tool": "mcp__forensic_metascience__recalc_independent_t",
+    "tool_short": "recalc_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_0156A8yLDD7B1gLNw7VxKNVX",
+    "input": {
+      "mean1": 70.2,
+      "sd1": 25,
+      "n1": 30,
+      "mean2": 78.8,
+      "sd2": 28.6,
+      "n2": 30,
+      "reported_p": 0.05
+    },
+    "result": "{\n  \"calculated_t\": -1.2400292585080308,\n  \"calculated_df\": 56.98104176989434,\n  \"calculated_p\": 0.2200469051920201,\n  \"test_type\": \"Welch\",\n  \"inputs\": {\n    \"group1\": {\n      \"mean\": 70.2,\n      \"sd\": 25,\n      \"n\": 30\n    },\n    \"group2\": {\n      \"mean\": 78.8,\n      \"sd\": 28.6,\n      \"n\": 30\n    }\n  },\n  \"reported_p\": 0.05,\n  \"p_matches\": false,\n  \"p_difference\": 0.1700469051920201,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Independent samples t-test (Welch): t = (M1 - M2) / sqrt(SE1\\u00b2 + SE2\\u00b2) = (70.2 - 78.8) / 6.9353 = -1.2400. df = 56.98, p = 0.220047\"\n}",
+    "result_truncated": false,
+    "result_chars": 578,
+    "is_error": false
+  },
+  {
+    "seq": 14,
+    "tool": "mcp__forensic_metascience__rivets_independent_t",
+    "tool_short": "rivets_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_012Szx4WC7gRvP53znHBeFgH",
+    "input": {
+      "mean1": 70.2,
+      "sd1": 25,
+      "n1": 30,
+      "mean2": 78.8,
+      "sd2": 28.6,
+      "n2": 30,
+      "reported_p": 0.05,
+      "decimals_mean": 1,
+      "decimals_sd": 1
+    },
+    "result": "{\n  \"severity\": \"highly_suspicious\",\n  \"explanation\": \"Reported p value = 0.05 is UNREACHABLE given the achievable interval [0.214, 0.226] implied by the printed precision of the means/SDs; no rounding of the printed descriptives yields it.\",\n  \"point_t_at_truncated\": 1.2400292585080308,\n  \"point_p_at_truncated\": 0.2200469051920201,\n  \"t_min\": 1.2233382062363432,\n  \"t_max\": 1.2567824071743512,\n  \"t_range\": 0.03344420093800804,\n  \"p_min\": 0.21396038903363296,\n  \"p_max\": 0.22623674782610825,\n  \"p_range\": 0.012276358792475295,\n  \"reported_t\": null,\n  \"reported_t_in_range\": false,\n  \"reported_p\": 0.05,\n  \"reported_p_is_threshold\": false,\n  \"reported_p_in_range\": false,\n  \"point_matches_reported_t\": false,\n  \"monte_carlo\": {\n    \"num_samples\": 10000,\n    \"fraction_match_reported_t\": null,\n    \"fraction_match_reported_p\": 0.0,\n    \"sampled_t_min\": 1.2244915326202777,\n    \"sampled_t_max\": 1.255552570501614\n  },\n  \"inputs\": {\n    \"mean1\": 70.2,\n    \"sd1\": 25,\n    \"n1\": 30,\n    \"mean2\": 78.8,\n    \"sd2\": 28.6,\n    \"n2\": 30,\n    \"decimals_mean\": 1,\n    \"decimals_sd\": 1,\n    \"use_welch\": true\n  },\n  \"methodology\": \"RIVETS independent-t: each reported descriptive sits in a truncation interval (means \\u00b10.05, SDs \\u00b10.05). Analytic [t_min, t_max] computed by extremizing the t-formula at the appropriate corners. Monte Carlo samples uniformly from the joint interval and reports the hit rate at the reported t/p precision. Point match at the truncated values plus low MC hit rate is the classical hand-calculation signature. A reported t OR a reported p lying outside its achievable interval is flagged at the same severity; a reported p given as a bound ('p < .001') is refuted only if the smallest achievable p exceeds that bound.\"\n}",
+    "result_truncated": false,
+    "result_chars": 1747,
+    "is_error": false
+  },
+  {
+    "seq": 15,
+    "tool": "mcp__forensic_metascience__recalc_independent_t",
+    "tool_short": "recalc_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01WPTFsVKzzijeAJiKkGSitP",
+    "input": {
+      "mean1": 77.2,
+      "sd1": 27.2,
+      "n1": 30,
+      "mean2": 70.2,
+      "sd2": 25,
+      "n2": 30,
+      "reported_p": 0.05
+    },
+    "result": "{\n  \"calculated_t\": 1.0378098691296689,\n  \"calculated_df\": 57.592256563609475,\n  \"calculated_p\": 0.3036963208270339,\n  \"test_type\": \"Welch\",\n  \"inputs\": {\n    \"group1\": {\n      \"mean\": 77.2,\n      \"sd\": 27.2,\n      \"n\": 30\n    },\n    \"group2\": {\n      \"mean\": 70.2,\n      \"sd\": 25,\n      \"n\": 30\n    }\n  },\n  \"reported_p\": 0.05,\n  \"p_matches\": false,\n  \"p_difference\": 0.2536963208270339,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Independent samples t-test (Welch): t = (M1 - M2) / sqrt(SE1\\u00b2 + SE2\\u00b2) = (77.2 - 70.2) / 6.7450 = 1.0378. df = 57.59, p = 0.303696\"\n}",
+    "result_truncated": false,
+    "result_chars": 577,
+    "is_error": false
+  },
+  {
+    "seq": 16,
+    "tool": "mcp__forensic_metascience__recalc_independent_t",
+    "tool_short": "recalc_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_014wdSQ6KcnvveS6KpWdJhVr",
+    "input": {
+      "mean1": 27.2,
+      "sd1": 2.9,
+      "n1": 30,
+      "mean2": 30.6,
+      "sd2": 3.2,
+      "n2": 30,
+      "reported_p": 0.05
+    },
+    "result": "{\n  \"calculated_t\": -4.312212223758776,\n  \"calculated_df\": 57.44689060669518,\n  \"calculated_p\": 6.424333789404634e-05,\n  \"test_type\": \"Welch\",\n  \"inputs\": {\n    \"group1\": {\n      \"mean\": 27.2,\n      \"sd\": 2.9,\n      \"n\": 30\n    },\n    \"group2\": {\n      \"mean\": 30.6,\n      \"sd\": 3.2,\n      \"n\": 30\n    }\n  },\n  \"reported_p\": 0.05,\n  \"p_matches\": false,\n  \"p_difference\": 0.04993575666210596,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Independent samples t-test (Welch): t = (M1 - M2) / sqrt(SE1\\u00b2 + SE2\\u00b2) = (27.2 - 30.6) / 0.7885 = -4.3122. df = 57.45, p = 0.000064\"\n}",
+    "result_truncated": false,
+    "result_chars": 581,
+    "is_error": false
+  },
+  {
+    "seq": 17,
+    "tool": "mcp__forensic_metascience__detect_duplication",
+    "tool_short": "detect_duplication",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01HfHsF8e1rMfeETuZu2tm7o",
+    "input": {
+      "blocks": [
+        {
+          "label": "Table 1 baseline (week 0)",
+          "sample_id": "baseline",
+          "independent": false,
+          "cells": [
+            {
+              "label": "G1 FBS",
+              "value": 120.1,
+              "sd": 10.9
+            },
+            {
+              "label": "G2 FBS",
+              "value": 118.9,
+              "sd": 13.1
+            },
+            {
+              "label": "G3 FBS",
+              "value": 119.9,
+              "sd": 7.2
+            },
+            {
+              "label": "G4 FBS",
+              "value": 113.6,
+              "sd": 12.5
+            },
+            {
+              "label": "G1 TG",
+              "value": 170.1,
+              "sd": 17.9
+            },
+            {
+              "label": "G2 TG",
+              "value": 167.2,
+              "sd": 13.2
+            },
+            {
+              "label": "G3 TG",
+              "value": 165.9,
+              "sd": 13.8
+            },
+            {
+              "label": "G4 TG",
+              "value": 168.1,
+              "sd": 18.2
+            },
+            {
+              "label": "G1 TC",
+              "value": 176,
+              "sd": 13.1
+            },
+            {
+              "label": "G2 TC",
+              "value": 173.6,
+              "sd": 16.3
+            },
+            {
+              "label": "G3 TC",
+              "value": 176.9,
+              "sd": 11.1
+            },
+            {
+              "label": "G4 TC",
+              "value": 178.5,
+              "sd": 11.5
+            }
+          ]
+        },
+        {
+          "label": "Table 3 week 0",
+          "sample_id": "baseline",
+          "independent": false,
+          "cells": [
+            {
+              "label": "G1 FBS",
+              "value": 120.1,
+              "sd": 10.9
+            },
+            {
+              "label": "G2 FBS",
+              "value": 118.9,
+              "sd": 13.1
+            },
+            {
+              "label": "G3 FBS",
+              "value": 119.9,
+              "sd": 12.2
+            },
+            {
+              "label": "G4 FBS",
+              "value": 118.6,
+              "sd": 12.5
+            },
+            {
+              "label": "G1 TG",
+              "value": 170.1,
+              "sd": 17.9
+            },
+            {
+              "label": "G2 TG",
+              "value": 167.2,
+              "sd": 13.2
+            },
+            {
+              "label": "G3 TG",
+              "value": 165.9,
+              "sd": 13.8
+            },
+            {
+              "label": "G4 TG",
+              "value": 166.1,
+              "sd": 18.2
+            },
+            {
+              "label": "G1 TC",
+              "value": 176,
+              "sd": 13.1
+            },
+            {
+              "label": "G2 TC",
+              "value": 175.6,
+              "sd": 12.9
+            },
+            {
+              "label": "G3 TC",
+              "value": 176.9,
+              "sd": 11.1
+            },
+            {
+              "label": "G4 TC",
+              "value": 178.5,
+              "sd": 11.5
+            }
+          ]
+        }
+      ]
+    },
+    "result": "{\n  \"severity\": \"indeterminate\",\n  \"explanation\": \"1 duplicate pattern(s) found (within-table repeats, same-sample matches, or near-matches); no improbable cross-independent-source overlap.\",\n  \"n_blocks\": 2,\n  \"n_cells_total\": 24,\n  \"n_comparisons\": 144,\n  \"max_identical_pairs\": 0,\n  \"chance_probability\": null,\n  \"duplicate_groups\": [\n    {\n      \"kind\": \"cross_source_pair\",\n      \"block_a\": \"Table 1 baseline (week 0)\",\n      \"block_b\": \"Table 3 week 0\",\n      \"same_sample_caveat\": true,\n      \"is_round_value\": true,\n      \"k_pairs\": 8,\n      \"values\": [\n        [\n          118.9,\n          13.1\n        ],\n        [\n          120.1,\n          10.9\n        ],\n        [\n          165.9,\n          13.8\n        ],\n        [\n          167.2,\n          13.2\n        ],\n        [\n          170.1,\n          17.9\n        ],\n        [\n          176,\n          13.1\n        ],\n        [\n          176.9,\n          11.1\n        ],\n        [\n          178.5,\n          11.5\n        ]\n      ],\n      \"occurrences\": [\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G2 FBS\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G1 FBS\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G3 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G2 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G1 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G1 TC\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G3 TC\"\n          ]\n        },\n        {\n          \"block\": \"Table 1 baseline (week 0)\",\n          \"cells\": [\n            \"G4 TC\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G2 FBS\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G1 FBS\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G3 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G2 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G1 TG\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G1 TC\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G3 TC\"\n          ]\n        },\n        {\n          \"block\": \"Table 3 week 0\",\n          \"cells\": [\n            \"G4 TC\"\n          ]\n        }\n      ],\n      \"severity\": \"indeterminate\"\n    }\n  ],\n  \"assumptions\": {\n    \"span_mean\": 64.9,\n    \"span_sd\": 11.0,\n    \"decimals\": [\n      2,\n      2\n    ],\n    \"p_pair\": 1.4007564084605686e-07,\n    \"note\": \"spans inferred from observed values; assumes independent cells and mean\\u22a5SD (slightly conservative).\"\n  },\n  \"caveats\": [\n    \"Blocks are assumed independent unless they share a sample_id. The editorial stage must confirm the sources use different participants before treating a cross-source match as a data-integrity anomaly.\",\n    \"Some matched values are round (integers/halves) and recur by chance; their severity was reduced.\"\n  ],\n  \"methodology\": \"Compared 144 cross-source (mean, SD) pairs across 2 blocks plus within-table rows/columns. Strongest independent overlap: 0 identical pair(s); coincidence probability \\u2248 n/a after correcting for the number of comparisons.\"\n}",
+    "result_truncated": false,
+    "result_chars": 3779,
+    "is_error": false
+  },
+  {
+    "seq": 18,
+    "tool": "mcp__forensic_metascience__statcheck",
+    "tool_short": "statcheck",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01CXhNvDTAoGQH2ChEicAR82",
+    "input": {
+      "text": "The addition of 5 mL, 10 mL or 15 mL of ACV to the diet resulted in significant decreases in body weight and BMI at weeks 4, 8 and 12 of ACV intake, when compared with baseline (week 0) (p<0.05). The circumferences of the waist and hip, along with the Body Fat Ratio (BFR), decreased significantly in the three treatment groups at weeks 8 and 12 compared with week 0 (p<0.05). No significant effect was observed at week 4, compared with baseline (p>0.05). Serum glucose levels decreased significantly by three doses of ACV at week 4, 8 and 12 compared with week 0 (p<0.05). Triglycerides and total cholesterol levels decreased significantly at weeks 8 and 12, compared with week 0 (p<0.05). The placebo group did not experience any significant changes in the anthropometric variables throughout the study (p>0.05). Statistical significance was set at p<0.05."
+    },
+    "result": "{\n  \"success\": true,\n  \"stats_found\": 0,\n  \"message\": \"No statistics found in text\"\n}",
+    "result_truncated": false,
+    "result_chars": 85,
+    "is_error": false
+  },
+  {
+    "seq": 19,
+    "tool": "mcp__forensic_metascience__extract_pdf",
+    "tool_short": "extract_pdf",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_018HwfbVQHsaoaAhsmhkjdow",
+    "input": {
+      "pdf_path": "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/agent_for_forensic_metascience/eval/runs/apple_cider/paper/Apple cider vinegar.pdf",
+      "first_page": 3,
+      "last_page": 5,
+      "max_chars": 18000
+    },
+    "result": "<persisted-output>\nOutput too large (54.5KB). Full output saved to: /home/dan/.claude/projects/-home-dan-Dropbox-AAA-METASCIENCE-OBSERVATORY-agent-for-forensic-metascience/a30cdee3-4684-4caf-8373-340c79f9587e/tool-results/toolu_018HwfbVQHsaoaAhsmhkjdow.json\n\nPreview (first 2KB):\n[\n  {\n    \"type\": \"text\",\n    \"text\": \"{\\n  \\\"text\\\": \\\"--- Page 3 ---\\\\nBMJ Nutrition, Prevention & Health\\\\nTable 1 Baseline demographic, anthropometric and biochemical variables of the three apple cider vinegar groups (group 1, 2\\\\nand 3) and the placebo group (group 4)\\\\nGroup 1 Group 2 Group 3 Group 4 (placebo)\\\\nVariable (n=30) (n=30) (n=30) (n=30)\\\\nGender (%)\\\\nMale 40.0 (n=12) 33.3 (n=10) 36.6 (n=11) 43.3 (n=13)\\\\nFemale 60.0 (n=18) 66.7 (n=20) 63.4 (n=19) 56.7 (n=17)\\\\nAge (years) 17.2\\\\u00b15.2 18.1\\\\u00b15.5 17.6\\\\u00b15.1 17.8\\\\u00b15.7\\\\nWeight (kg) 79.0\\\\u00b127.1 79.3\\\\u00b128.5 77.2\\\\u00b127.2 79.1\\\\u00b128.6\\\\nHeight (cm) 157.4\\\\u00b120.1 158.6\\\\u00b122.2 157.1\\\\u00b120.8 156.9\\\\u00b121.4\\\\nBMI (kg/m2) 30.6\\\\u00b13.1 30.2\\\\u00b12.8 30.0\\\\u00b13.0 30.7\\\\u00b13.2\\\\nWaist (cm) 85.9\\\\u00b13.8 84.7\\\\u00b14.4 85.3\\\\u00b14.8 84.2\\\\u00b14.3\\\\nHip (cm) 106.4\\\\u00b13.5 105.8\\\\u00b13.4 105.1\\\\u00b13.9 106.6\\\\u00b13.7\\\\nBFR (%) 29.8\\\\u00b16.7 28.1\\\\u00b15.5 30.4\\\\u00b16.3 29.1\\\\u00b15.8\\\\nFBS (mg/dL) 120.1\\\\u00b110.9 118.9\\\\u00b113.1 119.9\\\\u00b17.2 113.6\\\\u00b112.5\\\\nTG (mg/dL) 170.1\\\\u00b117.9 167.2\\\\u00b113.2 165.9\\\\u00b113.8 168.1\\\\u00b118.2\\\\nTC (mg/dL) 176.0\\\\u00b113.1 173.6\\\\u00b116.3 176.9\\\\u00b111.1 178.5\\\\u00b111.5\\\\nAll values are mean\\\\u00b1SD unless stated otherwise\\\\nGroup 1: daily intake of 5 mL of ACV; group 2: daily intake of 10 mL of ACV; group 3: daily intake of 15 mL of ACV.\\\\nACV, apple cider vinegar; BFR, body fat ratio; BMI, body mass index; FBS, fasting blood sugar; TC, total cholesterol; TG, triglycerides.\\\\ncholesterol quantitation kit (MAK043, Sigma- Aldrich). a high eating frequency, with more than four meals\\\\nBiochemical variables are shown in table 1. per day. Eighty-s even per cent had no family history of\\\\nobesity and 98% had no history of childhood obesity.\\\\nStatistical methods and data analysis\\\\nThe majority reported not having a regular exercise\\\\nData are presented as mean\\\\u00b1SD. Statistical analyses were\\\\nroutine an\n...\n</persisted-output>",
+    "result_truncated": false,
+    "result_chars": 2304,
+    "is_error": false
+  },
+  {
+    "seq": 20,
+    "tool": "mcp__forensic_metascience__recalc_independent_t",
+    "tool_short": "recalc_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01TdGzruaEAdrHSrhwqX9QDv",
+    "input": {
+      "mean1": 113.6,
+      "sd1": 12.5,
+      "n1": 30,
+      "mean2": 120.1,
+      "sd2": 10.9,
+      "n2": 30
+    },
+    "result": "{\n  \"calculated_t\": -2.1466451752947675,\n  \"calculated_df\": 56.94495244010451,\n  \"calculated_p\": 0.03609436604175654,\n  \"test_type\": \"Welch\",\n  \"inputs\": {\n    \"group1\": {\n      \"mean\": 113.6,\n      \"sd\": 12.5,\n      \"n\": 30\n    },\n    \"group2\": {\n      \"mean\": 120.1,\n      \"sd\": 10.9,\n      \"n\": 30\n    }\n  },\n  \"severity\": \"indeterminate\",\n  \"methodology\": \"Independent samples t-test (Welch): t = (M1 - M2) / sqrt(SE1\\u00b2 + SE2\\u00b2) = (113.6 - 120.1) / 3.0280 = -2.1466. df = 56.94, p = 0.036094\"\n}",
+    "result_truncated": false,
+    "result_chars": 506,
+    "is_error": false
+  },
+  {
+    "seq": 21,
+    "tool": "mcp__forensic_metascience__recalc_independent_t",
+    "tool_short": "recalc_independent_t",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_014JvA9W2RZWwskGfKaeSdr7",
+    "input": {
+      "mean1": 71.9,
+      "sd1": 26.1,
+      "n1": 30,
+      "mean2": 73.9,
+      "sd2": 23.7,
+      "n2": 30,
+      "reported_p": 0.05
+    },
+    "result": "{\n  \"calculated_t\": -0.3107223758967723,\n  \"calculated_df\": 57.468578346169785,\n  \"calculated_p\": 0.7571358928378995,\n  \"test_type\": \"Welch\",\n  \"inputs\": {\n    \"group1\": {\n      \"mean\": 71.9,\n      \"sd\": 26.1,\n      \"n\": 30\n    },\n    \"group2\": {\n      \"mean\": 73.9,\n      \"sd\": 23.7,\n      \"n\": 30\n    }\n  },\n  \"reported_p\": 0.05,\n  \"p_matches\": false,\n  \"p_difference\": 0.7071358928378995,\n  \"severity\": \"suspicious\",\n  \"methodology\": \"Independent samples t-test (Welch): t = (M1 - M2) / sqrt(SE1\\u00b2 + SE2\\u00b2) = (71.9 - 73.9) / 6.4366 = -0.3107. df = 57.47, p = 0.757136\"\n}",
+    "result_truncated": false,
+    "result_chars": 581,
+    "is_error": false
+  },
+  {
+    "seq": 22,
+    "tool": "mcp__forensic_metascience__check_proportion_from_normal",
+    "tool_short": "check_proportion_from_normal",
+    "surface": "forensic_mcp",
+    "validated": true,
+    "tool_use_id": "toolu_01Gi91drdsiw5T25s7NWxeGh",
+    "input": {
+      "reported_proportion": 1,
+      "mean": 30.6,
+      "sd": 3.1,
+      "n": 30,
+      "threshold": 34,
+      "direction": "below"
+    },
+    "result": "{\n  \"severity\": \"consistent\",\n  \"explanation\": \"Reported proportion 1.0000 (30/30) is consistent with a normal model: theoretical proportion below 34 = \\u03a6-based 0.8636 (binomial p = 0.02794, 95% CI 0.8843\\u20131.0000).\",\n  \"reported_proportion\": 1,\n  \"observed_count\": 30,\n  \"n\": 30,\n  \"threshold\": 34,\n  \"direction\": \"below\",\n  \"theoretical_proportion\": 0.863629943028773,\n  \"binomial_p_two_sided\": 0.027942497034293766,\n  \"binomial_ci_95\": [\n    0.8842966917779725,\n    1.0\n  ],\n  \"mc_mean_proportion\": 0.8636433333333334,\n  \"mc_ci_95\": [\n    0.7333333333333333,\n    0.9666666666666667\n  ],\n  \"mc_empirical_p_two_sided\": 0.0234,\n  \"mc_num_simulations\": 10000,\n  \"z_score\": 1.0967741935483866,\n  \"methodology\": \"Continuous\\u2192categorical plausibility: under the assumed normal N(30.6, 3.1\\u00b2), theoretical P(X below 34) = 0.8636. Reported proportion = 30/30 = 1.0000. Two-sided binomial test gives p = 0.02794; Monte Carlo with 10000 replicates of n = 30 gives 95% CI [0.7333, 0.9667].\"\n}",
+    "result_truncated": false,
+    "result_chars": 998,
+    "is_error": false
+  }
+]

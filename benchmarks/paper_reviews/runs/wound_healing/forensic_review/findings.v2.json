@@ -1,0 +1,2710 @@
+{
+  "disclaimer": "This is an automated check of a paper's reported numbers and its internal record -- not a finding of misconduct. It is NOT adequate for definitive detection of wrongdoing or fraud.",
+  "schema_version": "2.0",
+  "paper_id": "paper",
+  "run_id": "r_10a87ba9b98aec53",
+  "paper_metadata": {
+    "metadata_status": "failed"
+  },
+  "channels": {
+    "tool_expert": {
+      "state": "ran",
+      "detail": ""
+    },
+    "science_error": {
+      "state": "ran",
+      "detail": ""
+    },
+    "image_forensics": {
+      "state": "did_not_run",
+      "detail": "image track disabled"
+    },
+    "tortured_phrases": {
+      "state": "ran",
+      "detail": "0 distinct guarded fingerprint(s) across 0 match(es) in 4452 words"
+    }
+  },
+  "findings": [
+    {
+      "slug": "prose_counts_printed_as_percentages",
+      "technique": "not_computational",
+      "title": "Results print Table 1 counts as cohort percentages",
+      "description": "Results and Discussion state that wound gapping, seroma, erythema and infection occurred in 12%, 10%, 18% and 20% of the whole cohort. Table 1 prints those same numerators as 12 (3), 10 (2.5), 18 (4.5) and 20 (5) of n=397. The prose therefore reports the event counts as percentages, inflating each incidence about four-fold. Table 1 and Table 4 cell counts agree with one another. The abstract uses odds ratios, not these percentages.",
+      "location": "Results and Discussion versus Table 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+      "anchors": [
+        {
+          "anchor_id": "f_8e7f4efcee23e022:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_8e7f4efcee23e022:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+          "quote_folded_sha1": "060c52f9675ed330f4c6ff72f8e05027d3b5a8ac",
+          "file": "wound_healing.pdf",
+          "page": 6,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "quote_verbatim",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:42Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_8e7f4efcee23e022:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_8e7f4efcee23e022:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": null,
+          "label": "",
+          "quote": "WoundGapping Yes 12(3) No 385(97) Woundseroma Yes 10(2.5) No 387(97.5)",
+          "quote_folded_sha1": "5b7fc2a8b5d86cae505e3b71d1e30927e3c73029",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 313.6817932128906,
+              "y0": 119.01126098632812,
+              "x1": 336.1258850097656,
+              "y1": 126.98146057128906,
+              "page": 5
+            },
+            {
+              "x0": 338.79669189453125,
+              "y0": 119.01126098632812,
+              "x1": 365.1462097167969,
+              "y1": 126.98146057128906,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 127.96896362304688,
+              "x1": 332.20452880859375,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 127.96896362304688,
+              "x1": 418.7657165527344,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 127.96896362304688,
+              "x1": 429.56854248046875,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 136.98324584960938,
+              "x1": 330.4351806640625,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 407.396240234375,
+              "y0": 136.98324584960938,
+              "x1": 418.7538146972656,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 421.3999328613281,
+              "y0": 136.98324584960938,
+              "x1": 433.3552551269531,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 313.6817932128906,
+              "y0": 148.94570922851562,
+              "x1": 336.1258850097656,
+              "y1": 156.91590881347656,
+              "page": 5
+            },
+            {
+              "x0": 338.79669189453125,
+              "y0": 148.94570922851562,
+              "x1": 361.45599365234375,
+              "y1": 156.91590881347656,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 157.90341186523438,
+              "x1": 332.20452880859375,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 157.90341186523438,
+              "x1": 418.7657165527344,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 157.90341186523438,
+              "x1": 434.97235107421875,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 166.86111450195312,
+              "x1": 330.4351806640625,
+              "y1": 174.83131408691406,
+              "page": 5
+            },
+            {
+              "x0": 407.396240234375,
+              "y0": 166.86111450195312,
+              "x1": 418.7538146972656,
+              "y1": 174.83131408691406,
+              "page": 5
+            },
+            {
+              "x0": 421.3999328613281,
+              "y0": 166.86111450195312,
+              "x1": 438.7590637207031,
+              "y1": 174.83131408691406,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 313.6817932128906,
+            "y0": 119.01126098632812,
+            "x1": 438.7590637207031,
+            "y1": 174.83131408691406,
+            "page": 5
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:42Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "Table 1 cells are packed without spaces in body.md; the contiguous Results sentence carries the load-bearing 12%/10%/18%/20% figures.','reported':{",
+      "producer": "tool_expert",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_8e7f4efcee23e022",
+      "finding_id_hasher": "1",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": null,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "merged",
+        "rationale": "Same Results and Discussion percentages (12%, 10%, 18%, 20%) versus Table 1 counts 12, 10, 18, and 20 of 397. One defect; the registry-tool row is the survivor.",
+        "category": "duplicate",
+        "merged_into": "f_a6b28cb05fe71636"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_8e7f4efcee23e022:b:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "prose_counts_reported_as_percentages",
+      "technique": "check_count_percent",
+      "title": "Results treat Table 1 counts 12, 10, 18, 20 as cohort percentages",
+      "description": "Results and Discussion state that wound gapping, seroma, erythema, and infection occurred in 12%, 10%, 18%, and 20% of the whole cohort. Table 1 prints those same integers as counts with percentages 12 (3%), 10 (2.5%), 18 (4.5%), and 20 (5%) at n=397. check_count_percent on 12/397 versus printed 12% yields 3.02%, outside the rounding interval, with implied denominator about 100. The same Discussion paragraph later gives arm counts 10 (5.1%) and 2 (1%) for gapping, which cannot be a 12% cohort rate. Between-group Table 4 comparisons are unaffected.",
+      "location": "Results Description and Discussion versus Table 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+      "inputs": {
+        "count": 12,
+        "percentage": 12,
+        "n": 397,
+        "decimals": 0
+      },
+      "reported": {
+        "gapping_percent_prose": 12,
+        "seroma_percent_prose": 10,
+        "erythema_percent_prose": 18,
+        "infection_percent_prose": 20,
+        "gapping_table": "12 (3)",
+        "seroma_table": "10 (2.5)",
+        "erythema_table": "18 (4.5)",
+        "infection_table": "20 (5)",
+        "n": 397
+      },
+      "computed": {
+        "gapping_percent_from_12_of_397": 3.02267,
+        "seroma_percent_from_10_of_397": 2.518892,
+        "erythema_percent_from_18_of_397": 4.534005,
+        "infection_percent_from_20_of_397": 5.037783,
+        "implied_denominator_for_prose_12pct": 100.0
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 2,
+        "basis": "asserted",
+        "explanation": "Overall cohort incidence in Results and Discussion is overstated about four-fold; Table 4 arm comparisons and the abstract ORs are unchanged."
+      },
+      "notes": "Innocent reading: the Yes counts in Table 1 were copied into the prose as percentages. Table 1 n(%) cells themselves match n=397.",
+      "basis": "tool",
+      "reproduction": "metascience check-count-percent",
+      "anchors": [
+        {
+          "anchor_id": "f_a6b28cb05fe71636:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_a6b28cb05fe71636:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Results, Description",
+          "quote": "wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, wound erythema occurred in 18% of cases, and wound infection occurred in 20% of cases in the whole cohort of cases.",
+          "quote_folded_sha1": "060c52f9675ed330f4c6ff72f8e05027d3b5a8ac",
+          "file": "wound_healing.pdf",
+          "page": 6,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "quote_verbatim",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_a6b28cb05fe71636:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_a6b28cb05fe71636:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Discussion, paragraph 1",
+          "quote": "the percentage of wound gapping occurred in 12% of cases, wound seroma occurred in 10% of cases, and wound erythema occurred in 18% of cases, while wound infection occurred in 20% of cases.",
+          "quote_folded_sha1": "c02b6a8a7f87a1982cfd2d609b2386a2ae5c178f",
+          "file": "wound_healing.pdf",
+          "page": 6,
+          "boxes": [
+            {
+              "x0": 211.9150848388672,
+              "y0": 555.4903564453125,
+              "x1": 225.7332000732422,
+              "y1": 565.4529418945312,
+              "page": 6
+            },
+            {
+              "x0": 232.7777557373047,
+              "y0": 555.4903564453125,
+              "x1": 280.33917236328125,
+              "y1": 565.4529418945312,
+              "page": 6
+            },
+            {
+              "x0": 287.37176513671875,
+              "y0": 555.4903564453125,
+              "x1": 295.7503356933594,
+              "y1": 565.4529418945312,
+              "page": 6
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 568.586181640625,
+              "x1": 89.19378662109375,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 95.86673736572266,
+              "y0": 568.586181640625,
+              "x1": 131.00482177734375,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 137.5920867919922,
+              "y0": 568.586181640625,
+              "x1": 174.60313415527344,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 181.2451934814453,
+              "y0": 568.586181640625,
+              "x1": 189.10568237304688,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 195.7587127685547,
+              "y0": 568.586181640625,
+              "x1": 213.87071228027344,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 220.47691345214844,
+              "y0": 568.586181640625,
+              "x1": 228.85545349121094,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 235.50050354003906,
+              "y0": 568.586181640625,
+              "x1": 259.7095947265625,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 266.2839050292969,
+              "y0": 568.586181640625,
+              "x1": 295.723388671875,
+              "y1": 578.5487670898438,
+              "page": 6
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 581.625244140625,
+              "x1": 90.52876281738281,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 96.60395812988281,
+              "y0": 581.625244140625,
+              "x1": 133.61500549316406,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 139.63340759277344,
+              "y0": 581.625244140625,
+              "x1": 147.493896484375,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 153.5232696533203,
+              "y0": 581.625244140625,
+              "x1": 171.63526916503906,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 177.67459106445312,
+              "y0": 581.625244140625,
+              "x1": 186.05313110351562,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 192.07452392578125,
+              "y0": 581.625244140625,
+              "x1": 216.28363037109375,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 222.29107666015625,
+              "y0": 581.625244140625,
+              "x1": 238.24119567871094,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 244.28749084472656,
+              "y0": 581.625244140625,
+              "x1": 273.7269592285156,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 279.720458984375,
+              "y0": 581.625244140625,
+              "x1": 295.7204284667969,
+              "y1": 591.5878295898438,
+              "page": 6
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 594.7210693359375,
+              "x1": 86.6832046508789,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 91.50211334228516,
+              "y0": 594.7210693359375,
+              "x1": 128.51316833496094,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 133.2842559814453,
+              "y0": 594.7210693359375,
+              "x1": 141.14474487304688,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 145.92678833007812,
+              "y0": 594.7210693359375,
+              "x1": 164.03878784179688,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 168.77401733398438,
+              "y0": 594.7210693359375,
+              "x1": 177.15255737304688,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 181.98342895507812,
+              "y0": 594.7210693359375,
+              "x1": 206.19253540039062,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 210.95266723632812,
+              "y0": 594.7210693359375,
+              "x1": 233.48806762695312,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 238.27809143066406,
+              "y0": 594.7210693359375,
+              "x1": 267.7175598144531,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 272.4637451171875,
+              "y0": 594.7210693359375,
+              "x1": 295.7463684082031,
+              "y1": 604.6836547851562,
+              "page": 6
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 607.81689453125,
+              "x1": 76.38187408447266,
+              "y1": 617.7794799804688,
+              "page": 6
+            },
+            {
+              "x0": 81.12705993652344,
+              "y0": 607.81689453125,
+              "x1": 118.13810729980469,
+              "y1": 617.7794799804688,
+              "page": 6
+            },
+            {
+              "x0": 122.85240936279297,
+              "y0": 607.81689453125,
+              "x1": 130.712890625,
+              "y1": 617.7794799804688,
+              "page": 6
+            },
+            {
+              "x0": 135.38136291503906,
+              "y0": 607.81689453125,
+              "x1": 153.4933624267578,
+              "y1": 617.7794799804688,
+              "page": 6
+            },
+            {
+              "x0": 158.2285919189453,
+              "y0": 607.81689453125,
+              "x1": 166.6071319580078,
+              "y1": 617.7794799804688,
+              "page": 6
+            },
+            {
+              "x0": 171.3244171142578,
+              "y0": 607.81689453125,
+              "x1": 195.5335235595703,
+              "y1": 617.7794799804688,
+              "page": 6
+            }
+          ],
+          "region": {
+            "x0": 59.75429916381836,
+            "y0": 555.4903564453125,
+            "x1": 295.7503356933594,
+            "y1": 617.7794799804688,
+            "page": 6
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_a6b28cb05fe71636:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_a6b28cb05fe71636:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table 1, Yes rows",
+          "quote": "Yes 12(3) No 385(97) Woundseroma Yes 10(2.5) No 387(97.5) Wounderythema Yes 18(4.5) No 379(95.5) Woundinfection Yes 20(5)",
+          "quote_folded_sha1": "c13bf969787f27e72c0add4c4078f49358666064",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [
+            {
+              "x0": 321.6759033203125,
+              "y0": 127.96896362304688,
+              "x1": 332.20452880859375,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 127.96896362304688,
+              "x1": 418.7657165527344,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 127.96896362304688,
+              "x1": 429.56854248046875,
+              "y1": 135.9391632080078,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 136.98324584960938,
+              "x1": 330.4351806640625,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 407.396240234375,
+              "y0": 136.98324584960938,
+              "x1": 418.7538146972656,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 421.3999328613281,
+              "y0": 136.98324584960938,
+              "x1": 433.3552551269531,
+              "y1": 144.9534454345703,
+              "page": 5
+            },
+            {
+              "x0": 313.6817932128906,
+              "y0": 148.94570922851562,
+              "x1": 336.1258850097656,
+              "y1": 156.91590881347656,
+              "page": 5
+            },
+            {
+              "x0": 338.79669189453125,
+              "y0": 148.94570922851562,
+              "x1": 361.45599365234375,
+              "y1": 156.91590881347656,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 157.90341186523438,
+              "x1": 332.20452880859375,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 157.90341186523438,
+              "x1": 418.7657165527344,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 157.90341186523438,
+              "x1": 434.97235107421875,
+              "y1": 165.8736114501953,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 166.86111450195312,
+              "x1": 330.4351806640625,
+              "y1": 174.83131408691406,
+              "page": 5
+            },
+            {
+              "x0": 407.396240234375,
+              "y0": 166.86111450195312,
+              "x1": 418.7538146972656,
+              "y1": 174.83131408691406,
+              "page": 5
+            },
+            {
+              "x0": 421.3999328613281,
+              "y0": 166.86111450195312,
+              "x1": 438.7590637207031,
+              "y1": 174.83131408691406,
+              "page": 5
+            },
+            {
+              "x0": 313.6817932128906,
+              "y0": 178.82357788085938,
+              "x1": 336.1258850097656,
+              "y1": 186.7937774658203,
+              "page": 5
+            },
+            {
+              "x0": 338.79669189453125,
+              "y0": 178.82357788085938,
+              "x1": 368.2226867675781,
+              "y1": 186.7937774658203,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 187.78128051757812,
+              "x1": 332.20452880859375,
+              "y1": 195.75148010253906,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 187.78128051757812,
+              "x1": 418.7657165527344,
+              "y1": 195.75148010253906,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 187.78128051757812,
+              "x1": 434.97235107421875,
+              "y1": 195.75148010253906,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 196.73898315429688,
+              "x1": 330.4351806640625,
+              "y1": 204.7091827392578,
+              "page": 5
+            },
+            {
+              "x0": 407.396240234375,
+              "y0": 196.73898315429688,
+              "x1": 418.7538146972656,
+              "y1": 204.7091827392578,
+              "page": 5
+            },
+            {
+              "x0": 421.3999328613281,
+              "y0": 196.73898315429688,
+              "x1": 438.7590637207031,
+              "y1": 204.7091827392578,
+              "page": 5
+            },
+            {
+              "x0": 313.6817932128906,
+              "y0": 208.70144653320312,
+              "x1": 336.1258850097656,
+              "y1": 216.67164611816406,
+              "page": 5
+            },
+            {
+              "x0": 338.79669189453125,
+              "y0": 208.70144653320312,
+              "x1": 365.9113464355469,
+              "y1": 216.67164611816406,
+              "page": 5
+            },
+            {
+              "x0": 321.6759033203125,
+              "y0": 217.65914916992188,
+              "x1": 332.20452880859375,
+              "y1": 225.6293487548828,
+              "page": 5
+            },
+            {
+              "x0": 411.1940002441406,
+              "y0": 217.65914916992188,
+              "x1": 418.7657165527344,
+              "y1": 225.6293487548828,
+              "page": 5
+            },
+            {
+              "x0": 421.3990783691406,
+              "y0": 217.65914916992188,
+              "x1": 429.56854248046875,
+              "y1": 225.6293487548828,
+              "page": 5
+            }
+          ],
+          "region": {
+            "x0": 313.6817932128906,
+            "y0": 127.96896362304688,
+            "x1": 438.7590637207031,
+            "y1": 225.6293487548828,
+            "page": 5
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_a6b28cb05fe71636:d:pdf",
+          "passage_id": "d",
+          "passage_key": "f_a6b28cb05fe71636:d",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Discussion, gapping arm counts",
+          "quote": "the number in the continuous group=10 cases (5.1%), number in the interrupted group\u00bctwo cases (1%), p value=.019",
+          "quote_folded_sha1": "f94e80742c70f80fa447de8129306e514add2257",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "suspicious",
+        "tool": "check_count_percent",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_a6b28cb05fe71636",
+      "finding_id_hasher": "1",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience check-count-percent [OPTIONS] COUNT PERCENTAGE N\nTry 'metascience check-count-percent --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "adjudication": {
+        "action": "kept",
+        "rationale": "check_count_percent confirms 12/397 equals 3.02%, not 12%; the implied denominator is 100, not a missing-data base. The same integers appear as Table 1 counts 12 (3), 10 (2.5), 18 (4.5), 20 (5) and as cohort percentages in Results and Discussion. Table 1 and Table 4 cell counts agree. Correcting the prose changes the reported incidences about four-fold.",
+        "category": "none",
+        "merged_from": [
+          "f_8e7f4efcee23e022"
+        ]
+      },
+      "severity": 3,
+      "severity_is_provisional": false,
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_a6b28cb05fe71636:b:pdf",
+        "page": 6
+      }
+    },
+    {
+      "slug": "bmi_range_below_inclusion_threshold",
+      "technique": "internal_contradiction",
+      "title": "Table 2 BMI range 23.0-45.0 contradicts BMI>30 inclusion",
+      "description": "Inclusion required BMI>30 and Methods state there is no group with BMI below 30 because the study was restricted to obese women. Table 2 prints BMI range 23.0-45.0 (mean 34.5, SD 3.6). Those two statements cannot both be true: either non-obese women were enrolled, or the reported range is wrong. The abstract and title frame the trial as a study of obese women.",
+      "location": "Patients and methods versus Table 2, BMI row",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "quote": "with BMI>30 (so, we do not have a group of women with BMI below 30 as our focus in the present research was to assess the obese women)",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The claimed obese-only population is inconsistent with the printed BMI minimum of 23.0."
+      },
+      "notes": "Innocent reading: 23.0 is a typographical slip for 33.0. Exclusion also restates BMI<30. BMI measurement timing (pre-pregnancy versus at cesarean) is not specified.",
+      "anchors": [
+        {
+          "anchor_id": "f_8a461c74de2b8322:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_8a461c74de2b8322:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Patients and methods, inclusion",
+          "quote": "with BMI>30 (so, we do not have a group of women with BMI below 30 as our focus in the present research was to assess the obese women)",
+          "quote_folded_sha1": "c890a261606ff3c266d329e0f4c9b759941e587f",
+          "file": "wound_healing.pdf",
+          "page": null,
+          "boxes": [],
+          "confidence": "none",
+          "method": "unlocated",
+          "status": "unanchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_8a461c74de2b8322:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_8a461c74de2b8322:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Patients and methods, exclusion",
+          "quote": "The following patients were excluded women with BMI<30, who made previous CS, or have any medical disorders with pregnancy as DM, HTN with pregnancy.",
+          "quote_folded_sha1": "37acd95a0fae4e67dfdeb1a2394621a085e2a808",
+          "file": "wound_healing.pdf",
+          "page": null,
+          "boxes": [],
+          "confidence": "none",
+          "method": "unlocated",
+          "status": "unanchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_8a461c74de2b8322:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_8a461c74de2b8322:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Table 2, BMI row",
+          "quote": "BMI 23.0\u201345.0 34.5\u00b13.6 34.0",
+          "quote_folded_sha1": "99faa880ed66746b185fac4217727be9e47f5a5b",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_8a461c74de2b8322",
+      "finding_id_hasher": "1",
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 4,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Table 2 prints BMI range 23.0\u201345.0 (mean 34.5, SD 3.6). Methods require BMI>30 and state there is no group with BMI below 30. Those statements cannot both be true. The title and abstract frame the trial as a study of obese women, so the range or the inclusion claim needs a public correction.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "page_only",
+        "primary_anchor_id": "f_8a461c74de2b8322:c:pdf",
+        "page": 5
+      }
+    },
+    {
+      "slug": "table1_interrupted_ltfu_arithmetic",
+      "technique": "check_flow_arithmetic",
+      "title": "Table 1 interrupted n=199 after losing 2 cannot equal 200-2",
+      "description": "Methods and Figure 1 allocate 200 to interrupted, lose 1 to follow-up, and analyze 199. Table 1 prints Interrupted 199 (50.1) after lost follow-up of 2 women. Using Table 1's own operands, 200 minus 2 leaves 198, not 199. Both suture-type rows say lost follow-up of 2 women, which would be 4 exclusions, while the Table 1 header is n=397 after exclusion of 3 cases. The CONSORT cascade as printed (411-11=400; 200-1=199; 200-2=198) reconciles.",
+      "location": "Table 1, Suture Type rows versus Figure 1",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "Interrupted 199(50.1)afterlostfollowupof2women",
+      "inputs": {
+        "stages": [
+          {
+            "label": "allocated interrupted",
+            "n": 200,
+            "excluded": [
+              {
+                "reason": "lost follow up of 2 women",
+                "n": 2
+              }
+            ]
+          },
+          {
+            "label": "interrupted remaining Table 1",
+            "n": 199
+          }
+        ]
+      },
+      "reported": {
+        "allocated_interrupted": 200,
+        "table1_lost_interrupted": 2,
+        "table1_remaining_interrupted": 199,
+        "consort_lost_interrupted": 1
+      },
+      "computed": {
+        "expected_remaining": 198,
+        "observed_remaining": 199,
+        "difference": 1
+      },
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The interrupted lost-to-follow-up count is internally inconsistent; analyzed n=199 is used consistently in Tables 4-5."
+      },
+      "notes": "Innocent reading: copy-paste of the continuous-row phrase after lost follow up of 2 women onto the interrupted row. CONSORT and Methods agree on 1 interrupted and 2 continuous losses.",
+      "basis": "tool",
+      "reproduction": "metascience flow-check",
+      "anchors": [
+        {
+          "anchor_id": "f_b18c6b49b22ee707:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_b18c6b49b22ee707:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Table 1, Interrupted row",
+          "quote": "Interrupted 199(50.1)afterlostfollowupof2women",
+          "quote_folded_sha1": "c4c8629fce2df934ae263049907cc7625e113469",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_b18c6b49b22ee707:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_b18c6b49b22ee707:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Table 1, Continuous row",
+          "quote": "Continuous 198(49.9)afterlostfollowupof2women",
+          "quote_folded_sha1": "edf4a738465f6be1bbe6dfdfaa8a3de467d52cd3",
+          "file": "wound_healing.pdf",
+          "page": 5,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "numeric_tokens",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_b18c6b49b22ee707:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_b18c6b49b22ee707:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Methods, randomization paragraph",
+          "quote": "Two cases from the continuous group and one case from the interrupted group did not come for the follow up after CS",
+          "quote_folded_sha1": "d57979ad1e8cd1a959bd4052780e456d9addfecc",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 345.0313720703125,
+              "y0": 570.1536865234375,
+              "x1": 549.6373901367188,
+              "y1": 580.1162719726562,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 583.0791015625,
+              "x1": 549.6761474609375,
+              "y1": 593.0416870117188,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 596.0614013671875,
+              "x1": 392.2312316894531,
+              "y1": 606.0239868164062,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.6810302734375,
+            "y0": 570.1536865234375,
+            "x1": 549.6761474609375,
+            "y1": 606.0239868164062,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_b18c6b49b22ee707:d:pdf",
+          "passage_id": "d",
+          "passage_key": "f_b18c6b49b22ee707:d",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Methods, analyzed n",
+          "quote": "The net of the continuous group was 198 and that of the interrupted group was 199 ladies and this is illustrated in Figure 1.",
+          "quote_folded_sha1": "85b5de7423a479371e82016efd6d1068992f66da",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 387.7220764160156,
+              "y0": 634.8946533203125,
+              "x1": 549.6710815429688,
+              "y1": 644.8572387695312,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 647.8768920898438,
+              "x1": 549.6910400390625,
+              "y1": 657.8394775390625,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 660.8023681640625,
+              "x1": 454.18658447265625,
+              "y1": 670.7649536132812,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.6810302734375,
+            "y0": 634.8946533203125,
+            "x1": 549.6910400390625,
+            "y1": 670.7649536132812,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_b18c6b49b22ee707",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the paper's text",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience flow-check [OPTIONS] JSON_PATH\nTry 'metascience flow-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing argument 'JSO",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "downgraded",
+        "rationale": "check_flow_arithmetic on Table 1's own operands is a broken identity: 200 minus 2 leaves 198, not 199. Figure 1 and Methods already reconcile (interrupted lost 1 remaining 199; continuous lost 2 remaining 198; n=397). The interrupted row's 'lost followup of 2 women' is a copy-paste parenthetical; the analysed counts do not need re-derivation.",
+        "category": "consequence_reassessed"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_b18c6b49b22ee707:c:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "registry_1month_outcome_vs_7day_report",
+      "technique": "factual_claim",
+      "title": "Registered 1-month primary outcome not the paper's 7-day follow-up",
+      "description": "NCT03354078 was first submitted 19 November 2017 after a stated 18 June 2017 start, so registration is retrospective. The registered primary outcome is participants without seroma, erythema, and infection at one month after cesarean. The paper says most complications were diagnosed at 7 days and does not report 1-month results. Registry eligibility is age 18-40 years; the paper includes ages 25-35. The paper dates the study to December 2017, while the registry lists completion 23 November 2017 and the journal received the manuscript 1 December 2017.",
+      "location": "Abstract NCT ID, Methods follow-up, versus ClinicalTrials.gov NCT03354078",
+      "outcome": "problem",
+      "provisional_severity": 3,
+      "quote": "The time interval from the wound closure till diagnosis of the wound complications (erythema, seroma, wound infection, and wound gapping) in most of the patients was 7d (at first visit postoperative)",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "All wound-complication claims are 7-day outcomes, not the registered 1-month primary endpoint; 30-day SSI rates are unknown."
+      },
+      "notes": "Wloch et al. 2012, cited as ref 8, used 30-day SSI surveillance. Participant-only single masking is registered but not described in the paper. Enrollment 400 matches.",
+      "basis": "web_lookup",
+      "anchors": [
+        {
+          "anchor_id": "f_f921a11338ca1c43:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_f921a11338ca1c43:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, follow-up",
+          "quote": "The time interval from the wound closure till diagnosis of the wound complications (erythema, seroma, wound infection, and wound gapping) in most of the patients was 7d (at first visit postoperative)",
+          "quote_folded_sha1": "dd640346fc1b19a66dda3cffd1aba0e21a137696",
+          "file": "wound_healing.pdf",
+          "page": 4,
+          "boxes": [],
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "page",
+          "method": "quote_verbatim",
+          "status": "page_only",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_f921a11338ca1c43:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_f921a11338ca1c43:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Patients and methods, study period",
+          "quote": "Four hundred pregnant women were recruited for this study who accepted to share in the present study in the period from June 2017 to December 2017",
+          "quote_folded_sha1": "b7302eb500a1dbc04efd1bdb8dfcd4b1fcdbf1a3",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 59.75429916381836,
+              "y0": 453.7257995605469,
+              "x1": 295.7293701171875,
+              "y1": 463.68841552734375,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 466.70806884765625,
+              "x1": 295.7442626953125,
+              "y1": 476.6706848144531,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 479.6903381347656,
+              "x1": 258.5509033203125,
+              "y1": 489.6529541015625,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 59.75429916381836,
+            "y0": 453.7257995605469,
+            "x1": 295.7442626953125,
+            "y1": 489.6529541015625,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_f921a11338ca1c43:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_f921a11338ca1c43:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Patients and methods, age inclusion",
+          "quote": "The age of patients included in this research was between 25 and 35 years, with BMI>30",
+          "quote_folded_sha1": "227216cf965299644723a5b885ab6d86f9bd74db",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 325.6431579589844,
+              "y0": 129.7789306640625,
+              "x1": 341.1150817871094,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 346.1661071777344,
+              "y0": 129.7789306640625,
+              "x1": 361.5284423828125,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 366.5187072753906,
+              "y0": 129.7789306640625,
+              "x1": 374.89727783203125,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 379.9552917480469,
+              "y0": 129.7789306640625,
+              "x1": 413.8181457519531,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 418.8462829589844,
+              "y0": 129.7789306640625,
+              "x1": 455.2396240234375,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 460.28765869140625,
+              "y0": 129.7789306640625,
+              "x1": 468.14813232421875,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 473.1573181152344,
+              "y0": 129.7789306640625,
+              "x1": 488.2605895996094,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 493.2827453613281,
+              "y0": 129.7789306640625,
+              "x1": 528.5205078125,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 533.5904541015625,
+              "y0": 129.7789306640625,
+              "x1": 549.6701049804688,
+              "y1": 139.7415313720703,
+              "page": 3
+            },
+            {
+              "x0": 313.6810607910156,
+              "y0": 142.76116943359375,
+              "x1": 350.4829406738281,
+              "y1": 152.72377014160156,
+              "page": 3
+            },
+            {
+              "x0": 355.5768127441406,
+              "y0": 142.76116943359375,
+              "x1": 365.7984313964844,
+              "y1": 152.72377014160156,
+              "page": 3
+            },
+            {
+              "x0": 370.8833312988281,
+              "y0": 142.76116943359375,
+              "x1": 386.83343505859375,
+              "y1": 152.72377014160156,
+              "page": 3
+            },
+            {
+              "x0": 391.9163513183594,
+              "y0": 142.76116943359375,
+              "x1": 402.1379699707031,
+              "y1": 152.72377014160156,
+              "page": 3
+            },
+            {
+              "x0": 407.2228698730469,
+              "y0": 142.76116943359375,
+              "x1": 430.9737243652344,
+              "y1": 152.72377014160156,
+              "page": 3
+            },
+            {
+              "x0": 436.0795593261719,
+              "y0": 142.76116943359375,
+              "x1": 454.57012939453125,
+              "y1": 152.72377014160156,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.6810607910156,
+            "y0": 129.7789306640625,
+            "x1": 549.6701049804688,
+            "y1": 152.72377014160156,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_f921a11338ca1c43:d:pdf",
+          "passage_id": "d",
+          "passage_key": "f_f921a11338ca1c43:d",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Abstract, trial registration",
+          "quote": "Clinicaltrials.govIDIdentifier(NCT03354078).",
+          "quote_folded_sha1": "a88ef1fd885a7491a74e8fd45b85b39a53b83c9b",
+          "file": "wound_healing.pdf",
+          "page": null,
+          "boxes": [],
+          "confidence": "none",
+          "method": "unlocated",
+          "status": "unanchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "anchor_problem": "Registry 1-month time frame, 18-40 years eligibility, 19 Nov 2017 first submission, 18 Jun 2017 start, and 23 Nov 2017 completion are on ClinicalTrials.gov, not in the article text; they are in web_sources. The article Received 1 December 2017 is in the masthead.",
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_f921a11338ca1c43",
+      "finding_id_hasher": "1",
+      "provisional_severity_from": 4,
+      "web_unbacked": "no_recorded_source",
+      "ledger_web_context": [
+        "https://clinicaltrials.gov/study/NCT03354078",
+        "https://ichgcp.net/clinical-trials-registry/NCT03354078",
+        "https://www.cdc.gov/nchs/products/databriefs/db35.htm"
+      ],
+      "quote_verified": "stitched",
+      "quote_source": "assembled from values in the paper",
+      "quote_problem": "Every number here appears in the paper, but this exact sentence does not -- it was composed by the review, so searching the PDF for it will find nothing.",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 3,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "The paper cites NCT03354078 but reports diagnosis of gapping, seroma, erythema, and infection at about 7 days and does not present 1-month results; age inclusion in the paper is 25\u201335 years. Claims about the registry record itself were not re-fetched with recorded sources here, so this row stays at the model-knowledge cap.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_f921a11338ca1c43:b:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "methods_omit_definitions_analysis_ethics",
+      "technique": "not_computational",
+      "title": "Methods omit outcome definitions, analysis, randomization, and ethics",
+      "description": "This interventional RCT reports wound gapping, seroma, erythema, infection, and a 42-event composite without diagnostic criteria, a named statistical test for Table 4, a sample-size calculation, sequence generation, or allocation concealment. Skin closure is never specified even though surgeons closed skin and subcutaneous layers. The only ethics statement is informed consent; no ethics-committee approval is recorded.",
+      "location": "Patients and methods",
+      "outcome": "problem",
+      "provisional_severity": 4,
+      "quote": "Randomization of cases was done to the 400 pregnant women who were consented to participate in the study and were distributed in two groups: group A and group B. The randomization allocation was 1:1.",
+      "consequence": {
+        "flips_significance": null,
+        "claims_affected": null,
+        "basis": "asserted",
+        "explanation": "Unspecified skin closure and undefined wound outcomes block reproduction of the primary comparisons."
+      },
+      "notes": "Ten surgeons received randomly distributed patients; analysis treats 397 women as independent. Table 6 enters eight covariates against 42 composite events. Innocent reading: details exist in an uncited local protocol.",
+      "anchors": [
+        {
+          "anchor_id": "f_283798d106b66085:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_283798d106b66085:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, randomization",
+          "quote": "Randomization of cases was done to the 400 pregnant women who were consented to participate in the study and were distributed in two groups: group A and group B. The randomization allocation was 1:1.",
+          "quote_folded_sha1": "b0e57683989a0cbe5845ea40fac29c40ab8acbab",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 313.6810302734375,
+              "y0": 505.4127197265625,
+              "x1": 549.6701049804688,
+              "y1": 515.3753051757812,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 518.338134765625,
+              "x1": 549.6761474609375,
+              "y1": 528.3007202148438,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 531.263671875,
+              "x1": 549.6640625,
+              "y1": 541.2262573242188,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 544.2459106445312,
+              "x1": 467.1468811035156,
+              "y1": 554.20849609375,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.6810302734375,
+            "y0": 505.4127197265625,
+            "x1": 549.6761474609375,
+            "y1": 554.20849609375,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_283798d106b66085:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_283798d106b66085:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Consent section",
+          "quote": "All pregnant women who accepted to participate in this study signed an informed consent after complete explanation of the procedure to the participant woman.",
+          "quote_folded_sha1": "5553f5f6e3549d8f60a08875d770e1240c18c699",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 59.75429916381836,
+              "y0": 569.8908081054688,
+              "x1": 295.7443542480469,
+              "y1": 579.8533935546875,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 582.873046875,
+              "x1": 295.7344055175781,
+              "y1": 592.8356323242188,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 595.8553466796875,
+              "x1": 109.13890075683594,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 118.03350830078125,
+              "y0": 595.8553466796875,
+              "x1": 126.41205596923828,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 135.26780700683594,
+              "y0": 595.8553466796875,
+              "x1": 149.08592224121094,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 157.94467163085938,
+              "y0": 595.8553466796875,
+              "x1": 201.15245056152344,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 209.98828125,
+              "y0": 595.8553466796875,
+              "x1": 218.75537109375,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 227.62008666992188,
+              "y0": 595.8553466796875,
+              "x1": 241.43820190429688,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 250.2969512939453,
+              "y0": 595.8553466796875,
+              "x1": 295.7463073730469,
+              "y1": 605.8179321289062,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 608.8375854492188,
+              "x1": 93.2585220336914,
+              "y1": 618.8001708984375,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 59.75429916381836,
+            "y0": 569.8908081054688,
+            "x1": 295.7463073730469,
+            "y1": 618.8001708984375,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_283798d106b66085:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_283798d106b66085:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Methods, surgeons and skin closure",
+          "quote": "Ten surgeons performed the whole procedure of CS including the closure of subcutaneous and skin layer, all these surgeons were the consultants and specialists",
+          "quote_folded_sha1": "f1e7a40a61ad1713e9129af901d3c25f76e872af",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 71.71639251708984,
+              "y0": 621.7630615234375,
+              "x1": 295.7383728027344,
+              "y1": 631.7256469726562,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 634.745361328125,
+              "x1": 295.7532958984375,
+              "y1": 644.7079467773438,
+              "page": 3
+            },
+            {
+              "x0": 59.75429916381836,
+              "y0": 647.7276000976562,
+              "x1": 295.770263671875,
+              "y1": 657.690185546875,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 59.75429916381836,
+            "y0": 621.7630615234375,
+            "x1": 295.770263671875,
+            "y1": 657.690185546875,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_283798d106b66085",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 4,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Methods describe a prospective 1:1 randomized trial but never define diagnostic criteria for gapping, seroma, erythema, or infection, never name the Table 4 test or a sample-size calculation, and never describe sequence generation, allocation concealment, or skin-closure technique. Informed consent is recorded; no ethics-committee approval appears. These gaps block reproduction of the primary comparison.",
+        "category": "none",
+        "title_was": "Methods omit outcome definitions, analysis, randomization, and ethics",
+        "description_was": "This interventional RCT reports wound gapping, seroma, erythema, infection, and a 42-event composite without diagnostic criteria, a named statistical test, a sample-size calculation, sequence generation, or allocation concealment. Skin closure method is never specified even though surgeons closed skin and subcutaneous layers and the primary claims are wound complications. The only ethics statement is that participants signed informed consent; no committee, protocol number, or Helsinki statement is given. Selective suction drainage for oozing is allowed but not reported by arm."
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_283798d106b66085:a:pdf",
+        "page": 3
+      }
+    },
+    {
+      "slug": "citations_do_not_support_incidence_or_risks",
+      "technique": "factual_claim",
+      "title": "Citation [1] does not support the 3% to 30% CS complication range",
+      "description": "The paper cites Brown et al. 2010 for cesarean wound-complication incidence ranging from 3% to 30%. That paper is a plastic-surgery study of psychosocial distress and self-rated scar severity in 82 patients and does not report cesarean wound-complication incidence. Wound-infection risk factors are cited to Menacker and Hamilton 2010 (ref 7) plus Wloch et al. 2012 (ref 8); the Menacker NCHS data brief is about US cesarean-rate trends, not wound-infection predictors, while Wloch is an SSI risk-factor cohort.",
+      "location": "Introduction, paragraph 2, references [1] and [7]",
+      "outcome": "problem",
+      "provisional_severity": 2,
+      "quote": "Postoperative wound complications are one of the great issues in CS with an incidence ranging from 3% to 30% [1].",
+      "consequence": {
+        "flips_significance": false,
+        "claims_affected": 1,
+        "basis": "asserted",
+        "explanation": "The 3-30% incidence figure is not supported by the cited source; the trial's own estimates do not use this range."
+      },
+      "notes": "The 3-30% band is widely quoted in cesarean SSI papers; the defect is the citation, not necessarily the number. Ref 8 (Wloch) does support SSI risk factors.",
+      "basis": "web_lookup",
+      "anchors": [
+        {
+          "anchor_id": "f_265622f5cc9dca88:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_265622f5cc9dca88:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Introduction, incidence claim",
+          "quote": "Postoperative wound complications are one of the great issues in CS with an incidence ranging from 3% to 30% [1].",
+          "quote_folded_sha1": "910b0334d4a3d78a2a63a297a0cf95c9fe1ee8b7",
+          "file": "wound_healing.pdf",
+          "page": 2,
+          "boxes": [
+            {
+              "x0": 71.7164535522461,
+              "y0": 601.3004150390625,
+              "x1": 295.74945068359375,
+              "y1": 611.2630004882812,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 614.7369995117188,
+              "x1": 295.72552490234375,
+              "y1": 624.6995849609375,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 628.1167602539062,
+              "x1": 109.60321807861328,
+              "y1": 638.079345703125,
+              "page": 2
+            }
+          ],
+          "region": {
+            "x0": 59.75436019897461,
+            "y0": 601.3004150390625,
+            "x1": 295.74945068359375,
+            "y1": 638.079345703125,
+            "page": 2
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_265622f5cc9dca88:b:pdf",
+          "passage_id": "b",
+          "passage_key": "f_265622f5cc9dca88:b",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "said",
+          "label": "Introduction, risk-factor claim",
+          "quote": "Obesity, operative time, diabetes, age of the patient, anemia, associated infection (e.g. chorioamnionitis), delayed labor with many vaginal examinations, and reduced nutrition are recognized risk factors for wound infections [7,8].",
+          "quote_folded_sha1": "c21fb606a4443684f17c8321e22978a19b776c1c",
+          "file": "wound_healing.pdf",
+          "page": 2,
+          "boxes": [
+            {
+              "x0": 114.63233947753906,
+              "y0": 628.1167602539062,
+              "x1": 148.48524475097656,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 153.52333068847656,
+              "y0": 628.1167602539062,
+              "x1": 193.12464904785156,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 198.1966094970703,
+              "y0": 628.1167602539062,
+              "x1": 219.18780517578125,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 224.21792602539062,
+              "y0": 628.1167602539062,
+              "x1": 261.9263610839844,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 266.96343994140625,
+              "y0": 628.1167602539062,
+              "x1": 282.3257751464844,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 287.3728332519531,
+              "y0": 628.1167602539062,
+              "x1": 295.75140380859375,
+              "y1": 638.079345703125,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 641.49658203125,
+              "x1": 73.5724868774414,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 80.389892578125,
+              "y0": 641.49658203125,
+              "x1": 112.36983489990234,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 119.16732025146484,
+              "y0": 641.49658203125,
+              "x1": 151.99407958984375,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 158.79554748535156,
+              "y0": 641.49658203125,
+              "x1": 202.4616241455078,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 209.25112915039062,
+              "y0": 641.49658203125,
+              "x1": 246.10276794433594,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 252.90423583984375,
+              "y0": 641.49658203125,
+              "x1": 270.4184875488281,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 277.2249450683594,
+              "y0": 641.49658203125,
+              "x1": 295.7454528808594,
+              "y1": 651.4591674804688,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 654.8763427734375,
+              "x1": 119.57975769042969,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 123.19219970703125,
+              "y0": 654.8763427734375,
+              "x1": 156.25807189941406,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 159.8157196044922,
+              "y0": 654.8763427734375,
+              "x1": 181.3648223876953,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 184.93043518066406,
+              "y0": 654.8763427734375,
+              "x1": 203.4210205078125,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 206.983642578125,
+              "y0": 654.8763427734375,
+              "x1": 230.3160400390625,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 233.91253662109375,
+              "y0": 654.8763427734375,
+              "x1": 264.0892333984375,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 267.6438903808594,
+              "y0": 654.8763427734375,
+              "x1": 295.7483825683594,
+              "y1": 664.8389282226562,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 668.3128662109375,
+              "x1": 92.72059631347656,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 99.77909851074219,
+              "y0": 668.3128662109375,
+              "x1": 115.72921752929688,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 122.79569244384766,
+              "y0": 668.3128662109375,
+              "x1": 157.2264404296875,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 164.29391479492188,
+              "y0": 668.3128662109375,
+              "x1": 200.82676696777344,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 207.89024353027344,
+              "y0": 668.3128662109375,
+              "x1": 220.9412384033203,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 228.01568603515625,
+              "y0": 668.3128662109375,
+              "x1": 274.50115966796875,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 281.53277587890625,
+              "y0": 668.3128662109375,
+              "x1": 295.73944091796875,
+              "y1": 678.2754516601562,
+              "page": 2
+            },
+            {
+              "x0": 59.75436019897461,
+              "y0": 681.692626953125,
+              "x1": 87.8987045288086,
+              "y1": 691.6552124023438,
+              "page": 2
+            },
+            {
+              "x0": 93.54251861572266,
+              "y0": 681.692626953125,
+              "x1": 105.1788330078125,
+              "y1": 691.6552124023438,
+              "page": 2
+            },
+            {
+              "x0": 110.83360290527344,
+              "y0": 681.692626953125,
+              "x1": 140.27308654785156,
+              "y1": 691.6552124023438,
+              "page": 2
+            },
+            {
+              "x0": 145.92587280273438,
+              "y0": 681.692626953125,
+              "x1": 186.7227020263672,
+              "y1": 691.6552124023438,
+              "page": 2
+            },
+            {
+              "x0": 192.35655212402344,
+              "y0": 681.692626953125,
+              "x1": 212.38636779785156,
+              "y1": 691.6552124023438,
+              "page": 2
+            }
+          ],
+          "region": {
+            "x0": 59.75436019897461,
+            "y0": 628.1167602539062,
+            "x1": 295.75140380859375,
+            "y1": 691.6552124023438,
+            "page": 2
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_265622f5cc9dca88:c:pdf",
+          "passage_id": "c",
+          "passage_key": "f_265622f5cc9dca88:c",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Reference [1]",
+          "quote": "Brown BC, Moss TP, McGrouther DA, et al. Skin scar preconceptions must be challenged: importance of selfperception in skin scarring. J Plast Reconstr Aesthet Surg.2010;63(6):1022\u20131029.",
+          "quote_folded_sha1": "4f6ceb9f9f35ded7dbb19ae0890f01904fc0dcae",
+          "file": "wound_healing.pdf",
+          "page": 8,
+          "boxes": [
+            {
+              "x0": 340.2143859863281,
+              "y0": 215.3094024658203,
+              "x1": 364.5040588378906,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 368.73077392578125,
+              "y0": 215.3094024658203,
+              "x1": 380.64697265625,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 384.8880310058594,
+              "y0": 215.3094024658203,
+              "x1": 404.1207275390625,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 408.3591003417969,
+              "y0": 215.3094024658203,
+              "x1": 419.4414367675781,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 423.6663513183594,
+              "y0": 215.3094024658203,
+              "x1": 468.8475036621094,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 473.1029052734375,
+              "y0": 215.3094024658203,
+              "x1": 486.4178466796875,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 490.677734375,
+              "y0": 215.3094024658203,
+              "x1": 498.1376953125,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 502.3563537597656,
+              "y0": 215.3094024658203,
+              "x1": 510.6501770019531,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 514.8858642578125,
+              "y0": 215.3094024658203,
+              "x1": 530.5859375,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 534.8422241210938,
+              "y0": 215.3094024658203,
+              "x1": 549.66357421875,
+              "y1": 224.27569580078125,
+              "page": 8
+            },
+            {
+              "x0": 340.21441650390625,
+              "y0": 226.47779846191406,
+              "x1": 398.78228759765625,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 404.3916015625,
+              "y0": 226.47779846191406,
+              "x1": 423.32843017578125,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 428.9395446777344,
+              "y0": 226.47779846191406,
+              "x1": 438.53350830078125,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 444.1329650878906,
+              "y0": 226.47779846191406,
+              "x1": 487.5657653808594,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 493.2297668457031,
+              "y0": 226.47779846191406,
+              "x1": 536.537109375,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 542.1563110351562,
+              "y0": 226.47779846191406,
+              "x1": 549.6969604492188,
+              "y1": 235.444091796875,
+              "page": 8
+            },
+            {
+              "x0": 340.21441650390625,
+              "y0": 237.6461944580078,
+              "x1": 394.09295654296875,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 402.12408447265625,
+              "y0": 237.6461944580078,
+              "x1": 409.198486328125,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 417.2044982910156,
+              "y0": 237.6461944580078,
+              "x1": 432.0347595214844,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 440.1089172363281,
+              "y0": 237.6461944580078,
+              "x1": 471.8047790527344,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 479.85113525390625,
+              "y0": 237.6461944580078,
+              "x1": 483.1686706542969,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 491.1899108886719,
+              "y0": 237.6461944580078,
+              "x1": 508.9162902832031,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 516.9850463867188,
+              "y0": 237.6461944580078,
+              "x1": 549.667236328125,
+              "y1": 246.61248779296875,
+              "page": 8
+            },
+            {
+              "x0": 340.21441650390625,
+              "y0": 248.81459045410156,
+              "x1": 369.1486511230469,
+              "y1": 257.7808837890625,
+              "page": 8
+            },
+            {
+              "x0": 372.13262939453125,
+              "y0": 248.81459045410156,
+              "x1": 391.2936096191406,
+              "y1": 257.7808837890625,
+              "page": 8
+            },
+            {
+              "x0": 394.24261474609375,
+              "y0": 248.5687255859375,
+              "x1": 478.3904113769531,
+              "y1": 257.7808837890625,
+              "page": 8
+            }
+          ],
+          "region": {
+            "x0": 340.2143859863281,
+            "y0": 215.3094024658203,
+            "x1": 549.6969604492188,
+            "y1": 257.7808837890625,
+            "page": 8
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_word_align",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        },
+        {
+          "anchor_id": "f_265622f5cc9dca88:d:pdf",
+          "passage_id": "d",
+          "passage_key": "f_265622f5cc9dca88:d",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "against",
+          "label": "Reference [7]",
+          "quote": "Menacker F, Hamilton BE. Recent trends in cesarean delivery in the United States. NCHS data brief, no 35. Hyattsville, MD: National Center for Health Statistics; 2010.",
+          "quote_folded_sha1": "538f2e6dfbaa76a87a10f96dd03e21d9c6be4094",
+          "file": "wound_healing.pdf",
+          "page": 8,
+          "boxes": [
+            {
+              "x0": 340.2144470214844,
+              "y0": 481.87750244140625,
+              "x1": 549.6915893554688,
+              "y1": 490.84381103515625,
+              "page": 8
+            },
+            {
+              "x0": 340.2144775390625,
+              "y0": 493.0459289550781,
+              "x1": 549.6404418945312,
+              "y1": 502.0122375488281,
+              "page": 8
+            },
+            {
+              "x0": 340.2144775390625,
+              "y0": 504.21435546875,
+              "x1": 549.645751953125,
+              "y1": 513.1806640625,
+              "page": 8
+            },
+            {
+              "x0": 340.2144775390625,
+              "y0": 515.3827514648438,
+              "x1": 360.46929931640625,
+              "y1": 524.3490600585938,
+              "page": 8
+            }
+          ],
+          "region": {
+            "x0": 340.2144470214844,
+            "y0": 481.87750244140625,
+            "x1": 549.6915893554688,
+            "y1": 524.3490600585938,
+            "page": 8
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "computed_by": "model_reading",
+      "impossible": false,
+      "finding_id": "f_265622f5cc9dca88",
+      "finding_id_hasher": "1",
+      "web_unbacked": "no_recorded_source",
+      "ledger_web_context": [
+        "https://clinicaltrials.gov/study/NCT03354078",
+        "https://ichgcp.net/clinical-trials-registry/NCT03354078",
+        "https://www.cdc.gov/nchs/products/databriefs/db35.htm"
+      ],
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "empty reproduction command",
+      "severity": 2,
+      "severity_is_provisional": false,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "Reference [1] as printed is Brown et al. 2010 on skin-scar self-perception, which cannot support the Introduction's 3% to 30% cesarean wound-complication incidence. Reference [7] is an NCHS brief on cesarean-delivery trends, cited for wound-infection risk factors; [8] (Wloch et al.) is on-point. These are background citations, not results.",
+        "category": "none"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_265622f5cc9dca88:a:pdf",
+        "page": 2
+      }
+    },
+    {
+      "slug": "consort_printed_cascade_reconciles",
+      "technique": "check_flow_arithmetic",
+      "title": "CONSORT cascade 411 to 400 to 199 and 198 reconciles",
+      "description": "Figure 1 and Methods print assessed 411, excluded 11 who refused, randomized 400 with 200 per arm, then 1 interrupted and 2 continuous lost to follow-up, analyzed 199 and 198. Those identities hold exactly. This pass does not cover the contradictory Table 1 lost-follow-up footnote.",
+      "location": "Figure 1 and Methods randomization paragraph",
+      "outcome": "pass",
+      "quote": "The two groups were randomly selected, 200 in each group. Two cases from the continuous group and one case from the interrupted group did not come for the follow up after CS",
+      "inputs": {
+        "stages": [
+          {
+            "label": "assessed",
+            "n": 411,
+            "excluded": [
+              {
+                "reason": "refused to participate",
+                "n": 11
+              }
+            ]
+          },
+          {
+            "label": "randomized",
+            "n": 400,
+            "arms": [
+              {
+                "label": "interrupted",
+                "n": 200
+              },
+              {
+                "label": "continuous",
+                "n": 200
+              }
+            ],
+            "excluded": [
+              {
+                "reason": "lost to follow-up interrupted",
+                "n": 1
+              },
+              {
+                "reason": "lost to follow-up continuous",
+                "n": 2
+              }
+            ]
+          },
+          {
+            "label": "analyzed",
+            "n": 397,
+            "arms": [
+              {
+                "label": "interrupted analyzed",
+                "n": 199
+              },
+              {
+                "label": "continuous analyzed",
+                "n": 198
+              }
+            ]
+          }
+        ]
+      },
+      "computed": {
+        "n_checks": 5,
+        "consistent": true
+      },
+      "notes": "Table 1 n(%) cells for 198/397, 199/397, 12/397, 10/397, 18/397, 20/397, and 42/397 also match the printed percentages.",
+      "basis": "tool",
+      "reproduction": "metascience flow-check",
+      "anchors": [
+        {
+          "anchor_id": "f_e52c6120f164de7f:a:pdf",
+          "passage_id": "a",
+          "passage_key": "f_e52c6120f164de7f:a",
+          "surface": "pdf",
+          "kind": "pdf_text",
+          "role": "source",
+          "label": "Methods, allocation and attrition",
+          "quote": "The two groups were randomly selected, 200 in each group. Two cases from the continuous group and one case from the interrupted group did not come for the follow up after CS",
+          "quote_folded_sha1": "fdc7e63788a0b71931b6c7abf73c30501eed18d4",
+          "file": "wound_healing.pdf",
+          "page": 3,
+          "boxes": [
+            {
+              "x0": 313.6810302734375,
+              "y0": 557.17138671875,
+              "x1": 549.691162109375,
+              "y1": 567.1339721679688,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 570.1536865234375,
+              "x1": 549.6373901367188,
+              "y1": 580.1162719726562,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 583.0791015625,
+              "x1": 549.6761474609375,
+              "y1": 593.0416870117188,
+              "page": 3
+            },
+            {
+              "x0": 313.6810302734375,
+              "y0": 596.0614013671875,
+              "x1": 392.2312316894531,
+              "y1": 606.0239868164062,
+              "page": 3
+            }
+          ],
+          "region": {
+            "x0": 313.6810302734375,
+            "y0": 557.17138671875,
+            "x1": 549.691162109375,
+            "y1": 606.0239868164062,
+            "page": 3
+          },
+          "media_box": {
+            "w": 609.448974609375,
+            "h": 793.7009887695312
+          },
+          "confidence": "exact",
+          "method": "quote_verbatim",
+          "status": "anchored",
+          "anchor_provenance": {
+            "pipeline": "v1.15.0 (g4a7971102983, uncommitted changes)",
+            "at": "2026-09-02T14:52:43Z",
+            "pymupdf": "1.27.2.3"
+          }
+        }
+      ],
+      "producer": "science_error",
+      "quarantined": false,
+      "tool_verdict": {
+        "severity": "consistent",
+        "tool": "check_flow_arithmetic",
+        "validated": true,
+        "quarantined_raw": null
+      },
+      "computed_by": "registry_tool",
+      "impossible": false,
+      "finding_id": "f_e52c6120f164de7f",
+      "finding_id_hasher": "1",
+      "quote_verified": "verbatim",
+      "quote_source": "the PDF text layer",
+      "reproduction_kind": "command",
+      "reproduction_valid": false,
+      "reproduction_problem": "exited 2: Usage: metascience flow-check [OPTIONS] JSON_PATH\nTry 'metascience flow-check --help' for help.\n\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 Missing argument 'JSO",
+      "severity": null,
+      "severity_is_provisional": true,
+      "adjudication": {
+        "action": "kept",
+        "rationale": "not addressed by the adjudicator"
+      },
+      "anchor_summary": {
+        "pdf": "anchored",
+        "primary_anchor_id": "f_e52c6120f164de7f:a:pdf",
+        "page": 3
+      }
+    }
+  ],
+  "adjudication": {
+    "ran": true,
+    "verdict": "unresolved",
+    "paper_severity": 4,
+    "headline_finding_id": "f_8a461c74de2b8322",
+    "confidence": "medium",
+    "summary": "The most trust-undermining defect is Table 2's BMI range of 23.0\u201345.0 against the Methods inclusion rule BMI>30 and the explicit claim that the study has no women with BMI below 30; the title and abstract present the trial as a study of obese women. Results and Discussion also print Table 1 event counts (12, 10, 18, 20 of 397) as cohort percentages, inflating gapping, seroma, erythema, and infection about four-fold relative to the table's 3%, 2.5%, 4.5%, and 5%. Figure 1 and the Methods attrition narrative reconcile (411 assessed, 11 declined, 400 randomized 1:1, 3 lost, 199 and 198 analysed), and the six result tables' cell counts, percentages, and Table 4 odds ratios match one another. Methods never define the four wound outcomes, name the Table 4 test, report a sample-size calculation, describe sequence generation or allocation concealment, specify skin closure, or record ethics-committee approval. A corrigendum should correct the BMI range or the inclusion claim, restore the prose incidences to the table values, and supply the missing CONSORT items. This review did not independently re-fetch the ClinicalTrials.gov record, did not establish intent, and the table-level arithmetic screen otherwise reconciled on the printed values.",
+    "n_kept": 6,
+    "n_merged": 1,
+    "n_discarded": 0,
+    "n_downgraded": 1,
+    "n_upgraded": 0,
+    "n_unknown_ids": 0,
+    "n_readonly_flip_attempts": 0,
+    "failure": null,
+    "n_not_adjudicated": 0
+  },
+  "coverage": {
+    "stats_found": 0,
+    "tools_run": [
+      "bayesian_table1_dispersion",
+      "check_count_percent",
+      "check_effect_plausibility",
+      "check_estimate_ci",
+      "check_sd_range",
+      "check_summation_batch",
+      "check_table",
+      "csf_test",
+      "detect_duplication",
+      "extract_pdf",
+      "flag_round_n",
+      "grim_check",
+      "grimmer_check",
+      "multiplicity_report",
+      "parse_cells_as_declared",
+      "parse_cells_typed",
+      "parse_table",
+      "recalc_chi_squared",
+      "recalc_independent_t",
+      "required_n",
+      "rivets_independent_t",
+      "sprite_reconstruct",
+      "stalt_check",
+      "statcheck"
+    ],
+    "tools_run_source": "ledger"
+  },
+  "anatomy": {
+    "studies": [],
+    "variables": [],
+    "tests": []
+  },
+  "unchecked": [
+    {
+      "location": "Table 4 odds ratios and p-values",
+      "reason": "Handoff to tool expert: reconstruct_2x2 / chi-square or Fisher from 10 vs 2, 9 vs 1, 14 vs 4, 17 vs 3 at n=198/199, and OR 5.239, 9.429, 3.709, 6.136 with printed CIs."
+    },
+    {
+      "location": "Table 3 baseline p-values and SDs",
+      "reason": "Handoff to tool expert: independent-t recalculation and baseline dispersion/CSF on age, BMI, gestational age, sutures, blood loss, and depth."
+    },
+    {
+      "location": "Table 2 means, SDs, and ranges",
+      "reason": "Handoff to tool expert: SD-range/GRIMMER on age 25-35, BMI printed range 23.0-45.0 versus inclusion BMI>30, operative time 30-60, blood loss 350-1000, depth 2.0-6.5."
+    },
+    {
+      "location": "Table 6 logistic model",
+      "reason": "Handoff to tool expert: whether OR 7.743 for continuous versus interrupted is consistent with Table 5 counts 33/198 vs 9/199 after the printed covariates; eight covariates with 42 events."
+    },
+    {
+      "location": "Four correlated wound outcomes",
+      "reason": "Handoff to tool expert: multiplicity; no correction is described for four primary-like 2x2 tests plus a composite."
+    },
+    {
+      "location": "Table 1 composite 42 versus sum of four Yes counts 60",
+      "reason": "12+10+18+20=60 specific events versus 42 women with any complication. Likely overlapping complications, which the paper never states. Not filed as arithmetic error."
+    },
+    {
+      "location": "Data availability",
+      "reason": "No data-availability statement is present, so this is omission rather than state-but-withhold."
+    },
+    {
+      "location": "Figure 1 CONSORT graphic",
+      "reason": "Counts were read from the caption and adjacent methods text; the diagram itself was not independently digitized."
+    }
+  ],
+  "statistics_register": [],
+  "checks_tally": {
+    "checks_passed": 19,
+    "of_which_collapsed_by_check_table": 18,
+    "checks_refused_indeterminate": 0,
+    "checks_flagged": 7,
+    "checks_total": 26,
+    "by_severity": {
+      "3": 4,
+      "4": 2,
+      "2": 1,
+      "unknown": 1
+    },
+    "by_outcome": {
+      "flagged": 7,
+      "pass": 1
+    },
+    "rounding_convention": {
+      "n_fit_only_under_truncation": 0,
+      "n_granularity_checks": 25,
+      "note": "Values that fail the round-half convention but are consistent if the reporter TRUNCATES (SPSS's default, and several journal styles). NOT a finding and never counted as one: a single instance is a house style. The RATE is the signal -- this class of anomaly is commoner in papers with more serious problems, so a high proportion is grounds to look harder, not evidence in itself."
+    },
+    "grace": {
+      "n_items": 25,
+      "n_reconciled_strictly": 25,
+      "n_rescued": 0,
+      "by_grace": {},
+      "n_with_direction": 0,
+      "n_leaning_high": 0,
+      "n_leaning_low": 0,
+      "sign_test_p": null,
+      "reading": "Nothing needed an allowance; every item reconciled on its printed values."
+    },
+    "sd_convention": {
+      "n_fit_only_under_population_sd": 0,
+      "n_granularity_checks": 25,
+      "note": "Values that fail under the sample (Bessel, n-1) SD but are consistent under the POPULATION (n) SD -- numpy's std default and Excel's STDEVP. NOT a finding and never counted as one: choosing a convention is not fabrication. The RATE is the signal, on the same reasoning as the rounding convention above."
+    },
+    "harness_sweep": {
+      "n_tables": 6,
+      "n_accusatory": 0,
+      "accusatory": [],
+      "why": "These checks were aimed by the harness, not by the model: every eligible target in the paper's tables was enumerated and checked. That makes their coverage identical from run to run, which the model-aimed checks are not -- two runs of this pipeline on one paper overlapped on 0 of 10 model-aimed targets."
+    }
+  },
+  "producer_constraint_problems": []
+}

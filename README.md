@@ -68,7 +68,7 @@ examples use Claude Code.
 tracks, adjudicator; paid):
 
 ```bash
-metascience analyze paper.pdf --backend claude --budget-usd 30 # or a paper directory
+metascience analyze paper.pdf --backend claude --max-budget-usd 30 # or a paper directory
 ```
 
 **Run only the forensic metascience tools agent** (the statistical
@@ -121,7 +121,7 @@ metascience run tools_only paper.pdf --backend grok --model grok-4.6
 
 ```bash
 metascience batch corpus/ --backend claude --dry-run                   # free: plan and cost estimate
-metascience batch corpus/ --backend claude --budget-usd 30 --workers 10 # resumable; finished papers are skipped
+metascience batch corpus/ --backend claude --max-budget-usd 30 --workers 10 # resumable; finished papers are skipped
 ```
 
 **Free, offline checks** (no AI):

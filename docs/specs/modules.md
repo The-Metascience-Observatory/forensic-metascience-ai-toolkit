@@ -129,7 +129,7 @@ runner, ledger and transcripts need no new branch:
   invalid call is answered with the validation error; after three retries the
   run ends `error_max_structured_output_retries`, as on Claude.
 - **Cost:** OpenRouter's per-response `usage.cost`, summed. No spend cap, so a
-  run with `--budget-usd` and an OpenRouter module is refused before it starts.
+  run with `--max-budget-usd` and an OpenRouter module is refused before it starts.
 - **Effort** maps `low/medium/high` through and `xhigh/max` to `high`.
   `internet` turns on OpenRouter's `web` plugin.
 - **Preflight** checks `OPENROUTER_API_KEY` instead of a CLI binary.

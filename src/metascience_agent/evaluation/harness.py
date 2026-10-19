@@ -155,7 +155,7 @@ async def eval_one(
         from ..llm_backend import resolve_backend
         be = resolve_backend(backend)
         if budget_usd is not None and not be.supports_budget:
-            # Grok hard-rejects --budget-usd (BudgetUnsupported), and the
+            # Grok hard-rejects --max-budget-usd (BudgetUnsupported), and the
             # eval CLI always defaults one -- without this the documented
             # `metascience eval --backend grok` invocation errored before
             # spending a cent, which is the wrong direction to fail.
@@ -335,7 +335,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--paper", help="Run only this fixture (apple_cider | airforce | wound_healing)")
     parser.add_argument("--fixtures", help="Fixtures directory (default: benchmarks/paper_reviews/fixtures)")
     parser.add_argument("--runs-dir", help="Output directory (default: benchmarks/paper_reviews/runs)")
-    parser.add_argument("--budget-usd", type=float, default=8.0,
+    parser.add_argument("--max-budget-usd", "--budget-usd", dest="budget_usd", type=float, default=8.0,
                         help="Per-paper analysis budget (default: 8.0)")
     parser.add_argument("--timeout", type=int, default=1800,
                         help="Per-stage timeout seconds (default: 1800)")

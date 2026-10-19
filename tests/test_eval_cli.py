@@ -114,7 +114,7 @@ def _params(fn):
 
 class TestGrokBudgetSkip:
     def test_a_budgetless_backend_drops_the_default_budget(self):
-        """Grok raises BudgetUnsupported on any --budget-usd, and `metascience
+        """Grok raises BudgetUnsupported on any --max-budget-usd, and `metascience
         eval` defaults one -- so the documented `eval --backend grok` errored
         before spending a cent. The harness now drops the budget for a
         backend that cannot cap spend, loudly."""
@@ -152,8 +152,8 @@ class TestTheBudgetDefaultCanActuallyRunTheFixtures:
         cli = pathlib.Path("src/metascience_agent/cli.py").read_text()
         harness = pathlib.Path(
             "src/metascience_agent/evaluation/harness.py").read_text()
-        a = self._default(cli, r'([\d.]+), "--budget-usd"')
-        b = self._default(harness, r'"--budget-usd", type=float, default=([\d.]+)')
+        a = self._default(cli, r'([\d.]+), "--max-budget-usd"')
+        b = self._default(harness, r'"--max-budget-usd", "--budget-usd", dest="budget_usd", type=float, default=([\d.]+)')
         assert a == b, f"cli={a} harness={b}"
 
     def test_the_default_covers_the_most_expensive_archived_fixture(self):
@@ -165,7 +165,7 @@ class TestTheBudgetDefaultCanActuallyRunTheFixtures:
         harness = pathlib.Path(
             "src/metascience_agent/evaluation/harness.py").read_text()
         default = self._default(
-            harness, r'"--budget-usd", type=float, default=([\d.]+)')
+            harness, r'"--max-budget-usd", "--budget-usd", dest="budget_usd", type=float, default=([\d.]+)')
         most_expensive_tool_stage = 2.81   # benchmarks/paper_reviews/runs/apple_cider, 2026-08-21
         assert default * TOOL_BUDGET_FRACTION >= most_expensive_tool_stage, (
             f"a ${default} budget caps the tool agent at "
@@ -270,3 +270,27 @@ def test_the_judge_sees_every_kept_finding_compactly():
     prompt = _judge_prompt(fixture, "# r", {"findings": rows})
     assert '"f_79"' in prompt and "f_gone" not in prompt
     assert "SAME DEFECT by a different route" in prompt
+
+
+class TestMaxBudgetFlagName:
+    """`--budget-usd` was renamed `--max-budget-usd` (it is a cap, not a
+    target); the old name stays accepted so existing scripts keep working."""
+
+    def _parsers(self):
+        from metascience_agent.batch import build_parser as batch_parser
+        from metascience_agent.evaluation.harness import build_parser as eval_parser
+        return {"batch": (batch_parser(), ["corpus"]), "eval": (eval_parser(), [])}
+
+    def test_new_and_old_names_set_the_same_value(self):
+        for name, (parser, pos) in self._parsers().items():
+            for flag in ("--max-budget-usd", "--budget-usd"):
+                args = parser.parse_args([*pos, flag, "4.5"])
+                assert args.budget_usd == 4.5, (name, flag)
+
+    def test_typer_commands_accept_both_names(self):
+        from typer.main import get_command
+        from metascience_agent.cli import app
+        commands = get_command(app).commands
+        for cmd in ("analyze", "batch", "eval"):
+            opts = {o for p in commands[cmd].params for o in getattr(p, "opts", [])}
+            assert {"--max-budget-usd", "--budget-usd"} <= opts, cmd

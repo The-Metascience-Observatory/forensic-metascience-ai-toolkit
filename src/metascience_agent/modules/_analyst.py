@@ -356,7 +356,7 @@ async def parse_output(ctx, settings, stage, label, producer, limitations):
         if _agent._stage_hit_budget(stage):
             limitations.append(
                 f"the {label} stage was BUDGET-TRUNCATED before emitting "
-                "findings -- raise --budget-usd; its spend is recorded")
+                "findings -- raise --max-budget-usd; its spend is recorded")
         elif _agent._stage_hit_timeout(stage):
             # The sibling of the branch above. Until 2026-09-02 a stage
             # cut off by the wall clock or the stall detector reached the
@@ -853,7 +853,7 @@ class AnalystModule(Module):
 
         The fractions (tools 0.40, science 0.25, the adjudicator the rest)
         assume all three run. Applied raw, a `tools_only` run capped its only
-        agent at 40% of `--budget-usd`: on 2026-10-18 two GRIM dev papers were
+        agent at 40% of `--max-budget-usd`: on 2026-10-18 two GRIM dev papers were
         cut off at ~$1.25 of $3 with 60% of the budget unspent."""
         if ctx.budget_usd and self.budget_fraction is not None:
             return ctx.budget_usd * stage_budget_share(ctx.config, self.budget_fraction)

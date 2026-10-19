@@ -16,7 +16,7 @@ the batch pauses rather than burning papers against a spent 5-hour session limit
 Usage:
     python -m metascience_agent.batch cerebrolysin_papers --limit 3
     python -m metascience_agent.batch cerebrolysin_papers --limit 20 --concurrency 4
-    python -m metascience_agent.batch cerebrolysin_papers --budget-usd 2.0 --timeout 1800
+    python -m metascience_agent.batch cerebrolysin_papers --max-budget-usd 2.0 --timeout 1800
     python -m metascience_agent.batch cerebrolysin_papers --usage-threshold 70
 """
 
@@ -439,7 +439,7 @@ async def process_paper(
         except (PreflightError, BudgetUnsupported, BackendUnavailable) as e:
             # An environment / invocation fault, not a property of this paper.
             # Recording it per-paper would fill failed.jsonl with papers whose
-            # "failure" was a missing library, a Grok+--budget-usd combination,
+            # "failure" was a missing library, a Grok+--max-budget-usd combination,
             # or an exhausted API balance, and retrying cannot fix any of those
             # -- so it stops the batch and is deliberately NOT written to the
             # retry queue.
@@ -803,8 +803,10 @@ def build_parser() -> argparse.ArgumentParser:
                         help="Papers analyzed in parallel, one paper per worker (default: 3)")
     parser.add_argument("--timeout", type=int, default=1800,
                         help="Per-stage timeout in seconds (default: 1800; 0 = none)")
-    parser.add_argument("--budget-usd", type=float, default=None,
-                        help="Total budget cap per paper (forwarded to --max-budget-usd)")
+    parser.add_argument("--max-budget-usd", "--budget-usd", dest="budget_usd",
+                        type=float, default=None,
+                        help="Maximum spend per paper, split across the paid stages "
+                             "(Claude backend only; --budget-usd is the old name)")
     parser.add_argument("--mode",
                         choices=("parallel", "two_stage"),
                         default="parallel",

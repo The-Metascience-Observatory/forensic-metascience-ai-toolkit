@@ -9,6 +9,19 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.94.4] — 2026-10-19 — `--budget-usd` is now `--max-budget-usd`
+
+PATCH: CLI naming only; no prompt, tool, severity or finding changes.
+
+- **The per-paper spend cap is spelled `--max-budget-usd`** on `analyze`,
+  `run`, `batch`, `eval`, `python -m metascience_agent.batch` and the eval
+  harness. It is a ceiling, not a target, and "budget" alone did not say so.
+  `--budget-usd` is still accepted as the old name, so existing scripts keep
+  working (`tests/test_eval_cli.py::TestMaxBudgetFlagName`). The value is
+  still the total for the whole paper; each stage's share (tools agent 0.40,
+  proofreading agent 0.25, adjudicator the remainder) is what reaches Claude
+  Code's own `--max-budget-usd`. Default unchanged: no cap (eval: $8.00).
+
 ## [1.94.3] — 2026-10-19 — no dev extra: pytest-xdist and ruff are base
 
 PATCH: packaging only; no prompt, tool, severity or finding changes.

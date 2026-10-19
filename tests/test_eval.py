@@ -142,7 +142,7 @@ class TestLiveEval:
     def test_full_eval(self):
         from metascience_agent.evaluation.harness import main
 
-        rc = main(["--budget-usd", os.environ.get("EVAL_BUDGET", "3.0")])
+        rc = main(["--max-budget-usd", os.environ.get("EVAL_BUDGET", "3.0")])
         scorecard_path = repo_root() / "benchmarks" / "paper_reviews" / "runs" / "scorecard.json"
         assert scorecard_path.exists()
         scorecards = json.loads(scorecard_path.read_text())

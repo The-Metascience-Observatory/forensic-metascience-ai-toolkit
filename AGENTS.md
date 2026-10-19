@@ -924,7 +924,7 @@ untested code:
     `does_not_reconcile` matching expected, deterministic checks all passed,
     and severity calibration 1-of-1 in interval** — the 0.182 was superseded
     within hours and never updated here. Separately, re-running the command on
-    2026-08-22 produced NO measurement at all: the `--budget-usd` default was
+    2026-08-22 produced NO measurement at all: the `--max-budget-usd` (then `--budget-usd`) default was
     $3.00, the parallel split gives the tool agent 0.40 of it, and that
     fixture's tool stage is measured at $2.81, so the stage was
     BUDGET-TRUNCATED before emitting findings. The default is now $8.00 and
@@ -957,7 +957,7 @@ untested code:
   harness reads the flag as "reuse the run IF one exists" and would otherwise
   run the full paid pipeline — silently, on the one invocation passed to prevent
   exactly that. The CLI and harness `--model` defaults are pinned equal
-  (`sonnet`) by `tests/test_eval_cli.py`, and so are their `--budget-usd`
+  (`sonnet`) by `tests/test_eval_cli.py`, and so are their `--max-budget-usd`
   defaults — two places declare each, and the budget one had no pin until it
   drifted low enough to break the documented command.
 

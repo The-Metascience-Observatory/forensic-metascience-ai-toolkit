@@ -1260,7 +1260,7 @@ def _build_track_env() -> dict[str, str]:
 PARTIAL_COVERAGE_NOTE = (
     "PARTIAL COVERAGE: the forensic sweep was stopped early by the spend cap, so the paper "
     "was NOT fully checked. Absence of a finding here is not evidence of absence. Re-run with "
-    "a higher --budget-usd for full coverage."
+    "a higher --max-budget-usd for full coverage."
 )
 
 PARTIAL_COVERAGE_TIMEOUT_NOTE = (

@@ -360,7 +360,7 @@ class BackendUnavailable(RuntimeError):
 
 
 class BudgetUnsupported(ValueError):
-    """`--budget-usd` was passed to a backend with no spend cap.
+    """`--max-budget-usd` was passed to a backend with no spend cap.
 
     Subclass of ValueError so existing `pytest.raises(ValueError)` still
     matches; distinct so the batch runner can treat it as an environment
@@ -883,7 +883,7 @@ def build_invocation(
     """
     if budget_usd is not None and not backend.supports_budget:
         raise BudgetUnsupported(
-            f"{backend.name} has no spend cap; re-run without --budget-usd "
+            f"{backend.name} has no spend cap; re-run without --max-budget-usd "
             f"or use --backend claude"
         )
     if backend.name == "claude":

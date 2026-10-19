@@ -1035,7 +1035,7 @@ class TestBudgetSplitFollowsThePipeline:
     """The per-paper budget is split over the paid stages a pipeline RUNS.
 
     2026-10-18: a `tools_only` run capped its only agent at 40% of
-    `--budget-usd`; two GRIM dev papers were cut off at ~$1.25 of $3."""
+    `--max-budget-usd`; two GRIM dev papers were cut off at ~$1.25 of $3."""
 
     def _share(self, name, fraction):
         from metascience_agent.modules._analyst import stage_budget_share

@@ -360,7 +360,7 @@ def analyze(
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
     two_stage: bool = typer.Option(True, "--two-stage", help="Deprecated: the two-analyst review is the only pipeline now; the flag is kept so existing scripts keep working. Its `--single-stage` counterpart was removed in v1.19.0 along with the mode."),
     parallel: bool = typer.Option(False, "--parallel", help="Deprecated: this is the default pipeline now; the flag is kept so existing scripts keep working."),
-    budget_usd: Optional[float] = typer.Option(None, "--budget-usd", help="Total budget cap for the analysis"),
+    budget_usd: Optional[float] = typer.Option(None, "--max-budget-usd", "--budget-usd", help="Maximum spend for the whole paper, split across the paid stages (Claude backend only). Default: no cap. `--budget-usd` is the old name"),
     timeout: Optional[int] = typer.Option(None, "--timeout", help="Per-stage timeout in seconds"),
     backend: Optional[str] = typer.Option(
         None, "--backend",
@@ -640,7 +640,7 @@ def analyze(
     model = model or be.default_model
     if budget_usd is not None and not be.supports_budget:
         console.print(
-            f"[red]{be.name} has no spend cap; re-run without --budget-usd "
+            f"[red]{be.name} has no spend cap; re-run without --max-budget-usd "
             f"or use --backend claude.[/red]")
         raise typer.Exit(2)
 
@@ -3651,7 +3651,7 @@ def statcheck(
 def eval_cmd(
     paper: Optional[str] = typer.Option(None, "--paper", help="Run only this fixture (apple_cider | airforce | wound_healing | cerebrolysin_flow)"),
     budget_usd: float = typer.Option(
-        8.0, "--budget-usd",
+        8.0, "--max-budget-usd", "--budget-usd",
         help="Per-paper analysis budget. DEFAULT RAISED FROM 3.0, 2026-08-22: the parallel pipeline splits it (tool 0.40, science 0.25), and the archived apple_cider run spent $2.81 on the tool agent alone -- so at $3.00 its cap was $1.20 and the stage was BUDGET-TRUNCATED before emitting any findings, with the science agent's CLI exiting 1 beside it. CLAUDE.md instructs exactly `metascience eval --paper apple_cider` as the post-prompt-change check, and that documented command could not complete on its largest fixture. $7.01 is the break-even for that run; 8.0 leaves headroom. A cap is not a spend -- the other three fixtures cost $0.70-$0.81 and are unaffected."),
     timeout: int = typer.Option(1800, "--timeout", help="Per-stage timeout in seconds"),
     # Was "opus" here against harness.py's "sonnet" default for the same flag,
@@ -3720,7 +3720,7 @@ def eval_cmd(
     argv = []
     if paper:
         argv += ["--paper", paper]
-    argv += ["--budget-usd", str(budget_usd), "--timeout", str(timeout), "--model", model]
+    argv += ["--max-budget-usd", str(budget_usd), "--timeout", str(timeout), "--model", model]
     if backend:
         argv += ["--backend", backend]
     if pipeline:
@@ -4213,7 +4213,7 @@ def batch_cmd(
              "a ten-paper benchmark corpus finishes in one paper's wall time "
              "instead of ten. Each worker is an LLM CLI subprocess at roughly "
              "0.5-1 GB, so the ceiling is RAM: drop it on a small machine."),
-    budget_usd: Optional[float] = typer.Option(None, "--budget-usd", help="Per-paper budget cap"),
+    budget_usd: Optional[float] = typer.Option(None, "--max-budget-usd", "--budget-usd", help="Maximum spend per paper, split across the paid stages (Claude backend only). Default: no cap. `--budget-usd` is the old name"),
     pipeline: Optional[str] = typer.Option(
         None, "--pipeline",
         help="Pipeline to run per paper: a shipped name (`metascience pipeline "
@@ -4270,7 +4270,7 @@ def batch_cmd(
     is a new run and needs no --redo.
 
         metascience batch tests/fixtures/papers/high_value_pdfs_to_run_on --dry-run
-        metascience batch tests/fixtures/papers/high_value_pdfs_to_run_on --budget-usd 3
+        metascience batch tests/fixtures/papers/high_value_pdfs_to_run_on --max-budget-usd 3
         metascience batch tests/fixtures/papers/high_value_pdfs_to_run_on --workers 4
     """
     from argparse import Namespace
@@ -4303,7 +4303,7 @@ def batch_cmd(
     subdir_name = subdir_name or _versioned_review_dirname(model, config)
     if budget_usd is not None and not be.supports_budget:
         console.print(
-            f"[red]{be.name} has no spend cap; re-run without --budget-usd "
+            f"[red]{be.name} has no spend cap; re-run without --max-budget-usd "
             f"or use --backend claude.[/red]")
         raise typer.Exit(2)
 

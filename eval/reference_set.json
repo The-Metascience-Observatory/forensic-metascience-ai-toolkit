@@ -39,5 +39,5 @@
     "why": "Ten commits on 2026-08-28 left `registry_sha256` byte-identical -- the tool surface did not move -- so that was zero build changes, not ten. Triggering per commit would have cost roughly ten times what the information was worth.",
     "refuses_on": "git_dirty. A run stamped from a dirty tree records a sha that names a commit PLUS uncommitted edits, so it does not identify a build at all and cannot serve as a reference. Observed on this session's own first run."
   },
-  "cost": "Roughly $11-22 per paper, so $45-90 per genuine build change. Budget with --budget-usd 22; a $6 cap truncated both analysts before either emitted findings and produced nothing for $4.79."
+  "cost": "Roughly $11-22 per paper, so $45-90 per genuine build change. Budget with --max-budget-usd 22; a $6 cap truncated both analysts before either emitted findings and produced nothing for $4.79."
 }

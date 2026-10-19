@@ -47,6 +47,7 @@ P188 = ROOT / "tests" / "data" / "parity_1_88.json"
 P190 = ROOT / "tests" / "data" / "parity_1_90.json"
 P191 = ROOT / "tests" / "data" / "parity_1_91.json"
 P192 = ROOT / "tests" / "data" / "parity_1_92.json"
+P193 = ROOT / "tests" / "data" / "parity_1_93.json"
 
 #: The pre-1.86 title bound, restored in the capture process for the scope
 #: tests: every producer subset's `title` is the stored schema's again, and
@@ -106,7 +107,7 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
 
 def test_default_run_matches_the_newest_oracle(tmp_path):
     got = _capture(tmp_path)
-    want = json.loads(P192.read_text())
+    want = json.loads(P193.read_text())
     assert set(got) == set(want) == {"claude", "codex", "grok"}
     for backend in want:
         for i, (g, w) in enumerate(zip(got[backend]["invocations"],
@@ -502,3 +503,23 @@ def test_1_92_changed_only_the_tools_agent_system_prompt():
             else:
                 assert o == n, f"{backend} {o['stage']}"
     assert _mask_system_prompts(old) == _mask_system_prompts(new)
+
+
+def test_1_93_changed_only_the_one_tailed_tool_definitions():
+    """1.93.0 (2026-10-18): a one-tailed reading explains a p mismatch only
+    when the paper states one-tailed testing (statcheck's rule), via the new
+    `one_tailed_stated` on recalc_stat_to_p, recalc_f_to_p and
+    check_regression(_batch). Four MCP tool definitions change, which moves
+    `registry_sha256` and NOTHING ELSE against the 1.92 oracle. (The
+    one-tailed prompt block appears only for a paper that states it; the
+    capture fixture does not.)"""
+    old = json.loads(P192.read_text())
+    new = json.loads(P193.read_text())
+    for backend in old:
+        assert old[backend]["registry_sha256"] != new[backend]["registry_sha256"], backend
+        a, b = json.loads(json.dumps(old[backend])), json.loads(json.dumps(new[backend]))
+        a["registry_sha256"] = b["registry_sha256"] = "<REGISTRY>"
+        assert a == b, backend
+    from metascience_agent import registry
+    for name in ("recalc_stat_to_p", "recalc_f_to_p", "check_regression"):
+        assert "one_tailed_stated" in registry.BY_NAME[name].schema(), name

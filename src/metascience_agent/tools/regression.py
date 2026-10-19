@@ -11,7 +11,7 @@ from scipy import stats
 
 from . import rounding as _rounding
 from .severity import CONSISTENT, INDETERMINATE, SUSPICIOUS
-from .ttest import (_p_matches, bound_is_stated, check_p_adjustment,
+from .ttest import (ONE_TAILED_UNSTATED_NOTE, _p_matches, bound_is_stated, check_p_adjustment,
                     explain_under_claim, p_under_claimed, resolve_p_relation,
                     under_claim_finding, under_claim_note)
 
@@ -42,6 +42,7 @@ def check_regression(
     p_is_threshold: Optional[bool] = None,
     p_relation: Optional[str] = None,
     p_adjustment: Optional[str] = None,
+    one_tailed_stated: bool = False,
 ) -> dict:
     """
     Verify regression coefficient consistency.
@@ -70,6 +71,10 @@ def check_regression(
             bound), '>'. Supersedes `p_is_threshold` ('<' is True, '=' is
             False); unstated, see `ttest.resolve_p_relation`. An exact p above
             the whole achievable interval is an under-claim, `suspicious`.
+        one_tailed_stated: The paper says, anywhere, that it tested one-tailed
+            (statcheck's rule). Only then does a p that reconciles only as a
+            one-sided test count as a match; otherwise it is a finding with the
+            one-sided reading named beside it.
 
     Returns:
         Dictionary with consistency checks
@@ -267,6 +272,20 @@ def check_regression(
             two_dir = one_dir = True
         two_tailed_ok = two_dir and not p_under_claimed(p_hi, reported_p, decimals_p, rel)
         one_tailed_ok = one_dir and not p_under_claimed(sf_hi, reported_p, decimals_p, rel)
+        # THE ONE-SIDED READING ONLY WHEN THE PAPER SAYS SO (1.93.0, statcheck's
+        # OneTailedTxt rule). It used to be accepted for every coefficient; the
+        # same unstated rescue in recalc_stat_to_p hid 21 of the 49 errors in
+        # Wicherts et al.'s hand coding and decided no correct statistic.
+        one_sided_only_unstated = bool(one_tailed_ok and not two_tailed_ok
+                                       and not one_tailed_stated)
+        if one_sided_only_unstated:
+            one_tailed_ok = False
+            result["one_tailed_reconciles"] = True
+            result["failure_mode"] = "reconciles_only_one_tailed_unstated"
+            result["p_explanation"] = (
+                f"The reported p = {reported_p} is outside every two-tailed p "
+                f"B/SE = {b}/{se} allows at df = {df}. " + ONE_TAILED_UNSTATED_NOTE)
+        result["one_tailed_stated"] = bool(one_tailed_stated)
         result["p_matches"] = bool(two_tailed_ok or one_tailed_ok)
         # UNDER-CLAIM: an exact printed p above every two-tailed p the rounded
         # B and SE allow (and so above every one-tailed one). A bound is
@@ -427,6 +446,8 @@ def _batch_core(rows: list[dict]) -> dict:
                 decimals_p=row.get("decimals_p"),
                 p_is_threshold=row.get("p_is_threshold"),
                 p_relation=row.get("p_relation"),
+                p_adjustment=row.get("p_adjustment"),
+                one_tailed_stated=bool(row.get("one_tailed_stated", False)),
             )
         except (KeyError, TypeError, ValueError) as exc:
             out = {"severity": INDETERMINATE, "error": f"unusable row: {exc}"}

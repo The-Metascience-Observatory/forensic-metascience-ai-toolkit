@@ -317,6 +317,26 @@ TEST_CONFIRMED_HELP = (
     "A printed p SMALLER than the summary statistics allow is still a finding.")
 
 
+#: statcheck's `OneTailedTxt` rule (1.93.0): a one-tailed reading may explain a
+#: mismatch only when the paper SAYS, anywhere, that it tested one-tailed.
+ONE_TAILED_STATED_HELP = (
+    "True only when the paper says, anywhere, that its tests are one-tailed, "
+    "one-sided or directional (quote it) -- statcheck's rule. A 1-df F or "
+    "chi-squared whose printed p is only reachable as a one-tailed test is "
+    "then indeterminate; otherwise (default) it is a finding, with the "
+    "one-tailed reading named beside it.")
+
+#: Why an unstated one-tailed reading no longer rescues a p (1.93.0).
+ONE_TAILED_UNSTATED_NOTE = (
+    "It would be consistent with a ONE-tailed test, but the paper does not "
+    "say it used one, so that reading is not assumed (statcheck's rule: a "
+    "one-tailed test explains a mismatch only when the text states one-tailed, "
+    "one-sided or directional testing). If the paper does say so anywhere, "
+    "call again with one_tailed_stated=True. MEASURED 2026-10-18: the unstated "
+    "rescue hid 21 of the 49 errors Wicherts, Bakker & Molenaar (2011) coded "
+    "by hand and decided no correct statistic.")
+
+
 def check_p_adjustment(value: Optional[str]) -> dict:
     """`{"adjustment": ...}` (None when not supplied) or `{"error": ...}`."""
     if value is None:

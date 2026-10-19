@@ -14,7 +14,7 @@ from ...registry import (
     ToolSpec,
 )
 from ...tools.regression import check_regression, check_regression_batch
-from ...tools.ttest import P_ADJUSTMENT_HELP, P_RELATION_HELP
+from ...tools.ttest import ONE_TAILED_STATED_HELP, P_ADJUSTMENT_HELP, P_RELATION_HELP
 from .. import descriptions
 
 DESCRIPTIONS = descriptions(__file__)
@@ -43,6 +43,7 @@ SPECS = (
                        "an exact p. The float cannot carry the difference."),
             Param("p_relation", str, None, guard=True, help=P_RELATION_HELP),
             Param("p_adjustment", str, None, guard=True, help=P_ADJUSTMENT_HELP),
+            Param("one_tailed_stated", bool, False, help=ONE_TAILED_STATED_HELP),
         ),
         stages=frozenset({STAGE1}),
         cli=None,

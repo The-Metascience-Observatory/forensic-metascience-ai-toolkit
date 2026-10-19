@@ -306,8 +306,14 @@ class TestAnUnprintedDfIsBoundedNotRefused:
         assert lo > 0.06 + 0.005          # two-tailed: no df reaches it
         assert hi == 1.0                  # p -> 1 as df -> infinity
         assert r["one_tailed_reconciles"] is True
-        assert r["severity"] == "indeterminate"
-        assert "every df" in r["explanation"]
+        # 1.93.0, statcheck's rule: the one-tailed reading rescues only a
+        # paper that states it; unstated, the finding stands with it named.
+        assert r["severity"] == "suspicious"
+        assert r["failure_mode"] == "reconciles_only_one_tailed_unstated"
+        stated = recalc_stat_to_p(2.355, "chi2", reported_p=0.06, decimals_stat=3,
+                                  decimals_p=2, one_tailed_stated=True)
+        assert stated["severity"] == "indeterminate"
+        assert "every df" in stated["explanation"]
 
     def test_wansink_is_a_finding_once_the_paper_rules_out_one_df(self):
         """With df >= 2 stated, there is no one-tailed reading left and the p is

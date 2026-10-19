@@ -80,3 +80,40 @@ def p_adjustment_note(text: str | None) -> str:
         "printed p SMALLER than the statistic allows is never explained by a "
         "correction and is still a finding.")
     return "\n".join(lines)
+
+
+# --- a stated one-tailed test (1.93.0, statcheck's OneTailedTxt rule) ---
+#: statcheck searches the full text for `one.?sided|one.?tailed|directional`.
+#: Word boundaries are added, and "non-directional" (which states the
+#: opposite) is excluded; "bidirectional" never matched with boundaries.
+_ONE_TAILED_RX = re.compile(
+    r"\bone[\s\-–]?(?:sided|tailed)\b|(?<!non-)(?<!non )(?<!non–)\bdirectional\b", re.I)
+
+
+def declares_one_tailed(text: str | None) -> dict | None:
+    """The paper's own clause stating one-tailed / one-sided / directional
+    testing, or None. The p tools accept a one-tailed reading of a mismatch
+    only when this exists (their `one_tailed_stated`)."""
+    if not text:
+        return None
+    m = _ONE_TAILED_RX.search(text)
+    if not m:
+        return None
+    return {"marker": m.group(0), "quote": _clause_around(text, m.start(), m.end())}
+
+
+def one_tailed_note(text: str | None) -> str:
+    """The prompt block telling the analysts the paper states one-tailed testing."""
+    found = declares_one_tailed(text)
+    if not found:
+        return ""
+    return (
+        "\n\n**THIS PAPER MENTIONS ONE-TAILED (ONE-SIDED / DIRECTIONAL) TESTING.** "
+        f"Its own words:\n> {found['quote']}\n\n"
+        "Read which tests it covers. For those, pass `one_tailed_stated=True` to "
+        "`recalc_stat_to_p`, `recalc_f_to_p` and `check_regression` (a row key in "
+        "`check_regression_batch`): a p reachable only as a one-tailed test is then "
+        "indeterminate instead of a finding. If the sentence only mentions the term "
+        "(\"a directional hypothesis was not assumed\"), or names other tests, leave "
+        "it False. Without a statement like this, the tools do not assume a "
+        "one-tailed test.")

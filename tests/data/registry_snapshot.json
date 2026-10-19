@@ -215,7 +215,7 @@
   },
   "check_regression": {
     "cli": null,
-    "desc_sha": "b50989f645e108d1",
+    "desc_sha": "4eb9f5ba4f6583f0",
     "guards": [
       "p_adjustment",
       "p_is_threshold",
@@ -228,6 +228,7 @@
       "decimals_se": "int :: Printed decimals of se, read from the literal.",
       "decimals_t": "int :: Printed decimals of reported_t, read from the literal.",
       "df": "int",
+      "one_tailed_stated": "bool :: True only when the paper says, anywhere, that its tests are one-tailed, one-sided or directional (quote it) -- statcheck's rule. A 1-df F or chi-squared whose printed p is only reachable as a one-tailed test is then indeterminate; otherwise (default) it is a finding, with the one-tailed reading named beside it.",
       "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
       "p_is_threshold": "bool :: TRUE when the paper printed a BOUND ('P < .001') rather than an exact p. The float cannot carry the difference.",
       "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
@@ -244,7 +245,7 @@
   },
   "check_regression_batch": {
     "cli": "regression-batch",
-    "desc_sha": "78b31936bf759689",
+    "desc_sha": "d4a42e37c410043b",
     "guards": [],
     "schema": {
       "rows": "list",
@@ -1108,7 +1109,7 @@
   },
   "recalc_f_to_p": {
     "cli": "f-to-p",
-    "desc_sha": "ff24d9a1e49729cf",
+    "desc_sha": "59ea5cea0d3e287e",
     "guards": [
       "p_adjustment",
       "p_relation"
@@ -1119,6 +1120,7 @@
       "df1": "int",
       "df2": "int :: ONLY if the paper prints it; omit when unstated and the tool sweeps every df2 instead. An inferred df2 is an assumed bound and has produced a false positive.",
       "f_value": "float",
+      "one_tailed_stated": "bool :: True only when the paper says, anywhere, that its tests are one-tailed, one-sided or directional (quote it) -- statcheck's rule. A 1-df F or chi-squared whose printed p is only reachable as a one-tailed test is then indeterminate; otherwise (default) it is a finding, with the one-tailed reading named beside it.",
       "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
       "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
       "reported_p": "float",
@@ -1168,7 +1170,7 @@
   },
   "recalc_stat_to_p": {
     "cli": "stat-to-p",
-    "desc_sha": "c8c6fb105606b9dc",
+    "desc_sha": "416cad8503ca8e12",
     "guards": [
       "p_adjustment",
       "p_relation",
@@ -1183,6 +1185,7 @@
       "df_min": "float",
       "kind": "str",
       "n": "int",
+      "one_tailed_stated": "bool :: True only when the paper says, anywhere, that its tests are one-tailed, one-sided or directional (quote it) -- statcheck's rule. A 1-df F or chi-squared whose printed p is only reachable as a one-tailed test is then indeterminate; otherwise (default) it is a finding, with the one-tailed reading named beside it.",
       "p_adjustment": "str :: Whether the paper DECLARES a correction applied to its p: 'sphericity' (Greenhouse-Geisser / Huynh-Feldt with the uncorrected df printed), 'multiplicity' (Bonferroni, Holm, Tukey, Scheffe or another adjusted p printed beside the raw statistic), 'none', or 'unknown' (default). A declared correction explains a printed p LARGER than the statistic implies, so that direction becomes indeterminate; a printed p SMALLER than the statistic allows is still a finding. Quote the Methods sentence.",
       "p_relation": "str :: What the paper printed between 'p' and the number: '=' for an exact p ('p = .03'), '<' for a bound ('p < .05'), '>' for 'p > .05'. An exact p is checked in BOTH directions; a bound only against over-claiming. Unset, a value that is no conventional bound is read as exact and .05/.01/.001 as a possible bound -- so pass '=' for an exact 'p = .05'.",
       "reported_p": "float",

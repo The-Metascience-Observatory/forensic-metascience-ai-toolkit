@@ -15,7 +15,7 @@ from ...registry import (
     ToolSpec,
 )
 from ...tools.anova import recalc_f_to_p, recalc_one_way_anova
-from ...tools.ttest import P_ADJUSTMENT_HELP, P_RELATION_HELP, TEST_CONFIRMED_HELP
+from ...tools.ttest import ONE_TAILED_STATED_HELP, P_ADJUSTMENT_HELP, P_RELATION_HELP, TEST_CONFIRMED_HELP
 from .. import descriptions
 
 DESCRIPTIONS = descriptions(__file__)
@@ -63,6 +63,7 @@ SPECS = (
                   help="Printed decimals of reported_p, read from the literal."),
             Param("p_relation", str, None, guard=True, help=P_RELATION_HELP),
             Param("p_adjustment", str, None, guard=True, help=P_ADJUSTMENT_HELP),
+            Param("one_tailed_stated", bool, False, help=ONE_TAILED_STATED_HELP),
             Param("decimals_f", int, None,
                   help="Printed decimals of the reported F, read from the literal."),
         ),

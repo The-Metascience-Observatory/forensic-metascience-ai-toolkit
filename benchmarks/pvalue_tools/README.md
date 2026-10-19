@@ -70,3 +70,17 @@ An improvement is recorded by committing the new `scorecard.json`. The file
 The bound misses come from rounding slack that a printed bound should not get.
 The correction false flags come from the under-claim rule, which knows
 nothing about corrections. Release 1.90.0 addresses both.
+
+## After 1.93.0 (2026-10-18), `recalc_stat_to_p`
+
+| | 1.89.0 | 1.90.0 | 1.93.0 |
+|---|---|---|---|
+| Wicherts errors caught | 15 of 49 | 27 of 49 | 48 of 49 |
+| Errors on a printed bound caught | 20 of 55 | 32 of 55 | 54 of 55 |
+| False flags, all labelled-correct | 109 of 1,370 | 4 of 1,370 | 4 of 1,370 |
+| Corpus documented errors caught | 13 of 14 | 13 of 14 | 14 of 14 |
+
+1.90.0 removed the bound slack and taught the under-claim rule about declared
+corrections. 1.93.0 stopped assuming an unstated one-tailed test (statcheck's
+`OneTailedTxt` rule). The unstated rescue had decided 23 cases, all of them
+labelled errors. `scorecard.json` holds the current per-case record.

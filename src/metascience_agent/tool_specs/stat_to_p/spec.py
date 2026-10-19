@@ -15,7 +15,7 @@ from ...registry import (
     ToolSpec,
 )
 from ...tools.stat_to_p import recalc_stat_to_p
-from ...tools.ttest import P_ADJUSTMENT_HELP, P_RELATION_HELP
+from ...tools.ttest import ONE_TAILED_STATED_HELP, P_ADJUSTMENT_HELP, P_RELATION_HELP
 from .. import descriptions
 
 DESCRIPTIONS = descriptions(__file__)
@@ -36,6 +36,7 @@ SPECS = (
             Param("decimals_p", int, None),
             Param("p_relation", str, None, guard=True, help=P_RELATION_HELP),
             Param("p_adjustment", str, None, guard=True, help=P_ADJUSTMENT_HELP),
+            Param("one_tailed_stated", bool, False, help=ONE_TAILED_STATED_HELP),
             Param("tails", int, 2),
             Param("source_quote", str, None),
             Param("source_locator", str, None),

@@ -13,7 +13,8 @@ from ..survey_design import survey_refusal
 from .severity import CONSISTENT, INDETERMINATE, SUSPICIOUS
 from .ttest import (_half_for, p_under_claimed, resolve_p_relation,
                     under_claim_finding, under_claim_note,
-                    bound_is_stated, check_p_adjustment, explain_under_claim)
+                    bound_is_stated, check_p_adjustment, explain_under_claim,
+                    ONE_TAILED_UNSTATED_NOTE)
 
 
 def _apply_p_relation(result: dict, p_hi: float, reported_p: float,
@@ -301,6 +302,7 @@ def _f_to_p_df2_unstated(
     decimals_f: Optional[int],
     p_relation: Optional[str] = None,
     p_adjustment: Optional[str] = None,
+    one_tailed_stated: bool = False,
 ) -> dict:
     """The df2-unstated mode: attainability over EVERY df2, never one we chose.
 
@@ -365,20 +367,24 @@ def _f_to_p_df2_unstated(
             "is a reporting note, never a finding."
             + (" " + result["p_explanation"] if result.get("p_explanation") else ""))
         return result
-    if (df1 == 1 and reported_p + h_p >= p_lo / 2.0 - _rounding.EPSILON
-            and not p_under_claimed(p_hi / 2.0, reported_p, decimals_p,
-                                    result.get("p_relation"))):
-        # Same wrinkle as the exact-df2 path: F(1, df2) = t(df2)^2, so a
-        # one-tailed reading halves the p and the tail direction -- unstated
-        # -- decides. Indeterminate, not consistent, not suspicious.
-        result["severity"] = INDETERMINATE
+    one_tailed = (df1 == 1 and reported_p + h_p >= p_lo / 2.0 - _rounding.EPSILON
+                  and not p_under_claimed(p_hi / 2.0, reported_p, decimals_p,
+                                          result.get("p_relation")))
+    result["one_tailed_stated"] = bool(one_tailed_stated)
+    if one_tailed:
         result["one_tailed_reconciles"] = True
+    # Only when the paper SAYS it tested one-tailed (1.93.0, statcheck's rule).
+    if one_tailed and one_tailed_stated:
+        # Same wrinkle as the exact-df2 path: F(1, df2) = t(df2)^2, so a
+        # one-tailed reading halves the p, and the paper says it tested that
+        # way. Indeterminate, not consistent: df2 is still unprinted.
+        result["severity"] = INDETERMINATE
         result["explanation"] = (
             "The reported p is below the two-tailed floor for every df2 but "
             "inside the ONE-tailed range (df1 = 1, so halving is exactly what "
-            "a directional hypothesis produces). Two free parameters the "
-            "paper never states -- df2 and the tail -- decide this, so it "
-            "cannot be determined either way.")
+            "a directional hypothesis produces), and the paper states that it "
+            "tested one-tailed. df2 is still unprinted, so this cannot be "
+            "determined either way.")
         return result
     result["severity"] = SUSPICIOUS
     result["explanation"] = (
@@ -387,7 +393,10 @@ def _f_to_p_df2_unstated(
         f"{reported_p} -- so no choice of denominator degrees of freedom "
         "explains it. Capped at suspicious: the F itself is a printed, "
         "rounded value and a transcription slip in F or df1 is the ordinary "
-        "explanation; quote the sentence that prints them.")
+        "explanation; quote the sentence that prints them."
+        + (" " + ONE_TAILED_UNSTATED_NOTE if one_tailed else ""))
+    if one_tailed:
+        result["failure_mode"] = "reconciles_only_one_tailed_unstated"
     return result
 
 
@@ -400,6 +409,7 @@ def recalc_f_to_p(
     decimals_f: Optional[int] = None,
     p_relation: Optional[str] = None,
     p_adjustment: Optional[str] = None,
+    one_tailed_stated: bool = False,
 ) -> dict:
     """
     Verify F statistic to p-value conversion.
@@ -422,6 +432,9 @@ def recalc_f_to_p(
             of honestly rounded reports. Inferred from the F literal when absent.
         p_relation: '=' (exact), '<' (a bound) or '>' -- what the paper
             printed with the p; see `ttest.resolve_p_relation`.
+        one_tailed_stated: The paper says, anywhere, that it tested one-tailed
+            (statcheck's rule). Only then does the df1 = 1 one-tailed reading
+            explain a too-small p; otherwise it is named beside the finding.
 
     Returns:
         Dictionary with calculated p-value and comparison
@@ -434,7 +447,8 @@ def recalc_f_to_p(
     if df2 is None:
         return _f_to_p_df2_unstated(f_value, df1, reported_p,
                                     decimals_p, decimals_f, p_relation,
-                                    p_adjustment=p_adjustment)
+                                    p_adjustment=p_adjustment,
+                                    one_tailed_stated=one_tailed_stated)
 
     calculated_p = stats.f.sf(f_value, df1, df2)
 
@@ -543,7 +557,15 @@ def recalc_f_to_p(
                 and not p_under_claimed(p_hi_r / 2.0, reported_p, decimals_p,
                                         result.get("p_relation")))
             result["one_tailed_reconciles"] = reconciles
-            if reconciles:
+            result["one_tailed_stated"] = bool(one_tailed_stated)
+            if reconciles and not one_tailed_stated:
+                # Only when the paper SAYS it tested one-tailed (1.93.0,
+                # statcheck's OneTailedTxt rule): the finding stands, with the
+                # one-tailed reading named beside it.
+                result["failure_mode"] = "reconciles_only_one_tailed_unstated"
+                result["explanation"] = (
+                    str(result.get("explanation") or "") + " " + ONE_TAILED_UNSTATED_NOTE).strip()
+            elif reconciles:
                 # INDETERMINATE, not CONSISTENT. An independent adjudication of
                 # the PNAS case (2026-08-16) landed on the distinction and it is
                 # the right one: a free parameter the paper never states -- the
@@ -561,14 +583,12 @@ def recalc_f_to_p(
                     f"one-tailed interval [{one_tailed_lo:.5f}, "
                     f"{p_hi_r / 2.0:.5f}]. Since F(1, {df2}) = t({df2})^2, "
                     "halving is exactly what a directional hypothesis produces, "
-                    "so the arithmetic is not in question and this is NOT a "
-                    "p-value inconsistency. What IS unresolved is the tail "
-                    "direction, which the paper must state for a reader to "
-                    "reproduce the claim. Report it as an undisclosed testing "
-                    "choice -- and check whether the paper states tails ANYWHERE, "
-                    "including for a different family of tests, since that bears "
-                    "on the reading. A one-tailed test at alpha = .05 is a "
-                    "two-tailed test at alpha = .10."
+                    "and the paper states that it tested one-tailed, so this is "
+                    "NOT a p-value inconsistency. It stays indeterminate because "
+                    "a paper-wide statement does not prove THIS test was "
+                    "one-tailed: if the paper names it two-tailed, the mismatch "
+                    "stands. A one-tailed test at alpha = .05 is a two-tailed "
+                    "test at alpha = .10."
                 )
         elif df1 > 1 and not result["p_matches"]:
             result["one_tailed_reconciles"] = False

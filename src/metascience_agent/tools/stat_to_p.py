@@ -73,9 +73,9 @@ from . import rounding as _rounding
 from ..survey_design import survey_refusal
 from .severity import (CONSISTENT, INDETERMINATE, SUSPICIOUS,
                        refuse_if_nonfinite)
-from .ttest import (bound_is_stated, check_p_adjustment, explain_under_claim,
-                    p_under_claimed, resolve_p_relation, under_claim_finding,
-                    under_claim_note)
+from .ttest import (ONE_TAILED_UNSTATED_NOTE, bound_is_stated, check_p_adjustment,
+                    explain_under_claim, p_under_claimed, resolve_p_relation,
+                    under_claim_finding, under_claim_note)
 
 #: Nothing here reaches `impossible`. A p-value recomputed from a rounded
 #: statistic is an interval, and a disagreement has ordinary explanations --
@@ -178,6 +178,7 @@ def recalc_stat_to_p(
     df_min: float | None = None,
     df_max: float | None = None,
     p_adjustment: str | None = None,
+    one_tailed_stated: bool = False,
 ) -> dict:
     """Recompute p from a single printed statistic and compare it to the paper's.
 
@@ -209,6 +210,10 @@ def recalc_stat_to_p(
             a printed p ABOVE the recomputed one (an adjusted p beside its raw
             statistic), so that direction becomes indeterminate; a p BELOW
             what the statistic allows is still a finding.
+        one_tailed_stated: The paper says, anywhere, that it tested one-tailed
+            (statcheck's `OneTailedTxt` rule). Only then may the 1-df one-tailed
+            reading of an F or chi-squared explain a too-small p; otherwise the
+            mismatch is a finding with that reading named beside it.
     """
     refusal = survey_refusal("recalc_stat_to_p", sampling)
     if refusal is not None:
@@ -228,6 +233,7 @@ def recalc_stat_to_p(
         "source_quote": source_quote,
         "source_locator": source_locator,
         "source_quote_supplied": bool(source_quote),
+        "one_tailed_stated": bool(one_tailed_stated),
     }
 
     # NaN and infinity are what an extraction produces from an empty cell or a
@@ -342,6 +348,10 @@ def recalc_stat_to_p(
     # there, and the 1-df one-tailed reading comes with it.
     _one_df = ((k == "f" and df == 1) or (k == "chi2" and df == 1)
                or (k == "chi2" and df_free and lo_df < 2))
+    # A paper that STATES one-tailed testing earns the halved reading for a
+    # two-tailed t, z or r as well -- statcheck applies its rule to every test.
+    _one_tailed_reading = _one_df or (bool(one_tailed_stated)
+                                      and k in ("t", "z", "r") and tails == 2)
     if k in _UPPER_TAIL_ONLY and tails != 1:
         out["tails"] = 1
         if _one_df:
@@ -496,27 +506,34 @@ def recalc_stat_to_p(
         wide_lo = min(_span(top, _DF_FLOOR, math.inf)) / (2.0 if k == "chi2" else 1.0)
         out["verdict_needs_df_bounds"] = bool(
             reported_p + slack >= wide_lo - _rounding.EPSILON)
-    if _one_df:
+    if _one_tailed_reading:
         # Under an EXACT p the one-tailed reading must also not be exceeded:
         # it rescues a p that sits inside its interval, not one above it.
         # A declared bound gets no rounding slack here either (`bound_is_stated`).
-        if (reported_p + slack >= (p_lo / 2.0) - _rounding.EPSILON
-                and not p_under_claimed(p_hi / 2.0, reported_p, decimals_p, rel)):
+        reconciles = bool(reported_p + slack >= (p_lo / 2.0) - _rounding.EPSILON
+                          and not p_under_claimed(p_hi / 2.0, reported_p, decimals_p, rel))
+        out["one_tailed_reconciles"] = reconciles
+        # ONLY WHEN THE PAPER SAYS SO (1.93.0, statcheck's OneTailedTxt rule).
+        # This rescue used to fire on every 1-df F and chi-squared. MEASURED
+        # 2026-10-18 on the p-tool benchmark: it decided 23 cases, all 23
+        # labelled errors -- 21 of the 49 in Wicherts et al.'s hand coding --
+        # and not one correct statistic.
+        if reconciles and one_tailed_stated:
             return {**out, "severity": INDETERMINATE, "consistent": None,
                     "applicable": True, "one_tailed_reconciles": True,
                     "explanation": (
                         f"The printed {k} = {statistic} supports p no smaller than "
                         f"{p_lo:.6g} two-tailed{scope}, and the paper reports "
-                        f"{reported_p} -- but at df = 1 the one-tailed reading "
-                        f"supports p no smaller than {p_lo / 2.0:.6g}, which the "
-                        "reported value clears. The arithmetic is not in question. "
-                        "What is unresolved is the tail direction, which the paper "
-                        "must state for a reader to reproduce the claim. Report it "
-                        "as an undisclosed testing choice, NOT as a p-value "
-                        "inconsistency, and check whether the paper states tails "
-                        "anywhere -- including for a different family of tests. A "
-                        "one-tailed test at alpha = .05 is two-tailed at .10.")}
-        out["one_tailed_reconciles"] = False
+                        f"{reported_p} -- but the one-tailed reading supports p no "
+                        f"smaller than {p_lo / 2.0:.6g}, which the reported value "
+                        "clears, and the paper states that it tested one-tailed. "
+                        "So this is not a p-value inconsistency. It stays "
+                        "indeterminate rather than consistent because a paper-wide "
+                        "statement does not prove THIS test was one-tailed: if the "
+                        "paper names this test as two-tailed, the mismatch stands. "
+                        "A one-tailed test at alpha = .05 is two-tailed at .10.")}
+        if reconciles:
+            out["failure_mode"] = "reconciles_only_one_tailed_unstated"
     if df_free:
         needs = out.get("verdict_needs_df_bounds")
         return {**out, "severity": CEILING, "consistent": False, "applicable": True,
@@ -531,7 +548,9 @@ def recalc_stat_to_p(
                        + ("some df, or the 1-df one-tailed reading, reconciles it"
                           if k == "chi2" else "some df reconciles it")
                        + "), so quote the sentence that prints the numerals "
-                       "fixing the bound." if needs else "")),
+                       "fixing the bound." if needs else "")
+                + (" " + ONE_TAILED_UNSTATED_NOTE if out.get("one_tailed_reconciles")
+                   else "")),
                 "alternative_reading": (
                     ("A one-tailed test, a" if k == "t" and tails == 2 else "A")
                     + " correction applied to the p but not shown, or a statistic "
@@ -541,7 +560,9 @@ def recalc_stat_to_p(
             "explanation": (
                 f"The printed {k} = {statistic} supports p no smaller than {p_lo:.6g}, "
                 f"but the paper reports p = {reported_p} -- more significance than the "
-                "statistic earns at its printed precision."),
+                "statistic earns at its printed precision."
+                + (" " + ONE_TAILED_UNSTATED_NOTE if out.get("one_tailed_reconciles")
+                   else "")),
             "alternative_reading": (
                 "A one-tailed test, a different df convention, or a correction applied to "
                 "the p but not shown would each explain this. Check the reported test "

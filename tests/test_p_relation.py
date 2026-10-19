@@ -206,8 +206,10 @@ class TestEveryTailReadingIsHeldToTheRelation:
                     decimals_se=2, decimals_p=2)
         assert check_regression(p_is_threshold=False, **args)["severity"] == "suspicious"
         assert check_regression(p_relation="=", **args)["severity"] == "suspicious"
-        # As a BOUND, "p < .05" is true of the one-tailed .029: still rescued.
-        bound = check_regression(p_relation="<", **args)
+        # As a BOUND, "p < .05" is true of the one-tailed .029: rescued only
+        # when the paper states one-tailed testing (1.93.0).
+        assert check_regression(p_relation="<", **args)["severity"] == "suspicious"
+        bound = check_regression(p_relation="<", one_tailed_stated=True, **args)
         assert bound["severity"] == "consistent"
         assert bound["p_reconciles_one_sided_only"] is True
 
@@ -215,7 +217,7 @@ class TestEveryTailReadingIsHeldToTheRelation:
         # A printed p that IS the one-tailed value reconciles, and says so.
         r = check_regression(b=-13.55, se=6.99, reported_p=0.029, df=57,
                              decimals_b=2, decimals_se=2, decimals_p=3,
-                             p_relation="=")
+                             p_relation="=", one_tailed_stated=True)
         assert r["severity"] == "consistent", r
         assert r["p_reconciles_one_sided_only"] is True
 
@@ -225,8 +227,11 @@ class TestEveryTailReadingIsHeldToTheRelation:
                           p_relation="=")
         assert r["severity"] == "suspicious", r
         half = recalc_f_to_p(4.0, 1, 40, reported_p=0.026, decimals_p=3,
-                             decimals_f=1, p_relation="=")
+                             decimals_f=1, p_relation="=", one_tailed_stated=True)
         assert half["severity"] == "indeterminate", half
+        unstated = recalc_f_to_p(4.0, 1, 40, reported_p=0.026, decimals_p=3,
+                                 decimals_f=1, p_relation="=")
+        assert unstated["severity"] == "suspicious", unstated
 
 
 class TestRelations:

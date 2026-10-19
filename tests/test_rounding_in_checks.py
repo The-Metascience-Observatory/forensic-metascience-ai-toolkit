@@ -186,12 +186,17 @@ class TestRegressionConventions:
         assert r["t_matches"] is False
         assert r["severity"] == "suspicious"
 
-    def test_a_one_sided_p_is_consistent_not_suspicious(self):
+    def test_a_one_sided_p_is_consistent_when_one_tailed_is_stated(self):
         """B = 0.110, SE = 0.050, df = 100 give a two-tailed p ~ 0.028; a
         directional hypothesis reported one-sided prints ~0.014, exactly half.
-        The two-tailed-only check flagged every such honest one-sided p."""
-        r = check_regression(b=0.110, se=0.050, reported_p=0.014, df=100,
-                             decimals_b=3, decimals_se=3, decimals_p=3)
+        Since 1.93.0 (statcheck's rule) that reading counts only when the
+        paper states one-tailed testing."""
+        kw = dict(b=0.110, se=0.050, reported_p=0.014, df=100,
+                  decimals_b=3, decimals_se=3, decimals_p=3)
+        unstated = check_regression(**kw)
+        assert unstated["severity"] == "suspicious"
+        assert unstated["failure_mode"] == "reconciles_only_one_tailed_unstated"
+        r = check_regression(**kw, one_tailed_stated=True)
         assert r["p_matches"] is True
         assert r["severity"] == "consistent"
         assert r["p_reconciles_one_sided_only"] is True
@@ -422,9 +427,14 @@ class TestFToPDf2Unstated:
         # indeterminate, same as the exact-df2 path's PNAS lesson.
         floor2t = recalc_f_to_p(6.951, 1)["achievable_p_range_over_df2"][0]
         p_between = floor2t * 0.7   # below two-tailed floor, above half of it
-        r = recalc_f_to_p(6.951, 1, reported_p=p_between, decimals_p=6)
+        r = recalc_f_to_p(6.951, 1, reported_p=p_between, decimals_p=6,
+                          one_tailed_stated=True)
         assert r["severity"] == "indeterminate"
         assert r["one_tailed_reconciles"] is True
+        # Unstated (1.93.0, statcheck's rule): a finding, the reading named.
+        r = recalc_f_to_p(6.951, 1, reported_p=p_between, decimals_p=6)
+        assert r["severity"] == "suspicious"
+        assert r["failure_mode"] == "reconciles_only_one_tailed_unstated"
 
     def test_no_reported_p_is_indeterminate_with_the_range(self):
         r = recalc_f_to_p(6.951, 3)

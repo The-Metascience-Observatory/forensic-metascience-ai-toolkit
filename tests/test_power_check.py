@@ -177,9 +177,22 @@ class TestTheOneTailedReadingReachesTheSeverity:
     signal, and the difference is the whole cardinal rule.
     """
 
-    def test_the_real_case_no_longer_accuses(self):
+    def test_the_real_case_is_flagged_with_the_reading_named(self):
+        """1.93.0, statcheck's rule: the paper (checked 2026-10-18) never says
+        it tested one-tailed, so the halved reading does not rescue it. The
+        result names that reading, so the model cannot write that none exists."""
         from metascience_agent.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.09, decimals_f=2, decimals_p=2)
+        assert r["p_matches"] is False
+        assert r["one_tailed_reconciles"] is True
+        assert r["severity"] == "suspicious"
+        assert r["failure_mode"] == "reconciles_only_one_tailed_unstated"
+        assert "ONE-tailed" in r["explanation"]
+
+    def test_a_stated_one_tailed_test_no_longer_accuses(self):
+        from metascience_agent.tools.anova import recalc_f_to_p
+        r = recalc_f_to_p(1.93, 1, 19, reported_p=0.09, decimals_f=2, decimals_p=2,
+                          one_tailed_stated=True)
         assert r["p_matches"] is False, "still disagrees with the two-tailed interval"
         assert r["one_tailed_reconciles"] is True
         assert r["severity"] == "indeterminate", (
@@ -273,11 +286,15 @@ class TestRecalcStatToPHasTheSameOneDfReading:
                              reported_p=0.03, decimals_stat=1, decimals_p=2, tails=2)
         assert "omnibus" in r["tails_note"]
 
-    def test_the_real_case_no_longer_accuses(self):
+    def test_the_real_case_is_flagged_unless_one_tailed_is_stated(self):
         from metascience_agent.tools.stat_to_p import recalc_stat_to_p
-        r = recalc_stat_to_p(statistic=1.93, kind="f", df=1, df2=19,
-                             reported_p=0.09, decimals_stat=2, decimals_p=2)
+        kw = dict(statistic=1.93, kind="f", df=1, df2=19,
+                  reported_p=0.09, decimals_stat=2, decimals_p=2)
+        r = recalc_stat_to_p(**kw)
         assert r["one_tailed_reconciles"] is True
+        assert r["severity"] == "suspicious"
+        assert r["failure_mode"] == "reconciles_only_one_tailed_unstated"
+        r = recalc_stat_to_p(**kw, one_tailed_stated=True)
         assert r["severity"] == "indeterminate"
 
     def test_a_one_df_chi_squared_gets_the_same_treatment(self):
@@ -285,9 +302,13 @@ class TestRecalcStatToPHasTheSameOneDfReading:
         one and not the other would leave the same false accusation available."""
         from metascience_agent.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=3.5, kind="chi2", df=1,
-                             reported_p=0.031, decimals_stat=1, decimals_p=3)
+                             reported_p=0.031, decimals_stat=1, decimals_p=3,
+                             one_tailed_stated=True)
         assert r["one_tailed_reconciles"] is True
         assert r["severity"] == "indeterminate"
+        r = recalc_stat_to_p(statistic=3.5, kind="chi2", df=1,
+                             reported_p=0.031, decimals_stat=1, decimals_p=3)
+        assert r["severity"] == "suspicious"
 
     def test_a_p_too_small_even_for_one_tailed_is_still_flagged(self):
         from metascience_agent.tools.stat_to_p import recalc_stat_to_p

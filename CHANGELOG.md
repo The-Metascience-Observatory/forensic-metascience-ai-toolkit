@@ -9,6 +9,55 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.93.0] — 2026-10-18 — a one-tailed test explains a p only when the paper says so
+
+MINOR: severities change and four MCP tool definitions change (parity oracle
+`parity_1_93.json`: only `registry_sha256` moves).
+
+statcheck's rule (`OneTailedTxt`): a p that is right only as a one-tailed test
+counts as consistent only when the paper's text says "one-tailed", "one-sided"
+or "directional". Before this release our tools accepted the one-tailed
+reading automatically:
+- `recalc_stat_to_p` for every F(1, df) and chi-squared(1);
+- `recalc_f_to_p` at df1 = 1, in both its paths;
+- `check_regression` for every coefficient.
+
+Measured on the deterministic p-tool benchmark (`benchmarks/pvalue_tools`,
+scorecard re-pinned), `recalc_stat_to_p`:
+
+| | 1.92.0 | 1.93.0 |
+|---|---|---|
+| errors caught, all sources | 60/86 | 83/86 |
+| Wicherts et al. (2011) errors caught | 27/49 | 48/49 |
+| errors on a printed bound | 32/55 | 54/55 |
+| false flags on 1,370 labelled-correct statistics | 4 | 4 |
+
+The automatic rescue decided 23 benchmark cases, and all 23 were labelled
+errors.
+
+- **New `one_tailed_stated` parameter** (default False) on `recalc_stat_to_p`,
+  `recalc_f_to_p`, `check_regression`, and as a row key on
+  `check_regression_batch`.
+  - **True:** the one-tailed reading makes the result `indeterminate`, as
+    before. For `recalc_stat_to_p` this now also covers a two-tailed t, z or
+    r, since statcheck applies its rule to every test.
+  - **False:** the mismatch is `suspicious`, failure_mode
+    `reconciles_only_one_tailed_unstated`, and the one-tailed reading is
+    named beside it, so no model can write that none exists.
+- **`p_adjustment.declares_one_tailed`** finds the sentence: statcheck's
+  pattern with word boundaries, and "non-directional" excluded. The analysts'
+  prompt quotes it when a paper has one, as it does for a declared
+  correction.
+- `check_regression_batch` now also passes each row's `p_adjustment`, which
+  it had been dropping since 1.90.0.
+
+This reverses one recorded decision. On PNAS 0801268105 (2026-08-16) three
+F(1, 19) p-values that reconcile only one-tailed were made `indeterminate`.
+That paper never states one-tailed testing (checked 2026-10-18), so they are
+flagged again under statcheck's rule, capped at `suspicious` and with the
+one-tailed reading stated. The tests that pinned the old rescue now pin both
+halves.
+
 ## [1.92.0] — 2026-10-18 — internal contradictions have one owner
 
 MINOR: the tools agent's system prompt changes on every backend (parity oracle

@@ -790,8 +790,11 @@ async def _coordinate_analysis(
     survey_note = _survey_design_note(text)
     # A declared p correction rides with the design note: both tell the
     # analysts that a printed p larger than a recomputation is expected.
-    from .p_adjustment import p_adjustment_note
+    from .p_adjustment import one_tailed_note, p_adjustment_note
     survey_note += p_adjustment_note(text)
+    # A stated one-tailed test: the only case in which the p tools may read a
+    # mismatch as one-tailed (1.93.0, statcheck's OneTailedTxt rule).
+    survey_note += one_tailed_note(text)
 
     # THE MODULES. Each configured producer runs as its own task, started as
     # soon as the modules it `needs` have finished (core/scheduler.py); their

@@ -645,6 +645,52 @@ def present_files(paper_dir: Path) -> list[str]:
     return _scan(paper_dir)[0]
 
 
+#: fetchpdf's linked-deposit folder: `<stem>_data_artifacts/<deposit>/<file>`
+#: (`fetchpdf.retrieval.supplementary.DATA_ARTIFACT_INFIX`). A suffix match,
+#: because the stem is fetchpdf's encoding of the DOI, which is not always
+#: this toolkit's `doi_dirname`.
+DATA_ARTIFACT_INFIX = "_data_artifacts"
+
+#: What a review takes from a deposit: tables and documents, plus the formats
+#: it must NAME as unreadable (`.xls`, `.zip`, `.doc`) rather than pass over.
+#: Images, code and READMEs are left out on purpose -- a deposit can hold 199
+#: members of a vendored Stata package or a thousand microscopy TIFFs, and
+#: each image here would be sent to OCR and named in the analysts' prompt.
+DATA_ARTIFACT_SUFFIXES = frozenset({
+    ".pdf", ".docx", ".xlsx", ".xlsm", ".csv", ".tsv",
+    ".xls", ".zip", ".doc"})
+
+#: Most deposit files one review takes. The rest are counted, not dropped
+#: silently: `data_artifact_files` returns how many were left out.
+MAX_DATA_ARTIFACT_FILES = 50
+
+
+def data_artifact_files(paper_dir: str | Path) -> tuple[list[Path], int]:
+    """Files fetchpdf downloaded from the paper's linked data deposits.
+
+    Returns `(files, n_left_out)`: the analysable ones under every
+    `*_data_artifacts/` folder at the top of `paper_dir`, sorted, hidden files
+    excluded, capped at `MAX_DATA_ARTIFACT_FILES`; and how many more matched
+    the cap left out. The ONE scan for these folders -- the source resolver and
+    the raw-data module both read it, so they cannot disagree about which
+    deposit files a run had.
+    """
+    base = Path(paper_dir)
+    if not base.is_dir():
+        return [], 0
+    found: list[Path] = []
+    for folder in sorted(base.glob(f"*{DATA_ARTIFACT_INFIX}")):
+        if not folder.is_dir():
+            continue
+        for p in sorted(folder.rglob("*")):
+            rel = p.relative_to(folder)
+            if (p.is_file() and p.suffix.lower() in DATA_ARTIFACT_SUFFIXES
+                    and not any(part.startswith((".", "~$", "__MACOSX"))
+                                for part in rel.parts)):
+                found.append(p)
+    return found[:MAX_DATA_ARTIFACT_FILES], max(0, len(found) - MAX_DATA_ARTIFACT_FILES)
+
+
 def _scan_supplied(extra) -> tuple[list[str], list[dict]]:
     """The same usability verdict as `_scan`, for files named on the command line.
 

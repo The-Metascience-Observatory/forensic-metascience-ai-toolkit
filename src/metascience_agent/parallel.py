@@ -867,6 +867,14 @@ async def _coordinate_analysis(
             "publisher preview STUB beside a full-text XML -- the text was "
             "reviewed from the XML, but figure-dependent checks were "
             "effectively blind; re-fetch the full PDF")
+    # A paper fetched by `analyze --doi` says what the FETCH did and did not
+    # get, so a channel that never arrived is not read as one the paper lacks.
+    try:
+        from . import fetch_paper as _fetch_paper
+        fetch_record = _fetch_paper.read_record(paper_dir)
+        limitations.extend(_fetch_paper.limitations_from_record(fetch_record))
+    except Exception:  # noqa: BLE001 -- provenance must never fail a paid run
+        fetch_record = None
     # A cited supplement we do not hold no longer blocks the run (supplements.
     # gate, 2026-10-18), so the run itself must say so: a 'not reported'
     # finding is read against this line.
@@ -1324,6 +1332,11 @@ async def _coordinate_analysis(
         # counts supplements toward its denominator, so which ones were
         # readable is now part of a published coverage figure.
         **_agent._supplement_record(src, extra_supplements),
+        # `analyze --doi`: what fetchpdf obtained, channel by channel
+        # (fetch_paper.py). Absent for a paper that was not fetched here.
+        **({"fetch": {k: v for k, v in fetch_record.items()
+                      if k != "fetchpdf_record"}}
+           if fetch_record else {}),
     }
 
     # Only CONFIGURED modules can fail: an analyst the pipeline did not ask

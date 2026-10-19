@@ -9,6 +9,36 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.96.0] — 2026-10-19 — start a review from a DOI: `analyze --doi --run-full-on-everything`
+
+MINOR: fetched linked-dataset files now reach both analysts and the raw-data
+module, so a review can see inputs it could not see before. No prompt, tool or
+severity change.
+
+- **`metascience analyze --doi <DOI>`** fetches the paper with fetchpdf into
+  a new folder named for the DOI (`10.1/x` -> `./10.1--x/`; `--fetch-dir`
+  moves it), then reviews it. The article is fetched as publisher XML or
+  full-text HTML **and** the PDF; the review reads XML first, then HTML, then
+  the PDF, as it already did for a folder. `metascience run <pipeline> --doi`
+  works too.
+- **`--run-full-on-everything`** fetches everything -- the article, the
+  supplementary files and the linked data deposits (unpacked) -- and runs the
+  complete review on all of it: both analysts, the image and text tracks, the
+  copy-paste detector on the spreadsheets, and the adjudicator (`full_raw_data`,
+  which is `full` plus the raw-data module). A narrower `--pipeline` beside it
+  is refused before anything is fetched. `--max-supplementary-mb` /
+  `--max-data-mb` cap the downloads, `--refetch` re-runs fetchpdf over an
+  existing folder (otherwise it is reused).
+- **Deposit files are read.** fetchpdf's `<stem>_data_artifacts/<deposit>/`
+  was below every scan: the source resolver read the top level and the
+  raw-data module an allowlist of folder names. `supplements.data_artifact_files`
+  is now the one scan both use (tables and documents; images and code left
+  out; capped at 50 with the overflow counted).
+- **What the fetch got is on the record.** `fetch.json` in the folder and
+  `run_meta.fetch` give each channel as obtained / not obtained / none listed
+  / error / not requested, and each gap adds a Limitations line worded as a
+  fetch result, not as something the paper lacks. A DOI with no copy of the
+  article stops with exit 2 before any spend.
 ## [1.95.0] — 2026-10-19 — one command per tool: `metascience tool run`
 
 MINOR: the per-tool CLI verbs are removed, and two reproduction writers change

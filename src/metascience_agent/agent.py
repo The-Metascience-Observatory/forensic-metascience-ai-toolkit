@@ -254,6 +254,14 @@ def _resolve_paper_sources(paper_path: str, extra=None) -> PaperSources:
             [f for f in others if f.suffix.lower() in _SI_READABLE],
             [f for f in others if f.suffix.lower() in _SI_UNREADABLE],
         )
+        # LINKED DEPOSITS fetchpdf downloaded into `<stem>_data_artifacts/`.
+        # Below the top level, so the glob above never saw them: a dataset
+        # fetched for the review and then never opened by it. Merged like a
+        # `--supplement`, so PDFs reach extraction and the rest are classified
+        # by what `extract_supplement` can actually read.
+        from .supplements import data_artifact_files
+
+        found = _merge_supplied(found, data_artifact_files(p)[0])
     elif p.suffix.lower() == ".pdf":
         found = (PaperSources(None, None, [p], None, None, [], [])
                  if _is_supplementary(p)

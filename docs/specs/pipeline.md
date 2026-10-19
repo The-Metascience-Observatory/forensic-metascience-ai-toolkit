@@ -681,6 +681,34 @@ Measured against agy 1.4.2, 2026-10-18 (`--backend antigravity`, alias `agy`;
   (The design said `prompt.{label}.txt` and an applied `findings.json`; the
   code writes the names above.)
 
+## 13b. Starting from a DOI (`analyze --doi`, 1.96.0)
+
+`metascience analyze --doi 10.1/x [--run-full-on-everything]` (also
+`metascience run <pipeline> --doi ...`) fetches before anything is read or spent, through
+`fetch_paper.fetch_for_analysis`, which runs the installed `fetchpdf` library
+(`batch_fetch_pdfs`, one DOI, `get_xml_or_html`) into
+`<--fetch-dir, default .>/<paper_ids.doi_dirname(doi)>/`.
+
+- Without the flag: the article only (XML or HTML, plus the PDF).
+  `--run-full-on-everything`: also supplements and linked data deposits
+  (unpacked into `<stem>_data_artifacts/<deposit>/`), and the complete review
+  over all of it -- the `full_raw_data` pipeline (`full` + `raw_data`). A
+  narrower `--pipeline` beside it is refused before any fetch.
+- Which copy is the review's text is unchanged: `_resolve_paper_sources`
+  prefers XML, then validated HTML, then the PDF.
+- Deposit files are scanned once (`supplements.data_artifact_files`: tables,
+  documents, and `.xls`/`.zip`/`.doc` to be NAMED unreadable; no images or
+  code; capped at 50, the overflow counted). Both the source resolver and
+  `raw_track.structured_files` read that scan.
+- Each channel (`xml`, `html`, `pdf`, `supplements`, `datasets`) is
+  `obtained`, `not_obtained`, `none_listed`, `error` or `not_requested`, read
+  off the folder. `fetch.json` records it; `run_meta.fetch` carries it; each
+  channel that did not deliver adds a Limitations sentence worded as a fetch
+  result, never as something the paper lacks.
+- A folder already holding the article (and, for `--run-full-on-everything`, a
+  supplement manifest) is reused without the network; `--refetch` runs
+  fetchpdf again. No copy of the article: exit 2 before any spend.
+
 ## 14. Phase-4 additions (from the verification passes; normative)
 
 *Historical.* Item 1's `v2_pending` state was never implemented:

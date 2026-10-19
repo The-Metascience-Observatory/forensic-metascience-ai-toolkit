@@ -53,6 +53,13 @@ def structured_files(paper_dir: str | Path) -> list[Path]:
             if p.is_file() and p.suffix.lower() in FORMATS \
                     and not p.name.startswith((".", "~$")):
                 found.append(p)
+    # fetchpdf's linked deposits (`<stem>_data_artifacts/<deposit>/`), through
+    # the same scan the source resolver uses so the two agree.
+    from .supplements import data_artifact_files
+
+    seen = set(found)
+    found += [p for p in data_artifact_files(base)[0]
+              if p.suffix.lower() in FORMATS and p not in seen]
     return found
 
 

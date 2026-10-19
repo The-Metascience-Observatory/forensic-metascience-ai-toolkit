@@ -219,7 +219,37 @@ def _analyze_out_dir(paper_path: Path, output, model: str, config=None):
 
 @app.command()
 def analyze(
-    paper_path: Path = typer.Argument(..., help="Path to a paper directory, PDF, or markdown file"),
+    paper_path: Optional[Path] = typer.Argument(None, help="Path to a paper directory, PDF, or markdown file (or use --doi)"),
+    doi: Optional[str] = typer.Option(
+        None, "--doi",
+        help="Fetch the paper with fetchpdf instead of naming a path: the "
+             "article as publisher XML or HTML plus the PDF, into a new folder "
+             "named for the DOI (10.1/x -> 10.1--x/) under --fetch-dir. The "
+             "review reads XML first, then HTML, then the PDF."),
+    run_full_on_everything: bool = typer.Option(
+        False, "--run-full-on-everything",
+        help="With --doi: fetch EVERYTHING -- the article, the supplementary "
+             "files and the linked data deposits (unpacked) -- and run the "
+             "complete review on all of it: both analysts, the image and text "
+             "tracks, the copy-paste detector on the spreadsheets, and the "
+             "adjudicator (the `full_raw_data` pipeline). Refuses a narrower "
+             "--pipeline."),
+    fetch_dir: Path = typer.Option(
+        Path("."), "--fetch-dir",
+        help="With --doi: where the DOI's folder is created (default: the "
+             "current directory). An existing folder is reused."),
+    refetch: bool = typer.Option(
+        False, "--refetch",
+        help="With --doi: run fetchpdf again even when the folder already "
+             "holds the paper (files on disk are kept; supplements re-checked)."),
+    max_supplementary_mb: Optional[float] = typer.Option(
+        None, "--max-supplementary-mb",
+        help="With --run-full-on-everything: per-file cap on supplementary downloads "
+             "(fetchpdf's default otherwise)."),
+    max_data_mb: Optional[float] = typer.Option(
+        None, "--max-data-mb",
+        help="With --run-full-on-everything: cap on linked-dataset downloads "
+             "(fetchpdf's default otherwise)."),
     output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory for the review files (default: inside a paper directory, or beside a paper file as <paper>_forensic_review_...)"),
     pipeline: Optional[str] = typer.Option(
         None, "--pipeline",
@@ -344,9 +374,29 @@ def analyze(
         ignore_weekly_limit=ignore_weekly_limit,
     )
 
-    if not paper_path.exists():
+    if (paper_path is None) == (doi is None):
+        console.print("[red]Give a paper path or --doi (exactly one).[/red]")
+        raise typer.Exit(2)
+    if doi is None and (run_full_on_everything or refetch):
+        console.print("[red]--run-full-on-everything and --refetch fetch a "
+                      "paper, so they "
+                      "need --doi. For a local folder, put the supplements in "
+                      "it (or pass --supplement).[/red]")
+        raise typer.Exit(2)
+    if paper_path is not None and not paper_path.exists():
         console.print(f"[red]Error: Path not found: {paper_path}[/red]")
         raise typer.Exit(1)
+    # --run-full-on-everything IS the complete review over everything that
+    # was fetched. A narrower pipeline beside it would fetch all of it and
+    # then quietly read less, so it is refused rather than obeyed.
+    if run_full_on_everything:
+        if pipeline not in (None, FULL_ON_EVERYTHING_PIPELINE):
+            console.print(
+                f"[red]--run-full-on-everything runs the complete review "
+                f"(`{FULL_ON_EVERYTHING_PIPELINE}`); it cannot be combined "
+                f"with --pipeline {escape(pipeline)}. Drop one of them.[/red]")
+            raise typer.Exit(2)
+        pipeline = FULL_ON_EVERYTHING_PIPELINE
 
     # THE PIPELINE, resolved before anything is read or spent. A pipeline
     # decides the modules; the per-module flags are the pre-pipeline spelling of
@@ -380,6 +430,14 @@ def analyze(
         console.print(f"[cyan]Pipeline:[/cyan] {escape(config.describe())}")
     _require_backend(backend, config)
     effort = effort or DEFAULT_EFFORT
+
+    # FETCH BY DOI, after every flag has been validated (a typo must not cost
+    # a download) and before anything reads the paper.
+    if doi is not None:
+        paper_path = _fetch_doi_for_analysis(
+            doi, fetch_dir, everything=run_full_on_everything, refetch=refetch,
+            max_supplementary_mb=max_supplementary_mb,
+            max_data_mb=max_data_mb, verbose=verbose)
 
     # The old option only printed 'Including ...' and never delivered these
     # paths to either analyst. Refuse before extraction or spend rather than
@@ -2701,17 +2759,87 @@ def run_pipeline(
     ctx: typer.Context,
     pipeline: str = typer.Argument(..., help="A shipped pipeline name "
                                    "(`metascience pipeline list`) or a pipeline YAML path"),
-    paper_path: str = typer.Argument(..., help="Paper directory, PDF or markdown file"),
+    paper_path: Optional[str] = typer.Argument(None, help="Paper directory, PDF or markdown file (or use --doi)"),
+    doi: Optional[str] = typer.Option(None, "--doi", help="Fetch the paper by DOI (see `analyze --help`)"),
+    fetch_dir: Optional[Path] = typer.Option(None, "--fetch-dir", help="With --doi: where the DOI's folder is created"),
+    max_supplementary_mb: Optional[float] = typer.Option(None, "--max-supplementary-mb"),
+    max_data_mb: Optional[float] = typer.Option(None, "--max-data-mb"),
 ):
     """Run a pipeline on a paper: `metascience run tools_grim paper.pdf`.
 
     The same as `metascience analyze PAPER --pipeline PIPELINE`; any further
     `analyze` option (`--backend grok`, `-o DIR`, ...) is passed through.
+    `metascience run <pipeline> --doi 10.1/x` fetches the paper first; for the
+    complete review on everything use `metascience analyze --doi 10.1/x
+    --run-full-on-everything`.
     """
     from typer.main import get_command
+    # The fetch options that take a VALUE are declared here, not passed
+    # through: under `ignore_unknown_options` an unknown `--fetch-dir /x`
+    # would hand `/x` to PAPER_PATH.
+    fetch_args = [*(["--doi", doi] if doi else []),
+                  *(["--fetch-dir", str(fetch_dir)] if fetch_dir else []),
+                  *(["--max-supplementary-mb", str(max_supplementary_mb)]
+                    if max_supplementary_mb is not None else []),
+                  *(["--max-data-mb", str(max_data_mb)]
+                    if max_data_mb is not None else [])]
     analyze_cmd = get_command(app).commands["analyze"]
-    analyze_cmd.main(args=[paper_path, "--pipeline", pipeline, *ctx.args],
+    analyze_cmd.main(args=[*([paper_path] if paper_path else []),
+                           "--pipeline", pipeline, *fetch_args, *ctx.args],
                      prog_name="metascience run")
+
+
+#: What `--run-full-on-everything` runs: `full` plus the raw-data module.
+FULL_ON_EVERYTHING_PIPELINE = "full_raw_data"
+
+_FETCH_STYLE = {"obtained": "green", "not_requested": "dim",
+                "none_listed": "yellow", "not_obtained": "yellow",
+                "error": "red"}
+
+
+def _fetch_doi_for_analysis(doi: str, fetch_dir: Path, **kw) -> Path:
+    """Fetch `doi` (fetch_paper.fetch_for_analysis), print what arrived per
+    channel, and return the folder -- or stop, before any spend, when no copy
+    of the article arrived."""
+    from . import fetch_paper as _fp
+
+    try:
+        doi = _fp.normalize_doi(doi)
+        target = _fp.paper_dir_for(doi, fetch_dir)
+        console.print(f"[cyan]Fetching[/cyan] {escape(doi)} -> {escape(str(target))}")
+        result = _fp.fetch_for_analysis(doi, fetch_dir, **kw)
+    except _fp.FetchError as exc:
+        console.print(f"[red]{escape(str(exc))}[/red]")
+        raise typer.Exit(2)
+
+    table = Table(title=("Reused " if result.reused else "Fetched ")
+                  + escape(result.paper_dir.name), show_lines=False)
+    table.add_column("channel")
+    table.add_column("status")
+    table.add_column("files")
+    for name, ch in result.channels.items():
+        # Names, not paths: every path starts with the DOI stem, and the
+        # table truncated them to identical prefixes. fetch.json has paths.
+        paths = [Path(p).name.split("_supplementary_info_", 1)[-1]
+                 for p in ch.get("paths") or []]
+        files = ", ".join(paths[:3]) + (f" (+{len(paths) - 3} more)"
+                                        if len(paths) > 3 else "")
+        status = ch["status"] + (f" ({ch['fetch_status']})"
+                                 if ch.get("fetch_status") else "")
+        table.add_row(name, f"[{_FETCH_STYLE.get(ch['status'], 'white')}]"
+                      f"{escape(status)}[/]",
+                      escape(files or ch.get("detail", "")))
+    console.print(table)
+    for line in result.limitations():
+        console.print(f"[yellow]{escape(line)}[/yellow]")
+    if not result.has_article:
+        console.print(
+            "[red]No copy of the article was obtained, so there is nothing to "
+            f"analyse. Get it by hand from https://doi.org/{escape(doi)} , put "
+            f"it in {escape(str(result.paper_dir))}/ and run `metascience "
+            "analyze` on that folder.[/red]")
+        raise typer.Exit(2)
+    return result.paper_dir
 
 
 def _require_backend(backend: Optional[str], config) -> None:

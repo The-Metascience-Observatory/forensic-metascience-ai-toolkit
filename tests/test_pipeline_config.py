@@ -691,7 +691,7 @@ class TestAstraPhase1Findings:
             files = " ".join(f.read_text() for f in Path(inv.workdir).rglob("*")
                              if f.is_file()) if inv.workdir else ""
             for module in ("forensic_metascience_ai_toolkit.mcp_server",
-                           "metascience_agent.mcp_server"):  # old name, still importable
+                           "metascience_agent.mcp_server"):  # and the pre-1.96.1 name
                 assert module not in text + files
 
     def test_a_failed_repair_is_swallowed_not_raised(self, monkeypatch):

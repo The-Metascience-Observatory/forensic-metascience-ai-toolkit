@@ -9,6 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.98.1] — 2026-10-19 — the `metascience_agent` alias is removed
+
+PATCH: no change to any output. The `metascience_agent` compatibility alias
+added in 1.96.1 is gone, to keep one name: `import metascience_agent` and
+`python -m metascience_agent.X` now fail with `ModuleNotFoundError`. Use
+`forensic_metascience_ai_toolkit`. Recorded runs that name the old module are
+unchanged; they are records.
+
 ## [1.98.0] — 2026-10-19 — broken symbol fonts repaired by glyph shape; analysts told about font damage
 
 MINOR: the text every reader of a PDF's docling cache sees changes on papers

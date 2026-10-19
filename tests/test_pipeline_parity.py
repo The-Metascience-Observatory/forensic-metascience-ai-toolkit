@@ -92,7 +92,8 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
         patch = ""
         if old_package_name:
             # Before 1.96.1 the MCP server was launched under the package's
-            # old import name, which the `metascience_agent` alias still serves.
+            # old import name. Only the recorded string matters here; the
+            # capture never starts the server.
             patch += (
                 "import forensic_metascience_ai_toolkit.integration as I\n"
                 "I.forensic_mcp_module = 'metascience_agent.mcp_server'\n")
@@ -541,8 +542,7 @@ def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
     `metascience_agent` -> `forensic_metascience_ai_toolkit`, so every stage's
     MCP server is now launched as `python -m
     forensic_metascience_ai_toolkit.mcp_server`. Proved by construction: the
-    current tree with the OLD module name restored (served by the
-    `metascience_agent` alias) captures the 1.93 oracle byte for byte; and the
+    current tree with the OLD module name restored captures the 1.93 oracle byte for byte; and the
     1.96.1 oracle differs from it, and names the new module."""
     old = json.loads(P193.read_text())
     new = json.loads(P1961.read_text())

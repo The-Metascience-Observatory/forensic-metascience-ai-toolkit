@@ -11,9 +11,7 @@ This repo is the **Forensic Metascience AI Toolkit** (formerly the Agent for For
 Metascience; GitHub `delton137/forensic-metascience-ai-toolkit`; pip distribution
 `forensic-metascience-ai-toolkit`). The import package was renamed from
 `metascience_agent` to `forensic_metascience_ai_toolkit` on 2026-10-19 (1.96.1);
-`metascience_agent` remains as a deprecated alias shim
-(`src/metascience_agent/__init__.py`), so old imports and
-`python -m metascience_agent.X` still work. New code imports the new name.
+the old name no longer imports (its alias was removed in 1.98.1).
 The CLI is still `metascience`.
 
 Guidance for working in this repo. See [README.md](README.md) for user-facing usage

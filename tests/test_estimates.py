@@ -10,7 +10,7 @@ import subprocess
 import pytest
 from scipy import stats
 
-from metascience_agent.tools.estimates import (
+from forensic_metascience_ai_toolkit.tools.estimates import (
     absence_of_evidence, check_estimate_ci, is_ratio_measure,
 )
 
@@ -219,13 +219,13 @@ class TestTheDecimalsFallbackErrsWideOnly:
     """
 
     def test_trailing_zeros_read_coarser_hence_looser(self):
-        from metascience_agent.tools import rounding as R
-        from metascience_agent.tools.estimates import _decimals
+        from forensic_metascience_ai_toolkit.tools import rounding as R
+        from forensic_metascience_ai_toolkit.tools.estimates import _decimals
         assert _decimals(1.40) == 1          # printed to 2 dp, read as 1
         assert R.half_width(1) == pytest.approx(10 * R.half_width(2))
 
     def test_integral_values_read_at_zero_decimals(self):
-        from metascience_agent.tools.estimates import _decimals
+        from forensic_metascience_ai_toolkit.tools.estimates import _decimals
         assert _decimals(5.0) == 0           # was 1 -- ten times too tight
         assert _decimals(4) == 0
 
@@ -249,7 +249,7 @@ class TestTheDecimalsFallbackErrsWideOnly:
         original intent more exactly than the floor ever did -- 1e-8 now earns
         5e-9 rather than 0.005.
         """
-        from metascience_agent.tools.estimates import _p_tolerance
+        from forensic_metascience_ai_toolkit.tools.estimates import _p_tolerance
         assert _p_tolerance(1e-8) == pytest.approx(5e-9)
         # The intent, stated as an inequality rather than a magic number.
         assert _p_tolerance(1e-8) < 1e-8, "a tiny p must earn a tiny slack"
@@ -330,7 +330,7 @@ class TestRecoveredPIsAnInterval:
         """p is NOT monotone in the estimate -- it peaks at the null and falls
         away either side -- so the box corners never sample p = 1. Omitting the
         null as a candidate is what convicted the large-N table pattern."""
-        from metascience_agent.tools.estimates import _recovered_p_interval
+        from forensic_metascience_ai_toolkit.tools.estimates import _recovered_p_interval
         lo, hi = _recovered_p_interval(1.02, 0.9, 1.2, 0.95, True, 1.0, 1)
         assert hi == pytest.approx(1.0, abs=1e-9)
 
@@ -361,7 +361,7 @@ class TestZeroWidthIntervalIsRefusedNotAccused:
         """A caller must be able to tell a failed recovery from a real value."""
         import math
 
-        from metascience_agent.tools.estimates import _p_from_ci
+        from forensic_metascience_ai_toolkit.tools.estimates import _p_from_ci
         assert math.isnan(_p_from_ci(1.0, 1.0, 1.0, 0.95, True, 1.0))
         assert math.isnan(_p_from_ci(0.5, 0.5, 0.5, 0.95, False, 0.0))
 
@@ -384,14 +384,14 @@ class TestAbsenceOfEvidenceCanDeriveItsOwnInterval:
     what it is forbidden to do. The fix belongs in the tool."""
 
     def test_b_and_se_are_enough(self):
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         r = absence_of_evidence(b=0.12, se=0.31, measure="b",
                                 sesoi=0.5, null_value=0.0)
         assert r["severity"] != "indeterminate"
         assert r["derivation"]["interval_source"] == "derived"
 
     def test_the_arithmetic_is_the_ordinary_wald_interval(self):
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         d = absence_of_evidence(b=0.12, se=0.31, measure="b",
                                 sesoi=0.5, null_value=0.0)["derivation"]
         lo, hi = d["derived_ci"]
@@ -401,7 +401,7 @@ class TestAbsenceOfEvidenceCanDeriveItsOwnInterval:
     def test_df_selects_the_t_distribution_and_says_so(self):
         """Silently choosing a distribution is how a bound becomes wrong
         without anyone being able to see why."""
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         d = absence_of_evidence(b=0.12, se=0.31, df=12, measure="b",
                                 sesoi=0.5, null_value=0.0)["derivation"]
         assert "t with 12 df" in d["distribution"]
@@ -411,7 +411,7 @@ class TestAbsenceOfEvidenceCanDeriveItsOwnInterval:
         assert "normal" in z["distribution"]
 
     def test_a_derived_interval_never_passes_as_the_paper_s(self):
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         d = absence_of_evidence(b=0.12, se=0.31, measure="b",
                                 sesoi=0.5, null_value=0.0)["derivation"]
         assert "NOT printed by the paper" in d["note"]
@@ -420,20 +420,20 @@ class TestAbsenceOfEvidenceCanDeriveItsOwnInterval:
     def test_a_printed_interval_wins_and_ours_is_shown_beside_it(self):
         """Two intervals for one coefficient that DISAGREE is a finding in its
         own right; silently preferring either would bury it."""
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         r = absence_of_evidence(ci_low=-0.20, ci_high=0.44, b=0.12, se=0.31,
                                 measure="b", sesoi=0.5, null_value=0.0)
         assert "printed" in r["derivation"]["interval_source"]
         assert r["derivation"]["derived_ci"][0] == pytest.approx(-0.4876, abs=1e-3)
 
     def test_neither_input_is_still_a_clean_refusal(self):
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         r = absence_of_evidence(measure="b")
         assert r["severity"] == "indeterminate"
         assert "refusal, not a finding" in r["explanation"]
 
     def test_a_nonpositive_se_refuses_rather_than_inventing_a_bound(self):
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         for bad in (0, -0.3, float("nan")):
             r = absence_of_evidence(b=0.12, se=bad, measure="b")
             assert r["severity"] == "indeterminate"
@@ -441,7 +441,7 @@ class TestAbsenceOfEvidenceCanDeriveItsOwnInterval:
     def test_the_printed_path_is_completely_unchanged(self):
         """The derivation was added IN FRONT of the judgement, not inside it.
         A caller passing an interval must get exactly what it always got."""
-        from metascience_agent.tools.estimates import absence_of_evidence
+        from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
         r = absence_of_evidence(ci_low=-0.49, ci_high=0.73, measure="b",
                                 sesoi=0.5, null_value=0.0)
         assert "derivation" not in r

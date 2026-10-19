@@ -38,7 +38,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.anatomy import SEVERITY_WEIGHT, weight_finding_severity
+from forensic_metascience_ai_toolkit.anatomy import SEVERITY_WEIGHT, weight_finding_severity
 
 REPO = Path(__file__).resolve().parents[1]
 

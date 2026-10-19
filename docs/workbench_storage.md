@@ -15,8 +15,8 @@ other host is refused; the remote Neon database was retired 2026-10-16.
 Apply the additive journal migration once, then bootstrap this computer:
 
 ```sh
-python -m metascience_agent.workbench.service --migrate
-python -m metascience_agent.workbench.service --sync --index webapp/data/index.json
+python -m forensic_metascience_ai_toolkit.workbench.service --migrate
+python -m forensic_metascience_ai_toolkit.workbench.service --sync --index webapp/data/index.json
 cd webapp
 npm run build
 npm start
@@ -43,8 +43,8 @@ ranges, conditional requests and streaming.
 ## Import existing results without running analysis
 
 ```sh
-python -m metascience_agent.workbench.importer /path/to/corpus --dry-run
-python -m metascience_agent.workbench.importer /path/to/corpus > import-report.json
+python -m forensic_metascience_ai_toolkit.workbench.importer /path/to/corpus --dry-run
+python -m forensic_metascience_ai_toolkit.workbench.importer /path/to/corpus > import-report.json
 ```
 
 The importer compares stable run IDs and sealed digests, imports missing archives
@@ -242,7 +242,7 @@ no aliases of those modules (removed 2026-10-18, v1.85.0): `workbench/service.py
 loads them through `image_plugin.load`, or `workbench/image_review_host.load` for
 the three assembled from the host's storage (`local_images`,
 `local_image_import`, `local_image_service`). The import CLI is
-`python -m metascience_agent.workbench.image_import`, and `--images-local`
+`python -m forensic_metascience_ai_toolkit.workbench.image_import`, and `--images-local`
 refuses with an install hint when the package is absent. The statistical workbench runs without it. Their
 documentation moved with the code on 2026-10-16: see
 `docs/workbench_image_review.md` in the image package.

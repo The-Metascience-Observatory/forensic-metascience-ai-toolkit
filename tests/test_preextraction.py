@@ -26,9 +26,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import supplements
-from metascience_agent.agent import _pdfs_to_extract, ensure_paper_extracted
-from metascience_agent.extraction import docling_tables as dl
+from forensic_metascience_ai_toolkit import supplements
+from forensic_metascience_ai_toolkit.agent import _pdfs_to_extract, ensure_paper_extracted
+from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
 #: An article this repository ships already extracted. Used for the "a present
 #: cache costs nothing" property, which needs a REAL cache entry -- a synthetic
@@ -290,13 +290,13 @@ class TestExtractionStaysOutOfReadPaths:
         return _write_pdf(d / "10.1234--unextracted.pdf")
 
     def test_extract_text_refuses_instead_of_extracting(self, unextracted):
-        from metascience_agent.extraction.pdf import extract_text
+        from forensic_metascience_ai_toolkit.extraction.pdf import extract_text
 
         with pytest.warns(UserWarning, match="has not been extracted"):
             assert extract_text(unextracted) == ""
 
     def test_extract_text_with_tables_refuses_instead_of_extracting(self, unextracted):
-        from metascience_agent.extraction.pdf import extract_text_with_tables
+        from forensic_metascience_ai_toolkit.extraction.pdf import extract_text_with_tables
 
         out = extract_text_with_tables(unextracted)
         assert out["unreadable"] is True
@@ -305,7 +305,7 @@ class TestExtractionStaysOutOfReadPaths:
     def test_paper_text_refuses_instead_of_extracting(self, unextracted):
         """The one that matters most: `paper_text` is called by the supplement
         gate, the quote haystack and the glyph scan, on every paper."""
-        from metascience_agent.extraction.jats import paper_text
+        from forensic_metascience_ai_toolkit.extraction.jats import paper_text
 
         with pytest.warns(UserWarning, match="has not been extracted"):
             assert paper_text(unextracted.parent) == ""
@@ -326,7 +326,7 @@ class TestTheCliRunsItBeforeItsOwnGate:
     def test_the_preflight_precedes_the_supplement_gate(self):
         import inspect
 
-        from metascience_agent import cli
+        from forensic_metascience_ai_toolkit import cli
 
         src = inspect.getsource(cli.analyze)
         assert "ensure_paper_extracted" in src, (
@@ -346,7 +346,7 @@ class TestTheCliRunsItBeforeItsOwnGate:
         """
         import inspect
 
-        from metascience_agent import cli
+        from forensic_metascience_ai_toolkit import cli
 
         src = inspect.getsource(cli.batch_cmd)
         assert "ensure_paper_extracted(" in src

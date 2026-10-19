@@ -25,7 +25,7 @@ import json
 
 import pytest
 
-from metascience_agent.scaffold import coverage
+from forensic_metascience_ai_toolkit.scaffold import coverage
 
 # --------------------------------------------------------------------------
 # A tiny paper: four sentences that matter, one article table, one supplement
@@ -226,7 +226,7 @@ class TestTheNumbersAreModelFree:
         """The measures are worthless if nothing calls them."""
         import inspect
 
-        from metascience_agent.scaffold import bind
+        from forensic_metascience_ai_toolkit.scaffold import bind
         src = inspect.getsource(bind.assemble)
         assert 'account["headline"] = _coverage.headline(' in src
 
@@ -409,7 +409,7 @@ class TestDeclaredVariablesWithValues:
 
 
 def test_the_numeral_floor_is_rendered_as_an_inventory_under_its_own_heading():
-    from metascience_agent.scaffold import render
+    from forensic_metascience_ai_toolkit.scaffold import render
     src = render.render.__doc__ or ""
     import inspect
     body = inspect.getsource(render.render)

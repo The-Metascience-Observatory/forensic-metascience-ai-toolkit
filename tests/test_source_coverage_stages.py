@@ -33,7 +33,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.agent import _sweep_source_coverage
+from forensic_metascience_ai_toolkit.agent import _sweep_source_coverage
 REPO = Path(__file__).resolve().parents[1]
 RUN = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415/forensic_review_clamped"
 PAPER = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415"

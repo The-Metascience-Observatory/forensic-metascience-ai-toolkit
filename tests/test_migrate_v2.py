@@ -7,8 +7,8 @@ from pathlib import Path
 import jsonschema
 import pytest
 
-from metascience_agent import migrate_v2 as M
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit import migrate_v2 as M
+from forensic_metascience_ai_toolkit.core import prompts
 
 
 class TestRowMapping:

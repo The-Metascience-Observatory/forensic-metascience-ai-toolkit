@@ -10,7 +10,7 @@ any of them is a false positive by definition. Free, offline, deterministic.
 """
 import pytest
 
-from metascience_agent.simulation import (
+from forensic_metascience_ai_toolkit.simulation import (
     FLAW_KINDS,
     benchmark,
     generate_clean_paper,
@@ -87,7 +87,7 @@ class TestTheGeneratorInjectsFlawsThatAreActuallyThere:
     """
 
     def test_a_transposition_actually_transposes(self):
-        from metascience_agent.simulation import Row, inject_flaw
+        from forensic_metascience_ai_toolkit.simulation import Row, inject_flaw
         import random
         row = Row(label="r", values=[1], scale_min=1, scale_max=7)
         row.reported_mean, row.reported_sd, row.reported_n = 4.61, 1.0, 30
@@ -99,7 +99,7 @@ class TestTheGeneratorInjectsFlawsThatAreActuallyThere:
         """The honest record. At n >= 100 every two-decimal mean is
         GRIM-attainable, so there is no detectable violation to inject, and
         saying so is what lets the benchmark exclude it rather than score it."""
-        from metascience_agent.simulation import (generate_clean_paper,
+        from forensic_metascience_ai_toolkit.simulation import (generate_clean_paper,
                                                   generate_flawed_paper)
         for seed in range(3000, 3060):
             clean = generate_clean_paper(seed)
@@ -111,7 +111,7 @@ class TestTheGeneratorInjectsFlawsThatAreActuallyThere:
                     f"seed {seed}: row {f.label} is unchanged but claims flaw={f.flaw}")
 
     def test_the_benchmark_excludes_undetectable_flaws_and_says_how_many(self):
-        from metascience_agent.simulation import benchmark
+        from forensic_metascience_ai_toolkit.simulation import benchmark
         b = benchmark()
         for kind, s in b["sensitivity"].items():
             assert "undetectable" in s, f"{kind} must report what it excluded"
@@ -124,7 +124,7 @@ class TestTheGeneratorInjectsFlawsThatAreActuallyThere:
         flawed paper score as a detection -- the one arrangement that makes a
         tool look better the worse it behaves."""
         import inspect
-        from metascience_agent import simulation
+        from forensic_metascience_ai_toolkit import simulation
         src = inspect.getsource(simulation.benchmark)
         assert "flawed_rows &" in src or "flawed_rows.intersection" in src, (
             "benchmark must intersect the injected rows with the accused rows")

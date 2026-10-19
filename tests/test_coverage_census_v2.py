@@ -26,7 +26,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import agent, census, parallel
+from forensic_metascience_ai_toolkit import agent, census, parallel
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "benchmarks" / "paper_reviews" / "runs"
@@ -199,7 +199,7 @@ class TestTheWriterShipsIt:
 class TestTheModelCannotWriteIt:
     def test_the_document_declares_it_and_the_producer_schema_does_not(self):
         """Its entire value is that no model produced it."""
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         assert "coverage_summary" in prompts.findings_schema_v2()["properties"]
         for producer in ("tool_expert", "science_error"):
             assert "coverage_summary" not in prompts.producer_findings_schema(

@@ -36,9 +36,9 @@ import pathlib
 
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
-SRC = pathlib.Path(__file__).parent.parent / "src" / "metascience_agent"
+SRC = pathlib.Path(__file__).parent.parent / "src" / "forensic_metascience_ai_toolkit"
 TOOLS_DIR = SRC / "tools"
 CLI_SRC = SRC / "cli.py"
 
@@ -377,7 +377,7 @@ def _public_tool_functions() -> dict[str, object]:
 def _cli_commands() -> dict[str, set[str]]:
     """CLI command name -> its parameter names."""
     import inspect
-    from metascience_agent.cli import app
+    from forensic_metascience_ai_toolkit.cli import app
     return {info.name or info.callback.__name__.replace("_", "-"):
             set(inspect.signature(info.callback).parameters)
             for info in app.registered_commands}
@@ -575,8 +575,8 @@ class TestCoverage:
         Named here so a well-meaning 'add the missing tool' cannot land
         without deleting this test and the measurements it cites.
         """
-        from metascience_agent.agent import STAGE1_TOOLS, STAGE2_TOOLS
-        from metascience_agent.tools_mcp import ALL_TOOLS
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, STAGE2_TOOLS
+        from forensic_metascience_ai_toolkit.tools_mcp import ALL_TOOLS
         names = {s.name for s in R.SPECS}
         assert "detect_copy_move" not in names
         assert "copy_move" not in names
@@ -616,7 +616,7 @@ class TestCliSurface:
         """An operator (no role, no manifest in the environment) can run every
         registered tool -- the two CLI-only ones included, since `tool run`
         is now their only command-line route."""
-        from metascience_agent import tool_cli
+        from forensic_metascience_ai_toolkit import tool_cli
         monkeypatch.delenv("METASCIENCE_MCP_STAGE", raising=False)
         monkeypatch.delenv("METASCIENCE_MCP_TOOLS", raising=False)
         served = set(tool_cli._served())
@@ -626,7 +626,7 @@ class TestCliSurface:
         assert not unreachable, f"tools with no command-line route: {unreachable}"
 
     def test_a_fenced_agent_still_cannot_run_the_cli_only_tools(self, monkeypatch):
-        from metascience_agent import tool_cli
+        from forensic_metascience_ai_toolkit import tool_cli
         monkeypatch.setenv("METASCIENCE_MCP_STAGE", R.TOOL_AGENT)
         for name in R.CLI_ONLY:
             assert not tool_cli._operator_may_run(name), name
@@ -657,7 +657,7 @@ class TestPromptCoverage:
 
     def _sweep(self):
         # Assembled: the per-tool guidance lives in each tool's TOOL.md.
-        from metascience_agent.core.prompts import tool_expert_body
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_body
         return tool_expert_body()
 
     def _reference(self):
@@ -714,7 +714,7 @@ class TestPromptCoverage:
         be registered too."""
         import re
         from typer.main import get_command
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
         commands = get_command(app).commands
         reference = self._reference()
         verbs = (set(re.findall(r"^metascience ([a-z][a-z0-9-]+)", reference, re.M))
@@ -784,8 +784,8 @@ class TestTheHelpStringsActuallyReachTheModel:
 
     @staticmethod
     def _seen(name):
-        from metascience_agent.mcp_server import _to_json_schema
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.mcp_server import _to_json_schema
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         return _to_json_schema(BY_NAME[name].schema())["properties"]
 
     def test_the_primary_features_instruction_is_on_the_wire(self):
@@ -794,12 +794,12 @@ class TestTheHelpStringsActuallyReachTheModel:
         assert "contiguous span" in desc
 
     def test_no_tool_description_repeats_it_so_the_schema_is_the_only_route(self):
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.registry import SPECS
         assert not [s.name for s in SPECS if "VERBATIM text from the paper" in s.description]
 
     def test_every_authored_help_string_reaches_the_model(self):
-        from metascience_agent.mcp_server import _to_json_schema
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.mcp_server import _to_json_schema
+        from forensic_metascience_ai_toolkit.registry import SPECS
         missing = []
         for spec in SPECS:
             props = _to_json_schema(spec.schema())["properties"]
@@ -818,8 +818,8 @@ class TestTheHelpStringsActuallyReachTheModel:
         assert self._seen("check_regression")["decimals_b"]["type"] == "integer"
 
     def test_no_parameter_is_mistyped_as_string(self):
-        from metascience_agent.mcp_server import _PY_TYPE_TO_JSON, _to_json_schema
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.mcp_server import _PY_TYPE_TO_JSON, _to_json_schema
+        from forensic_metascience_ai_toolkit.registry import SPECS
         bad = []
         for spec in SPECS:
             props = _to_json_schema(spec.schema())["properties"]
@@ -833,11 +833,11 @@ class TestTheHelpStringsActuallyReachTheModel:
         assert not bad, bad[:10]
 
     def test_a_plain_type_still_works(self):
-        from metascience_agent.mcp_server import _to_json_schema
+        from forensic_metascience_ai_toolkit.mcp_server import _to_json_schema
         assert _to_json_schema({"x": int}) == {
             "type": "object", "properties": {"x": {"type": "integer"}}}
 
     def test_an_already_built_json_schema_passes_through(self):
-        from metascience_agent.mcp_server import _to_json_schema
+        from forensic_metascience_ai_toolkit.mcp_server import _to_json_schema
         given = {"type": "object", "properties": {"y": {"type": "string"}}}
         assert _to_json_schema(given) is given

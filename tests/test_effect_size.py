@@ -10,7 +10,7 @@ import math
 
 import pytest
 
-from metascience_agent.tools.effect_size import (
+from forensic_metascience_ai_toolkit.tools.effect_size import (
     FIELD_BENCHMARKS,
     check_effect_plausibility,
     cohens_d,
@@ -235,11 +235,11 @@ class TestTheBadBenchmarkIsWithdrawnRatherThanDeleted:
     ARGS = dict(mean1=5.2, sd1=1.1, n1=40, mean2=4.6, sd2=1.2, n2=40)
 
     def test_the_bad_row_is_gone_from_the_live_table(self):
-        from metascience_agent.tools.effect_size import FIELD_BENCHMARKS
+        from forensic_metascience_ai_toolkit.tools.effect_size import FIELD_BENCHMARKS
         assert "psychology_general" not in FIELD_BENCHMARKS
 
     def test_naming_it_returns_a_diagnosis_not_unknown_field(self):
-        from metascience_agent.tools.effect_size import check_effect_plausibility
+        from forensic_metascience_ai_toolkit.tools.effect_size import check_effect_plausibility
         r = check_effect_plausibility(field="psychology_general", **self.ARGS)
         assert r["severity"] == "indeterminate"
         assert r.get("benchmark_withdrawn") == "psychology_general"
@@ -248,12 +248,12 @@ class TestTheBadBenchmarkIsWithdrawnRatherThanDeleted:
 
     def test_the_effect_size_is_still_reported(self):
         """A withdrawn benchmark limits the comparison, never the value."""
-        from metascience_agent.tools.effect_size import check_effect_plausibility
+        from forensic_metascience_ai_toolkit.tools.effect_size import check_effect_plausibility
         r = check_effect_plausibility(field="psychology_general", **self.ARGS)
         assert "d = 0.5" in r["explanation"] and "95% CI" in r["explanation"]
 
     def test_every_surviving_benchmark_declares_its_provenance(self):
-        from metascience_agent.tools.effect_size import FIELD_BENCHMARKS
+        from forensic_metascience_ai_toolkit.tools.effect_size import FIELD_BENCHMARKS
         for name, row in FIELD_BENCHMARKS.items():
             assert row.get("provenance") in ("cited", "uncited_estimate"), name
             assert row.get("source"), name
@@ -262,7 +262,7 @@ class TestTheBadBenchmarkIsWithdrawnRatherThanDeleted:
         """The withdrawn row's defect in a form that generalises: a median that
         low turns the ordinary into the exceptional. Nothing plausible in these
         literatures sits under d = 0.25."""
-        from metascience_agent.tools.effect_size import FIELD_BENCHMARKS
+        from forensic_metascience_ai_toolkit.tools.effect_size import FIELD_BENCHMARKS
         for name, row in FIELD_BENCHMARKS.items():
             assert row["median"] >= 0.25, f"{name} median {row['median']} will over-flag"
             assert row["median"] < row["p75"] < row["p95"], f"{name} percentiles disordered"
@@ -289,7 +289,7 @@ class TestPairedDInterval:
         NAMING: the tool must not offer a key called d_av, and must say that
         d_av needs a ratio it does not take.
         """
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         out = P(dz=0.89)
         assert not [k for k in out if k.startswith("d_av")], (
             "an output key named d_av names a quantity this tool cannot compute")
@@ -299,7 +299,7 @@ class TestPairedDInterval:
     def test_the_registry_card_does_not_state_the_inverse(self):
         """The card asserted 'Unequal SDs make d_av the quantity this returns'
         -- the exact inverse -- and that card is published to the report."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         card = " ".join(R.BY_NAME["paired_d_interval"].assumptions)
         assert "Lakens 2013" in card
         assert "NOT d_av" in card
@@ -307,7 +307,7 @@ class TestPairedDInterval:
     def test_the_direction_is_not_inverted(self):
         """d_av SHRINKS as r rises. effectcheck 0.7.7 divides where it should
         multiply and so reports 2.82 where the truth is 0.28."""
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         lo = P(dz=0.891, r=0.95)["d_rm"]
         hi = P(dz=0.891, r=0.1)["d_rm"]
         assert lo < hi
@@ -315,7 +315,7 @@ class TestPairedDInterval:
         assert lo < 0.3 and hi > 1.1
 
     def test_an_unreported_correlation_yields_an_interval_not_a_point(self):
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         r = P(dz=0.89)
         assert r["r_is_reported"] is False
         assert r["d_rm_low"] < r["d_rm_high"]
@@ -323,20 +323,20 @@ class TestPairedDInterval:
         assert r["ratio_high_to_low"] > 3
 
     def test_a_reported_correlation_determines_it(self):
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         r = P(dz=0.89, r=0.5)
         assert r["r_is_reported"] is True
         assert r["d_rm_low"] == r["d_rm_high"] == r["d_rm"]
         assert r["interval_width"] == 0.0
 
     def test_dz_can_be_derived_from_t_and_n(self):
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         assert abs(P(t=6.3, n=50)["dz"] - 6.3 / math.sqrt(50)) < 1e-12
 
     def test_it_never_accuses(self):
         """Descriptive by evidence class: a wide interval is a fact about the
         reporting, not about the work."""
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         for kwargs in ({"dz": 0.89}, {"dz": 5.0}, {"dz": 0.1, "r": 0.99}):
             assert P(**kwargs)["severity"] == "indeterminate"
 
@@ -348,10 +348,10 @@ class TestPairedDInterval:
         {"t": 6.3, "n": 1},            # n too small
     ])
     def test_bad_input_is_a_structured_refusal_not_an_exception(self, kwargs):
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         out = P(**kwargs)
         assert "error" in out and out["severity"] == "indeterminate"
 
     def test_it_points_at_the_better_tool_when_one_applies(self):
-        from metascience_agent.tools.effect_size import paired_d_interval as P
+        from forensic_metascience_ai_toolkit.tools.effect_size import paired_d_interval as P
         assert "recalc_within_subjects_t" in P(dz=0.89)["note"]

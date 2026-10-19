@@ -17,7 +17,7 @@ stated at the top of the ladder.
 """
 import pytest
 
-from metascience_agent.tools.bounds import (
+from forensic_metascience_ai_toolkit.tools.bounds import (
     MEASURE_BOUNDS, canonical_measure, check_statistic_bounds,
     rescalings_that_fit,
 )
@@ -76,7 +76,7 @@ class TestVerificationIsThePriceOfTheAccusation:
         not a confidence flag, not the model's say-so."""
         import inspect
 
-        from metascience_agent.tools import bounds
+        from forensic_metascience_ai_toolkit.tools import bounds
         sig = inspect.signature(bounds.check_statistic_bounds)
         assert set(sig.parameters) == {
             "value", "measure", "extraction_verified", "source_quote"}
@@ -165,7 +165,7 @@ class TestSPRITEIsReproducible:
               data_type="likert", discreteness_source="stated")
 
     def _sr(self, **over):
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
         return sprite_reconstruct(**{**self.KW, **over})
 
     def test_the_same_call_twice_gives_the_same_verdict(self):
@@ -183,7 +183,7 @@ class TestSPRITEIsReproducible:
         re-run under several seeds, not to hope the default was lucky."""
         import inspect
 
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
         assert "seed" in inspect.signature(sprite_reconstruct).parameters
 
     def test_it_does_not_seed_the_global_rng(self):
@@ -201,7 +201,7 @@ class TestSPRITEIsReproducible:
         """What makes a SPRITE no-solution usable as evidence is that the
         infeasibility is PROVED from parity and integrality, not searched for.
         That path takes no RNG and cannot be seed-dependent."""
-        from metascience_agent.tools.sprite import _sd_window_feasible
+        from forensic_metascience_ai_toolkit.tools.sprite import _sd_window_feasible
         ok_a, _ = _sd_window_feasible(60, 20, 1.5, 1, 1, 7)
         ok_b, _ = _sd_window_feasible(60, 20, 1.5, 1, 1, 7)
         assert ok_a is ok_b
@@ -235,7 +235,7 @@ class TestEverySimulatingToolSuppliesItsSeed:
     def test_each_takes_a_seed(self):
         import inspect
 
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         for name in self.SIMULATING:
             fn = R.BY_NAME[name].fn
             assert "seed" in inspect.signature(fn).parameters, name
@@ -244,7 +244,7 @@ class TestEverySimulatingToolSuppliesItsSeed:
         """`seed=None` would be a seed parameter that changes nothing."""
         import inspect
 
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         for name in self.SIMULATING:
             default = inspect.signature(R.BY_NAME[name].fn).parameters["seed"].default
             assert isinstance(default, int), f"{name}: seed default is {default!r}"
@@ -252,7 +252,7 @@ class TestEverySimulatingToolSuppliesItsSeed:
     def test_each_seed_is_RECORDED_in_the_call_ledger(self):
         """The half that was missing. A seed the caller cannot see is a seed
         nobody can re-supply."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         for name in self.SIMULATING:
             spec = R.BY_NAME[name]
             assert any(p.name == "seed" for p in spec.params), (
@@ -267,7 +267,7 @@ class TestEverySimulatingToolSuppliesItsSeed:
         import pathlib
         import re
         tools = (pathlib.Path(__file__).resolve().parents[1]
-                 / "src/metascience_agent/tools")
+                 / "src/forensic_metascience_ai_toolkit/tools")
         call = re.compile(
             r"(?<![\w.])random\.(shuffle|choice|random|randint|sample|uniform|seed)\s*\(")
         bad = []
@@ -319,7 +319,7 @@ class TestTheSplitCountPercentColumn:
         a false accusation, manufactured by us, against a table whose
         arithmetic is fine. Four cells here must yield TWO pairs, not four.
         """
-        from metascience_agent.dispatch import count_percent_pairs
+        from forensic_metascience_ai_toolkit.dispatch import count_percent_pairs
         pairs = count_percent_pairs(self._cells())
         assert len(pairs) == 2
         for p in pairs:
@@ -327,20 +327,20 @@ class TestTheSplitCountPercentColumn:
                     == p["percent_cell"]["col_label"].split("|")[0])
 
     def test_the_denominator_comes_from_that_groups_OWN_header(self):
-        from metascience_agent.dispatch import count_percent_pairs
+        from forensic_metascience_ai_toolkit.dispatch import count_percent_pairs
         got = {p["group"]: p["n"] for p in count_percent_pairs(self._cells())}
         assert got == {self.A: 22, self.B: 30}
 
     def test_headers_that_do_not_span_are_LEFT_ALONE(self):
         """Without a separator there is no group to pair on, and pairing by
         position is the guess this refuses to make."""
-        from metascience_agent.dispatch import count_percent_pairs
+        from forensic_metascience_ai_toolkit.dispatch import count_percent_pairs
         assert count_percent_pairs([
             {"raw": "3", "row_label": "X", "col_label": "No."},
             {"raw": "13.64", "row_label": "X", "col_label": "%"}]) == []
 
     def test_no_printed_denominator_means_no_check(self):
-        from metascience_agent.dispatch import count_percent_pairs
+        from forensic_metascience_ai_toolkit.dispatch import count_percent_pairs
         assert count_percent_pairs([
             {"raw": "3", "row_label": "X", "col_label": "Arm A | No."},
             {"raw": "13.64", "row_label": "X", "col_label": "Arm A | %"}]) == []
@@ -348,7 +348,7 @@ class TestTheSplitCountPercentColumn:
     def test_an_ambiguous_prefix_refuses_rather_than_picking_one(self):
         """Two count columns under one prefix means the prefix does not
         identify a group."""
-        from metascience_agent.dispatch import count_percent_pairs
+        from forensic_metascience_ai_toolkit.dispatch import count_percent_pairs
         assert count_percent_pairs([
             {"raw": "3", "row_label": "X", "col_label": "Arm A (n = 22) | No."},
             {"raw": "4", "row_label": "X", "col_label": "Arm A (n = 22) | n"},
@@ -358,7 +358,7 @@ class TestTheSplitCountPercentColumn:
         """Built, tested, never invoked is this repo's recurring failure, and
         the tool being paired here is itself an instance of nearly becoming
         one."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(self._cells(), [], {})
         assert "check_count_percent" in (out.get("tools_run") or set())
 
@@ -367,7 +367,7 @@ class TestTheSplitCountPercentColumn:
         base is the commonest convention in clinical tables -- the mismatch is
         evidence about which denominator was used at least as often as about
         the arithmetic."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         cells = self._cells() + [
             {"raw": "5", "row_label": "Pain", "col_label": f"{self.A} | No."},
             {"raw": "40.0", "row_label": "Pain", "col_label": f"{self.A} | %"}]
@@ -378,7 +378,7 @@ class TestTheSplitCountPercentColumn:
         assert hits[0]["cell"]["row_label"] == "Pain"
 
     def test_it_carries_a_runnable_reproduction_and_its_denominator_source(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         cells = self._cells() + [
             {"raw": "5", "row_label": "Pain", "col_label": f"{self.A} | No."},
             {"raw": "40.0", "row_label": "Pain", "col_label": f"{self.A} | %"}]
@@ -393,7 +393,7 @@ class TestTheSplitCountPercentColumn:
     def test_consistent_pairs_do_not_bloat_the_result(self):
         """They go to the index, like every other consistent check -- the whole
         point of the dispatcher."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(self._cells(), [], {})
         assert not [r for r in out.get("results", [])
                     if r["tool"] == "check_count_percent"]
@@ -401,7 +401,7 @@ class TestTheSplitCountPercentColumn:
                     if c["tool"] == "check_count_percent"]) == 2
 
     def test_garbage_cells_are_skipped_rather_than_crashing(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         cells = [
             {"raw": "n/a", "row_label": "X", "col_label": f"{self.A} | No."},
             {"raw": "--", "row_label": "X", "col_label": f"{self.A} | %"}]
@@ -421,7 +421,7 @@ class TestPrintAndExport:
     def _src(self):
         import pathlib
         return (pathlib.Path(__file__).resolve().parents[1]
-                / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+                / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
 
     def test_printing_forces_every_section_to_BUILD_first(self):
         """`built{}` fills lazily as a reader clicks, so a bare window.print()
@@ -495,7 +495,7 @@ class TestCompositeTableDisplay:
     """
 
     def _sections(self, full):
-        from metascience_agent.bundle import _table_sections
+        from forensic_metascience_ai_toolkit.bundle import _table_sections
         return _table_sections(full)
 
     GRID = [
@@ -570,7 +570,7 @@ class TestCompositeTableDisplay:
     def test_the_renderer_and_its_styling_are_wired(self):
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         assert "function sectionNote(t)" in src
         # Defined once and CALLED from the table strip. The definition happens
         # to sit earlier in the file than the call, so this counts occurrences
@@ -584,7 +584,7 @@ class TestCompositeTableDisplay:
         and the severity palette is reserved for claims about the paper."""
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         i = src.index("tr.banner td{")
         for accusatory in ("--bad", "--warn", "--flag", "red"):
             assert accusatory not in src[i:i + 160]

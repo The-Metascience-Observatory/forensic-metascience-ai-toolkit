@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import db_push
-from metascience_agent.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit import db_push
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
 
 #: Captured before the autouse conftest guard stubs it out for every test.
 _real_dotenv_url = db_push._dotenv_url
@@ -125,7 +125,7 @@ class TestIdentityQuery:
         servers can both have a database called the same thing."""
         import inspect
 
-        from metascience_agent.workbench.remote import Remote
+        from forensic_metascience_ai_toolkit.workbench.remote import Remote
 
         src = inspect.getsource(Remote.identity)
         assert "system_identifier" in src
@@ -134,7 +134,7 @@ class TestIdentityQuery:
     def test_sync_resets_when_the_identity_changes(self):
         import inspect
 
-        from metascience_agent.workbench.remote import Remote
+        from forensic_metascience_ai_toolkit.workbench.remote import Remote
 
         src = inspect.getsource(Remote._sync_locked)
         assert "db_identity" in src
@@ -145,7 +145,7 @@ class TestIdentityQuery:
         resetting there would throw away a bootstrap already in progress."""
         import inspect
 
-        from metascience_agent.workbench.remote import Remote
+        from forensic_metascience_ai_toolkit.workbench.remote import Remote
 
         src = inspect.getsource(Remote._sync_locked)
         assert "if seen is not None" in src

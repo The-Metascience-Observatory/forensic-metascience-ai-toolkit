@@ -41,7 +41,7 @@ def refused(monkeypatch):
 def _apps():
     from metascience_observatory_image_analysis.cli import app as standalone
 
-    from metascience_agent.cli import app as host
+    from forensic_metascience_ai_toolkit.cli import app as host
     return standalone, host
 
 

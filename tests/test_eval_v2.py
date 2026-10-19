@@ -1,7 +1,7 @@
 """The eval harness's findings-v2 slice: deterministic invariants + integer
 severity intervals in the judge."""
 
-from metascience_agent.evaluation.deterministic import check_findings_json
+from forensic_metascience_ai_toolkit.evaluation.deterministic import check_findings_json
 
 
 def v2doc(findings, adj=None):
@@ -73,7 +73,7 @@ class TestV2Invariants:
 
 class TestJudgeIntegerIntervals:
     def _score(self, matched_sev):
-        from metascience_agent.evaluation.judge import score_judgement
+        from forensic_metascience_ai_toolkit.evaluation.judge import score_judgement
         fixture = {"key_findings": [
             {"id": "k1", "weight": "major", "severity_expected": [3, 5]}]}
         parsed = {"per_finding": [

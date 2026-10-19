@@ -20,7 +20,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-SRC = Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
 PACKAGE = "metascience_observatory_image_analysis"
 
 #: The one file allowed to name the package in code. Host modules do not alias
@@ -85,9 +85,9 @@ class TestTheToolkitRunsWithoutThePackage:
     def test_every_non_image_module_imports(self, tmp_path):
         out = _run('''
 import importlib, json, pkgutil
-import metascience_agent
+import forensic_metascience_ai_toolkit
 failed = []
-for m in pkgutil.walk_packages(metascience_agent.__path__, "metascience_agent."):
+for m in pkgutil.walk_packages(forensic_metascience_ai_toolkit.__path__, "forensic_metascience_ai_toolkit."):
     if m.name.endswith("__main__"):
         continue
     try:
@@ -104,9 +104,9 @@ print(json.dumps(failed))
         out = _run('''
 import json
 from typer.testing import CliRunner
-from metascience_agent.cli import app
-from metascience_agent import image_plugin, registry
-from metascience_agent.tools_mcp import ALL_TOOLS
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit import image_plugin, registry
+from forensic_metascience_ai_toolkit.tools_mcp import ALL_TOOLS
 r = CliRunner()
 help_ = r.invoke(app, ["--help"])
 assert help_.exit_code == 0, help_.output
@@ -126,7 +126,7 @@ print(json.dumps({"available": image_plugin.available(), "n_specs": len(registry
         assert got["available"] is False
         # The registry is the same with or without the package: specs stay
         # registered and refuse by name.
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         assert got["n_specs"] == len(registry.SPECS)
         assert got["refused"]["state"] == "image_plugin_unavailable"
         assert got["refused"]["severity"] == "indeterminate"
@@ -134,7 +134,7 @@ print(json.dumps({"available": image_plugin.available(), "n_specs": len(registry
     def test_an_image_module_reports_unavailable_not_clean(self, tmp_path):
         out = _run('''
 import asyncio, json
-from metascience_agent import modules
+from forensic_metascience_ai_toolkit import modules
 module = modules.load("image_analysis")
 class Ctx:
     paper_dir = "."
@@ -148,13 +148,13 @@ print(json.dumps(result.record))
 
     def test_preflight_and_the_workbench_service_build(self, tmp_path):
         _run(f'''
-from metascience_agent import preflight
+from forensic_metascience_ai_toolkit import preflight
 rows = preflight.optional_checks()
 panel = [r for r in rows if r[0].startswith("Panel duplication")][0]
 assert panel[1] is False and "not installed" in panel[2], panel
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.service import Service
-from metascience_agent.image_plugin import ImagePluginUnavailable
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.service import Service
+from forensic_metascience_ai_toolkit.image_plugin import ImagePluginUnavailable
 svc = Service(Catalog(r"{tmp_path}/wb.sqlite3"), remote=object(), background=False)
 try:
     svc.shared_image_queue("feed", {{}})

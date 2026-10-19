@@ -25,7 +25,7 @@ cardinal rule ranks second only to a false accusation.
 """
 import pytest
 
-from metascience_agent.tools.grim import (
+from forensic_metascience_ai_toolkit.tools.grim import (
     _mean_passes_grim, _mean_passes_grim_truncation, discriminating_power,
     grim_test,
 )
@@ -274,7 +274,7 @@ class TestTheApparentViolationREACHESTheReader:
     def _call(self, result: dict) -> dict:
         import json
 
-        from metascience_agent.bundle import _distil_calls
+        from forensic_metascience_ai_toolkit.bundle import _distil_calls
         return _distil_calls(
             [{"seq": 1, "tool_short": "grim_check", "input": {},
               "result": json.dumps(result)}], "stage2")[0]
@@ -302,7 +302,7 @@ class TestTheApparentViolationREACHESTheReader:
         assert "as_reported" not in entry
 
     def test_a_result_that_is_not_json_does_not_crash_the_distiller(self):
-        from metascience_agent.bundle import _distil_calls
+        from forensic_metascience_ai_toolkit.bundle import _distil_calls
         out = _distil_calls([{"seq": 1, "tool_short": "read_file",
                               "input": {}, "result": "plain text"}], "stage1")
         assert out and "as_reported" not in out[0]
@@ -313,7 +313,7 @@ class TestTheApparentViolationREACHESTheReader:
         asserted here; the behavioural check is the node run in the commit."""
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         assert "function asReportedHtml" in src
         assert "function powerHtml" in src
         assert "asReportedHtml(c.as_reported)" in src
@@ -326,7 +326,7 @@ class TestTheApparentViolationREACHESTheReader:
         reintroduce as DESIGN the escalation the severity ladder avoids."""
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         i = src.index(".asrep{")
         block = src[i:i + 200]
         for accusatory in ("--bad", "--impossible", "--danger", "red"):
@@ -343,7 +343,7 @@ class TestThePopulationSDConventionIsShownToo:
     """
 
     def _rescued(self):
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         # The repo's own verified false accusation: [1,2,2,3,3,3,4,4,4,4] has
         # mean 3.0 and population SD exactly 1.0, and was branded `impossible`.
         return grimmer_test(3.0, 1.0, 10, scale_min=1, scale_max=7, decimals=2,
@@ -371,7 +371,7 @@ class TestThePopulationSDConventionIsShownToo:
     def test_a_real_sd_impossibility_is_untouched(self):
         """The check must still fire. This is the property every one of these
         changes is at risk of quietly destroying."""
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         r = grimmer_test(3.0, 1.02, 10, scale_min=1, scale_max=7, decimals=2,
                          decimals_sd=2, data_type="likert",
                          discreteness_source="stated")
@@ -394,7 +394,7 @@ class TestThePercentagePathGetsTheSameTreatment:
     """
 
     def _pct(self, **kw):
-        from metascience_agent.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
         return grim_test_percentage(**kw)
 
     def test_a_whole_percentage_against_a_large_n_cannot_fail(self):
@@ -445,7 +445,7 @@ class TestDEBITShowsItsWorkingToo:
     """
 
     def _rescued(self):
-        from metascience_agent.tools.debit import debit_test
+        from forensic_metascience_ai_toolkit.tools.debit import debit_test
         # Found by the sweep: clears only under truncation.
         return debit_test(mean=0.7, sd=0.45, n=400, decimals_mean=2,
                           decimals_sd=2, data_type="binary")
@@ -468,7 +468,7 @@ class TestDEBITShowsItsWorkingToo:
         assert "fully" in self._rescued()["as_reported"]["statement"].lower()
 
     def test_a_triple_no_convention_explains_gets_no_excuse_block(self):
-        from metascience_agent.tools.debit import debit_test
+        from forensic_metascience_ai_toolkit.tools.debit import debit_test
         r = debit_test(mean=0.5, sd=0.51, n=100, decimals_mean=2,
                        decimals_sd=2, data_type="binary")
         assert r["severity"] == "impossible"
@@ -479,7 +479,7 @@ class TestDEBITShowsItsWorkingToo:
         rather than asserted."""
         import random
 
-        from metascience_agent.tools.debit import debit_test
+        from forensic_metascience_ai_toolkit.tools.debit import debit_test
         rng = random.Random(2)
         accused = 0
         for _ in range(120):

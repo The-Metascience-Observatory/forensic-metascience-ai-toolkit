@@ -14,7 +14,7 @@ import types
 
 import pytest
 
-from metascience_agent import test_runner
+from forensic_metascience_ai_toolkit import test_runner
 
 
 def _install_fake_pytest(monkeypatch, captured):
@@ -30,7 +30,7 @@ def _install_fake_pytest(monkeypatch, captured):
 
 class TestDefaultWorkerCount:
     def test_delegates_to_machine_calibration(self, monkeypatch):
-        from metascience_agent import test_performance
+        from forensic_metascience_ai_toolkit import test_performance
         monkeypatch.setattr(test_performance, "default_workers", lambda: 12)
         assert test_runner._default_worker_count() == 12
 
@@ -173,7 +173,7 @@ def test_explicit_serial_is_preserved():
 
 
 def test_stack_dispatches_without_nesting_pytest(monkeypatch):
-    from metascience_agent import test_stack
+    from forensic_metascience_ai_toolkit import test_stack
     calls = []
     monkeypatch.setattr(test_runner, "_xdist_available", lambda: True)
     monkeypatch.setattr(test_stack, "main", lambda args: calls.append(args) or 3)

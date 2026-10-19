@@ -21,7 +21,7 @@ import math
 import numpy as np
 import pytest
 
-from metascience_agent.tools.sd_checks import check_sd_range
+from forensic_metascience_ai_toolkit.tools.sd_checks import check_sd_range
 
 
 class TestUnknownNUsesTheSupremum:

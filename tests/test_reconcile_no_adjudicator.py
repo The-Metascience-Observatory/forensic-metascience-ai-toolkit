@@ -6,8 +6,8 @@ the statistic and never the quote; `parallel._unaccounted_record` is the
 structured list of accusing tool results the final review does not account for.
 """
 
-from metascience_agent import findings_v2 as fv2
-from metascience_agent import parallel
+from forensic_metascience_ai_toolkit import findings_v2 as fv2
+from forensic_metascience_ai_toolkit import parallel
 
 
 def _row(fid, technique, outcome="problem", **kw):

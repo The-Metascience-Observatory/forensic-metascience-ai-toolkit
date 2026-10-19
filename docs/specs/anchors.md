@@ -228,7 +228,7 @@ The producer-facing `--json-schema` subset enforces these by shape:
 
 ## 7. Module design
 
-- **New `src/metascience_agent/anchors.py`.** NOT `anchoring.py` — that name
+- **New `src/forensic_metascience_ai_toolkit/anchors.py`.** NOT `anchoring.py` — that name
   is taken by evidence-provenance; both modules' docstrings MUST
   cross-reference the other ("locations" vs "evidentiary basis").
 - **`locators.py` stays the compute engine and the legacy view-time

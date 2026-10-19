@@ -15,8 +15,8 @@ import json
 
 import pytest
 
-from metascience_agent import agent
-from metascience_agent.cli import _fmt_elapsed, _fmt_tokens, _render_progress
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.cli import _fmt_elapsed, _fmt_tokens, _render_progress
 
 
 def _events(*, turns=2, tools_per_turn=1, out_per_turn=100):
@@ -313,7 +313,7 @@ class TestRendering:
 
 class TestLiveToolName:
     def test_mcp_prefix_and_grok_use_tool_unwrap(self):
-        from metascience_agent.agent import _live_tool_name
+        from forensic_metascience_ai_toolkit.agent import _live_tool_name
         assert _live_tool_name({
             "name": "mcp__forensic_metascience__grim_check"}) == "grim_check"
         assert _live_tool_name({
@@ -326,7 +326,7 @@ class TestLiveToolName:
 class TestLiveBatchStatus:
     def test_renderable_names_each_in_flight_paper(self):
         from rich.console import Console
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False)
         mon.begin("paper-a")
         mon.update("paper-a", {
@@ -354,7 +354,7 @@ class TestLiveBatchStatus:
         watched one line flicker between two unrelated stages.
         """
         from rich.console import Console
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False, show_key=False)
         mon.begin("tool_agent")
         mon.begin("science_agent")
@@ -400,7 +400,7 @@ class TestLiveBatchStatus:
         """A line kept on screen must not keep counting. A finished stage
         whose elapsed climbs reads as one that is still working."""
         import time as _time
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False, show_key=False)
         mon.begin("tool_agent")
         mon.update("tool_agent", {"stage": "tool_agent",
@@ -418,7 +418,7 @@ class TestLiveBatchStatus:
 
     def test_a_finished_track_keeps_its_terminal_state(self):
         from rich.console import Console
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False, show_key=False)
         mon.begin("image_track")
         mon.update("image_track", {"stage": "image_track", "kind": "track",
@@ -440,7 +440,7 @@ class TestLiveBatchStatus:
         lost the one signal that says whether a silent run is still alive.
         """
         import time as _time
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False)
         mon.begin("10.1136--bmjopen-2023-082989")
         for stage, snap in [
@@ -471,7 +471,7 @@ class TestLiveBatchStatus:
         """The analyze view keys by stage, so only that stage's own marker
         retires its line -- another stage finishing must not touch it."""
         import time as _time
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=False, show_key=False)
         mon.begin("science_agent")
         mon.update("science_agent", {"stage": "science_agent",
@@ -491,7 +491,7 @@ class TestLiveBatchStatus:
         assert mon._elapsed(slot, now + 500) == mon._elapsed(slot, now + 900)
 
     def test_transient_defaults_to_the_batch_behaviour(self):
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         assert LiveBatchStatus(live=False).transient is True
         assert LiveBatchStatus(live=False, transient=False).transient is False
 
@@ -523,7 +523,7 @@ class TestBatchGrid:
 
     def test_each_stage_of_each_paper_gets_its_own_row(self):
         """The paper-keyed line showed whichever stage reported last."""
-        from metascience_agent.progress import BatchGrid
+        from forensic_metascience_ai_toolkit.progress import BatchGrid
         mon = BatchGrid(total=5, live=False, periodic_log=False)
         mon.begin("paper-a")
         mon.update("paper-a", {"stage": "tool_agent", "current_tool": "grim_check",
@@ -546,7 +546,7 @@ class TestBatchGrid:
 
     def test_a_finished_stage_says_done_and_stops_only_its_clock(self):
         import time as _time
-        from metascience_agent.progress import BatchGrid
+        from forensic_metascience_ai_toolkit.progress import BatchGrid
         mon = BatchGrid(total=1, live=False, periodic_log=False)
         mon.begin("p")
         mon.update("p", {"stage": "tool_agent", "current_tool": "get_table",
@@ -566,7 +566,7 @@ class TestBatchGrid:
         assert "done" in tool_row
 
     def test_header_counts_the_corpus_and_finished_papers_are_listed(self):
-        from metascience_agent.progress import BatchGrid
+        from forensic_metascience_ai_toolkit.progress import BatchGrid
         mon = BatchGrid(total=6, live=False, periodic_log=False)
         mon.record("already-done", "skip")
         for name, status in [("p1", "ok"), ("p2", "partial"), ("p3", "fail")]:
@@ -586,7 +586,7 @@ class TestBatchGrid:
         assert "starting" in text              # p4 has not reported yet
 
     def test_markup_in_a_paper_name_is_printed_literally(self):
-        from metascience_agent.progress import BatchGrid
+        from forensic_metascience_ai_toolkit.progress import BatchGrid
         mon = BatchGrid(total=1, live=False, periodic_log=False)
         mon.begin("[bold]weird[/bold]")
         assert "[bold]weird[/bold]" in self._text(mon)
@@ -594,7 +594,7 @@ class TestBatchGrid:
     def test_plain_log_is_throttled_per_row_not_globally(self, capsys):
         """A global window let one paper through per 15 s; ten workers then
         showed each paper every ~2.5 minutes, and a quiet one possibly never."""
-        from metascience_agent.progress import BatchGrid
+        from forensic_metascience_ai_toolkit.progress import BatchGrid
         mon = BatchGrid(total=3, live=False, periodic_log=True)
         for p in ("a", "b", "c"):
             mon.begin(p)
@@ -612,7 +612,7 @@ class TestBatchGrid:
 
     def test_live_status_slots_are_throttled_independently(self, capsys):
         """Same defect in the `analyze` view, keyed by stage."""
-        from metascience_agent.progress import LiveBatchStatus
+        from forensic_metascience_ai_toolkit.progress import LiveBatchStatus
         mon = LiveBatchStatus(live=False, periodic_log=True, show_key=False)
         mon.update("tool_agent", {"stage": "tool_agent", "current_tool": "a"})
         mon.update("science_agent", {"stage": "science_agent",
@@ -623,7 +623,7 @@ class TestBatchGrid:
 class TestVerbosePrefix:
     def test_each_paper_task_prefixes_its_own_lines(self, capsys):
         import asyncio
-        from metascience_agent.progress import (CURRENT_PAPER,
+        from forensic_metascience_ai_toolkit.progress import (CURRENT_PAPER,
                                                 prefix_stdout_by_paper)
 
         async def paper(name, chunks):
@@ -648,7 +648,7 @@ class TestVerbosePrefix:
 
     def test_disabled_leaves_stdout_alone(self):
         import sys
-        from metascience_agent.progress import prefix_stdout_by_paper
+        from forensic_metascience_ai_toolkit.progress import prefix_stdout_by_paper
         before = sys.stdout
         with prefix_stdout_by_paper(enabled=False):
             assert sys.stdout is before

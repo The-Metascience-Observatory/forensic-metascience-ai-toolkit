@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.anatomy import anatomy_from_findings
-from metascience_agent.tools.claims import (
+from forensic_metascience_ai_toolkit.anatomy import anatomy_from_findings
+from forensic_metascience_ai_toolkit.tools.claims import (
     CEILING, check_claim_vs_result, claim_consistency_report)
 
 CLAIM = "Training improved fluid intelligence."
@@ -258,7 +258,7 @@ class TestTheSweepIsActuallyWired:
         assert a.studies[0].alpha == 0.05
 
     def test_the_prepass_sweep_uses_the_papers_own_alpha(self):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         r = prepass._sweep_claims(self.DOC)
         assert r["alpha"] == 0.05
         assert r["n_checked"] == 2
@@ -268,7 +268,7 @@ class TestTheSweepIsActuallyWired:
         """Assuming .05 would accuse every paper that committed to another
         threshold. Refusing loudly keeps 'we looked and found nothing'
         distinguishable from 'we never looked'."""
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         doc = {**self.DOC, "anatomy": {**self.DOC["anatomy"],
                                        "studies": [{"id": "s1", "label": "s"}]}}
         r = prepass._sweep_claims(doc)
@@ -280,7 +280,7 @@ class TestTheSweepIsActuallyWired:
         """The sweep reads the anatomy, not the tables, so gating it on the
         tables check would silently disable it for prose- and figure-only
         papers -- whose claims are hardest to check by other means."""
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         r = prepass.run_exhaustive(tmp_path, self.DOC)
         assert r is not None, "the claim sweep was hidden by the tables gate"
         assert r["n_tables"] == 0
@@ -290,14 +290,14 @@ class TestTheSweepIsActuallyWired:
     def test_a_table_less_paper_with_no_claims_is_still_silent(self):
         """Silence about tables remains the right answer when there is nothing
         else to report -- a '0 of 0' line reads as a failed review."""
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         import tempfile, pathlib
         r = prepass.run_exhaustive(pathlib.Path(tempfile.mkdtemp()),
                                    {"paper_id": "p", "anatomy": {"studies": []}})
         assert r is None
 
     def test_a_sweep_that_crashed_says_so_rather_than_reporting_zero(self):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         r = prepass._sweep_claims({"paper_id": "p", "anatomy": {
             "interpretations": [{"id": "i1", "claim": "x", "asserts": "supported"}],
             "tests": "not a list"}})

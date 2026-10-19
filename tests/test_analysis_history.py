@@ -1,12 +1,12 @@
 from pathlib import Path
 import json
 import pytest
-from metascience_agent.analysis_runs import Archive
+from forensic_metascience_ai_toolkit.analysis_runs import Archive
 
 
 @pytest.mark.usefixtures("image_package")
 def test_isolated_workspace_keeps_every_image_source_directory(tmp_path):
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
     paper = tmp_path/'paper'
     paper.mkdir()
     expected = ('pmc_figures', 'publisher_figures', 'paper_figures', 'paper_images',
@@ -232,7 +232,7 @@ def test_index_rebuild_recovers_manifest(tmp_path):
 
 def test_portable_copy_import_is_idempotent_and_checks_bytes(tmp_path):
     from copy_paste_detector.portable import save_run
-    from metascience_agent.analysis_history import import_copy
+    from forensic_metascience_ai_toolkit.analysis_history import import_copy
 
     root = tmp_path / "project"
     paper = root / "paper"
@@ -260,7 +260,7 @@ def test_portable_copy_import_is_idempotent_and_checks_bytes(tmp_path):
 
 @pytest.mark.usefixtures("image_package")
 def test_dry_inventory_never_creates_archive(tmp_path):
-    from metascience_agent.analysis_history import import_history
+    from forensic_metascience_ai_toolkit.analysis_history import import_history
 
     paper = tmp_path / "p"
     paper.mkdir()
@@ -273,7 +273,7 @@ def test_dry_inventory_never_creates_archive(tmp_path):
 
 @pytest.mark.usefixtures("image_package")
 def test_interrupted_workspace_preserves_previous_run(tmp_path):
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
 
     a = Archive(tmp_path)
     execution(a, "e1")
@@ -295,7 +295,7 @@ def test_a_successful_workspace_reclaims_its_own_tree(tmp_path):
     """The leak this closes: the staging tree used to survive on EVERY path, so
     each re-sweep left a full copy of every paper behind -- 164.7 GB across
     three corpora when it was measured."""
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
 
     paper = tmp_path / "p"
     paper.mkdir()
@@ -313,7 +313,7 @@ def test_a_successful_workspace_reclaims_its_own_tree(tmp_path):
 def test_a_failed_workspace_keeps_its_tree(tmp_path):
     """A run that never sealed never froze its output into objects/ nor
     published it, so its tree can be the only copy of that work."""
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
 
     paper = tmp_path / "p"
     paper.mkdir()
@@ -330,7 +330,7 @@ def test_a_failed_workspace_keeps_its_tree(tmp_path):
 
 @pytest.mark.usefixtures("image_package")
 def test_keep_workspace_env_var_retains_the_tree_on_success(monkeypatch, tmp_path):
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
 
     monkeypatch.setenv("METASCIENCE_KEEP_WORKSPACE", "1")
     paper = tmp_path / "p"
@@ -348,7 +348,7 @@ def test_the_staged_copy_is_independent_of_the_paper(tmp_path):
     A reflink shares extents but NOT identity, so a producer mutating its
     private copy must not reach the paper directory -- which is the whole
     reason this module forbids hard links into mutable paper directories."""
-    from metascience_agent.analysis_runs import workspace
+    from forensic_metascience_ai_toolkit.analysis_runs import workspace
 
     paper = tmp_path / "p"
     paper.mkdir()
@@ -371,7 +371,7 @@ def test_explicit_reuse_does_not_relabel_owner(tmp_path):
 
 
 def test_copy_missing_input_keeps_raw_error(tmp_path):
-    from metascience_agent.analysis_history import capture_copy
+    from forensic_metascience_ai_toolkit.analysis_history import capture_copy
 
     (tmp_path / "p").mkdir()
     saved = capture_copy(tmp_path, tmp_path / "p", {"error": "unreadable file"}, None)
@@ -392,7 +392,7 @@ def test_tampered_manifest_is_rejected(tmp_path):
 
 
 def test_report_history_never_reads_newer_tracks_or_sources(tmp_path, monkeypatch):
-    from metascience_agent.review_issues import collect_issues
+    from forensic_metascience_ai_toolkit.review_issues import collect_issues
 
     a = Archive(tmp_path)
     paper = tmp_path / "p"
@@ -410,7 +410,7 @@ def test_report_history_never_reads_newer_tracks_or_sources(tmp_path, monkeypatc
     )
     (paper / "new.pdf").write_bytes(b"new source")
     monkeypatch.setattr(
-        "metascience_agent.review_issues._image_issues",
+        "forensic_metascience_ai_toolkit.review_issues._image_issues",
         lambda *args: pytest.fail("current image joined into history"),
     )
     view = collect_issues(paper, "report")
@@ -420,7 +420,7 @@ def test_report_history_never_reads_newer_tracks_or_sources(tmp_path, monkeypatc
 
 
 def test_tool_capture_precedes_truncation_and_uses_frozen_input(tmp_path, monkeypatch):
-    from metascience_agent.history_runtime import record_tool_copy
+    from forensic_metascience_ai_toolkit.history_runtime import record_tool_copy
 
     a = Archive(tmp_path)
     e = a.execution("comprehensive", components=["comprehensive", "copy_paste"])
@@ -447,7 +447,7 @@ def test_tool_capture_precedes_truncation_and_uses_frozen_input(tmp_path, monkey
 
 def test_portable_failed_attempt_keeps_its_error_without_input(tmp_path):
     from copy_paste_detector.portable import save_run
-    from metascience_agent.analysis_history import import_copy
+    from forensic_metascience_ai_toolkit.analysis_history import import_copy
 
     paper = tmp_path / "project/p"
     paper.mkdir(parents=True)
@@ -498,7 +498,7 @@ def test_cancellation_records_the_screening_attempt(tmp_path, monkeypatch):
 @pytest.mark.usefixtures("image_package")
 def test_image_publication_uses_item_policy_and_incremental_sync(tmp_path, monkeypatch):
     from contextlib import nullcontext
-    from metascience_agent import history_publication
+    from forensic_metascience_ai_toolkit import history_publication
     from metascience_observatory_image_analysis.image_forensics import screening
 
     records = [
@@ -543,7 +543,7 @@ def test_image_publication_uses_item_policy_and_incremental_sync(tmp_path, monke
 
 @pytest.mark.usefixtures("image_package")
 def test_inventory_discovers_copy_results_and_preserves_recorded_id(tmp_path):
-    from metascience_agent.analysis_history import import_history
+    from forensic_metascience_ai_toolkit.analysis_history import import_history
 
     paper = tmp_path / "p"
     paper.mkdir()
@@ -571,7 +571,7 @@ def test_inventory_discovers_copy_results_and_preserves_recorded_id(tmp_path):
 
 
 def test_report_source_cannot_be_the_generated_report_pdf(tmp_path):
-    from metascience_agent.analysis_history import report_view
+    from forensic_metascience_ai_toolkit.analysis_history import report_view
     archive = Archive(tmp_path); paper = tmp_path / 'p'; paper.mkdir()
     execution_record = archive.execution('comprehensive', components=['comprehensive'])
     source = paper / 'z_source.pdf'; source.write_bytes(b'source document')
@@ -602,7 +602,7 @@ def test_panel_source_pdf_is_frozen_with_its_pixels(tmp_path):
 def test_streamed_evidence_digest_preserves_historical_bytes():
     import hashlib
     import json
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     value = {'unicode': 'μ核', 'nested': [{'float': 1.5, 'none': None, 'bool': True}] * 1000}
     assert digest(value) == hashlib.sha256(json.dumps(
         value, sort_keys=True, ensure_ascii=False, default=str).encode()).hexdigest()

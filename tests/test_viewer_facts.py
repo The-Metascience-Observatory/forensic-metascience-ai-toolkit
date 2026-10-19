@@ -17,7 +17,7 @@ import re
 
 import pytest
 
-from metascience_agent import viewer_facts as VF
+from forensic_metascience_ai_toolkit import viewer_facts as VF
 
 BUNDLE = pathlib.Path(__file__).resolve().parents[1] / (
     "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/"
@@ -372,7 +372,7 @@ class TestTheFactsActuallyReachTheBundle:
     def _collected(self):
         import pathlib
 
-        from metascience_agent.bundle import collect
+        from forensic_metascience_ai_toolkit.bundle import collect
         review = (pathlib.Path(__file__).resolve().parents[1]
                   / "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8"
                   / "forensic_review_opus_08_10_2026")
@@ -420,7 +420,7 @@ class TestTheFactsActuallyReachTheBundle:
         the JS literal stays -- but it must be the FALLBACK, never the source."""
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         i = src.index("const REFUSAL_KINDS=")
         head = src[i:i + 260]
         assert "D.facts" in head and "refusal_kinds" in head
@@ -504,7 +504,7 @@ class TestTheFindingIndex:
     def test_the_real_bundle_indexes_every_finding(self):
         import pathlib
 
-        from metascience_agent.bundle import collect
+        from forensic_metascience_ai_toolkit.bundle import collect
         review = (pathlib.Path(__file__).resolve().parents[1]
                   / "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8"
                   / "forensic_review_opus_08_10_2026")

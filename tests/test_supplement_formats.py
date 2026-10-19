@@ -22,7 +22,7 @@ import zipfile
 
 import pytest
 
-from metascience_agent.extraction.supplements_read import (
+from forensic_metascience_ai_toolkit.extraction.supplements_read import (
     IMAGE_SUFFIXES,
     READABLE,
     UNREADABLE,
@@ -84,7 +84,7 @@ def _ruled_table_pdf(path):
     of the file, so editing the fixture cannot leave the cache describing a
     document that no longer exists.
     """
-    from metascience_agent.extraction import docling_tables as dl
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
     doc = fitz.open()
     page = doc.new_page()
@@ -172,7 +172,7 @@ def _extract_first(path):
     So write the entry directly. Empty text with real pages is exactly what a
     genuine scan produces, which is the state under test.
     """
-    from metascience_agent.extraction.docling_tables import _cache_path
+    from forensic_metascience_ai_toolkit.extraction.docling_tables import _cache_path
     import json
     c = _cache_path(path)
     c.parent.mkdir(parents=True, exist_ok=True)
@@ -205,7 +205,7 @@ class TestPdfSupplements:
     def test_the_cells_survive_the_typing_chain(self, tmp_path):
         """A cell that cannot be typed is a cell no check can use, so the
         contract has to be verified through the consumer, not at the boundary."""
-        from metascience_agent.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
 
         got = extract_supplement_full(_ruled_table_pdf(tmp_path / "si.pdf"))
         cells = got["tables"][0]["cells"]
@@ -310,7 +310,7 @@ class TestPdfSupplements:
         """A born-digital PDF with no tables and a scan both return zero tables
         and mean opposite things. `no_text_layer` is the fact that separates
         them, and it is what says OCR is the route in."""
-        from metascience_agent.extraction import ocr
+        from forensic_metascience_ai_toolkit.extraction import ocr
 
         doc = fitz.open()
         for _ in range(2):
@@ -330,7 +330,7 @@ class TestImageSupplements:
         `this file has no tables` must never arrive in the same shape: the
         second is a claim about the authors, and it would be written out of a
         missing package."""
-        from metascience_agent.extraction import ocr
+        from forensic_metascience_ai_toolkit.extraction import ocr
 
         path = tmp_path / "etable1.png"
         path.write_bytes(b"\x89PNG\r\n\x1a\n")

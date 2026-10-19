@@ -17,8 +17,8 @@ def test_postgres_history_constraints_and_idempotence(tmp_path):
         pytest.skip("explicit PostgreSQL test connection not configured")
     psycopg = pytest.importorskip("psycopg")
     from psycopg import sql
-    from metascience_agent.analysis_runs import Archive
-    from metascience_agent.history_db import sync, migrate
+    from forensic_metascience_ai_toolkit.analysis_runs import Archive
+    from forensic_metascience_ai_toolkit.history_db import sync, migrate
 
     class Rollback(Exception):
         pass
@@ -92,7 +92,7 @@ def test_postgres_history_constraints_and_idempotence(tmp_path):
                 )
                 # The archive is also consumed by existing report readers/stats.
                 # A later compatibility push must keep the same report identity.
-                from metascience_agent import db_push
+                from forensic_metascience_ai_toolkit import db_push
                 paper = tmp_path / "p"
                 paper.mkdir()
                 document = {
@@ -135,7 +135,7 @@ def test_a_null_column_is_an_empty_object_not_a_crash():
     corpus of screening judgments stranded, visible only as an AttributeError
     inside a per-paper pending reason.
     """
-    from metascience_agent.db_push import _previous_state
+    from forensic_metascience_ai_toolkit.db_push import _previous_state
 
     assert _previous_state(None) == ({}, {})
     assert _previous_state((None, None)) == ({}, {})
@@ -168,7 +168,7 @@ def test_partial_review_findings_are_uploaded_with_their_own_kind():
     It used to send a `partial_review` run's run row (kind `component`) and
     no findings at all, so the workbench showed an empty run.
     """
-    from metascience_agent.history_db import RUN_KINDS, _sync_report_findings
+    from forensic_metascience_ai_toolkit.history_db import RUN_KINDS, _sync_report_findings
 
     class Cursor:
         def __init__(self):
@@ -196,8 +196,8 @@ def test_postgres_partial_review_findings_reach_the_database(tmp_path):
         pytest.skip("explicit PostgreSQL test connection not configured")
     psycopg = pytest.importorskip("psycopg")
     from psycopg import sql
-    from metascience_agent.analysis_runs import Archive
-    from metascience_agent.history_db import sync, migrate
+    from forensic_metascience_ai_toolkit.analysis_runs import Archive
+    from forensic_metascience_ai_toolkit.history_db import sync, migrate
 
     class Rollback(Exception):
         pass

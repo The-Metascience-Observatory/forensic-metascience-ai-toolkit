@@ -8,8 +8,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import completeness as C
-from metascience_agent import references as R
+from forensic_metascience_ai_toolkit import completeness as C
+from forensic_metascience_ai_toolkit import references as R
 
 CACHES = sorted(pathlib.Path("tests/fixtures/papers/high_value_pdfs_to_run_on").glob(
     "**/.extraction_cache/*.tables.json"))
@@ -179,7 +179,7 @@ class TestTheBibliographyIsTheLastListNotTheLongest:
                         for i in range(1, 6)))
 
     def test_a_numbered_list_in_results_is_not_the_bibliography(self):
-        from metascience_agent.references import split
+        from forensic_metascience_ai_toolkit.references import split
         r = split(self._review_with_a_numbered_results_list())
         assert "Discussion: the pooled estimate" in r["body"]
         assert "reported a mean difference of 1.4" in r["body"]
@@ -193,7 +193,7 @@ class TestTheBibliographyIsTheLastListNotTheLongest:
         of a real bibliography was reclassified as body. Runs close together
         are one list -- the three real within-bibliography gaps in that corpus
         are 192, 752 and 1,155 characters."""
-        from metascience_agent.references import split
+        from forensic_metascience_ai_toolkit.references import split
         body = "Introduction. " + "Body prose here. " * 400 + "\n"
         first = "".join(f"{i}. Ref{i} A (200{i%9}) J Something 200{i%9};1(1):1-9.\n"
                         for i in range(1, 11))
@@ -206,7 +206,7 @@ class TestTheBibliographyIsTheLastListNotTheLongest:
             "the boundary landed inside the bibliography")
 
     def test_the_gap_threshold_is_documented_as_measured(self):
-        from metascience_agent import references
+        from forensic_metascience_ai_toolkit import references
         assert references._SAME_LIST_GAP >= 1155, (
             "must exceed the largest observed within-bibliography gap")
 
@@ -219,7 +219,7 @@ class TestABulletedBibliography:
     15 of 211 Zotero-corpus papers use this shape."""
 
     def test_the_bulleted_form_is_recognised(self):
-        from metascience_agent.references import split
+        from forensic_metascience_ai_toolkit.references import split
         body = "Introduction. " + "Body prose here. " * 400 + "\n"
         refs = "".join(
             f"- {i} . Author{i}, A. B. Title of the work. Journal 20{i:02d};1(1):1-9.\n"
@@ -230,7 +230,7 @@ class TestABulletedBibliography:
         assert "Body prose here" in r["body"]
 
     def test_the_plain_form_still_works(self):
-        from metascience_agent.references import split
+        from forensic_metascience_ai_toolkit.references import split
         body = "Introduction. " + "Body prose here. " * 400 + "\n"
         refs = "".join(f"{i}. Author{i} A (200{i%9}) J Something 200{i%9};1(1):1-9.\n"
                        for i in range(1, 12))

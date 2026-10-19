@@ -31,7 +31,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.agent import (MCP_TOOL_PREFIX, STAGE1_TOOLS,
+from forensic_metascience_ai_toolkit.agent import (MCP_TOOL_PREFIX, STAGE1_TOOLS,
                                      STAGE2_TOOLS, _sandbox_audit,
                                      _tool_call_ledger)
 
@@ -192,7 +192,7 @@ class TestTheTierReachesTheReader:
     lesson in this repo, and the reason it is standing.
     """
 
-    SRC = REPO / "src/metascience_agent/bundle.py"
+    SRC = REPO / "src/forensic_metascience_ai_toolkit/bundle.py"
 
     def _alarms(self, sandbox):
         """Run the landing screen's own alarm block under node."""

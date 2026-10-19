@@ -9,8 +9,8 @@ values. MEASURED 2026-10-18 (statcheck_pvalue_errors working set, tools_only):
 three different things about them.
 """
 
-from metascience_agent import pipeline_config
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit import pipeline_config
+from forensic_metascience_ai_toolkit.core import prompts
 
 
 def _note(pipeline, module="tools_agent"):

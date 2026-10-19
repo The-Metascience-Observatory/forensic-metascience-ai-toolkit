@@ -5,7 +5,7 @@
 | **Status** | Approved 2026-08-21 |
 | **Source of truth** | THIS DOCUMENT. Derived from the approved 2026-08 overhaul plan (sections A3, A4, B1, B2, B4, R2, R4 of a working file at `~/.claude/plans/`, since retired and reused for later planning — do not consult it); this spec states the corrected rules as normative. |
 | **Implemented by** | Master Phase 4 (`adjudicate.py`, `modules/adjudicator/prompt.md`, `adjudication.schema.json`, `apply()`, parallel-mode wiring). Depends on Phase 1 (`severity9.py`, findings-v2 schema, finding_id hasher) and Phase 3 (registry `ADJUDICATOR` role, prompt assemblers, backend seams). Phase 7 relabels eval fixtures and performs cutover. |
-| **New files** | `src/metascience_agent/adjudicate.py`, `modules/adjudicator/prompt.md`, `src/metascience_agent/schema/adjudication.schema.json`, `tests/test_adjudicate.py` |
+| **New files** | `src/forensic_metascience_ai_toolkit/adjudicate.py`, `modules/adjudicator/prompt.md`, `src/forensic_metascience_ai_toolkit/schema/adjudication.schema.json`, `tests/test_adjudicate.py` |
 
 ## 1. Role
 

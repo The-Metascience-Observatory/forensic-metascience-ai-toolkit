@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import pytest
 
 from metascience_observatory_image_analysis.image_forensics import evidence as E, screening as S
-from metascience_agent import adjudicate as A
+from forensic_metascience_ai_toolkit import adjudicate as A
 from metascience_observatory_image_analysis import image_review as IR
 
 

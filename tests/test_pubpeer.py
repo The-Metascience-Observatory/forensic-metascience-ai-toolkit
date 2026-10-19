@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import pubpeer as PP
+from forensic_metascience_ai_toolkit import pubpeer as PP
 
 FIXTURE = Path(__file__).parent / "data" / "pubpeer_publication_page.html"
 
@@ -292,7 +292,7 @@ class TestFigureReferencesAreReadWhole:
 
 class TestItIsNotAForensicTool:
     def test_it_is_registered_nowhere(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         names = {spec.name for spec in registry.SPECS}
         assert not any("pubpeer" in n for n in names)
 

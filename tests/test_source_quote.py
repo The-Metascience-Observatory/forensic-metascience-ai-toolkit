@@ -12,8 +12,8 @@ one at all.
 
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.quotes import normalise, verify_ledger
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.quotes import normalise, verify_ledger
 
 GRIM = dict(mean=5.19, n=28, decimals=2, data_type="likert")
 

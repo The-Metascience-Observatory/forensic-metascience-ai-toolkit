@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-AGENT = ROOT / "src" / "metascience_agent" / "agent.py"
+AGENT = ROOT / "src" / "forensic_metascience_ai_toolkit" / "agent.py"
 
 
 class TestEffortDefaultIsAccepted:
@@ -31,15 +31,15 @@ class TestEffortDefaultIsAccepted:
     """
 
     def test_agent_default_is_not_max(self):
-        from metascience_agent.agent import DEFAULT_EFFORT
+        from forensic_metascience_ai_toolkit.agent import DEFAULT_EFFORT
 
         assert DEFAULT_EFFORT != "max"
 
     def test_cli_analyze_defaults_to_the_shared_constant(self):
         import inspect
 
-        from metascience_agent.agent import DEFAULT_EFFORT
-        from metascience_agent.cli import analyze
+        from forensic_metascience_ai_toolkit.agent import DEFAULT_EFFORT
+        from forensic_metascience_ai_toolkit.cli import analyze
 
         default = inspect.signature(analyze).parameters["effort"].default
         default = getattr(default, "default", default)
@@ -53,8 +53,8 @@ class TestEffortDefaultIsAccepted:
     def test_cli_batch_defaults_to_the_shared_constant(self):
         import inspect
 
-        from metascience_agent.agent import DEFAULT_EFFORT
-        from metascience_agent.cli import batch_cmd
+        from forensic_metascience_ai_toolkit.agent import DEFAULT_EFFORT
+        from forensic_metascience_ai_toolkit.cli import batch_cmd
 
         default = inspect.signature(batch_cmd).parameters["effort"].default
         default = getattr(default, "default", default)
@@ -64,7 +64,7 @@ class TestEffortDefaultIsAccepted:
 
     def test_no_entry_point_hardcodes_max(self):
         """Source-level, because a new command would reintroduce it silently."""
-        for rel in ("src/metascience_agent/cli.py", "src/metascience_agent/batch.py"):
+        for rel in ("src/forensic_metascience_ai_toolkit/cli.py", "src/forensic_metascience_ai_toolkit/batch.py"):
             text = (ROOT / rel).read_text()
             assert '"--effort", default="max"' not in text, rel
             assert 'typer.Option("max", "--effort"' not in text, rel

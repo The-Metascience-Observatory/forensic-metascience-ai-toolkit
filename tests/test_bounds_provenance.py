@@ -36,7 +36,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.anatomy import Variable
+from forensic_metascience_ai_toolkit.anatomy import Variable
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -101,7 +101,7 @@ class TestTheQuoteMustMentionTheBounds:
     def test_a_missing_matcher_closes_the_gate_rather_than_opening_it(self, monkeypatch):
         """Fail-safe direction. An import failure must not silently restore the
         permissive behaviour this test file exists to remove."""
-        import metascience_agent.quotes as q
+        import forensic_metascience_ai_toolkit.quotes as q
         monkeypatch.delattr(q, "_number_forms", raising=False)
         assert not _var("responses ranged from 1 to 5").bounds_are_stated()
 
@@ -144,7 +144,7 @@ class TestTheArchiveReplayed:
             "bounds; if this fell to zero the tightening went too far")
 
     def test_nothing_passes_without_its_bounds_in_the_quote(self, variables):
-        from metascience_agent.quotes import _number_forms, normalise
+        from forensic_metascience_ai_toolkit.quotes import _number_forms, normalise
         for d in variables:
             v = self._built(d)
             if not (v.bounds_are_stated() and v.lower_bound is not None):

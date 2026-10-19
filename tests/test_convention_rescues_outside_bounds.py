@@ -35,9 +35,9 @@ is a population SD and the scale is wider than assumed".
 import numpy as np
 import pytest
 
-from metascience_agent.tools.debit import debit_test, debit_test_batch
-from metascience_agent.tools.sd_checks import grimmer_test
-from metascience_agent.tools.sprite import sprite_reconstruct
+from forensic_metascience_ai_toolkit.tools.debit import debit_test, debit_test_batch
+from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
+from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
 # Real integers on a 1-10 scale whose POPULATION SD rounds to 2.71.
 WITNESS = [2, 2, 2, 3, 4, 4, 5, 5, 5, 6, 6, 7, 8, 8, 8, 9, 9, 10, 10, 10]

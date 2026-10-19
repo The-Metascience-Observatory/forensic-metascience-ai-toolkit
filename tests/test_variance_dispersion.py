@@ -7,7 +7,7 @@ paper's own Table 1. If a refactor moves these, it has changed the statistic.
 import numpy as np
 import pytest
 
-from metascience_agent.tools.variance_dispersion import (
+from forensic_metascience_ai_toolkit.tools.variance_dispersion import (
     MIN_GROUPS,
     _dispersion,
     _granularity_ratios,

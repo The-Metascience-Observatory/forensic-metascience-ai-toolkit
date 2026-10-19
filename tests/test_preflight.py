@@ -17,8 +17,8 @@ import importlib
 
 import pytest
 
-from metascience_agent import preflight
-from metascience_agent.preflight import (
+from forensic_metascience_ai_toolkit import preflight
+from forensic_metascience_ai_toolkit.preflight import (
     PreflightError,
     assert_ready,
     fatal_checks,
@@ -234,7 +234,7 @@ class TestTheGateRunsBeforeTheSpend:
     """The whole point: refuse BEFORE `claude` is launched, not after."""
 
     def test_run_stage_aborts_without_launching_a_subprocess(self, monkeypatch):
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
 
         launched = []
 
@@ -252,7 +252,7 @@ class TestTheGateRunsBeforeTheSpend:
 
     def test_it_precedes_the_usage_guard(self, monkeypatch):
         """The free local check runs before the network probe."""
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
 
         order = []
 
@@ -285,7 +285,7 @@ class TestBatchRunnerTreatsItAsEnvironmentFault:
         import re
 
         src = (Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "batch.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "batch.py").read_text()
         # Matched by SHAPE, not by the tuple's exact text: the tuple grows as
         # new environment faults are found (BackendUnavailable joined it
         # 2026-08-23 after an exhausted API balance filled failed.jsonl with

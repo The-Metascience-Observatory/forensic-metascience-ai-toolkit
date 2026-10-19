@@ -34,7 +34,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import prepass
+from forensic_metascience_ai_toolkit import prepass
 
 CORPUS = Path("tests/fixtures/papers/high_value_pdfs_to_run_on")
 

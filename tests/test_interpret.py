@@ -1,5 +1,5 @@
 """Tidy entries joined to the declared variables and levels (step 3)."""
-from metascience_agent.scaffold import interpret as I
+from forensic_metascience_ai_toolkit.scaffold import interpret as I
 
 VARS = [
     {"id": "var:state", "name": "State", "levels": [{"id": "lvl:pa", "label": "Pennsylvania", "value": None},

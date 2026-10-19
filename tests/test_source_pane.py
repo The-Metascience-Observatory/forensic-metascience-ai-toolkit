@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.bundle import (
+from forensic_metascience_ai_toolkit.bundle import (
     _blocks,
     _body_html,
     _ordered_pdfs,
@@ -99,7 +99,7 @@ class TestBodyHtmlCarriesOffsets:
 
     @pytest.mark.skipif(not _has_paper_files(PAPER), reason="corpus not present")
     def test_on_a_real_paper_every_offset_lands_inside_the_text(self):
-        from metascience_agent.extraction.jats import paper_text
+        from forensic_metascience_ai_toolkit.extraction.jats import paper_text
 
         text = paper_text(PAPER)
         html = _body_html(PAPER, text)
@@ -160,7 +160,7 @@ class TestMultipleDocuments:
     @pytest.mark.skipif(not _has_paper_files(PAPER), reason="corpus not present")
     def test_the_page_budget_is_reported_rather_than_silently_applied(self, tmp_path):
         """A reader seeing 3 of 14 pages must know the other 11 exist."""
-        import metascience_agent.bundle as B
+        import forensic_metascience_ai_toolkit.bundle as B
 
         original = B._MAX_RENDERED_PAGES
         try:
@@ -176,7 +176,7 @@ class TestMultipleDocuments:
     def test_a_document_past_the_budget_is_still_declared(self, tmp_path):
         """It used to `break`, so a document past the budget vanished from the
         selector -- indistinguishable from one the package never contained."""
-        import metascience_agent.bundle as B
+        import forensic_metascience_ai_toolkit.bundle as B
 
         pdfs = [PAPER / "10.1002--mpr.70006.pdf",
                 CORPUS / "10.1002--hbm.26595" / "10.1002--hbm.26595.pdf"]
@@ -219,7 +219,7 @@ class TestATableThatIsAPicture:
         assert recs["Table 3"]["preview"]
 
     def test_the_viewer_says_no_check_could_reach_it(self):
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({"table_records": _table_records(IMAGE_TABLE_PAPER)})
         assert "This table is a PICTURE in the publisher XML" in html
         assert "reach a single number in it" in html

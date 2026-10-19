@@ -41,7 +41,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import anchoring as A
+from forensic_metascience_ai_toolkit import anchoring as A
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -171,7 +171,7 @@ class TestItReadsTheShapeProductionActuallyWrites:
     def test_the_warrant_string_matches_the_module_that_defines_it(self):
         """Kept as a literal here so a rename in `warrants.py` fails loudly
         instead of silently disabling this clamp."""
-        from metascience_agent.warrants import SUPPLIED_WARRANT
+        from forensic_metascience_ai_toolkit.warrants import SUPPLIED_WARRANT
         assert A.SUPPLIED_WARRANT == SUPPLIED_WARRANT
 
 class TestTheArchiveReplayed:

@@ -20,8 +20,8 @@ import json
 
 import pytest
 
-from metascience_agent import tripwire
-from metascience_agent.tripwire import (
+from forensic_metascience_ai_toolkit import tripwire
+from forensic_metascience_ai_toolkit.tripwire import (
     Trip, TripwireError, check_preflight, check_report, enforce, summarise,
 )
 
@@ -206,7 +206,7 @@ class TestAStageThatReportsItsOwnError:
     """
 
     def test_it_fires_when_a_stage_reports_an_error(self):
-        from metascience_agent.tripwire import check_run
+        from forensic_metascience_ai_toolkit.tripwire import check_run
         t = check_run({"stages": {
             "sweep": {"is_error": False},
             "editorial": {"is_error": True, "error_subtype": "api_error"},
@@ -215,14 +215,14 @@ class TestAStageThatReportsItsOwnError:
         assert "editorial" in t.got and "api_error" in t.got
 
     def test_it_is_silent_when_every_stage_completed(self):
-        from metascience_agent.tripwire import check_run
+        from forensic_metascience_ai_toolkit.tripwire import check_run
         t = check_run({"stages": {"sweep": {"is_error": False},
                                   "editorial": {"is_error": False}}})[0]
         assert t.fired is False
 
     def test_a_budget_kill_fires_too(self):
         """The archived `apple_cider` case: not an API fault, still a loss."""
-        from metascience_agent.tripwire import check_run
+        from forensic_metascience_ai_toolkit.tripwire import check_run
         t = check_run({"stages": {
             "sweep": {"is_error": True, "error_subtype": "error_max_budget_usd"},
             "editorial": {"is_error": True, "error_subtype": "error_max_budget_usd"}}})[0]
@@ -230,7 +230,7 @@ class TestAStageThatReportsItsOwnError:
         assert "2 reported an error" in t.got
 
     def test_no_stages_is_not_measured_rather_than_clean(self):
-        from metascience_agent.tripwire import check_run
+        from forensic_metascience_ai_toolkit.tripwire import check_run
         t = check_run({})[0]
         assert t.fired is False and t.not_measured is True
 
@@ -260,7 +260,7 @@ class TestASecondaryModelWritingContent:
                             "claude-haiku-4-5": {"outputTokens": out_tokens}}}}}
 
     def _trip(self, meta):
-        from metascience_agent.tripwire import check_run
+        from forensic_metascience_ai_toolkit.tripwire import check_run
         return [t for t in check_run(meta)
                 if t.id == "secondary_model_wrote_content"][0]
 

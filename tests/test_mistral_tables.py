@@ -17,7 +17,7 @@ import json
 
 import pytest
 
-from metascience_agent.extraction import mistral_tables as mt
+from forensic_metascience_ai_toolkit.extraction import mistral_tables as mt
 
 lxml = pytest.importorskip("lxml.html")
 
@@ -102,7 +102,7 @@ class TestTheSpanWalkIsTheSharedOne:
         assert len(set(labels)) == 2
 
     def test_the_group_sizes_reach_the_labels(self):
-        from metascience_agent.values import design_values_from_cells
+        from forensic_metascience_ai_toolkit.values import design_values_from_cells
 
         cells = mt.tables_from_response(_response(TWO_ROW))[0]["cells"]
         values = design_values_from_cells(cells, table="t1")
@@ -163,8 +163,8 @@ class TestThePipelineActuallyUsesIt:
         # With no docling cache the text cannot be checked, so this asserts the
         # WIRING, not the preference: see
         # `TestThePixelReadingIsNotAlwaysBetter` for the rule itself.
-        from metascience_agent.extraction import docling_tables as dl
-        from metascience_agent.prepass import paper_tables
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.prepass import paper_tables
 
         paper = tmp_path / "10.1234--demo"
         paper.mkdir()
@@ -185,7 +185,7 @@ class TestThePipelineActuallyUsesIt:
                    for t in tables for c in t["cells"])
 
     def test_without_one_it_falls_through_to_docling(self, tmp_path):
-        from metascience_agent.prepass import paper_tables
+        from forensic_metascience_ai_toolkit.prepass import paper_tables
 
         paper = tmp_path / "10.1234--plain"
         paper.mkdir()
@@ -211,7 +211,7 @@ class TestThePixelReadingIsNotAlwaysBetter:
     """
 
     def _pdf_with(self, tmp_path, text):
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
         paper = tmp_path / "10.1234--demo"
         paper.mkdir()
@@ -231,13 +231,13 @@ class TestThePixelReadingIsNotAlwaysBetter:
         return paper
 
     def test_a_clean_text_layer_keeps_docling(self, tmp_path):
-        from metascience_agent.prepass import paper_tables
+        from forensic_metascience_ai_toolkit.prepass import paper_tables
 
         paper = self._pdf_with(tmp_path, "Mean age was 65.1 (SD 1.17) years.")
         assert [t["extractor"] for t in paper_tables(paper)] == ["docling"]
 
     def test_a_corrupt_text_layer_switches_to_the_pixels(self, tmp_path):
-        from metascience_agent.prepass import paper_tables
+        from forensic_metascience_ai_toolkit.prepass import paper_tables
 
         # A PostScript glyph-name leak: the text layer naming glyphs it could
         # not map, which is exactly the damage the pixel reading is for.
@@ -247,7 +247,7 @@ class TestThePixelReadingIsNotAlwaysBetter:
         assert [t["extractor"] for t in tables] == ["mistral"]
 
     def test_the_switch_is_announced(self, tmp_path):
-        from metascience_agent.prepass import paper_tables
+        from forensic_metascience_ai_toolkit.prepass import paper_tables
 
         paper = self._pdf_with(tmp_path, "age 65.1 /C6 1.17 and 66.2 /C6 1.32 "
                                          "with p /C6 0.05 across /C6 arms")
@@ -258,7 +258,7 @@ class TestThePixelReadingIsNotAlwaysBetter:
         # No docling cache at all: we do not KNOW the text is damaged, and
         # swapping in the noisier reader on a maybe is not a decision to make
         # silently.
-        from metascience_agent.prepass import _text_layer_lies
+        from forensic_metascience_ai_toolkit.prepass import _text_layer_lies
 
         pdf = tmp_path / "x.pdf"
         pdf.write_bytes(b"%PDF-1.4\n")

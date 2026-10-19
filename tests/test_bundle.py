@@ -14,8 +14,8 @@ import subprocess
 import pathlib
 import pytest
 
-from metascience_agent.bundle import build_bundle, collect, render_viewer
-from metascience_agent.version import NOT_RECORDED
+from forensic_metascience_ai_toolkit.bundle import build_bundle, collect, render_viewer
+from forensic_metascience_ai_toolkit.version import NOT_RECORDED
 
 #: A DOM stub thin enough to let the viewer's top-level code run and no
 #: thinner. The section builders are the only thing under test here, but they
@@ -411,7 +411,7 @@ class TestAnchoring:
     """
 
     def test_prose_quote_is_found_in_the_pdf_text(self):
-        from metascience_agent.bundle import _locate
+        from forensic_metascience_ai_toolkit.bundle import _locate
         pages = ["", "the sample began with 68 pennsylvania and missouri coalitions", ""]
         got = _locate("The sample began with 68 Pennsylvania and Missouri coalitions",
                       pages, "")
@@ -421,30 +421,30 @@ class TestAnchoring:
         """Table quotes are markdown reconstructions and NEVER match the PDF
         verbatim. Exact matching alone found 5 of 36 findings on a real paper;
         numeric-token scoring took it to 33."""
-        from metascience_agent.bundle import _locate
+        from forensic_metascience_ai_toolkit.bundle import _locate
         pages = ["unrelated 9.99 text", "constant -4.51 (1.50) <.001 and 3.16 (0.98)"]
         got = _locate("Constant | - 4.51 (1.50) | <.001 | 3.16 (0.98)", pages, "")
         assert got["page"] == 2
 
     def test_a_single_shared_number_is_not_a_location(self):
         """One number in common is a coincidence, not a match."""
-        from metascience_agent.bundle import _locate
+        from forensic_metascience_ai_toolkit.bundle import _locate
         pages = ["something 4.51 elsewhere", "nothing relevant here at all"]
         assert "page" not in _locate("Constant | - 4.51", pages, "")
 
     def test_text_offset_is_recorded(self):
-        from metascience_agent.bundle import _locate, _norm
+        from forensic_metascience_ai_toolkit.bundle import _locate, _norm
         body = "preamble. the mean level of engaging communication was 3.83 on a scale"
         got = _locate("The mean level of engaging communication was 3.83", [], _norm(body))
         assert got["text_index"] == _norm(body).index("the mean level")
 
     def test_findings_without_a_quote_are_left_alone(self):
-        from metascience_agent.bundle import anchor_findings
+        from forensic_metascience_ai_toolkit.bundle import anchor_findings
         out = anchor_findings([{"id": "x", "severity": "suspicious"}], None, "")
         assert "_anchor" not in out[0]
 
     def test_anchoring_survives_a_missing_pdf(self):
-        from metascience_agent.bundle import anchor_findings
+        from forensic_metascience_ai_toolkit.bundle import anchor_findings
         out = anchor_findings([{"id": "x", "quote": "some text"}], None, "some text here")
         assert out[0]["_anchor"]["text_index"] == 0
 
@@ -563,7 +563,7 @@ class TestTheFilesListDoesNotLie:
     def test_the_dead_analysis_names_are_gone(self):
         """`tool_ledger.json` and `guard_audit.json` were listed for copying long
         after the writers changed name. Nothing has ever written either."""
-        from metascience_agent.bundle import _ANALYSIS_FILES
+        from forensic_metascience_ai_toolkit.bundle import _ANALYSIS_FILES
         assert "tool_ledger.json" not in _ANALYSIS_FILES
         assert "guard_audit.json" not in _ANALYSIS_FILES
 
@@ -702,11 +702,11 @@ class TestTheMetadataTableIsAFixedSchema:
         return [f["fact"] for f in collect(review)["paper_facts"]]
 
     def test_every_row_is_present_for_a_rich_paper(self, review):
-        from metascience_agent.bundle import _METADATA_ROWS
+        from forensic_metascience_ai_toolkit.bundle import _METADATA_ROWS
         assert self._rows(review) == list(_METADATA_ROWS)
 
     def test_every_row_is_present_for_an_empty_paper(self, tmp_path):
-        from metascience_agent.bundle import _METADATA_ROWS
+        from forensic_metascience_ai_toolkit.bundle import _METADATA_ROWS
         rev = tmp_path / "bare" / "forensic_review"
         rev.mkdir(parents=True)
         (rev / "findings.json").write_text("{}")
@@ -801,13 +801,13 @@ class TestTheExtractionPaneCanAnswerItsOwnQuestion:
     """
 
     def test_a_placeholder_becomes_the_actual_table(self, tmp_path):
-        from metascience_agent.bundle import _TABLE_PLACEHOLDER, _md_table
+        from forensic_metascience_ai_toolkit.bundle import _TABLE_PLACEHOLDER, _md_table
         text = "[Table 1: Participant characteristics. — 2 rows x 2 cols; see tables]"
         assert _TABLE_PLACEHOLDER.search(text)
         assert _TABLE_PLACEHOLDER.search(text).group("name") == "Table 1"
 
     def test_a_grid_becomes_a_markdown_table(self):
-        from metascience_agent.bundle import _md_table
+        from forensic_metascience_ai_toolkit.bundle import _md_table
         md = _md_table([["", "n (%)"], ["Age", "40 (37%)"]])
         assert md.splitlines()[0] == "|  | n (%) |"
         assert md.splitlines()[1] == "|---|---|"
@@ -816,13 +816,13 @@ class TestTheExtractionPaneCanAnswerItsOwnQuestion:
     def test_a_pipe_inside_a_cell_cannot_shift_the_row(self):
         """An unescaped `|` opens a phantom column and moves every value in the
         row one place left -- exactly the class of error this pane reveals."""
-        from metascience_agent.bundle import _md_table
+        from forensic_metascience_ai_toolkit.bundle import _md_table
         md = _md_table([["a", "b"], ["x|y", "z"]])
         assert r"x\|y" in md
         assert md.splitlines()[-1].count(" | ") == 1
 
     def test_ragged_rows_are_padded_not_dropped(self):
-        from metascience_agent.bundle import _md_table
+        from forensic_metascience_ai_toolkit.bundle import _md_table
         md = _md_table([["a", "b", "c"], ["only one"]])
         assert md.splitlines()[-1] == "| only one |  |  |"
 
@@ -874,7 +874,7 @@ class TestAcronyms:
     code rather than a model, and precision beats recall."""
 
     def _a(self, text):
-        from metascience_agent.bundle import _acronyms
+        from forensic_metascience_ai_toolkit.bundle import _acronyms
         return {x["acronym"]: x["expansion"] for x in _acronyms(text)}
 
     def test_a_plain_definition_is_captured(self):
@@ -1014,21 +1014,21 @@ class TestResearchPractice:
 
 class TestGlossary:
     def test_every_entry_has_a_plain_reading_and_an_example(self):
-        from metascience_agent.bundle import GLOSSARY
+        from forensic_metascience_ai_toolkit.bundle import GLOSSARY
         for g in GLOSSARY:
             assert g["plain"].strip() and g["example"].strip(), g["term"]
 
     def test_named_tools_are_real(self):
         """A glossary that points at a check we do not have is worse than one
         that admits the gap."""
-        from metascience_agent.bundle import GLOSSARY
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.bundle import GLOSSARY
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         for g in GLOSSARY:
             for tool in g["detects"]:
                 assert tool in BY_NAME, f"{g['term']} names unknown tool {tool}"
 
     def test_a_problem_we_cannot_detect_says_so(self):
-        from metascience_agent.bundle import GLOSSARY
+        from forensic_metascience_ai_toolkit.bundle import GLOSSARY
         multi = [g for g in GLOSSARY if g["term"] == "Multicollinearity"][0]
         assert multi["detects"] == ()
 
@@ -1104,7 +1104,7 @@ class TestTheFindingsPageAgreesWithTheReport:
         return review
 
     def test_the_payload_is_in_the_reports_order(self, graded):
-        from metascience_agent.report_render import sort_findings
+        from forensic_metascience_ai_toolkit.report_render import sort_findings
         got = [f["title"] for f in collect(graded)["report_obj"]["findings"]]
         want = [f["title"] for f in sort_findings(
             json.loads((graded / "report.json").read_text())["findings"])]
@@ -1283,12 +1283,12 @@ class TestTheScrubberIsNarrow:
     home directory, and the bundle exists to show what the paper offered."""
 
     def test_a_url_containing_home_survives(self):
-        from metascience_agent.bundle import scrub
+        from forensic_metascience_ai_toolkit.bundle import scrub
         assert scrub("https://osf.io/home/xyz") == "https://osf.io/home/xyz"
         assert scrub("https://github.com/Users/foo") == "https://github.com/Users/foo"
 
     def test_the_three_home_shapes_are_all_caught(self):
-        from metascience_agent.bundle import scrub
+        from forensic_metascience_ai_toolkit.bundle import scrub
         assert scrub("--xml /home/op/p.xml") == "--xml <home>/p.xml"
         assert scrub("/mnt/c/Users/op/p.xml") == "<home>/p.xml"
         assert scrub(r"C:\Users\op\p.xml") == r"<home>\p.xml"
@@ -1299,7 +1299,7 @@ class TestTheScrubberIsNarrow:
         "cost". A health-economics paper's finding can carry `mean_cost` in its
         inputs, and dropping that would delete the evidence under a finding --
         a worse failure than the leak this exists to close."""
-        from metascience_agent.bundle import _scrub
+        from forensic_metascience_ai_toolkit.bundle import _scrub
         got = _scrub({"inputs": {"mean_cost": 412.0, "cost_per_qaly": 30000},
                       "cost_usd": 7.58})
         assert got == {"inputs": {"mean_cost": 412.0, "cost_per_qaly": 30000}}
@@ -1557,7 +1557,7 @@ class TestWhatThisReviewCouldNotDo:
         """
         import pathlib
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         i = src.index("on no validated computation")
         block = src[max(0, i - 1600):i + 400]
         # The discredited predicate must not be back...
@@ -2632,7 +2632,7 @@ class TestAJudgementIsNotAnUnreproducibleFinding:
     returned the paper's printed 180.74 exactly."""
 
     def test_no_command_applies_is_a_third_state(self):
-        from metascience_agent.evaluation.deterministic import classify_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import classify_reproduction
         for s in ["No", "No forensic tool applies to this finding.",
                   "MCP-only tool, no CLI verb exists", "n/a", "Not applicable",
                   "NO COMMAND APPLIES"]:
@@ -2641,7 +2641,7 @@ class TestAJudgementIsNotAnUnreproducibleFinding:
     def test_a_real_command_is_never_swallowed_by_the_prose_matcher(self):
         """The matcher is consulted ONLY when the string does not begin with
         `metascience`, so no command can be reclassified out of the count."""
-        from metascience_agent.evaluation.deterministic import classify_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import classify_reproduction
         for s in ["metascience grim 5.5 30",
                   "metascience summation-batch --rows '[]'",
                   "metascience nonexistent-verb --no-such-flag"]:
@@ -2650,7 +2650,7 @@ class TestAJudgementIsNotAnUnreproducibleFinding:
     def test_something_that_is_neither_stays_a_command_and_stays_invalid(self):
         """`python foo.py` is a wrong command, not a declaration that none
         applies. Filing it as the latter would hide a real defect."""
-        from metascience_agent.evaluation.deterministic import classify_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import classify_reproduction
         assert classify_reproduction("python foo.py") == "command"
 
     def test_the_rate_is_stated_over_findings_that_should_have_a_command(
@@ -2733,7 +2733,7 @@ class TestAnAbsentRunCountIsNotAZero:
         # Pull the function out of the SHIPPED source rather than retyping it.
         from pathlib import Path as _P
         src = (_P(__file__).resolve().parents[1]
-               / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+               / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         m = _re.search(r"function reproTally\(rep\)\{.*?\n\}", src, _re.S)
         assert m, "reproTally not found in bundle.py"
         prog = ("const D={};const esc=s=>String(s==null?'':s);\n"
@@ -2785,7 +2785,7 @@ class TestTheViewerIsBuiltWithoutBeingAskedFor:
     def _analyze_src(self):
         from pathlib import Path as _P
         return (_P(__file__).resolve().parents[1]
-                / "src/metascience_agent/cli.py").read_text(encoding="utf-8")
+                / "src/forensic_metascience_ai_toolkit/cli.py").read_text(encoding="utf-8")
 
     def test_analyze_builds_the_bundle_itself(self):
         # `analyze` is the FIRST command in the file, so the body is between the
@@ -3006,8 +3006,8 @@ class TestTheBundleAndTheWalkerAgreeAboutTables:
 
     @pytest.mark.skipif(not PAPER.is_dir(), reason="corpus not present")
     def test_the_counts_match_the_shared_walker(self):
-        from metascience_agent import prepass
-        from metascience_agent.bundle import _table_records
+        from forensic_metascience_ai_toolkit import prepass
+        from forensic_metascience_ai_toolkit.bundle import _table_records
         st: dict = {}
         recs = _table_records(self.PAPER, status=st)
         walker = prepass.paper_tables(self.PAPER, include_supplements=True)
@@ -3016,7 +3016,7 @@ class TestTheBundleAndTheWalkerAgreeAboutTables:
 
     @pytest.mark.skipif(not PAPER.is_dir(), reason="corpus not present")
     def test_a_pdf_record_carries_its_grid_and_its_extractor(self):
-        from metascience_agent.bundle import _table_records
+        from forensic_metascience_ai_toolkit.bundle import _table_records
         recs = _table_records(self.PAPER, status={})
         r = recs[0]
         assert r["source"], "a reader must be able to tell which extractor ran"
@@ -3027,7 +3027,7 @@ class TestTheBundleAndTheWalkerAgreeAboutTables:
         """`error` means our attempt FAILED. "Never attempted" is a different
         fact, and collapsing the two is the same defect the corrupt-XML test
         guards, pointed the other way."""
-        from metascience_agent.bundle import _table_records
+        from forensic_metascience_ai_toolkit.bundle import _table_records
         d = tmp_path / "10.9999--nopdf"
         d.mkdir()
         (d / "10.9999--nopdf.pdf").write_bytes(b"%PDF-1.4\nnot really\n")
@@ -3079,7 +3079,7 @@ class TestTheTextIntegrityWarningReachesTheReader:
         """Pins the consumer. Before this, `text_integrity` appeared ZERO times
         in bundle.py -- computed every run, rendered never."""
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         assert "cs.text_integrity" in src
         assert "corrupts_digits" in src
         # In `L`, which bears on the findings, not `B`, which bounds the
@@ -3102,7 +3102,7 @@ class TestTheModelsOwnRegisterIsRendered:
 
     def test_the_viewer_consumes_it(self):
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         assert "cs.statistics_register" in src
         assert "modelRegisterBlock()" in src
 
@@ -3110,7 +3110,7 @@ class TestTheModelsOwnRegisterIsRendered:
         """`floor_check` returns `n_unmatched` and `n_floor`. The first cut read
         `n_missed`, which does not exist, so the comparison rendered nothing at
         all -- a silent blank where the headline number belongs."""
-        from metascience_agent import register as R
+        from forensic_metascience_ai_toolkit import register as R
         r = R.validate(
             [{"quote": "M = 4.2 (SD 0.3)", "values": [4.2, 0.3],
               "source": "table", "checkable": {"tools": ["grim_check"]}}],
@@ -3118,7 +3118,7 @@ class TestTheModelsOwnRegisterIsRendered:
             floor_items=[{"raw": "M = 4.2"}, {"raw": "p < .05"}])
         assert set(r["floor"]) >= {"n_floor", "n_unmatched"}
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         i = src.index("function modelRegisterBlock()")
         block = src[i:i + 3000]
         assert "fl.n_unmatched" in block
@@ -3130,11 +3130,11 @@ class TestTheModelsOwnRegisterIsRendered:
         """`register.py` insists on this and the renderer must not collapse it:
         no register emitted is OUR wiring or the model's refusal; an empty one
         is a claim about the paper."""
-        from metascience_agent import register as R
+        from forensic_metascience_ai_toolkit import register as R
         assert R.validate(None)["absent"] is True
         assert R.validate([])["absent"] is False
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         i = src.index("function modelRegisterBlock()")
         assert "sr.absent" in src[i:i + 3000]
 
@@ -3143,7 +3143,7 @@ class TestTheModelsOwnRegisterIsRendered:
         wrong in ways no arithmetic can detect -- a lost minus sign reads as an
         ordinary number -- so the reader has to see which text it came from."""
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         i = src.index("function modelRegisterBlock()")
         assert "sr.provenance" in src[i:i + 3000]
 
@@ -3183,7 +3183,7 @@ class TestAFailedRegisterSaysSoInsteadOfBlamingTheBundle:
 
     def test_the_viewer_prefers_the_reason_over_the_age_excuse(self):
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "bundle.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "bundle.py").read_text()
         i = src.index("D.value_register_error")
         j = src.index("predates the value register")
         assert i < j, ("the failure branch must be tested BEFORE the "
@@ -3193,7 +3193,7 @@ class TestAFailedRegisterSaysSoInsteadOfBlamingTheBundle:
     def test_read_text_is_not_load(self):
         """`_load` returns None for anything that is not json, which is every
         one of these written-out failure reasons."""
-        from metascience_agent.bundle import _load, _read_text
+        from forensic_metascience_ai_toolkit.bundle import _load, _read_text
         import tempfile
         with tempfile.TemporaryDirectory() as d:
             f = pathlib.Path(d) / "why.txt"
@@ -3333,7 +3333,7 @@ class TestV2Bundle:
                                              monkeypatch):
         """The regression pin: if the adapter breaks again, the build must
         FAIL, not produce a viewer with the evidence missing."""
-        from metascience_agent import bundle as B
+        from forensic_metascience_ai_toolkit import bundle as B
         real = B.collect
 
         def sabotaged(review_dir, paper_dir=None):

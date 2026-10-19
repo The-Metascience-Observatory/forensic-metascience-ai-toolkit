@@ -113,7 +113,8 @@ def test_parallel_limit_unique_cwds_and_global_attempt_budget(tmp_path, monkeypa
     async def fake(argv, *, cwd, env, timeout):
         nonlocal active, peak, calls
         assert "--disable-web-search" in argv and "--no-subagents" in argv
-        assert "metascience_agent" not in str(argv)
+        assert "forensic_metascience_ai_toolkit" not in str(argv)
+        assert "metascience_agent" not in str(argv)  # the old name is an alias
         assert not Path(cwd).is_relative_to(tmp_path)
         cwds.append(cwd)
         active += 1

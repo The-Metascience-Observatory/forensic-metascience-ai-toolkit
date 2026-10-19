@@ -21,7 +21,7 @@ valueless including all 56 p-values, and the five complete
 
 import pytest
 
-from metascience_agent.values import groups_from_body_items, prose_values
+from forensic_metascience_ai_toolkit.values import groups_from_body_items, prose_values
 
 
 class TestTheNumberIsRecovered:
@@ -183,19 +183,19 @@ class TestLancetHouseStyleDecimals:
     """
 
     def test_a_middle_dot_between_digits_is_a_decimal_point(self):
-        from metascience_agent.tools.celltypes import repair_unicode
+        from forensic_metascience_ai_toolkit.tools.celltypes import repair_unicode
         assert repair_unicode("4·5")[0] == "4.5"
         assert repair_unicode("4·5")[1] == 1, "the repair is counted, not silent"
 
     def test_a_middle_dot_that_is_not_between_digits_is_left_alone(self):
         """It is a bullet and a separator elsewhere, and this codebase may not
         rewrite it on sight."""
-        from metascience_agent.tools.celltypes import repair_unicode
+        from forensic_metascience_ai_toolkit.tools.celltypes import repair_unicode
         assert repair_unicode("a · bullet")[0] == "a · bullet"
         assert repair_unicode("a · bullet")[1] == 0
 
     def test_the_verbatim_interval_from_the_run(self):
-        from metascience_agent.values import prose_values
+        from forensic_metascience_ai_toolkit.values import prose_values
         got = {v["role"]: v["value"] for v in
                prose_values("estimate_ci_prose", "-5·077 (95% CI: -7·716 to -2·437)")}
         assert got["estimate"] == -5.077
@@ -208,13 +208,13 @@ class TestLancetHouseStyleDecimals:
         dot it matched only `077`, so everything downstream was handed a number
         that began three characters late."""
         import re
-        from metascience_agent.completeness import BODY_PATTERNS
+        from forensic_metascience_ai_toolkit.completeness import BODY_PATTERNS
         text = "the difference was -5·077 (95% CI: -7·716 to -2·437) overall"
         m = re.search(BODY_PATTERNS["estimate_ci_prose"], text)
         assert m and m.group(0).startswith("-5·077"), m.group(0) if m else None
 
     def test_an_ordinary_decimal_point_is_unaffected(self):
-        from metascience_agent.values import prose_values
+        from forensic_metascience_ai_toolkit.values import prose_values
         got = {v["role"]: v["value"] for v in
                prose_values("estimate_ci_prose", "0.548 (95% CI, 0.182 to 0.912)")}
         assert got["estimate"] == 0.548

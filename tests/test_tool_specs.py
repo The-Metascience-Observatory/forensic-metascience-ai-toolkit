@@ -10,8 +10,8 @@ integrity cards and descriptions are read from TOOL.md.
 
 from pathlib import Path
 
-from metascience_agent import registry as R
-from metascience_agent import tool_specs as TS
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit import tool_specs as TS
 
 PKG = Path(TS.__file__).resolve().parent
 
@@ -50,12 +50,12 @@ def test_integrity_cards_come_from_tool_md():
 
 def test_a_family_folder_is_named_for_its_implementation():
     # `grim_harness` is named for its implementation too, which is a
-    # harness module (`metascience_agent.grim_harness`), not a pure tool.
+    # harness module (`forensic_metascience_ai_toolkit.grim_harness`), not a pure tool.
     grouped = {"readers", "cells", "check_table", "run_script", "tracks",
                "multiplicity", "raw_duplication", "grim_harness"}
     for fam in set(TS.FAMILIES) - grouped:
         for spec in R.SPECS:
-            if spec.fn.__module__ == f"metascience_agent.tools.{fam}":
+            if spec.fn.__module__ == f"forensic_metascience_ai_toolkit.tools.{fam}":
                 break
         else:
             raise AssertionError(f"tool_specs/{fam} has no tools/{fam}.py tool")
@@ -65,7 +65,7 @@ def test_the_procedure_guidance_lives_beside_its_tools():
     """Phase 3b: the tools agent's step-3 bullets are in TOOL.md, numbered,
     each in the family of the first tool it names, and assembled back into
     the prompt (byte-identical to before: test_pipeline_parity)."""
-    from metascience_agent.core import prompts
+    from forensic_metascience_ai_toolkit.core import prompts
     blocks = TS.guidance()
     assert [b[0] for b in blocks] == list(range(1, len(blocks) + 1))
     fam = TS.family_of()
@@ -74,7 +74,7 @@ def test_the_procedure_guidance_lives_beside_its_tools():
         lead = [n for n in __import__("re").findall(r"`(\w+)`", text.split(" — ")[0])
                 if n in names]
         assert f"<!-- guidance:{_n:02d} -->" in (PKG / fam[lead[0]] / "TOOL.md").read_text()
-    raw = __import__("metascience_agent.core.prompts", fromlist=["x"]).prompt_path("tool_expert.md").read_text()
+    raw = __import__("forensic_metascience_ai_toolkit.core.prompts", fromlist=["x"]).prompt_path("tool_expert.md").read_text()
     assert prompts.TOOL_GUIDANCE_MARK in raw and "`grimmer_check` —" not in raw
     body = prompts.tool_expert_body()
     assert prompts.TOOL_GUIDANCE_MARK not in body

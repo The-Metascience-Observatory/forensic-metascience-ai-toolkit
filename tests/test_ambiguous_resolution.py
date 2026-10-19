@@ -21,7 +21,7 @@ severity cap already lifted.
 
 import pytest
 
-from metascience_agent.dispatch import _resolve_ambiguous
+from forensic_metascience_ai_toolkit.dispatch import _resolve_ambiguous
 
 
 def resolve(raw, family, candidates=("mean_sd", "n_percent")):
@@ -48,7 +48,7 @@ class TestDigitGroupsSurviveResolution:
         """Two number patterns in one pipeline is two chances to disagree about
         what a cell contains, and the disagreement is silent."""
         import inspect
-        from metascience_agent import dispatch
+        from forensic_metascience_ai_toolkit import dispatch
         assert "_NUM" in inspect.getsource(dispatch._resolve_ambiguous)
 
 

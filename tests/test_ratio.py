@@ -11,7 +11,7 @@ result and the pipeline skipped it for want of an operator.
 """
 import pytest
 
-from metascience_agent.tools.ratio import check_ratio
+from forensic_metascience_ai_toolkit.tools.ratio import check_ratio
 
 
 # The published table: incremental cost EUR 408 (Methods 2.2), and three ICERs

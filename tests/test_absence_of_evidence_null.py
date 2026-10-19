@@ -12,8 +12,8 @@ dominated by ratios), from a check the reader believes ran.
 """
 import pytest
 
-from metascience_agent.registry import BY_NAME
-from metascience_agent.tools.estimates import absence_of_evidence
+from forensic_metascience_ai_toolkit.registry import BY_NAME
+from forensic_metascience_ai_toolkit.tools.estimates import absence_of_evidence
 
 
 class TestRefusesWithoutTheNull:

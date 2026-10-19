@@ -7,7 +7,7 @@ three contain literal `...` placeholders, three invoke flags that do not exist
 """
 import pytest
 
-from metascience_agent.evaluation.deterministic import (
+from forensic_metascience_ai_toolkit.evaluation.deterministic import (
     known_commands,
     run_reproduction,
     validate_reproduction,
@@ -97,14 +97,14 @@ class TestTheAggregatorWasDeletedRatherThanFixed:
     """
 
     def test_it_is_gone(self):
-        from metascience_agent.evaluation import deterministic as D
+        from forensic_metascience_ai_toolkit.evaluation import deterministic as D
         assert not hasattr(D, "check_reproductions"), (
             "if it is back, it must forward claimed_severity and count `valid`, "
             "not `ok` -- see the note at its former site")
 
     def test_the_live_path_is_the_one_wired_in(self):
         """Named here so the deletion cannot be read as a loss of coverage."""
-        from metascience_agent.agent import _annotate_reproductions
+        from forensic_metascience_ai_toolkit.agent import _annotate_reproductions
         r = {"findings": {"findings": [
             {"id": "f1", "severity": "consistent",
              "reproduction": """metascience tool run grim_check --json '{"mean": 5.51, "n": 30, "decimals": 2, "data_type": "likert"}'"""},
@@ -131,7 +131,7 @@ class TestAgreementNotJustExecutability:
     executed, said `indeterminate`."""
 
     def test_the_verdict_is_read_out_of_the_output(self):
-        from metascience_agent.evaluation.deterministic import reported_severity
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import reported_severity
         assert reported_severity("CONSISTENT: Mean 3.14 is possible for n=28") == "consistent"
         assert reported_severity("indeterminate  correlation = 11.3") == "indeterminate"
         assert reported_severity("highly_suspicious  x") == "highly_suspicious"
@@ -139,19 +139,19 @@ class TestAgreementNotJustExecutability:
     def test_prose_further_down_is_not_read_as_the_verdict(self):
         """`consistent` appears in explanations ("...is consistent with...").
         Reading that as the answer would score a disagreement as a pass."""
-        from metascience_agent.evaluation.deterministic import reported_severity
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import reported_severity
         head = "impossible  x = 1\n" + "y " * 200 + "is consistent with the mean"
         assert reported_severity(head) == "impossible"
 
     def test_an_unreadable_verdict_is_unknown_not_agreement(self):
-        from metascience_agent.evaluation.deterministic import reported_severity
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import reported_severity
         assert reported_severity("something with no ladder word in it") is None
 
     def test_a_command_that_disagrees_is_no_longer_valid(self):
         """THE LIVE CASE. This command runs, exits 0, and reports
         `indeterminate`. A finding claiming `impossible` from it is not
         reproduced by it."""
-        from metascience_agent.evaluation.deterministic import run_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
         r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""",
                              claimed_severity="impossible")
         if not r.get("ran"):
@@ -163,7 +163,7 @@ class TestAgreementNotJustExecutability:
         assert "DISAGREES" in " ".join(r["problems"])
 
     def test_a_command_that_agrees_is_valid(self):
-        from metascience_agent.evaluation.deterministic import run_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
         r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""",
                              claimed_severity="indeterminate")
         if not r.get("ran"):
@@ -173,7 +173,7 @@ class TestAgreementNotJustExecutability:
     def test_with_no_claim_it_falls_back_to_executability(self):
         """The fail-safe direction. Nothing was claimed, so nothing can
         disagree, and the old meaning is the honest one."""
-        from metascience_agent.evaluation.deterministic import run_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
         r = run_reproduction("""metascience tool run check_statistic_bounds --json '{"value": 11.3, "measure": "correlation"}'""")
         if not r.get("ran"):
             pytest.skip("CLI unavailable")
@@ -183,7 +183,7 @@ class TestAgreementNotJustExecutability:
         """`None` must not be promoted in either direction: not to agreement,
         which would restore the bug, and not to disagreement, which would
         accuse a finding on the strength of our own parser."""
-        from metascience_agent.evaluation.deterministic import run_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
         r = run_reproduction("metascience --help", claimed_severity="impossible")
         if not r.get("ran"):
             pytest.skip("CLI unavailable")
@@ -205,7 +205,7 @@ class TestTheCacheKeyIncludesTheClaim:
     """
 
     def _cached(self, monkeypatch, **kw):
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         calls = []
 
         def fake(command, timeout=90, claimed_severity=None,
@@ -215,7 +215,7 @@ class TestTheCacheKeyIncludesTheClaim:
                     "agrees": None, "problems": []}
 
         monkeypatch.setattr(
-            "metascience_agent.evaluation.deterministic.run_reproduction", fake)
+            "forensic_metascience_ai_toolkit.evaluation.deterministic.run_reproduction", fake)
         agent._REPRO_RUN_CACHE.clear()
         return agent, calls
 

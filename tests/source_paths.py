@@ -29,7 +29,7 @@ def canonical(path):
     for node in ast.walk(ast.parse(text)):
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "import_module":
             name = ast.literal_eval(node.args[0])
-            roots = {"metascience_agent": ROOT / "src/metascience_agent",
+            roots = {"forensic_metascience_ai_toolkit": ROOT / "src/forensic_metascience_ai_toolkit",
                      "metascience_observatory_image_analysis": IMAGE_SRC}
             package, _, rest = name.partition(".")
             if package in roots and roots[package] is None:

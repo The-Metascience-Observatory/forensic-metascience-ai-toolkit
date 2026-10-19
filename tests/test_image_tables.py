@@ -13,7 +13,7 @@ import pytest
 
 fitz = pytest.importorskip("fitz")
 
-from metascience_agent.extraction import image_tables as IT  # noqa: E402
+from forensic_metascience_ai_toolkit.extraction import image_tables as IT  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 

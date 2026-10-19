@@ -35,8 +35,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import secondlook as S
-from metascience_agent.severity9 import ACCUSATORY_MIN
+from forensic_metascience_ai_toolkit import secondlook as S
+from forensic_metascience_ai_toolkit.severity9 import ACCUSATORY_MIN
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 RUN = (REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1002--ajcp.70049"
@@ -128,17 +128,17 @@ class TestItReadsTheShapeTheCallSiteActuallyProduces:
     }
 
     def test_a_producer_row_is_recognised_as_an_accusation(self):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         assert secondlook.worklist([self.PRODUCER_ROW])["n_accusatory"] == 1
 
     def test_the_docket_does_not_say_nothing_accuses(self):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         note = secondlook.worklist([self.PRODUCER_ROW])["note"]
         assert "No finding accuses the paper" not in note
 
     def test_the_markers_actually_fire_on_a_producer_row(self):
         """The point of the docket is the markers, not the count."""
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         out = secondlook.worklist([self.PRODUCER_ROW])
         assert out["n_flagged"] == 1
         assert "quote_not_located" in out["by_marker"]
@@ -147,26 +147,26 @@ class TestItReadsTheShapeTheCallSiteActuallyProduces:
         """ABSENT and None are different facts. No `severity` key means not yet
         adjudicated; `severity: None` means adjudicated and DISCARDED, and its
         provisional level is the claim just rejected."""
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         discarded = dict(self.PRODUCER_ROW, severity=None)
         assert secondlook.worklist([discarded])["n_accusatory"] == 0
 
     def test_an_adjudicated_row_still_uses_its_final_severity(self):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         kept = dict(self.PRODUCER_ROW, severity=5)
         assert secondlook.worklist([kept])["n_accusatory"] == 1
         lowered = dict(self.PRODUCER_ROW, severity=1)
         assert secondlook.worklist([lowered])["n_accusatory"] == 0
 
     def test_a_pass_accuses_nobody_at_any_level(self):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         row = dict(self.PRODUCER_ROW, outcome="pass")
         assert secondlook.worklist([row])["n_accusatory"] == 0
 
     def test_the_producer_schema_really_has_no_severity_property(self):
         """The fact that makes all of the above load-bearing. If this ever
         changes, the fallback above is dead code and should go."""
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         schema = prompts.producer_findings_schema("tool_expert")
         props = schema["properties"]["findings"]["items"]["properties"]
         assert "severity" not in props
@@ -189,7 +189,7 @@ class TestQuoteNotLocatedIsTheComplementOfLocated:
            "computed_by": "registry_tool", "quote": "x"}
 
     def _flagged(self, verdict):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         out = secondlook.worklist([dict(self.ROW, quote_verified=verdict)])
         return "quote_not_located" in (out["by_marker"] or {})
 
@@ -236,7 +236,7 @@ class TestTheCleanNoteClaimsOnlyWhatWasChecked:
              "quote": "x", "quote_verified": "verbatim"}
 
     def _note(self, *rows):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         return secondlook.worklist(list(rows))["note"]
 
     def test_it_does_not_claim_stated_bounds_when_none_were_recorded(self):
@@ -253,7 +253,7 @@ class TestTheCleanNoteClaimsOnlyWhatWasChecked:
         assert "rest on stated bounds" in note
 
     def test_an_assumed_bound_is_flagged_rather_than_noted(self):
-        from metascience_agent import secondlook
+        from forensic_metascience_ai_toolkit import secondlook
         out = secondlook.worklist(
             [dict(self.CLEAN, inputs={"bound_source": "assumed"})])
         assert "assumed_bound" in out["by_marker"]

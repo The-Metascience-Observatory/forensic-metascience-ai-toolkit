@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository, adjudicator_output
-from metascience_agent.workbench.service import Service
-from metascience_agent.workbench.remote import migration_sql
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository, adjudicator_output
+from forensic_metascience_ai_toolkit.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.remote import migration_sql
 
 
 def seed(c):
@@ -292,8 +292,8 @@ def test_conflict_does_not_republish_revoked_finding(catalog):
 
 
 def test_importer_reports_unrepresentable_records_without_altering_archives(tmp_path,monkeypatch):
-    from metascience_agent.workbench import importer
-    from metascience_agent import history_db,history_publication
+    from forensic_metascience_ai_toolkit.workbench import importer
+    from forensic_metascience_ai_toolkit import history_db,history_publication
     class Connection:
         def execute(self,*args):
             if 'pg_size_bytes' in args[0]:

@@ -8,7 +8,7 @@ sum compared against a single cell's tolerance.
 """
 import pytest
 
-from metascience_agent.tools import rounding as R
+from forensic_metascience_ai_toolkit.tools import rounding as R
 
 
 class TestHalfWidth:
@@ -154,24 +154,24 @@ class TestTheOldHelpersStillWork:
     """The nine call sites kept their local names; they must still resolve."""
 
     def test_debit(self):
-        from metascience_agent.tools.debit import _rounding_half_width
+        from forensic_metascience_ai_toolkit.tools.debit import _rounding_half_width
         assert _rounding_half_width(2) == R.half_width(2)
 
     def test_rivets(self):
-        from metascience_agent.tools.rivets import _half_width, _matches_at_precision
+        from forensic_metascience_ai_toolkit.tools.rivets import _half_width, _matches_at_precision
         assert _half_width(2) == R.half_width(2)
         assert _matches_at_precision(1.001, 1.0, 2)
 
     def test_grimu_imports_from_rivets(self):
         """The one pre-existing cross-module import must survive the move."""
-        from metascience_agent.tools.grimu import _half_width as gu
+        from forensic_metascience_ai_toolkit.tools.grimu import _half_width as gu
         assert gu(3) == R.half_width(3)
 
     def test_estimates(self):
-        from metascience_agent.tools.estimates import _half_width
+        from forensic_metascience_ai_toolkit.tools.estimates import _half_width
         assert _half_width(1.40, 1.1) == R.half_width(1)
 
     def test_celltypes(self):
-        from metascience_agent.tools.celltypes import _dp
+        from forensic_metascience_ai_toolkit.tools.celltypes import _dp
         assert _dp("71.0") == 1
         assert _dp("n/a") is None

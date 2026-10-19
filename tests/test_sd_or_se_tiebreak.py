@@ -15,7 +15,7 @@ an implausibly tight spread. The tool preferred the reading the paper did not
 use, then flagged the paper for not using it.
 """
 
-from metascience_agent.registry import BY_NAME
+from forensic_metascience_ai_toolkit.registry import BY_NAME
 
 
 def _check(value, n, reported_as, lo, hi, decimals="2"):

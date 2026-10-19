@@ -36,7 +36,7 @@ from pathlib import Path
 
 import pytest
 
-SRC = Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
 
 #: Modules a human-facing reader actually sees. A key referenced only inside the
 #: module that writes it is not consumed -- that is the bug.
@@ -511,8 +511,8 @@ class TestEveryRunMetaCarriesTheTextProvenance:
     @staticmethod
     def _run_meta_literals() -> list[str]:
         import pathlib
-        src = (lambda r: (r / "src/metascience_agent/agent.py").read_text(encoding="utf-8")
-                   + (r / "src/metascience_agent/parallel.py").read_text(encoding="utf-8")
+        src = (lambda r: (r / "src/forensic_metascience_ai_toolkit/agent.py").read_text(encoding="utf-8")
+                   + (r / "src/forensic_metascience_ai_toolkit/parallel.py").read_text(encoding="utf-8")
                    )(pathlib.Path(__file__).resolve().parents[1])
         out, i = [], 0
         while (i := src.find("run_meta = {", i)) != -1:
@@ -535,7 +535,7 @@ class TestEveryRunMetaCarriesTheTextProvenance:
 
         import pytest
 
-        from metascience_agent.agent import _text_provenance
+        from forensic_metascience_ai_toolkit.agent import _text_provenance
         d = (pathlib.Path(__file__).resolve().parents[1]
              / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1371--journal.pone.0069841")
         if not d.is_dir():

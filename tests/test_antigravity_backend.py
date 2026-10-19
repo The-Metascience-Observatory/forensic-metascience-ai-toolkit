@@ -29,8 +29,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit.llm_backend import (
     ANTIGRAVITY,
     ANTIGRAVITY_AGENT,
     ANTIGRAVITY_DENY_RULES,
@@ -51,7 +51,7 @@ from metascience_agent.llm_backend import (
     resolve_backend,
     sandbox_limitation_sentence,
 )
-from metascience_agent.usage_guard import parse_antigravity_usage
+from forensic_metascience_ai_toolkit.usage_guard import parse_antigravity_usage
 
 DATA = Path(__file__).parent / "data"
 FORENSIC = "mcp__forensic_metascience__"
@@ -602,7 +602,7 @@ def agy_stage_env(tmp_path, monkeypatch):
         seen.append(k)
 
     monkeypatch.setattr(A, "usage_guard", _guard)
-    from metascience_agent.llm_backend import Backend
+    from forensic_metascience_ai_toolkit.llm_backend import Backend
     monkeypatch.setattr(Backend, "assert_mcp_live", lambda self, sandbox: None)
     return seen
 
@@ -658,7 +658,7 @@ class TestServerImportsThisTree:
     `copy_paste_detector`, died on import, and every stage refused."""
 
     def test_pythonpath_carries_both_source_roots(self):
-        from metascience_agent.llm_backend import forensic_pythonpath
+        from forensic_metascience_ai_toolkit.llm_backend import forensic_pythonpath
         import os
         parts = forensic_pythonpath().split(os.pathsep)
         src = Path(A.__file__).resolve().parent.parent
@@ -668,7 +668,7 @@ class TestServerImportsThisTree:
             assert str(detector) in parts
 
     def test_every_backend_hands_the_server_both(self, tmp_path, monkeypatch):
-        from metascience_agent.llm_backend import forensic_pythonpath
+        from forensic_metascience_ai_toolkit.llm_backend import forensic_pythonpath
         monkeypatch.setenv("METASCIENCE_ANTIGRAVITY_SANDBOX_ROOT", str(tmp_path))
         inv = build_invocation(ANTIGRAVITY, system_prompt="s",
                                allowed_tools=[f"{FORENSIC}grim_check"],
@@ -693,7 +693,7 @@ class TestRefusalBeforeLaunchCleansUp:
 
     @pytest.mark.parametrize("where", ["preflight", "mcp_live", "usage_guard"])
     def test_sandbox_removed_when_a_gate_refuses(self, where, tmp_path, monkeypatch):
-        from metascience_agent.llm_backend import Backend, MCPUnavailable
+        from forensic_metascience_ai_toolkit.llm_backend import Backend, MCPUnavailable
         monkeypatch.setenv("METASCIENCE_ANTIGRAVITY_SANDBOX_ROOT", str(tmp_path))
 
         def _refuse(*a, **k):
@@ -765,7 +765,7 @@ class TestResumeTheUnfinishedConversation:
 
     def test_no_finish_keeps_the_sandbox_and_marks_the_result(
             self, tmp_path, monkeypatch):
-        from metascience_agent.llm_backend import stage_resumable_conversation
+        from forensic_metascience_ai_toolkit.llm_backend import stage_resumable_conversation
         inv = self._inv(tmp_path, monkeypatch)
         out = _normalize(self.NO_FINISH, expects_schema=True,
                          resume_state=inv.resume_state)
@@ -807,7 +807,7 @@ class TestResumeTheUnfinishedConversation:
     def test_retry_if_empty_resumes_instead_of_restarting(
             self, agy_stage_env, tmp_path, monkeypatch):
         from types import SimpleNamespace
-        from metascience_agent.modules import _analyst
+        from forensic_metascience_ai_toolkit.modules import _analyst
         payloads = [self.NO_FINISH, self._finished()]
         spawned = []
 

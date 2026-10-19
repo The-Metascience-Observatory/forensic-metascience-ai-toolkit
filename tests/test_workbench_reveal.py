@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.service import Service
 from tests.test_workbench_integration import source_catalog
 
 

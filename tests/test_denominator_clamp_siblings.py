@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.dispatch import check_table
+from forensic_metascience_ai_toolkit.dispatch import check_table
 
 VARIABLE = {"id": "v1", "name": "Reported full compliance",
             "measurement_level": "nominal", "discreteness": "discrete",
@@ -88,7 +88,7 @@ class TestARealErrorStillReachesTheReader:
 
     def test_the_clamp_never_raises_a_severity(self):
         """Propagation is downward-only by construction."""
-        from metascience_agent.dispatch import _propagate_denominator_clamp
+        from forensic_metascience_ai_toolkit.dispatch import _propagate_denominator_clamp
         results = [
             {"tool": "check_count_percent", "severity": "indeterminate",
              "clamped_by": "shared_section_denominator", "clamp_reason": "r",
@@ -100,7 +100,7 @@ class TestARealErrorStillReachesTheReader:
         assert results[1]["severity"] == "consistent"
 
     def test_an_unclamped_sibling_is_untouched(self):
-        from metascience_agent.dispatch import _propagate_denominator_clamp
+        from forensic_metascience_ai_toolkit.dispatch import _propagate_denominator_clamp
         results = [
             {"tool": "check_count_percent", "severity": "suspicious",
              "cell": {"row_label": "x", "row": 1, "ordinal": 0, "raw": "1 (2)"}},
@@ -112,7 +112,7 @@ class TestARealErrorStillReachesTheReader:
 
     def test_a_different_cell_does_not_inherit(self):
         """Cell identity is what licenses the inheritance."""
-        from metascience_agent.dispatch import _propagate_denominator_clamp
+        from forensic_metascience_ai_toolkit.dispatch import _propagate_denominator_clamp
         results = [
             {"tool": "check_count_percent", "severity": "indeterminate",
              "clamped_by": "shared_section_denominator", "clamp_reason": "r",
@@ -140,7 +140,7 @@ class TestOnlyTheEvidencedClampPropagates:
     """
 
     def test_a_lone_row_clamp_does_not_propagate(self):
-        from metascience_agent.dispatch import _propagate_denominator_clamp
+        from forensic_metascience_ai_toolkit.dispatch import _propagate_denominator_clamp
         cell = {"row_label": "x", "row": 1, "ordinal": 0, "raw": "101 (71.5%)"}
         results = [
             {"tool": "check_count_percent", "severity": "indeterminate",

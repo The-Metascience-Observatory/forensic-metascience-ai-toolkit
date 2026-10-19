@@ -12,7 +12,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from metascience_agent.atomicio import atomic_write_text, scratch_sibling
+from forensic_metascience_ai_toolkit.atomicio import atomic_write_text, scratch_sibling
 
 
 def test_it_writes_the_content(tmp_path):
@@ -31,7 +31,7 @@ def test_same_process_writers_get_different_temp_paths(tmp_path):
     inside ONE process, and the two analysts of one paper run under a single
     `asyncio.gather` -- same PID, concurrent writers, and a PID discriminator
     that distinguishes nothing."""
-    from metascience_agent.atomicio import _unique_tmp
+    from forensic_metascience_ai_toolkit.atomicio import _unique_tmp
     target = tmp_path / "index.json"
     names = {_unique_tmp(target).name for _ in range(200)}
     assert len(names) == 200

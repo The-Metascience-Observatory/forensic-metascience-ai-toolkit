@@ -17,8 +17,8 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent.parallel import (_add_ledger_only_attempts,
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit.parallel import (_add_ledger_only_attempts,
                                         _coverage_with_ledger_fallback,
                                         _producer_retry_correction,
                                         _usage_totals)

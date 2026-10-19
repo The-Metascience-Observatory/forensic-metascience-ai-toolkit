@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.tortured_phrases import detect_tortured_phrases
+from forensic_metascience_ai_toolkit.tools.tortured_phrases import detect_tortured_phrases
 
 # Guarded fingerprints from the seed dictionary, one per planted count.
 P1 = "counterfeit consciousness"

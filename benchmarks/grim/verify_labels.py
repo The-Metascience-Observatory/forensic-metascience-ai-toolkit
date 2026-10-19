@@ -51,7 +51,7 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from metascience_agent.tools.grim import (
+from forensic_metascience_ai_toolkit.tools.grim import (
     _mean_passes_grim,
     _mean_passes_grim_truncation,
     discriminating_power,

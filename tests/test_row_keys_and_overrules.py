@@ -19,9 +19,9 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.agent import _checked_cell_key
-from metascience_agent.census import render, summarise, cell_census
-from metascience_agent.report_render import _render_checkable_detail
+from forensic_metascience_ai_toolkit.agent import _checked_cell_key
+from forensic_metascience_ai_toolkit.census import render, summarise, cell_census
+from forensic_metascience_ai_toolkit.report_render import _render_checkable_detail
 
 
 def _cell(row, col, raw):

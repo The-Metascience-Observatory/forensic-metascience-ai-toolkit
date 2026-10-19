@@ -17,7 +17,7 @@ against the paper which is actually our bug.
 """
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 from metascience_observatory_image_analysis.extraction.figures import (
     AI_PROPOSED,
     HUMAN_VERIFIED,

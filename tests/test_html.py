@@ -22,7 +22,7 @@ tests against real decoy pages; these just confirm the wiring here reaches it.
 
 import pytest
 
-from metascience_agent.extraction.html import (
+from forensic_metascience_ai_toolkit.extraction.html import (
     extract_html_text_with_tables,
     find_html,
 )
@@ -49,7 +49,7 @@ def _table(tmp_path, inner, extra_body=""):
 def _only_table(tmp_path, inner, extra_body="", monkeypatch=None):
     if monkeypatch is not None:
         monkeypatch.setattr(
-            "metascience_agent.extraction.html._validate_not_a_landing_page",
+            "forensic_metascience_ai_toolkit.extraction.html._validate_not_a_landing_page",
             lambda path, content, **kw: None,
         )
     result = extract_html_text_with_tables(_table(tmp_path, inner, extra_body))
@@ -124,7 +124,7 @@ def test_table_with_no_rows_reports_image_only(tmp_path, monkeypatch):
     the page's own JavaScript. Same treatment jats.py gives a picture-only
     table: no cells, and say so rather than pretending it was checked."""
     monkeypatch.setattr(
-        "metascience_agent.extraction.html._validate_not_a_landing_page",
+        "forensic_metascience_ai_toolkit.extraction.html._validate_not_a_landing_page",
         lambda path, content, **kw: None,
     )
     path = _write(
@@ -141,7 +141,7 @@ def test_table_content_is_never_inlined_into_text(tmp_path, monkeypatch):
     """Only a placeholder reaches `text` -- pouring table data into prose loses
     column alignment, the exact failure this reuses jats.py's reasoning to avoid."""
     monkeypatch.setattr(
-        "metascience_agent.extraction.html._validate_not_a_landing_page",
+        "forensic_metascience_ai_toolkit.extraction.html._validate_not_a_landing_page",
         lambda path, content, **kw: None,
     )
     path = _write(
@@ -162,7 +162,7 @@ def test_table_content_is_never_inlined_into_text(tmp_path, monkeypatch):
 
 def test_find_html_prefers_dirname_stem(tmp_path, monkeypatch):
     monkeypatch.setattr(
-        "metascience_agent.extraction.html._validate_not_a_landing_page",
+        "forensic_metascience_ai_toolkit.extraction.html._validate_not_a_landing_page",
         lambda path, content, **kw: None,
     )
     (tmp_path / "other.html").write_text("<html></html>", encoding="utf-8")
@@ -173,7 +173,7 @@ def test_find_html_prefers_dirname_stem(tmp_path, monkeypatch):
 
 def test_find_html_excludes_supplementary_stems(tmp_path, monkeypatch):
     monkeypatch.setattr(
-        "metascience_agent.extraction.html._validate_not_a_landing_page",
+        "forensic_metascience_ai_toolkit.extraction.html._validate_not_a_landing_page",
         lambda path, content, **kw: None,
     )
     (tmp_path / "paper_supplementary_info_1.html").write_text("<html></html>", encoding="utf-8")
@@ -215,7 +215,7 @@ def test_decoy_error_shape_matches_supplements_read_convention():
     """Same {error, unreadable_format, tables: [], ...} shape
     extraction.supplements_read already uses for an unreadable format, so
     existing prompt-level 'record in unchecked' routing needs no new case."""
-    from metascience_agent.extraction.html import _validation_error
+    from forensic_metascience_ai_toolkit.extraction.html import _validation_error
     from pathlib import Path
 
     result = _validation_error(Path("x.html"), "paywall/bot-challenge signature: 'test'")
@@ -267,14 +267,14 @@ class TestTheDefenceWorksWithoutItsOptionalDependency:
     """
 
     def test_the_blatant_decoy_is_caught_with_no_dependency(self):
-        from metascience_agent.extraction.html import _looks_like_boilerplate
+        from forensic_metascience_ai_toolkit.extraction.html import _looks_like_boilerplate
         page = "Jump to Content. Dismiss this warning.\n" * 150
         assert _looks_like_boilerplate(page)
 
     def test_a_real_article_is_not_refused(self):
         """Over-refusing here means a paper cannot be reviewed at all, so the
         fallback must fire only on the blatant case."""
-        from metascience_agent.extraction.html import _looks_like_boilerplate
+        from forensic_metascience_ai_toolkit.extraction.html import _looks_like_boilerplate
         body = ("Participants completed the task under three conditions. "
                 "Reaction times were recorded to the nearest millisecond. "
                 "We analysed the data with a mixed-effects model. " * 40)
@@ -283,7 +283,7 @@ class TestTheDefenceWorksWithoutItsOptionalDependency:
     def test_an_article_merely_MENTIONING_cookies_is_not_a_decoy(self):
         """Presence is not dominance. A paper about web tracking says 'cookie'
         often and is still a paper."""
-        from metascience_agent.extraction.html import _looks_like_boilerplate
+        from forensic_metascience_ai_toolkit.extraction.html import _looks_like_boilerplate
         body = ("This study examined how users respond when asked to enable "
                 "cookies during checkout. Please enable cookies was shown to "
                 "half the sample. " * 30)
@@ -292,5 +292,5 @@ class TestTheDefenceWorksWithoutItsOptionalDependency:
     def test_too_short_to_judge_is_not_refused(self):
         """The byte floors already handle short pages; guessing here would add
         a refusal on no evidence."""
-        from metascience_agent.extraction.html import _looks_like_boilerplate
+        from forensic_metascience_ai_toolkit.extraction.html import _looks_like_boilerplate
         assert _looks_like_boilerplate("Jump to Content.") is None

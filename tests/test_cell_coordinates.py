@@ -38,7 +38,7 @@ PAPER = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1002--ajc
 def tables():
     if not PAPER.is_file():
         pytest.skip("corpus paper not present in this checkout")
-    from metascience_agent.extraction.jats import extract_xml_tables
+    from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_tables
     return extract_xml_tables(str(PAPER))
 
 
@@ -69,8 +69,8 @@ class TestPositionSeparatesWhatLabelsCannot:
             "being true the test proves nothing and must be re-grounded")
 
     def test_the_register_carries_the_column(self, tables):
-        from metascience_agent.tools.celltypes import parse_cells
-        from metascience_agent.values import build_register
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.values import build_register
         t = next(x for x in tables if "2" in str(x.get("label", "")))
         reg = build_register(tables=[{"name": "Table 2",
                                       "parsed": parse_cells(t["cells"]),
@@ -85,7 +85,7 @@ class TestPositionSeparatesWhatLabelsCannot:
         a few keys from a larger record and the rest dies between two functions
         that both had it. `parse_cells` copied the two LABELS and dropped the
         two INDICES."""
-        from metascience_agent.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
         t = tables[0]
         out = parse_cells(t["cells"])["cells"]
         assert all("col" in c and "row" in c for c in out)

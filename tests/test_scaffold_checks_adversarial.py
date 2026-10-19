@@ -21,7 +21,7 @@ import shutil
 
 import pytest
 
-from metascience_agent.scaffold import checks, structure
+from forensic_metascience_ai_toolkit.scaffold import checks, structure
 
 # --------------------------------------------------------------------------
 # The Delta trial
@@ -286,7 +286,7 @@ class TestAModelOutputIsNotADescriptiveStatistic:
         assert _ref(got, "chk:grim:val:t2:b")["reason"] == "reports_model_output"
 
     def test_the_guard_is_the_repos_own_and_not_a_second_copy(self):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         assert prepass.reports_model_output("Coefficient (SE)", None)
         assert prepass.reports_model_output(None, "Associations between x and y")
         assert prepass.reports_model_output("All participants", "Descriptive statistics") is None
@@ -535,7 +535,7 @@ class TestOneCandidateCannotTakeTheRunWithIt:
         the vehicle the defect was found with (a zero denominator) no longer
         reaches a tool, and a guard tested only through a route that is now
         closed is a guard that has stopped being tested."""
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
 
         class _Boom:
             def call(self, args):

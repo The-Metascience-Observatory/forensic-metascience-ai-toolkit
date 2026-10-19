@@ -62,7 +62,7 @@ class TestSupplementDenialIsNotACitation:
     it has none."""
 
     def _audit(self, tmp_path, body):
-        from metascience_agent.supplements import audit
+        from forensic_metascience_ai_toolkit.supplements import audit
         (tmp_path / "body.md").write_text(body, encoding="utf-8")
         return audit(tmp_path)
 
@@ -88,7 +88,7 @@ class TestSupplementDenialIsNotACitation:
         """A plain distance window reached across the semicolon and classified
         the citation as a denial -- which would have let the gate proceed on a
         paper that really does depend on a supplement."""
-        from metascience_agent.supplements import classify_mentions
+        from forensic_metascience_ai_toolkit.supplements import classify_mentions
         r = classify_mentions(
             "See Supplementary Table 1; no supplementary code is provided.")
         assert len(r["cited"]) == 1, "the citation must survive its neighbour"
@@ -124,7 +124,7 @@ class TestLocatorNumbersDiscriminate:
     """
 
     def _pick(self, location, cands):
-        from metascience_agent.sourcing import _disambiguate_by_locator
+        from forensic_metascience_ai_toolkit.sourcing import _disambiguate_by_locator
         r = _disambiguate_by_locator(
             {"location": location},
             [{"source_locator": loc, "tool": tag} for loc, tag in cands])

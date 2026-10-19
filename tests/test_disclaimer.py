@@ -20,8 +20,8 @@ def _flat(text: str) -> str:
     """
     return re.sub(r"\s+", " ", text).lower()
 
-from metascience_agent.core import prompts
-from metascience_agent.disclaimer import (
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit.disclaimer import (
     ACTION_NOTE,
     DISCLAIMER_LONG,
     DISCLAIMER_SHORT,
@@ -82,7 +82,7 @@ class TestReportRendering:
 
 class TestOtherChannels:
     def test_findings_disclaimer_does_not_break_the_validator(self):
-        from metascience_agent.evaluation import deterministic
+        from forensic_metascience_ai_toolkit.evaluation import deterministic
 
         obj = {
             "disclaimer": DISCLAIMER_SHORT,

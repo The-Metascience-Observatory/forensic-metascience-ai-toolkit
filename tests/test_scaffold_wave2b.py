@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.scaffold import document as D
+from forensic_metascience_ai_toolkit.scaffold import document as D
 
 
 # --------------------------------------------------------------------------
@@ -95,13 +95,13 @@ class TestTheFetchedImagesJoinTheseCaptions:
 
 class TestTheSupplementProseCapIsRecordedNotHidden:
     def _raw(self, kept: int, available: int):
-        from metascience_agent.extraction import pdf as _pdf
+        from forensic_metascience_ai_toolkit.extraction import pdf as _pdf
         return {"text": "x" * kept + _pdf.TRUNCATION_MARKER, "tables": [], "num_pages": 53,
                 "truncated": True, "n_chars_available": available, "unreadable": False}
 
     def test_the_marker_is_not_part_of_the_supplements_prose(self, monkeypatch, tmp_path):
-        from metascience_agent.extraction import pdf as _pdf
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import pdf as _pdf
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         monkeypatch.setattr(_pdf, "extract_text_with_tables",
                             lambda p, *a, **k: self._raw(50_000, 289_222))
         out = SR.extract_pdf_tables(tmp_path / "s001.pdf")
@@ -113,8 +113,8 @@ class TestTheSupplementProseCapIsRecordedNotHidden:
         assert out["n_chars_available"] == 289_222 and out["n_chars_served"] == 50_000
 
     def test_an_untruncated_supplement_says_so_with_both_numbers(self, monkeypatch, tmp_path):
-        from metascience_agent.extraction import pdf as _pdf
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import pdf as _pdf
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         monkeypatch.setattr(_pdf, "extract_text_with_tables",
                             lambda p, *a, **k: {"text": "abc", "tables": [], "num_pages": 1,
                                                 "truncated": False, "n_chars_available": 3,
@@ -188,7 +188,7 @@ class TestTheReferenceListLeavesTheServedBody:
         assert refs["text"] == self.REFS
 
     def test_every_numeral_of_the_cut_block_is_counted_somewhere(self):
-        from metascience_agent import numerals as N
+        from forensic_metascience_ai_toolkit import numerals as N
         text = self.BODY + self.REFS
         body, refs = D._split_references(text)
         whole = len(N.index(text, tables_available=False))
@@ -220,7 +220,7 @@ class TestTheImagesInsideAWordSupplementAreInventoried:
         return path
 
     def test_every_embedded_picture_is_listed_in_document_order(self, tmp_path):
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         path = self._docx(tmp_path, ["image1.png", "image2.tiff", "image3.png"],
                           order_ids=[3, 1, 2])
         got = SR.docx_images(path)
@@ -232,7 +232,7 @@ class TestTheImagesInsideAWordSupplementAreInventoried:
 
     def test_a_docx_whose_relationships_cannot_be_read_says_which_order_it_used(self, tmp_path):
         import zipfile
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         path = tmp_path / "s2.docx"
         with zipfile.ZipFile(path, "w") as z:
             z.writestr("word/media/image2.png", b"x" * 10)
@@ -242,7 +242,7 @@ class TestTheImagesInsideAWordSupplementAreInventoried:
         assert {g["order"] for g in got} == {"file_name"}
 
     def test_a_docx_with_no_pictures_yields_none(self, tmp_path):
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         assert SR.docx_images(self._docx(tmp_path, [])) == []
 
     def test_the_inventory_says_it_does_not_know_what_the_picture_is(self, tmp_path):
@@ -272,7 +272,7 @@ class TestTheImagesInsideAWordSupplementAreInventoried:
 
 class TestASupplementHasARole:
     def _role(self, text, name="s1.docx"):
-        from metascience_agent import supplements as S
+        from forensic_metascience_ai_toolkit import supplements as S
         return S.classify_role(name, text)
 
     def test_a_document_that_names_itself_a_protocol_is_one(self):
@@ -297,7 +297,7 @@ class TestASupplementHasARole:
         assert self._role(text)["role"] == "results"
 
     def test_every_role_is_in_the_closed_set(self):
-        from metascience_agent import supplements as S
+        from forensic_metascience_ai_toolkit import supplements as S
         cases = ["Supplementary Table 1. Distribution of cancer types",
                  "Supplementary data: The impact of probiotic supplementation\n\nNMR extraction",
                  "## Data Sharing Statement\n\nData available: yes",
@@ -369,7 +369,7 @@ class TestAnUnextractedSupplementIsARefusalNotAZero:
             "0 characters and 0 tables is served, and the account says why")
 
     def test_the_walker_reports_it_rather_than_passing_over_it(self, tmp_path):
-        from metascience_agent import prepass as P
+        from forensic_metascience_ai_toolkit import prepass as P
         paper = self._paper(tmp_path)
         walked = P.paper_tables(paper, include_supplements=True)
         assert walked.unextracted_supplements == ["paper_supplementary_info_1_s001.pdf"]

@@ -44,7 +44,7 @@ import re
 
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
 ROOT = pathlib.Path(__file__).parent.parent
 # The project guidance lives in AGENTS.md; CLAUDE.md only imports it.
@@ -113,7 +113,7 @@ class TestInstall:
                 assert "file://" not in req, f"extra {name!r} pins a local path: {req}"
 
     def test_preflight_is_a_real_command(self):
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
 
         names = {c.name or c.callback.__name__ for c in app.registered_commands}
         assert "preflight" in names
@@ -124,7 +124,7 @@ class TestExtractionOrder:
     usable cells per table and the XML yields 86."""
 
     def test_the_sweep_prompt_agrees(self):
-        from metascience_agent.core.prompts import tool_expert_body
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_body
         sweep = tool_expert_body()
         assert sweep.index("extract_xml") < sweep.index("extract_pdf")
 
@@ -209,7 +209,7 @@ class TestAddATool:
 
     def test_the_derivation_actually_holds(self):
         """Pin the claim the checklist now makes, so it cannot become false."""
-        from metascience_agent.agent import STAGE1_TOOLS, STAGE2_TOOLS
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, STAGE2_TOOLS
 
         for stage, listed in ((R.STAGE1, STAGE1_TOOLS), (R.STAGE2, STAGE2_TOOLS)):
             derived = {f"mcp__forensic_metascience__{n}" for n in R.stage_tools(stage)}

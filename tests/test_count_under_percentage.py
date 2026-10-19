@@ -34,8 +34,8 @@ import copy
 
 import pytest
 
-from metascience_agent import numerals, sections
-from metascience_agent.scaffold import bind, checks, reconstruct
+from forensic_metascience_ai_toolkit import numerals, sections
+from forensic_metascience_ai_toolkit.scaffold import bind, checks, reconstruct
 
 # --------------------------------------------------------------------------
 # The rule itself

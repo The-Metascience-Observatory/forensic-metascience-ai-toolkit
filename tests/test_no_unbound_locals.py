@@ -26,7 +26,7 @@ import pathlib
 
 import pytest
 
-SRC = pathlib.Path(__file__).parent.parent / "src" / "metascience_agent"
+SRC = pathlib.Path(__file__).parent.parent / "src" / "forensic_metascience_ai_toolkit"
 #: The image package's source too. Host modules moved there (2026-10-01:
 #: `extraction/regions_docling.py`) would otherwise leave this lint's reach
 #: without anyone deciding they should.

@@ -2,8 +2,8 @@
 
 import pytest
 
-from metascience_agent import declared
-from metascience_agent.registry import BY_NAME
+from forensic_metascience_ai_toolkit import declared
+from forensic_metascience_ai_toolkit.registry import BY_NAME
 
 BDI = {"id": "v1", "name": "BDI-II total", "family": "likert_composite",
        "measurement_level": "interval", "discreteness": "discrete",

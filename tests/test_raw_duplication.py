@@ -35,7 +35,7 @@ def test_the_tool_spec_signature_is_stable():
 def test_word_input_grid_matches_agent_reader(tmp_path, shape):
     from docx import Document
 
-    from metascience_agent.extraction.supplements_read import extract_docx_tables as agent_reader
+    from forensic_metascience_ai_toolkit.extraction.supplements_read import extract_docx_tables as agent_reader
 
     doc = Document()
     table = doc.add_table(rows=6 if shape != "header_only" else 1, cols=4)
@@ -71,8 +71,8 @@ def test_word_input_grid_matches_agent_reader(tmp_path, shape):
 def test_existing_agent_cli_and_registry_use_same_result(tmp_path):
     from typer.testing import CliRunner
 
-    from metascience_agent.cli import app
-    from metascience_agent.registry import BY_NAME
+    from forensic_metascience_ai_toolkit.cli import app
+    from forensic_metascience_ai_toolkit.registry import BY_NAME
 
     rng = random.Random(7)
     rows = [["id", "weight", "cortisol"]]

@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from metascience_agent import corpus_stats as CS
+from forensic_metascience_ai_toolkit import corpus_stats as CS
 
 
 def _paper(root, name, findings, channels, journal="Journal of Testing",

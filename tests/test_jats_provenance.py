@@ -13,7 +13,7 @@ so a derived JATS carries identical corruption inside much better structure.
 import pathlib
 import tempfile
 
-from metascience_agent.extraction.jats import xml_provenance
+from forensic_metascience_ai_toolkit.extraction.jats import xml_provenance
 
 
 def _write(text):
@@ -81,7 +81,7 @@ class TestItFailsTowardTheWeakerClaim:
     def test_the_label_never_says_bare_xml(self):
         """`paper_text_with_source` must not return `"xml"` any more -- a caller
         keying off that string would give a derived file publisher privileges."""
-        import metascience_agent.extraction.jats as jats
+        import forensic_metascience_ai_toolkit.extraction.jats as jats
         src = pathlib.Path(jats.__file__).read_text()
         assert 'return text, "xml"' not in src
         assert "xml_publisher" in src and "xml_derived" in src

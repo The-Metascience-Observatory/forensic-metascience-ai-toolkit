@@ -39,10 +39,10 @@ import math
 
 import pytest
 
-from metascience_agent.tools import rounding as R
-from metascience_agent.tools.grim import grim_test
-from metascience_agent.tools.sd_checks import grimmer_test
-from metascience_agent.tools.sprite import sprite_reconstruct
+from forensic_metascience_ai_toolkit.tools import rounding as R
+from forensic_metascience_ai_toolkit.tools.grim import grim_test
+from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
+from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
 #: A real, ordinary Likert sample. Every value inside 1-7, n=30, S=120, Q=546,
 #: exact mean 4.000000 and exact sample SD 1.508596. A truncating reporter
@@ -169,7 +169,7 @@ class TestTheRescueIsNotAnOffSwitch:
 
     @pytest.mark.parametrize("n,dp", [(20, 2), (30, 2), (100, 2)])
     def test_truncation_still_rejects_most_of_what_round_half_rejects(self, n, dp):
-        from metascience_agent.tools.sprite import _sd_window_feasible
+        from forensic_metascience_ai_toolkit.tools.sprite import _sd_window_feasible
         S = int(n * 3.5)
         grid = [round(x * 10 ** -dp, dp) for x in range(1, int(4 * 10 ** dp))]
         rh = [s for s in grid

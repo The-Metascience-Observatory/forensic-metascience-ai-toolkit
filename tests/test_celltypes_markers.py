@@ -16,7 +16,7 @@ hand a checking tool a value 10,000x too large.
 """
 import pytest
 
-from metascience_agent.tools.celltypes import parse_cell, parse_cells
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell, parse_cells
 
 
 class TestAMarkedCellReachesTheTools:
@@ -144,7 +144,7 @@ class TestASignificanceSubscriptAfterABracket:
     """
 
     def _p(self, raw, col="M (SD)"):
-        from metascience_agent import census as C
+        from forensic_metascience_ai_toolkit import census as C
         return C.parse_cells([{"raw": raw, "row": 1,
                                "row_label": "Clarity", "col_label": col}])["cells"][0]
 
@@ -184,7 +184,7 @@ class TestASignificanceSubscriptAfterABracket:
         import pathlib
         import re
 
-        from metascience_agent import census as C
+        from forensic_metascience_ai_toolkit import census as C
         si = pathlib.Path("/mnt/c/Users/gregs/_excised_from_forensic_repo/"
                           "gino_paper_excised_2026-07-25/10.1073--pnas.1523586113/"
                           "10.1073--pnas.1523586113_SUPPLEMENTARY_INFO.md")

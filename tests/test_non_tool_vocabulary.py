@@ -28,9 +28,9 @@ of the "a tool computed this" answer, which is the claim that has to be earned.
 """
 from __future__ import annotations
 
-from metascience_agent.computation import (NON_TOOL_TECHNIQUES, classify,
+from forensic_metascience_ai_toolkit.computation import (NON_TOOL_TECHNIQUES, classify,
                                            did_unaided_arithmetic)
-from metascience_agent.core.prompts import NON_TOOL_TECHNIQUES as SPEC
+from forensic_metascience_ai_toolkit.core.prompts import NON_TOOL_TECHNIQUES as SPEC
 
 
 class TestTheTwoListsCannotDisagree:
@@ -44,7 +44,7 @@ class TestTheTwoListsCannotDisagree:
         """A second literal list is how this broke. If someone re-hardcodes the
         membership, the derivation disappears and drift becomes possible again."""
         import inspect
-        from metascience_agent import computation
+        from forensic_metascience_ai_toolkit import computation
         src = inspect.getsource(computation._non_tool_techniques)
         assert "from .core.prompts import NON_TOOL_TECHNIQUES" in src
 

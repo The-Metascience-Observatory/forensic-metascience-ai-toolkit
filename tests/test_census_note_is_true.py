@@ -27,7 +27,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import bundle
+from forensic_metascience_ai_toolkit import bundle
 
 
 class TestTheCapabilityClaim:

@@ -25,8 +25,8 @@ import os
 
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.agent import _checkable_coverage
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.agent import _checkable_coverage
 def _obj():
     return {
         "headline": {"severity": "suspicious", "statement": "A scale contradiction."},
@@ -80,7 +80,7 @@ class TestOurCliFailureIsNotThePapersProperty:
     (57.6%) fail validation."""
 
     def _clause(self, problem):
-        from metascience_agent.report_render import _repro_failure_clause
+        from forensic_metascience_ai_toolkit.report_render import _repro_failure_clause
         return _repro_failure_clause({"reproduction_problem": problem})
 
     def test_no_raw_stderr_reaches_the_reader(self):

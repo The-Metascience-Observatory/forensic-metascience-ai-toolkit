@@ -92,7 +92,7 @@ def _doc(slug, technique):
 
 
 def capture_backend(backend: str, root: Path) -> list[dict]:
-    from metascience_agent import agent, paper_metadata
+    from forensic_metascience_ai_toolkit import agent, paper_metadata
 
     paper = root / "paper"
     paper.mkdir()
@@ -202,7 +202,7 @@ def capture_backend(backend: str, root: Path) -> list[dict]:
 
 
 def capture_all() -> dict:
-    from metascience_agent import preflight
+    from forensic_metascience_ai_toolkit import preflight
     preflight._r_crosscheck_status = lambda: (True, "frozen for the parity capture")
     out = {}
     for backend in BACKENDS:

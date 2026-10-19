@@ -42,13 +42,13 @@ CHILD_PATH = os.pathsep.join([*(str(_ROOT / p) for p in ("src", "copy_paste_dete
                               *([str(IMAGE_SRC.parent)] if IMAGE_SRC else [])])
 
 PAIRS = [
-    ("metascience_agent.extraction.figures",
+    ("forensic_metascience_ai_toolkit.extraction.figures",
      "metascience_observatory_image_analysis.extraction.figures"),
 ]
 
 _IMAGE = "metascience_observatory_image_analysis"
 #: Modules a fresh interpreter must be able to import first.
-FIRST_IMPORTS = ["metascience_agent.extraction.figures",
+FIRST_IMPORTS = ["forensic_metascience_ai_toolkit.extraction.figures",
                  f"{_IMAGE}.extraction.figures",
                  f"{_IMAGE}.image_forensics.image_track",
                  f"{_IMAGE}.image_forensics.pipeline",
@@ -57,28 +57,28 @@ FIRST_IMPORTS = ["metascience_agent.extraction.figures",
 
 #: Old paths, removed (a sample from 2026-10-01; all of 2026-10-18's).
 REMOVED = [
-    "metascience_agent.tools.image_analysis",
-    "metascience_agent.tools.chrome_mask",
-    "metascience_agent.tools.copy_move",
-    "metascience_agent.extraction.panels",
-    "metascience_agent.image_corpus",
-    "metascience_agent.image_review",
-    "metascience_agent.review_media",
-    "metascience_agent.image_track",
-    "metascience_agent.image_forensics",
-    "metascience_agent.image_forensics.image_track",
-    "metascience_agent.image_forensics.pipeline",
-    "metascience_agent.workbench.content_support",
-    "metascience_agent.workbench.image_equivalence",
-    "metascience_agent.workbench.image_geometry",
-    "metascience_agent.workbench.local_image_import",
-    "metascience_agent.workbench.local_image_service",
-    "metascience_agent.workbench.local_images",
-    "metascience_agent.workbench.text_regions",
-    "metascience_agent.workbench.thumbnails",
-    "metascience_agent.workbench.videos",
-    "metascience_agent.highlight_render",
-    "metascience_agent.tools.raw_duplication",
+    "forensic_metascience_ai_toolkit.tools.image_analysis",
+    "forensic_metascience_ai_toolkit.tools.chrome_mask",
+    "forensic_metascience_ai_toolkit.tools.copy_move",
+    "forensic_metascience_ai_toolkit.extraction.panels",
+    "forensic_metascience_ai_toolkit.image_corpus",
+    "forensic_metascience_ai_toolkit.image_review",
+    "forensic_metascience_ai_toolkit.review_media",
+    "forensic_metascience_ai_toolkit.image_track",
+    "forensic_metascience_ai_toolkit.image_forensics",
+    "forensic_metascience_ai_toolkit.image_forensics.image_track",
+    "forensic_metascience_ai_toolkit.image_forensics.pipeline",
+    "forensic_metascience_ai_toolkit.workbench.content_support",
+    "forensic_metascience_ai_toolkit.workbench.image_equivalence",
+    "forensic_metascience_ai_toolkit.workbench.image_geometry",
+    "forensic_metascience_ai_toolkit.workbench.local_image_import",
+    "forensic_metascience_ai_toolkit.workbench.local_image_service",
+    "forensic_metascience_ai_toolkit.workbench.local_images",
+    "forensic_metascience_ai_toolkit.workbench.text_regions",
+    "forensic_metascience_ai_toolkit.workbench.thumbnails",
+    "forensic_metascience_ai_toolkit.workbench.videos",
+    "forensic_metascience_ai_toolkit.highlight_render",
+    "forensic_metascience_ai_toolkit.tools.raw_duplication",
     "copy_paste_detector._compat",
 ]
 
@@ -109,11 +109,11 @@ def test_each_module_imports_first_in_a_fresh_interpreter(module):
 @pytest.mark.usefixtures("image_package")
 def test_the_package_level_tool_export_still_resolves():
     proc = _fresh(
-        "from metascience_agent.tools import analyze_paper_images as a\n"
+        "from forensic_metascience_ai_toolkit.tools import analyze_paper_images as a\n"
         "from metascience_observatory_image_analysis.image_forensics.image_analysis import "
         "analyze_paper_images as b\n"
         "assert a is b\n"
-        "import metascience_agent.tools as T; assert 'analyze_paper_images' in T.__all__")
+        "import forensic_metascience_ai_toolkit.tools as T; assert 'analyze_paper_images' in T.__all__")
     assert proc.returncode == 0, proc.stderr[-800:]
 
 

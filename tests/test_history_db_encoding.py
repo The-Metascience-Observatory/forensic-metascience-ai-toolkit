@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import json
 
-from metascience_agent import history_db as H
+from forensic_metascience_ai_toolkit import history_db as H
 
 
 def test_nul_is_removed_at_every_depth():

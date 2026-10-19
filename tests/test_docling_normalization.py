@@ -22,8 +22,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from metascience_agent.extraction import docling_tables as dl
-from metascience_agent.extraction.docling_tables import (
+from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
+from forensic_metascience_ai_toolkit.extraction.docling_tables import (
     _heal_ligatures,
     _normalize_extracted,
 )

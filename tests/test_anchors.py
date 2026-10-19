@@ -15,7 +15,7 @@ import pytest
 
 fitz = pytest.importorskip("fitz")
 
-from metascience_agent import anchors
+from forensic_metascience_ai_toolkit import anchors
 
 PAGE1 = (
     "Methods\n"

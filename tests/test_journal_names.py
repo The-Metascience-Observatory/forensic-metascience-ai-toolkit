@@ -1,5 +1,5 @@
 """Journal-name normalization: known mappings map, unknowns pass through."""
-from metascience_agent.journal_names import mapping_counts, normalize, normalize_key
+from forensic_metascience_ai_toolkit.journal_names import mapping_counts, normalize, normalize_key
 
 
 def test_vendored_data_actually_loaded():

@@ -19,10 +19,10 @@ as data and it never becomes a label at all.
 import lxml.html
 import pytest
 
-from metascience_agent.extraction.html import _rows_of
-from metascience_agent.extraction.jats import _Counter, _expand, _header_depth
-from metascience_agent.extraction.supplements_read import _finish
-from metascience_agent.values import design_values_from_cells
+from forensic_metascience_ai_toolkit.extraction.html import _rows_of
+from forensic_metascience_ai_toolkit.extraction.jats import _Counter, _expand, _header_depth
+from forensic_metascience_ai_toolkit.extraction.supplements_read import _finish
+from forensic_metascience_ai_toolkit.values import design_values_from_cells
 
 # The shape of the real thing: a spanning group label over the columns that
 # carry the group sizes. Taken from `10.1007--s00702-004-0248-2`.
@@ -234,7 +234,7 @@ class TestDoclingIsAskedRatherThanGuessedAt:
         return Table([[Cell(text, header) for text, header in row] for row in rows])
 
     def test_two_flagged_rows_are_two_header_rows(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = self._table([
             [("", True), ("Treatment", True), ("Treatment", True)],
@@ -247,7 +247,7 @@ class TestDoclingIsAskedRatherThanGuessedAt:
         assert len(grid) == 3
 
     def test_one_flagged_row_is_one(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = self._table([
             [("Measure", True), ("Drug", True)],
@@ -259,7 +259,7 @@ class TestDoclingIsAskedRatherThanGuessedAt:
         # docling flags no header on some tables. Returning 0 would drop the
         # header the PDF path has always assumed; the floor keeps that promise
         # explicit instead of leaving it to a slice that happened to say 1.
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = self._table([
             [("Measure", False), ("Drug", False)],
@@ -276,7 +276,7 @@ class TestTheEmptyStubDoesNotDiscardTheAnswer:
     tables and three treatment arms kept sharing one label."""
 
     def test_an_unflagged_blank_corner_does_not_cost_the_second_row(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("", False), ("Control", True), ("Control", True)],
@@ -286,7 +286,7 @@ class TestTheEmptyStubDoesNotDiscardTheAnswer:
         assert _grid_of(table, None)[2] == 2
 
     def test_a_row_of_blanks_is_not_a_header_row(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("", False), ("", False)],
@@ -295,7 +295,7 @@ class TestTheEmptyStubDoesNotDiscardTheAnswer:
         assert _grid_of(table, None)[2] == 1
 
     def test_a_data_row_still_stops_the_count(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("", False), ("Control", True), ("Control", True)],
@@ -311,7 +311,7 @@ class TestAFlagCannotDeleteAValue:
     every check downstream."""
 
     def test_a_flagged_row_of_numbers_stays_in_the_body(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("", False), ("Control", True), ("Control", True)],
@@ -323,7 +323,7 @@ class TestAFlagCannotDeleteAValue:
     def test_the_first_row_is_never_taken_away_by_the_brake(self):
         # Row 0 is the header by the PDF path's long-standing convention. The
         # brake governs how much FURTHER to go, not whether to have a header.
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("Mean", True), ("12.5", True), ("13.5", True)],
@@ -332,7 +332,7 @@ class TestAFlagCannotDeleteAValue:
         assert _grid_of(table, None)[2] == 1
 
     def test_a_flagged_row_of_labels_is_still_promoted(self):
-        from metascience_agent.extraction.docling_tables import _grid_of
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _grid_of
 
         table = TestDoclingIsAskedRatherThanGuessedAt._table([
             [("", False), ("Control", True), ("Control", True)],

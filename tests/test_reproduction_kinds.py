@@ -4,8 +4,8 @@ Regression for three defects measured on the 2026-09-01 flagged batch, all of
 the house shape: two sides of one comparison written at different times.
 """
 
-from metascience_agent import agent
-from metascience_agent.evaluation.deterministic import classify_reproduction
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.evaluation.deterministic import classify_reproduction
 
 
 class TestClassify:
@@ -77,7 +77,7 @@ class TestAgreementAcrossVocabularies:
            """'{"count": 278, "percentage": 83, "n": 324, "decimals": 0}'""")
 
     def _run(self, **kw):
-        from metascience_agent.evaluation.deterministic import run_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
         return run_reproduction(self.CMD, **kw)
 
     def test_tool_and_finding_agreeing_is_not_a_disagreement(self):
@@ -105,7 +105,7 @@ class TestAgreementAcrossVocabularies:
         # stated definition, so this cannot drift again.
         import inspect
 
-        from metascience_agent.evaluation import deterministic
+        from forensic_metascience_ai_toolkit.evaluation import deterministic
         src = inspect.getsource(deterministic.run_reproduction)
         assert "OUTCOME_FROM_FIVE" in src
         assert '"suspicious": 3' not in src
@@ -121,7 +121,7 @@ class TestFigureBlindnessIsDeclared:
     def _limitations(self, figures):
         import inspect
 
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         src = inspect.getsource(parallel)
         assert "figure values were not extracted for the numeric/science analysts" in src, "the declaration is gone"
         assert "if not figures:" in src, "it must be conditional on the flag"

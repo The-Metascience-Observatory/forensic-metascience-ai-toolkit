@@ -2,7 +2,7 @@
 
 Dan's requirement, verbatim: "running the system on the 100 papers in series
 should be as simple as a single command line command"; "it's meant to be fully
-automated". Before this, batching lived in `metascience_agent/batch.py` with
+automated". Before this, batching lived in `forensic_metascience_ai_toolkit/batch.py` with
 `--limit 3` and `--concurrency 3` -- a script, not a command, defaulting to
 three papers in parallel.
 
@@ -12,7 +12,7 @@ import json
 
 from typer.testing import CliRunner
 
-from metascience_agent.cli import app
+from forensic_metascience_ai_toolkit.cli import app
 
 runner = CliRunner()
 
@@ -195,7 +195,7 @@ class TestFullTextGate:
         fault.
         """
         import inspect
-        from metascience_agent import cli as cli_mod
+        from forensic_metascience_ai_toolkit import cli as cli_mod
         src = inspect.getsource(cli_mod.batch_cmd)
         assert "papers=pending" in src, (
             "run_batch must receive the gated pending list; re-picking "
@@ -206,7 +206,7 @@ class TestFullTextGate:
         """Live path, not dry-run: analyze_paper must not see the empty dirs."""
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
 
         seen: list[str] = []
 
@@ -373,7 +373,7 @@ class TestDuplicateTextWarning:
     @staticmethod
     def _pdf_only(tmp_path, texts):
         """One PDF-only paper per text, each with a planted extraction cache."""
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
         root = tmp_path / "corpus"
         root.mkdir()
         for i, text in enumerate(texts):
@@ -589,7 +589,7 @@ class TestUnreadableIsNotOverridable:
     @staticmethod
     def _plant_empty_cache(pdf):
         import json
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
         cache = dl._cache_path(pdf)
         cache.parent.mkdir(parents=True, exist_ok=True)
         cache.write_text(json.dumps({
@@ -625,7 +625,7 @@ class TestSupplementFlagIsNotAnUnreadabilityOverride:
         return d
 
     def test_a_supplied_file_does_not_make_a_scan_readable(self, tmp_path):
-        from metascience_agent.cli import _supplement_gate
+        from forensic_metascience_ai_toolkit.cli import _supplement_gate
         si = tmp_path / "si.docx"
         si.write_bytes(b"PK\x03\x04")
         g = _supplement_gate(self._scan_dir(tmp_path), [si], allow_incomplete=False)
@@ -633,7 +633,7 @@ class TestSupplementFlagIsNotAnUnreadabilityOverride:
         assert g["audit"].get("text_available") is False
 
     def test_a_readable_paper_still_accepts_the_supplied_file(self, tmp_path):
-        from metascience_agent.cli import _supplement_gate
+        from forensic_metascience_ai_toolkit.cli import _supplement_gate
         d = tmp_path / "real"
         d.mkdir()
         (d / "body.md").write_text(
@@ -691,11 +691,11 @@ class TestWorkers:
         assert "serial" not in r.output
 
     def test_underlying_script_takes_the_same_alias(self, tmp_path):
-        """`metascience batch` and metascience_agent/batch.py must not disagree
+        """`metascience batch` and forensic_metascience_ai_toolkit/batch.py must not disagree
         about what the flag is called -- the CLI delegates straight to it."""
         import sys
         from pathlib import Path
-        from metascience_agent import batch as batch_analyze
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
         parser = batch_analyze.build_parser()
         assert parser.parse_args(["c", "--workers", "5"]).concurrency == 5
         assert parser.parse_args(["c", "--concurrency", "5"]).concurrency == 5
@@ -745,7 +745,7 @@ class TestAlreadyAnalysedIsOneDefinition:
 
     def test_helper_returns_the_newest_review(self, tmp_path):
         import os
-        from metascience_agent.agent import completed_review
+        from forensic_metascience_ai_toolkit.agent import completed_review
         p = tmp_path / "paper"
         (p / "forensic_review_opus_08_11_2026").mkdir(parents=True)
         (p / "forensic_review_opus_08_11_2026" / "report.md").write_text("old")
@@ -755,7 +755,7 @@ class TestAlreadyAnalysedIsOneDefinition:
         assert completed_review(p).name == "forensic_review_sonnet_08_14_2026"
 
     def test_helper_on_a_paper_with_no_review(self, tmp_path):
-        from metascience_agent.agent import completed_review
+        from forensic_metascience_ai_toolkit.agent import completed_review
         p = tmp_path / "paper"; p.mkdir()
         assert completed_review(p) is None
         assert completed_review(tmp_path / "does-not-exist") is None
@@ -833,7 +833,7 @@ class TestCostLedgerRecordsWhatItReports:
         from pathlib import Path as _P
         import inspect
 
-        from metascience_agent import batch as batch_analyze
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
         src = inspect.getsource(batch_analyze.process_paper)
         for field in ("\"model\"", "\"total_wall_seconds\"",
                       "\"cache_read_input_tokens\"", "\"primary_billed_model\""):
@@ -869,7 +869,7 @@ class TestUsageGuardPreCheckForwardsBackend:
         import inspect
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
         src = inspect.getsource(batch_analyze.process_paper)
         assert "usage_guard(backend=" in src, (
             "the pre-check usage_guard() call must forward backend= -- a "
@@ -882,8 +882,8 @@ class TestForensicToolsNeverRanDump:
     def test_a_refuse_leaves_a_diagnostic_not_just_a_traceback(self, tmp_path):
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
-        from metascience_agent.llm_backend import ForensicToolsNeverRan
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
+        from forensic_metascience_ai_toolkit.llm_backend import ForensicToolsNeverRan
 
         paper = tmp_path / "10.1234--p"
         paper.mkdir()
@@ -918,8 +918,8 @@ class TestForensicToolsNeverRanDump:
         was only in ~/.grok/sessions after sandbox cleanup."""
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
-        from metascience_agent.llm_backend import ForensicToolsNeverRan
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
+        from forensic_metascience_ai_toolkit.llm_backend import ForensicToolsNeverRan
 
         paper = tmp_path / "10.18332--tid--209827"
         paper.mkdir()
@@ -970,8 +970,8 @@ class TestForensicToolsNeverRanDump:
     def test_a_refuse_is_billed(self):
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
-        from metascience_agent.llm_backend import ForensicToolsNeverRan
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
+        from forensic_metascience_ai_toolkit.llm_backend import ForensicToolsNeverRan
 
         first = {"cost_usd": 0.01, "input_tokens": 100, "output_tokens": 173,
                  "wall_seconds": 37.0, "cache_creation_input_tokens": 0,
@@ -990,7 +990,7 @@ class TestForensicToolsNeverRanDump:
         import inspect
         import sys
         from pathlib import Path as _P
-        from metascience_agent import batch as batch_analyze
+        from forensic_metascience_ai_toolkit import batch as batch_analyze
         src = inspect.getsource(batch_analyze.process_paper)
         # One print_exc, on the generic Exception path. The known refuse
         # used to dump a traceback that looked like a batch crash.
@@ -1018,7 +1018,7 @@ class TestBackendIsRequired:
         assert "--backend is required" in r.output
 
     def test_a_pipeline_that_calls_no_model_needs_no_backend(self):
-        from metascience_agent import pipeline_config as pc
+        from forensic_metascience_ai_toolkit import pipeline_config as pc
         assert not pc.load("image_detect").uses_llm
         assert not pc.load("raw_data_only").uses_llm
         for name in ("full", "tools_only", "proofreading_only", "image_only"):

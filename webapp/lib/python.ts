@@ -110,7 +110,7 @@ let active = 0;
 const MAX_CHILDREN = 2;
 
 export function pyJson(args: string[], opts?: string | Options): Promise<unknown> {
-  return runJson(["-m", "metascience_agent.cli", ...args], opts);
+  return runJson(["-m", "forensic_metascience_ai_toolkit.cli", ...args], opts);
 }
 
 /** Leaf modules avoid importing the full CLI on hot paths. */

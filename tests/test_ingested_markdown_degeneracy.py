@@ -17,7 +17,7 @@ import warnings
 
 import pytest
 
-from metascience_agent.extraction.jats import (
+from forensic_metascience_ai_toolkit.extraction.jats import (
     _ingested_markdown_is_degraded,
     ingested_markdown_degeneracy,
 )
@@ -93,7 +93,7 @@ class TestTheBarIsDeliberatelyHigh:
 class TestTheDemotionIsAnnouncedNotSilent:
     def test_a_demoted_paper_warns(self, tmp_path):
         (tmp_path / "body.md").write_text(_REAL_SHAPE * 40, encoding="utf-8")
-        from metascience_agent.extraction import jats
+        from forensic_metascience_ai_toolkit.extraction import jats
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             jats.paper_text_with_source(tmp_path)
@@ -104,7 +104,7 @@ class TestTheDemotionIsAnnouncedNotSilent:
         text as UNKNOWN, so a partly-readable paper would be recorded as one
         that says nothing."""
         (tmp_path / "body.md").write_text(_REAL_SHAPE * 40, encoding="utf-8")
-        from metascience_agent.extraction import jats
+        from forensic_metascience_ai_toolkit.extraction import jats
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always")
             text, source = jats.paper_text_with_source(tmp_path)
@@ -115,7 +115,7 @@ class TestTheDemotionIsAnnouncedNotSilent:
     def test_a_healthy_body_md_keeps_its_rank_silently(self, tmp_path):
         (tmp_path / "body.md").write_text(
             "Ordinary prose about 3 groups of 30 adults.\n", encoding="utf-8")
-        from metascience_agent.extraction import jats
+        from forensic_metascience_ai_toolkit.extraction import jats
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             text, source = jats.paper_text_with_source(tmp_path)

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.bounds import check_statistic_bounds as check
+from forensic_metascience_ai_toolkit.tools.bounds import check_statistic_bounds as check
 
 
 def _sev(value, measure, verified=True):

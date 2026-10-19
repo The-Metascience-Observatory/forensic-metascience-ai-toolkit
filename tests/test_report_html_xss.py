@@ -19,7 +19,7 @@ import re
 import tempfile
 from pathlib import Path
 
-from metascience_agent.bundle import _body_html, _report_html
+from forensic_metascience_ai_toolkit.bundle import _body_html, _report_html
 
 LIVE_TAG = re.compile(r"<(script|img|iframe|svg|object|embed|link|style|body)\b", re.I)
 

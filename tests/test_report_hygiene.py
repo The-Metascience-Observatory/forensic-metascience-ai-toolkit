@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import bundle, scrub
+from forensic_metascience_ai_toolkit import bundle, scrub
 LEAKS = [
     "/home/gsfitzgerald/.venvs/metascience-agent/bin/python",
     "/mnt/c/Users/gregs/agent_for_forensic_metascience/x.pdf",

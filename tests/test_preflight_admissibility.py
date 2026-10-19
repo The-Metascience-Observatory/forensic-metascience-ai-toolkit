@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.handoff import audit
+from forensic_metascience_ai_toolkit.handoff import audit
 
 LINK = "cited supplements are present"
 

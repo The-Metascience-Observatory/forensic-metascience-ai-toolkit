@@ -14,7 +14,7 @@ shop front. The tool agent only escaped it by calling `extract_pdf` itself.
 """
 import pytest
 
-from metascience_agent.extraction.jats import (
+from forensic_metascience_ai_toolkit.extraction.jats import (
     looks_like_access_wall,
     paper_text_with_source,
 )

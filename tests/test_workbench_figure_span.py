@@ -10,10 +10,10 @@ import json
 
 import pytest
 
-from metascience_agent.workbench import image_review_host
+from forensic_metascience_ai_toolkit.workbench import image_review_host
 image_review_host.configure()  # the host lends its storage first, as at runtime
 from metascience_observatory_image_analysis.review_workbench.local_images import ImageCatalog, LocalImages  # noqa: E402
-from metascience_agent.workbench.match_regions import figure_span  # noqa: E402
+from forensic_metascience_ai_toolkit.workbench.match_regions import figure_span  # noqa: E402
 from tests.test_local_image_review import local  # noqa: F401,E402  (fixture)
 
 

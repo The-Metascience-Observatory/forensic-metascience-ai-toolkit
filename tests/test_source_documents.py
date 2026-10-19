@@ -29,7 +29,7 @@ import zipfile
 
 import pytest
 
-from metascience_agent.bundle import (
+from forensic_metascience_ai_toolkit.bundle import (
     _safe_html,
     build_bundle,
     collect,
@@ -166,7 +166,7 @@ class TestHonestDegradation:
             self, review, tmp_path):
         """The distinction the whole OCR seam exists to preserve, carried all
         the way to the reader's screen."""
-        from metascience_agent.extraction import ocr
+        from forensic_metascience_ai_toolkit.extraction import ocr
 
         if ocr.engine_status()["available"]:
             pytest.skip("an OCR engine is installed; this is the no-engine case")

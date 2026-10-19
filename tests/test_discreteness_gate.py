@@ -25,12 +25,12 @@ at the cost of requiring the paper to say its data are integers.
 """
 import pytest
 
-from metascience_agent.anatomy import Variable
-from metascience_agent.tools.grim import (
+from forensic_metascience_ai_toolkit.anatomy import Variable
+from forensic_metascience_ai_toolkit.tools.grim import (
     DISCRETENESS_CAVEAT, HARD_DISCRETENESS_SOURCES, granularity_ceiling, grim_test,
 )
-from metascience_agent.tools.sd_checks import grimmer_test
-from metascience_agent.tools.sprite import sprite_reconstruct
+from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
+from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
 #: 5.51 x 30 = 165.3. No integer total rounds to it under round-half OR
 #: truncation, so this is a genuine granularity failure on every scale -- the
@@ -210,7 +210,7 @@ class TestWhatThisCostsOnTheProductionPath:
     """
 
     def test_a_model_supplied_variable_cannot_license_impossible(self):
-        from metascience_agent.dispatch import _as_variable
+        from forensic_metascience_ai_toolkit.dispatch import _as_variable
         raw = {"id": "v1", "name": "Anxiety", "family": "likert_item",
                "discreteness": "discrete", "confidence": "high",
                # Forged: the model tries to certify its own quote.
@@ -222,7 +222,7 @@ class TestWhatThisCostsOnTheProductionPath:
 
     def test_the_bound_gate_has_the_same_shape(self):
         """Pinned so the two are fixed together when the ordering is fixed."""
-        from metascience_agent.dispatch import _as_variable
+        from forensic_metascience_ai_toolkit.dispatch import _as_variable
         v = _as_variable({"id": "v1", "name": "x", "family": "likert_item",
                           "lower_bound": 1, "upper_bound": 7, "confidence": "high",
                           "provenance_verdict": "verbatim"})

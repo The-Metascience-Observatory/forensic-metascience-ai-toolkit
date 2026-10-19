@@ -25,7 +25,7 @@ tests/test_viewer_js_parses.py -- because a broken template blanks the page.
 """
 import pytest
 
-from metascience_agent.census import summarise
+from forensic_metascience_ai_toolkit.census import summarise
 
 CELL = {"consumable": True, "routable": True, "runnable": True,
         "kind": "mean_sd", "missing": []}

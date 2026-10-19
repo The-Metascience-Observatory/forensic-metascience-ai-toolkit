@@ -47,7 +47,7 @@ _MIN_SHARED_SEGMENTS = 2
 
 
 def _registered() -> set[str]:
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     return {s.name for s in registry.SPECS}
 
 
@@ -83,7 +83,7 @@ def suspects(text: str, names: set[str]) -> dict[str, list[str]]:
 _DOC_REFERENCE = pathlib.Path(__file__).resolve().parents[1] / "docs" / "tool_reference.md"
 
 
-@pytest.mark.parametrize("path", [*__import__("metascience_agent.core.prompts", fromlist=["x"]).prompt_files(), _DOC_REFERENCE], ids=lambda p: p.name)
+@pytest.mark.parametrize("path", [*__import__("forensic_metascience_ai_toolkit.core.prompts", fromlist=["x"]).prompt_files(), _DOC_REFERENCE], ids=lambda p: p.name)
 def test_no_prompt_names_a_tool_one_word_off_a_real_one(path):
     found = suspects(path.read_text(encoding="utf-8"), _registered())
     assert not found, (

@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import json
 
-from metascience_agent.agent import _extract_json, _salvage_documents
+from forensic_metascience_ai_toolkit.agent import _extract_json, _salvage_documents
 
 DOC = {"schema_version": "2.0", "paper_id": "p",
        "findings": [{"slug": "a", "technique": "grim_percentage"}],

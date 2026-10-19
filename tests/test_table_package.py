@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import table_package as TP
+from forensic_metascience_ai_toolkit import table_package as TP
 
 # A composite table: two banner sections, and labels carrying the pipe that the
 # stacked-header fold introduces.
@@ -195,9 +195,9 @@ class TestTheDerivedPackage:
             assert "DERIVED" in text and "Cite the printed table" in text
 
     def _build(self, tmp_path, monkeypatch, cells=None):
-        from metascience_agent import table_package
+        from forensic_metascience_ai_toolkit import table_package
         monkeypatch.setattr(
-            "metascience_agent.prepass.paper_tables",
+            "forensic_metascience_ai_toolkit.prepass.paper_tables",
             lambda *a, **k: [{"label": "Table 1", "cells": cells or CELLS,
                               "extractor": "test"}])
         return table_package.build(tmp_path, out_dir=tmp_path / "out")
@@ -208,9 +208,9 @@ class TestTheAnchoringInvariant:
     the moment it becomes evidence the provenance argument is lost."""
 
     def test_no_block_id_appears_in_a_value_anchor(self, tmp_path, monkeypatch):
-        from metascience_agent import table_package, values
+        from forensic_metascience_ai_toolkit import table_package, values
         monkeypatch.setattr(
-            "metascience_agent.prepass.paper_tables",
+            "forensic_metascience_ai_toolkit.prepass.paper_tables",
             lambda *a, **k: [{"label": "Table 1", "cells": CELLS, "extractor": "t"}])
         idx = table_package.build(tmp_path, out_dir=tmp_path / "out")
         ids = TP.block_ids(idx)
@@ -224,9 +224,9 @@ class TestTheAnchoringInvariant:
     def test_the_package_writes_nothing_the_register_reads(self, tmp_path, monkeypatch):
         """The register is built from the walked tables. Building the package
         must not change what it sees."""
-        from metascience_agent import table_package, values
+        from forensic_metascience_ai_toolkit import table_package, values
         monkeypatch.setattr(
-            "metascience_agent.prepass.paper_tables",
+            "forensic_metascience_ai_toolkit.prepass.paper_tables",
             lambda *a, **k: [{"label": "Table 1", "cells": CELLS, "extractor": "t"}])
         before = values.build_from_paper(str(tmp_path), variables=[], bindings={})
         table_package.build(tmp_path, out_dir=tmp_path / "out")
@@ -256,7 +256,7 @@ class TestTheSplitIsLossless:
     """
 
     def test_every_parent_cell_lands_in_exactly_one_block(self):
-        from metascience_agent import table_package as TP
+        from forensic_metascience_ai_toolkit import table_package as TP
         table = {"label": "T", "cells": CELLS,
                  "sections": [{"row": 0, "label": "Gender"},
                               {"row": 4, "label": "Age group"}]}
@@ -275,7 +275,7 @@ class TestTheSplitIsLossless:
         scan therefore found ONE section and wrote ZERO blocks on a table that
         is visibly composite. Preferring the record took it to 10 blocks across
         the paper."""
-        from metascience_agent import table_package as TP
+        from forensic_metascience_ai_toolkit import table_package as TP
         table = {"label": "T", "cells": CELLS,
                  "sections": [{"row": 2, "label": "Recorded"}]}
         secs = TP._sections_from_record(table, CELLS)
@@ -283,7 +283,7 @@ class TestTheSplitIsLossless:
             "rows before the first band must survive as a leading block")
 
     def test_no_sections_on_the_record_falls_back_rather_than_asserting_none(self):
-        from metascience_agent import table_package as TP
+        from forensic_metascience_ai_toolkit import table_package as TP
         assert TP._sections_from_record({"label": "T", "cells": CELLS}, CELLS) == []
 
 
@@ -333,9 +333,9 @@ class TestTheSecondInvariant:
     ]
 
     def _package(self, tmp_path, monkeypatch, cells):
-        from metascience_agent import table_package
+        from forensic_metascience_ai_toolkit import table_package
         monkeypatch.setattr(
-            "metascience_agent.prepass.paper_tables",
+            "forensic_metascience_ai_toolkit.prepass.paper_tables",
             lambda *a, **k: [{"label": "Table 1", "cells": cells, "extractor": "t"}])
         return table_package.build(tmp_path, out_dir=tmp_path / "out")
 
@@ -343,10 +343,10 @@ class TestTheSecondInvariant:
             self, tmp_path, monkeypatch):
         """The strongest form of "never supplies": every premise the register
         carries must be reachable without the derived split existing at all."""
-        from metascience_agent import values
-        from metascience_agent import table_package
+        from forensic_metascience_ai_toolkit import values
+        from forensic_metascience_ai_toolkit import table_package
         monkeypatch.setattr(
-            "metascience_agent.prepass.paper_tables",
+            "forensic_metascience_ai_toolkit.prepass.paper_tables",
             lambda *a, **k: [{"label": "Table 1", "cells": CELLS, "extractor": "t"}])
         without = values.build_from_paper(str(tmp_path), variables=[], bindings={})
         table_package.build(tmp_path, out_dir=tmp_path / "out")
@@ -370,7 +370,7 @@ class TestTheSecondInvariant:
         """The grounding case. Whatever the package makes of a header repeat
         mid-body, the register must anchor every value to the printed table and
         must not acquire a premise from the split."""
-        from metascience_agent import values
+        from forensic_metascience_ai_toolkit import values
         idx = self._package(tmp_path, monkeypatch, self.CONTINUATION)
         ids = TP.block_ids(idx)
         reg = values.build_from_paper(str(tmp_path), variables=[], bindings={})

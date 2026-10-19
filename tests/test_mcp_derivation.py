@@ -16,11 +16,11 @@ import json
 
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
 pytest.importorskip("claude_agent_sdk", reason="MCP derivation needs the agent SDK")
 
-from metascience_agent import tools_mcp as M  # noqa: E402
+from forensic_metascience_ai_toolkit import tools_mcp as M  # noqa: E402
 
 #: Specs a model may be offered. CLI-only tools stay registered and
 #: CLI-callable; they must not appear on the MCP server.

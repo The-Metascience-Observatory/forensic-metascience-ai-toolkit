@@ -11,9 +11,9 @@ import asyncio
 import json
 from types import SimpleNamespace
 
-from metascience_agent import agent
-from metascience_agent.findings_v2 import unaccounted_verdicts
-from metascience_agent.modules import _analyst as A
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.findings_v2 import unaccounted_verdicts
+from forensic_metascience_ai_toolkit.modules import _analyst as A
 from tests.test_parallel_pipeline import fakes, paper  # noqa: F401
 
 
@@ -68,7 +68,7 @@ class TestWhatCounts:
         assert 2 in tools
 
     def test_most_severe_first_and_receipts_filter(self, monkeypatch, tmp_path):
-        from metascience_agent import receipts
+        from forensic_metascience_ai_toolkit import receipts
         items = A.unfiled_results(LEDGER, {"findings": []})
         assert [v["severity"] for v in items] == ["impossible", "highly_suspicious", "suspicious"]
         # Receipts: only calls our tool layer answered are listed.
@@ -128,7 +128,7 @@ class TestInputsLessFinding:
         assert len(unaccounted_verdicts([], self._ledger())) == 7
 
     def test_tool_verdict_joins_only_the_named_calls(self):
-        from metascience_agent.findings_v2 import backing_call, tool_verdict_for
+        from forensic_metascience_ai_toolkit.findings_v2 import backing_call, tool_verdict_for
         ledger = self._ledger()
         # Make an unnamed call disagree: under the old any-call join this
         # broke unanimity and erased the verdict.
@@ -269,7 +269,7 @@ class TestZeroCallRetry:
 
 
 def test_the_unfiled_transcript_is_archived(paper, fakes):  # noqa: F811
-    from metascience_agent import parallel
+    from forensic_metascience_ai_toolkit import parallel
     r = asyncio.run(agent.analyze_paper(str(paper), mode="parallel"))
     r["unfiled_stages"] = {"tool_agent": {"messages": [
         {"type": "assistant", "message": {"content": [{"type": "text", "text": "x"}]}}]}}

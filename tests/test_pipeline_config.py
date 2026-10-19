@@ -18,9 +18,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent, parallel
-from metascience_agent.core import prompts
-from metascience_agent import pipeline_config as pc
+from forensic_metascience_ai_toolkit import agent, parallel
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import pipeline_config as pc
 from tests.test_parallel_pipeline import _doc, _row, _stage, fakes, paper  # noqa: F401
 
 
@@ -224,7 +224,7 @@ class TestFences:
         assert parallel.tool_agent_tools(False, None) == parallel.tool_agent_tools(False)
 
     def test_manifest_narrows_the_role(self):
-        from metascience_agent import mcp_server
+        from forensic_metascience_ai_toolkit import mcp_server
         served = mcp_server._manifest_tools({"grim_check", "check_table"}, "tool_agent")
         assert {t.name for t in served} == {"grim_check", "check_table"}
 
@@ -236,7 +236,7 @@ class TestFences:
         ({"run_python_script"}, "tool_agent", "nothing to serve"),
     ])
     def test_manifest_fails_closed(self, enabled, stage, fragment):
-        from metascience_agent import mcp_server
+        from forensic_metascience_ai_toolkit import mcp_server
         with pytest.raises(mcp_server.ToolManifestError) as exc:
             mcp_server._manifest_tools(enabled, stage)
         assert fragment in str(exc.value)
@@ -251,7 +251,7 @@ class TestFences:
         assert env[pc.MCP_TOOLS_ENV] == "grim_check,check_table"
 
     def test_check_table_refuses_tools_the_pipeline_disabled(self, monkeypatch):
-        from metascience_agent.dispatch import NOT_ENABLED_REASON, check_table
+        from forensic_metascience_ai_toolkit.dispatch import NOT_ENABLED_REASON, check_table
         likert = {"id": "y", "family": "likert_item", "lower_bound": 1,
                   "upper_bound": 7, "confidence": "high"}
         cells = [{"raw": "5.51 (1.20)", "row_label": "S", "n": 30}]
@@ -263,7 +263,7 @@ class TestFences:
         assert refused == {"grimmer_check", "sprite_reconstruct"}
 
     def test_harness_sweeps_follow_the_toolset(self, monkeypatch):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         monkeypatch.setattr(prepass, "paper_tables",
                             lambda *a, **k: [{"id": "T1", "cells": []}])
         called = []
@@ -378,7 +378,7 @@ class TestReaders:
                              "image_forensics": {"state": "ran"}}}
 
     def test_run_kind(self):
-        from metascience_agent.discovery import run_kind
+        from forensic_metascience_ai_toolkit.discovery import run_kind
         assert run_kind(self._doc(pc.load("full"))) == "full_review"
         assert run_kind(self._doc(None)) == "full_review"
         assert run_kind(self._doc(pc.load("tools_grim"))) == "partial_review"
@@ -455,7 +455,7 @@ class TestReaders:
         assert agent.completed_review(tmp_path, pipeline=pc.load("full")) == d
 
     def test_build_identity_is_configuration_aware(self):
-        from metascience_agent import runs
+        from forensic_metascience_ai_toolkit import runs
         default = runs.build_fingerprint()
         assert default == runs.build_fingerprint(pc.from_flags())
         grim = runs.build_fingerprint(pc.load("tools_grim"))
@@ -463,7 +463,7 @@ class TestReaders:
         assert grim["registry_sha256"] == default["registry_sha256"]
 
     def test_partial_review_directory_names_itself(self):
-        from metascience_agent.cli import _versioned_review_dirname
+        from forensic_metascience_ai_toolkit.cli import _versioned_review_dirname
         assert "tools_grim" not in _versioned_review_dirname("opus", pc.load("full"))
         assert _versioned_review_dirname("opus", pc.load("tools_grim")).startswith(
             "forensic_review_tools-grim_opus_v")
@@ -477,7 +477,7 @@ class TestAnalyzeVerb:
     def _invoke(self, paper, monkeypatch, *args):
         from typer.testing import CliRunner
 
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
         monkeypatch.setattr(agent, "ensure_paper_extracted",
                             lambda *a, **k: {"failed": []})
         return CliRunner().invoke(app, [
@@ -486,7 +486,7 @@ class TestAnalyzeVerb:
 
     def test_a_partial_pipeline_writes_its_own_named_review(
             self, paper, fakes, monkeypatch):
-        from metascience_agent.cli import _analyze_out_dir
+        from forensic_metascience_ai_toolkit.cli import _analyze_out_dir
         result = self._invoke(paper, monkeypatch, "--pipeline", "tools_only")
         assert result.exit_code == 0, (result.output, result.exception)
         out, _ = _analyze_out_dir(paper, None, "opus", pc.load("tools_only"))
@@ -525,7 +525,7 @@ class TestReviewFixes:
             self, paper, fakes, monkeypatch):
         from metascience_observatory_image_analysis.image_forensics import pipeline as ip
 
-        from metascience_agent import runs
+        from forensic_metascience_ai_toolkit import runs
 
         async def fake_image(*a, **k):
             return {**ip.disabled_record(), "execution_status": "complete",
@@ -537,7 +537,7 @@ class TestReviewFixes:
                 == runs.build_fingerprint(cfg)["prompt_sha256"])
 
     def test_the_index_never_takes_a_partial_run_as_the_papers_review(self, tmp_path):
-        from metascience_agent import webapp_index as wi
+        from forensic_metascience_ai_toolkit import webapp_index as wi
         from tests.test_webapp_index import _paper
         d = _paper(tmp_path, dirs=("forensic_review_opus_v1",
                                    "forensic_review_tools-grim_opus_v1"))
@@ -561,7 +561,7 @@ class TestReviewFixes:
         assert rec["verdict"] is not None
 
     def test_a_partial_report_says_so_first(self):
-        from metascience_agent.report_v2 import render_report_v2
+        from forensic_metascience_ai_toolkit.report_v2 import render_report_v2
         doc = {"paper_id": "p", "findings": [], "adjudication": {"ran": False},
                "pipeline": pc.load("tools_grim").record()}
         text = render_report_v2(doc)
@@ -578,8 +578,8 @@ class TestAstraPhase1Findings:
 
     # 1 -- workbench default review leaves partial runs out
     def test_workbench_default_selection_excludes_partial_runs(self, tmp_path):
-        from metascience_agent.workbench.catalog import Catalog
-        from metascience_agent.workbench.repository import Repository
+        from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+        from forensic_metascience_ai_toolkit.workbench.repository import Repository
         from tests.test_workbench_catalog import seed
         c = Catalog(tmp_path / "cache.sqlite3")
         seed(c)
@@ -606,8 +606,8 @@ class TestAstraPhase1Findings:
     # its findings open (2026-10-18: "No run recorded" / "Finding not in
     # this project" on every tools_only paper)
     def test_workbench_shows_partial_runs_and_their_finding_detail(self, tmp_path):
-        from metascience_agent.workbench.catalog import Catalog
-        from metascience_agent.workbench.service import Service
+        from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+        from forensic_metascience_ai_toolkit.workbench.service import Service
         from tests.test_workbench_catalog import seed
         c = Catalog(tmp_path / "cache.sqlite3")
         seed(c)
@@ -690,12 +690,14 @@ class TestAstraPhase1Findings:
             text = " ".join(inv.argv)
             files = " ".join(f.read_text() for f in Path(inv.workdir).rglob("*")
                              if f.is_file()) if inv.workdir else ""
-            assert "metascience_agent.mcp_server" not in text + files
+            for module in ("forensic_metascience_ai_toolkit.mcp_server",
+                           "metascience_agent.mcp_server"):  # old name, still importable
+                assert module not in text + files
 
     def test_a_failed_repair_is_swallowed_not_raised(self, monkeypatch):
         """runtime.StageError IS agent.StageError, so `_repair_json` returns None
         on a failed repair instead of failing the paper (2026-10-18)."""
-        from metascience_agent import runtime
+        from forensic_metascience_ai_toolkit import runtime
 
         assert agent.StageError is runtime.StageError
 
@@ -743,7 +745,7 @@ class TestAstraPhase1Findings:
 
     # 5 -- the index's worst severity ignores partial runs
     def test_index_worst_severity_ignores_partial_runs(self, tmp_path):
-        from metascience_agent import webapp_index as wi
+        from forensic_metascience_ai_toolkit import webapp_index as wi
         from tests.test_webapp_index import _paper
         d = _paper(tmp_path, dirs=("forensic_review_opus_v1",
                                    "forensic_review_tools-grim_opus_v1"))
@@ -760,7 +762,7 @@ class TestAstraPhase1Findings:
 
     # 7 -- drafts come from a complete review unless a partial one is named
     def test_drafts_default_to_the_complete_review(self, tmp_path):
-        from metascience_agent import drafts
+        from forensic_metascience_ai_toolkit import drafts
         for name, cfg, fid in (("forensic_review_opus_v1", "full", "f_full"),
                                ("forensic_review_tools-grim_opus_v1", "tools_grim",
                                 "f_part")):
@@ -777,7 +779,7 @@ class TestAstraPhase1Findings:
         assert "PARTIAL PIPELINE" in named["pipeline_scope"]
 
     def test_drafts_refuse_a_partial_only_paper_unless_named(self, tmp_path):
-        from metascience_agent import drafts
+        from forensic_metascience_ai_toolkit import drafts
         (tmp_path / "forensic_review_x").mkdir()
         (tmp_path / "forensic_review_x" / "findings.v2.json").write_text(json.dumps({
             "paper_id": "p", "pipeline": pc.load("tools_grim").record(),
@@ -797,7 +799,7 @@ class TestAstraPhase1Findings:
 
     # 9 -- the adjudicator hears which harness sweeps did not run
     def test_restricted_sweeps_say_what_did_not_run(self, monkeypatch):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         monkeypatch.setattr(prepass, "paper_tables", lambda *a, **k: [{"id": "T1"}])
         monkeypatch.setattr(prepass, "sweep_sd_range",
                             lambda *a: {"severity": None, "results": []})
@@ -831,7 +833,7 @@ class TestAstraPhase1Findings:
 
     # 11 -- an empty manifest is a manifest, and it is refused
     def test_an_empty_manifest_fails_closed(self, monkeypatch):
-        from metascience_agent import mcp_server
+        from forensic_metascience_ai_toolkit import mcp_server
         monkeypatch.setenv(pc.MCP_TOOLS_ENV, "  ")
         assert pc.enabled_tools_from_env() == frozenset()
         monkeypatch.setenv("METASCIENCE_MCP_STAGE", "tool_agent")
@@ -865,7 +867,7 @@ class TestAstraPhase1Findings:
 
     # 6 -- the shareable viewer names the pipeline too
     def test_bundle_run_facts_name_a_partial_pipeline(self, tmp_path):
-        from metascience_agent import bundle
+        from forensic_metascience_ai_toolkit import bundle
         rows = bundle._run_facts(tmp_path, {"pipeline": pc.load("tools_grim").record()})
         fact = next(r for r in rows if r["fact"] == "Pipeline")
         assert "PARTIAL" in fact["value"] and "tools_agent" in fact["detail"]
@@ -939,7 +941,7 @@ class TestAstraVerificationFindings:
 
     def test_the_emitted_docket_says_which_sweeps_did_not_run(self, paper, fakes,
                                                               monkeypatch):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         monkeypatch.setattr(prepass, "paper_tables", lambda *a, **k: [{"id": "T1"}])
         monkeypatch.setattr(prepass, "sweep_sd_range",
                             lambda *a: {"severity": None, "results": []})
@@ -964,7 +966,7 @@ class TestAstraVerificationFindings:
                                                          monkeypatch, tmp_path):
         from metascience_observatory_image_analysis.image_forensics import pipeline as ip
 
-        from metascience_agent import runs
+        from forensic_metascience_ai_toolkit import runs
 
         async def fake_image(*a, **k):
             return {**ip.disabled_record(), "execution_status": "completed",
@@ -998,7 +1000,7 @@ class TestAstraVerificationFindings:
             ["items"]["properties"])
 
     def test_a_corrupt_older_review_does_not_block_drafting(self, tmp_path):
-        from metascience_agent import drafts
+        from forensic_metascience_ai_toolkit import drafts
         (tmp_path / "forensic_review_a").mkdir()
         (tmp_path / "forensic_review_a" / "findings.v2.json").write_text("{corrupt")
         (tmp_path / "forensic_review_b").mkdir()
@@ -1038,26 +1040,26 @@ class TestBudgetSplitFollowsThePipeline:
     `--max-budget-usd`; two GRIM dev papers were cut off at ~$1.25 of $3."""
 
     def _share(self, name, fraction):
-        from metascience_agent.modules._analyst import stage_budget_share
+        from forensic_metascience_ai_toolkit.modules._analyst import stage_budget_share
         return stage_budget_share(pc.load(name), fraction)
 
     def test_the_full_pipeline_is_unchanged(self):
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         assert self._share("full", parallel.TOOL_BUDGET_FRACTION) == pytest.approx(0.40)
         assert self._share("full", parallel.SCIENCE_BUDGET_FRACTION) == pytest.approx(0.25)
 
     def test_a_lone_tools_agent_gets_the_whole_budget(self):
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         for name in ("tools_only", "tools_grim"):
             assert self._share(name, parallel.TOOL_BUDGET_FRACTION) == pytest.approx(1.0)
 
     def test_a_lone_proofreading_agent_gets_the_whole_budget(self):
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         assert self._share("proofreading_only",
                            parallel.SCIENCE_BUDGET_FRACTION) == pytest.approx(1.0)
 
     def test_without_the_adjudicator_the_analysts_share_it(self):
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         tools = self._share("no_adjudication", parallel.TOOL_BUDGET_FRACTION)
         science = self._share("no_adjudication", parallel.SCIENCE_BUDGET_FRACTION)
         assert tools + science == pytest.approx(1.0)
@@ -1066,7 +1068,7 @@ class TestBudgetSplitFollowsThePipeline:
     def test_the_analyst_cap_uses_it(self):
         from types import SimpleNamespace
 
-        from metascience_agent import modules
+        from forensic_metascience_ai_toolkit import modules
         tools = modules.load("tools_agent")
         ctx = SimpleNamespace(budget_usd=3.0, config=pc.load("tools_only"))
         assert tools.budget(ctx) == pytest.approx(3.0)

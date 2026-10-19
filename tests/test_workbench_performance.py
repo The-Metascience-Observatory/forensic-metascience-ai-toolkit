@@ -6,9 +6,9 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 from PIL import Image
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository
-from metascience_agent.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.service import Service
 from tests.test_workbench_catalog import seed
 
 

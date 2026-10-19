@@ -18,7 +18,7 @@ import json
 
 import pytest
 
-from metascience_agent import webapp_index as W
+from forensic_metascience_ai_toolkit import webapp_index as W
 
 
 def _paper(tmp_path, name="10.1234--demo", files=None, dirs=()):
@@ -968,7 +968,7 @@ class TestProjectScan:
         assert set(scanned) >= {"n_viewed", "n_viewed_unknown"}
 
     def test_the_header_count_of_viewed_papers_is_real(self, tmp_path):
-        from metascience_agent.views_io import record_view
+        from forensic_metascience_ai_toolkit.views_io import record_view
         a = _paper(tmp_path / "corpus_a", "10.1--a",
                    files={"10.1--a.pdf": "x"})
         _paper(tmp_path / "corpus_a", "10.1--b", files={"10.1--b.pdf": "x"})
@@ -1228,7 +1228,7 @@ class TestAViewIsNotAReview:
     """
 
     def _viewed(self, tmp_path, **kw):
-        from metascience_agent.views_io import record_view
+        from forensic_metascience_ai_toolkit.views_io import record_view
         d = _paper(tmp_path, files={"x.pdf": "x"})
         record_view(d, at="2026-08-22T10:00:00Z", **kw)
         return d
@@ -1262,7 +1262,7 @@ class TestAViewIsNotAReview:
     def test_a_view_does_not_reorder_the_work_queue(self, tmp_path):
         # `sort_papers` puts unreviewed first. A paper somebody merely opened
         # must not be demoted past the papers nobody has touched.
-        from metascience_agent.views_io import record_view
+        from forensic_metascience_ai_toolkit.views_io import record_view
         a = _paper(tmp_path, name="10.1234--a", files={"x.pdf": "x"})
         b = _paper(tmp_path, name="10.1234--b", files={"x.pdf": "x"})
         before = [p["dir"] for p in
@@ -1300,7 +1300,7 @@ class TestAViewIsNotAReview:
         assert v["n_views"] == 0
 
     def test_a_recorded_view_outranks_the_inference(self, tmp_path):
-        from metascience_agent.views_io import record_view
+        from forensic_metascience_ai_toolkit.views_io import record_view
         d = _paper(tmp_path, files={
             "x.pdf": "x",
             "review.json": {"schema_version": "2.0",

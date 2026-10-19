@@ -27,9 +27,9 @@ over.
 import json
 from pathlib import Path
 
-from metascience_agent import registry
+from forensic_metascience_ai_toolkit import registry
 
-SCHEMA = (Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+SCHEMA = (Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
           / "schema" / "findings.v2.schema.json")
 
 #: Tools that produce no finding of their own. They fetch, parse or dispatch;
@@ -94,7 +94,7 @@ def _enum():
     wiring-checklist step 4). Reading the FILE therefore sees one fake value
     and reports every real tool as unnameable -- the opposite of the truth.
     """
-    from metascience_agent.core import prompts
+    from forensic_metascience_ai_toolkit.core import prompts
     s = prompts.findings_schema_v2()
 
     def owner(node):

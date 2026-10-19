@@ -18,8 +18,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction import jats as _jats
-from metascience_agent.scaffold import document as D
+from forensic_metascience_ai_toolkit.extraction import jats as _jats
+from forensic_metascience_ai_toolkit.scaffold import document as D
 
 CORPUS = Path(os.environ.get("METASCIENCE_WAVE2B_CORPUS", "/tmp/jats1/wave2b"))
 PAPERS = sorted(p for p in CORPUS.glob("10.*") if p.is_dir()) if CORPUS.is_dir() else []
@@ -68,7 +68,7 @@ def test_the_truncated_supplement_reports_served_of_available(jama_document):
 
 
 def test_no_truncation_marker_reaches_the_served_text_or_the_floor(jama_document):
-    from metascience_agent.extraction.pdf import TRUNCATION_MARKER
+    from forensic_metascience_ai_toolkit.extraction.pdf import TRUNCATION_MARKER
 
     assert "[TEXT TRUNCATED" not in jama_document["text"]
     assert TRUNCATION_MARKER not in jama_document["text"]
@@ -87,7 +87,7 @@ def test_two_tables_on_one_supplement_page_are_drawn_separately(jama_document):
     """s001 page 15 carries eTable 2 and eTable 3. Both were drawn as the same
     whole-page image -- byte-identical PNGs, one per table."""
     fitz = pytest.importorskip("fitz", reason="PyMuPDF is not installed")
-    from metascience_agent.scaffold import reconstruct as RC
+    from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
 
     tables = jama_document["tables"]
     p15 = [t for t in tables if t.get("source") == "supplement"
@@ -117,7 +117,7 @@ def test_the_meta_analysis_table_2_is_drawn_whole(tmp_path):
     ~60 rows were absent from the image and no error said so."""
     import xml.etree.ElementTree as ET
 
-    from metascience_agent.scaffold import reconstruct as RC
+    from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
 
     if not RC.chrome_binary():
         pytest.skip("no headless Chromium on this machine")
@@ -160,7 +160,7 @@ def test_a_publisher_that_lists_tab5_before_tab4_still_numbers_them_right():
 def test_the_meta_analysis_body_loses_its_bibliography_and_only_that():
     """53% of everything the passes were served on this paper was a list of
     other papers' titles, years, volumes and page ranges."""
-    from metascience_agent import numerals as N
+    from forensic_metascience_ai_toolkit import numerals as N
 
     doc = D.build(CORPUS / META)
     ladder, _ = _jats.paper_text_with_source(CORPUS / META)
@@ -194,7 +194,7 @@ NATURE = "10.1038--s41392-026-02904-0"
 
 
 def test_the_two_empty_supplement_tables_are_not_rendered_or_read(tmp_path):
-    from metascience_agent.scaffold import reconstruct as RC
+    from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
 
     doc = D.build(CORPUS / NATURE)
     empty = [t for t in doc["tables"] if not t.get("cells")]

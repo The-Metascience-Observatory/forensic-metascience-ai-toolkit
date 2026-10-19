@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import verdicts as V
+from forensic_metascience_ai_toolkit import verdicts as V
 
 REPO = Path(__file__).resolve().parents[1]
 

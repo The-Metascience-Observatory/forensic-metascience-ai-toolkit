@@ -8,8 +8,8 @@ score order is kept.
 """
 import json
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository, paper_column, sort_feed_items
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository, paper_column, sort_feed_items
 from tests.test_workbench_catalog import seed
 from tests.test_workbench_paper_folder_filter import _relabel
 

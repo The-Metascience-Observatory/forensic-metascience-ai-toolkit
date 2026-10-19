@@ -8,7 +8,7 @@ import sys
 
 import pytest
 
-from metascience_agent import agent, parallel
+from forensic_metascience_ai_toolkit import agent, parallel
 from metascience_observatory_image_analysis.image_forensics import pipeline, screening
 
 
@@ -23,7 +23,7 @@ detection_record = _contracts.detection_record
 
 
 def test_default_enabled_and_legacy_detector_aliases():
-    from metascience_agent.cli import analyze, batch_cmd
+    from forensic_metascience_ai_toolkit.cli import analyze, batch_cmd
     for fn in (agent.analyze_paper, parallel.analyze_paper_parallel):
         assert inspect.signature(fn).parameters["image_forensics"].default is True
     for fn in (analyze, batch_cmd):
@@ -63,7 +63,7 @@ def test_unavailable_engine_differs_from_optional_tier(tmp_path, monkeypatch, ti
 
 
 def test_standalone_batch_default_and_opt_out():
-    from metascience_agent.batch import build_parser
+    from forensic_metascience_ai_toolkit.batch import build_parser
     parser = build_parser()
     assert parser.parse_args(["papers"]).image_forensics is True
     assert parser.parse_args(["papers", "--no-image-forensics"]).image_forensics is False

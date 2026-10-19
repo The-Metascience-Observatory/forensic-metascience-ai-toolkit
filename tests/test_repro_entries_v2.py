@@ -18,13 +18,13 @@ import copy
 
 import pytest
 
-from metascience_agent import agent as A
+from forensic_metascience_ai_toolkit import agent as A
 
 
 def _entries(result):
     """The function's home moves in the split; resolve it wherever it is."""
     try:
-        from metascience_agent import annotators
+        from forensic_metascience_ai_toolkit import annotators
         return annotators._repro_entries(result)
     except ImportError:
         return A._repro_entries(result)
@@ -32,7 +32,7 @@ def _entries(result):
 
 def _annotate(result, **kw):
     try:
-        from metascience_agent import annotators
+        from forensic_metascience_ai_toolkit import annotators
         return annotators.annotate_reproductions(result, **kw)
     except ImportError:
         return A._annotate_reproductions(result, **kw)
@@ -100,7 +100,7 @@ class TestTheFixturesAreLiveShaped:
     def test_the_source_no_longer_reads_report_obj(self):
         import inspect
         try:
-            from metascience_agent import annotators as home
+            from forensic_metascience_ai_toolkit import annotators as home
         except ImportError:
             home = A
         src = inspect.getsource(home._repro_entries)

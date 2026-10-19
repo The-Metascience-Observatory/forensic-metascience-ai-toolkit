@@ -31,7 +31,7 @@ so no fold can put a number into a quote that the paper does not print.
 """
 import pytest
 
-from metascience_agent.quotes import (
+from forensic_metascience_ai_toolkit.quotes import (
     build_haystack, classify, fold_haystack, fold_rendering, normalise,
 )
 
@@ -292,24 +292,24 @@ class TestEntitiesDoNotReachTheReader:
     """
 
     def test_a_threshold_p_renders_as_the_paper_printed_it(self):
-        from metascience_agent.report_render import _quote_line
+        from forensic_metascience_ai_toolkit.report_render import _quote_line
         line = _quote_line("- ", "F (1,13) = 4.65; P &lt; 0.05", "the paper's text", "exact")
         assert "P < 0.05" in line
         assert "&lt;" not in line
 
     def test_ampersand_and_gt_are_decoded_too(self):
-        from metascience_agent.report_render import _quote_line
+        from forensic_metascience_ai_toolkit.report_render import _quote_line
         line = _quote_line("- ", "Smith &amp; Jones report n &gt; 30", "the paper", "exact")
         assert "Smith & Jones" in line and "n > 30" in line
 
     def test_decoding_happens_once(self):
         """`&amp;lt;` is a literal "&lt;" in the source, not a `<`. Unescaping
         twice would silently rewrite the paper's text."""
-        from metascience_agent.report_render import _quote_line
+        from forensic_metascience_ai_toolkit.report_render import _quote_line
         line = _quote_line("- ", "the token &amp;lt; appears", "the paper", "exact")
         assert "&lt;" in line and "< appears" not in line
 
     def test_plain_text_is_untouched(self):
-        from metascience_agent.report_render import _quote_line
+        from forensic_metascience_ai_toolkit.report_render import _quote_line
         line = _quote_line("- ", "M = 4.52 (SD = 1.13), t(48) = 2.51", "Table 1", "exact")
         assert "M = 4.52 (SD = 1.13), t(48) = 2.51" in line

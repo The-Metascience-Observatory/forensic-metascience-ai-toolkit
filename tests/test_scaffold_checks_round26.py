@@ -175,7 +175,7 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import pytest
 
-from metascience_agent.scaffold import checks, premises
+from forensic_metascience_ai_toolkit.scaffold import checks, premises
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
 

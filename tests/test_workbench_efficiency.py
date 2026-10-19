@@ -5,7 +5,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 import pytest
 from metascience_observatory_image_analysis import image_review as ir
-from metascience_agent.review_io import write_review
+from forensic_metascience_ai_toolkit.review_io import write_review
 from tests.test_image_review import _paper, _group
 
 

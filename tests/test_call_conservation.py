@@ -25,7 +25,7 @@ have taught its reader nothing.
 
 import pytest
 
-from metascience_agent.values import call_ledger_balance
+from forensic_metascience_ai_toolkit.values import call_ledger_balance
 
 
 def _calls(n, unreadable=0, name="mcp__x__grim_check"):

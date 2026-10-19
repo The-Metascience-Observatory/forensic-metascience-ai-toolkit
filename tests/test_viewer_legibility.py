@@ -6,7 +6,7 @@ import json
 
 from tests.test_bundle import review, section_html, flat  # noqa: F401
 
-from metascience_agent.bundle import collect, render_viewer
+from forensic_metascience_ai_toolkit.bundle import collect, render_viewer
 
 
 class TestCodedWordsAreDefinedAtPointOfUse:
@@ -78,7 +78,7 @@ class TestCodedWordsAreDefinedAtPointOfUse:
         assert 'data-cb="terms">BH</span>' in html   # the text node defined
 
     def test_the_new_glossary_terms_exist_and_name_real_tools(self):
-        from metascience_agent.bundle import GLOSSARY
+        from forensic_metascience_ai_toolkit.bundle import GLOSSARY
         terms = {g["term"]: g for g in GLOSSARY}
         assert "Family-wise error rate" in terms
         assert "Tau-hat" in terms
@@ -232,7 +232,7 @@ class TestATemplateWithNoRecordedVerdictIsNotOfferedAsACommand:
     def test_the_write_paths_own_judgement_agrees_with_the_mirror(self):
         """The mirror and deterministic.py must call the same things
         templates, or the bundle disagrees with the report beside it."""
-        from metascience_agent.evaluation.deterministic import validate_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import validate_reproduction
         assert validate_reproduction("metascience grim <mean> <n>")["valid"] is False
         assert validate_reproduction(
             """metascience tool run statcheck --json '{"text": "(chi2(3) = 18.9, p < 0.001)."}'"""

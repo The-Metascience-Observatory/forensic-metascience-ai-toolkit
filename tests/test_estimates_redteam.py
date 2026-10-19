@@ -14,7 +14,7 @@ import math
 
 import pytest
 
-from metascience_agent.tools.estimates import (
+from forensic_metascience_ai_toolkit.tools.estimates import (
     absence_of_evidence, check_estimate_ci, is_difference_measure,
     is_ratio_measure,
 )

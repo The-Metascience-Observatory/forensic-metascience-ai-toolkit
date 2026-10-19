@@ -233,7 +233,7 @@ def test_redirected_cache_keeps_the_machine_compute_cache(monkeypatch, tmp_path)
 
 def test_finished_author_notifies_the_review_store(monkeypatch, tmp_path):
     """A cohort's results stayed invisible until its session was notified."""
-    from metascience_agent.workbench import notifications
+    from forensic_metascience_ai_toolkit.workbench import notifications
     seen = []
     monkeypatch.setattr(notifications, "published", lambda root: seen.append(root) or {"state": "notified"})
     assert launcher.notify_review(tmp_path) == {"state": "notified"} and seen == [tmp_path]

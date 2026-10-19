@@ -60,7 +60,7 @@ import statistics as st
 
 import pytest
 
-from metascience_agent.scaffold import (adjudication_n, checks,
+from forensic_metascience_ai_toolkit.scaffold import (adjudication_n, checks,
                                         premise_reading as PR, premises)
 
 from tests.test_scaffold_checks_round18 import (ANALYSED, BAD, ENROLLED, EVASIONS,

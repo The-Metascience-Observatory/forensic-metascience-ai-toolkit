@@ -15,7 +15,7 @@ guess, and the guess a reader sees is indistinguishable from a fact.
 
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
 
 class TestEveryToolDeclaresItsEvidenceClass:
@@ -75,7 +75,7 @@ class TestEveryToolSaysWhetherItConsumesThePapersNumbers:
         those consumes a table cell BY CONSTRUCTION, so a False there would be
         two files that both claim to be the truth contradicting each other.
         """
-        from metascience_agent.dispatch import DISPATCH
+        from forensic_metascience_ai_toolkit.dispatch import DISPATCH
 
         routed = {t for tools in DISPATCH.values() for t in tools}
         undeclared = sorted(routed - R.cell_consuming_tools())
@@ -259,7 +259,7 @@ class TestTheLadderHoldsAtRUNTIME:
         assert out["severity"] == "indeterminate", name
 
     def test_the_sibling_that_set_the_standard_still_agrees(self):
-        from metascience_agent.tools.ttest import recalc_independent_t
+        from forensic_metascience_ai_toolkit.tools.ttest import recalc_independent_t
         assert recalc_independent_t(5.0, -1.0, 20, 6.0, 1.0, 20)["severity"] == \
             "indeterminate"
 
@@ -276,7 +276,7 @@ class TestTheCardsReachAReader:
     """
 
     def test_a_glossary_is_rendered_for_the_tools_that_ran(self):
-        from metascience_agent.report_render import _render_check_glossary
+        from forensic_metascience_ai_toolkit.report_render import _render_check_glossary
         md = "\n".join(_render_check_glossary({"tools_run": ["grim_check", "statcheck"]}))
         assert "## What each check does" in md
         assert "`grim_check`" in md and "`statcheck`" in md
@@ -287,13 +287,13 @@ class TestTheCardsReachAReader:
 
     def test_a_tool_it_cannot_describe_is_named_not_dropped(self):
         """Silently omitting one would make the glossary look complete."""
-        from metascience_agent.report_render import _render_check_glossary
+        from forensic_metascience_ai_toolkit.report_render import _render_check_glossary
         md = "\n".join(_render_check_glossary({"tools_run": ["grim_check", "no_such_tool"]}))
         assert "no_such_tool" in md
         assert "cannot describe" in md
 
     def test_no_run_no_glossary(self):
-        from metascience_agent.report_render import _render_check_glossary
+        from forensic_metascience_ai_toolkit.report_render import _render_check_glossary
         assert _render_check_glossary({}) == []
         assert _render_check_glossary({"tools_run": []}) == []
 
@@ -301,7 +301,7 @@ class TestTheCardsReachAReader:
         """The specific drift that rendering caught. `table1_dispersion` no
         longer uses a bootstrap for its verdict and no longer quarantines, so a
         card saying otherwise misdescribes the check to the reader it is for."""
-        import metascience_agent.registry as R
+        import forensic_metascience_ai_toolkit.registry as R
         text = " ".join(R.TOOL_INTEGRITY["bayesian_table1_dispersion"]["assumptions"]).lower()
         assert "exact chi-square null" in text
         assert "quarantined" not in text, "both quarantines were released 2026-08-10"

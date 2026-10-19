@@ -13,11 +13,11 @@ import csv
 
 import pytest
 
-from metascience_agent.extraction.supplements_read import (
+from forensic_metascience_ai_toolkit.extraction.supplements_read import (
     UNREADABLE,
     extract_supplement,
 )
-from metascience_agent.tools.celltypes import parse_cells
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
 
 docx = pytest.importorskip("docx")
 openpyxl = pytest.importorskip("openpyxl")
@@ -278,7 +278,7 @@ def test_jats_tables_keep_their_col_fallback(tmp_path):
     """`col{i}` stays right for a JATS grid, which is rectangular by
     construction: there the position IS the column identity. Only the padded
     path needs the stronger wording."""
-    from metascience_agent.extraction.jats import _cells_from_grid
+    from forensic_metascience_ai_toolkit.extraction.jats import _cells_from_grid
     cells = _cells_from_grid(["Var", ""], [["Age", "12.3"]])
     assert cells[0]["col_label"] == "col1"
 

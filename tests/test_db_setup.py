@@ -9,8 +9,8 @@ checked against a real server in a throwaway schema (see CHANGELOG 1.94.0);
 import pytest
 from typer.testing import CliRunner
 
-from metascience_agent import db_push, db_setup as S
-from metascience_agent.cli import app
+from forensic_metascience_ai_toolkit import db_push, db_setup as S
+from forensic_metascience_ai_toolkit.cli import app
 
 
 #: Captured at import, before conftest's autouse fixture blinds it: these
@@ -181,12 +181,12 @@ class TestCommand:
 
 class TestPreflightRow:
     def test_row_is_present_and_off_passes(self, env_file):
-        from metascience_agent.preflight import optional_checks
+        from forensic_metascience_ai_toolkit.preflight import optional_checks
         env_file.write_text(f"{db_push.NO_DB_ENV}=1\n")
         row = next(r for r in optional_checks() if r[0] == "Findings database")
         assert row[1] is True
 
     def test_not_configured_does_not_pass(self, env_file):
-        from metascience_agent.preflight import database_row
+        from forensic_metascience_ai_toolkit.preflight import database_row
         name, ok, detail = database_row()
         assert not ok and "db-setup" in detail

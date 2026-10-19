@@ -2,7 +2,7 @@
 import json
 import pytest
 
-from metascience_agent.review_io import (
+from forensic_metascience_ai_toolkit.review_io import (
     empty_review, image_issue_decisions, load_review, merge_review,
     write_review,
 )
@@ -175,7 +175,7 @@ class TestRunScopedReviews20:
     run; the flat `issues` key survives as a regenerated compat view."""
 
     def test_run_scoped_patch_lands_in_its_run(self):
-        from metascience_agent.review_io import merge_review
+        from forensic_metascience_ai_toolkit.review_io import merge_review
         merged = merge_review({}, {"issue_id": "numeric:3",
                                    "decision": "false_positive",
                                    "run": "forensic_review_v15"})
@@ -184,7 +184,7 @@ class TestRunScopedReviews20:
         assert merged["issues"]["numeric:3"]["decision"] == "false_positive"
 
     def test_two_runs_hold_independent_verdicts(self):
-        from metascience_agent.review_io import merge_review
+        from forensic_metascience_ai_toolkit.review_io import merge_review
         merged = merge_review({}, {"issue_id": "f_1", "decision":
                                    "false_positive", "run": "run_v12"})
         merged = merge_review(merged, {"issue_id": "f_1",
@@ -196,7 +196,7 @@ class TestRunScopedReviews20:
             "decision"] == "correct_significant"
 
     def test_legacy_flat_issues_become_the_unscoped_bucket(self):
-        from metascience_agent.review_io import UNSCOPED_RUN, merge_review
+        from forensic_metascience_ai_toolkit.review_io import UNSCOPED_RUN, merge_review
         legacy = {"schema_version": "1.1",
                   "issues": {"image:IMGDUP-1": {"decision": "true_issue"}}}
         merged = merge_review(legacy, {})
@@ -205,7 +205,7 @@ class TestRunScopedReviews20:
         assert merged["issues"]["image:IMGDUP-1"]["decision"] == "true_issue"
 
     def test_run_scoped_wins_the_compat_view_over_unscoped(self):
-        from metascience_agent.review_io import merge_review
+        from forensic_metascience_ai_toolkit.review_io import merge_review
         legacy = {"issues": {"numeric:3": {"decision": "correct"}}}
         merged = merge_review(legacy, {"issue_id": "numeric:3",
                                        "decision": "false_positive",
@@ -213,7 +213,7 @@ class TestRunScopedReviews20:
         assert merged["issues"]["numeric:3"]["decision"] == "false_positive"
 
     def test_run_status_is_per_run(self):
-        from metascience_agent.review_io import merge_review
+        from forensic_metascience_ai_toolkit.review_io import merge_review
         merged = merge_review({}, {"run": "run_v15",
                                    "run_status": "complete"})
         assert merged["runs"]["run_v15"]["status"] == "complete"
@@ -228,7 +228,7 @@ def test_a_view_lives_outside_the_decision_file(tmp_path):
     later "tidy up, one file per paper" patch cannot undo the separation
     without failing a test that says why.
     """
-    from metascience_agent.views_io import record_view
+    from forensic_metascience_ai_toolkit.views_io import record_view
 
     write_review(tmp_path, {"issue_id": "numeric:1",
                             "decision": "correct_minor"})
@@ -243,7 +243,7 @@ def test_a_view_lives_outside_the_decision_file(tmp_path):
 @pytest.mark.usefixtures("image_package")
 @pytest.mark.parametrize("decision", ["false_positive", "false_positive_scale_bar", "false_positive_channels", "false_positive_logo"])
 def test_generic_image_false_positive_survives_save_and_reload(tmp_path, decision):
-    from metascience_agent.review_io import IMAGE_DECISIONS
+    from forensic_metascience_ai_toolkit.review_io import IMAGE_DECISIONS
     from metascience_observatory_image_analysis.image_forensics.benchmark import FP_DECISIONS
     assert decision in IMAGE_DECISIONS
     assert decision in FP_DECISIONS

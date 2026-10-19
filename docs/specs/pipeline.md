@@ -212,7 +212,7 @@ disjointness test is how guards stop guarding — fix the prompt, not the test.
 
 ## 7. New tool: `check_flow_arithmetic`
 
-`src/metascience_agent/tools/flow.py`, pure function, result dict with
+`src/forensic_metascience_ai_toolkit/tools/flow.py`, pure function, result dict with
 `severity` per repo convention.
 
 **Input shape:**

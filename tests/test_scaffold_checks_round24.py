@@ -132,10 +132,10 @@ import statistics as st
 
 import pytest
 
-from metascience_agent.scaffold import adjudication_attach as AA
-from metascience_agent.scaffold import checks
-from metascience_agent.scaffold import premise_reading as PR
-from metascience_agent.scaffold import premises
+from forensic_metascience_ai_toolkit.scaffold import adjudication_attach as AA
+from forensic_metascience_ai_toolkit.scaffold import checks
+from forensic_metascience_ai_toolkit.scaffold import premise_reading as PR
+from forensic_metascience_ai_toolkit.scaffold import premises
 
 
 # --------------------------------------------------------------------------
@@ -576,7 +576,7 @@ class TestTheDefaultPathIsUnchanged:
         assert AA.PREMISE not in {c["premise"] for c in got}
 
     def test_the_prototype_nets_never_offer_it_either(self):
-        from metascience_agent.scaffold import adjudication, adjudication_n
+        from forensic_metascience_ai_toolkit.scaffold import adjudication, adjudication_n
         acc, text = mill(LEAKS["leading adjunct naming a rival"])
         for net in (adjudication.candidates, adjudication_n.candidates):
             assert AA.PREMISE not in {c["premise"] for c in net(acc, text)}

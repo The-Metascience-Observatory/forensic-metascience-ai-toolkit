@@ -9,10 +9,10 @@ import uuid
 from pathlib import Path
 
 import pytest
-from metascience_agent.db_push import _connect, resolve_db_url
+from forensic_metascience_ai_toolkit.db_push import _connect, resolve_db_url
 LIVE_URL=resolve_db_url() if os.environ.get("METASCIENCE_TEST_POSTGRES")=="1" else None
-from metascience_agent.workbench.remote import Remote
-from metascience_agent.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.remote import Remote
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
 
 pytestmark=pytest.mark.skipif(os.environ.get('METASCIENCE_TEST_POSTGRES')!='1',reason='explicit Postgres integration opt-in')
 
@@ -75,7 +75,7 @@ def test_journal_cursor_cannot_skip_uncommitted_earlier_writer(remote,tmp_path):
 
 
 def test_review_retry_identity_and_shared_conflict(remote,tmp_path):
-    from metascience_agent.workbench.repository import Repository
+    from forensic_metascience_ai_toolkit.workbench.repository import Repository
     r,schema=remote;c=Catalog(tmp_path/'cache.sqlite3')
     try:
         # A non-UTC session returns timestamptz as '...20:00-04:00'; a retry of
@@ -111,7 +111,7 @@ def test_two_apps_bootstrap_same_private_cache_without_partial_snapshot(remote,t
 
 
 def test_retirement_preserves_replacement_and_invalidates_cached_detail(remote,tmp_path):
-    from metascience_agent.workbench.retirement import apply,migrate
+    from forensic_metascience_ai_toolkit.workbench.retirement import apply,migrate
     r,schema=remote;c=Catalog(tmp_path/'cache.sqlite3')
     try:
         migrate(r.conn)
@@ -134,7 +134,7 @@ def test_retirement_preserves_replacement_and_invalidates_cached_detail(remote,t
 
 
 def test_publication_uses_shared_records_with_missing_local_corpus(remote,tmp_path,monkeypatch):
-    from metascience_agent import history_publication
+    from forensic_metascience_ai_toolkit import history_publication
     from metascience_observatory_image_analysis.image_forensics.screening import POLICY
     r,_ = remote
     conn = r.connect()
@@ -164,8 +164,8 @@ def test_publication_uses_shared_records_with_missing_local_corpus(remote,tmp_pa
 
 
 def test_explicit_image_reset_cannot_touch_other_analysis_or_reimport(remote,tmp_path):
-    from metascience_agent.workbench.image_cleanup import migrate,clear_database
-    from metascience_agent.workbench.repository import Repository
+    from forensic_metascience_ai_toolkit.workbench.image_cleanup import migrate,clear_database
+    from forensic_metascience_ai_toolkit.workbench.repository import Repository
     r,_=remote;conn=r.connect();migrate(conn)
     conn.execute('insert into component_item_papers(item_id,paper_id) values(1,1)')
     conn.execute("update runs set sealed_digest='sealed',history_record='{}'::jsonb where id=1")
@@ -195,7 +195,7 @@ def test_explicit_image_reset_cannot_touch_other_analysis_or_reimport(remote,tmp
 def test_finding_summaries_say_which_tool_triggered_them(remote,tmp_path):
     """The cached summary carries `tool_basis`, and a pre-feature cache is
     backfilled -- with the state between the two reading `not_recorded`."""
-    from metascience_agent.review_issues import finding_tool
+    from forensic_metascience_ai_toolkit.review_issues import finding_tool
     r,schema=remote
     r.conn.execute("insert into runs(paper_id,run_uid,kind,component,status) values(1,'r_part','partial_review','partial_review','complete')")
     records={

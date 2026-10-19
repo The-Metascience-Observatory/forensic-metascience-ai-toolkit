@@ -53,7 +53,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import completeness as C
+from forensic_metascience_ai_toolkit import completeness as C
 
 REPO = Path(__file__).resolve().parents[1]
 WITH_SUPP = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1001--jamanetworkopen.2023.37679"
@@ -66,8 +66,8 @@ def _unextracted_supplements() -> list[str]:
     by `supplements_read` with no layout model in the way, so its readability
     never depended on pdfplumber and does not depend on the cache now.
     """
-    from metascience_agent import supplements as _supp
-    from metascience_agent.extraction import docling_tables as _dl
+    from forensic_metascience_ai_toolkit import supplements as _supp
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as _dl
 
     bad = []
     for name in _supp.present_files(WITH_SUPP) or []:
@@ -137,7 +137,7 @@ class TestAnUnreadableSupplementIsRecordedNotDropped:
     def test_a_failure_to_enumerate_is_a_problem_not_a_silence(self, monkeypatch):
         problems = []
         monkeypatch.setattr(
-            "metascience_agent.supplements.present_files",
+            "forensic_metascience_ai_toolkit.supplements.present_files",
             lambda *_a, **_k: (_ for _ in ()).throw(OSError("disk gone")))
         out = C._supplement_items(Path("."), problems)
         assert out == []
@@ -146,10 +146,10 @@ class TestAnUnreadableSupplementIsRecordedNotDropped:
 
     def test_an_unreadable_file_says_so_and_yields_nothing(self, monkeypatch):
         problems = []
-        monkeypatch.setattr("metascience_agent.supplements.present_files",
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.supplements.present_files",
                             lambda *_a, **_k: ["broken.pdf"])
         monkeypatch.setattr(
-            "metascience_agent.extraction.supplements_read.extract_supplement_full",
+            "forensic_metascience_ai_toolkit.extraction.supplements_read.extract_supplement_full",
             lambda *_a, **_k: {"error": "unsupported format"})
         out = C._supplement_items(Path("."), problems)
         assert out == []

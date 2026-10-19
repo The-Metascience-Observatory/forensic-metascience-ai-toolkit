@@ -17,7 +17,7 @@ import sys
 
 import pytest
 
-from metascience_agent.prepass import _article_html_tables, paper_tables
+from forensic_metascience_ai_toolkit.prepass import _article_html_tables, paper_tables
 
 TABLE = """
 <html><body>
@@ -104,7 +104,7 @@ def test_paper_tables_prefers_html_over_the_pdf(tmp_path):
 # After: 42 headings, 41 sections, 24 chunks, 0 ragged boundaries.
 # ---------------------------------------------------------------------------
 
-from metascience_agent.extraction.html import _article_root, extract_html_text_with_tables
+from forensic_metascience_ai_toolkit.extraction.html import _article_root, extract_html_text_with_tables
 
 STRUCTURED = """
 <html><body>
@@ -143,8 +143,8 @@ def test_the_mapper_finds_the_papers_own_sections(tmp_path):
     """`map_sections` names sections; `document._roles_for` is what assigns a
     ROLE to each. Asserting roles here would test the wrong function -- the
     first draft of this test did, and failed against correct code."""
-    from metascience_agent.scaffold.document import _roles_for
-    from metascience_agent.sections import map_sections
+    from forensic_metascience_ai_toolkit.scaffold.document import _roles_for
+    from forensic_metascience_ai_toolkit.sections import map_sections
     p = tmp_path / "a.fulltext.html"
     p.write_text(STRUCTURED, encoding="utf-8")
     text = extract_html_text_with_tables(p, max_chars=10_000_000)["text"]
@@ -237,7 +237,7 @@ def test_the_reference_list_leaves_the_statistics_text(tmp_path):
 def test_the_skip_reuses_the_jats_definition(tmp_path):
     """A second copy of "what counts as the reference list" is the drift this
     project keeps finding. `jats._SKIP_SECTIONS` is the one definition."""
-    from metascience_agent.extraction.jats import _SKIP_SECTIONS
+    from forensic_metascience_ai_toolkit.extraction.jats import _SKIP_SECTIONS
     assert "ref-list" in _SKIP_SECTIONS
 
 

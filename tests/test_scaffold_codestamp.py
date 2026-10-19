@@ -18,7 +18,7 @@ import json
 
 import pytest
 
-from metascience_agent.scaffold import bind, codestamp, coverage, render
+from forensic_metascience_ai_toolkit.scaffold import bind, codestamp, coverage, render
 
 from .test_scaffold_coverage import TEXT, account
 

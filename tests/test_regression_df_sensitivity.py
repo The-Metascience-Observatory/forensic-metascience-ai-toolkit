@@ -37,7 +37,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.tools.regression import (DF_PROBES, DF_REPORTED,
+from forensic_metascience_ai_toolkit.tools.regression import (DF_PROBES, DF_REPORTED,
                                                 check_regression_batch)
 
 REPO = Path(__file__).resolve().parents[1]
@@ -201,7 +201,7 @@ class TestTheModelIsToldAboutTheField:
     instruction every reported df would be probed as though invented."""
 
     def test_the_registry_description_explains_df_source(self):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         desc = BY_NAME["check_regression_batch"].description
         assert "df_source" in desc
         assert "reported" in desc and "assumed" in desc

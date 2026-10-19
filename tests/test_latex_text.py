@@ -5,7 +5,7 @@ text layer, 39 from Mistral, and 2 from Mathpix -- whose extraction was
 excellent and whose notation we simply could not see. Across the 22 damaged
 papers the normalisation takes Mathpix from 277 statistics to 1,266."""
 
-from metascience_agent.latex_text import to_unicode, looks_like_latex
+from forensic_metascience_ai_toolkit.latex_text import to_unicode, looks_like_latex
 
 
 class TestItIsSafeToApplyGlobally:
@@ -55,7 +55,7 @@ class TestItKnowsWhenNotToRun:
 
 class TestTheFloorCanNowReadIt:
     def test_a_mathpix_style_mean_and_sd_is_enumerated(self):
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         text = (r"Values are mean $\pm$ SD. Age was $65 \pm 1.17$ years and "
                 r"weight $70.2 \pm 3.4$ kg, with $p \leq 0.05$ throughout.")
         kinds = [i["kind"] for i in C._body_items(text)]

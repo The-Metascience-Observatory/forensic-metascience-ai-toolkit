@@ -30,7 +30,7 @@ import copy
 
 import pytest
 
-from metascience_agent.scaffold import bind, structure
+from forensic_metascience_ai_toolkit.scaffold import bind, structure
 
 
 def _doc_with(tables: list[dict], studies: list[dict]) -> dict:

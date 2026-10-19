@@ -18,8 +18,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import cli
-from metascience_agent.bundle import collect, render_viewer
+from forensic_metascience_ai_toolkit import cli
+from forensic_metascience_ai_toolkit.bundle import collect, render_viewer
 
 REVIEW = Path("tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--mpr.70006/forensic_review_wave3")
 pytestmark = pytest.mark.skipif(not REVIEW.exists(), reason="corpus not present")
@@ -62,7 +62,7 @@ class TestEditorialFindingsArePrimary:
         assert "Checks the report did not carry" in html
 
     def test_the_page_falls_back_to_the_sweep_when_there_is_no_editorial_stage(self):
-        from metascience_agent.bundle import render_viewer as rv
+        from forensic_metascience_ai_toolkit.bundle import render_viewer as rv
 
         assert "The editorial stage produced no findings" in rv({})
 

@@ -1,6 +1,6 @@
 """render_report_v2: the structural guarantees are the renderer's."""
 
-from metascience_agent.report_v2 import render_report_v2
+from forensic_metascience_ai_toolkit.report_v2 import render_report_v2
 import pytest
 
 
@@ -232,7 +232,7 @@ class TestAReproductionCommandIsNotOfferedUntilItValidates:
     """
 
     def _line(self, **kw):
-        from metascience_agent.report_v2 import _reproduction_line
+        from forensic_metascience_ai_toolkit.report_v2 import _reproduction_line
         return _reproduction_line(kw)
 
     def test_a_validated_command_is_offered_to_paste(self):
@@ -285,7 +285,7 @@ class TestAQuoteIsNotPrintedAsThePapersWordsUnlessItIs:
     """
 
     def _lines(self, **f):
-        from metascience_agent.report_v2 import _quote_lines
+        from forensic_metascience_ai_toolkit.report_v2 import _quote_lines
         return _quote_lines(f)
 
     @pytest.mark.parametrize("verdict", ["verbatim", "elided"])

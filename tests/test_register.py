@@ -9,7 +9,7 @@ has no pattern for -- but THE DENOMINATOR MUST BE INDEPENDENT OF THE FINDER, or
 coverage is `(what it checked) / (what it decided was checkable)` and improves
 as the enumeration degrades.
 """
-from metascience_agent import register as R
+from forensic_metascience_ai_toolkit import register as R
 
 TEXT = ("Participants rated losing control while eating (M = 2.26, SD = 1.32) and "
         "difficulties resisting eating (M = 2.79, SD = 1.42). Negative affect "
@@ -128,8 +128,8 @@ class TestItSaysWhatItCannotMeasure:
 class TestItIsConsumed:
     def test_the_run_attaches_the_register_to_the_report(self):
         import pathlib
-        src = (lambda r: (r / "src/metascience_agent/agent.py").read_text(encoding="utf-8")
-                   + (r / "src/metascience_agent/parallel.py").read_text(encoding="utf-8")
+        src = (lambda r: (r / "src/forensic_metascience_ai_toolkit/agent.py").read_text(encoding="utf-8")
+                   + (r / "src/forensic_metascience_ai_toolkit/parallel.py").read_text(encoding="utf-8")
                    )(pathlib.Path(__file__).resolve().parents[1])
         # The live pipeline builds it in `parallel._build_coverage_summary`
         # and files it under `coverage_summary`.
@@ -139,7 +139,7 @@ class TestItIsConsumed:
         import json
         import pathlib
         s = json.loads((pathlib.Path(__file__).resolve().parents[1]
-                        / "src/metascience_agent/schema/findings.v2.schema.json"
+                        / "src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json"
                         ).read_text(encoding="utf-8"))
         assert "statistics_register" in s["properties"]
         assert "statistics_register" not in s.get("required", []), \
@@ -147,7 +147,7 @@ class TestItIsConsumed:
 
     def test_the_prompt_teaches_enumerate_before_judging(self):
         import pathlib
-        from metascience_agent.core.prompts import tool_expert_body
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_body
         md = tool_expert_body()   # the prompt as assembled, guidance included
         assert "statistics_register" in md
         assert "ENUMERATE BEFORE YOU JUDGE" in md

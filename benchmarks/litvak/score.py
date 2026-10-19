@@ -211,7 +211,7 @@ def load_findings_from_db(corpus: str, db_url: Optional[str] = None
     down.
     """
     sys.path.insert(0, str(REPO_ROOT / "src"))
-    from metascience_agent.db_push import _connect      # noqa: PLC0415
+    from forensic_metascience_ai_toolkit.db_push import _connect      # noqa: PLC0415
 
     conn = _connect(db_url)
     try:

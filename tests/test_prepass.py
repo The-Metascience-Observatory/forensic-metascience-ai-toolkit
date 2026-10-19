@@ -44,7 +44,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import prepass as P
+from forensic_metascience_ai_toolkit import prepass as P
 
 REPO = Path(__file__).resolve().parents[1]
 ROMANO = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415"
@@ -78,8 +78,8 @@ def _unextracted(paper_dir: Path) -> list[str]:
     paper has been through that pre-flight". A second list of the same files
     kept in this test would eventually be the more permissive one.
     """
-    from metascience_agent.agent import _pdfs_to_extract
-    from metascience_agent.extraction import docling_tables as _dl
+    from forensic_metascience_ai_toolkit.agent import _pdfs_to_extract
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as _dl
 
     cold = []
     for pdf, role in _pdfs_to_extract(str(paper_dir)):
@@ -95,8 +95,8 @@ class TestTheTableWalkIsSharedNotCopied:
     printed beside it."""
 
     def test_agent_uses_prepass_for_its_census(self):
-        src = ((REPO / "src/metascience_agent/agent.py").read_text(encoding="utf-8")
-                + (REPO / "src/metascience_agent/parallel.py").read_text(encoding="utf-8"))
+        src = ((REPO / "src/forensic_metascience_ai_toolkit/agent.py").read_text(encoding="utf-8")
+                + (REPO / "src/forensic_metascience_ai_toolkit/parallel.py").read_text(encoding="utf-8"))
         assert "_prepass.paper_tables(paper_dir" in src
 
     def test_the_census_and_the_sweeps_walk_the_same_tables(self):
@@ -109,9 +109,9 @@ class TestTheTableWalkIsSharedNotCopied:
         two denominators existing for one paper, and is now checkable directly,
         because a flag decides the population."""
         import re
-        agent = ((REPO / "src/metascience_agent/agent.py").read_text(encoding="utf-8")
-                + (REPO / "src/metascience_agent/parallel.py").read_text(encoding="utf-8"))
-        prep = (REPO / "src/metascience_agent/prepass.py").read_text(encoding="utf-8")
+        agent = ((REPO / "src/forensic_metascience_ai_toolkit/agent.py").read_text(encoding="utf-8")
+                + (REPO / "src/forensic_metascience_ai_toolkit/parallel.py").read_text(encoding="utf-8"))
+        prep = (REPO / "src/forensic_metascience_ai_toolkit/prepass.py").read_text(encoding="utf-8")
 
         def _supplements_in_scope(src, pattern):
             m = re.search(pattern, src)
@@ -353,7 +353,7 @@ class TestProvenGlyphRepairOnTableCells:
         return d
 
     def test_a_proven_document_gets_its_cells_back(self, tmp_path):
-        from metascience_agent.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
         d = self._paper(tmp_path, "# Body\n\nValues are mean \x06 SD throughout.\n")
         tabs = [{"label": "T1", "cells": [
             {"raw": "65 \x06 1.17", "row": 1, "row_label": "Age", "col_label": "A"}]}]
@@ -369,7 +369,7 @@ class TestProvenGlyphRepairOnTableCells:
         reading `\\x00 3.5 \\x06 7.6` becomes `\\x00 3.5 ± 7.6` and still will
         not type -- correctly, because its sign is still missing. Repairing what
         is proven must not imply the rest is now safe."""
-        from metascience_agent.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
         d = self._paper(tmp_path, "# Body\n\nValues are mean \x06 SD throughout.\n")
         tabs = [{"label": "T1", "cells": [
             {"raw": "\x00 3.5 \x06 7.6", "row": 1, "col_label": "A"}]}]

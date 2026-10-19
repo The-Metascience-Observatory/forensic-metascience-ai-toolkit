@@ -37,7 +37,7 @@ is unknown"), not `bound_source`-style.
 """
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 from metascience_observatory_image_analysis.extraction.figures import (
     AS_PRINTED,
     MEASURED,
@@ -392,7 +392,7 @@ class TestHelpReachesTheModel:
         removed (and whose own dict conversion drops Annotated help AND
         mistypes the param as string; the server function exists precisely
         because of that)."""
-        from metascience_agent.mcp_server import _to_json_schema
+        from forensic_metascience_ai_toolkit.mcp_server import _to_json_schema
         props = _to_json_schema(R.BY_NAME["grim_check"].schema())["properties"]
         assert "the wrong one accuses" in props["decimals"]["description"]
         assert props["decimals"]["type"] == "integer", \

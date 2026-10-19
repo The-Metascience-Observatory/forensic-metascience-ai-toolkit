@@ -40,8 +40,8 @@ from __future__ import annotations
 
 import statistics as st
 
-from metascience_agent.scaffold import adjudication, checks, premises
-from metascience_agent.scaffold import premise_reading as PR
+from forensic_metascience_ai_toolkit.scaffold import adjudication, checks, premises
+from forensic_metascience_ai_toolkit.scaffold import premise_reading as PR
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
 

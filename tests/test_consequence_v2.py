@@ -40,7 +40,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import consequence as C
+from forensic_metascience_ai_toolkit import consequence as C
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 RUN = (REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1002--ajcp.70049"

@@ -26,8 +26,8 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import numerals
-from metascience_agent.scaffold import bind, coverage
+from forensic_metascience_ai_toolkit import numerals
+from forensic_metascience_ai_toolkit.scaffold import bind, coverage
 
 # --------------------------------------------------------------------------
 # Every sentence a rule here touches, and the false-removal battery beside it.

@@ -2,7 +2,7 @@
 
 import pytest
 
-from metascience_agent.tools.heuristics import flag_round_n, flag_uninformative_stat
+from forensic_metascience_ai_toolkit.tools.heuristics import flag_round_n, flag_uninformative_stat
 
 
 class TestFlagRoundN:

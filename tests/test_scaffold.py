@@ -13,7 +13,7 @@ import json
 
 import pytest
 
-from metascience_agent.scaffold import applicability, bind, fontaudit, schema
+from forensic_metascience_ai_toolkit.scaffold import applicability, bind, fontaudit, schema
 
 # --------------------------------------------------------------------------
 # A tiny paper: one table, one caption, one comparison.
@@ -39,7 +39,7 @@ Smith J (2001). A paper. J Things 12: 100-110.
 
 
 def _doc():
-    from metascience_agent import numerals, sections
+    from forensic_metascience_ai_toolkit import numerals, sections
     secs = sections.map_sections(TEXT)
     cells = []
     rows = [("Weight", ["23.0 (±0.40)", "24.83 (±0.48)"]),
@@ -376,7 +376,7 @@ class TestRenderIsTheVerificationInstrument:
     """Every element a reader would check must be visible with its provenance."""
 
     def test_render_shows_each_layer_with_a_quote_or_cell_beside_it(self, account):
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         md = render.render(account)
         for heading in ("## 0. Headline coverage", "## 1. Structure",
                         "## How to verify this account",
@@ -399,7 +399,7 @@ class TestRenderIsTheVerificationInstrument:
         assert "### Design template problems" in md
 
     def test_render_never_restates_a_value_the_account_lacks(self, account):
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         md = render.render(account)
         assert "9999" not in md
 
@@ -409,7 +409,7 @@ class TestTableSpan:
         """The walker's cell reads `23.0 ( ± 0.40)`; the repaired body reads
         `23.0 (±0.40)`. A literal match found no table, so every table numeral
         fell out of the accounting (measured on Stern 2014, 2026-09-05)."""
-        from metascience_agent.scaffold import document
+        from forensic_metascience_ai_toolkit.scaffold import document
         text = "intro\n\n| | Veh |\n|---|---|\n| Weight | 23.0 (±0.40) |\n| Pole | 10.6 (±1.12) |\n\nafter"
         cells = [{"raw": "23.0 ( ± 0.40)"}, {"raw": "10.6 ( ± 1.12)"}]
         span = document._table_span(text, cells)
@@ -423,7 +423,7 @@ class TestLinearChunks:
     exclude back matter, and every in-scope numeral is served exactly once."""
 
     def test_chunks_tile_the_analytic_text_in_order(self):
-        from metascience_agent.scaffold import linear
+        from forensic_metascience_ai_toolkit.scaffold import linear
         doc = _doc()
         for s in doc["sections"]:
             s["role"] = "back" if s["name"].startswith("references") else "results"
@@ -440,7 +440,7 @@ class TestLinearChunks:
         assert any(c["has_table"] for c in cs)
 
     def test_chunk_schema_requires_dispositions(self):
-        from metascience_agent.scaffold import linear
+        from forensic_metascience_ai_toolkit.scaffold import linear
         import jsonschema
         sch = linear.chunk_schema()
         jsonschema.Draft202012Validator.check_schema(sch)
@@ -489,7 +489,7 @@ class TestFontAudit:
 
 class TestPass3InParts:
     def test_verified_tables_are_not_re_read_and_unread_ones_are_batched(self):
-        from metascience_agent.scaffold import prompts as PR
+        from forensic_metascience_ai_toolkit.scaffold import prompts as PR
         def t(i, n, verified=False):
             return {"id": f"table:{i}", "label": f"Table {i}", "n_cells": n, "cells": [], "col_labels": [], "row_labels": [],
                     "reconstruction": {"status": "verified"} if verified else {"status": "not_attempted"}}
@@ -501,7 +501,7 @@ class TestPass3InParts:
         assert not any(x["id"] == "table:1" for b in [main] + batches for x in b), "a verified table is entries already"
 
     def test_the_main_prompt_names_the_tables_read_elsewhere(self):
-        from metascience_agent.scaffold import prompts as PR
+        from forensic_metascience_ai_toolkit.scaffold import prompts as PR
         tables = [{"id": "table:1", "label": "Table 1", "n_cells": 3, "cells": [], "col_labels": [], "row_labels": [],
                    "caption": "c", "reconstruction": {"status": "verified"}}]
         p = PR.pass3_prompt("text", {"studies": []}, {"variables": []}, tables, [])
@@ -512,7 +512,7 @@ class TestPass3InParts:
 
 
     def test_merged_readings_are_one_per_table(self):
-        from metascience_agent.scaffold import prompts as PR
+        from forensic_metascience_ai_toolkit.scaffold import prompts as PR
         rs = [{"table_id": "table:1", "x": 1}, {"table_id": "table:2"}, {"table_id": "table:1", "x": 2}]
         out = PR.dedupe_readings(rs)
         assert [r["table_id"] for r in out] == ["table:1", "table:2"] and out[0]["x"] == 1

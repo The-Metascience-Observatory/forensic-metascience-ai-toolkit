@@ -2,7 +2,7 @@
 
 import pytest
 
-from metascience_agent.tools.continuous_to_categorical import (
+from forensic_metascience_ai_toolkit.tools.continuous_to_categorical import (
     check_proportion_from_normal,
 )
 

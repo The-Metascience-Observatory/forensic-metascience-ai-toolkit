@@ -2,7 +2,7 @@
 import json
 from datetime import datetime, timedelta, timezone
 
-from metascience_agent.paper_metadata import (
+from forensic_metascience_ai_toolkit.paper_metadata import (
     authors_have_initials, authors_list_from_crossref, build_authors_list,
     citation_bits, derive_status, doi_from_slug, ensure_metadata, first_author,
     given_is_initials, has_core_identity, has_displayable, load_cached,
@@ -33,7 +33,7 @@ def test_doi_from_slug_replaces_every_separator():
     `--`. Replacing the first only produced `10.1210/clinem--dgag124` for a
     paper whose only identity was its directory name (no XML, no
     provenance): a DOI that resolves nowhere, written into metadata.json."""
-    from metascience_agent.paper_ids import doi_dirname
+    from forensic_metascience_ai_toolkit.paper_ids import doi_dirname
     assert doi_from_slug("10.1210--clinem--dgag124") == "10.1210/clinem/dgag124"
     assert doi_from_slug("10.21203--rs.3.rs-3547685--v1") \
         == "10.21203/rs.3.rs-3547685/v1"
@@ -118,13 +118,13 @@ def test_cached_file_is_preferred(tmp_path, monkeypatch):
     def boom(*a, **k):
         raise AssertionError("network must not run when the cache is displayable")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     rec = ensure_metadata(paper, network=True)
     assert rec["title"] == "Cached Title"
 
 
 def test_scan_paper_reads_metadata_json(tmp_path):
-    from metascience_agent.webapp_index import scan_paper
+    from forensic_metascience_ai_toolkit.webapp_index import scan_paper
     paper = tmp_path / "10.1--x"
     paper.mkdir()
     (paper / "x.pdf").write_text("x")
@@ -147,21 +147,21 @@ def test_scan_paper_reads_metadata_json(tmp_path):
 
 
 def test_record_for_run_is_offline_under_pytest(tmp_path, monkeypatch):
-    from metascience_agent.paper_metadata import record_for_run
+    from forensic_metascience_ai_toolkit.paper_metadata import record_for_run
     called = {}
     def fake(paper_dir, force=False, network=True):
         called["network"] = network
         return {"title": None, "source": "none"}
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.ensure_metadata", fake)
+        "forensic_metascience_ai_toolkit.paper_metadata.ensure_metadata", fake)
     record_for_run(tmp_path)
     assert called["network"] is False
 
 
 def test_record_for_run_does_not_raise(tmp_path, monkeypatch):
-    from metascience_agent.paper_metadata import record_for_run
+    from forensic_metascience_ai_toolkit.paper_metadata import record_for_run
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.ensure_metadata",
+        "forensic_metascience_ai_toolkit.paper_metadata.ensure_metadata",
         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("crossref down")))
     rec = record_for_run(tmp_path / "nope")
     assert rec.get("error")
@@ -172,7 +172,7 @@ def test_failed_fetch_is_recorded_not_silent(tmp_path, monkeypatch):
     paper = tmp_path / "10.1--x"
     paper.mkdir()
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: None)
     rec = ensure_metadata(paper, network=True)
     assert rec.get("error")
@@ -205,7 +205,7 @@ def test_title_without_authors_is_refetched(tmp_path, monkeypatch):
         "fetched_at": "2026-08-01T00:00:00+00:00",
     }))
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"title": "Title Only", "authors": "Ada Lovelace",
                      "journal": "Notes", "volume": None, "issue": None,
                      "pages": None, "year": 1843, "url": None})
@@ -224,7 +224,7 @@ def test_stale_error_is_retried(tmp_path, monkeypatch):
         "doi": "10.1/x",
     }))
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"title": "Recovered", "authors": "Ada",
                      "journal": None, "volume": None, "issue": None,
                      "pages": None, "year": None, "url": None})
@@ -244,7 +244,7 @@ def test_cached_error_is_not_retried(tmp_path, monkeypatch):
     def boom(*a, **k):
         raise AssertionError("must not refetch a recorded failure")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     rec = ensure_metadata(paper, network=True)
     assert rec["error"] == "DOI APIs returned nothing"
 
@@ -260,7 +260,7 @@ def test_force_retries_a_cached_error(tmp_path, monkeypatch):
         "title": None,
     }))
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"title": "Recovered", "authors": "Ada", "journal": "Notes",
                      "volume": None, "issue": None, "pages": None, "year": 1843,
                      "url": None})
@@ -335,14 +335,14 @@ def test_authors_have_initials_reads_structured_list_first():
 
 
 def test_refetched_names_update_only_when_more_complete(monkeypatch):
-    from metascience_agent.paper_metadata import _expand_abbreviated_authors
+    from forensic_metascience_ai_toolkit.paper_metadata import _expand_abbreviated_authors
     rec = {"doi": "10.1/x", "title": "T",
            "authors": "J. Smith; A. Jones",
            "authors_list": build_authors_list({"authors": "J. Smith; A. Jones"})}
 
     # More complete -> updated (and Last, First answers are folded first).
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"authors": "Smith, John; Jones, Alice"})
     out = _expand_abbreviated_authors(rec)
     assert out["authors"] == "John Smith; Alice Jones"
@@ -352,13 +352,13 @@ def test_refetched_names_update_only_when_more_complete(monkeypatch):
 
     # Fewer authors (wrong-paper match) -> unchanged.
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"authors": "J. Smith"})
     assert _expand_abbreviated_authors(rec)["authors"] == "J. Smith; A. Jones"
 
     # Same quality (still initials) -> unchanged.
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"authors": "J. A. Smith; A. B. Jones"})
     assert _expand_abbreviated_authors(rec)["authors"] == "J. Smith; A. Jones"
 
@@ -366,18 +366,18 @@ def test_refetched_names_update_only_when_more_complete(monkeypatch):
     def boom(doi):
         raise RuntimeError("crossref down")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     assert _expand_abbreviated_authors(rec)["authors"] == "J. Smith; A. Jones"
 
 
 def test_full_names_are_not_refetched_at_all(monkeypatch):
-    from metascience_agent.paper_metadata import _expand_abbreviated_authors
+    from forensic_metascience_ai_toolkit.paper_metadata import _expand_abbreviated_authors
     def boom(*a, **k):
         raise AssertionError("full names must not cost a network call")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata._fetch_by_title", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata._fetch_by_title", boom)
     rec = {"doi": "10.1/x", "authors": "John Smith; Alice Jones"}
     assert _expand_abbreviated_authors(rec) == rec
 
@@ -411,7 +411,7 @@ def test_fetch_path_emits_all_v11_fields(tmp_path, monkeypatch):
     paper = tmp_path / "10.1234--x"
     paper.mkdir()
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"title": "T", "authors": "Nina Mazar; Dan Ariely",
                      "journal": "Dev. Sci", "volume": None, "issue": None,
                      "pages": None, "year": 2015, "url": None})
@@ -427,7 +427,7 @@ def test_unknown_journal_normalizes_to_itself_never_null(tmp_path, monkeypatch):
     paper = tmp_path / "10.1234--x"
     paper.mkdir()
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"title": "T", "authors": "Ada Lovelace",
                      "journal": "Journal of Entirely Imaginary Results",
                      "volume": None, "issue": None, "pages": None,
@@ -453,9 +453,9 @@ def test_10_to_11_upgrade_in_place_round_trip(tmp_path, monkeypatch):
     def boom(*a, **k):
         raise AssertionError("full names + core identity must not refetch")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata._fetch_by_title", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata._fetch_by_title", boom)
 
     rec = ensure_metadata(paper, network=True)
     assert rec["schema_version"] == "1.1"
@@ -504,7 +504,7 @@ def test_upgrade_refetches_initials_only_authors(tmp_path, monkeypatch):
         "source": "doi_api",
     }))
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi",
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi",
         lambda doi: {"authors": "John Smith; Alice Jones"})
     rec = ensure_metadata(paper, network=True)
     assert rec["authors"] == "John Smith; Alice Jones"
@@ -527,7 +527,7 @@ def test_upgrade_survives_a_failed_name_refetch(tmp_path, monkeypatch):
     def boom(doi):
         raise RuntimeError("crossref down")
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata.fetch_metadata_from_doi", boom)
+        "forensic_metascience_ai_toolkit.paper_metadata.fetch_metadata_from_doi", boom)
     rec = ensure_metadata(paper, network=True)
     assert rec["schema_version"] == "1.1"
     assert rec["authors"] == "J. Smith; A. Jones"
@@ -544,7 +544,7 @@ def test_no_doi_paper_falls_back_to_title_search(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata._fetch_by_title",
+        "forensic_metascience_ai_toolkit.paper_metadata._fetch_by_title",
         lambda title: {"doi": "10.9/z", "authors": "Ada Lovelace",
                        "title": "The Found Title", "journal": "Notes",
                        "volume": None, "issue": None, "pages": None,
@@ -567,7 +567,7 @@ def test_no_doi_and_no_title_match_is_recorded_not_invented(tmp_path, monkeypatc
         encoding="utf-8",
     )
     monkeypatch.setattr(
-        "metascience_agent.paper_metadata._fetch_by_title", lambda title: None)
+        "forensic_metascience_ai_toolkit.paper_metadata._fetch_by_title", lambda title: None)
     rec = ensure_metadata(paper, network=True)
     assert "no DOI" in rec["error"]
     # The 'no DOI' error still parks the paper: asking again cannot help.

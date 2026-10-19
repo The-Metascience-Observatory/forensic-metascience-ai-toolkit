@@ -13,8 +13,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit.llm_backend import (
     CLAUDE,
     GROK,
     MCPUnavailable,
@@ -25,7 +25,7 @@ from metascience_agent.llm_backend import (
     off_stage_mcp_names,
     resolve_backend,
 )
-from metascience_agent.usage_guard import UNSUPPORTED
+from forensic_metascience_ai_toolkit.usage_guard import UNSUPPORTED
 
 DATA = Path(__file__).parent / "data"
 
@@ -59,7 +59,7 @@ class TestNormalizerKnownPositive:
     def test_ledger_records_the_forensic_call(self):
         events = [normalize_event(e, GROK) for e in _events_from_fixture(
             "grok_use_tool_stream.jsonl")]
-        from metascience_agent.agent import STAGE1_TOOLS, _tool_call_ledger
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _tool_call_ledger
         ledger = _tool_call_ledger(events, STAGE1_TOOLS)
         forensic = [r for r in ledger if r["surface"] == "forensic_mcp"]
         assert len(forensic) >= 1, (
@@ -76,7 +76,7 @@ class TestNormalizerKnownPositive:
     def test_search_tool_is_harness_not_unvalidated(self):
         events = [normalize_event(e, GROK) for e in _events_from_fixture(
             "grok_use_tool_stream.jsonl")]
-        from metascience_agent.agent import STAGE1_TOOLS, _tool_call_ledger
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _tool_call_ledger
         ledger = _tool_call_ledger(events, STAGE1_TOOLS)
         search = [r for r in ledger if r["tool_short"] == "search_tool"]
         assert search, "fixture contains a search_tool call"
@@ -85,7 +85,7 @@ class TestNormalizerKnownPositive:
     def test_read_file_rewrites_to_Read(self):
         events = [normalize_event(e, GROK) for e in _events_from_fixture(
             "grok_use_tool_stream.jsonl")]
-        from metascience_agent.agent import STAGE1_TOOLS, _tool_call_ledger
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _tool_call_ledger
         ledger = _tool_call_ledger(events, STAGE1_TOOLS)
         reads = [r for r in ledger if r["tool_short"] == "Read"]
         assert reads
@@ -107,7 +107,7 @@ class TestNormalizerKnownPositive:
         rewritten = normalize_event(event, GROK)
         block = rewritten["message"]["content"][0]
         assert block["name"] == "use_tool"
-        from metascience_agent.agent import STAGE1_TOOLS, _tool_call_ledger
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _tool_call_ledger
         ledger = _tool_call_ledger([rewritten], STAGE1_TOOLS)
         assert ledger[0]["surface"] == "UNVALIDATED"
 
@@ -116,7 +116,7 @@ class TestNormalizerKnownPositive:
             {"type": "tool_use", "name": "mcp__forensic_metascience__grim_check",
              "id": "1", "input": {"mean": 1}}
         ]}}
-        from metascience_agent.llm_backend import CLAUDE
+        from forensic_metascience_ai_toolkit.llm_backend import CLAUDE
         assert normalize_event(event, CLAUDE) is event
 
 
@@ -151,8 +151,8 @@ class TestDoctorFixtures:
 
 class TestDenyComplement:
     def test_derived_from_registry_not_a_hand_list(self):
-        from metascience_agent.agent import STAGE1_TOOLS, STAGE2_TOOLS
-        from metascience_agent.registry import (
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, STAGE2_TOOLS
+        from forensic_metascience_ai_toolkit.registry import (
             ADJUDICATOR, SPECS, TOOL_AGENT, stage_tools)
         s1 = set(off_stage_mcp_names(STAGE1_TOOLS))
         # By the role CONSTANTS, not string literals -- the literal "stage1"
@@ -184,7 +184,7 @@ class TestBudgetRefuse:
         assert launched == []
 
     def test_build_invocation_raises(self):
-        from metascience_agent.agent import STAGE1_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _build_claude_cmd
         with pytest.raises(BudgetUnsupported):
             _build_claude_cmd(
                 system_prompt="s", allowed_tools=STAGE1_TOOLS,
@@ -243,7 +243,7 @@ def grok_stage_env(tmp_path, monkeypatch):
         return None
 
     monkeypatch.setattr(A, "usage_guard", _no_guard)
-    from metascience_agent.llm_backend import Backend
+    from forensic_metascience_ai_toolkit.llm_backend import Backend
     monkeypatch.setattr(Backend, "assert_mcp_live", lambda self, sandbox: None)
     return tmp_path
 
@@ -560,7 +560,7 @@ class TestUsageUnsupported:
             spawned.append(args)
             raise AssertionError("grok must not probe /usage")
 
-        from metascience_agent import usage_guard
+        from forensic_metascience_ai_toolkit import usage_guard
         monkeypatch.setattr(usage_guard.asyncio, "create_subprocess_exec", fake_exec)
         result = asyncio.run(usage_guard.probe_usage(backend=GROK))
         assert result is UNSUPPORTED
@@ -723,7 +723,7 @@ class TestTheSchemaRejectionReachesTheStagePayload:
     def test_the_correction_actually_quotes_it_end_to_end(
             self, grok_stage_env, monkeypatch):
         """The whole point of the field: the retry says what was rejected."""
-        from metascience_agent.parallel import _schema_gate_correction
+        from forensic_metascience_ai_toolkit.parallel import _schema_gate_correction
         stage = self._stage(monkeypatch, [
             {"type": "result", "subtype": "error_max_structured_output_retries",
              "is_error": True, "result": "", "usage": {},
@@ -764,7 +764,7 @@ class TestFolderTrustIsDisabledForTheSandbox:
     def test_the_run_invocation_carries_the_switch(self, tmp_path, monkeypatch):
         monkeypatch.setenv("METASCIENCE_GROK_SANDBOX_ROOT", str(tmp_path / "sb"))
         monkeypatch.setenv("METASCIENCE_GROK_SKIP_FOLDER_TRUST", "1")
-        from metascience_agent.agent import STAGE1_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _build_claude_cmd
         inv = _build_claude_cmd(
             system_prompt="s", allowed_tools=STAGE1_TOOLS, backend="grok")
         try:
@@ -776,7 +776,7 @@ class TestFolderTrustIsDisabledForTheSandbox:
         """A probe that is gated differently from the run it vouches for
         proves nothing about that run."""
         import inspect
-        from metascience_agent import llm_backend as B
+        from forensic_metascience_ai_toolkit import llm_backend as B
         src = inspect.getsource(B._probe_mcp_doctor)
         assert "GROK_FOLDER_TRUST_ENV" in src
         assert B.GROK_FOLDER_TRUST_ENV == {"GROK_FOLDER_TRUST": "0"}
@@ -784,7 +784,7 @@ class TestFolderTrustIsDisabledForTheSandbox:
     def test_the_root_trust_entry_is_still_written(self, tmp_path, monkeypatch):
         """Kept for grok versions where the cascade still works; the env
         switch is the belt, this is the braces."""
-        from metascience_agent import llm_backend as B
+        from forensic_metascience_ai_toolkit import llm_backend as B
         monkeypatch.setenv("HOME", str(tmp_path))
         monkeypatch.delenv("METASCIENCE_GROK_SKIP_FOLDER_TRUST", raising=False)
         root = tmp_path / "sb"

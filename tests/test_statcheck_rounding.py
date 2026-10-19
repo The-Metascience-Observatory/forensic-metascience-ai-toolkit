@@ -15,7 +15,7 @@ was 22, none of which changed a conclusion.
 """
 import pytest
 
-from metascience_agent.tools.r_wrappers import _within_printed_precision
+from forensic_metascience_ai_toolkit.tools.r_wrappers import _within_printed_precision
 
 
 class TestWithinPrintedPrecision:

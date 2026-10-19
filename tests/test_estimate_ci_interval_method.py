@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.estimates import check_estimate_ci as check
+from forensic_metascience_ai_toolkit.tools.estimates import check_estimate_ci as check
 
 # An honest incremental cost with a non-parametric bootstrap CI.
 COST = dict(estimate=420.0, ci_low=95.0, ci_high=910.0, measure="mean_difference")
@@ -75,7 +75,7 @@ class TestSymmetricIntervalsAreUntouched:
 
     def test_the_parameter_is_declared_so_the_model_can_pass_it(self):
         """A parameter the model cannot supply is dead weight."""
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.registry import SPECS
         spec = next(s for s in SPECS if s.name == "check_estimate_ci")
         assert "interval_method" in [p.name for p in spec.params]
 

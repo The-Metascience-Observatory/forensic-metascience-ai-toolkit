@@ -21,9 +21,9 @@ import math
 
 import pytest
 
-from metascience_agent.tools.power_check import required_n, verify_power_analysis
-from metascience_agent.tools.stalt import stalt_check
-from metascience_agent.tools.summation import check_summation, check_summation_batch
+from forensic_metascience_ai_toolkit.tools.power_check import required_n, verify_power_analysis
+from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
+from forensic_metascience_ai_toolkit.tools.summation import check_summation, check_summation_batch
 
 NAN = float("nan")
 INF = float("inf")

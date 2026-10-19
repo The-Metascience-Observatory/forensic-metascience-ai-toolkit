@@ -26,9 +26,9 @@ very parameter the claim is about. See [[a-fixture-that-excludes-the-defect-regi
 """
 from __future__ import annotations
 
-from metascience_agent import dispatch
-from metascience_agent import values as V
-from metascience_agent.tools.celltypes import parse_cells
+from forensic_metascience_ai_toolkit import dispatch
+from forensic_metascience_ai_toolkit import values as V
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
 
 COL = "Primary hypertension (n = 100)"
 
@@ -62,7 +62,7 @@ class TestTheFixtureIsNotVacuous:
     def test_and_the_header_n_really_would_accuse_these_honest_rows(self):
         """The defect, reproduced directly: checked against the header's 100
         instead of the section's 120, every row is called suspicious."""
-        from metascience_agent.tools.count_percent import check_count_percent
+        from forensic_metascience_ai_toolkit.tools.count_percent import check_count_percent
         for count, pct in ((60, 50.0), (36, 30.0), (24, 20.0)):
             assert check_count_percent(count=count, percentage=pct,
                                        n=100, decimals=1)["severity"] == "suspicious"

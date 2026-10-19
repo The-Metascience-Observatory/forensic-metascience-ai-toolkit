@@ -26,7 +26,7 @@ fix, with the downstream accusation it produced:
 """
 import pytest
 
-from metascience_agent.tools.celltypes import label_hint, parse_cell
+from forensic_metascience_ai_toolkit.tools.celltypes import label_hint, parse_cell
 
 
 class TestUnlabeledIntervalCellsMayNotAccuse:
@@ -136,7 +136,7 @@ class TestTheCountPercentHeuristicRefusesInsteadOfGuessing:
 
     def test_declared_binary_variable_still_reaches_grim(self):
         # The recovery path the demotion relies on: declaration, not guessing.
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         r = check_table(
             cells=[{"raw": "142 (71.0)", "row_label": "M", "n": 200}],
             variables=[{"id": "s", "family": "binary"}],

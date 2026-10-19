@@ -27,7 +27,7 @@ quietly rewritten.
 
 import pytest
 
-from metascience_agent import secondlook as S
+from forensic_metascience_ai_toolkit import secondlook as S
 
 
 def _f(fid, severity, technique="grim_check", quote="verbatim", bound="stated",

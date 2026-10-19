@@ -18,9 +18,9 @@ on argv that is never executed.
 import pytest
 from typer.testing import CliRunner
 
-from metascience_agent import cli
-from metascience_agent.cli import app
-from metascience_agent.evaluation import harness
+from forensic_metascience_ai_toolkit import cli
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit.evaluation import harness
 
 runner = CliRunner()
 
@@ -120,7 +120,7 @@ class TestGrokBudgetSkip:
         backend that cannot cap spend, loudly."""
         import inspect
 
-        from metascience_agent.evaluation import harness
+        from forensic_metascience_ai_toolkit.evaluation import harness
         src = inspect.getsource(harness)
         assert "supports_budget" in src
         assert "running WITHOUT" in src
@@ -149,9 +149,9 @@ class TestTheBudgetDefaultCanActuallyRunTheFixtures:
         """Two places declare it; they must not drift. Same argument the
         `--model` defaults are already pinned on."""
         import pathlib
-        cli = pathlib.Path("src/metascience_agent/cli.py").read_text()
+        cli = pathlib.Path("src/forensic_metascience_ai_toolkit/cli.py").read_text()
         harness = pathlib.Path(
-            "src/metascience_agent/evaluation/harness.py").read_text()
+            "src/forensic_metascience_ai_toolkit/evaluation/harness.py").read_text()
         a = self._default(cli, r'([\d.]+), "--max-budget-usd"')
         b = self._default(harness, r'"--max-budget-usd", "--budget-usd", dest="budget_usd", type=float, default=([\d.]+)')
         assert a == b, f"cli={a} harness={b}"
@@ -161,9 +161,9 @@ class TestTheBudgetDefaultCanActuallyRunTheFixtures:
         not arbitrary and the test says where it comes from, so a future
         reduction has to argue with the measurement rather than the constant."""
         import pathlib
-        from metascience_agent.parallel import TOOL_BUDGET_FRACTION
+        from forensic_metascience_ai_toolkit.parallel import TOOL_BUDGET_FRACTION
         harness = pathlib.Path(
-            "src/metascience_agent/evaluation/harness.py").read_text()
+            "src/forensic_metascience_ai_toolkit/evaluation/harness.py").read_text()
         default = self._default(
             harness, r'"--max-budget-usd", "--budget-usd", dest="budget_usd", type=float, default=([\d.]+)')
         most_expensive_tool_stage = 2.81   # benchmarks/paper_reviews/runs/apple_cider, 2026-08-21
@@ -211,14 +211,14 @@ class TestTheJudgeIsFixed:
     notes (Sonnet: 0.462). One grader for every backend."""
 
     def test_default_judge_is_claude_sonnet(self):
-        from metascience_agent.evaluation import harness
+        from forensic_metascience_ai_toolkit.evaluation import harness
         assert (harness.JUDGE_BACKEND, harness.JUDGE_MODEL) == ("claude", "sonnet")
         args = harness.build_parser().parse_args(["--backend", "grok"])
         assert args.judge_backend is None and args.judge_model is None   # -> the constants
 
     def test_eval_one_passes_the_judge_not_the_backend(self, monkeypatch, tmp_path):
         import asyncio
-        from metascience_agent.evaluation import harness
+        from forensic_metascience_ai_toolkit.evaluation import harness
         seen = {}
 
         async def fake_judge(fixture, report_md, findings, model=None, verbose=False,
@@ -243,7 +243,7 @@ class TestTheJudgeIsFixed:
             "claude", "sonnet", "high")
 
     def test_a_silent_judge_is_flagged_not_scored_as_zero(self):
-        from metascience_agent.evaluation.judge import score_judgement
+        from forensic_metascience_ai_toolkit.evaluation.judge import score_judgement
         fixture = {"key_findings": [{"id": "a", "weight": "major"}]}
         findings = {"findings": [{"technique": "x"}] * 3}
         sc = score_judgement(fixture, {"per_finding": [], "notes": ""}, findings)
@@ -257,7 +257,7 @@ def test_the_judge_sees_every_kept_finding_compactly():
     """The full JSON was cut at 30K characters, so a 60-80 finding review was
     graded on what fitted. The judge now gets the grading fields of every
     kept row, and the cross-route equivalence rule."""
-    from metascience_agent.evaluation.judge import _judge_prompt, _judge_view
+    from forensic_metascience_ai_toolkit.evaluation.judge import _judge_prompt, _judge_view
     rows = [{"finding_id": f"f_{i}", "technique": "grim_check", "title": f"t{i}",
              "description": "d" * 200, "outcome": "problem", "severity": 3,
              "anchors": [{"quote": "x" * 2000}], "inputs": {"mean": 1.0},
@@ -277,8 +277,8 @@ class TestMaxBudgetFlagName:
     target); the old name stays accepted so existing scripts keep working."""
 
     def _parsers(self):
-        from metascience_agent.batch import build_parser as batch_parser
-        from metascience_agent.evaluation.harness import build_parser as eval_parser
+        from forensic_metascience_ai_toolkit.batch import build_parser as batch_parser
+        from forensic_metascience_ai_toolkit.evaluation.harness import build_parser as eval_parser
         return {"batch": (batch_parser(), ["corpus"]), "eval": (eval_parser(), [])}
 
     def test_new_and_old_names_set_the_same_value(self):
@@ -289,7 +289,7 @@ class TestMaxBudgetFlagName:
 
     def test_typer_commands_accept_both_names(self):
         from typer.main import get_command
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
         commands = get_command(app).commands
         for cmd in ("analyze", "batch", "eval"):
             opts = {o for p in commands[cmd].params for o in getattr(p, "opts", [])}

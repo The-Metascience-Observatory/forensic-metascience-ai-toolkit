@@ -1,6 +1,6 @@
 """Tests for table ingestion (parse_cell / parse_table / reconcile_tables)."""
 
-from metascience_agent.tools.tableparse import (
+from forensic_metascience_ai_toolkit.tools.tableparse import (
     parse_cell,
     parse_table,
     reconcile_tables,

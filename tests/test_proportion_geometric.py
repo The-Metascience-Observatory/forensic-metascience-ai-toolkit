@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.continuous_to_categorical import (
+from forensic_metascience_ai_toolkit.tools.continuous_to_categorical import (
     check_proportion_from_normal as check)
 
 # An honest lognormal biomarker: GM 10.0, GSD 3.0. Verified by 200,000 draws,

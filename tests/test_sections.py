@@ -2,7 +2,7 @@
 analysis of the extractable values." These pin the direction the rule must fail
 in, which is the whole difficulty."""
 
-from metascience_agent import sections as S
+from forensic_metascience_ai_toolkit import sections as S
 
 PAPER = """# Body
 

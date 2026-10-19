@@ -10,7 +10,7 @@ consequences and is the operator's decision; this module reads text and reports.
 """
 import pytest
 
-from metascience_agent.artefacts import find, find_in_paper
+from forensic_metascience_ai_toolkit.artefacts import find, find_in_paper
 
 
 class TestDetection:
@@ -85,7 +85,7 @@ class TestReporting:
 
 
 def find_in_paper_text(text):
-    from metascience_agent.artefacts import summarise
+    from forensic_metascience_ai_toolkit.artefacts import summarise
     return summarise(find(text))
 
 
@@ -97,7 +97,7 @@ class TestPreregistration:
     """
 
     def _p(self, text):
-        from metascience_agent.artefacts import preregistration
+        from forensic_metascience_ai_toolkit.artefacts import preregistration
         return preregistration(text)
 
     def test_a_registration_id_means_preregistered(self):
@@ -126,7 +126,7 @@ class TestPreregistrationPrecision:
     """Each of these was a false positive found while calibrating on the corpus."""
 
     def _p(self, text):
-        from metascience_agent.artefacts import preregistration
+        from forensic_metascience_ai_toolkit.artefacts import preregistration
         return preregistration(text)
 
     def test_as_predicted_prose_is_not_the_aspredicted_platform(self):
@@ -146,7 +146,7 @@ class TestPreregistrationPrecision:
 
 class TestDeviationDisclosure:
     def _p(self, text):
-        from metascience_agent.artefacts import preregistration
+        from forensic_metascience_ai_toolkit.artefacts import preregistration
         return preregistration(text)
 
     def test_explicit_deviation_is_caught(self):
@@ -201,12 +201,12 @@ class TestAvailableFromIsHowAPaperNamesItsSupplier:
     ]
 
     def test_a_supply_sentence_is_not_a_data_availability_statement(self):
-        from metascience_agent.artefacts import has_availability_statement
+        from forensic_metascience_ai_toolkit.artefacts import has_availability_statement
         fooled = [t for t in self.NOT_A_STATEMENT if has_availability_statement(t)]
         assert not fooled, f"read as availability statements: {fooled}"
 
     def test_a_real_statement_is_still_recognised(self):
-        from metascience_agent.artefacts import has_availability_statement
+        from forensic_metascience_ai_toolkit.artefacts import has_availability_statement
         missed = [t for t in self.IS_A_STATEMENT
                   if not has_availability_statement(t)]
         assert not missed, f"real statements missed: {missed}"
@@ -217,12 +217,12 @@ class TestAvailableFromIsHowAPaperNamesItsSupplier:
         only co-occur when the paper is making the statement. The two errors
         do not cost the same: a miss adds a conservative caveat, a false
         positive asserts something about the authors' conduct."""
-        from metascience_agent.artefacts import has_availability_statement
+        from forensic_metascience_ai_toolkit.artefacts import has_availability_statement
         assert not has_availability_statement(
             "Materials were available from Sigma-Aldrich.")
         assert has_availability_statement("Materials availability statement")
 
     def test_find_reports_the_judged_value(self):
-        from metascience_agent.artefacts import find
+        from forensic_metascience_ai_toolkit.artefacts import find
         assert find("Cerebrolysin was available from EVER Pharma."
                     )["has_availability_statement"] is False

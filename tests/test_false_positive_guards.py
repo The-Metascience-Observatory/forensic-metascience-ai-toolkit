@@ -15,8 +15,8 @@ import subprocess
 
 import pytest
 
-from metascience_agent.tools import debit_test, debit_test_batch, sprite_reconstruct
-from metascience_agent.tools.ttest import recalc_within_subjects_t
+from forensic_metascience_ai_toolkit.tools import debit_test, debit_test_batch, sprite_reconstruct
+from forensic_metascience_ai_toolkit.tools.ttest import recalc_within_subjects_t
 
 # Pre/post table from a real reporting pattern: every p reported as a threshold.
 PRE, SD_PRE, POST, SD_POST, N = 120.0, 7.2, 105.0, 7.0, 30
@@ -367,7 +367,7 @@ class TestBudgetTruncationIsLoud:
         return base
 
     def test_stage_meta_records_error_subtype(self):
-        from metascience_agent.agent import _stage_meta
+        from forensic_metascience_ai_toolkit.agent import _stage_meta
         meta = _stage_meta(
             self._stage(is_error=True, return_code=1, error_subtype="error_max_budget_usd"),
             "opus",
@@ -376,7 +376,7 @@ class TestBudgetTruncationIsLoud:
         assert meta["truncated_by_budget"] is True
 
     def test_clean_stage_is_not_marked_truncated(self):
-        from metascience_agent.agent import _stage_meta
+        from forensic_metascience_ai_toolkit.agent import _stage_meta
         meta = _stage_meta(self._stage(), "opus")
         assert meta["truncated_by_budget"] is False
         assert meta["truncated_by_timeout"] is False
@@ -385,17 +385,17 @@ class TestBudgetTruncationIsLoud:
     def test_chi_squared_underclaim_p05_is_consistent(self):
         """A paper printing p<.05 (arriving as 0.05) against a tiny computed
         p is an under-claim, not a mismatch."""
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared([[20, 5], [8, 30]], reported_p=0.05)
         assert r["severity"] == "consistent"
 
     def test_f_to_p_underclaim_p05_is_consistent(self):
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(25.0, 2, 40, reported_p=0.05)
         assert r["severity"] == "consistent"
 
     def test_grimu_conventional_alpha_dual_read(self):
-        from metascience_agent.tools.grimu import grimu_check
+        from forensic_metascience_ai_toolkit.tools.grimu import grimu_check
         as_bound = grimu_check(8, 8, "<0.05")
         assert as_bound["severity"] in {"consistent", "indeterminate"}
         exact = grimu_check(8, 8, "0.05")
@@ -404,7 +404,7 @@ class TestBudgetTruncationIsLoud:
                 exact["severity"] == "indeterminate")
 
     def test_a_wall_clock_kill_is_timeout_not_budget(self):
-        from metascience_agent.agent import (
+        from forensic_metascience_ai_toolkit.agent import (
             _stage_hit_budget, _stage_hit_timeout, _stage_meta,
         )
         stage = self._stage(is_error=True, error_subtype="error_timeout",
@@ -418,7 +418,7 @@ class TestBudgetTruncationIsLoud:
         assert meta["tool_calls"] == 7
 
     def test_budget_detector_ignores_unrelated_errors(self):
-        from metascience_agent.agent import _stage_hit_budget
+        from forensic_metascience_ai_toolkit.agent import _stage_hit_budget
         assert _stage_hit_budget(self._stage(is_error=True, error_subtype="error_timeout")) is False
 
     def test_api_failure_is_not_recorded_as_success(self):
@@ -429,14 +429,14 @@ class TestBudgetTruncationIsLoud:
         as `error_subtype: "success"` it read like a completed stage, so the
         failed scorecard looked committable.
         """
-        from metascience_agent.agent import _error_subtype
+        from forensic_metascience_ai_toolkit.agent import _error_subtype
         assert _error_subtype({
             "is_error": True, "subtype": "success", "terminal_reason": "api_error",
         }) == "api_error"
 
     def test_real_subtypes_are_preserved(self):
         """The budget/timeout subtypes must survive -- _stage_hit_budget reads them."""
-        from metascience_agent.agent import _error_subtype, _stage_hit_budget
+        from forensic_metascience_ai_toolkit.agent import _error_subtype, _stage_hit_budget
         for subtype in ("error_max_budget_usd", "error_timeout"):
             event = {"is_error": True, "subtype": subtype, "terminal_reason": "api_error"}
             assert _error_subtype(event) == subtype
@@ -446,14 +446,14 @@ class TestBudgetTruncationIsLoud:
         ) is True
 
     def test_missing_subtype_falls_back_to_terminal_reason(self):
-        from metascience_agent.agent import _error_subtype
+        from forensic_metascience_ai_toolkit.agent import _error_subtype
         assert _error_subtype({"is_error": True, "terminal_reason": "api_error"}) == "api_error"
         assert _error_subtype({"is_error": True}) is None
 
     def test_repair_call_is_capped(self):
         """The recovery path from a budget stop must itself be capped."""
         import inspect
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         src = inspect.getsource(agent._repair_json)
         assert "--max-budget-usd" in src
 
@@ -469,7 +469,7 @@ class TestReportedPrecisionIsHonoured:
     def test_real_dataset_is_not_called_impossible(self):
         """Eight 1s and twenty-two 2s, reported as M=1.7, SD=0.4."""
         import numpy as np
-        from metascience_agent.tools import grimmer_test
+        from forensic_metascience_ai_toolkit.tools import grimmer_test
         data = np.array([1] * 8 + [2] * 22)
         assert round(float(data.mean()), 1) == 1.7
         r = sprite_reconstruct(1.7, 0.4, 30, scale_min=1, scale_max=5, num_samples=10)
@@ -477,14 +477,14 @@ class TestReportedPrecisionIsHonoured:
         assert grimmer_test(1.7, 0.4, 30, scale_min=1, scale_max=5)["severity"] != "impossible"
 
     def test_precision_is_inferred_from_the_literal(self):
-        from metascience_agent.tools.sprite import _decimals_of, _grim_consistent_sums
+        from forensic_metascience_ai_toolkit.tools.sprite import _decimals_of, _grim_consistent_sums
         assert _decimals_of(1.7) == 1 and _decimals_of("1.70") == 2
         # One decimal admits three totals; two decimals admits one.
         assert len(_grim_consistent_sums(1.7, 30, 1)) > len(_grim_consistent_sums(1.70, 30, 2))
 
     def test_all_admissible_totals_are_tested(self):
         """Infeasibility must hold for EVERY total consistent with the mean."""
-        from metascience_agent.tools.sprite import _grim_consistent_sums
+        from forensic_metascience_ai_toolkit.tools.sprite import _grim_consistent_sums
         sums = _grim_consistent_sums(1.7, 30, 1)
         assert len(sums) > 1, "multiple totals should be admissible at 1 dp"
         r = sprite_reconstruct(1.7, 0.4, 30, scale_min=1, scale_max=5, num_samples=10)
@@ -507,7 +507,7 @@ class TestGrimmerPopulationSdConvention:
     """
 
     def test_population_sd_is_not_impossible(self):
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         r = grimmer_test(mean=3.0, sd=1.0, n=10, scale_min=1, scale_max=7,
                          data_type="likert", bound_source="stated")
         assert r["severity"] != "impossible"
@@ -519,7 +519,7 @@ class TestGrimmerPopulationSdConvention:
 
     def test_sample_sd_is_still_consistent(self):
         import numpy as np
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         sd = round(float(np.std([1, 2, 2, 3, 3, 3, 4, 4, 4, 4], ddof=1)), 2)
         r = grimmer_test(mean=3.0, sd=sd, n=10, scale_min=1, scale_max=7,
                          data_type="likert", bound_source="stated")
@@ -528,7 +528,7 @@ class TestGrimmerPopulationSdConvention:
     def test_a_genuinely_impossible_sd_stays_impossible(self):
         """The fix must not blunt the tool: an SD no convention admits is still
         impossible."""
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         r = grimmer_test(mean=1.0, sd=5.0, n=10, scale_min=1, scale_max=7,
                          data_type="likert", bound_source="stated",
                          discreteness_source="stated")
@@ -557,7 +557,7 @@ class TestSpritePopulationSdConvention:
     def test_it_agrees_with_grimmer_on_the_same_cell(self):
         """The two must not contradict each other -- corroboration is exactly
         what makes a false accusation persuasive."""
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
         args = dict(mean=3.0, sd=1.0, n=10, scale_min=1, scale_max=7,
                     data_type="likert", bound_source="stated")
         assert sprite_reconstruct(**args)["severity"] == "consistent"
@@ -585,7 +585,7 @@ class TestGrimTruncationConvention:
     """
 
     def test_a_truncated_mean_is_not_impossible(self):
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         r = grim_test(3.46, 30, scale_min=1, scale_max=7, decimals=2,
                       data_type="likert", bound_source="stated")
         # RECALIBRATED 2026-08-10 (Greg): a value rescued purely by the
@@ -597,7 +597,7 @@ class TestGrimTruncationConvention:
         assert r["failure_mode"] == "rounding_convention"
 
     def test_the_round_half_neighbour_stays_consistent(self):
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         r = grim_test(3.47, 30, scale_min=1, scale_max=7, decimals=2,
                       data_type="likert", bound_source="stated")
         assert r["severity"] == "consistent"
@@ -605,7 +605,7 @@ class TestGrimTruncationConvention:
     def test_a_mean_impossible_under_both_conventions_stays_impossible(self):
         """3.60 at n=2: exact means are S/2 (..3.0, 3.5, 4.0..). Round-half of
         3.60 lands on none; truncation [3.60, 3.70) contains no S/2 either."""
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         r = grim_test(3.60, 2, scale_min=1, scale_max=7, decimals=2,
                       data_type="likert", bound_source="stated",
                       discreteness_source="stated")
@@ -664,7 +664,7 @@ class TestGrimPercentageCannotAccuseOnAnUndeclaredPercentage:
 
     @staticmethod
     def _call(**args):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         return BY_NAME["grim_percentage"].call(dict(args))
 
     def test_omitting_the_declaration_refuses(self):
@@ -688,7 +688,7 @@ class TestGrimPercentageCannotAccuseOnAnUndeclaredPercentage:
     def test_it_matches_its_sibling_on_the_same_omission(self):
         """Two GRIM tools disagreeing about what an omitted data_type means is
         how this survived unnoticed."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         mean_side = BY_NAME["grim_check"].call({"mean": 5.19, "n": 28, "decimals": 2})
         pct_side = self._call(percentage=23.7, n=42)
         assert mean_side["applicable"] is pct_side["applicable"] is False
@@ -696,7 +696,7 @@ class TestGrimPercentageCannotAccuseOnAnUndeclaredPercentage:
     def test_the_default_is_not_a_substantive_value(self):
         """Pins the mechanism, not just the behaviour: if someone restores a
         real default the gate silently stops gating again."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         p = next(p for p in BY_NAME["grim_percentage"].params if p.name == "data_type")
         assert p.guard is True
         assert p.default == "unknown"
@@ -727,7 +727,7 @@ class TestMcNemarIsADifferentStatistic:
     PAIRED = [[30, 20], [5, 45]]
 
     def test_a_genuine_mcnemar_report_is_not_accused(self):
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared(self.PAIRED, reported_chi2=9.0)
         assert r["severity"] == "consistent"
         assert r["chi2_match_convention"] == "mcnemar"
@@ -737,21 +737,21 @@ class TestMcNemarIsADifferentStatistic:
         """R's `mcnemar.test` applies the correction BY DEFAULT, so a paper
         printing either value is following a mainstream default -- the same
         argument this module already makes for Pearson vs Yates."""
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared(self.PAIRED, reported_chi2=7.84)
         assert r["severity"] == "consistent"
         assert r["chi2_match_convention"] == "mcnemar_cc"
 
     def test_an_independence_table_keeps_its_ordinary_label(self):
         """McNemar is tried LAST, so an ordinary 2x2 is unaffected."""
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared(self.PAIRED, reported_chi2=27.47)
         assert r["severity"] == "consistent"
         assert r["chi2_match_convention"] == "pearson"
 
     def test_a_genuinely_unexplained_value_still_flags(self):
         """The guard must not become a universal excuse."""
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared(self.PAIRED, reported_chi2=99.0)
         assert r["severity"] == "suspicious"
         assert r["chi2_match_convention"] is None
@@ -759,7 +759,7 @@ class TestMcNemarIsADifferentStatistic:
             "a reader must see that the paired reading was considered"
 
     def test_paired_makes_mcnemar_the_headline(self):
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared(self.PAIRED, paired=True)
         assert r["test_type"] == "McNemar"
         assert r["calculated_chi2"] == pytest.approx(9.0)
@@ -768,7 +768,7 @@ class TestMcNemarIsADifferentStatistic:
     def test_no_discordant_pairs_says_so_instead_of_falling_back(self):
         """b + c == 0 makes McNemar undefined. Silently answering with a test
         of independence would be answering a different question."""
-        from metascience_agent.tools.chi_squared import recalc_chi_squared
+        from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
         r = recalc_chi_squared([[30, 0], [0, 45]], paired=True)
         assert "mcnemar_undefined" in r
         assert "calculated_chi2_mcnemar" not in r

@@ -25,7 +25,7 @@ things the book is emphatic about and our output was silent on.
    base rate reads as an accusation.
 """
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 MINIMAL = {"headline": {"severity": "consistent", "statement": "x"},
            "findings": [], "coverage_summary": {"stats_found": 1, "stats_checked": 1}}
 

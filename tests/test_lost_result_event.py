@@ -36,9 +36,9 @@ import time
 
 import pytest
 
-from metascience_agent import agent, runtime
-from metascience_agent.llm_backend import CLAUDE, Invocation
-from metascience_agent.track_contracts import (
+from forensic_metascience_ai_toolkit import agent, runtime
+from forensic_metascience_ai_toolkit.llm_backend import CLAUDE, Invocation
+from forensic_metascience_ai_toolkit.track_contracts import (
     ACCEPTED_TOOL_CALL_PATH,
     _accepted_structured_output,
     _extract_json,

@@ -3,8 +3,8 @@ import pytest
 import threading
 from pathlib import Path
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.monitor import FileMonitor, under
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.monitor import FileMonitor, under
 
 
 def test_under_matches_equal_and_contained_paths_only():
@@ -32,7 +32,7 @@ def test_idle_prepare_and_video_poll_do_not_write(tmp_path):
         for _ in range(5): monitor.prepare()
         assert c.db.total_changes == writes
         assert not c.db.in_transaction
-        from metascience_agent.workbench.service import Service
+        from forensic_metascience_ai_toolkit.workbench.service import Service
         s = Service(c, background=False)
         statements = []
         c.db.set_trace_callback(statements.append)

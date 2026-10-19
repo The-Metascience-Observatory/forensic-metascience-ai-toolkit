@@ -20,8 +20,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import quotes
-from metascience_agent.extraction import jats
+from forensic_metascience_ai_toolkit import quotes
+from forensic_metascience_ai_toolkit.extraction import jats
 from metascience_observatory_image_analysis.image_forensics import figure_context as F
 from metascience_observatory_image_analysis.image_forensics import pmc_figures
 

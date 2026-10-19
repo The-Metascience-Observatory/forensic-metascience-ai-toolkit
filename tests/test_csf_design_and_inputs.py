@@ -20,7 +20,7 @@ import math
 
 import pytest
 
-from metascience_agent.tools.csf import DEPENDENT_DESIGNS, _resolve_design, csf_test
+from forensic_metascience_ai_toolkit.tools.csf import DEPENDENT_DESIGNS, _resolve_design, csf_test
 
 # p-values extreme enough that the verdict is decided by the design gate and the
 # cap, not by the arithmetic: similarity_p < 1e-6 at rho = 0.5.
@@ -200,13 +200,13 @@ class TestADenialOfADesignIsNotThatDesign:
     ]
 
     def test_a_negated_design_does_not_resolve_to_it(self):
-        from metascience_agent.tools.csf import _resolve_design
+        from forensic_metascience_ai_toolkit.tools.csf import _resolve_design
         wrong = [(n, _resolve_design(d), want) for n, d, want in self.NEGATED
                  if _resolve_design(d) != want]
         assert not wrong, f"negated designs still resolving: {wrong}"
 
     def test_real_designs_still_resolve(self):
-        from metascience_agent.tools.csf import _resolve_design
+        from forensic_metascience_ai_toolkit.tools.csf import _resolve_design
         wrong = [(d, _resolve_design(d), want) for d, want in self.AFFIRMED
                  if _resolve_design(d) != want]
         assert not wrong, f"the negation rule broke real designs: {wrong}"
@@ -214,5 +214,5 @@ class TestADenialOfADesignIsNotThatDesign:
     def test_negating_everything_yields_unknown_which_KEEPS_the_cap(self):
         """None is safe in both directions: `design_known` is False, so the
         severity cap stays on AND the dependent-design gate does not fire."""
-        from metascience_agent.tools.csf import _resolve_design
+        from forensic_metascience_ai_toolkit.tools.csf import _resolve_design
         assert _resolve_design("not a multicentre trial") is None

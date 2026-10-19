@@ -12,9 +12,9 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import finding_view as FV
-from metascience_agent import severity9
-from metascience_agent.bundle import _v2_container
+from forensic_metascience_ai_toolkit import finding_view as FV
+from forensic_metascience_ai_toolkit import severity9
+from forensic_metascience_ai_toolkit.bundle import _v2_container
 
 PRODUCER = {
     "slug": "gordon_self_esteem_mean_exceeds_scale_maximum",

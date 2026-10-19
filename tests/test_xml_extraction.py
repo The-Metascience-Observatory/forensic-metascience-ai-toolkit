@@ -40,7 +40,7 @@ class TestATopLevelHeadingIsNotLostWithItsProse:
 
     def _titles(self):
         import xml.etree.ElementTree as ET
-        from metascience_agent.extraction.jats import _Counter, _sections
+        from forensic_metascience_ai_toolkit.extraction.jats import _Counter, _sections
         root = ET.fromstring(self.JATS)
         return [s["title"] for s in _sections(root, _Counter())]
 
@@ -64,7 +64,7 @@ class TestATopLevelHeadingIsNotLostWithItsProse:
     def test_the_real_paper_that_reported_it(self):
         import xml.etree.ElementTree as ET
         from pathlib import Path
-        from metascience_agent.extraction.jats import _Counter, _sections
+        from forensic_metascience_ai_toolkit.extraction.jats import _Counter, _sections
         p = (Path(__file__).resolve().parents[1]
              / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.xml")
         if not p.exists():
@@ -103,7 +103,7 @@ class TestUnsectionedBodyProseIsNotDropped:
     </article>"""
 
     def _text(self, tmp_path, xml: str) -> str:
-        from metascience_agent.extraction.jats import extract_xml_text
+        from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_text
         f = tmp_path / "a.xml"
         f.write_text(xml, encoding="utf-8")
         return extract_xml_text(f)
@@ -176,7 +176,7 @@ class TestElsevierFullTextIsPublisherMarkupWithAnAbstract:
     </full-text-retrieval-response>"""
 
     def test_the_structured_abstract_reaches_the_text(self, tmp_path):
-        from metascience_agent.extraction.jats import extract_xml_text
+        from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_text
         f = tmp_path / "a.xml"
         f.write_text(self._ELSEVIER, encoding="utf-8")
         text = extract_xml_text(f)
@@ -186,14 +186,14 @@ class TestElsevierFullTextIsPublisherMarkupWithAnAbstract:
         assert "Anorexia nervosa is a complex disorder" in text
 
     def test_the_elsevier_api_root_is_publisher_not_derived(self, tmp_path):
-        from metascience_agent.extraction.jats import xml_provenance
+        from forensic_metascience_ai_toolkit.extraction.jats import xml_provenance
         f = tmp_path / "a.xml"
         f.write_text(self._ELSEVIER, encoding="utf-8")
         assert xml_provenance(f) == "publisher"
 
     def test_a_grobid_tei_is_still_derived(self, tmp_path):
         """The privilege stays narrow: a converter's output earns none of it."""
-        from metascience_agent.extraction.jats import xml_provenance
+        from forensic_metascience_ai_toolkit.extraction.jats import xml_provenance
         f = tmp_path / "b.xml"
         f.write_text(
             '<?xml version="1.0"?><TEI xmlns="http://www.tei-c.org/ns/1.0">'

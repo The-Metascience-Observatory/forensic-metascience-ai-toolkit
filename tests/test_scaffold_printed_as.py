@@ -27,7 +27,7 @@ import copy
 
 import pytest
 
-from metascience_agent.scaffold import coverage, interpret, structure
+from forensic_metascience_ai_toolkit.scaffold import coverage, interpret, structure
 
 from tests.test_scaffold import P1, P2, TEXT, _doc
 

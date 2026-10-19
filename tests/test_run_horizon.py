@@ -24,7 +24,7 @@ import json
 
 import pytest
 
-from metascience_agent import runs
+from forensic_metascience_ai_toolkit import runs
 
 NOW = _dt.datetime(2026, 8, 29, tzinfo=_dt.timezone.utc)
 
@@ -178,7 +178,7 @@ class TestTheConsumersActuallyUseIt:
         return ast.unparse(node)
 
     def test_register_view_no_longer_sorts_by_mtime(self):
-        from metascience_agent import register_view
+        from forensic_metascience_ai_toolkit import register_view
         body = self._body(register_view._latest_review)
         assert "st_mtime" not in body, (
             "_latest_review sorted on mtime, which dates the file rather than "
@@ -198,7 +198,7 @@ class TestTheConsumersActuallyUseIt:
         `runs` verb, in `register_view` (which feeds the model), and in the rule
         in CLAUDE.md.
         """
-        from metascience_agent import corpus_stats
+        from forensic_metascience_ai_toolkit import corpus_stats
         assert "current_runs" not in self._body(corpus_stats._v2_docs)
 
 class TestSchemaBeatsAge:
@@ -306,7 +306,7 @@ class TestTheConstraintRecordIsAlwaysWritten:
     """
 
     def test_a_problem_row_missing_its_provisional_is_flagged(self):
-        from metascience_agent import findings_v2 as fv2
+        from forensic_metascience_ai_toolkit import findings_v2 as fv2
         got = fv2.validate_producer_constraints([{
             "slug": "x", "producer": "tool_expert", "outcome": "problem",
             "provisional_severity": None, "severity": None,
@@ -315,7 +315,7 @@ class TestTheConstraintRecordIsAlwaysWritten:
 
     def test_a_pass_row_without_one_is_not_flagged(self):
         """The 13. A finding that is not a problem has no severity to clamp."""
-        from metascience_agent import findings_v2 as fv2
+        from forensic_metascience_ai_toolkit import findings_v2 as fv2
         got = fv2.validate_producer_constraints([{
             "slug": "x", "producer": "tool_expert", "outcome": "pass",
             "provisional_severity": None, "severity": None}])
@@ -328,7 +328,7 @@ class TestTheConstraintRecordIsAlwaysWritten:
         import ast
         import inspect
         import textwrap
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         tree = ast.parse(textwrap.dedent(
             inspect.getsource(parallel._coordinate_analysis)))
         # the comment quoting the old code must not be mistaken for the code:

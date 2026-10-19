@@ -6,7 +6,7 @@ misapplication-guard invariant: a missing/fractional operand REFUSES
 `suspicious` -- papers legitimately omit attrition reasons.
 """
 
-from metascience_agent.tools import check_flow_arithmetic
+from forensic_metascience_ai_toolkit.tools import check_flow_arithmetic
 
 
 def stages_ok():

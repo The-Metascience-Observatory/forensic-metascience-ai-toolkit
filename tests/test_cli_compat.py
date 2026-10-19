@@ -15,8 +15,8 @@ import click
 import pytest
 import typer
 
-from metascience_agent.cli import app
-from metascience_agent.cli_compat import McpFriendlyGroup, _is_argument, rewrite_args
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit.cli_compat import McpFriendlyGroup, _is_argument, rewrite_args
 
 # The toolkit's own per-tool verbs were retired in 1.95.0 (`metascience tool
 # run` is the one command), but the shim still fronts the image package's CLI.
@@ -97,7 +97,7 @@ class TestTheShimIsNotInert:
         isinstance to be defeated by vendoring."""
         import inspect
 
-        from metascience_agent import cli_compat
+        from forensic_metascience_ai_toolkit import cli_compat
 
         cmd = _cmd(group, "grimmer")
         pos = [p for p in cmd.params if _is_argument(p)]

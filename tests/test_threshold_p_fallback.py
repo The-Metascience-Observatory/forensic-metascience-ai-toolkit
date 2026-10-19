@@ -28,8 +28,8 @@ only when the caller has not confirmed the p was printed exactly.
 
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.tools.ttest import _p_matches
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.tools.ttest import _p_matches
 
 REG = dict(b=0.55, se=0.13, df=200)          # t = 4.23, true two-tailed p ~ 3e-5
 OVER = dict(b=0.15, se=0.13, df=200)         # t = 1.15, true two-tailed p ~ .25

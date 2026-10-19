@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "forensic-metascience-ai-toolkit"
-# Read from src/metascience_agent/version.py, which is the single source of
+# Read from src/forensic_metascience_ai_toolkit/version.py, which is the single source of
 # truth. Declaring the number here too is how it silently drifted from the
 # package for months. See [tool.hatch.version] below.
 dynamic = ["version"]
@@ -166,8 +166,8 @@ db = []
 pdf = []
 
 [project.scripts]
-metascience = "metascience_agent.cli:app"
-metascience-test = "metascience_agent.test_runner:main"
+metascience = "forensic_metascience_ai_toolkit.cli:app"
+metascience-test = "forensic_metascience_ai_toolkit.test_runner:main"
 copy-paste-detect = "copy_paste_detector.cli:main"
 copy-paste-batch = "copy_paste_detector.batch:main"
 copy-paste-dataset = "copy_paste_detector.datasets:main"
@@ -177,8 +177,8 @@ copy-paste-benchmark = "copy_paste_detector.benchmark:main"
 # The toolkit and the copy-paste detector, from their canonical source
 # directories. The image analysis package is distributed separately (a
 # private repository that depends on this one) and is NOT bundled; the
-# toolkit runs without it (`metascience_agent.image_plugin`).
-packages = ["src/metascience_agent", "copy_paste_detector/src/copy_paste_detector"]
+# toolkit runs without it (`forensic_metascience_ai_toolkit.image_plugin`).
+packages = ["src/forensic_metascience_ai_toolkit", "src/metascience_agent", "copy_paste_detector/src/copy_paste_detector"]
 
 # The `html` extra below points at a sibling checkout via a `file://` URL
 # (fetchpdf is not on PyPI). Newer hatchling refuses to build ANY metadata
@@ -187,7 +187,7 @@ packages = ["src/metascience_agent", "copy_paste_detector/src/copy_paste_detecto
 # up front. Without it: "Dependency #1 of option `html` ... cannot be a
 # direct reference unless ... allow-direct-references is set to true".
 [tool.hatch.build.targets.wheel.force-include]
-"db/migrations/003_analysis_history.sql" = "metascience_agent/analysis_history.sql"
+"db/migrations/003_analysis_history.sql" = "forensic_metascience_ai_toolkit/analysis_history.sql"
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -195,7 +195,7 @@ allow-direct-references = true
 # The `dynamic = ["version"]` above resolves here: hatchling reads the
 # `__version__` literal out of version.py at build time. One number, one file.
 [tool.hatch.version]
-path = "src/metascience_agent/version.py"
+path = "src/forensic_metascience_ai_toolkit/version.py"
 
 [tool.ruff]
 line-length = 100

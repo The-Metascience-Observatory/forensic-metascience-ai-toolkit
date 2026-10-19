@@ -9,8 +9,8 @@ forwarding at the two hops the subagent found broken.
 
 import inspect
 
-import metascience_agent.agent as agent_mod
-from metascience_agent.agent import analyze_paper_sync
+import forensic_metascience_ai_toolkit.agent as agent_mod
+from forensic_metascience_ai_toolkit.agent import analyze_paper_sync
 
 
 def test_analyze_paper_sync_forwards_figures(monkeypatch):
@@ -30,5 +30,5 @@ def test_analyze_paper_sync_forwards_figures(monkeypatch):
 def test_cli_analyze_passes_figures_to_analyze_paper():
     # The CLI closure forwards `figures=figures`; assert the source wires it,
     # since the whole defect was a missing keyword at the call site.
-    src = inspect.getsource(__import__("metascience_agent.cli", fromlist=["analyze"]))
+    src = inspect.getsource(__import__("forensic_metascience_ai_toolkit.cli", fromlist=["analyze"]))
     assert "figures=figures" in src, "cli.analyze must forward figures to analyze_paper"

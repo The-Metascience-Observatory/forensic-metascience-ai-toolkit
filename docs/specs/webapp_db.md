@@ -595,7 +595,7 @@ behavior across the schema bump.
 
 ## 11. PubPeer + letter drafts (on demand — NOT part of the analysis agents)
 
-- `src/metascience_agent/drafts.py`: one `claude -p` subprocess with an injectable
+- `src/forensic_metascience_ai_toolkit/drafts.py`: one `claude -p` subprocess with an injectable
   runner; structured refusal on failure; **it NEVER posts anywhere**.
 - CLI: `metascience draft-pubpeer <paper_dir> --findings f_9c1e22ab,f_77aa01bc` and
   `metascience draft-letter …`. Findings are addressed by hash `finding_id`; bare slugs
@@ -637,7 +637,7 @@ behavior across the schema bump.
 
 ## 14. `corpus_stats.json` producer contract (A6 — resolves critic open #4)
 
-Produced by `src/metascience_agent/corpus_stats.py` / `metascience
+Produced by `src/forensic_metascience_ai_toolkit/corpus_stats.py` / `metascience
 corpus-stats <corpus-root> [--from-db]` (`schema_version: "1.0"`). The
 `--from-db` SQL mode's output is asserted EQUAL to the file-scan mode on the
 migrated corpora (the two-implementations drift check, Phase 5N).
@@ -706,5 +706,5 @@ independently**.
 Project executions group per-paper reports and component runs. `component_items` is immutable candidate evidence; `findings` remains report output. Component reviews name an owning run. `image_publication` is the current eligibility projection; `published_component_items` requires matching input and policy stamps and deduplicates revisions. Run and artifact history are never rewritten by screening or export. Image and copy/paste candidates do not inflate comprehensive-report counts.
 
 The DDL is not repeated here. It is `db/migrations/003_analysis_history.sql`
-(identical to `src/metascience_agent/analysis_history.sql`, and included in
+(identical to `src/forensic_metascience_ai_toolkit/analysis_history.sql`, and included in
 `db/schema.sql`); the narrative is [docs/analysis_history.md](../analysis_history.md).

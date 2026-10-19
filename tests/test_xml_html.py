@@ -1,5 +1,5 @@
 """XML article view: a missing PDF is a named gap plus a DOI link."""
-from metascience_agent.extraction.xml_html import article_view, doi_url
+from forensic_metascience_ai_toolkit.extraction.xml_html import article_view, doi_url
 
 
 def _xml(tmp_path, body, doi="10.1234/demo"):
@@ -62,7 +62,7 @@ def test_doi_url_normalises():
 
 def test_figures_keep_extended_data_identity_and_complete_captions(tmp_path):
     import json
-    from metascience_agent.extraction.xml_html import article_media
+    from forensic_metascience_ai_toolkit.extraction.xml_html import article_media
     caption = 'Full caption ' * 160
     paper = _xml(tmp_path, '<sec><title>Results</title><p>Read the figures.</p>'
                  '<fig id="F1"><label>Figure 1</label><caption><p>Main caption</p></caption>'
@@ -86,7 +86,7 @@ def test_figures_keep_extended_data_identity_and_complete_captions(tmp_path):
 
 
 def test_multiple_graphics_and_unsafe_or_missing_artwork(tmp_path):
-    from metascience_agent.extraction.xml_html import article_media
+    from forensic_metascience_ai_toolkit.extraction.xml_html import article_media
     paper = _xml(tmp_path, '<fig id="f"><label>Figure 1</label><caption><p>&lt;script&gt;caption</p></caption>'
                  '<graphic href="one.png"/><graphic href="two.png"/>'
                  '<graphic href="../escape.png"/><graphic href="https://example.com/x.png"/></fig>')
@@ -102,7 +102,7 @@ def test_multiple_graphics_and_unsafe_or_missing_artwork(tmp_path):
 
 def test_elsevier_locator_is_resolved_without_a_graphic_tag(tmp_path):
     import json
-    from metascience_agent.extraction.xml_figures import xml_figures
+    from forensic_metascience_ai_toolkit.extraction.xml_figures import xml_figures
     xml = tmp_path/'article.xml'
     xml.write_text('<full-text-retrieval-response xmlns:ce="urn:ce"><ce:figure id="f1">'
                    '<ce:label>Fig. 1</ce:label><ce:caption><ce:simple-para>Entire caption</ce:simple-para></ce:caption>'
@@ -115,7 +115,7 @@ def test_elsevier_locator_is_resolved_without_a_graphic_tag(tmp_path):
 
 
 def test_archived_missing_image_is_not_replaced_by_current_file(tmp_path):
-    from metascience_agent.extraction.xml_figures import xml_figures
+    from forensic_metascience_ai_toolkit.extraction.xml_figures import xml_figures
     paper = _xml(tmp_path, '<fig><label>Figure 1</label><graphic href="one.png"/></fig>')
     (paper/'one.png').write_bytes(b'contemporary')
     figures = xml_figures(next(paper.glob('*.xml')), paper_dir=paper, archived_assets=[
@@ -125,7 +125,7 @@ def test_archived_missing_image_is_not_replaced_by_current_file(tmp_path):
 
 
 def test_figure_dependencies_detect_nested_arrivals_and_manifest_changes(tmp_path):
-    from metascience_agent.extraction.xml_figures import figure_dependencies
+    from forensic_metascience_ai_toolkit.extraction.xml_figures import figure_dependencies
     paper = _xml(tmp_path, '<fig><graphic href="nested/one.png"/></fig>')
     before = figure_dependencies(paper)
     (paper/'nested').mkdir(); (paper/'nested/one.png').write_bytes(b'image')

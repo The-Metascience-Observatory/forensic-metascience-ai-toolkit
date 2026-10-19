@@ -13,7 +13,7 @@ Both halves showed up in one 9-paper batch (MEASURED 2026-08-22):
 """
 import pytest
 
-from metascience_agent.tools.effect_size_from_f import effect_size_from_f
+from forensic_metascience_ai_toolkit.tools.effect_size_from_f import effect_size_from_f
 
 
 class TestTheMeasuredCases:

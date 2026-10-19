@@ -16,7 +16,7 @@ import re
 
 import pytest
 
-from metascience_agent.completeness import BODY_PATTERNS
+from forensic_metascience_ai_toolkit.completeness import BODY_PATTERNS
 
 
 def _matches(name: str, text: str):
@@ -110,7 +110,7 @@ class TestTheFloorIsClassifiedNotSuppressed:
     finder. `n_total` is the one number that cannot quietly shrink."""
 
     def test_no_pattern_can_remove_a_numeral(self):
-        from metascience_agent import numerals as N
+        from forensic_metascience_ai_toolkit import numerals as N
         text = ("F1,37 = 1.19, p = 0.282; b = 0.13, SE b = 0.07; "
                 "ARR, 0.879; 95% CI, 0.775-0.997.")
         assert len(N.index(text)) == len(N.index(text))

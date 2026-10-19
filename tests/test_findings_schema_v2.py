@@ -32,9 +32,9 @@ import json
 import jsonschema
 import pytest
 
-from metascience_agent import registry
-from metascience_agent.core import prompts
-from metascience_agent.webapp_index import CHANNEL_STATES
+from forensic_metascience_ai_toolkit import registry
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit.webapp_index import CHANNEL_STATES
 
 SCHEMA = prompts.findings_schema_v2()
 FINDING = SCHEMA["properties"]["findings"]["items"]

@@ -13,8 +13,8 @@ plausible, on which every downstream check computes confidently.
 """
 import pytest
 
-from metascience_agent import glyphs as G
-from metascience_agent.glyphs import scan, scan_paper
+from forensic_metascience_ai_toolkit import glyphs as G
+from forensic_metascience_ai_toolkit.glyphs import scan, scan_paper
 
 
 class TestDetection:
@@ -124,7 +124,7 @@ class TestTheProseFormOfTheLostMinusSign:
                 "2 3.10 ( 2 9.2, 2 0.40), and once more as 2 1.20 ( 2 4.4, 2 0.10)")
 
     def test_the_inline_form_is_caught_and_quarantined(self):
-        from metascience_agent.glyphs import scan
+        from forensic_metascience_ai_toolkit.glyphs import scan
         r = scan(self.KROSS)
         hit = [h for h in r["patterns"] if h["pattern"] == "operator lost before a decimal"]
         assert hit, [h["pattern"] for h in r["patterns"]]
@@ -133,7 +133,7 @@ class TestTheProseFormOfTheLostMinusSign:
     def test_the_bracketed_form_is_still_caught(self):
         """The pattern this one was added beside must keep working; a
         replacement dressed as an addition is the failure that produced it."""
-        from metascience_agent.glyphs import scan
+        from forensic_metascience_ai_toolkit.glyphs import scan
         r = scan(self.ORIGINAL)
         assert any(h["pattern"] == "minus as digit 2" for h in r["patterns"])
 
@@ -143,7 +143,7 @@ class TestTheProseFormOfTheLostMinusSign:
         other without re-measuring."""
         import re
 
-        from metascience_agent.glyphs import _PATTERNS
+        from forensic_metascience_ai_toolkit.glyphs import _PATTERNS
         pat = {label: rx for label, rx, _, _ in _PATTERNS}
         assert not pat["minus as digit 2"].search(self.KROSS)
         assert not pat["operator lost before a decimal"].search(self.ORIGINAL)
@@ -153,7 +153,7 @@ class TestTheProseFormOfTheLostMinusSign:
         """The anchor on `=` is what keeps a flattened table row out. Two
         adjacent cells rendered on one line look identical to the corruption
         without it."""
-        from metascience_agent.glyphs import scan
+        from forensic_metascience_ai_toolkit.glyphs import scan
         clean = ("Mean age was 42.1 (SD 8.3) and the model gave B = -0.006, "
                  "beta = -0.059, t(73) = -1.04, p = .30. "
                  "| Age | 2 | .006 | 41 | .07 | 2 | .12 |\n" * 4)
@@ -164,8 +164,8 @@ class TestTheProseFormOfTheLostMinusSign:
         """The measurement itself, against the file on disk."""
         import pathlib
 
-        from metascience_agent.glyphs import scan
-        from metascience_agent.extraction.docling_tables import cached_text
+        from forensic_metascience_ai_toolkit.glyphs import scan
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import cached_text
         pdf = (pathlib.Path(__file__).resolve().parents[1]
                / "tests/fixtures/papers/high_value_pdfs_to_run_on/10.1371--journal.pone.0069841"
                / "10.1371--journal.pone.0069841.pdf")
@@ -224,12 +224,12 @@ class TestATruncatedNumberIsRefusedNotReported:
         the pipeline received a reported p of ZERO. That is impossible, and a
         check comparing reported against computed p can turn it into an
         accusation against an honest paper."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         items = C._body_items("control group, P < 0\x0605; P < 0\x0601, signif")
         assert not [i for i in items if i["raw"].strip() in ("P < 0", "P<0")]
 
     def test_the_same_sentence_undamaged_still_reports_both(self):
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         items = C._body_items("control group, P < 0.05; P < 0.01, signif")
         assert [i["raw"] for i in items if i["kind"] == "p_value"] == \
             ["P < 0.05", "P < 0.01"]
@@ -237,7 +237,7 @@ class TestATruncatedNumberIsRefusedNotReported:
     def test_a_proven_document_still_yields_its_mean_sd_pairs(self):
         """EPIVI7B3 yields 182 `mean_pm_prose` items once its own text proves
         the glyph. Refusing those would be the opposite error."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         items = C._body_items(
             "Age, mean \x06 SD years. Weight was 65.2 \x06 1.17 kg overall.")
         assert any(i["kind"] == "mean_pm_prose" for i in items)
@@ -263,7 +263,7 @@ class TestTheSignPositionIsTheDangerousHalf:
     def test_a_lost_minus_is_not_reported_as_a_positive_mean(self):
         """MEASURED: 21 `mean_pm_prose` items in EPIVI7B3 sit behind a lost
         minus. Read without this guard, every one arrives with the wrong sign."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         items = C._body_items("Values are mean \x06 SD. Change was "
                               "\x00 3.5 \x06 7.6 overall.")
         assert not [i for i in items if i["raw"].startswith("3.5")]
@@ -272,11 +272,11 @@ class TestTheSignPositionIsTheDangerousHalf:
         """`\\x18 69%` is `~69%`. The difference between an approximate value
         and an exact one is the difference between a number GRIM may test and
         one it may not."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         assert C._body_items("brain activation, with \x18 69% of ROIs") == []
 
     def test_an_ordinary_negative_number_is_untouched(self):
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         got = [i["kind"] for i in
                C._body_items("the effect was -0.145 (95% CI -0.3, 0.1)")]
         assert "estimate_ci_prose" in got
@@ -327,14 +327,14 @@ class TestTheSameCharacterLeaksTwoWays:
                        for p in r["patterns"])
 
     def test_the_recovered_pair_is_read_as_a_dispersion(self):
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         t = "Values are Mean /C6 SD. Age was 65 /C6 1.17 years."
         kinds = [i["kind"] for i in C._body_items(t)]
         assert "mean_pm_prose" in kinds
 
     def test_raw_is_still_the_source_spelling(self):
         """A reader checking our work has to see what we actually read."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         t = "Values are Mean /C6 SD. Age was 65 /C6 1.17 years."
         got = [i["raw"] for i in C._body_items(t) if i["kind"] == "mean_pm_prose"]
         assert got == ["65 /C6 1.17"]
@@ -349,7 +349,7 @@ class TestAGlyphNameInSignPositionLosesTheSign:
     numbers are refused and the paper quarantines."""
 
     def _items(self, s):
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         return [(i["kind"], i["raw"]) for i in C._body_items(s)]
 
     def test_a_sign_flipped_effect_size_is_refused(self):

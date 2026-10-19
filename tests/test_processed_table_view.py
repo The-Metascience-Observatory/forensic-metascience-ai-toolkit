@@ -27,8 +27,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent.bundle import _paged_table, _processed_cells, _table_records
-from metascience_agent.extraction.jats import extract_xml_text_with_tables, get_table
+from forensic_metascience_ai_toolkit.bundle import _paged_table, _processed_cells, _table_records
+from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_text_with_tables, get_table
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 PAPER = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1038--s41537-025-00576-3"
@@ -145,7 +145,7 @@ class TestItReachesTheRenderedPage:
         import hashlib
         import shutil
 
-        from metascience_agent import bundle
+        from forensic_metascience_ai_toolkit import bundle
         runs = sorted(glob.glob(str(REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "*"
                                     / "forensic_review*" / "report.json")))
         if not runs:

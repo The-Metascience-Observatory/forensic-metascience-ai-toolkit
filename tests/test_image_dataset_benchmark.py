@@ -172,7 +172,7 @@ def test_missing_input_and_cache_invalidation(tmp_path, monkeypatch):
 
 
 def test_cli_commands_are_reachable(tmp_path):
-    from metascience_agent.cli import app
+    from forensic_metascience_ai_toolkit.cli import app
     runner = CliRunner()
     for name in ("image-dataset-fetch", "image-dataset-prepare", "image-dataset-run"):
         r = runner.invoke(app, [name, "--help"])

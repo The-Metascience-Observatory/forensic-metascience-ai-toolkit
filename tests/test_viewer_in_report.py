@@ -21,8 +21,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent.bundle import _check_table, _reported_ids, _sankey
-from metascience_agent.report_v2 import reported_finding_ids
+from forensic_metascience_ai_toolkit.bundle import _check_table, _reported_ids, _sankey
+from forensic_metascience_ai_toolkit.report_v2 import reported_finding_ids
 
 RUN = (pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
        / "10.1002--ajcp.70049" / "forensic_review_gatetest2_2026-08-29"

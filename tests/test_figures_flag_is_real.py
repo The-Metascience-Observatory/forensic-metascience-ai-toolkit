@@ -38,9 +38,9 @@ import inspect
 
 import pytest
 
-from metascience_agent import parallel as P
-from metascience_agent.core import prompts
-from metascience_agent import agent as A
+from forensic_metascience_ai_toolkit import parallel as P
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import agent as A
 
 
 class TestTheFlagReachesThePipeline:

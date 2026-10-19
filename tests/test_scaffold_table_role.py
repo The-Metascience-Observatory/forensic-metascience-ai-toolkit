@@ -23,7 +23,7 @@ import copy
 
 import pytest
 
-from metascience_agent.scaffold import coverage
+from forensic_metascience_ai_toolkit.scaffold import coverage
 
 from .test_scaffold_coverage import TEXT, account
 

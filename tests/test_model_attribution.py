@@ -22,7 +22,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.agent import _resolved_models, _stage_meta
+from forensic_metascience_ai_toolkit.agent import _resolved_models, _stage_meta
 
 RUN = (pathlib.Path(__file__).parent.parent / "tests/fixtures/papers/cerebrolysin_papers" / "done"
        / "10.1002--adbi.202300439" / "forensic_review_fable_07_17_2026")
@@ -96,7 +96,7 @@ class TestSchemaAllowsWhatWeWrite:
 
     def test_annotation_keys_are_declared(self):
         schema = json.loads(
-            (pathlib.Path(__file__).parent.parent / "src" / "metascience_agent"
+            (pathlib.Path(__file__).parent.parent / "src" / "forensic_metascience_ai_toolkit"
              / "schema" / "findings.v2.schema.json").read_text())
         props = schema["properties"]["findings"]["items"]["properties"]
         assert "reproduction_valid" in props

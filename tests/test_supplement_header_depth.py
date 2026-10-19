@@ -21,7 +21,7 @@ no p-value check can dispatch on them.
 import pathlib
 import pytest
 
-from metascience_agent.extraction import supplements_read as S
+from forensic_metascience_ai_toolkit.extraction import supplements_read as S
 
 DOCX = pathlib.Path("tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415/"
                     "EAT-58-1072-s001.docx")
@@ -98,7 +98,7 @@ class TestASpanningHeaderLabelReachesEveryColumnItCovers:
     def test_the_innermost_level_still_names_the_role(self):
         """The p-column rule reads the level nearest the data; propagating an
         outer level must not break it."""
-        from metascience_agent import values as V
+        from forensic_metascience_ai_toolkit import values as V
         assert V.role_from_column("Within-Person | p", 0.03) == "p"
 
 

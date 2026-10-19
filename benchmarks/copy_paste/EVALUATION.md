@@ -149,7 +149,7 @@ complete cell retention, cross-file matches/exclusions, differently labelled
 units, duplicate deliveries, physical row gaps, checksum failures, malformed AI
 output, call budgets/retries, subprocess overlap, cancellation/reaping, atomic
 publication and fingerprint resume. Fresh-wheel tests run outside the repository
-with no `metascience_agent` installed.
+with no `forensic_metascience_ai_toolkit` installed.
 
 The machine-readable [evaluation.json](evaluation.json) records the measurements
 and source/code fingerprints. Full inputs, raw runs, prompts and test logs are
@@ -162,7 +162,7 @@ variability check. Human-review metrics require the independently reviewed ledge
 ## Final acceptance results
 
 - Standalone wheel: **159 passed**, using a clean virtual environment outside
-  the repository; `metascience_agent` is absent. A 16-paper process batch also
+  the repository; `metascience_agent` (the toolkit, under its name then) is absent. A 16-paper process batch also
   completed from the installed wheel, and the 100-paper sample reproduced byte-for-byte.
 - Required repository run: **10,387 passed, 166 skipped, one expected failure**,
   in 85.66 seconds. Skips and the expected failure are not passed checks.

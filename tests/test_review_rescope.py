@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.workbench import review_rescope as RR
+from forensic_metascience_ai_toolkit.workbench import review_rescope as RR
 
 
 class FakeCursor:
@@ -146,7 +146,7 @@ class TestTheRecoveredRowSaysItWasRecovered:
                 self._cur = RecordingCursor({})
 
         monkey = RecordingConn()
-        import metascience_agent.db_push as dbp
+        import forensic_metascience_ai_toolkit.db_push as dbp
         real = dbp._user_for
         dbp._user_for = lambda cur, name: 2
         try:

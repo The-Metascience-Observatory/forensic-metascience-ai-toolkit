@@ -21,15 +21,15 @@ repository does every character of the matching.
 """
 import pytest
 
-from metascience_agent.tools import cellformat as CF
-from metascience_agent.tools.celltypes import parse_cells
+from forensic_metascience_ai_toolkit.tools import cellformat as CF
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
 
 
 class TestGregsQuestion:
     """Curly brackets, exactly as asked."""
 
     def test_the_brace_cell_is_unreadable_without_a_declaration(self):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         assert parse_cell("5.38 {1.17}").kind == "non_numeric"
 
     def test_and_reads_correctly_with_one(self):

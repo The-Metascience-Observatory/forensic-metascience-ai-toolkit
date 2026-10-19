@@ -10,9 +10,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.core import prompts
-from metascience_agent.evaluation import deterministic
-from metascience_agent.evaluation.harness import load_fixtures, repo_root
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit.evaluation import deterministic
+from forensic_metascience_ai_toolkit.evaluation.harness import load_fixtures, repo_root
 
 FIXTURES_DIR = repo_root() / "benchmarks" / "paper_reviews" / "fixtures"
 
@@ -124,11 +124,11 @@ class TestDeterministicChecks:
 
 class TestJudgeScoring:
     def test_weights(self):
-        from metascience_agent.evaluation.judge import WEIGHTS
+        from forensic_metascience_ai_toolkit.evaluation.judge import WEIGHTS
         assert WEIGHTS == {"critical": 3, "major": 2, "minor": 1}
 
     def test_judge_schema_is_valid_json_schema_shape(self):
-        from metascience_agent.evaluation.judge import JUDGE_SCHEMA
+        from forensic_metascience_ai_toolkit.evaluation.judge import JUDGE_SCHEMA
         assert JUDGE_SCHEMA["type"] == "object"
         assert "per_finding" in JUDGE_SCHEMA["properties"]
 
@@ -140,7 +140,7 @@ class TestJudgeScoring:
 )
 class TestLiveEval:
     def test_full_eval(self):
-        from metascience_agent.evaluation.harness import main
+        from forensic_metascience_ai_toolkit.evaluation.harness import main
 
         rc = main(["--max-budget-usd", os.environ.get("EVAL_BUDGET", "3.0")])
         scorecard_path = repo_root() / "benchmarks" / "paper_reviews" / "runs" / "scorecard.json"

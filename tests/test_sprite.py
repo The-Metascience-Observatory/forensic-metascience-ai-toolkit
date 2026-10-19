@@ -21,7 +21,7 @@ bound-free and stays `impossible`.
 """
 import pytest
 
-from metascience_agent.tools.sprite import _sd_window_feasible, sprite_reconstruct
+from forensic_metascience_ai_toolkit.tools.sprite import _sd_window_feasible, sprite_reconstruct
 
 COALITION = dict(mean=35.78, sd=33.74, n=64, data_type="count",
                  decimals_mean=2, decimals_sd=2)

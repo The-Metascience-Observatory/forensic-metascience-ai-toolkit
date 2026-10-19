@@ -11,10 +11,10 @@ import json
 
 import pytest
 
-from metascience_agent import adjudicate, agent
+from forensic_metascience_ai_toolkit import adjudicate, agent
 from metascience_observatory_image_analysis import discovery
-from metascience_agent import pipeline_config as pc
-from metascience_agent.modules.image_analysis.module import NOT_SCREENED
+from forensic_metascience_ai_toolkit import pipeline_config as pc
+from forensic_metascience_ai_toolkit.modules.image_analysis.module import NOT_SCREENED
 from metascience_observatory_image_analysis.image_forensics import pipeline, screening
 from tests.test_image_pipeline import detection_record
 from tests.test_image_review import _group, _paper

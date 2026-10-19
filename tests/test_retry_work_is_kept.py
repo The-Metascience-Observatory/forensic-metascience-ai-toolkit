@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import json
 
-from metascience_agent import agent
+from forensic_metascience_ai_toolkit import agent
 from tests.test_parallel_pipeline import (_doc, _stage, fakes, paper,  # noqa: F401
                                           run)
 
@@ -114,7 +114,7 @@ def test_a_failed_recovery_is_not_refused_as_a_stage_that_never_ran(
         paper, monkeypatch, fakes):
     # About the retry, not the unfiled-results pass Claude gets since 1.91.0
     # (its 25 accusing calls would otherwise be sent back once more).
-    from metascience_agent.modules import _analyst
+    from forensic_metascience_ai_toolkit.modules import _analyst
     monkeypatch.setattr(_analyst, "UNFILED_RECOVERY_BACKENDS",
                         _analyst.UNFILED_RECOVERY_BACKENDS - {"claude"})
     labels = _install(monkeypatch, _empty())
@@ -155,7 +155,7 @@ def test_a_first_attempts_recovered_docket_keeps_its_ledger(paper, monkeypatch, 
 
 
 def test_carrying_work_puts_the_tool_transcript_first():
-    from metascience_agent.modules._analyst import _carrying_work
+    from forensic_metascience_ai_toolkit.modules._analyst import _carrying_work
     rec = {"messages": [{"type": "result"}]}
     out = _carrying_work(rec, {"messages": [{"type": "assistant"}]}, None)
     assert out is rec

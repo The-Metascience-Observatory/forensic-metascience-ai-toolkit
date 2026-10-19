@@ -23,7 +23,7 @@ manufactures a false accusation.
 """
 import pytest
 
-from metascience_agent.tools.celltypes import CELL_KINDS, parse_cell
+from forensic_metascience_ai_toolkit.tools.celltypes import CELL_KINDS, parse_cell
 
 KIND = "count_denominator_percent"
 
@@ -82,7 +82,7 @@ class TestItReachesGrimWithAStatedN:
             "count": 12, "n": 30, "percentage": 40.0}
 
     def test_a_consistent_percentage_passes_grim(self):
-        from metascience_agent.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
         c = parse_cell("12/30 (40.0)")
         r = grim_test_percentage(percentage=c.percent, n=c.denominator,
                                  decimals=c.decimals_percent)
@@ -92,7 +92,7 @@ class TestItReachesGrimWithAStatedN:
         """13/30 is 43.333, which prints as 43.3. A reported 43.4 is not a value
         any whole count out of 30 can produce -- and the n came from the cell,
         so nothing about this finding rests on an inference of ours."""
-        from metascience_agent.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
         c = parse_cell("13/30 (43.4)")
         r = grim_test_percentage(percentage=c.percent, n=c.denominator,
                                  decimals=c.decimals_percent)
@@ -125,18 +125,18 @@ class TestThePrintedDenominatorReachesACheck:
         """It was parsed, documented at length, and then dropped one method
         later -- `forensic_kwargs` returned it and `as_dict` did not, so the
         per-cell path saw the number and the table path did not."""
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         assert parse_cell("12/30 (40.0)").as_dict()["denominator"] == 30
 
     def test_the_cell_reaches_a_check_at_all(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(cells=self.CELLS, variables=[], bindings={})
         assert out["n_checks_run"] == 4
         assert out["n_not_run"] == 0
 
     def test_a_wrong_percentage_is_caught(self):
         """12/30 is 40.0, not 44.4."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(cells=self.CELLS, variables=[], bindings={})
         caught = [r for r in out["results"]
                   if r["tool"] == "check_count_percent"
@@ -144,7 +144,7 @@ class TestThePrintedDenominatorReachesACheck:
         assert caught and caught[0]["severity"] == "suspicious"
 
     def test_the_right_percentage_clears(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(cells=self.CELLS, variables=[], bindings={})
         assert any(c["tool"] == "check_count_percent"
                    for c in out["consistent_index"])
@@ -153,7 +153,7 @@ class TestThePrintedDenominatorReachesACheck:
         """Not inferred from a column header, not carried down from a row
         above, not reconstructed from a section total -- each of which can
         manufacture an impossibility."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(cells=self.CELLS, variables=[], bindings={})
         for r in out["results"]:
             assert r["inputs"]["n"] == 30
@@ -161,7 +161,7 @@ class TestThePrintedDenominatorReachesACheck:
             assert r["n_provenance"]["derived"] is False
 
     def test_the_common_printed_variants_all_type(self):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         for raw in ("12/30 (40.0)", "12/30 (40.0%)", "12/30 (40%)",
                     "12 / 30 (40.0)", "12/30(40.0)", "12/30 [40.0]",
                     "0/30 (0.0)"):

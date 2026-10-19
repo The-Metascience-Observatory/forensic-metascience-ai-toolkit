@@ -6,7 +6,7 @@ from metascience_observatory_image_analysis.image_forensics import screening, sc
 
 
 def test_empty_sync_does_not_read_archive_or_connect(tmp_path, monkeypatch):
-    from metascience_agent import history_db
+    from forensic_metascience_ai_toolkit import history_db
     def forbidden(*args, **kwargs):
         raise AssertionError('empty selection must not expand to the corpus')
     monkeypatch.setattr(history_db, 'Archive', forbidden)
@@ -14,7 +14,7 @@ def test_empty_sync_does_not_read_archive_or_connect(tmp_path, monkeypatch):
 
 
 def test_scoped_reconcile_batches_publication_and_never_renders(tmp_path, monkeypatch):
-    from metascience_agent import history_publication, webapp_index
+    from forensic_metascience_ai_toolkit import history_publication, webapp_index
     from metascience_observatory_image_analysis import image_review
     from metascience_observatory_image_analysis.image_forensics import repair_source_identity
     calls = []
@@ -70,7 +70,7 @@ def test_pending_finalization_survives_restart_without_rescreen(tmp_path, monkey
 
 
 def test_batch_publication_preserves_unselected_state(tmp_path, monkeypatch):
-    from metascience_agent import history_publication, analysis_runs
+    from forensic_metascience_ai_toolkit import history_publication, analysis_runs
     from metascience_observatory_image_analysis import image_review
     base = tmp_path/'.analysis_runs'
     base.mkdir()
@@ -91,7 +91,7 @@ def test_batch_publication_preserves_unselected_state(tmp_path, monkeypatch):
 
 
 def test_no_changed_papers_means_no_finalization_work(tmp_path, monkeypatch):
-    from metascience_agent import db_push
+    from forensic_metascience_ai_toolkit import db_push
     from metascience_observatory_image_analysis import image_review
     def forbidden(*args, **kwargs):
         raise AssertionError('nothing changed: no connection or feed rebuild')

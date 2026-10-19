@@ -1,7 +1,7 @@
 """Workbench issue list: stage 2 helps, Python is the order the reader sees."""
 import json
 
-from metascience_agent.review_issues import (
+from forensic_metascience_ai_toolkit.review_issues import (
     _image_where, collect_issues, issue_sort_key, sort_issues,
 )
 
@@ -264,7 +264,7 @@ def _db_hit(label_corpus="fmt-derik-flagged", matched_by="doi"):
 
 
 def test_collect_issues_falls_back_to_the_database(tmp_path, monkeypatch):
-    from metascience_agent import db_push
+    from forensic_metascience_ai_toolkit import db_push
     paper = tmp_path / "FMT-reports_derik-flagged_2026-09-01" / "10.1002--jfa2.70171"
     paper.mkdir(parents=True)
     asked = []
@@ -290,7 +290,7 @@ def test_collect_issues_falls_back_to_the_database(tmp_path, monkeypatch):
 
 
 def test_collect_issues_dir_match_keeps_plain_run_name(tmp_path, monkeypatch):
-    from metascience_agent import db_push
+    from forensic_metascience_ai_toolkit import db_push
     paper = tmp_path / "fmt-derik-flagged" / "10.1002--jfa2.70171"
     paper.mkdir(parents=True)
     monkeypatch.setattr(db_push, "fetch_paper_runs",
@@ -302,7 +302,7 @@ def test_collect_issues_dir_match_keeps_plain_run_name(tmp_path, monkeypatch):
 
 
 def test_collect_issues_reports_an_unreachable_database_in_words(tmp_path, monkeypatch):
-    from metascience_agent import db_push
+    from forensic_metascience_ai_toolkit import db_push
     paper = tmp_path / "corpus" / "10.1002--jfa2.70171"
     paper.mkdir(parents=True)
     monkeypatch.setattr(db_push, "fetch_paper_runs", lambda p, **kw: {
@@ -315,7 +315,7 @@ def test_collect_issues_reports_an_unreachable_database_in_words(tmp_path, monke
 
 
 def test_collect_issues_disk_run_wins_and_skips_the_database(tmp_path, monkeypatch):
-    from metascience_agent import db_push
+    from forensic_metascience_ai_toolkit import db_push
     paper = tmp_path / "corpus" / "p"
     run = paper / "forensic_review"
     run.mkdir(parents=True)

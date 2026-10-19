@@ -26,8 +26,8 @@ import json
 import statistics as st
 from pathlib import Path
 
-from metascience_agent import numerals, sections
-from metascience_agent.scaffold import bind, checks, premise_reading as PR, premises
+from forensic_metascience_ai_toolkit import numerals, sections
+from forensic_metascience_ai_toolkit.scaffold import bind, checks, premise_reading as PR, premises
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
 
@@ -829,7 +829,7 @@ class TestThePromptIsTheValidatedOne:
         """AN ACCOUNT READ WITH THIS PASS IS DECIDED BY THIS FILE, so the stamp
         that says which code built an account has to name it -- the same claim
         `test_scaffold_checks` makes for the bridge."""
-        from metascience_agent.scaffold import codestamp
+        from forensic_metascience_ai_toolkit.scaffold import codestamp
         assert "scaffold/premise_reading.py" in codestamp.MODULES
         assert codestamp.stamp()["modules"]["scaffold/premise_reading.py"]
 

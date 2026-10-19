@@ -20,10 +20,10 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from metascience_agent import adjudicate
-from metascience_agent import batch as batch_mod
-from metascience_agent.cli import app
-from metascience_agent.pipeline_config import load as load_pipeline
+from forensic_metascience_ai_toolkit import adjudicate
+from forensic_metascience_ai_toolkit import batch as batch_mod
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit.pipeline_config import load as load_pipeline
 
 runner = CliRunner()
 
@@ -119,7 +119,7 @@ class TestBatchCostIsThisRun:
     def test_a_refused_paper_is_billed_to_this_run(self, tmp_path, monkeypatch):
         """A ForensicToolsNeverRan refusal is written to the ledger with its
         spend; leaving it out of this run's total understated the batch."""
-        from metascience_agent.llm_backend import ForensicToolsNeverRan
+        from forensic_metascience_ai_toolkit.llm_backend import ForensicToolsNeverRan
         root = _corpus(tmp_path, 2)
 
         async def fake_analyze(path, **kwargs):

@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from metascience_agent.extraction.jats import (
+from forensic_metascience_ai_toolkit.extraction.jats import (
     ELSEVIER,
     JATS,
     PMC_SET,
@@ -25,8 +25,8 @@ from metascience_agent.extraction.jats import (
     paper_text_with_source,
     xml_flavour,
 )
-from metascience_agent.tools.celltypes import parse_cells
-from metascience_agent.tools.tableparse import parse_cell
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
+from forensic_metascience_ai_toolkit.tools.tableparse import parse_cell
 
 
 def _write(tmp_path, body, name="paper.xml"):
@@ -576,7 +576,7 @@ def _extracted(pdf, text=_PAGE_BODY):
     """
     import json
 
-    from metascience_agent.extraction import docling_tables as dl
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
     cache = dl._cache_path(pdf)
     cache.parent.mkdir(parents=True, exist_ok=True)
@@ -623,7 +623,7 @@ def test_an_unextracted_pdf_yields_a_refusal_not_silent_text(tmp_path):
     neither column contains -- so the two readers disagreed on the same
     document, 36,016 characters against 38,879.
     """
-    from metascience_agent.supplements import audit
+    from forensic_metascience_ai_toolkit.supplements import audit
 
     paper = tmp_path / "10.1234--z"
     paper.mkdir()
@@ -654,7 +654,7 @@ def test_the_supplement_gate_can_see_an_extracted_pdf_only_paper(tmp_path):
     "Supplementary Table 1" this fixture cites. Same verdict, no longer any
     evidence that the paper was read. `text_available` is the discriminator.
     """
-    from metascience_agent.supplements import gate
+    from forensic_metascience_ai_toolkit.supplements import gate
     paper = tmp_path / "10.1234--z"
     paper.mkdir()
     _extracted(_pdf(paper / "10.1234--z.pdf"))
@@ -685,7 +685,7 @@ def test_xml_still_wins_over_the_pdf(tmp_path):
 
 
 def test_find_pdf_prefers_the_stem_matching_the_directory(tmp_path):
-    from metascience_agent.extraction.jats import find_pdf
+    from forensic_metascience_ai_toolkit.extraction.jats import find_pdf
     paper = tmp_path / "10.1234--x"
     paper.mkdir()
     _pdf(paper / "other.pdf")
@@ -696,7 +696,7 @@ def test_find_pdf_prefers_the_stem_matching_the_directory(tmp_path):
 def test_find_pdf_skips_a_supplement(tmp_path):
     """Reading an appendix as though it were the paper would let the gate find
     its own citations inside it and clear itself."""
-    from metascience_agent.extraction.jats import find_pdf
+    from forensic_metascience_ai_toolkit.extraction.jats import find_pdf
     paper = tmp_path / "p"
     paper.mkdir()
     _pdf(paper / "p_supplementary.pdf")
@@ -739,7 +739,7 @@ def test_an_exponent_keeps_the_caret_because_unicode_would_invent_a_value():
     """`10^-3` refuses to parse. `10⁻³` parses to 10 -- the paper printed
     0.001, so the Unicode form would manufacture a number 10,000 times too
     large. Refusing is the honest answer."""
-    from metascience_agent.tools.tableparse import parse_cell as _tp
+    from forensic_metascience_ai_toolkit.tools.tableparse import parse_cell as _tp
     assert _cell_text(ET.fromstring("<td>10<sup>-3</sup></td>")) == "10^-3"
     assert _tp("10^-3")["value"] is None
     assert _tp("10⁻³")["value"] == 10.0, "which is why the caret is kept"
@@ -752,7 +752,7 @@ def test_a_marker_unicode_cannot_raise_is_left_alone_rather_than_half_raised():
 
 
 def test_the_rewrite_is_counted_like_every_other_normalisation():
-    from metascience_agent.extraction.jats import _Counter, _collect
+    from forensic_metascience_ai_toolkit.extraction.jats import _Counter, _collect
     counts = _Counter()
     buf: list[str] = []
     _collect(ET.fromstring("<td>kg/m<sup>2</sup></td>"), buf, counts)
@@ -789,7 +789,7 @@ _FLOATS_XML = """<article>
 
 
 def _extract(tmp_path, xml_text):
-    from metascience_agent.extraction.jats import extract_xml_text_with_tables
+    from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_text_with_tables
     p = tmp_path / "a.xml"
     p.write_text(xml_text, encoding="utf-8")
     return extract_xml_text_with_tables(p, tables="full", max_chars=2_000_000)

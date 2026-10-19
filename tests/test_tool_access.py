@@ -13,9 +13,9 @@ import json
 
 import pytest
 
-from metascience_agent import agent
-from metascience_agent.core import prompts
-from metascience_agent import pipeline_config as pc
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import pipeline_config as pc
 
 
 def _cfg(*mods, **top):
@@ -122,8 +122,8 @@ class TestBriefServer:
     def server(self, monkeypatch):
         import importlib
         import sys
-        import metascience_agent
-        name = "metascience_agent.mcp_server"
+        import forensic_metascience_ai_toolkit
+        name = "forensic_metascience_ai_toolkit.mcp_server"
         orig = sys.modules.get(name)
         monkeypatch.setenv("METASCIENCE_MCP_STAGE", "tool_agent")
         monkeypatch.setenv("METASCIENCE_MCP_BRIEF", "1")
@@ -131,10 +131,10 @@ class TestBriefServer:
         yield importlib.import_module(name)
         if orig is not None:
             sys.modules[name] = orig
-            metascience_agent.mcp_server = orig
+            forensic_metascience_ai_toolkit.mcp_server = orig
 
     def test_one_line_descriptions_and_describe_tool(self, server):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         tools = asyncio.run(server._list_tools())
         by = {t.name: t for t in tools}
         assert by["grim_check"].description == BY_NAME["grim_check"].brief
@@ -193,7 +193,7 @@ class TestSkillGuard:
         "metascience tool list --role tool_agent --json",
     ])
     def test_the_three_shapes_pass(self, cmd):
-        from metascience_agent.skill_guard import allowed
+        from forensic_metascience_ai_toolkit.skill_guard import allowed
         assert allowed(cmd)
 
     @pytest.mark.parametrize("cmd", [
@@ -211,13 +211,13 @@ class TestSkillGuard:
         "metascience tool run grim_check --json '{}'\nid",
     ])
     def test_everything_else_is_refused(self, cmd):
-        from metascience_agent.skill_guard import allowed
+        from forensic_metascience_ai_toolkit.skill_guard import allowed
         assert not allowed(cmd)
 
     def test_the_hook_blocks_with_exit_2_and_fails_closed(self):
         import subprocess
         import sys
-        from metascience_agent import skill_guard
+        from forensic_metascience_ai_toolkit import skill_guard
         path = skill_guard.__file__
 
         def run(stdin):

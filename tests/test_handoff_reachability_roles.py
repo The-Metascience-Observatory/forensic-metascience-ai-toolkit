@@ -21,7 +21,7 @@ import re
 
 import pytest
 
-from metascience_agent import handoff, registry
+from forensic_metascience_ai_toolkit import handoff, registry
 
 SRC = handoff.SRC
 

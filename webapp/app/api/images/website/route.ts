@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     const local = await pyJson(["fetch-metadata", "--offline", paperDir], { timeoutMs: 60_000 }) as Record<string, unknown>;
     doi = String(local?.doi || "").trim();
     if (!doi) return fail("This paper has no DOI on record, so it cannot be cited on the website.", 422);
-    const meta = await pyModuleJson("metascience_agent.fetch_metadata_from_doi", [doi], { timeoutMs: 90_000 }) as Record<string, unknown>;
+    const meta = await pyModuleJson("forensic_metascience_ai_toolkit.fetch_metadata_from_doi", [doi], { timeoutMs: 90_000 }) as Record<string, unknown>;
     citation = citationFrom(meta, doi);
   } catch (e) { return fail(`Citation lookup failed: ${errMsg(e)}`, 502); }
   if (!citation) return fail(`The DOI APIs returned no title or authors for ${doi}.`, 502);

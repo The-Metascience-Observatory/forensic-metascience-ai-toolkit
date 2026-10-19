@@ -25,9 +25,9 @@ it is pinned here too.
 
 import scipy.stats as st
 
-from metascience_agent.registry import BY_NAME
-from metascience_agent.tools.regression import check_regression
-from metascience_agent.tools.ttest import _p_matches
+from forensic_metascience_ai_toolkit.registry import BY_NAME
+from forensic_metascience_ai_toolkit.tools.regression import check_regression
+from forensic_metascience_ai_toolkit.tools.ttest import _p_matches
 
 
 def _coefficient_for(target_p: float, se: float = 0.0100, df: int = 200):
@@ -150,7 +150,7 @@ class TestTheOtherCallersAreUntouched:
         the failure branch, and only to DOWNGRADE. What actually matters is
         the direction, so that is what is pinned now: the threshold reading
         may rescue a row to indeterminate, never make one more severe."""
-        from metascience_agent.tools.ttest import recalc_independent_t
+        from forensic_metascience_ai_toolkit.tools.ttest import recalc_independent_t
 
         # Reported t fits neither flavor, but the data CAN reach the
         # conventional alpha as a bound: ambiguous, not an accusation.

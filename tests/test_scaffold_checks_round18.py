@@ -69,7 +69,7 @@ import statistics as st
 
 import pytest
 
-from metascience_agent.scaffold import (adjudication, adjudication_n, checks,
+from forensic_metascience_ai_toolkit.scaffold import (adjudication, adjudication_n, checks,
                                         premise_reading as PR, premises)
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
@@ -674,7 +674,7 @@ def test_the_cli_offers_its_own_flag_and_refuses_two_nets_at_once(capsys):
     here."""
     import inspect
 
-    from metascience_agent.scaffold import __main__ as M
+    from forensic_metascience_ai_toolkit.scaffold import __main__ as M
 
     with pytest.raises(SystemExit) as exc:
         M.main(["--help"])

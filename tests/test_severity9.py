@@ -16,8 +16,8 @@ import re
 
 import pytest
 
-from metascience_agent import severity9
-from metascience_agent.severity9 import (
+from forensic_metascience_ai_toolkit import severity9
+from forensic_metascience_ai_toolkit.severity9 import (
     ACCUSATORY_MIN,
     AGENT_CODE_CAP,
     FAST_SCREEN_CAP,
@@ -178,14 +178,14 @@ def test_no_ceiling_constants_exist():
     """v1.14.0: the ladder has no absolute ceiling. Every role may write any
     rung 1-9; only evidence-CHANNEL caps remain. A reintroduced ceiling
     constant is a regression, not a safety feature, until Dan says otherwise."""
-    from metascience_agent import severity9
+    from forensic_metascience_ai_toolkit import severity9
     for name in ("PIPELINE_MAX", "ADJUDICATOR_MAX_DEFAULT",
                  "ADJUDICATOR_MAX_MANIPULATION", "PROVISIONAL_CAP"):
         assert not hasattr(severity9, name), name
 
 
 def test_ladder_version_is_three():
-    from metascience_agent.severity9 import LADDER_VERSION
+    from forensic_metascience_ai_toolkit.severity9 import LADDER_VERSION
     assert LADDER_VERSION == "3"
 
 
@@ -378,7 +378,7 @@ def test_severity9_imports_nothing_from_tools_severity():
     source = inspect.getsource(severity9)
     assert "tools.severity" not in source
     assert "from .tools" not in source
-    assert "from metascience_agent.tools" not in source
+    assert "from forensic_metascience_ai_toolkit.tools" not in source
 
 
 class TestModelReadingIsArithmeticNobodyPerformed:

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.scaffold import reconstruct as RC
+from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
 
 WRAP = """<table-wrap id="T2"><label>Table 2</label><caption><p>Outcomes by arm</p></caption>
 <table><thead><tr><th rowspan="2">Outcome</th><th colspan="2">Model 1</th></tr>
@@ -456,7 +456,7 @@ class TestPdfSupplementTables:
 
 class TestFiguresFromTheManifest:
     def test_fetched_images_join_the_caption_figures_by_number(self):
-        from metascience_agent.scaffold import document as D
+        from forensic_metascience_ai_toolkit.scaffold import document as D
         figs = [{"id": "figure:1", "label": "Figure 1", "caption": "Figure 1. Recall.", "panels": ["a", "b"], "n_panels": 2}]
         manifest = {"source": "local_html_page", "figures": [
             {"id": "fig01", "figure_label": "Figure 1", "file": "f1.jpg", "status": "ok", "caption": "Recall."},
@@ -877,7 +877,7 @@ class TestTheRenderDoesNotCarryTheWalkersGuess:
         73% and `_add_band` refuses to draw the page at all. Three depths, three
         different images, one of them no image."""
         pytest.importorskip("fitz", reason="PyMuPDF is not installed")
-        from metascience_agent.extraction import supplements_read as SR
+        from forensic_metascience_ai_toolkit.extraction import supplements_read as SR
         path = TestAPageIsNotATable()._pdf(tmp_path, [
             (100, ["Table 6. Allele frequencies by sex", "Population   N     H     L",
                    "Males        620   0.051 0.503", "Females      340   0.072 0.474",

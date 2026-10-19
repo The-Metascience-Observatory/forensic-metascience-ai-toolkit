@@ -4,7 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 
-from metascience_agent.workbench import image_review_host
+from forensic_metascience_ai_toolkit.workbench import image_review_host
 image_review_host.configure()  # the host lends its storage first, as at runtime
 from metascience_observatory_image_analysis.review_workbench.local_images import ImageCatalog, LocalImages  # noqa: E402
 from metascience_observatory_image_analysis.image_forensics.review_fixture import export_missed, missed_ground_truth  # noqa: E402

@@ -20,9 +20,9 @@ import json
 import jsonschema
 import pytest
 
-from metascience_agent import adjudicate, parallel
-from metascience_agent import findings_v2 as fv2
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit import adjudicate, parallel
+from forensic_metascience_ai_toolkit import findings_v2 as fv2
+from forensic_metascience_ai_toolkit.core import prompts
 
 #: A real rejected title shape from the benchmark (94 characters).
 LONG = ("Table 2: reported t(58) = 2.10, p = .002 recomputes to p = 0.0401, "

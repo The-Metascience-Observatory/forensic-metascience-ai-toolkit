@@ -20,9 +20,9 @@ import json
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent import mcp_server as M
-from metascience_agent.registry import (
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit import mcp_server as M
+from forensic_metascience_ai_toolkit.registry import (
     ADJUDICATOR, SCIENCE_AGENT, TOOL_AGENT, stage_tools,
 )
 
@@ -106,9 +106,9 @@ class TestConfigThreading:
         three default invocations actually carries."""
         import inspect
 
-        from metascience_agent import modules
-        from metascience_agent.modules import _analyst
-        from metascience_agent.registry import SCIENCE_AGENT, TOOL_AGENT
+        from forensic_metascience_ai_toolkit import modules
+        from forensic_metascience_ai_toolkit.modules import _analyst
+        from forensic_metascience_ai_toolkit.registry import SCIENCE_AGENT, TOOL_AGENT
         assert modules.load("tools_agent").mcp_stage == TOOL_AGENT
         assert modules.load("scientific_proofreading_agent").mcp_stage == SCIENCE_AGENT
         build = inspect.getsource(_analyst.AnalystModule.build_cmd)
@@ -128,7 +128,7 @@ class TestGrokRouteIsFencedToo:
         check_estimate_ci and grim_check off-role through use_tool."""
         monkeypatch.setenv("METASCIENCE_GROK_SKIP_FOLDER_TRUST", "1")
         monkeypatch.setenv("METASCIENCE_GROK_SANDBOX_ROOT", str(tmp_path))
-        from metascience_agent.llm_backend import GROK, build_invocation
+        from forensic_metascience_ai_toolkit.llm_backend import GROK, build_invocation
         inv = build_invocation(
             GROK, system_prompt="x", allowed_tools=["read_file"],
             model="grok-4.6", effort="high", paper_dir=str(tmp_path),

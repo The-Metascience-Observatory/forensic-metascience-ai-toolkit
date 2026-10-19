@@ -35,12 +35,12 @@ again at a weak accusation.
 
 from __future__ import annotations
 
-from metascience_agent import secondlook as S
-from metascience_agent import viewer_facts as VF
-from metascience_agent.bundle import _check_table, _sankey, _v2_container
-from metascience_agent.evaluation import agreement as A
+from forensic_metascience_ai_toolkit import secondlook as S
+from forensic_metascience_ai_toolkit import viewer_facts as VF
+from forensic_metascience_ai_toolkit.bundle import _check_table, _sankey, _v2_container
+from forensic_metascience_ai_toolkit.evaluation import agreement as A
 
-from metascience_agent.bundle import _v2_container as _adapter
+from forensic_metascience_ai_toolkit.bundle import _v2_container as _adapter
 
 # THE SAME FIXTURES AS tests/test_finding_view.py, restated because test
 # modules here are not importable from one another. Shaped on litvak05

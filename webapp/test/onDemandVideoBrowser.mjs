@@ -50,7 +50,7 @@ try {
     try {
       const env=readFileSync(`/proc/${pid}/environ`,'utf8').split('\0');
       const cmd=readFileSync(`/proc/${pid}/cmdline`,'utf8');
-      if(env.includes(`METASCIENCE_WORKBENCH_DB=${database}`)&&cmd.includes('metascience_agent.workbench.service')) {
+      if(env.includes(`METASCIENCE_WORKBENCH_DB=${database}`)&&cmd.includes('forensic_metascience_ai_toolkit.workbench.service')) {
         process.kill(Number(pid),'SIGTERM'); stopped++;
       }
     } catch { /* process exited */ }

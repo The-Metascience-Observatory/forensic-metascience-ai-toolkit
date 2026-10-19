@@ -26,7 +26,7 @@ belongs to -- that is what makes it glued. Splitting one would attach a number
 to a heading it was never printed under, and a mean paired with another
 column's `n` is how an honest paper gets accused.
 """
-from metascience_agent import values as V
+from forensic_metascience_ai_toolkit import values as V
 
 
 class TestTheTwoReasonsAreSeparated:

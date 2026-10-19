@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import db_push as D
+from forensic_metascience_ai_toolkit import db_push as D
 
 # Bound at collection time, BEFORE the autouse `_no_live_findings_db` guard
 # replaces the module attribute -- the parser tests need the real function.

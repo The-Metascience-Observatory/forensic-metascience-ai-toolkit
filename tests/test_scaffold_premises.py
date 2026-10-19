@@ -26,9 +26,9 @@ import re
 
 import pytest
 
-from metascience_agent.scaffold import bind, checks, coverage, premises
+from forensic_metascience_ai_toolkit.scaffold import bind, checks, coverage, premises
 
-SRC = pathlib.Path(__file__).resolve().parent.parent / "src" / "metascience_agent"
+SRC = pathlib.Path(__file__).resolve().parent.parent / "src" / "forensic_metascience_ai_toolkit"
 SCAFFOLD = SRC / "scaffold"
 
 # --------------------------------------------------------------------------
@@ -202,7 +202,7 @@ class TestTheKindNecessaryPaths:
         step says what the variable IS. A count moves in whole units whatever
         any sentence says, and the token is the tools' own
         `logically_necessary`, which licenses exactly what `stated` does."""
-        from metascience_agent.tools.grim import HARD_DISCRETENESS_SOURCES
+        from forensic_metascience_ai_toolkit.tools.grim import HARD_DISCRETENESS_SOURCES
         g = next(v for v in stamped["variables"]
                  if v["id"] == "var:reach")["granularity"]["verification"]
         assert g["kind_makes_it_necessary"] is True
@@ -341,7 +341,7 @@ class TestTheModelOutputChannelsAreStructuralNotStringy:
         assert v["premise"]["descriptive"]["reports_model_output"]
 
     def test_the_repos_own_rule_is_asked_first_and_still_answers(self):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         assert prepass.reports_model_output("Coefficient (SE)", None)
         acc = account()
         acc["values"].append(_cell("val:x", "mean", "8.57", row=9,
@@ -689,7 +689,7 @@ class TestNoModuleUnderScaffoldReDerivesIt:
         the gate admits must be a source the schema allows, and the one the
         schema allows and the gate does not is `not_stated` -- which is the
         whole point of the gate."""
-        from metascience_agent.scaffold import schema
+        from forensic_metascience_ai_toolkit.scaffold import schema
         assert set(premises.BOUND_SOURCE_OF) < set(schema.BOUND_SOURCES)
         assert set(schema.BOUND_SOURCES) - set(premises.BOUND_SOURCE_OF) == {"not_stated"}
 

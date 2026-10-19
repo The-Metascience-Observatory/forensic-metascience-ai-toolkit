@@ -23,10 +23,10 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import verdicts
+from forensic_metascience_ai_toolkit import verdicts
 
-PROMPT = Path("src/metascience_agent/modules/adjudicator/prompt.md")
-SCHEMA = Path("src/metascience_agent/schema/report.schema.json")
+PROMPT = Path("src/forensic_metascience_ai_toolkit/modules/adjudicator/prompt.md")
+SCHEMA = Path("src/forensic_metascience_ai_toolkit/schema/report.schema.json")
 
 LADDER = ("impossible", "highly_suspicious", "suspicious",
           "indeterminate", "consistent")
@@ -78,7 +78,7 @@ class TestAPrintedScaleCountsAsStated:
 
     @pytest.fixture(scope="class")
     def rulebook(self):
-        return Path("src/metascience_agent/core/prompts/rulebook.md").read_text(encoding="utf-8")
+        return Path("src/forensic_metascience_ai_toolkit/core/prompts/rulebook.md").read_text(encoding="utf-8")
 
     def test_the_assumed_side_is_stated(self, rulebook):
         """The half that stops a control paper being convicted on prose."""

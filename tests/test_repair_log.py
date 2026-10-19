@@ -15,8 +15,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import repairs as R
-from metascience_agent.extraction.jats import paper_text_with_source
+from forensic_metascience_ai_toolkit import repairs as R
+from forensic_metascience_ai_toolkit.extraction.jats import paper_text_with_source
 
 CORPUS = Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
 PAPER = CORPUS / "10.1002--ajcp.70049"
@@ -37,7 +37,7 @@ def paper(tmp_path: Path) -> Path:
     resolved failed all nine with FileNotFoundError -- our missing derived
     file, reported as the resolver's defect.
     """
-    from metascience_agent.extraction.markdown_out import materialise
+    from forensic_metascience_ai_toolkit.extraction.markdown_out import materialise
     d = tmp_path / "paper"
     shutil.copytree(PAPER, d)
     rec = materialise(d)
@@ -56,7 +56,7 @@ def _declare(d: Path, against: str, *, repairs=1) -> None:
 
 
 def _edit_body(d: Path, marker: str = "SENTINEL_42") -> None:
-    from metascience_agent.extraction.markdown_out import body_path
+    from forensic_metascience_ai_toolkit.extraction.markdown_out import body_path
     p = body_path(d)
     p.write_text(p.read_text(encoding="utf-8", errors="replace")
                  + f"\n\n{marker}\n", encoding="utf-8")
@@ -137,7 +137,7 @@ class TestADeclarationMustProveWhatItRepaired:
 
 class TestItFailsClosed:
     def test_a_malformed_log_is_not_read_as_no_repairs(self, tmp_path: Path):
-        from metascience_agent.extraction.markdown_out import markdown_dir
+        from forensic_metascience_ai_toolkit.extraction.markdown_out import markdown_dir
         d = tmp_path / "p"
         markdown_dir(d).mkdir(parents=True)
         R.path(d).write_text("{not json", encoding="utf-8")
@@ -146,7 +146,7 @@ class TestItFailsClosed:
 
     def test_a_future_schema_is_refused(self, tmp_path: Path):
         import json
-        from metascience_agent.extraction.markdown_out import markdown_dir
+        from forensic_metascience_ai_toolkit.extraction.markdown_out import markdown_dir
         d = tmp_path / "p"
         markdown_dir(d).mkdir(parents=True)
         R.path(d).write_text(json.dumps({"schema_version": 99, "repairs": []}),
@@ -186,7 +186,7 @@ class TestTheWriterAndTheReaderAgree:
 
     def test_materialise_and_resolve_reach_a_fixed_point(self, paper: Path):
         import json
-        from metascience_agent.extraction import markdown_out as MO
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as MO
 
         base, _ = paper_text_with_source(paper)
         MO.body_path(paper).write_text(base + "\n\nSENTINEL_42\n", encoding="utf-8")
@@ -214,7 +214,7 @@ class TestAbsentAndBrokenAreDifferentFacts:
     house failure mode -- an absence rendered as knowledge."""
 
     def _dir(self, tmp_path: Path) -> Path:
-        from metascience_agent.extraction.markdown_out import markdown_dir
+        from forensic_metascience_ai_toolkit.extraction.markdown_out import markdown_dir
         d = tmp_path / "p"
         markdown_dir(d).mkdir(parents=True)
         return d
@@ -249,7 +249,7 @@ class TestMaterialiseReportsWhatItDidNotDo:
     something else. Being ignored looked exactly like being applied."""
 
     def test_it_reports_an_undeclared_edit_it_is_ignoring(self, paper: Path):
-        from metascience_agent.extraction import markdown_out as MO
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as MO
 
         MO.materialise(paper)
         body = MO.body_path(paper)
@@ -266,7 +266,7 @@ class TestMaterialiseReportsWhatItDidNotDo:
         assert "EDIT" in body.read_text(encoding="utf-8")
 
     def test_an_untouched_paper_reports_match_and_stays_quiet(self, paper: Path):
-        from metascience_agent.extraction import markdown_out as MO
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as MO
 
         MO.materialise(paper)
         with warnings.catch_warnings(record=True) as caught:
@@ -277,7 +277,7 @@ class TestMaterialiseReportsWhatItDidNotDo:
         assert not [w for w in caught if "IGNORED" in str(w.message)]
 
     def test_a_declared_repair_is_not_warned_about(self, paper: Path):
-        from metascience_agent.extraction import markdown_out as MO
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as MO
 
         base, _ = paper_text_with_source(paper)
         MO.body_path(paper).write_text(base + "\n\nEDIT\n", encoding="utf-8")

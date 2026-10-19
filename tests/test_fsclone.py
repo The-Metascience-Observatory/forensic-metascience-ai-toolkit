@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import fsclone
+from forensic_metascience_ai_toolkit import fsclone
 
 
 def test_a_clone_is_independent_of_its_source(tmp_path):

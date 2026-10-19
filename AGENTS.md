@@ -9,8 +9,12 @@
 
 This repo is the **Forensic Metascience AI Toolkit** (formerly the Agent for Forensic
 Metascience; GitHub `delton137/forensic-metascience-ai-toolkit`; pip distribution
-`forensic-metascience-ai-toolkit`). The import package is still `metascience_agent` and
-the CLI is still `metascience`.
+`forensic-metascience-ai-toolkit`). The import package was renamed from
+`metascience_agent` to `forensic_metascience_ai_toolkit` on 2026-10-19 (1.96.1);
+`metascience_agent` remains as a deprecated alias shim
+(`src/metascience_agent/__init__.py`), so old imports and
+`python -m metascience_agent.X` still work. New code imports the new name.
+The CLI is still `metascience`.
 
 Guidance for working in this repo. See [README.md](README.md) for user-facing usage
 and [docs/README.md](docs/README.md) for an index of the specs and design notes
@@ -80,7 +84,7 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   conclusion that a 95-paper corpus contained zero test statistics. Run
   `preflight` first.
 - **Tests: `metascience-test -q`** (console script from `[project.scripts]`,
-  wraps `src/metascience_agent/test_runner.py`). Use **`metascience-test --stack -q`**
+  wraps `src/forensic_metascience_ai_toolkit/test_runner.py`). Use **`metascience-test --stack -q`**
   for final local verification: all three Python test roots, TypeScript, web unit tests,
   isolated browser checks, and lint run concurrently, with separate logs and a
   combined exit status. Live server/database checks and paid evals remain explicit.
@@ -223,8 +227,8 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   `modules/adjudicator/prompt.md`) and the shared text (`rulebook.md`,
   `rulebook_roles.md`, `reproduction.md`, `grok_mcp_route.md`) is
   `core/prompts/`. They are assembled by `core/prompts/__init__.py`
-  (`metascience_agent.core.prompts`), the single source of truth for what
-  is sent; the JSON schemas are `src/metascience_agent/schema/`. The old
+  (`forensic_metascience_ai_toolkit.core.prompts`), the single source of truth for what
+  is sent; the JSON schemas are `src/forensic_metascience_ai_toolkit/schema/`. The old
   `metascience_agent/prompts/` package was retired on 2026-10-18.
   `prompts.PROMPT_FILES` maps the old names to the files; a scanner of
   prompt text reads `prompts.prompt_files()`, never a glob of one folder.
@@ -253,7 +257,7 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   was maintained for an audience of nobody. Guidance the model needs goes in the
   `description` or in the two stage prompts.
 
-  Schemas: producer-specific variants of `src/metascience_agent/schema/findings.v2.schema.json`
+  Schemas: producer-specific variants of `src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json`
   and `schema/adjudication.schema.json`, enforced via `--json-schema`.
   The v1 `findings.schema.json` and `report.schema.json` were deleted, as were
   the retired divergent master prompts; do not reintroduce either.
@@ -391,7 +395,7 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   - `workbench/monitor.py` uses nonrecursive watches on known paths and periodic
     reconciliation. Source-file modifications are revalidated locally, independently
     of the database. Watcher failure is visible and retains periodic reconciliation.
-  - `python -m metascience_agent.workbench.service --migrate` applies migrations
+  - `python -m forensic_metascience_ai_toolkit.workbench.service --migrate` applies migrations
     004/005/006; `--sync --index webapp/data/index.json` bootstraps the local cache.
     Here `python` means the interpreter discovered from the console script above.
     psycopg and watchfiles are base dependencies; `metascience db-setup` creates
@@ -438,7 +442,7 @@ the archive verbs -- because deleting a writer is not deleting a reader.
   variables and values, plus (since v1.72.0) a deterministic checks/premises
   layer (`checks.py`, `premises.py`, `premise_reading.py`, `adjudication*.py`).
   **Not wired into the analysis pipeline**; run it with
-  `python -m metascience_agent.scaffold`. The paid premise reading is opt-in
+  `python -m forensic_metascience_ai_toolkit.scaffold`. The paid premise reading is opt-in
   (`--read-premises`, capped by `MAX_CANDIDATES_PER_PAPER`). Paid table readings
   persist in `~/.cache/metascience/readings` (`METASCIENCE_READING_CACHE`, `off`
   for test-retest); the suite gives each test its own empty store.

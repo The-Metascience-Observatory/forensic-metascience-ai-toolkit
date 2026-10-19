@@ -28,7 +28,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.tools.duplication import (
+from forensic_metascience_ai_toolkit.tools.duplication import (
     _SAMPLE_SD_ALLOWANCE, _is_bernoulli_pair, detect_duplication,
 )
 
@@ -89,7 +89,7 @@ class TestTheFalseAccusationIsGone:
     def test_the_jama_cohort_paper_is_not_accused(self):
         """THE REGRESSION TEST. This paper is honest, it is on the demo
         shortlist, and the tool called it highly_suspicious."""
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         result = prepass.sweep_duplication(prepass.paper_tables(JAMA))
         assert result["severity"] not in ("suspicious", "highly_suspicious",
                                           "impossible"), result["severity"]
@@ -100,7 +100,7 @@ class TestTheFalseAccusationIsGone:
         priced as one number, a chance match is essentially CERTAIN -- which is
         the true state of affairs for proportions repeated across the tables of
         one cohort."""
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         res = prepass.sweep_duplication(prepass.paper_tables(JAMA))["result"]
         assert res["chance_probability"] > 0.5, res["chance_probability"]
 

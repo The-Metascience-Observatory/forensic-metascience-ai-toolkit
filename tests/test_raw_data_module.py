@@ -8,8 +8,8 @@ never the headline. A paper with no spreadsheet is `did_not_run`, never clean.
 import asyncio
 import json
 
-from metascience_agent import adjudicate, agent, raw_track
-from metascience_agent import pipeline_config as pc
+from forensic_metascience_ai_toolkit import adjudicate, agent, raw_track
+from forensic_metascience_ai_toolkit import pipeline_config as pc
 from tests.test_parallel_pipeline import fakes, paper  # noqa: F401
 
 
@@ -101,7 +101,7 @@ class TestThePipeline:
         (paper / "data.csv").write_text(_csv_with_copied_rows())
         res = _run(paper)
         root = res["history_root"]
-        from metascience_agent.analysis_runs import read
+        from forensic_metascience_ai_toolkit.analysis_runs import read
         from pathlib import Path
         runs = read(Path(root) / ".analysis_runs" / "index.json",
                     {"runs": {}})["runs"].values()
@@ -132,7 +132,7 @@ class TestTheRunVerb:
             self, paper, fakes, monkeypatch):
         from typer.testing import CliRunner
 
-        from metascience_agent.cli import _analyze_out_dir, app
+        from forensic_metascience_ai_toolkit.cli import _analyze_out_dir, app
         monkeypatch.setattr(agent, "ensure_paper_extracted",
                             lambda *a, **k: {"failed": []})
         (paper / "data.csv").write_text(_csv_with_copied_rows())
@@ -150,7 +150,7 @@ class TestTheRunVerb:
 class TestPartialCoverageReachesTheReport:
     def test_a_partial_scan_says_so_in_the_limitations(self, paper, fakes,
                                                        monkeypatch):
-        from metascience_agent.modules.raw_data import module as raw_mod
+        from forensic_metascience_ai_toolkit.modules.raw_data import module as raw_mod
 
         async def partial(paper_dir, timeout_s=None):
             return {"ran": True, "is_error": False,
@@ -165,7 +165,7 @@ class TestPartialCoverageReachesTheReport:
                    for l in res["limitations"]), res["limitations"]
 
     def test_a_timeout_is_named(self, paper, fakes, monkeypatch):
-        from metascience_agent.modules.raw_data import module as raw_mod
+        from forensic_metascience_ai_toolkit.modules.raw_data import module as raw_mod
 
         async def timed_out(paper_dir, timeout_s=None):
             return {"ran": False, "is_error": True, "execution_status": "failed",

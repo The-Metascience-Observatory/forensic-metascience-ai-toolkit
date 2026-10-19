@@ -12,8 +12,8 @@ from pathlib import Path
 import jsonschema
 import pytest
 
-from metascience_agent import adjudicate as A
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit import adjudicate as A
+from forensic_metascience_ai_toolkit.core import prompts
 
 PAPER = ("The compliance rate was 81.3% of participants. "
          "the same section is shown at 10x and 40x magnification. "
@@ -123,7 +123,7 @@ class TestAClearNeedsARealQuote:
         assert f["severity"] is not None
 
     def test_the_minimum_is_imported_not_restated(self):
-        from metascience_agent.quotes import _MIN_FRAGMENT
+        from forensic_metascience_ai_toolkit.quotes import _MIN_FRAGMENT
         assert _MIN_FRAGMENT == 12
 
 

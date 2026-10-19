@@ -12,8 +12,8 @@ These tests pin the machinery that makes it a one-line answer instead.
 """
 import json
 
-from metascience_agent import agent as A
-from metascience_agent.agent import STAGE1_TOOLS, _mcp, _sandbox_audit, _tool_call_ledger
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _mcp, _sandbox_audit, _tool_call_ledger
 
 
 def _msgs(*calls):
@@ -120,7 +120,7 @@ class TestTheDispatcherSRefusalsReachTheReport:
         ]
 
     def test_refusals_are_harvested(self):
-        from metascience_agent.agent import _machine_refusals
+        from forensic_metascience_ai_toolkit.agent import _machine_refusals
         out = _machine_refusals(self._messages([
             {"cell": "r0", "tools": ["grim_check"], "reason": "needs n"},
             {"cell": "r1", "tools": ["grim_check"], "reason": "needs n"},
@@ -131,7 +131,7 @@ class TestTheDispatcherSRefusalsReachTheReport:
         assert out[0]["source"] == "dispatcher"
 
     def test_many_identical_refusals_collapse_to_one_entry(self):
-        from metascience_agent.agent import _machine_refusals
+        from forensic_metascience_ai_toolkit.agent import _machine_refusals
         out = _machine_refusals(self._messages(
             [{"cell": f"r{i}", "tools": ["grim_check"], "reason": "needs n"}
              for i in range(34)]))
@@ -139,7 +139,7 @@ class TestTheDispatcherSRefusalsReachTheReport:
         assert "and 28 more" in out[0]["location"]
 
     def test_different_reasons_stay_separate(self):
-        from metascience_agent.agent import _machine_refusals
+        from forensic_metascience_ai_toolkit.agent import _machine_refusals
         out = _machine_refusals(self._messages([
             {"cell": "r0", "tools": ["grim_check"], "reason": "needs n"},
             {"cell": "r1", "tools": ["debit_check"], "reason": "no stated bound"},
@@ -147,11 +147,11 @@ class TestTheDispatcherSRefusalsReachTheReport:
         assert len(out) == 2
 
     def test_a_clean_run_harvests_nothing(self):
-        from metascience_agent.agent import _machine_refusals
+        from forensic_metascience_ai_toolkit.agent import _machine_refusals
         assert _machine_refusals(self._messages([])) == []
 
     def test_a_truncated_or_unparseable_result_does_not_crash(self):
-        from metascience_agent.agent import _machine_refusals
+        from forensic_metascience_ai_toolkit.agent import _machine_refusals
         msgs = self._messages([])
         msgs[1]["message"]["content"][0]["content"][0]["text"] = '{"not_run": [ trunca'
         assert _machine_refusals(msgs) == []
@@ -187,13 +187,13 @@ class TestTheGateableSubsetIsNotTheRawVerdict:
         ]
 
     def test_only_the_accusatory_unbacked_findings_are_gateable(self):
-        from metascience_agent.agent import unbacked_accusations
+        from forensic_metascience_ai_toolkit.agent import unbacked_accusations
         ids = {f["id"] for f in unbacked_accusations(self.LEDGER, self._findings())}
         assert ids == {"a"}, ids
 
     def test_the_raw_unbacked_list_is_wider_and_must_stay_wider(self):
         """Both lists are wanted: one to LOG, one to GATE."""
-        from metascience_agent.agent import _unbacked_findings, unbacked_accusations
+        from forensic_metascience_ai_toolkit.agent import _unbacked_findings, unbacked_accusations
         raw = {f["id"] for f in _unbacked_findings(self.LEDGER, self._findings())}
         gate = {f["id"] for f in unbacked_accusations(self.LEDGER, self._findings())}
         assert gate < raw, "the gateable subset must be strictly narrower"
@@ -202,7 +202,7 @@ class TestTheGateableSubsetIsNotTheRawVerdict:
     def test_a_manual_finding_is_never_gateable(self):
         """`manual` is honestly labelled. It is a severity-cap question, not a
         sandbox breach, and conflating them would punish the honest label."""
-        from metascience_agent.agent import unbacked_accusations
+        from forensic_metascience_ai_toolkit.agent import unbacked_accusations
         assert unbacked_accusations(
             [], [{"id": "m", "technique": "manual", "severity": "impossible"}]) == []
 
@@ -218,8 +218,8 @@ class TestRunProvenance:
 
     def test_provenance_never_breaks_a_run(self):
         """It is bookkeeping. A failure here must not cost a paid analysis."""
-        from metascience_agent import agent as A
-        import metascience_agent.registry as R
+        from forensic_metascience_ai_toolkit import agent as A
+        import forensic_metascience_ai_toolkit.registry as R
         real = R.SPECS
         try:
             R.SPECS = property(lambda self: 1 / 0)  # force the hash to raise
@@ -254,7 +254,7 @@ class TestTheVerdictGetsADenominator:
         return _msgs((_mcp("check_table"), {"cells": []}, payload))
 
     def test_collapsed_passes_are_counted(self):
-        from metascience_agent.agent import checks_tally
+        from forensic_metascience_ai_toolkit.agent import checks_tally
         t = checks_tally(self._msgs_with_collapsed(125),
                          {"findings": [{"severity": "consistent"},
                                        {"severity": "suspicious"}]})
@@ -266,7 +266,7 @@ class TestTheVerdictGetsADenominator:
     def test_refusals_are_kept_separate_from_passes_and_from_flags(self):
         """`indeterminate` is OUR reach failing. Folding it into either column
         would make our blind spots read as evidence about the paper."""
-        from metascience_agent.agent import checks_tally
+        from forensic_metascience_ai_toolkit.agent import checks_tally
         t = checks_tally([], {"findings": [
             {"severity": "indeterminate"}, {"severity": "indeterminate"},
             {"severity": "consistent"}, {"severity": "impossible"}]})
@@ -281,7 +281,7 @@ class TestTheVerdictGetsADenominator:
         `checks_total` came out 0 -- on all 9 papers of a real batch. The dict
         goes straight into `adjudicate.build_docket(tally=...)`, so a zeroed
         tally tells the adjudicator nothing passed and nothing was flagged."""
-        from metascience_agent.agent import checks_tally
+        from forensic_metascience_ai_toolkit.agent import checks_tally
         t = checks_tally([], {"findings": [
             {"outcome": "pass", "severity": None},
             {"outcome": "pass", "severity": None},
@@ -298,7 +298,7 @@ class TestTheVerdictGetsADenominator:
     def test_an_unrecognised_vocabulary_is_named_not_binned(self):
         """A finding neither branch understands is counted as `unclassified`.
         Folding it into passes is how a blind spot reads as a clean paper."""
-        from metascience_agent.agent import checks_tally
+        from forensic_metascience_ai_toolkit.agent import checks_tally
         t = checks_tally([], {"findings": [{"title": "no outcome, no severity"}]})
         assert t["checks_total"] == 0
         assert t["checks_passed"] == 0
@@ -323,7 +323,7 @@ class TestThePromptIsPersisted:
         """The prompt is recorded where it is SENT, not rebuilt afterwards -- a
         prompt reconstructed later is a guess about what ran, not a record."""
         import inspect
-        from metascience_agent import agent as A
+        from forensic_metascience_ai_toolkit import agent as A
         from metascience_observatory_image_analysis import runtime
         src = inspect.getsource(runtime._run_stage)
         assert '"prompt": prompt' in src

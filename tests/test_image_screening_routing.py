@@ -10,7 +10,7 @@ from tests.test_image_review import _paper, _group
 
 
 def test_cli_defaults_use_luna_then_grok(tmp_path, monkeypatch):
-    from metascience_agent.cli import app
+    from forensic_metascience_ai_toolkit.cli import app
     called = []
     async def run(root, screen, confirm, *args, **kwargs):
         called.append((screen, confirm))

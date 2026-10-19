@@ -356,7 +356,7 @@ def body_chars(result: Any) -> int:
     """
     if not isinstance(result, dict):
         return 0
-    from metascience_agent.extraction.pdf import readable_body_chars
+    from forensic_metascience_ai_toolkit.extraction.pdf import readable_body_chars
 
     pages = result.get("pages")
     if isinstance(pages, list) and pages:
@@ -417,9 +417,9 @@ def probe(pdf: Path) -> dict:
     that a single number would merge: docling could not read this document, and
     docling read it but the reader saw nothing.
     """
-    from metascience_agent.extraction import docling_tables as _dl
-    from metascience_agent.tool_specs.readers.spec import extract_figures  # refuses by name without the image package
-    from metascience_agent.extraction.pdf import (
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as _dl
+    from forensic_metascience_ai_toolkit.tool_specs.readers.spec import extract_figures  # refuses by name without the image package
+    from forensic_metascience_ai_toolkit.extraction.pdf import (
         extract_text,
         extract_text_with_tables,
     )
@@ -523,7 +523,7 @@ def probe(pdf: Path) -> dict:
     # corruption detector reporting clean on a file it could not read is the
     # exact defect this harness classifies as `silent_empty` elsewhere.
     try:
-        from metascience_agent.glyphs import scan_paper
+        from forensic_metascience_ai_toolkit.glyphs import scan_paper
         with _budget(PATH_TIMEOUT_SEC):
             g = scan_paper(pdf.parent)
         out["glyph_text_available"] = bool(g.get("text_available"))

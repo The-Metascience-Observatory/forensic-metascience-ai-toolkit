@@ -29,9 +29,9 @@ that corpus with its most applicable tool unreachable.
 """
 import pytest
 
-from metascience_agent import agent, registry
+from forensic_metascience_ai_toolkit import agent, registry
 
-from metascience_agent.registry import CLI_ONLY
+from forensic_metascience_ai_toolkit.registry import CLI_ONLY
 
 
 def _offered() -> set[str]:
@@ -68,7 +68,7 @@ class TestNoToolIsUnreachableByAccident:
         findings. The tracks import the Python functions; they do not
         need the server."""
         pytest.importorskip("claude_agent_sdk")
-        from metascience_agent.tools_mcp import ALL_TOOLS
+        from forensic_metascience_ai_toolkit.tools_mcp import ALL_TOOLS
         leaked = set(CLI_ONLY) & {t.name for t in ALL_TOOLS}
         assert not leaked, f"CLI-only tools served over MCP: {sorted(leaked)}"
 

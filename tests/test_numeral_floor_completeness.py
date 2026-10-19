@@ -21,7 +21,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import completeness, references
+from forensic_metascience_ai_toolkit import completeness, references
 
 CORPUS = pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
 INTERLEAVED = CORPUS / "10.1073--pnas.0801268105"
@@ -53,7 +53,7 @@ class TestItDetectsStrandedBodyProse:
         if not INTERLEAVED.is_dir():
             pytest.skip("reference paper not present")
         text, source = completeness._read_body(INTERLEAVED), None
-        from metascience_agent.extraction.jats import _derive_paper_text
+        from forensic_metascience_ai_toolkit.extraction.jats import _derive_paper_text
         _, source = _derive_paper_text(INTERLEAVED)
         out = references.stranded_prose(text[0])
         if source == "pdf":
@@ -141,10 +141,10 @@ class TestItDetectsStrandedBodyProse:
 
 class TestTheRegisterSaysSoWhereTheClaimIsMade:
     def test_the_register_records_the_incompleteness(self):
-        from metascience_agent import values
+        from forensic_metascience_ai_toolkit import values
         if not INTERLEAVED.is_dir():
             pytest.skip("reference paper not present")
-        from metascience_agent.extraction.jats import _derive_paper_text
+        from forensic_metascience_ai_toolkit.extraction.jats import _derive_paper_text
         _, source = _derive_paper_text(INTERLEAVED)
         reg = values.build_from_paper(INTERLEAVED)
         n = reg.get("numerals_incomplete", {}).get("n_lines", 0)
@@ -156,8 +156,8 @@ class TestTheRegisterSaysSoWhereTheClaimIsMade:
             assert n == 0, f"source={source} but the register still claims {n} stranded lines"
 
     def test_it_also_lands_in_problems_where_a_reader_looks(self):
-        from metascience_agent import values
-        from metascience_agent.extraction.jats import _derive_paper_text
+        from forensic_metascience_ai_toolkit import values
+        from forensic_metascience_ai_toolkit.extraction.jats import _derive_paper_text
         if not INTERLEAVED.is_dir():
             pytest.skip("reference paper not present")
         if _derive_paper_text(INTERLEAVED)[1] != "pdf":
@@ -170,7 +170,7 @@ class TestTheRegisterSaysSoWhereTheClaimIsMade:
     def test_a_clean_paper_records_nothing(self):
         """Absence of the key must mean "the claim holds", so it cannot be
         written unconditionally."""
-        from metascience_agent import values
+        from forensic_metascience_ai_toolkit import values
         clean = CORPUS / "10.1001--jamanetworkopen.2023.37679"
         if not clean.is_dir():
             pytest.skip("paper not present")

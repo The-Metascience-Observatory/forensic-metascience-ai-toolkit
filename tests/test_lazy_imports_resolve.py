@@ -5,7 +5,7 @@ WHY THIS EXISTS. v1.27.0 (`1d6a832`) deleted `agent.write_review_outputs`.
 
     from .agent import analyze_paper, write_review_outputs
 
-INSIDE the function body, so `import metascience_agent.cli` succeeded, every
+INSIDE the function body, so `import forensic_metascience_ai_toolkit.cli` succeeded, every
 test that imports the CLI passed, and `metascience analyze <paper>` -- the
 verb the toolkit exists for -- raised ImportError on every invocation, before
 any spend. Found 2026-09-05 while splitting agent.py; Dan's main carried the
@@ -27,8 +27,8 @@ from tests.source_paths import canonical, IMAGE_SRC
 import ast
 import pathlib
 
-SRC = pathlib.Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
-PACKAGE = "metascience_agent"
+SRC = pathlib.Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
+PACKAGE = "forensic_metascience_ai_toolkit"
 
 
 def _bindings(tree: ast.Module) -> set[str]:

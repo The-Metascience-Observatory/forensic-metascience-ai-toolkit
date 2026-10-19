@@ -23,7 +23,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import completeness as C
+from forensic_metascience_ai_toolkit import completeness as C
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
@@ -256,7 +256,7 @@ class TestEveryStage1FindingEndsWithADisposition:
         return {"id": fid, "severity": sev, "location": "T1"}
 
     def test_a_dropped_accusation_is_surfaced(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings(
             [self._f("a", "impossible"), self._f("b", "consistent")],
             {"findings": [{"stage1_finding_ids": ["b"]}]})
@@ -266,7 +266,7 @@ class TestEveryStage1FindingEndsWithADisposition:
         assert "silent retraction" in r["note"]
 
     def test_dropping_only_consistent_results_is_clean(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings(
             [self._f("a", "consistent"), self._f("b", "suspicious")],
             {"findings": [{"stage1_finding_ids": ["b"]}]})
@@ -275,13 +275,13 @@ class TestEveryStage1FindingEndsWithADisposition:
         assert "None of the dropped findings was accusatory" in r["note"]
 
     def test_everything_carried_says_so(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings([self._f("a", "suspicious")],
                                {"findings": [{"stage1_finding_ids": ["a"]}]})
         assert r["n_dropped"] == 0 and r["clean"] is True
 
     def test_no_findings_is_not_an_alarm(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings([], {"findings": []})
         assert r["clean"] is True and "nothing to reconcile" in r["note"]
 
@@ -291,7 +291,7 @@ class TestEveryStage1FindingEndsWithADisposition:
         dropped -- 11 accusatory -- which manufactured a six-item accusation
         against the pipeline out of two absent files. Two archived runs have a
         findings.json and no report.json."""
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings([self._f("a", "impossible")], None)
         assert r["reconcilable"] is False
         assert r["n_dropped"] is None and r["n_carried"] is None
@@ -305,7 +305,7 @@ class TestEveryStage1FindingEndsWithADisposition:
         `highly_suspicious` are dropped 0 times. The strongest claims survive to
         the report, which is what this check was built to find out."""
         import json, pathlib as _p
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         root = _p.Path(__file__).resolve().parents[1]
         worst = 0
         seen = 0
@@ -348,13 +348,13 @@ class TestTheTriageChannelIsReadNotJustOffered:
         return {"id": fid, "severity": sev, "location": "T1"}
 
     def test_an_unexplained_accusation_drop_is_not_clean(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings([self._f("a", "suspicious")], {"findings": []})
         assert r["n_accusatory_unexplained"] == 1
         assert r["clean"] is False
 
     def test_a_stated_reason_makes_the_same_drop_clean(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings(
             [self._f("a", "suspicious")],
             {"findings": [],
@@ -365,7 +365,7 @@ class TestTheTriageChannelIsReadNotJustOffered:
         assert r["n_dropped"] == 1, "explaining a drop does not un-drop it"
 
     def test_the_reason_travels_with_the_row(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings(
             [self._f("a", "impossible")],
             {"findings": [],
@@ -377,7 +377,7 @@ class TestTheTriageChannelIsReadNotJustOffered:
         assert "folded into" in row["reason"]
 
     def test_explaining_a_consistent_drop_is_not_required(self):
-        from metascience_agent.completeness import reconcile_findings
+        from forensic_metascience_ai_toolkit.completeness import reconcile_findings
         r = reconcile_findings([self._f("a", "consistent")], {"findings": []})
         assert r["clean"] is True, "a consistent result belongs nowhere in a report"
 
@@ -416,7 +416,7 @@ class TestTheProseHalfHasASourceForPDFOnlyPapers:
         return p
 
     def test_a_pdf_only_paper_now_enumerates_prose(self):
-        from metascience_agent.completeness import _read_body, build_manifest
+        from forensic_metascience_ai_toolkit.completeness import _read_body, build_manifest
         d = self._dir("10.1073--pnas.0903620106")          # Ophir: PDF, no XML, no body.md
         assert not list(d.glob("*.xml")) and not (d / "body.md").exists(), \
             "this test is only meaningful on a paper with no XML and no body.md"
@@ -429,12 +429,12 @@ class TestTheProseHalfHasASourceForPDFOnlyPapers:
         """The PDF is the LAST resort. XML is structured ground truth and must
         not be displaced by a text layer inferred from ink."""
         import pathlib
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         d = self._dir("10.1001--jamanetworkopen.2023.37679")
         assert list(d.glob("*.xml")), "fixture assumption"
         called = []
         real = C.cached_text if hasattr(C, "cached_text") else None
-        from metascience_agent.extraction import docling_tables as DT
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as DT
         orig = DT.cached_text
         DT.cached_text = lambda *a, **k: (called.append(a) or ("", "should not be reached"))
         try:
@@ -446,7 +446,7 @@ class TestTheProseHalfHasASourceForPDFOnlyPapers:
     def test_a_cold_cache_names_the_fix_instead_of_returning_silence(self, tmp_path):
         """An empty string on its own reads as "this paper has no prose", which
         is a claim about the paper. A failure to read one is a fact about us."""
-        from metascience_agent.completeness import _read_body
+        from forensic_metascience_ai_toolkit.completeness import _read_body
         (tmp_path / f"{tmp_path.name}.pdf").write_bytes(b"%PDF-1.4 not really")
         text, problem = _read_body(tmp_path)
         assert text == ""
@@ -457,7 +457,7 @@ class TestTheProseHalfHasASourceForPDFOnlyPapers:
         """Reading whichever PDF sorts first would put a supplement's prose into
         the manifest as the paper's own body. `_article_pdf` resolves by
         declaration, then by the DOI stem -- never by sort order."""
-        from metascience_agent.completeness import _article_pdf
+        from forensic_metascience_ai_toolkit.completeness import _article_pdf
         (tmp_path / "aaa_supplementary_appendix.pdf").write_bytes(b"%PDF-1.4")
         got, how = _article_pdf(tmp_path)
         # STILL REFUSED, and now for a reason that names the risk. The message
@@ -493,7 +493,7 @@ class TestTheFloorStopsAtTheBibliography:
         return f"{'Filler sentence about the method. ' * 40}\n{results}\n\nReferences\n\n{refs}\n"
 
     def test_a_statistic_in_the_reference_list_is_not_enumerated(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = self._body(
             "Accuracy differed by group, t(48) = 2.51, p = 0.015.",
             "Gross JJ (1998). Antecedent- and response-focused emotion regulation. "
@@ -506,12 +506,12 @@ class TestTheFloorStopsAtTheBibliography:
     def test_a_doi_in_running_text_is_not_a_sample_fraction(self):
         """The cutoff cannot catch a DOI cited mid-paragraph, so the DOI context
         and the impossible-fraction rule have to hold on their own."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = "As reported previously (10.1037/0022-3514.74.1.224), the effect held. " * 3
         assert not [i for i in _body_items(text) if "/" in i["raw"]]
 
     def test_a_fraction_larger_than_its_own_total_is_refused(self):
-        from metascience_agent.completeness import _is_result
+        from forensic_metascience_ai_toolkit.completeness import _is_result
         import re
         m = re.match(r"^(\d+/\d+)$", "1037/0022")
         assert _is_result("1037/0022", m) is False
@@ -521,12 +521,12 @@ class TestTheFloorStopsAtTheBibliography:
     def test_the_cut_never_fires_in_the_front_of_a_document(self):
         """A table of contents listing 'References' must not truncate the paper.
         Cutting early loses real results, which is the worse direction."""
-        from metascience_agent.completeness import _body_end
+        from forensic_metascience_ai_toolkit.completeness import _body_end
         text = "Contents\n\nReferences\n\n" + ("Body text with results. " * 200)
         assert _body_end(text) == len(text)
 
     def test_the_heading_must_be_a_heading(self):
-        from metascience_agent.completeness import _body_end
+        from forensic_metascience_ai_toolkit.completeness import _body_end
         text = ("Filler. " * 100) + "\nWe compared our references to theirs.\n" + ("More. " * 100)
         assert _body_end(text) == len(text), "a sentence mentioning references is not a heading"
 
@@ -567,13 +567,13 @@ class TestANumberInMethodsIsNotAReportedResult:
     ]
 
     def test_methods_numbers_are_not_enrolled(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         fooled = [(n, [i["raw"] for i in _body_items(t)])
                   for n, t in self.NOT_A_RESULT if _body_items(t)]
         assert not fooled, f"enrolled as reported statistics: {fooled}"
 
     def test_real_results_are_still_enrolled(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         missed = [n for n, t in self.IS_A_RESULT if not _body_items(t)]
         assert not missed, f"real statistics dropped from the floor: {missed}"
 
@@ -581,7 +581,7 @@ class TestANumberInMethodsIsNotAReportedResult:
         """Dropping a real statistic from the floor is a false all-clear about
         the register's completeness -- the error this module exists to
         prevent -- so the filter matches future/conditional modality only."""
-        from metascience_agent.completeness import _HYPOTHETICAL_BEFORE
+        from forensic_metascience_ai_toolkit.completeness import _HYPOTHETICAL_BEFORE
         assert _HYPOTHETICAL_BEFORE.search("will be judged successful if more than ")
         assert not _HYPOTHETICAL_BEFORE.search("As expected, in non-tg mice approximately ")
         assert not _HYPOTHETICAL_BEFORE.search("These criteria improved by ")
@@ -596,7 +596,7 @@ class TestTheMojibakeEqualsSign:
     they were absent from the floor AND unreachable by statcheck."""
 
     def test_a_mojibake_p_value_is_enumerated(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         items = _body_items("The effect was reliable (P ¼ 0.038) at follow-up.")
         assert [i["kind"] for i in items] == ["p_value"]
 
@@ -604,7 +604,7 @@ class TestTheMojibakeEqualsSign:
         """A locator that points at a string the paper does not contain is
         worse than no locator. `celltypes` keeps `raw` verbatim for the same
         reason and records the repair beside it."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = "The effect was reliable (P ¼ 0.038) at follow-up."
         i = _body_items(text)[0]
         assert i["raw"] == "P ¼ 0.038"
@@ -612,7 +612,7 @@ class TestTheMojibakeEqualsSign:
         assert i["repaired"] == "P = 0.038"
 
     def test_offsets_still_point_into_the_original(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = "Baseline was stable. The effect was reliable (P ¼ 0.038) here."
         i = _body_items(text)[0]
         assert text[i["offset"]:i["offset"] + len(i["raw"])] == i["raw"]
@@ -621,14 +621,14 @@ class TestTheMojibakeEqualsSign:
         """The load-bearing property: only the single character is swapped and
         every surrounding space is kept, so an offset into the repaired text is
         an offset into the original."""
-        from metascience_agent.completeness import _repair_equals
+        from forensic_metascience_ai_toolkit.completeness import _repair_equals
         for s in ("P ¼ 0.038", "n ¼ 68", "F CL ¼ 45.43; DFn ¼ 19", "no quarter here"):
             assert len(_repair_equals(s)) == len(s), s
 
     def test_one_quarter_is_left_alone(self):
         """`¼` means one quarter. The repair only fires between a word or
         closing bracket and a NUMBER, where it cannot."""
-        from metascience_agent.completeness import _repair_equals
+        from forensic_metascience_ai_toolkit.completeness import _repair_equals
         assert _repair_equals("improvement in ¼ of patients") == \
             "improvement in ¼ of patients"
         assert "¼" in _repair_equals("roughly ¼ responded")
@@ -643,7 +643,7 @@ class TestTheTwoWaysAPaperPrintsAMeanAndItsDispersion:
         """`M = 4.64, SD = 1.50`. Psychology's convention, and the fraud
         ground-truth papers are psychology: 37 pairs in
         10.1007--s11031-011-9216-y alone, every one invisible."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         items = _body_items("the control condition (M = 6.82, SD = .67) did not")
         assert [i["kind"] for i in items] == ["mean_sd_apa"]
 
@@ -652,12 +652,12 @@ class TestTheTwoWaysAPaperPrintsAMeanAndItsDispersion:
         papers (42%) use it, 5,942 occurrences, none indexed. The floor exists
         to say what the model overlooked and could not see the commonest way a
         clinical paper prints a mean."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         for text in ("mean age was 65.2 ± 1.17 years", "65.2 +/- 1.17"):
             assert [i["kind"] for i in _body_items(text)] == ["mean_pm_prose"], text
 
     def test_the_parenthesised_form_still_works(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         assert [i["kind"] for i in _body_items("scores of 4.17 (SD = 1.19) here")] \
             == ["mean_sd_prose"]
 
@@ -683,7 +683,7 @@ class TestTheTwoWaysAPaperPrintsAMeanAndItsDispersion:
         the anchor is read. The cost is accepted knowingly: YLHWMEJ3's 50
         dispersions are very probably `±` and go unread, because being nearly
         sure is still a guess about a digit."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         assert _body_items("the 65 \x06 1.17 group") == []
         proved = "Values are mean \x06 SD. The 65 \x06 1.17 group improved."
         assert "mean_pm_prose" in [i["kind"] for i in _body_items(proved)]
@@ -692,7 +692,7 @@ class TestTheTwoWaysAPaperPrintsAMeanAndItsDispersion:
         """What follows `±` may be an SD, an SE or a half-interval. This does
         not decide which -- that is the typer's job, and a value nobody can
         type is still a value the paper printed."""
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         i = _body_items("65.2 ± 1.17")[0]
         assert i["kind"] == "mean_pm_prose"
         assert "sd" not in i["kind"]
@@ -708,12 +708,12 @@ class TestOperatorEntitiesHideAPValue:
     15,296."""
 
     def test_an_entity_hidden_p_value_is_enumerated(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         items = _body_items("the effect was reliable (p &lt; .05) overall")
         assert [i["kind"] for i in items] == ["p_value"]
 
     def test_raw_is_what_the_source_contains(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = "the effect was reliable (p &lt; .05) overall"
         i = _body_items(text)[0]
         assert i["raw"] == "p &lt; .05"
@@ -722,12 +722,12 @@ class TestOperatorEntitiesHideAPValue:
     def test_the_repair_is_length_preserving(self):
         """Padded, the same discipline as the mojibake `=`: an offset into the
         repaired text stays an offset into the original."""
-        from metascience_agent.completeness import _repair_entities
+        from forensic_metascience_ai_toolkit.completeness import _repair_entities
         for s in ("p &lt; .05", "a &gt; b", "x &amp; y", "no entities here"):
             assert len(_repair_entities(s)) == len(s), s
 
     def test_offsets_still_point_into_the_original(self):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         text = "Baseline held. The effect was reliable (p &lt; .05) overall."
         i = _body_items(text)[0]
         assert text[i["offset"]:i["offset"] + len(i["raw"])] == i["raw"]
@@ -740,7 +740,7 @@ class TestANamedQuantityGivenAValue:
     matches. +1,745 statistics across the corpus."""
 
     def _kinds(self, text):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         return [(i["kind"], i["raw"]) for i in _body_items(text)]
 
     def test_a_prose_sample_size_is_finally_enumerated(self):
@@ -767,7 +767,7 @@ class TestANamedQuantityGivenAValue:
 
 class TestThreeGapsTheRulesCatalogueFound:
     def _kinds(self, text):
-        from metascience_agent.completeness import _body_items
+        from forensic_metascience_ai_toolkit.completeness import _body_items
         return [(i["kind"], i["raw"]) for i in _body_items(text)]
 
     def test_welch_decimal_degrees_of_freedom(self):
@@ -802,21 +802,21 @@ class TestTheRepairBelongsAtTheReader:
     reached the model with damage the XML papers never had."""
 
     def test_the_reader_decodes_operator_entities(self):
-        from metascience_agent.extraction.jats import repair_extraction_damage
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage
         assert repair_extraction_damage("p &lt; .05 and a &gt; b") == "p < .05 and a > b"
 
     def test_the_reader_repairs_the_mojibake_equals(self):
-        from metascience_agent.extraction.jats import repair_extraction_damage
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage
         assert repair_extraction_damage("n ¼ 68 patients") == "n = 68 patients"
 
     def test_one_quarter_is_still_one_quarter(self):
-        from metascience_agent.extraction.jats import repair_extraction_damage
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage
         assert repair_extraction_damage("in ¼ of patients") == "in ¼ of patients"
 
     def test_it_is_idempotent_so_two_layers_cannot_drift(self):
         """`completeness` keeps its own repair for callers that pass raw text
         directly. Decoding already-decoded text must be a no-op."""
-        from metascience_agent.extraction.jats import repair_extraction_damage as R
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage as R
         once = R("p &lt; .05")
         assert R(once) == once == "p < .05"
 
@@ -824,7 +824,7 @@ class TestTheRepairBelongsAtTheReader:
         """`&lt;` is not what the paper printed -- the paper printed `<`, and
         the entity is damage the extractor added. That is why the repair belongs
         above every consumer rather than inside one."""
-        from metascience_agent.extraction.jats import repair_extraction_damage as R
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage as R
         assert "&" not in R("p &lt; .05")
 
 
@@ -835,8 +835,8 @@ class TestASplitDecimalIsOneNumber:
     380 tokens."""
 
     def test_the_decimal_is_rejoined(self):
-        from metascience_agent.extraction.jats import repair_extraction_damage as R
-        from metascience_agent import numerals as N
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage as R
+        from forensic_metascience_ai_toolkit import numerals as N
         assert R("a value of 0 . 28 here") == "a value of 0.28 here"
         assert [r["printed"] for r in N.index(R("x 0 . 06 to + 0 . 28"))] == \
             ["0.06", "0.28"]
@@ -844,7 +844,7 @@ class TestASplitDecimalIsOneNumber:
     def test_a_numbered_list_marker_is_left_alone(self):
         """A SPACE BEFORE THE DOT is required, which is what separates a broken
         decimal from `1. Text`."""
-        from metascience_agent.extraction.jats import repair_extraction_damage as R
+        from forensic_metascience_ai_toolkit.extraction.jats import repair_extraction_damage as R
         assert R("1. Text follows") == "1. Text follows"
         assert R("see 1. 5 above") == "see 1. 5 above"
 
@@ -861,7 +861,7 @@ class TestTheProseHalfNeedsTheSameArticleTheTableHalfUses:
     that nothing had ever been handed."""
 
     def test_the_only_pdf_is_the_article(self, tmp_path):
-        from metascience_agent.completeness import _article_pdf
+        from forensic_metascience_ai_toolkit.completeness import _article_pdf
         d = tmp_path / "PAPERKEY"
         d.mkdir()
         (d / "paper.pdf").write_bytes(b"%PDF-1.4\n")
@@ -872,7 +872,7 @@ class TestTheProseHalfNeedsTheSameArticleTheTableHalfUses:
     def test_several_pdfs_and_no_declaration_still_refuses(self, tmp_path):
         """Then the ambiguity is real: a supplement's prose would enter the
         manifest as the paper's own body."""
-        from metascience_agent.completeness import _article_pdf
+        from forensic_metascience_ai_toolkit.completeness import _article_pdf
         d = tmp_path / "PAPERKEY"
         d.mkdir()
         (d / "paper.pdf").write_bytes(b"%PDF-1.4\n")
@@ -882,7 +882,7 @@ class TestTheProseHalfNeedsTheSameArticleTheTableHalfUses:
         assert "2 PDFs" in how and "refusing to guess" in how
 
     def test_no_pdf_at_all_is_still_reported(self, tmp_path):
-        from metascience_agent.completeness import _article_pdf
+        from forensic_metascience_ai_toolkit.completeness import _article_pdf
         d = tmp_path / "PAPERKEY"
         d.mkdir()
         got, how = _article_pdf(d)
@@ -891,7 +891,7 @@ class TestTheProseHalfNeedsTheSameArticleTheTableHalfUses:
     def test_a_declaration_still_wins(self, tmp_path):
         """The fallback must not overtake the authority it backs up."""
         import json
-        from metascience_agent.completeness import _article_pdf
+        from forensic_metascience_ai_toolkit.completeness import _article_pdf
         d = tmp_path / "PAPERKEY"
         d.mkdir()
         (d / "a.pdf").write_bytes(b"%PDF-1.4\n")

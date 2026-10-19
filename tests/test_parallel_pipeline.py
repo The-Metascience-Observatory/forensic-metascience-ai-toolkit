@@ -14,7 +14,7 @@ import re
 
 import pytest
 
-from metascience_agent import agent, parallel
+from forensic_metascience_ai_toolkit import agent, parallel
 
 
 def _doc(producer_rows, **top):
@@ -125,7 +125,7 @@ def fakes(monkeypatch):
                         fake_requiring)
     monkeypatch.setattr(agent, "_run_stage", fake_run_stage)
     monkeypatch.setattr(agent, "ensure_paper_extracted", lambda *a, **k: None)
-    from metascience_agent import paper_metadata
+    from forensic_metascience_ai_toolkit import paper_metadata
     monkeypatch.setattr(paper_metadata, "record_for_run", lambda d: None)
     return state
 
@@ -142,7 +142,7 @@ class TestAnalyzeCommand:
     def _invoke(self, paper, monkeypatch, *args):
         from typer.testing import CliRunner
 
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
 
         monkeypatch.setattr(agent, "ensure_paper_extracted",
                             lambda *a, **k: {"failed": []})
@@ -153,7 +153,7 @@ class TestAnalyzeCommand:
         ])
 
     def test_writes_an_adjudicated_review_and_viewer(self, paper, fakes, monkeypatch):
-        from metascience_agent.cli import _analyze_out_dir
+        from forensic_metascience_ai_toolkit.cli import _analyze_out_dir
 
         result = self._invoke(paper, monkeypatch)
         assert result.exit_code == 0, (result.output, result.exception)
@@ -168,7 +168,7 @@ class TestAnalyzeCommand:
 
     def test_crash_record_uses_the_selected_review_directory(
             self, paper, fakes, monkeypatch, tmp_path):
-        from metascience_agent.cli import _analyze_out_dir
+        from forensic_metascience_ai_toolkit.cli import _analyze_out_dir
 
         working = tmp_path / "working"
         working.mkdir()
@@ -206,7 +206,7 @@ class TestAnalyzeCommand:
             self, paper, fakes, monkeypatch):
         from typer.testing import CliRunner
 
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
 
         def must_not_extract(*args, **kwargs):
             pytest.fail("an unsupported input must be refused before work starts")
@@ -327,7 +327,7 @@ class TestHappyPath:
                                                                  fakes):
         """Captured where the command is built, not rebuilt by the writer: a
         rebuild is a second answer to "what was sent" and can drift."""
-        from metascience_agent.core import prompts as _p
+        from forensic_metascience_ai_toolkit.core import prompts as _p
         res = run(paper)
         assert res["system_prompts"]["adjudicator"] == \
             _p.adjudication_system_prompt()
@@ -812,7 +812,7 @@ class TestStubPdfLimitation:
     def test_a_preview_stub_main_pdf_is_a_named_limitation(self, paper,
                                                            monkeypatch,
                                                            fakes):
-        from metascience_agent import webapp_index as W
+        from forensic_metascience_ai_toolkit import webapp_index as W
         monkeypatch.setattr(W, "probe_main_pdf_stub",
                             lambda *a, **k: {"main_pdf_pages": 1,
                                              "pdf_suspect_stub": True})
@@ -821,7 +821,7 @@ class TestStubPdfLimitation:
             "a figure-blind run must say so in its own report"
 
     def test_a_full_pdf_adds_no_limitation(self, paper, monkeypatch, fakes):
-        from metascience_agent import webapp_index as W
+        from forensic_metascience_ai_toolkit import webapp_index as W
         monkeypatch.setattr(W, "probe_main_pdf_stub",
                             lambda *a, **k: {"main_pdf_pages": 9})
         res = run(paper)
@@ -834,7 +834,7 @@ class TestMissingSupplementLimitation:
 
     def test_a_cited_absent_supplement_is_a_named_limitation(self, paper,
                                                             monkeypatch, fakes):
-        from metascience_agent import supplements
+        from forensic_metascience_ai_toolkit import supplements
         monkeypatch.setattr(supplements, "audit", lambda *a, **k: {
             "missing": True, "styles": {"eTable / eFigure (JAMA)": ["eTable 3"]}})
         res = run(paper)
@@ -843,7 +843,7 @@ class TestMissingSupplementLimitation:
 
     def test_a_complete_paper_adds_no_such_limitation(self, paper, monkeypatch,
                                                       fakes):
-        from metascience_agent import supplements
+        from forensic_metascience_ai_toolkit import supplements
         monkeypatch.setattr(supplements, "audit", lambda *a, **k: {"missing": False})
         res = run(paper)
         assert not any("not available to this review" in line
@@ -1053,7 +1053,7 @@ class TestTheDigestAgainstTheRealArchive:
     @pytest.mark.skipif(not LEDGER.is_file(),
                         reason="the wound_healing run is not in this checkout")
     def test_the_measured_run_yields_a_usable_digest(self):
-        from metascience_agent import parallel as P
+        from forensic_metascience_ai_toolkit import parallel as P
         rows = json.loads(self.LEDGER.read_text())
         d = P._ledger_digest(rows if isinstance(rows, list) else [])
         n = d.count("### call ")
@@ -1125,7 +1125,7 @@ class TestWhatCountsAsWorkIsPerProducer:
                                                               fakes, monkeypatch):
         """The tool expert has no such excuse: the validated toolkit is its
         whole job, so `agent_code` does not count as work for it."""
-        from metascience_agent import parallel as P
+        from forensic_metascience_ai_toolkit import parallel as P
         assert P._n_work_calls(
             agent._tool_call_ledger(self._script_messages(4), []),
             "tool_expert") == 0
@@ -1300,7 +1300,7 @@ class TestAnAdjudicatorCrashKeepsTheFindings:
                    for l in res["limitations"])
 
     def test_an_account_level_stop_still_propagates(self, paper, fakes):
-        from metascience_agent.llm_backend import BackendUnavailable
+        from forensic_metascience_ai_toolkit.llm_backend import BackendUnavailable
         fakes["adjudicator"] = BackendUnavailable("out of credits")
         with pytest.raises(BackendUnavailable):
             run(paper)

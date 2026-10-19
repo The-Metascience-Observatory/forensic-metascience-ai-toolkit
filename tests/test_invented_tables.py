@@ -46,8 +46,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction.docling_tables import cache_status
-from metascience_agent.extraction.pdf import extract_text_with_tables
+from forensic_metascience_ai_toolkit.extraction.docling_tables import cache_status
+from forensic_metascience_ai_toolkit.extraction.pdf import extract_text_with_tables
 
 # Two real tables, on pages 6 and 9. Named for the defect it caught, not for a
 # property of the paper -- see the module docstring on why "PROSE" was a lie.

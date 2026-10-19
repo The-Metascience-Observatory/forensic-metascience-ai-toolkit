@@ -11,7 +11,7 @@ import subprocess
 
 import pytest
 
-from metascience_agent import run_script as rs
+from forensic_metascience_ai_toolkit import run_script as rs
 
 
 @pytest.fixture(autouse=True)

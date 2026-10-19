@@ -18,7 +18,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.evaluation.agreement import find_runs, from_review_dirs
+from forensic_metascience_ai_toolkit.evaluation.agreement import find_runs, from_review_dirs
 
 ROW = {"slug": "s", "title": "t" * 10, "description": "d" * 30,
        "location": "Table 1", "severity": "suspicious"}

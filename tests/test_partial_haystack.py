@@ -10,8 +10,8 @@ opened), and the rest got `unverified` ("not located"). Both are definitive
 claims about text we never read -- the house failure pattern.
 """
 
-import metascience_agent.quotes as quotes
-from metascience_agent.quotes import annotate, normalise
+import forensic_metascience_ai_toolkit.quotes as quotes
+from forensic_metascience_ai_toolkit.quotes import annotate, normalise
 
 
 class TestOnlyASupplementLoaded:

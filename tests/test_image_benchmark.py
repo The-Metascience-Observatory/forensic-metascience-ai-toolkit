@@ -18,7 +18,7 @@ from metascience_observatory_image_analysis.image_forensics import labels as L  
 from metascience_observatory_image_analysis.image_forensics import retain as R  # noqa: E402
 from metascience_observatory_image_analysis.image_forensics import sweep as S  # noqa: E402
 
-SRC = Path(__file__).resolve().parent.parent / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parent.parent / "src" / "forensic_metascience_ai_toolkit"
 
 
 
@@ -247,7 +247,7 @@ class TestTheImgdupJoin:
         assert ids[1] == "IMGDUP-1"
 
     def test_precision_reads_workbench_decisions(self, swept):
-        from metascience_agent.review_io import write_review
+        from forensic_metascience_ai_toolkit.review_io import write_review
         root, lp = swept
         # An UNSCOPED (legacy) label must be counted and NOT joined ...
         write_review(root / "10.1--a",
@@ -518,7 +518,7 @@ class TestKinds:
             L.apply_figure_kinds(payload, {"10.1/a": {"Figure 1": "hologram"}})
 
     def test_build_labels_offline_with_a_stubbed_pubpeer(self, tmp_path, monkeypatch):
-        from metascience_agent import pubpeer as PP
+        from forensic_metascience_ai_toolkit import pubpeer as PP
         root = tmp_path / "c"
         (root / "10.1--a").mkdir(parents=True)
         (root / "10.1--a" / "metadata.json").write_text("{}")

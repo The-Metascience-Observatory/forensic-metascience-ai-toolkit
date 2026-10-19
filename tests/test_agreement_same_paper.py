@@ -25,7 +25,7 @@ import json
 
 import pytest
 
-from metascience_agent.evaluation.agreement import from_review_dirs
+from forensic_metascience_ai_toolkit.evaluation.agreement import from_review_dirs
 
 
 def _run(tmp, name, paper_id, findings):

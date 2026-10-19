@@ -8,12 +8,12 @@ both compared against a constant.
 """
 import pytest
 
-from metascience_agent.tools import rounding as R
-from metascience_agent.tools.anova import recalc_f_to_p
-from metascience_agent.tools.regression import check_regression, check_regression_batch
-from metascience_agent.tools.sd_checks import check_sd_range
-from metascience_agent.tools.summation import check_summation, check_summation_batch
-from metascience_agent.tools.ttest import _p_matches
+from forensic_metascience_ai_toolkit.tools import rounding as R
+from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
+from forensic_metascience_ai_toolkit.tools.regression import check_regression, check_regression_batch
+from forensic_metascience_ai_toolkit.tools.sd_checks import check_sd_range
+from forensic_metascience_ai_toolkit.tools.summation import check_summation, check_summation_batch
+from forensic_metascience_ai_toolkit.tools.ttest import _p_matches
 
 
 class TestQuotientInterval:
@@ -348,7 +348,7 @@ class TestSdOrSePrecisionChangesTheAnswer:
     byte-identical."""
 
     def test_the_verdict_moves_with_the_precision(self):
-        from metascience_agent.tools.se_sd import check_sd_or_se
+        from forensic_metascience_ai_toolkit.tools.se_sd import check_sd_or_se
         guessed = check_sd_or_se(3.1, 30, reported_as="SD", variable_range=(1, 7))
         printed = check_sd_or_se(3.1, 30, reported_as="SD", variable_range=(1, 7),
                                  decimals=1)
@@ -360,7 +360,7 @@ class TestSdOrSePrecisionChangesTheAnswer:
         """One payload used to carry `sd_plausible: True` beside a nested
         `severity: impossible` -- the top of the ladder, inside a `consistent`
         result the model reads."""
-        from metascience_agent.tools.se_sd import check_sd_or_se
+        from forensic_metascience_ai_toolkit.tools.se_sd import check_sd_or_se
         r = check_sd_or_se(3.1, 30, reported_as="SD", variable_range=(1, 7),
                            decimals=1)
         assert r["as_sd"]["sd_plausible"] is True

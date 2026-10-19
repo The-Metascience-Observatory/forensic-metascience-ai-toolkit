@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.simulation import (
+from forensic_metascience_ai_toolkit.simulation import (
     BREAKERS,
     CLEAN_GENERATORS,
     screen_broken,
@@ -97,7 +97,7 @@ class TestTheGeneratorsAreHonest:
     def test_the_generated_percentage_is_actually_correct(self):
         """Spot-check the construction claim itself rather than trusting it."""
         import random
-        from metascience_agent.simulation import clean_count_percent
+        from forensic_metascience_ai_toolkit.simulation import clean_count_percent
         for seed in range(2000, 2020):
             kw = clean_count_percent(random.Random(seed))
             assert kw["percentage"] == pytest.approx(
@@ -106,7 +106,7 @@ class TestTheGeneratorsAreHonest:
     def test_the_generated_interval_is_actually_wald(self):
         import math
         import random
-        from metascience_agent.simulation import clean_estimate_ci
+        from forensic_metascience_ai_toolkit.simulation import clean_estimate_ci
         for seed in range(2000, 2020):
             kw = clean_estimate_ci(random.Random(seed))
             centre = math.sqrt(kw["ci_low"] * kw["ci_high"])

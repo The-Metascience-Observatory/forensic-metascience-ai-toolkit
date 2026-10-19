@@ -10,8 +10,8 @@ newest run's OWN date, the number of detector CONFIGURATIONS (code fingerprint
 newest run's identity into the response, so the selector and header can
 state freshness rather than leave it to be inferred.
 """
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
 from tests.test_workbench_catalog import seed
 
 

@@ -24,9 +24,9 @@ import time
 
 import pytest
 
-import metascience_agent.llm_backend as lb
-from metascience_agent import runtime
-from metascience_agent.llm_backend import (CLAUDE, CODEX, GROK, Invocation,
+import forensic_metascience_ai_toolkit.llm_backend as lb
+from forensic_metascience_ai_toolkit import runtime
+from forensic_metascience_ai_toolkit.llm_backend import (CLAUDE, CODEX, GROK, Invocation,
                                            MCPUnavailable,
                                            reset_mcp_live_cache)
 

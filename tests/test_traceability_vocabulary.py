@@ -17,7 +17,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.viewer_facts import traceability, traceability_sentence
+from forensic_metascience_ai_toolkit.viewer_facts import traceability, traceability_sentence
 
 RUN = (pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
        / "10.1002--ajcp.70049" / "forensic_review_gatetest2_2026-08-29"

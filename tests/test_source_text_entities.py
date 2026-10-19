@@ -27,7 +27,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.bundle import _SOURCE_TEXT_KEYS, _decode_source_text
+from forensic_metascience_ai_toolkit.bundle import _SOURCE_TEXT_KEYS, _decode_source_text
 
 
 class TestTheDecodeIsScopedToQuotedText:
@@ -75,7 +75,7 @@ class TestTheRenderedViewerCarriesNoEntities:
     def test_render_viewer_emits_decoded_quotes(self):
         """End to end, because the unit test above cannot catch the payload
         being decoded and then re-encoded by something downstream."""
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html_out = render_viewer({
             "paper_id": "10.0000/test",
             "findings": [{"quote": "P &lt; 0.05", "severity": "indeterminate"}],
@@ -89,7 +89,7 @@ class TestTheRenderedViewerCarriesNoEntities:
 
 class TestTheMarkdownPathToo:
     def test_quote_line_decodes(self):
-        from metascience_agent.report_render import _quote_line
+        from forensic_metascience_ai_toolkit.report_render import _quote_line
         line = _quote_line("- ", "P &lt; 0.05", "the paper's text", "verbatim")
         assert "P < 0.05" in line
         assert "&lt;" not in line

@@ -4,7 +4,7 @@ import gzip
 
 import pytest
 
-from metascience_agent import seen_papers
+from forensic_metascience_ai_toolkit import seen_papers
 
 
 def _write(path, rows):

@@ -56,6 +56,6 @@ def test_it_is_idempotent_and_carries_the_block(tmp_path):
 
 def test_the_cli_verb_exists():
     from typer.testing import CliRunner
-    from metascience_agent.cli import app
+    from forensic_metascience_ai_toolkit.cli import app
     r = CliRunner().invoke(app, ["image-rebuild-exhibits", "--help"])
     assert r.exit_code == 0 and "backfill" in r.output

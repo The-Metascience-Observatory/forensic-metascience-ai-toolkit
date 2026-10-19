@@ -3,7 +3,7 @@
 import shutil
 import pytest
 
-from metascience_agent.report_render import markdown_to_html, render_markdown_to_pdf
+from forensic_metascience_ai_toolkit.report_render import markdown_to_html, render_markdown_to_pdf
 
 SAMPLE_MD = (
     "# Forensic Review\n\n"
@@ -52,7 +52,7 @@ class TestPdfRender:
         place, and this test would assert None against a successful render.
         """
         import builtins
-        import metascience_agent.report_render as rr
+        import forensic_metascience_ai_toolkit.report_render as rr
         monkeypatch.setattr(rr.shutil, "which", lambda name: None)
         real = builtins.__import__
 
@@ -178,7 +178,7 @@ class TestTheReportBodySpeaksTheCurrentVocabulary:
         one: `verdicts.py` is reachable, well tested, and was imported by
         nothing outside `tests/`."""
         import pathlib
-        root = pathlib.Path(__file__).resolve().parents[1] / "src/metascience_agent"
+        root = pathlib.Path(__file__).resolve().parents[1] / "src/forensic_metascience_ai_toolkit"
         importers = [p.name for p in root.rglob("*.py")
                      if p.name != "verdicts.py"
                      and "import verdicts" in p.read_text(encoding="utf-8")]

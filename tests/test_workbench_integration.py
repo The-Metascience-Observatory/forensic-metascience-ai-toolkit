@@ -6,9 +6,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 import pytest
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.service import Service
-from metascience_agent.workbench.monitor import FileMonitor
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.monitor import FileMonitor
 
 
 def test_detail_does_not_wait_for_background_network_lock(tmp_path):
@@ -113,7 +113,7 @@ def test_file_events_update_local_availability_without_network(tmp_path):
 
 @pytest.mark.usefixtures("image_package")
 def test_shared_projection_preserves_clone_policy_and_review_conflicts():
-    from metascience_agent.history_publication import shared_records
+    from forensic_metascience_ai_toolkit.history_publication import shared_records
     from metascience_observatory_image_analysis.image_forensics.screening import POLICY,CLONE_POLICY
 
     def screen(policy):
@@ -197,7 +197,7 @@ def test_cross_paper_xml_uses_only_scoped_sources(tmp_path):
 
 @pytest.mark.usefixtures("image_package")
 def test_historical_xml_conversion_reused_but_hash_still_checked(tmp_path, monkeypatch):
-    from metascience_agent.extraction import xml_html
+    from forensic_metascience_ai_toolkit.extraction import xml_html
     c, xml = source_catalog(tmp_path)
     original = xml_html._xml_article_html
     calls = []
@@ -271,7 +271,7 @@ def test_failed_source_conversion_can_retry(tmp_path):
 def test_source_route_converts_other_document_while_one_is_busy(tmp_path, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Event
-    from metascience_agent.extraction import xml_html
+    from forensic_metascience_ai_toolkit.extraction import xml_html
     c, xml = source_catalog(tmp_path)
     other = tmp_path / 'other.xml'
     other.write_text(xml.read_text().replace('Archived title', 'Other title'))

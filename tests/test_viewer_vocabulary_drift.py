@@ -29,7 +29,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-BUNDLE = REPO / "src/metascience_agent/bundle.py"
+BUNDLE = REPO / "src/forensic_metascience_ai_toolkit/bundle.py"
 
 
 @pytest.fixture(scope="module")
@@ -50,7 +50,7 @@ class TestTheVerdictVocabulary:
     them. What it must not do is present them as the current scale."""
 
     def test_the_current_words_are_the_ones_python_defines(self, viewer_src):
-        from metascience_agent.verdicts import VERDICTS
+        from forensic_metascience_ai_toolkit.verdicts import VERDICTS
         for v in VERDICTS:
             assert v in viewer_src, f"viewer never mentions `{v}`"
 
@@ -62,7 +62,7 @@ class TestTheVerdictVocabulary:
         # own explanation, which had the old words on one line and the new ones
         # on the next. Third time today a source-text assertion has tripped on
         # the comment that documents the rule it enforces.
-        from metascience_agent.verdicts import LEGACY
+        from forensic_metascience_ai_toolkit.verdicts import LEGACY
         code = _code_only(viewer_src)
         for old, new in LEGACY.items():
             for m in re.finditer(rf"\b{old}\b", code):
@@ -77,7 +77,7 @@ class TestTheVerdictVocabulary:
                     f"rename note:\n    ...{snippet}...")
 
     def test_the_codebook_defines_every_current_verdict(self, viewer_src):
-        from metascience_agent.verdicts import VERDICTS
+        from forensic_metascience_ai_toolkit.verdicts import VERDICTS
         for v in VERDICTS:
             assert f"row('{v}'" in viewer_src, (
                 f"the codebook has no entry for `{v}` -- the verdict is the "
@@ -91,13 +91,13 @@ class TestTheVerdictVocabulary:
 
 class TestTheWarrantVocabulary:
     def test_every_warrant_python_defines_reaches_the_page(self, viewer_src):
-        from metascience_agent.warrants import WARRANTS
+        from forensic_metascience_ai_toolkit.warrants import WARRANTS
         for w in WARRANTS:
             assert w in viewer_src, f"viewer never mentions warrant `{w}`"
 
     def test_the_codebook_explains_the_field(self, viewer_src):
         assert "row('warrant'" in viewer_src
-        from metascience_agent.warrants import SUPPLIED_CEILING
+        from forensic_metascience_ai_toolkit.warrants import SUPPLIED_CEILING
         i = viewer_src.index("row('warrant'")
         assert SUPPLIED_CEILING in viewer_src[i:i + 1400], (
             "the codebook must say what `field_norm` caps at, since the cap is "
@@ -192,7 +192,7 @@ class TestBothVerdictRenderersUseTheSameMapper:
         node = shutil.which("node") or shutil.which("nodejs")
         if not node:
             pytest.skip("node not available")
-        from metascience_agent import verdicts as _verdicts
+        from forensic_metascience_ai_toolkit import verdicts as _verdicts
 
         src = BUNDLE.read_text(encoding="utf-8")
         m = re.search(r"const VERDICT_DEF=.*?\nfunction verdictHtml\(v\)\{.*?\n\}",

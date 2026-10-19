@@ -39,7 +39,7 @@ def load_cases(path: Path = HERE / "cases.jsonl") -> list[dict]:
 # ----------------------------------------------------------------- recalc tool
 def run_recalc(cases: list[dict]) -> dict[str, bool | None]:
     """case id -> flagged (True/False), or None when the tool refused to evaluate."""
-    from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+    from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
     params = set(inspect.signature(recalc_stat_to_p).parameters)
     out = {}
     for c in cases:
@@ -105,7 +105,7 @@ def _norm(s: str) -> str:
 def run_statcheck(cases: list[dict]) -> dict[str, bool | None]:
     """Each case is its own text: statcheck's per-text heuristics (one-tailed
     wording, corrections) must not leak from one case to the next."""
-    from metascience_agent.tools.r_wrappers import python_statcheck_text
+    from forensic_metascience_ai_toolkit.tools.r_wrappers import python_statcheck_text
     out = {}
     for c in cases:
         s = apa(c)
@@ -175,7 +175,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out", type=Path, default=HERE / "scorecard.json")
     a = ap.parse_args(argv)
     card = run(load_cases(a.cases))
-    from metascience_agent.version import __version__
+    from forensic_metascience_ai_toolkit.version import __version__
     card["toolkit_version"] = __version__
     a.out.write_text(json.dumps(card, indent=1, sort_keys=True) + "\n")
     print("\n".join(summary_lines(card)))

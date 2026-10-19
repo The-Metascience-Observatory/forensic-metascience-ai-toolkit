@@ -13,9 +13,9 @@ import json
 import pytest
 from typer.testing import CliRunner
 
-from metascience_agent import receipts
-from metascience_agent.cli import app
-from metascience_agent.evaluation.deterministic import (
+from forensic_metascience_ai_toolkit import receipts
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit.evaluation.deterministic import (
     reported_severity,
     reproduction_execution_problem,
     reproducible_tools,
@@ -38,8 +38,8 @@ def _fresh_server(monkeypatch):
     under the test's environment."""
     import importlib
     import sys
-    sys.modules.pop("metascience_agent.mcp_server", None)
-    return importlib.import_module("metascience_agent.mcp_server")
+    sys.modules.pop("forensic_metascience_ai_toolkit.mcp_server", None)
+    return importlib.import_module("forensic_metascience_ai_toolkit.mcp_server")
 
 
 @pytest.fixture(autouse=True)
@@ -47,13 +47,13 @@ def _restore_server():
     """Put the ORIGINAL server module back: other test files hold it and
     `importlib.reload` it, which needs it registered under its name."""
     import sys
-    import metascience_agent
-    name = "metascience_agent.mcp_server"
+    import forensic_metascience_ai_toolkit
+    name = "forensic_metascience_ai_toolkit.mcp_server"
     orig = sys.modules.get(name)
     yield
     if orig is not None:
         sys.modules[name] = orig
-        metascience_agent.mcp_server = orig
+        forensic_metascience_ai_toolkit.mcp_server = orig
     else:
         sys.modules.pop(name, None)
 
@@ -108,7 +108,7 @@ class TestRun:
         monkeypatch.setenv("METASCIENCE_MCP_STAGE", "tool_agent")
         monkeypatch.setenv("METASCIENCE_MCP_TOOLS", "no_such_tool")
         import sys
-        sys.modules.pop("metascience_agent.mcp_server", None)
+        sys.modules.pop("forensic_metascience_ai_toolkit.mcp_server", None)
         res = runner.invoke(app, ["tool", "run", "grim_check", "--json", json.dumps(GRIM_OK)])
         assert res.exit_code == 2
         assert json.loads(res.output)["refusal"] == "tool_manifest_error"

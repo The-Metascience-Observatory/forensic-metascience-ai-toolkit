@@ -15,7 +15,7 @@ needs no spec file to produce.
 """
 import pytest
 
-from metascience_agent.agent import _guard_audit
+from forensic_metascience_ai_toolkit.agent import _guard_audit
 
 
 def _call(seq, tool, **args):

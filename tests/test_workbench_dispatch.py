@@ -4,7 +4,7 @@ import json
 import threading
 import time
 
-from metascience_agent.workbench.service import Dispatcher
+from forensic_metascience_ai_toolkit.workbench.service import Dispatcher
 
 
 class Blocking:

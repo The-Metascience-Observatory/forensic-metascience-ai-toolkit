@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import io
 
-from metascience_agent.progress import Progress, _fmt
+from forensic_metascience_ai_toolkit.progress import Progress, _fmt
 
 
 class TestItNeverBreaksTheRunItIsWatching:
@@ -104,7 +104,7 @@ class TestAdvanceDrivesTheBarFromOutside:
 
     def test_it_counts_without_iterating(self):
         import io
-        from metascience_agent.progress import Progress
+        from forensic_metascience_ai_toolkit.progress import Progress
         buf = io.StringIO()
         with Progress(range(5), desc="sweep", every_s=0.0, stream=buf) as bar:
             for i in range(5):
@@ -113,7 +113,7 @@ class TestAdvanceDrivesTheBarFromOutside:
 
     def test_the_label_follows_the_completed_item(self):
         import io
-        from metascience_agent.progress import Progress
+        from forensic_metascience_ai_toolkit.progress import Progress
         buf = io.StringIO()
         with Progress(range(2), desc="sweep", every_s=0.0, stream=buf) as bar:
             bar.advance("10.1234--abc")
@@ -123,7 +123,7 @@ class TestAdvanceDrivesTheBarFromOutside:
         """A pool reports completions, so `n` must track them even when the
         caller never touches `items`."""
         import io
-        from metascience_agent.progress import Progress
+        from forensic_metascience_ai_toolkit.progress import Progress
         buf = io.StringIO()
         with Progress([], total=3, desc="sweep", every_s=0.0, stream=buf) as bar:
             bar.advance("a", n=3)

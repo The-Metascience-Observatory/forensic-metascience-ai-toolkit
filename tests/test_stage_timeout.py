@@ -17,7 +17,7 @@ import json
 
 import pytest
 
-from metascience_agent import agent
+from forensic_metascience_ai_toolkit import agent
 
 
 class _FakeStdin:
@@ -125,7 +125,7 @@ class TestStageTimeoutReturnsWhatItSaw:
 
 
 def test_editorial_timeout_note_is_distinct_from_the_sweep_note():
-    from metascience_agent.agent import (
+    from forensic_metascience_ai_toolkit.agent import (
         PARTIAL_COVERAGE_EDITORIAL_TIMEOUT_NOTE,
         PARTIAL_COVERAGE_TIMEOUT_NOTE,
     )
@@ -137,7 +137,7 @@ def test_a_slow_mcp_tool_returns_indeterminate_not_a_hang(monkeypatch):
     import json
     from types import SimpleNamespace
 
-    from metascience_agent import mcp_server
+    from forensic_metascience_ai_toolkit import mcp_server
 
     async def slow(_args):
         await asyncio.sleep(10)

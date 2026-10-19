@@ -18,7 +18,7 @@ import math
 import pytest
 from scipy import stats
 
-from metascience_agent.tools.stat_to_p import CEILING, recalc_stat_to_p
+from forensic_metascience_ai_toolkit.tools.stat_to_p import CEILING, recalc_stat_to_p
 
 
 class TestTheArithmeticMatchesScipy:
@@ -163,12 +163,12 @@ class TestTailsAreNotAMatterOfTaste:
 
 class TestItIsReachable:
     def test_registered_for_both_stages(self):
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         spec = R.BY_NAME["recalc_stat_to_p"]
         assert len(spec.stages) == 2
 
     def test_it_is_a_replayable_calculation(self):
-        from metascience_agent.evaluation.deterministic import reproducible_tools
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import reproducible_tools
         assert "recalc_stat_to_p" in reproducible_tools()
 
 
@@ -271,7 +271,7 @@ class TestAnUnprintedDfIsBoundedNotRefused:
 
     # -- the premise, so a new entry in _DF_MONOTONE has to earn it ----------
     def test_the_monotonicity_the_bound_rests_on_holds(self):
-        from metascience_agent.tools.stat_to_p import _DF_MONOTONE
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import _DF_MONOTONE
         dfs = [1, 1.5, 2, 3, 5, 8, 13, 30, 100, 1000, 1e5]
         for x in (0.01, 0.3, 1.0, 1.96, 2.355, 4.0, 9.748, 25.0):
             t = [2 * stats.t.sf(x, d) for d in dfs]
@@ -432,7 +432,7 @@ class TestAnUnprintedDfIsBoundedNotRefused:
         assert "ignored" in r["df_note"]
 
     def test_the_registry_path_carries_the_bounds(self):
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.registry import SPECS
         spec = next(s for s in SPECS if s.name == "recalc_stat_to_p")
         r = spec.call({"statistic": 2.0, "kind": "t", "reported_p": 0.04,
                        "decimals_stat": 2, "decimals_p": 2, "df_max": 10})

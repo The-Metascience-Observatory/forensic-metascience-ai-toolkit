@@ -11,14 +11,14 @@ import pathlib
 
 import pytest
 
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit.core import prompts
 
 
 def _md(name: str) -> str:
     """A prompt's text, or "" if it has been retired. `tool_expert.md` is read
     as ASSEMBLED: its per-tool guidance lives in the tool folders' TOOL.md."""
     if name == "tool_expert.md":
-        from metascience_agent.core.prompts import tool_expert_body
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_body
         return tool_expert_body()
     path = prompts.prompt_path(name)   # the agents' prompts live in modules/
     return path.read_text(encoding="utf-8") if path.is_file() else ""
@@ -107,7 +107,7 @@ class TestTechniqueEnum:
         """
         import re
 
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
 
         enum = set(prompts.findings_schema_v2()["properties"]["findings"]
                    ["items"]["properties"]["technique"]["enum"])
@@ -156,7 +156,7 @@ class TestFigureCoverageIsStructuralOnV2:
             "guarantee is now unguarded on both paths")
 
     def test_the_renderer_still_reports_a_channel_that_did_not_run(self):
-        from metascience_agent.report_v2 import render_report_v2
+        from forensic_metascience_ai_toolkit.report_v2 import render_report_v2
 
         md = render_report_v2(
             {"schema_version": "2.0", "paper_id": "p", "findings": [],
@@ -203,7 +203,7 @@ class TestMeasuredValuesMustDeclareProvenance:
         assert "unchecked" in section
 
     def test_the_provenance_vocabulary_matches_the_registry(self):
-        from metascience_agent.registry import MEASURED_PROVENANCE
+        from forensic_metascience_ai_toolkit.registry import MEASURED_PROVENANCE
 
         i = TOOL_EXPERT.find("Do NOT read values off the marks")
         section = TOOL_EXPERT[i : i + 1600]
@@ -256,8 +256,8 @@ class TestStage2ClaimsNoFenceItDoesNotHave:
         """
         import inspect
 
-        from metascience_agent import mcp_server
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import mcp_server
+        from forensic_metascience_ai_toolkit import registry as R
 
         offered = {s.name for s in R.SPECS if s.stages}
         assert set(mcp_server._TOOLS_BY_NAME) == offered
@@ -310,7 +310,7 @@ class TestNoImpossibleWithoutAnRCrossCheck:
         a refused call, which costs a turn and reads to the model like a check
         that happened.
         """
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         assert R.STAGE2 in R.BY_NAME["r_grim_ground_truth"].stages
         assert R.STAGE1 in R.BY_NAME["r_sprite_ground_truth"].stages
@@ -345,7 +345,7 @@ class TestEstimateCiDecimalsGuidance:
     """
 
     def test_the_measured_behaviour_is_the_wide_erring_fallback(self):
-        from metascience_agent.tools.estimates import _decimals
+        from forensic_metascience_ai_toolkit.tools.estimates import _decimals
 
         assert _decimals(float("1.40")) == 1, "printed 2 dp, read as 1: too coarse"
         assert _decimals(float("5")) == 0, "integral values read exact, never tight"
@@ -415,7 +415,7 @@ class TestBatchToolsAreJustifiedByCorrectness:
 
     def test_the_registry_rows_really_carry_per_row_arguments(self):
         """Pin the claim the docs now make."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
 
         for name in ("check_summation_batch", "check_regression_batch"):
             assert {p.name for p in BY_NAME[name].params} >= {"rows"}

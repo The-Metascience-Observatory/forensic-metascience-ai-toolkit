@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.agent import (
+from forensic_metascience_ai_toolkit.agent import (
     _build_sweep_prompt,
     _is_supplementary,
     _resolve_paper_inputs,

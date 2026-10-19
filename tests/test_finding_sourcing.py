@@ -17,7 +17,7 @@ exactly -- our join error published in the grammar of a claim about the paper.
 Hence the unanimity rule, and hence most of what follows.
 """
 
-from metascience_agent import sourcing
+from forensic_metascience_ai_toolkit import sourcing
 
 
 def call(tool, quote=None, verified=None, locator=None, source=None,
@@ -234,7 +234,7 @@ class TestLocatorDisambiguation:
                 for i, loc in enumerate(locators)]
 
     def _join(self, location, *locators, inputs=None):
-        from metascience_agent import sourcing
+        from forensic_metascience_ai_toolkit import sourcing
         finding = {"technique": "grim_check", "location": location,
                    "inputs": inputs or {"unmatchable": 999999}}
         out = sourcing.annotate(
@@ -281,7 +281,7 @@ class TestLocatorDisambiguation:
     def test_the_scalar_path_still_wins_when_it_works(self):
         """Locator matching is a FALLBACK. An exact scalar join must not be
         overridden by it, and must not be labelled as one."""
-        from metascience_agent import sourcing
+        from forensic_metascience_ai_toolkit import sourcing
         led = [{"tool": "mcp__forensic_metascience__grim_check",
                 "tool_short": "grim_check", "validated": True,
                 "input": {"mean": 5.19, "n": 28, "source_quote": "M = 5.19 (n = 28)",

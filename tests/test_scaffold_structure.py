@@ -28,8 +28,8 @@ import json
 
 import pytest
 
-from metascience_agent.scaffold import bind, document, passes, structure
-from metascience_agent.scaffold.__main__ import main
+from forensic_metascience_ai_toolkit.scaffold import bind, document, passes, structure
+from forensic_metascience_ai_toolkit.scaffold.__main__ import main
 
 from tests.test_scaffold import P1, P2, P3, TEXT, _doc
 
@@ -175,7 +175,7 @@ class TestAForeignIdIsNeverAccepted:
         assert structure.close_vocabulary(sets, p3)["unbound_foreign_id"] == first == 3
 
     def test_the_account_says_so_in_section_1(self):
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         account = bind.assemble(_doc(), P1, P2, self._p3_with_foreign_ids(),
                                 structure=_structure())
         md = render.render(account)
@@ -445,7 +445,7 @@ class TestTheStructuralAdjudicationGates:
         assert len(twice["adjudication"]) == 2 and twice["version"] == 3
         assert structure.adjudication_counts(twice)["conflicts"] == 1
         account = bind.assemble(_doc(), P1, P2, copy.deepcopy(P3), structure=twice)
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         md = render.render(account)
         assert "status `adjudicated`" in md and "2 round(s)" in md
         assert "UNADJUDICATED" not in md

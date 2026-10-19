@@ -25,8 +25,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import report_render, verdicts
-from metascience_agent.bundle import collect
+from forensic_metascience_ai_toolkit import report_render, verdicts
+from forensic_metascience_ai_toolkit.bundle import collect
 
 from tests.test_bundle import flat, review, section_html  # noqa: F401
 
@@ -65,7 +65,7 @@ class TestTheDefinitionHasExactlyOneHome:
         claimed the map was shipped in the payload under a key that did not
         exist -- which is how the third renderer ended up with no copy at all.
         """
-        src = Path("src/metascience_agent/bundle.py").read_text()
+        src = Path("src/forensic_metascience_ai_toolkit/bundle.py").read_text()
         assert "const VERDICT_DEF=((D.facts||{}).verdict_vocab||{}).defs" in src
         assert "const VERDICT_LEGACY=((D.facts||{}).verdict_vocab||{}).legacy" in src
         assert "reconciles:'" not in src, (
@@ -75,7 +75,7 @@ class TestTheDefinitionHasExactlyOneHome:
         """`cli.py` held its own `{trustworthy: green, ...}` colour map, which
         is the same defect wearing different clothes: a surface that knows the
         words without knowing where they came from."""
-        for path in Path("src/metascience_agent").rglob("*.py"):
+        for path in Path("src/forensic_metascience_ai_toolkit").rglob("*.py"):
             if path.name == "verdicts.py":
                 continue
             text = path.read_text(encoding="utf-8")

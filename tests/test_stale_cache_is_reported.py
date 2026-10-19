@@ -21,7 +21,7 @@ exists to prevent, pointed at its own cache.
 import pathlib
 import pytest
 
-from metascience_agent import prepass
+from forensic_metascience_ai_toolkit import prepass
 
 CORPUS = pathlib.Path("tests/fixtures/papers/high_value_pdfs_to_run_on")
 
@@ -32,7 +32,7 @@ class TestTheWalkerNamesAStaleCache:
         import json
         pdf = tmp_path / "10.1234--x.pdf"
         pdf.write_bytes(b"%PDF-1.4\n%%EOF\n")
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
         cache = tmp_path / dl.CACHE_DIRNAME
         cache.mkdir()
         (cache / f"{pdf.stem}.{dl._digest(pdf)}.tables.json").write_text(
@@ -48,7 +48,7 @@ class TestTheWalkerNamesAStaleCache:
         import json
         pdf = tmp_path / "10.1234--y.pdf"
         pdf.write_bytes(b"%PDF-1.4\n%%EOF\n")
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
         cache = tmp_path / dl.CACHE_DIRNAME
         cache.mkdir()
         (cache / f"{pdf.stem}.{dl._digest(pdf)}.tables.json").write_text(

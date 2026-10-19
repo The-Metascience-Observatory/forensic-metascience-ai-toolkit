@@ -2,12 +2,12 @@
 
 import pytest
 import math
-from metascience_agent.tools.ttest import recalc_independent_t, recalc_within_subjects_t
-from metascience_agent.tools.anova import recalc_one_way_anova, recalc_f_to_p
-from metascience_agent.tools.chi_squared import recalc_chi_squared
-from metascience_agent.tools.sd_checks import check_sd_range
-from metascience_agent.tools.summation import check_summation
-from metascience_agent.tools.stalt import stalt_check
+from forensic_metascience_ai_toolkit.tools.ttest import recalc_independent_t, recalc_within_subjects_t
+from forensic_metascience_ai_toolkit.tools.anova import recalc_one_way_anova, recalc_f_to_p
+from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
+from forensic_metascience_ai_toolkit.tools.sd_checks import check_sd_range
+from forensic_metascience_ai_toolkit.tools.summation import check_summation
+from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
 
 
 class TestIndependentTTest:
@@ -341,17 +341,17 @@ class TestStaltStyleFloor:
     """
 
     def test_bound_satisfied_however_small_is_consistent(self):
-        from metascience_agent.tools.stalt import stalt_check
+        from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
         assert stalt_check(1e-15, "<0.001")["severity"] == "consistent"
         assert stalt_check(0.0009, "<0.001")["severity"] == "consistent"
 
     def test_a_real_bound_violation_is_flagged(self):
-        from metascience_agent.tools.stalt import stalt_check
+        from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
         assert stalt_check(0.04, "<0.001")["severity"] == "highly_suspicious"  # 40x
         assert stalt_check(0.006, "<0.001")["severity"] == "suspicious"        # 6x
 
     def test_within_tail_slack_is_indeterminate_not_accused(self):
-        from metascience_agent.tools.stalt import stalt_check
+        from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
         # 1.5x above the bound: a one-tailed p read as two-tailed explains it.
         assert stalt_check(0.0015, "<0.001")["severity"] == "indeterminate"
 
@@ -430,7 +430,7 @@ class TestTTestAcceptsBothConventions:
     """
 
     def test_a_correct_pooled_t_is_accepted(self):
-        from metascience_agent.tools.rivets import rivets_independent_t
+        from forensic_metascience_ai_toolkit.tools.rivets import rivets_independent_t
         r = rivets_independent_t(105.00, 10.00, 20, 100.00, 20.00, 60,
                                  reported_t=1.07, reported_p=0.287,
                                  decimals_mean=2, decimals_sd=2,
@@ -438,7 +438,7 @@ class TestTTestAcceptsBothConventions:
         assert r["severity"] == "consistent"
 
     def test_a_one_tailed_p_is_accepted(self):
-        from metascience_agent.tools.rivets import rivets_independent_t
+        from forensic_metascience_ai_toolkit.tools.rivets import rivets_independent_t
         r = rivets_independent_t(5.30, 1.20, 30, 4.80, 1.20, 30,
                                  reported_t=1.61, reported_p=0.056,
                                  decimals_mean=2, decimals_sd=2,
@@ -446,7 +446,7 @@ class TestTTestAcceptsBothConventions:
         assert r["severity"] == "consistent"
 
     def test_a_t_explained_by_no_standard_reading_is_flagged(self):
-        from metascience_agent.tools.rivets import rivets_independent_t
+        from forensic_metascience_ai_toolkit.tools.rivets import rivets_independent_t
         r = rivets_independent_t(105.00, 10.00, 20, 100.00, 20.00, 60,
                                  reported_t=2.5, decimals_mean=2,
                                  decimals_sd=2, decimals_t=2)

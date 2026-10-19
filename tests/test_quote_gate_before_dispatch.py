@@ -24,8 +24,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import dispatch as D
-from metascience_agent.agent import PAPER_DIR_ENV, _build_mcp_config
+from forensic_metascience_ai_toolkit import dispatch as D
+from forensic_metascience_ai_toolkit.agent import PAPER_DIR_ENV, _build_mcp_config
 
 PAPER = pathlib.Path(__file__).resolve().parents[1] / (
     "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8")

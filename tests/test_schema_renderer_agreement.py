@@ -24,9 +24,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.core import prompts
+from forensic_metascience_ai_toolkit.core import prompts
 
-SRC = Path("src/metascience_agent")
+SRC = Path("src/forensic_metascience_ai_toolkit")
 
 
 

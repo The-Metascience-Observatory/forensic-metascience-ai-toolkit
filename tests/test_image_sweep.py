@@ -17,12 +17,12 @@ import pytest
 fitz = pytest.importorskip("fitz")
 cv2 = pytest.importorskip("cv2")
 
-from metascience_agent import corpus_stats as CS  # noqa: E402
-from metascience_agent import webapp_index as W  # noqa: E402
+from forensic_metascience_ai_toolkit import corpus_stats as CS  # noqa: E402
+from forensic_metascience_ai_toolkit import webapp_index as W  # noqa: E402
 from metascience_observatory_image_analysis.image_forensics import retain as R  # noqa: E402
 from metascience_observatory_image_analysis.image_forensics import sweep as S  # noqa: E402
 
-SRC = Path(__file__).resolve().parent.parent / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parent.parent / "src" / "forensic_metascience_ai_toolkit"
 
 
 # ---------------------------------------------------------------------------
@@ -149,7 +149,7 @@ class TestASweepRetainsEveryAnswer:
 
     def test_the_v2_document_validates_and_names_what_did_not_run(self, corpus):
         jsonschema = pytest.importorskip("jsonschema")
-        from metascience_agent.core.prompts import findings_schema_v2
+        from forensic_metascience_ai_toolkit.core.prompts import findings_schema_v2
         _sweep(corpus)
         v2dir = corpus / "10.1--a" / R.V2_DIRNAME
         doc = json.loads((v2dir / R.V2_DOC).read_text())
@@ -334,7 +334,7 @@ class TestTheChildOwnsItsStdout:
         import os
         import subprocess
         import sys
-        from metascience_agent.agent import _image_track_command
+        from forensic_metascience_ai_toolkit.agent import _image_track_command
         flags = {"segment_montages": True, "include_supplements": False,
                  "rendered_regions": False, "copy_move": False,
                  "max_panels": 200, "emit_v2": True,
@@ -369,7 +369,7 @@ class TestTheChainedAdjudication:
     def _invoke(self, corpus, extra):
         from typer.testing import CliRunner
 
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
         return CliRunner().invoke(
             app, ["image-sweep", str(corpus), "--sweep-id", "chain",
                   "--no-furniture-pass", "--jobs", "1"] + extra)
@@ -505,7 +505,7 @@ class TestItSpendsNothing:
     def test_the_default_child_argv_is_unchanged(self):
         # The child is the launcher (track_launcher.py), which hands these
         # exact arguments to image_track.main behind its code-change check.
-        from metascience_agent.agent import _image_track_command
+        from forensic_metascience_ai_toolkit.agent import _image_track_command
         cmd = _image_track_command(Path("/x"))
         assert cmd[1:] == ["-m", "metascience_observatory_image_analysis.image_forensics.track_launcher",
                            "/x", "--json"]
@@ -513,5 +513,5 @@ class TestItSpendsNothing:
             "--segment-montages"
 
     def test_run_uid_matches_the_parallel_pipeline(self):
-        from metascience_agent.parallel import _mint_run_uid
+        from forensic_metascience_ai_toolkit.parallel import _mint_run_uid
         assert _mint_run_uid("p", "t") == R._mint_run_uid("p", "t")

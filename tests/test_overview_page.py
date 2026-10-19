@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.bundle import (
+from forensic_metascience_ai_toolkit.bundle import (
     _abstract,
     _abstract_text,
     _missing_supplements,
@@ -74,7 +74,7 @@ class TestAvailabilitySplit:
 
     def test_the_practice_row_agrees_with_the_metadata_row(self, tmp_path):
         """The two used to disagree, reading different keys off the same scan."""
-        from metascience_agent import artefacts
+        from forensic_metascience_ai_toolkit import artefacts
 
         rows = _practice({}, [], artefacts.find(BODY_WITH_BOTH), {}, [], 0,
                          tmp_path, BODY_WITH_BOTH)
@@ -260,7 +260,7 @@ class TestAbstract:
 # What each check returned
 # --------------------------------------------------------------------------
 
-from metascience_agent.bundle import _check_table, _sankey  # noqa: E402
+from forensic_metascience_ai_toolkit.bundle import _check_table, _sankey  # noqa: E402
 
 CALLS = [
     {"tool": "grim_sweep", "validated": True},

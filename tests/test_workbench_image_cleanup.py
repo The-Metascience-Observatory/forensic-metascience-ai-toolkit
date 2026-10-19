@@ -5,8 +5,8 @@ pytest.importorskip("metascience_observatory_image_analysis", reason="needs the 
 import json
 from pathlib import Path
 import pytest
-from metascience_agent.analysis_runs import Archive
-from metascience_agent.workbench.image_cleanup import disk_plan,clear_disk
+from forensic_metascience_ai_toolkit.analysis_runs import Archive
+from forensic_metascience_ai_toolkit.workbench.image_cleanup import disk_plan,clear_disk
 
 
 def test_cleanup_removes_results_preserves_sources_and_other_runs(tmp_path):

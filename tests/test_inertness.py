@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import inertness as I
+from forensic_metascience_ai_toolkit import inertness as I
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -546,7 +546,7 @@ class TestTheWriteOnlyKeyDetector:
         version of this test asserted a specific key, which dropped the count
         from 20 to 19 and then failed against itself. A test for this detector
         asserts its METHOD."""
-        from metascience_agent.inertness import scan
+        from forensic_metascience_ai_toolkit.inertness import scan
 
         found = scan(only=["write_only_key"])["findings"]
         assert any("agent.py" in f["where"] for f in found), (
@@ -556,7 +556,7 @@ class TestTheWriteOnlyKeyDetector:
     def test_it_reports_a_worklist_never_a_certainty(self):
         """A key read through `**kwargs`, a variable subscript or an external
         tool is invisible to any static rule."""
-        from metascience_agent.inertness import scan
+        from forensic_metascience_ai_toolkit.inertness import scan
 
         assert all(f["confidence"] == "worklist"
                    for f in scan(only=["write_only_key"])["findings"])
@@ -566,7 +566,7 @@ class TestTheWriteOnlyKeyDetector:
         MCP text block: the MODEL is the reader, and no static analysis sees it.
         Including `tools/` accused `fisher_odds_ratio`, `achievable_t_interval`
         and a dozen more that are read on every call."""
-        from metascience_agent.inertness import scan
+        from forensic_metascience_ai_toolkit.inertness import scan
 
         wheres = {f["where"] for f in scan(only=["write_only_key"])["findings"]}
         assert not [w for w in wheres if "/tools/" in w]
@@ -575,7 +575,7 @@ class TestTheWriteOnlyKeyDetector:
         """Including them produced 336 items dominated by LaTeX symbol maps and
         env-var names. Every real instance was a SUBSCRIPT write -- "I computed
         this and stored it somewhere"."""
-        from metascience_agent.inertness import scan
+        from forensic_metascience_ai_toolkit.inertness import scan
 
         keys = {f["extra"]["key"] for f in scan(only=["write_only_key"])["findings"]}
         assert not {"Delta", "Omega", "Sigma", "TORCHDYNAMO_DISABLE"} & keys
@@ -598,7 +598,7 @@ class TestTheWriteOnlyRatchet:
     MAX_WRITE_ONLY = 32
 
     def test_write_only_keys_have_not_multiplied(self):
-        from metascience_agent.inertness import scan
+        from forensic_metascience_ai_toolkit.inertness import scan
 
         n = scan(only=["write_only_key"])["n"]
         assert n <= self.MAX_WRITE_ONLY, (

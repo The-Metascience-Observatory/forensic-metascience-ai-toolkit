@@ -34,7 +34,7 @@ import time
 
 import pytest
 
-from metascience_agent.scaffold import checks, premises
+from forensic_metascience_ai_toolkit.scaffold import checks, premises
 
 # --------------------------------------------------------------------------
 # The Harborview study. Everything in it is true and consistent.

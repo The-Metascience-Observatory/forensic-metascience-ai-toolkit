@@ -14,7 +14,7 @@ import json
 
 import pytest
 
-from metascience_agent import handoff_contracts as H
+from forensic_metascience_ai_toolkit import handoff_contracts as H
 
 
 def _run(**over):

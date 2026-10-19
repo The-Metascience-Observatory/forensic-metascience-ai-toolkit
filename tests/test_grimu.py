@@ -6,7 +6,7 @@ and the paper's Table 2 / Table 7 achievable-p values.
 
 import pytest
 
-from metascience_agent.tools.grimu import (
+from forensic_metascience_ai_toolkit.tools.grimu import (
     _achievable,
     _exact_u_counts,
     _p_normal,

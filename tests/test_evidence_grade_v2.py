@@ -20,7 +20,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.viewer_facts import evidence_grade
+from forensic_metascience_ai_toolkit.viewer_facts import evidence_grade
 
 RUN = (pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
        / "10.1002--ajcp.70049" / "forensic_review_gatetest2_2026-08-29"
@@ -99,20 +99,20 @@ class TestTheLedgerReachesTheGradedFindings:
         return json.loads(RUN.read_text(encoding="utf-8"))
 
     def test_the_ledger_grades_every_finding(self, doc):
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         led = evidence_ledger(doc)
         assert led["n"] == len(doc["findings"]) == 34
         assert len(led["per_finding"]) == 34
 
     def test_the_counts_match_computed_by(self, doc):
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         led = evidence_ledger(doc)
         assert led["counts"] == {"computed": 5, "hand_computed": 0,
                                  "reading": 29}
 
     def test_a_v1_payload_still_uses_report_obj(self):
         """The fallback must not override a real report_obj."""
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         payload = {"report_obj": {"findings": [{"title": "from report",
                                                 "severity": "suspicious"}]},
                    "findings": [{"id": "s1", "title": "from sweep"}]}
@@ -134,8 +134,8 @@ class TestTheAccusatoryCountUnderstandsBothLadders:
         return json.loads(RUN.read_text(encoding="utf-8"))
 
     def test_it_matches_ground_truth_on_the_real_run(self, doc):
-        from metascience_agent.severity9 import ACCUSATORY_MIN
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.severity9 import ACCUSATORY_MIN
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         truth = [f for f in doc["findings"]
                  if isinstance(f.get("severity"), int)
                  and f["severity"] >= ACCUSATORY_MIN
@@ -145,20 +145,20 @@ class TestTheAccusatoryCountUnderstandsBothLadders:
             == len(truth) == 2
 
     def test_a_numeric_severity_below_the_bar_does_not_count(self):
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         payload = {"findings": [{"severity": 2, "computed_by": "model_reading"}]}
         assert evidence_ledger(payload)[
             "accusatory_without_a_validated_check"] == 0
 
     def test_a_v1_string_severity_still_counts(self):
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         payload = {"report_obj": {"findings": [{"severity": "suspicious"}]}}
         assert evidence_ledger(payload)[
             "accusatory_without_a_validated_check"] == 1
 
     def test_a_tool_computed_accusation_is_not_counted(self):
         """The question is accusations WITHOUT a validated check."""
-        from metascience_agent.viewer_facts import evidence_ledger
+        from forensic_metascience_ai_toolkit.viewer_facts import evidence_ledger
         payload = {"findings": [{"severity": 5, "computed_by": "registry_tool"}]}
         assert evidence_ledger(payload)[
             "accusatory_without_a_validated_check"] == 0

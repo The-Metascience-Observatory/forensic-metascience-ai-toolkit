@@ -9,8 +9,8 @@ import pytest
 
 from copy_paste_detector.batch import run_batch
 from copy_paste_detector.storage import atomic_json, file_hash
-from metascience_agent.analysis_history import import_copy, sheet
-from metascience_agent.analysis_runs import Archive
+from forensic_metascience_ai_toolkit.analysis_history import import_copy, sheet
+from forensic_metascience_ai_toolkit.analysis_runs import Archive
 
 
 def test_batch_import_preserves_sources_decisions_and_table_cells(tmp_path):
@@ -73,7 +73,7 @@ def test_batch_import_preserves_sources_decisions_and_table_cells(tmp_path):
 
 def test_embedded_copy_version_needs_no_distribution_metadata():
     from copy_paste_detector import __version__
-    from metascience_agent.analysis_runs import provenance
+    from forensic_metascience_ai_toolkit.analysis_runs import provenance
     assert provenance('copy_paste')['version'] == __version__
 
 

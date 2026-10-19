@@ -18,7 +18,7 @@ import random
 
 import pytest
 
-from metascience_agent.tools.grim import (
+from forensic_metascience_ai_toolkit.tools.grim import (
     DENOMINATOR_WINDOW, grim_test, nearby_denominators,
     percentage_reading_disagrees,
 )
@@ -152,7 +152,7 @@ class TestTheRescueWeDidNotShip:
 
 class TestEveryCheckSaysWhereItsDenominatorCameFrom:
     def test_an_ordinary_supplied_n_is_recorded(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(
             [{"raw": "5.51 (1.20)", "row_label": "Anxiety", "n": 30}],
             [{"id": "v1", "family": "likert_item", "lower_bound": 1,
@@ -167,7 +167,7 @@ class TestEveryCheckSaysWhereItsDenominatorCameFrom:
     def test_an_n_printed_in_the_cell_label_says_so(self):
         """`n = 30` in a column header is weak evidence, but it is evidence, and
         it is different from an n we cannot see the source of at all."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         out = check_table(
             [{"raw": "5.51 (1.20)", "row_label": "Anxiety",
               "col_label": "Treatment (n = 30)", "n": 30}],
@@ -180,7 +180,7 @@ class TestEveryCheckSaysWhereItsDenominatorCameFrom:
     def test_the_derived_case_still_caps_and_still_says_so(self):
         """The reconstructed denominator was already documented and capped. This
         change must not have quietly replaced that with the weaker stamp."""
-        from metascience_agent.dispatch import _stamp_derived_n
+        from forensic_metascience_ai_toolkit.dispatch import _stamp_derived_n
         rec = {"severity": "impossible"}
         _stamp_derived_n(rec, {"n": 100, "n_source": "sum", "section": "S",
                                "column": "C"})
@@ -205,7 +205,7 @@ class TestThePercentageAsMeanFalseClear:
     """
 
     def test_the_two_readings_genuinely_disagree(self):
-        from metascience_agent.tools.grim import _mean_passes_grim
+        from forensic_metascience_ai_toolkit.tools.grim import _mean_passes_grim
         assert _mean_passes_grim(18.3, 12, 1)[0] is True      # as a mean
         assert percentage_reading_disagrees(18.3, 12, 1) is not None               # not as a percentage
 
@@ -291,8 +291,8 @@ class TestTheEqualsSignAsThePDFEncodedIt:
     """
 
     def test_the_corrupted_form_is_read_as_a_denominator(self):
-        from metascience_agent.dispatch import _N_IN_LABEL, _HEADER_N
-        from metascience_agent.composite import _HEADER_N as COMPOSITE_N
+        from forensic_metascience_ai_toolkit.dispatch import _N_IN_LABEL, _HEADER_N
+        from forensic_metascience_ai_toolkit.composite import _HEADER_N as COMPOSITE_N
         for pattern in (_N_IN_LABEL, _HEADER_N, COMPOSITE_N):
             assert pattern.findall("Placebo (n ¼ 68)") == ["68"], pattern.pattern
             assert pattern.findall("Placebo (n = 68)") == ["68"], pattern.pattern
@@ -302,7 +302,7 @@ class TestTheEqualsSignAsThePDFEncodedIt:
         `celltypes._UNICODE_REPAIRS` is deliberately not the place for it.
         Between an `n` and a digit it can mean nothing else; anywhere else it
         means a quarter."""
-        from metascience_agent.dispatch import _N_IN_LABEL
+        from forensic_metascience_ai_toolkit.dispatch import _N_IN_LABEL
         assert _N_IN_LABEL.findall("improvement in ¼ of patients") == []
         assert _N_IN_LABEL.findall("¼ 68") == []
 
@@ -312,7 +312,7 @@ class TestTheEqualsSignAsThePDFEncodedIt:
         unasked is the false accusation this module exists to prevent." An
         enrolled total is not the n behind a given row, and these checks accuse
         when n is too large."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         cells = [{"raw": "47 (60.3)", "row": 4, "row_label": "Female",
                   "col_label": "Placebo (n ¼ 68)"}]
         variables = [{"id": "v1", "name": "Female", "family": "binary",

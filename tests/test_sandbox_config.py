@@ -14,9 +14,9 @@ import pathlib
 
 import pytest
 
-from metascience_agent.agent import BUILTIN_TOOLS, DENIED_TOOLS, _build_claude_cmd
+from forensic_metascience_ai_toolkit.agent import BUILTIN_TOOLS, DENIED_TOOLS, _build_claude_cmd
 
-AGENT_SRC = pathlib.Path(__file__).parent.parent / "src" / "metascience_agent" / "agent.py"
+AGENT_SRC = pathlib.Path(__file__).parent.parent / "src" / "forensic_metascience_ai_toolkit" / "agent.py"
 
 
 class TestDeniedTools:
@@ -51,7 +51,7 @@ class TestInvocation:
     """
 
     def _cmd(self):
-        from metascience_agent.agent import STAGE1_TOOLS
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS
         return _build_claude_cmd(
             system_prompt="s", allowed_tools=STAGE1_TOOLS, model="sonnet",
         ).argv
@@ -121,7 +121,7 @@ class TestThePromptNeverGoesOnArgv:
     MAX_ARG_STRLEN = 32 * 4096  # Linux, 4 KB pages
 
     def _cmd(self):
-        from metascience_agent.agent import STAGE1_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _build_claude_cmd
         return _build_claude_cmd(
             system_prompt="s" * 5000, allowed_tools=STAGE1_TOOLS, model="sonnet"
         ).argv
@@ -143,7 +143,7 @@ class TestThePromptNeverGoesOnArgv:
         that still passes one positionally."""
         import inspect
 
-        from metascience_agent.agent import _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import _build_claude_cmd
         assert "prompt" not in inspect.signature(_build_claude_cmd).parameters
 
     def test_run_stage_requires_the_prompt_so_it_cannot_be_dropped(self):
@@ -151,7 +151,7 @@ class TestThePromptNeverGoesOnArgv:
         -p` reads until EOF."""
         import inspect
 
-        from metascience_agent.agent import _run_stage
+        from forensic_metascience_ai_toolkit.agent import _run_stage
         params = inspect.signature(_run_stage).parameters
         assert "prompt" in params
         assert params["prompt"].default is inspect.Parameter.empty
@@ -159,7 +159,7 @@ class TestThePromptNeverGoesOnArgv:
 
 class TestClaudeArgvStaysByteIdentical:
     def test_starts_with_claude_dash_p(self):
-        from metascience_agent.agent import STAGE1_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _build_claude_cmd
         argv = _build_claude_cmd(
             system_prompt="s", allowed_tools=STAGE1_TOOLS, model="sonnet",
         ).argv
@@ -169,7 +169,7 @@ class TestClaudeArgvStaysByteIdentical:
         assert "--disallowedTools" in argv
         # The space-joined quirk is left untouched on purpose.
         assert argv[argv.index("--disallowedTools") + 1] == " ".join(
-            __import__("metascience_agent.agent", fromlist=["DENIED_TOOLS"]).DENIED_TOOLS
+            __import__("forensic_metascience_ai_toolkit.agent", fromlist=["DENIED_TOOLS"]).DENIED_TOOLS
         )
 
 
@@ -177,7 +177,7 @@ class TestGrokInvocation:
     def _inv(self, tmp_path, monkeypatch, allowed=None):
         monkeypatch.setenv("METASCIENCE_GROK_SANDBOX_ROOT", str(tmp_path / "sb"))
         monkeypatch.setenv("METASCIENCE_GROK_SKIP_FOLDER_TRUST", "1")
-        from metascience_agent.agent import STAGE1_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, _build_claude_cmd
         return _build_claude_cmd(
             system_prompt="s",
             allowed_tools=allowed or STAGE1_TOOLS,

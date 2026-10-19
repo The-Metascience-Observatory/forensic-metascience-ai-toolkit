@@ -10,7 +10,7 @@ scored as coverage.
 
 from __future__ import annotations
 
-from metascience_agent.evaluation.judge import score_judgement
+from forensic_metascience_ai_toolkit.evaluation.judge import score_judgement
 
 
 def _fixture(**kf_extra):

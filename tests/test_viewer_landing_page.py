@@ -13,7 +13,7 @@ import json
 
 from tests.test_bundle import flat, review, section_html  # noqa: F401
 
-from metascience_agent.bundle import _run_facts, collect, render_viewer
+from forensic_metascience_ai_toolkit.bundle import _run_facts, collect, render_viewer
 
 
 class TestTheModelRowStopsContradictingRunDetails:

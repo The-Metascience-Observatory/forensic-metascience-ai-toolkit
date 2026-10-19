@@ -23,8 +23,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import text_track as TT
-from metascience_agent.agent import (
+from forensic_metascience_ai_toolkit import text_track as TT
+from forensic_metascience_ai_toolkit.agent import (
     _run_text_track,
     _validate_text_track_output,
 )
@@ -186,7 +186,7 @@ class TestChild:
         assert out["status"]["refusal_subtype"] == "text_unreadable"
 
     def test_missing_dictionary_is_fingerprints_missing(self, tmp_path, monkeypatch):
-        from metascience_agent.tools import tortured_phrases as tp
+        from forensic_metascience_ai_toolkit.tools import tortured_phrases as tp
         monkeypatch.setattr(
             tp, "load_phrasebook",
             lambda *a, **k: (_ for _ in ()).throw(
@@ -257,7 +257,7 @@ class TestChild:
             "ambiguity": "low", "acronym_present": None,
             "suppressed_by": None,
         } for i, p in enumerate(distinct)]
-        from metascience_agent.tools import tortured_phrases as tp_mod
+        from forensic_metascience_ai_toolkit.tools import tortured_phrases as tp_mod
         stub = {
             "success": True, "severity": "indeterminate",
             "severity_before_quarantine": "highly_suspicious",
@@ -272,7 +272,7 @@ class TestChild:
         }
         monkeypatch.setattr(TT, "run_track", TT.run_track)  # no-op anchor
         monkeypatch.setattr(
-            "metascience_agent.tools.tortured_phrases."
+            "forensic_metascience_ai_toolkit.tools.tortured_phrases."
             "detect_tortured_phrases", lambda *a, **k: stub)
         (tmp_path / "body.md").write_text("x", encoding="utf-8")
         out = TT.run_track(tmp_path)

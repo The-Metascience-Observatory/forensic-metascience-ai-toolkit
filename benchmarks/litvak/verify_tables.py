@@ -36,8 +36,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from paths import BenchmarkNotFound, add_bench_arg, resolve_bench  # noqa: E402
 
-from metascience_agent.extraction.pdf import extract_text_with_tables  # noqa: E402
-from metascience_agent.extraction.supplements_read import extract_supplement  # noqa: E402
+from forensic_metascience_ai_toolkit.extraction.pdf import extract_text_with_tables  # noqa: E402
+from forensic_metascience_ai_toolkit.extraction.supplements_read import extract_supplement  # noqa: E402
 
 
 def _rows(table: dict) -> list[list[str]]:

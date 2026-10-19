@@ -46,7 +46,7 @@ import statistics as st
 
 import pytest
 
-from metascience_agent.scaffold import bind, checks, premise_reading as PR, premises
+from forensic_metascience_ai_toolkit.scaffold import bind, checks, premise_reading as PR, premises
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
 

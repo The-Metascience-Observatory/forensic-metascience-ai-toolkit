@@ -9,7 +9,7 @@ about a single finding.
 > paper, what would the journal **have to** do about it?
 
 **This file is the narrative source. It is not what the code reads.**
-`src/metascience_agent/severity9.py` holds the machine-readable ladder --
+`src/forensic_metascience_ai_toolkit/severity9.py` holds the machine-readable ladder --
 rung text, boundary tests, caps and colours -- and generates
 `webapp/lib/constants.gen.ts` and `docs/severity_ladder.json`. Changing a
 rung's meaning means editing `severity9.py` and bumping its `LADDER_VERSION`;

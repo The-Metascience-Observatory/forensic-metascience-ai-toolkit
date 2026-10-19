@@ -1,6 +1,6 @@
 """The generated TS constants cannot drift from their Python sources."""
 
-from metascience_agent import webapp_constants as W
+from forensic_metascience_ai_toolkit import webapp_constants as W
 
 
 class TestParity:
@@ -14,7 +14,7 @@ class TestParity:
         """Known positive (LESSONS #4): mutate the ladder and the comparison
         MUST fail -- a byte-compare that always passes is indistinguishable
         from one comparing nothing."""
-        from metascience_agent import severity9
+        from forensic_metascience_ai_toolkit import severity9
         real = severity9.as_json
 
         def mutated():
@@ -31,7 +31,7 @@ class TestParity:
             "`metascience gen-webapp-constants` and commit the result")
 
     def test_the_ladder_json_drift_guard_can_fire(self, monkeypatch):
-        from metascience_agent import severity9
+        from forensic_metascience_ai_toolkit import severity9
         real = severity9.as_json
 
         def mutated():

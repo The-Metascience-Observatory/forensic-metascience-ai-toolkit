@@ -3,10 +3,10 @@ import json
 
 import pytest
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.match_regions import region_coverage, region_kind
-from metascience_agent.workbench.remote import Remote, summary_expr
-from metascience_agent.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.match_regions import region_coverage, region_kind
+from forensic_metascience_ai_toolkit.workbench.remote import Remote, summary_expr
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
 from tests.test_workbench_catalog import seed
 
 
@@ -123,7 +123,7 @@ def test_old_cache_gets_bounded_geometry_without_moving_cursor_or_losing_details
 
 @pytest.mark.usefixtures("image_package")
 def test_transformation_and_incomplete_coverage_filter_before_pagination(tmp_path):
-    from metascience_agent.workbench.match_regions import transformation_kind
+    from forensic_metascience_ai_toolkit.workbench.match_regions import transformation_kind
     assert transformation_kind(candidate(rotation_deg=37, scale=1, flip=False)) == 'rotation'
     assert transformation_kind(candidate(rotation_deg=37, scale=.5, flip=True)) == 'combined'
     assert transformation_kind(candidate()) == 'unknown'

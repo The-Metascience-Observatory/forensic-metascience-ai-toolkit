@@ -5,7 +5,7 @@ authorised: every paper failed with
 
     'Namespace' object has no attribute 'image_forensics'
 
-before a single API call. `metascience_agent/batch.py` reads `args` as though
+before a single API call. `forensic_metascience_ai_toolkit/batch.py` reads `args` as though
 argparse had built it; `cli.batch` hand-builds a `Namespace` and five fields
 were missing. The command whose docstring says "One command, fully automated"
 could not analyse anything at all, on `origin/main`, and the suite was green.
@@ -23,8 +23,8 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-RUNNER = REPO / "src" / "metascience_agent" / "batch.py"
-CLI = REPO / "src" / "metascience_agent" / "cli.py"
+RUNNER = REPO / "src" / "forensic_metascience_ai_toolkit" / "batch.py"
+CLI = REPO / "src" / "forensic_metascience_ai_toolkit" / "cli.py"
 
 
 def _read_off_args(path: Path) -> set[str]:

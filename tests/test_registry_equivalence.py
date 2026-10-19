@@ -25,7 +25,7 @@ from typing import Annotated, get_args, get_origin
 
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
 SNAPSHOT = pathlib.Path(__file__).parent / "data" / "registry_snapshot.json"
 
@@ -520,7 +520,7 @@ class TestEntityEscapedArgumentsAreNotLost:
     def test_an_ordinary_string_is_untouched(self):
         """Only strings that actually contain an entity are decoded, so a
         normal value passes through byte-identical."""
-        from metascience_agent.registry import _unescape_entity_args
+        from forensic_metascience_ai_toolkit.registry import _unescape_entity_args
         spec = next(s for s in R.SPECS if s.name == "stalt_check")
         args = {"reported_threshold": "p < 0.05", "source_quote": "a & b", "calculated_p": 0.01}
         assert _unescape_entity_args(spec, args) == args
@@ -528,7 +528,7 @@ class TestEntityEscapedArgumentsAreNotLost:
     def test_a_quote_carrying_an_entity_is_decoded(self):
         """`quotes.py` already unescapes the haystack before matching, so
         decoding here closes the third gap rather than opening an inconsistency."""
-        from metascience_agent.registry import _unescape_entity_args
+        from forensic_metascience_ai_toolkit.registry import _unescape_entity_args
         spec = next(s for s in R.SPECS if s.name == "stalt_check")
         out = _unescape_entity_args(spec, {"source_quote": "reported as p &lt; .01"})
         assert out["source_quote"] == "reported as p < .01"

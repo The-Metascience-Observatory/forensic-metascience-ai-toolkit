@@ -55,7 +55,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "src"))
 sys.path.insert(0, str(HERE))
 
-from metascience_agent.tools.grim import grim_test  # noqa: E402
+from forensic_metascience_ai_toolkit.tools.grim import grim_test  # noqa: E402
 from fingerprint import GRIM_SOURCES, code_sha256  # noqa: E402
 
 R_SCRIPT = r"""

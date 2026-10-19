@@ -20,13 +20,13 @@ import inspect
 
 import pytest
 
-import metascience_agent.agent as agent_mod
+import forensic_metascience_ai_toolkit.agent as agent_mod
 
 
 class TestTheFlagIsForwarded:
     def test_cli_analyze_passes_extra_supplements_to_analyze_paper(self):
         src = inspect.getsource(
-            __import__("metascience_agent.cli", fromlist=["analyze"]))
+            __import__("forensic_metascience_ai_toolkit.cli", fromlist=["analyze"]))
         assert "extra_supplements=supplement" in src, (
             "cli.analyze must forward --supplement to analyze_paper; without it "
             "the flag only satisfies the gate"
@@ -54,7 +54,7 @@ class TestTheModelCannotFindFilesItself:
             assert denied in agent_mod.DENIED_TOOLS
 
     def test_no_registered_tool_lists_a_directory(self):
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.registry import SPECS
 
         names = {s.name for s in SPECS}
         assert not (names & {"glob", "list_files", "list_dir", "ls"})

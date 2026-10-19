@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.evaluation import corpus, corpus_run
+from forensic_metascience_ai_toolkit.evaluation import corpus, corpus_run
 
 MANIFEST_TOOLS = set(corpus.TOOLS)
 
@@ -58,7 +58,7 @@ class TestTheRefusalsAreTheDeliverable:
         """Not 'unevaluated' -- UNSCOREABLE. The manifest's vocabulary names a
         technique this toolkit has never implemented, and my own
         pre-registration counted cells for it without checking."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         assert not [k for k in BY_NAME if "digit" in k or "benford" in k.lower()]
         row = {r["tool"]: r for r in
                corpus_run.run_paper("10.1234/x", paper, tmp_path / "b")}["digit_preference"]
@@ -101,7 +101,7 @@ class TestStatcheckIsTheOnlyThingThatCanRunUnaided:
         assert "no machine-readable text" in row["note"]
 
     def test_a_crash_is_a_refusal_not_a_pass(self, paper, tmp_path, monkeypatch):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
 
         class Boom:  # ToolSpec is frozen; swap the registry entry, not the spec
             def call(self, *_a, **_k):
@@ -208,7 +208,7 @@ class TestCaseDoesNotDecidePresence:
         """The measurement, against the files themselves."""
         import csv
 
-        from metascience_agent.evaluation.harness import repo_root
+        from forensic_metascience_ai_toolkit.evaluation.harness import repo_root
 
         root = repo_root() / "eval" / "ground_truth"
         rows = list(csv.DictReader(open(root / "manifest.csv", encoding="utf-8")))

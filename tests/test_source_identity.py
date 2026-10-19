@@ -284,7 +284,7 @@ def test_apply_appends_history_revision_consumed_by_workbench(tmp_path, monkeypa
 
 
 def test_geometry_claim_cannot_invent_rotation():
-    from metascience_agent.agent import _check_image_geometry_claims
+    from forensic_metascience_ai_toolkit.agent import _check_image_geometry_claims
     g = {'match_stats':{'rotation_deg':0.,'flip':False}}
     r = {'verdict':'unexplained','explanation':'This is a magnified, rotated version of Figure 3C.'}
     _check_image_geometry_claims(r,g)

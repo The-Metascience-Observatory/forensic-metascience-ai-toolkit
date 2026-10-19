@@ -1,8 +1,8 @@
 """Tests for CSF, STALT, and regression checks (previously uncovered)."""
 
-from metascience_agent.tools.csf import csf_test
-from metascience_agent.tools.regression import check_regression
-from metascience_agent.tools.stalt import stalt_check
+from forensic_metascience_ai_toolkit.tools.csf import csf_test
+from forensic_metascience_ai_toolkit.tools.regression import check_regression
+from forensic_metascience_ai_toolkit.tools.stalt import stalt_check
 
 
 class TestCSF:

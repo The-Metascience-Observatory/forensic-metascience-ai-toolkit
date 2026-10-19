@@ -8,8 +8,8 @@ import cv2
 import numpy as np
 import pytest
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.service import Service
 from metascience_observatory_image_analysis.image_forensics.on_demand_video import file_sha, supported
 
 ARGS = {'project': 'project', 'run': 'r1', 'item': 'within:paper:IMGDUP-1'}

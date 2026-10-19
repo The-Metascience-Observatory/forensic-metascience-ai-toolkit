@@ -15,9 +15,9 @@ while this one answered a nearby question and reported success.
 """
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.dispatch import check_table
-from metascience_agent.tools.count_percent import CEILING, check_count_percent
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.dispatch import check_table
+from forensic_metascience_ai_toolkit.tools.count_percent import CEILING, check_count_percent
 
 PROP = {"id": "g", "family": "proportion", "confidence": "high"}
 
@@ -133,7 +133,7 @@ class TestItIsActuallyReached:
         assert rec["inputs"]["count"] == 142
 
     def test_every_n_percent_dispatch_row_includes_it(self):
-        from metascience_agent.dispatch import DISPATCH
+        from forensic_metascience_ai_toolkit.dispatch import DISPATCH
         rows = {k: v for k, v in DISPATCH.items() if k[0] == "n_percent"}
         assert rows
         for key, tools in rows.items():
@@ -156,7 +156,7 @@ class TestTheRedTeamFindings:
         truncation ambiguity, while this used a half-ulp of 0.005. A truncating
         table passed section verification and was then accused by the check
         running on the very cells that certified the denominator."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         rows = [("Married", 311, 34.67), ("Single", 208, 23.18),
                 ("Divorced", 253, 28.20), ("Widowed", 125, 13.93)]
         cells = [{"raw": f"{c} ({p})", "row": i, "row_label": lab,

@@ -8,7 +8,7 @@ r["offset"]` on them and crashed with TypeError, after three paid passes
 ($7.49). The guard existed in `linear.chunks` and not here: one seam patched,
 the next left open.
 """
-from metascience_agent.scaffold import bind
+from forensic_metascience_ai_toolkit.scaffold import bind
 
 
 def _doc(text="The mean was 4.01 (0.92) in the sample of 120 people."):
@@ -44,7 +44,7 @@ def test_a_table_cell_row_is_never_served_as_residual_work():
 
 class TestAVerifiedTableNeedsNoPass3Reading:
     def test_entries_become_values_without_a_reading(self):
-        from metascience_agent.scaffold import bind as B
+        from forensic_metascience_ai_toolkit.scaffold import bind as B
         doc = {"tables": [{"id": "table:1", "label": "Table 1", "n_cells": 1, "row_labels": ["r"], "col_labels": ["c"],
                            "reconstruction": {"status": "verified"},
                            "cells": [{"row": 1, "col": 1, "row_label": "r", "col_label": "c", "raw": "38 (59%)",

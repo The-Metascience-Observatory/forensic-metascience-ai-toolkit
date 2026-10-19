@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import handoff, prepass
+from forensic_metascience_ai_toolkit import handoff, prepass
 
 
 @pytest.fixture

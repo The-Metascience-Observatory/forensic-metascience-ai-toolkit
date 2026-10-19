@@ -6,7 +6,7 @@ and an absent file means nothing was recorded, not that nobody looked.
 """
 import json
 
-from metascience_agent.views_io import (
+from forensic_metascience_ai_toolkit.views_io import (
     VIEWS_NAME, empty_views, load_views, merge_view, record_view,
 )
 

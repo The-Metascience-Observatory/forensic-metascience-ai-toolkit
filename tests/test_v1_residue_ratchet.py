@@ -31,7 +31,7 @@ import re
 
 import pytest
 
-SRC = pathlib.Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+SRC = pathlib.Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
 
 #: The structures. Named rather than pattern-matched, because the point is
 #: these three specifically -- not "anything v1-shaped".

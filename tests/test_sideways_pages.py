@@ -25,7 +25,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction.pdf import extract_text_with_tables
+from forensic_metascience_ai_toolkit.extraction.pdf import extract_text_with_tables
 
 PDF = Path("tests/fixtures/papers/high_value_pdfs_to_run_on/10.1002--eat.24415/10.1002--eat.24415.pdf")
 CACHE = PDF.parent / ".extraction_cache"

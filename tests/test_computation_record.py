@@ -21,10 +21,10 @@ import pathlib
 
 import pytest
 
-from metascience_agent import computation as C
+from forensic_metascience_ai_toolkit import computation as C
 
 SCHEMA = (pathlib.Path(__file__).resolve().parents[1]
-          / "src/metascience_agent/schema/findings.v2.schema.json")
+          / "src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json")
 
 
 class TestTheThreeCasesAreDistinguished:
@@ -170,12 +170,12 @@ class TestAPartialHaystackSaysSo:
     caught it as the 29th proven-inert finding."""
 
     def test_no_readable_source_returns_nothing_and_says_why(self):
-        from metascience_agent.agent import _number_haystack
+        from forensic_metascience_ai_toolkit.agent import _number_haystack
         text, why = _number_haystack("/nonexistent/paper/dir", None)
         assert text is None and why, "a silent None reads as a clean paper"
 
     def test_cells_without_prose_carry_the_caveat(self):
-        from metascience_agent.agent import _number_haystack
+        from forensic_metascience_ai_toolkit.agent import _number_haystack
         text, why = _number_haystack("/nonexistent/paper/dir",
                                      {"items": [{"raw": "12.3"}, {"raw": "4"}]})
         assert "12.3" in text
@@ -183,7 +183,7 @@ class TestAPartialHaystackSaysSo:
 
 class TestItIsConsumed:
     def test_the_prompt_teaches_all_three(self):
-        from metascience_agent.core.prompts import tool_expert_body
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_body
         md = tool_expert_body()   # the prompt as assembled, guidance included
         for v in ("not_computational", "no_tool_exists", "tool_existed_unused"):
             assert v in md
@@ -237,7 +237,7 @@ class TestALocatedNumberMayBeACoincidence:
            "95% intervals. The adjusted mean was 40.86 in the treatment arm.")
 
     def _verify(self, computed):
-        from metascience_agent.computation import verify
+        from forensic_metascience_ai_toolkit.computation import verify
         return verify({"technique": "no_tool_exists", "computed": computed},
                       self.HAY)
 
@@ -268,7 +268,7 @@ class TestALocatedNumberMayBeACoincidence:
         assert "number_derived" in v["codes"]
 
     def test_significant_digits(self):
-        from metascience_agent.computation import _significant_digits as sd
+        from forensic_metascience_ai_toolkit.computation import _significant_digits as sd
         assert sd("12") == 2
         assert sd("0.05") == 1
         assert sd("40.86") == 4
@@ -291,20 +291,20 @@ class TestARangeSeparatorIsNotAMinusSign:
     """
 
     def test_a_row_range_is_two_numbers(self):
-        from metascience_agent.computation import _numbers_in
+        from forensic_metascience_ai_toolkit.computation import _numbers_in
         assert _numbers_in("rows 1-8, 9-16") == ["1", "8", "9", "16"]
 
     def test_a_scale_range_is_two_numbers(self):
-        from metascience_agent.computation import _numbers_in
+        from forensic_metascience_ai_toolkit.computation import _numbers_in
         assert _numbers_in("integer responses on a 1-7 scale") == ["1", "7"]
 
     def test_a_genuine_negative_survives(self):
-        from metascience_agent.computation import _numbers_in
+        from forensic_metascience_ai_toolkit.computation import _numbers_in
         assert _numbers_in({"difference": -0.85}) == ["-0.85"]
         assert _numbers_in("change of -1.5") == ["-1.5"]
 
     def test_a_decimal_range_does_not_become_a_negative(self):
-        from metascience_agent.computation import _numbers_in
+        from forensic_metascience_ai_toolkit.computation import _numbers_in
         assert _numbers_in("2.5-1.234") == ["2.5", "1.234"]
 
     def test_a_figure_spelled_inside_a_key_is_still_a_figure(self):
@@ -315,6 +315,6 @@ class TestARangeSeparatorIsNotAMinusSign:
         Switching to the shared tokenizer would have dropped 346 such figures
         across 116 of the 225 archived blocks -- making the guard ask a smaller
         question, which is the wrong direction for a guard."""
-        from metascience_agent.computation import _numbers_in
+        from forensic_metascience_ai_toolkit.computation import _numbers_in
         got = _numbers_in({"unique_viable_n_for_61pct_within_n_max_19": 18})
         assert got == ["61", "19", "18"]

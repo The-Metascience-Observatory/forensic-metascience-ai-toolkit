@@ -11,8 +11,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import scope
-from metascience_agent.disclaimer import DISCLAIMER_LONG, closing_section_markdown
+from forensic_metascience_ai_toolkit import scope
+from forensic_metascience_ai_toolkit.disclaimer import DISCLAIMER_LONG, closing_section_markdown
 
 RUN = (pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
        / "10.1002--ajcp.70049" / "forensic_review_gatetest2_2026-08-29"
@@ -65,7 +65,7 @@ class TestTheDocumentContainsWhatItPointsAt:
 class TestTheRenderedReport:
     @pytest.fixture(scope="class")
     def md(self):
-        from metascience_agent.report_v2 import render_report_v2
+        from forensic_metascience_ai_toolkit.report_v2 import render_report_v2
         return render_report_v2(json.loads(RUN.read_text(encoding="utf-8")))
 
     def test_it_renders_the_section_the_disclaimer_points_at(self, md):

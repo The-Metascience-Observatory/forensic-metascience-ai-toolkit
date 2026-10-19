@@ -37,7 +37,7 @@ from pathlib import Path
 import pytest
 
 from metascience_observatory_image_analysis.extraction.figures import extract_figures
-from metascience_agent.extraction.pdf import extract_text_with_tables
+from forensic_metascience_ai_toolkit.extraction.pdf import extract_text_with_tables
 
 fitz = pytest.importorskip("fitz")
 
@@ -199,7 +199,7 @@ def _extracted(pdf: Path) -> Path:
     the extractor comparison is measured against publisher JATS XML in
     `docling_tables`' module docstring (recall 60.7% -> 95.9%), not here.
     """
-    from metascience_agent.extraction import docling_tables as dl
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
     doc = fitz.open(str(pdf))
     pages = [{"page_num": i + 1, "text": page.get_text() or ""}
@@ -586,7 +586,7 @@ class TestOneBadPageDoesNotCostTheDocument:
         monkeypatch.setattr(fitz.Page, "get_pixmap", flaky)
 
     def _render(self, tmp_path):
-        from metascience_agent.bundle import render_all_pdfs
+        from forensic_metascience_ai_toolkit.bundle import render_all_pdfs
         return render_all_pdfs([self.PDF], tmp_path)
 
     def test_the_other_pages_survive(self, tmp_path, monkeypatch):

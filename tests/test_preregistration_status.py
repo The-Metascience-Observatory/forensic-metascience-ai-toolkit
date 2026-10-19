@@ -32,7 +32,7 @@ scan with no OCR layer -- 2 of the first 41 documents in the Zotero sweep.
 """
 import pytest
 
-from metascience_agent.artefacts import preregistration
+from forensic_metascience_ai_toolkit.artefacts import preregistration
 
 
 class TestNoTextIsUnknown:

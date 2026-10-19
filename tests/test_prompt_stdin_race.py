@@ -23,8 +23,8 @@ import io
 import sys
 import time
 
-from metascience_agent import runtime
-from metascience_agent.llm_backend import CLAUDE, GROK, Invocation
+from forensic_metascience_ai_toolkit import runtime
+from forensic_metascience_ai_toolkit.llm_backend import CLAUDE, GROK, Invocation
 
 #: Waits CHILD_WAIT seconds for stdin, like the CLI's 3 s, then exits 1.
 CHILD_WAIT = 0.5

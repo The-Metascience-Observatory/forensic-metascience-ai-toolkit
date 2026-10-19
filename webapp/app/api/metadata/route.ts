@@ -49,7 +49,7 @@ export async function POST(req: Request) {
         if (force) args.push("--force");
         last = await pyJson(args);
         if (core(last)) {
-          await pyModuleJson("metascience_agent.webapp_index", [abs]);
+          await pyModuleJson("forensic_metascience_ai_toolkit.webapp_index", [abs]);
           updated += 1;
         }
       }

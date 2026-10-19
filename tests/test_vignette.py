@@ -17,8 +17,8 @@ import re
 
 import pytest
 
-from metascience_agent import vignette
-from metascience_agent.bundle import _distil_calls, _integrity_card, collect
+from forensic_metascience_ai_toolkit import vignette
+from forensic_metascience_ai_toolkit.bundle import _distil_calls, _integrity_card, collect
 from tests.test_bundle import flat, review, section_html  # noqa: F401
 
 
@@ -150,7 +150,7 @@ class TestNothingIsInvented:
         assert v["computed"]["no_method"] is True
 
     def test_the_question_is_the_registrys_purpose_not_a_new_description(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         v = compose("grim_check", {"severity": "consistent"})
         assert v["asked"]["question"] == registry.BY_NAME["grim_check"].purpose
 
@@ -338,7 +338,7 @@ class TestTheRawRecordStillShips:
 class TestTheViewerRendersIt:
     def test_a_call_shows_its_five_headings_and_its_question(self, review, tmp_path):
         html = flat(section_html(collect(review), "calls", tmp_path))
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         assert registry.BY_NAME["grim_check"].purpose in html
 
     def test_the_severity_word_still_comes_from_the_pages_own_map(self, review,

@@ -34,11 +34,11 @@ import ast
 import pathlib
 
 
-from metascience_agent.tools.severity import (ACCUSATION_GRADE, ACCUSES_AT_ALL,
+from forensic_metascience_ai_toolkit.tools.severity import (ACCUSATION_GRADE, ACCUSES_AT_ALL,
                                               HIGHLY_SUSPICIOUS, IMPOSSIBLE,
                                               SUSPICIOUS)
 
-SRC = pathlib.Path(__file__).resolve().parent.parent / "src" / "metascience_agent"
+SRC = pathlib.Path(__file__).resolve().parent.parent / "src" / "forensic_metascience_ai_toolkit"
 
 
 class TestTheTwoConceptsAreDistinct:
@@ -68,14 +68,14 @@ class TestTheDeliberateHigherBarSurvives:
     def test_the_preregistered_thresholds_are_unchanged(self):
         """A pre-registered threshold that moves silently invalidates every rate
         published against it. Both are carried, so neither can be quoted alone."""
-        from metascience_agent.evaluation.corpus import (ACCUSATORY,
+        from forensic_metascience_ai_toolkit.evaluation.corpus import (ACCUSATORY,
                                                          ACCUSATORY_SECONDARY)
         assert ACCUSATORY == ACCUSATION_GRADE
         assert ACCUSATORY_SECONDARY == ACCUSES_AT_ALL
         assert SUSPICIOUS not in ACCUSATORY
 
     def test_the_sensitivity_harness_keeps_suspicious_below_the_bar(self):
-        from metascience_agent.simulation import ACCUSATORY
+        from forensic_metascience_ai_toolkit.simulation import ACCUSATORY
         assert ACCUSATORY == ACCUSATION_GRADE
         assert SUSPICIOUS not in ACCUSATORY
 

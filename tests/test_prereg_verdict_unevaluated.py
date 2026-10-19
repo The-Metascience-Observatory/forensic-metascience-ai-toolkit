@@ -30,7 +30,7 @@ import math
 
 import pytest
 
-from metascience_agent.evaluation.corpus import Endpoint, verdict
+from forensic_metascience_ai_toolkit.evaluation.corpus import Endpoint, verdict
 
 CLEAN_REST = {"E3_canary_hits": [], "E4_coverage": {"rate": 0.9}}
 
@@ -97,6 +97,6 @@ class TestTheUnderlyingReturnIsStillHonest:
         """The (nan, nan) itself is CORRECT and stays. One cluster cannot
         produce an interval, and a fabricated one would be far worse than a
         missing one -- the defect was never here, it was in the reader."""
-        from metascience_agent.evaluation.corpus import cluster_bootstrap_ci
+        from forensic_metascience_ai_toolkit.evaluation.corpus import cluster_bootstrap_ci
         assert all(math.isnan(x) for x in cluster_bootstrap_ci([]))
         assert all(math.isnan(x) for x in cluster_bootstrap_ci([("a", True)]))

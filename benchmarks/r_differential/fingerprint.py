@@ -17,7 +17,7 @@ import hashlib
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-_TOOLS = "src/metascience_agent/tools"
+_TOOLS = "src/forensic_metascience_ai_toolkit/tools"
 
 GRIM_SOURCES = (
     f"{_TOOLS}/grim.py",

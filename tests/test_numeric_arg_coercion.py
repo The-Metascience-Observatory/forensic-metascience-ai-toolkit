@@ -13,7 +13,7 @@ serialisation slip on a value the model got right.
 """
 import pytest
 
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit import registry as R
 
 GRIM = dict(mean=5.51, n=30, data_type="likert", discreteness_source="stated")
 
@@ -73,7 +73,7 @@ class TestWhatIsDeliberatelyNotCoerced:
     def test_bool_is_never_coerced(self):
         """Python reads `bool("False")` as True, so coercing a stringified
         boolean would INVERT a guard silently -- worse than refusing it."""
-        from metascience_agent.registry import _COERCIBLE
+        from forensic_metascience_ai_toolkit.registry import _COERCIBLE
         assert bool not in _COERCIBLE
 
 

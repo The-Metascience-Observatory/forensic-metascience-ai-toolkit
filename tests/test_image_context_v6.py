@@ -206,7 +206,7 @@ def test_brief_preserves_legacy_caption_and_eval_denominator():
 
 
 def test_ineligible_unresolved_is_not_a_clearance(catalog):
-    from metascience_agent.workbench.repository import Repository
+    from forensic_metascience_ai_toolkit.workbench.repository import Repository
     repo=Repository(catalog);repo.refresh()
     raw=deepcopy(repo.items[1])
     raw['record']['screening'].update(decision='unresolved',validated=False)

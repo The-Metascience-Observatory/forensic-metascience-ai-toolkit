@@ -17,7 +17,7 @@ import re
 
 import pytest
 
-from metascience_agent.bundle import render_viewer
+from forensic_metascience_ai_toolkit.bundle import render_viewer
 
 #: A parser that rejects NaN/Infinity exactly as the browser's JSON.parse does.
 #: Python's json.loads ACCEPTS them by default, so a naive round-trip test would

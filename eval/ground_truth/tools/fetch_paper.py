@@ -30,7 +30,7 @@ UA = "metascience-ground-truth/0.1 (mailto:%s)" % EMAIL
 def slug(doi: str) -> str:
     # Delegated: this function DEFINED the convention, and four other call
     # sites reimplemented it, two of them without the `.lower()`.
-    from metascience_agent.paper_ids import doi_dirname
+    from forensic_metascience_ai_toolkit.paper_ids import doi_dirname
     return doi_dirname(doi)
 
 

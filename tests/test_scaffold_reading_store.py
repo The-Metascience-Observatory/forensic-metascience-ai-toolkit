@@ -20,9 +20,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.scaffold import passes as PASSES
-from metascience_agent.scaffold import reading_store as RS
-from metascience_agent.scaffold import reconstruct as RC
+from forensic_metascience_ai_toolkit.scaffold import passes as PASSES
+from forensic_metascience_ai_toolkit.scaffold import reading_store as RS
+from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
 
 # The walker cells and the reading that verifies against them are already
 # written once, next door; pytest 9 defaults to the importlib import mode and

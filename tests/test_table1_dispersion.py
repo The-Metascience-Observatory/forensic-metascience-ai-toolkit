@@ -5,13 +5,13 @@ import random
 
 import pytest
 
-from metascience_agent.tools.table1_dispersion import (
+from forensic_metascience_ai_toolkit.tools.table1_dispersion import (
     table1_dispersion,
     _z_from_p_two_sided,
     _precision_multiplier,
     _row_to_p_value,
 )
-from metascience_agent.tools.csf import csf_test
+from forensic_metascience_ai_toolkit.tools.csf import csf_test
 import numpy as np
 
 
@@ -271,7 +271,7 @@ class TestCorrelationAwareness:
 
     def test_verdict_rho_matches_csf(self):
         """One calibrated constant, not two drifting ones."""
-        from metascience_agent.tools.csf import VERDICT_RHO
+        from forensic_metascience_ai_toolkit.tools.csf import VERDICT_RHO
         result = table1_dispersion(TWELVE_ROW_CLINICAL, num_bootstrap=200, seed=0)
         assert result["correlation_used"] == VERDICT_RHO
         assert result["correlation_assumed"] is False

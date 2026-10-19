@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-SCHEMA = Path("src/metascience_agent/schema/report.schema.json")
+SCHEMA = Path("src/forensic_metascience_ai_toolkit/schema/report.schema.json")
 
 
 def _report(**kw):
@@ -44,7 +44,7 @@ def _report(**kw):
 
 
 class TestFigureClassification:
-    SCHEMA1 = Path("src/metascience_agent/schema/findings.v2.schema.json")
+    SCHEMA1 = Path("src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json")
 
     def test_the_schema_asks_for_it(self):
         s = json.loads(self.SCHEMA1.read_text())
@@ -71,13 +71,13 @@ class TestTheSupplementIsNotBlamedOnThePaper:
         """It opened "THIS ANALYSIS WAS RUN ON AN INCOMPLETE PAPER", which reads
         as a charge against the authors however carefully the rest of the
         paragraph attributes it to the operator."""
-        from metascience_agent.supplements import OVERRIDE_WARNING
+        from forensic_metascience_ai_toolkit.supplements import OVERRIDE_WARNING
         first = OVERRIDE_WARNING.split("\n")[0]
         assert "THIS REVIEW" in first
         assert "INCOMPLETE PAPER" not in first
 
     def test_it_says_whose_fault_it_is_not(self):
-        from metascience_agent.supplements import OVERRIDE_WARNING
+        from forensic_metascience_ai_toolkit.supplements import OVERRIDE_WARNING
         assert "not a fault of the publication" in OVERRIDE_WARNING
 
 

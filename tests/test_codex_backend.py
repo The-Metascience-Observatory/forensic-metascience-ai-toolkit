@@ -21,8 +21,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit.llm_backend import (
     CLAUDE,
     CODEX,
     CODEX_DISABLED_FEATURES,
@@ -42,7 +42,7 @@ from metascience_agent.llm_backend import (
     reset_mcp_live_cache,
     sandbox_limitation_sentence,
 )
-from metascience_agent.usage_guard import UNSUPPORTED
+from forensic_metascience_ai_toolkit.usage_guard import UNSUPPORTED
 
 DATA = Path(__file__).parent / "data"
 
@@ -97,7 +97,7 @@ class TestABareConstOrEnumGainsItsType:
         import glob
         import json as _json
 
-        from metascience_agent.llm_backend import codex_strict_schema
+        from forensic_metascience_ai_toolkit.llm_backend import codex_strict_schema
 
         def typeless(node, path=""):
             if isinstance(node, dict):
@@ -114,7 +114,7 @@ class TestABareConstOrEnumGainsItsType:
 
         here = Path(__file__).resolve().parent.parent
         schemas = sorted(glob.glob(
-            str(here / "src/metascience_agent/schema/*.json")))
+            str(here / "src/forensic_metascience_ai_toolkit/schema/*.json")))
         assert schemas, "no schemas found"
         offenders = {}
         for path in schemas:
@@ -125,7 +125,7 @@ class TestABareConstOrEnumGainsItsType:
         assert not offenders, offenders
 
     def test_the_implied_type_is_the_value_s_own(self):
-        from metascience_agent.llm_backend import codex_strict_schema
+        from forensic_metascience_ai_toolkit.llm_backend import codex_strict_schema
         out = codex_strict_schema({
             "type": "object", "required": ["a", "b", "c", "d", "e"],
             "properties": {"a": {"const": "1.0"}, "b": {"const": 3},
@@ -142,7 +142,7 @@ class TestABareConstOrEnumGainsItsType:
         assert p["e"]["type"] == ["string", "null"]
 
     def test_a_declared_type_is_never_overwritten(self):
-        from metascience_agent.llm_backend import codex_strict_schema
+        from forensic_metascience_ai_toolkit.llm_backend import codex_strict_schema
         out = codex_strict_schema({
             "type": "object", "required": ["a"],
             "properties": {"a": {"type": "string", "const": "1.0"}}})
@@ -466,8 +466,8 @@ class TestStrictSchemaRoundTrip:
     the restore makes the parsed document identical to a Claude run's."""
 
     def test_every_object_is_closed_and_fully_required(self):
-        from metascience_agent.llm_backend import codex_strict_schema
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.llm_backend import codex_strict_schema
+        from forensic_metascience_ai_toolkit.core import prompts
         strict = codex_strict_schema(
             prompts.producer_findings_schema("tool_expert", figures=False))
 
@@ -488,7 +488,7 @@ class TestStrictSchemaRoundTrip:
         check(strict)
 
     def test_freeform_objects_become_json_strings(self):
-        from metascience_agent.llm_backend import codex_strict_schema
+        from forensic_metascience_ai_toolkit.llm_backend import codex_strict_schema
         strict = codex_strict_schema({
             "type": "object",
             "properties": {"inputs": {"type": "object",
@@ -499,7 +499,7 @@ class TestStrictSchemaRoundTrip:
         assert "serialized" in strict["properties"]["inputs"]["description"]
 
     def test_restore_parses_strings_and_drops_standin_nulls(self):
-        from metascience_agent.llm_backend import restore_from_strict
+        from forensic_metascience_ai_toolkit.llm_backend import restore_from_strict
         original = {
             "type": "object",
             "properties": {
@@ -528,14 +528,14 @@ class TestStrictSchemaRoundTrip:
         }]}
 
     def test_restore_keeps_a_null_the_original_allows(self):
-        from metascience_agent.llm_backend import restore_from_strict
+        from forensic_metascience_ai_toolkit.llm_backend import restore_from_strict
         original = {"type": "object",
                     "properties": {"dup": {"type": ["string", "null"]}},
                     "required": []}
         assert restore_from_strict({"dup": None}, original) == {"dup": None}
 
     def test_restore_leaves_unparseable_strings_alone(self):
-        from metascience_agent.llm_backend import restore_from_strict
+        from forensic_metascience_ai_toolkit.llm_backend import restore_from_strict
         original = {"type": "object",
                     "properties": {"inputs": {"type": "object"}},
                     "required": ["inputs"]}
@@ -592,26 +592,26 @@ class TestLivenessProbe:
             r.stdout, r.stderr, r.returncode = stdout, stderr, returncode
             return r
 
-        import metascience_agent.llm_backend as lb
+        import forensic_metascience_ai_toolkit.llm_backend as lb
         monkeypatch.setattr(lb.subprocess, "run", fake)
         return calls
 
     def test_tools_listed_passes(self, monkeypatch):
-        from metascience_agent.llm_backend import _probe_mcp_stdio
+        from forensic_metascience_ai_toolkit.llm_backend import _probe_mcp_stdio
         ok = json.dumps({"jsonrpc": "2.0", "id": 2,
                          "result": {"tools": [{"name": "grim_check"}]}})
         self._fake_run(monkeypatch, stdout=ok + "\n")
         _probe_mcp_stdio()  # does not raise
 
     def test_zero_tools_raises(self, monkeypatch):
-        from metascience_agent.llm_backend import _probe_mcp_stdio
+        from forensic_metascience_ai_toolkit.llm_backend import _probe_mcp_stdio
         empty = json.dumps({"jsonrpc": "2.0", "id": 2, "result": {"tools": []}})
         self._fake_run(monkeypatch, stdout=empty + "\n")
         with pytest.raises(MCPUnavailable, match="0 tools"):
             _probe_mcp_stdio()
 
     def test_no_response_raises(self, monkeypatch):
-        from metascience_agent.llm_backend import _probe_mcp_stdio
+        from forensic_metascience_ai_toolkit.llm_backend import _probe_mcp_stdio
         self._fake_run(monkeypatch, stdout="", stderr="ImportError: mcp",
                        returncode=1)
         with pytest.raises(MCPUnavailable, match="no tools/list response"):
@@ -619,7 +619,7 @@ class TestLivenessProbe:
 
     def test_assert_mcp_live_uses_the_stdio_probe_and_caches(self, monkeypatch):
         reset_mcp_live_cache()
-        import metascience_agent.llm_backend as lb
+        import forensic_metascience_ai_toolkit.llm_backend as lb
         calls = []
         monkeypatch.setattr(lb, "_probe_mcp_stdio",
                             lambda *a, **k: calls.append(1))
@@ -632,19 +632,19 @@ class TestLivenessProbe:
     def test_liveness_probe_against_the_real_server(self):
         # Free and offline: spawns OUR OWN MCP server over stdio and requires
         # tools. This is the probe a real codex run performs before spend.
-        from metascience_agent.llm_backend import _probe_mcp_stdio
+        from forensic_metascience_ai_toolkit.llm_backend import _probe_mcp_stdio
         _probe_mcp_stdio()
 
 
 class TestIsolationRow:
     def test_missing_binary_is_not_ok(self, monkeypatch):
-        import metascience_agent.llm_backend as lb
+        import forensic_metascience_ai_toolkit.llm_backend as lb
         monkeypatch.setattr(lb.shutil, "which", lambda name: None)
         name, ok, detail = codex_config_isolation_row()
         assert not ok and "not on PATH" in detail
 
     def test_present_binary_is_structurally_ok(self, monkeypatch):
-        import metascience_agent.llm_backend as lb
+        import forensic_metascience_ai_toolkit.llm_backend as lb
         monkeypatch.setattr(lb.shutil, "which", lambda name: "/usr/bin/codex")
 
         def fake_run(*a, **kw):
@@ -668,7 +668,7 @@ class TestUsageIsProbedFromTheAppServer:
     what guards a codex run (that is the grok mistake of 2026-08-19)."""
 
     def test_codex_probes_its_own_app_server_not_claude(self, monkeypatch):
-        from metascience_agent import usage_guard as ug
+        from forensic_metascience_ai_toolkit import usage_guard as ug
         spawned = []
         answer = (b'{"jsonrpc":"2.0","id":2,"result":{"rateLimits":{"primary":'
                   b'{"usedPercent":36},"secondary":{"usedPercent":28}}}}\n')
@@ -743,7 +743,7 @@ def codex_stage_env(tmp_path, monkeypatch):
         return None
 
     monkeypatch.setattr(A, "usage_guard", _no_guard)
-    from metascience_agent.llm_backend import Backend
+    from forensic_metascience_ai_toolkit.llm_backend import Backend
     monkeypatch.setattr(Backend, "assert_mcp_live", lambda self, sandbox: None)
     return tmp_path
 

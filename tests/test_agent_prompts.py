@@ -18,8 +18,8 @@ from pathlib import Path
 import jsonschema
 import pytest
 
-from metascience_agent.core import prompts
-from metascience_agent import registry as R
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import registry as R
 
 SCIENCE_MD = prompts.prompt_path("science_error.md").read_text()
 TOOL_MD = prompts.tool_expert_body()   # assembled: step-3 guidance lives in TOOL.md
@@ -116,7 +116,7 @@ class TestTheRCrossCheckStateIsStated:
     accusation that reads as "confirmation pending" is being published now."""
 
     def test_both_ranking_prompts_carry_the_availability_block(self):
-        from metascience_agent.core.prompts import (
+        from forensic_metascience_ai_toolkit.core.prompts import (
             adjudication_system_prompt,
             tool_expert_system_prompt,
         )
@@ -127,7 +127,7 @@ class TestTheRCrossCheckStateIsStated:
 
     def test_both_branches_forbid_the_pending_wording(self):
         """Whichever branch this machine takes, "pending" must be ruled out."""
-        from metascience_agent.core.prompts import r_crosscheck_note
+        from forensic_metascience_ai_toolkit.core.prompts import r_crosscheck_note
         note = r_crosscheck_note()
         assert "pending" in note.lower()
         assert "await" in note.lower()
@@ -137,8 +137,8 @@ class TestTheRCrossCheckStateIsStated:
         pipeline has no editorial stage, and `r_grim_ground_truth` is
         registered adjudicator-only -- which is how a finding came to name a
         stage that does not run."""
-        from metascience_agent import registry as R
-        from metascience_agent.core.prompts import tool_expert_system_prompt
+        from forensic_metascience_ai_toolkit import registry as R
+        from forensic_metascience_ai_toolkit.core.prompts import tool_expert_system_prompt
 
         assert "r_grim_ground_truth" not in R.stage_tools(R.TOOL_AGENT)
         assert "r_grim_ground_truth" in R.stage_tools(R.ADJUDICATOR)

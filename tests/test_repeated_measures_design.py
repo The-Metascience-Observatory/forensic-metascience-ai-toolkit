@@ -19,8 +19,8 @@ import statistics as st
 
 import pytest
 
-from metascience_agent.tools.csf import DEPENDENT_DESIGNS, _resolve_design
-from metascience_agent.tools.variance_dispersion import check_variance_dispersion
+from forensic_metascience_ai_toolkit.tools.csf import DEPENDENT_DESIGNS, _resolve_design
+from forensic_metascience_ai_toolkit.tools.variance_dispersion import check_variance_dispersion
 
 
 class TestTheVocabularyRecognisesRepeatedMeasures:

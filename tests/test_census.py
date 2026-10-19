@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.census import CONSUMABLE_KINDS, cell_census, render, summarise
+from forensic_metascience_ai_toolkit.census import CONSUMABLE_KINDS, cell_census, render, summarise
 
 LIKERT = [{"id": "v1", "name": "declared", "family": "likert_item",
            "lower_bound": 0, "upper_bound": 66}]
@@ -74,7 +74,7 @@ class TestItMirrorsTheDispatcher:
         ("25 (42.4)", "declared"),
     ])
     def test_runnable_agrees_with_check_table_actually_running(self, raw, label):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         c = cells((raw, label, "C (n = 59)"))
         c[0]["n"] = 59
         kw = dict(variables=LIKERT, bindings={label: "v1"})
@@ -82,7 +82,7 @@ class TestItMirrorsTheDispatcher:
         assert cell_census(c, **kw)[0]["runnable"] is ran
 
     def test_consumable_kinds_are_derived_from_dispatch_not_listed(self):
-        from metascience_agent.dispatch import DISPATCH
+        from forensic_metascience_ai_toolkit.dispatch import DISPATCH
         for kind in CONSUMABLE_KINDS:
             assert any(DISPATCH.get((k, dt)) for (k, dt) in DISPATCH if k == kind)
 
@@ -116,7 +116,7 @@ class TestTheRealPaper:
 
     @pytest.fixture(scope="class")
     def entries(self):
-        from metascience_agent.extraction.jats import (
+        from forensic_metascience_ai_toolkit.extraction.jats import (
             extract_xml_text_with_tables,
             get_table,
         )
@@ -178,7 +178,7 @@ class TestItIsActuallyWiredIn:
     """
 
     def test_the_report_pass_computes_it_from_a_paper_directory(self):
-        from metascience_agent.agent import _checkable_coverage
+        from forensic_metascience_ai_toolkit.agent import _checkable_coverage
         root = Path(__file__).resolve().parents[1]
         pdir = root / "tests/fixtures/papers/cerebrolysin_run_2026-08-09" / "10.3390--jpm11060545"
         if not pdir.exists():
@@ -193,11 +193,11 @@ class TestItIsActuallyWiredIn:
     def test_a_paper_with_no_xml_returns_none_rather_than_a_misleading_zero(self, tmp_path):
         """Zero checkable cells and no tables to survey are different claims,
         and a zero here would read as the former."""
-        from metascience_agent.agent import _checkable_coverage
+        from forensic_metascience_ai_toolkit.agent import _checkable_coverage
         assert _checkable_coverage(str(tmp_path), []) is None
 
     def test_a_broken_paper_directory_never_breaks_a_paid_run(self):
-        from metascience_agent.agent import _checkable_coverage
+        from forensic_metascience_ai_toolkit.agent import _checkable_coverage
         assert _checkable_coverage("/nonexistent/path/xyz", []) is None
 
 
@@ -218,7 +218,7 @@ class TestTheRendererGetsTheFieldsItReads:
     """
 
     def _entries(self):
-        from metascience_agent.census import cell_census
+        from forensic_metascience_ai_toolkit.census import cell_census
         cells = [{"raw": "12.34 (5.6)", "row_label": "Age", "col_label": "A", "n": 40},
                  {"raw": "8.10 (2.2)", "row_label": "Age", "col_label": "B", "n": 40}]
         variables = [{"id": "age", "family": "count", "bounds_are_stated": True,
@@ -229,7 +229,7 @@ class TestTheRendererGetsTheFieldsItReads:
         """Parsed out of the renderer rather than hand-listed, so a key added
         there without a producer fails here instead of rendering nothing."""
         import inspect, re
-        from metascience_agent import census, report_render
+        from forensic_metascience_ai_toolkit import census, report_render
         src = inspect.getsource(report_render._render_checkable_detail)
         read = set(re.findall(r"""c\.get\(["'](\w+)["']""", src))
         read |= set(re.findall(r"""c\[["'](\w+)["']\]""", src))
@@ -242,8 +242,8 @@ class TestTheRendererGetsTheFieldsItReads:
         )
 
     def test_never_submitted_is_populated_and_prints(self):
-        from metascience_agent import census
-        from metascience_agent.report_render import _render_checkable_detail
+        from forensic_metascience_ai_toolkit import census
+        from forensic_metascience_ai_toolkit.report_render import _render_checkable_detail
         s = census.summarise(self._entries(), n_checked=0)
         assert "never_submitted" in s, "the field the census exists to report"
         s["cells_checked_via_check_table"] = 0
@@ -254,7 +254,7 @@ class TestTheRendererGetsTheFieldsItReads:
     def test_the_published_summary_carries_n_checked(self):
         """The exact regression: the payload lacked what the second, discarded
         call had computed."""
-        from metascience_agent import census
+        from forensic_metascience_ai_toolkit import census
         s = census.summarise(self._entries(), n_checked=2)
         assert s["n_checked"] == 2
         assert "coverage" in s
@@ -277,7 +277,7 @@ class TestThePredictorAdmitsWhenItIsWrong:
             "missing_inputs": {}, "never_submitted": 0}
 
     def test_the_contradiction_is_explained_in_the_prose(self):
-        from metascience_agent.census import render
+        from forensic_metascience_ai_toolkit.census import render
 
         text = render({**self.BASE, "predictor_disagrees": {
             "predicted_runnable": 0, "actually_checked": 8}})
@@ -288,7 +288,7 @@ class TestThePredictorAdmitsWhenItIsWrong:
     def test_it_names_which_number_to_believe(self):
         """A reader handed numbers that disagree needs to know which is the
         fact, not merely that they disagree."""
-        from metascience_agent.census import render
+        from forensic_metascience_ai_toolkit.census import render
 
         text = render({**self.BASE, "predictor_disagrees": {
             "predicted_runnable": 0, "actually_checked": 8}})
@@ -297,7 +297,7 @@ class TestThePredictorAdmitsWhenItIsWrong:
     def test_a_consistent_census_says_nothing_extra(self):
         """An audit that fires on every clean run teaches its reader to skip
         it, and is then worse than absent."""
-        from metascience_agent.census import render
+        from forensic_metascience_ai_toolkit.census import render
 
         text = render({**self.BASE, "n_checked": 20, "coverage": 20 / 24})
         assert "do not add up" not in text

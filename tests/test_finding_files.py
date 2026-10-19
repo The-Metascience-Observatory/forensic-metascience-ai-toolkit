@@ -2,11 +2,11 @@
 import json
 from pathlib import Path
 
-from metascience_agent.finding_files import (
+from forensic_metascience_ai_toolkit.finding_files import (
     artefacts_for_editorial, artefacts_from_sweep_finding, relativize,
     resolve, read_sheet,
 )
-from metascience_agent.review_issues import collect_issues
+from forensic_metascience_ai_toolkit.review_issues import collect_issues
 
 
 def test_relativize_unix_absolute_becomes_basename(tmp_path):

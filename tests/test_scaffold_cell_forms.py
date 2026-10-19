@@ -6,7 +6,7 @@ own mislabel (`M (SD)` over coefficients) -- and the deterministic parser then
 refused every cell: "Cells parsed into values: 0 of 42" three times over. 202 of
 210 table cells unparsed. The paper's core results contributed zero values.
 """
-from metascience_agent.scaffold.bind import cell_components as cc
+from forensic_metascience_ai_toolkit.scaffold.bind import cell_components as cc
 
 
 def test_a_coefficient_with_a_parenthesised_dispersion_lands_unnamed():

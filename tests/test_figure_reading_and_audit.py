@@ -9,9 +9,9 @@ import json
 
 import pytest
 
-from metascience_agent.agent import _figures_were_read
-from metascience_agent.evaluation.deterministic import validate_reproduction
-from metascience_agent.report_render import FIGURE_BLINDNESS_NOTE, FIGURES_READ_NOTE
+from forensic_metascience_ai_toolkit.agent import _figures_were_read
+from forensic_metascience_ai_toolkit.evaluation.deterministic import validate_reproduction
+from forensic_metascience_ai_toolkit.report_render import FIGURE_BLINDNESS_NOTE, FIGURES_READ_NOTE
 
 
 def _report():
@@ -117,10 +117,10 @@ class TestTitleQualityIsMeasured:
     """The schema asked for noun phrases and a real batch returned 8 of 31.
     An instruction nobody measures is one nobody knows is being ignored."""
 
-    from metascience_agent.evaluation.deterministic import check_titles as _c
+    from forensic_metascience_ai_toolkit.evaluation.deterministic import check_titles as _c
 
     def _check(self, *titles):
-        from metascience_agent.evaluation.deterministic import check_titles
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import check_titles
         return check_titles({"findings": [{"title": t} for t in titles]})
 
     def test_a_noun_phrase_passes(self):
@@ -141,7 +141,7 @@ class TestTitleQualityIsMeasured:
         under the 90-character cap and is exactly at the limit under the 120 it
         became on 2026-08-13, so the test silently stopped exercising the
         branch it names."""
-        from metascience_agent.evaluation.deterministic import _TITLE_MAX
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import _TITLE_MAX
         assert self._check("x" * (_TITLE_MAX + 1))["n_overlong"] == 1
         assert self._check("x" * _TITLE_MAX)["n_overlong"] == 0
 
@@ -152,7 +152,7 @@ class TestTitleQualityIsMeasured:
         assert "pass" in r and r["n"] == 1        # reported, not raised
 
     def test_no_findings_is_not_a_failure(self):
-        from metascience_agent.evaluation.deterministic import check_titles
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import check_titles
         assert check_titles({})["pass"] is True
 
 

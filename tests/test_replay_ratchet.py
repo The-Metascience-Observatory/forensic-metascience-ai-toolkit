@@ -30,7 +30,7 @@ import collections
 
 import pytest
 
-from metascience_agent.evaluation import replay
+from forensic_metascience_ai_toolkit.evaluation import replay
 
 CORPUS = "tests/fixtures/papers/high_value_pdfs_to_run_on"
 

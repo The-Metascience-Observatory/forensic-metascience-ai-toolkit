@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-from metascience_agent import drafts as D
+from forensic_metascience_ai_toolkit import drafts as D
 
 
 def _paper(tmp_path):

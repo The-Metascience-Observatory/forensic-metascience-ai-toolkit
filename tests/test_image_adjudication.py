@@ -24,8 +24,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.core import prompts
-from metascience_agent.agent import (
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit.agent import (
     _apply_image_adjudication,
     _image_adjudication_prompt,
 )
@@ -395,7 +395,7 @@ class TestAClearMustRestOnText:
         """`classify` normalises the quote and assumes the haystack already
         is; a raw haystack fails every lookup, and a failed lookup DEMOTES --
         so the guard would have demoted every honest clear."""
-        from metascience_agent.agent import _context_haystack
+        from forensic_metascience_ai_toolkit.agent import _context_haystack
         ctx = _ctx()
         ctx["captions"]["Figure 2"]["caption"] = "Saline\u2010treated cortex"  # NB hyphen
         hay, _facts = _context_haystack(ctx, ["Figure 2"])
@@ -488,7 +488,7 @@ class TestEveryCallerPassesTheContext:
 
     def test_the_single_paper_path_passes_it(self, tmp_path, monkeypatch):
         import asyncio
-        from metascience_agent.agent import adjudicate_retained_findings
+        from forensic_metascience_ai_toolkit.agent import adjudicate_retained_findings
         seen = {}
         paper = tmp_path / "10.1--x"
         (paper / "panels").mkdir(parents=True)
@@ -638,7 +638,7 @@ class TestThePromptCarriesItsGuards:
         offers and the enum omits is a HARD rejection of the whole response --
         not a soft fallback. The two must not drift."""
         import json
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         enum = (prompts.image_adjudication_schema()["properties"]["verdicts"]
                 ["items"]["properties"]["category"]["enum"])
         p = self._prompt()
@@ -811,14 +811,14 @@ class TestASubPanelCanActuallyBeSeen:
 class TestAdjudicateRetainedFindings:
     def test_missing_file_is_skipped(self, tmp_path):
         import asyncio
-        from metascience_agent.agent import adjudicate_retained_findings
+        from forensic_metascience_ai_toolkit.agent import adjudicate_retained_findings
         out = asyncio.run(adjudicate_retained_findings(
             tmp_path / "nope", model="sonnet", render_media=False))
         assert out["skipped"] == "no_retained_findings"
 
     def test_explained_verdict_is_written_back(self, tmp_path, monkeypatch):
         import asyncio
-        from metascience_agent.agent import adjudicate_retained_findings
+        from forensic_metascience_ai_toolkit.agent import adjudicate_retained_findings
         paper = tmp_path / "10.1--x"
         paper.mkdir()
         payload = _result(1)
@@ -851,7 +851,7 @@ class TestGrokAdjudicationCommand:
     def test_grok_adjudicator_is_read_only(self, tmp_path, monkeypatch):
         monkeypatch.setenv("METASCIENCE_GROK_SANDBOX_ROOT", str(tmp_path / "sb"))
         monkeypatch.setenv("METASCIENCE_GROK_SKIP_FOLDER_TRUST", "1")
-        from metascience_agent.agent import BUILTIN_TOOLS, _build_claude_cmd
+        from forensic_metascience_ai_toolkit.agent import BUILTIN_TOOLS, _build_claude_cmd
         paper = tmp_path / "p"
         paper.mkdir()
         inv = _build_claude_cmd(

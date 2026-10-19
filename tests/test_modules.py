@@ -13,11 +13,11 @@ import json
 
 import pytest
 
-from metascience_agent import agent, modules
-from metascience_agent import pipeline_config as pc
-from metascience_agent.core import scheduler
-from metascience_agent.modules import ModuleResult
-from metascience_agent.modules.base import Module, ModuleDef
+from forensic_metascience_ai_toolkit import agent, modules
+from forensic_metascience_ai_toolkit import pipeline_config as pc
+from forensic_metascience_ai_toolkit.core import scheduler
+from forensic_metascience_ai_toolkit.modules import ModuleResult
+from forensic_metascience_ai_toolkit.modules.base import Module, ModuleDef
 from tests.test_parallel_pipeline import _doc, _row, _stage, fakes, paper  # noqa: F401
 
 
@@ -174,7 +174,7 @@ class TestPerModuleBackend:
         assert rec.module("tools_agent").backend == {"name": "grok"}
 
     def test_a_budget_needs_every_model_module_to_support_one(self, paper, fakes):
-        from metascience_agent.llm_backend import BudgetUnsupported
+        from forensic_metascience_ai_toolkit.llm_backend import BudgetUnsupported
         cfg = _cfg({"use": "tools_agent", "backend": {"name": "codex"}},
                    backend={"name": "claude"})
         with pytest.raises(BudgetUnsupported, match="tools_agent runs on codex"):
@@ -190,7 +190,7 @@ class TestPromptsLiveWithTheirModules:
     test_prompt_contract's `_md` both did, until fixed with the move)."""
 
     def test_every_named_prompt_exists_where_the_table_says(self):
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         for name, path in prompts.PROMPT_FILES.items():
             assert path.is_file(), name
             assert prompts.prompt_path(name) == path
@@ -199,15 +199,15 @@ class TestPromptsLiveWithTheirModules:
             assert (prompts._PKG / "modules" / mod / "prompt.md").is_file()
 
     def test_the_scanner_list_covers_every_prompt(self):
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         files = set(prompts.prompt_files())
         assert set(prompts.PROMPT_FILES.values()) <= files
 
     def test_the_old_prompts_package_is_gone(self):
         """`metascience_agent/prompts/` was retired on 2026-10-18: the loader
-        is `core/prompts/__init__.py`, the schemas `metascience_agent/schema/`.
+        is `core/prompts/__init__.py`, the schemas `forensic_metascience_ai_toolkit/schema/`.
         A file put back there would be read by nothing."""
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         assert not (prompts._PKG / "prompts").exists()
         shared = {p for p in prompts.PROMPTS_DIR.glob("*.md")}
         assert shared <= set(prompts.PROMPT_FILES.values())

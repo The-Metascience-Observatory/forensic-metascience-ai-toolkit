@@ -23,7 +23,7 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from metascience_agent.extraction import jats
+from forensic_metascience_ai_toolkit.extraction import jats
 
 XML = pathlib.Path(__file__).resolve().parents[1] / (
     "tests/fixtures/papers/cerebrolysin_run_2026-08-09/10.1007--s11064-023-03861-8/"

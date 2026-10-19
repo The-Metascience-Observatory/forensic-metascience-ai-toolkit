@@ -103,7 +103,7 @@ def test_encoding_failure_never_overwrites_old_mp4(tmp_path, monkeypatch):
 
 
 def test_citation_preparation_reaches_card_and_reports_missing_fields(tmp_path, monkeypatch):
-    from metascience_agent import paper_metadata
+    from forensic_metascience_ai_toolkit import paper_metadata
     _paper(tmp_path, meta=None)
     calls = []
     def prepare(p):

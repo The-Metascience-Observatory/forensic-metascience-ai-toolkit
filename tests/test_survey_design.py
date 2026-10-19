@@ -18,12 +18,12 @@ import math
 import pytest
 from scipy import stats
 
-from metascience_agent.registry import BY_NAME
-from metascience_agent.survey_design import (COMPLEX_SURVEY, REFUSED_UNDER_SURVEY,
+from forensic_metascience_ai_toolkit.registry import BY_NAME
+from forensic_metascience_ai_toolkit.survey_design import (COMPLEX_SURVEY, REFUSED_UNDER_SURVEY,
                                              SIMPLE_RANDOM, canonical_sampling,
                                              declares_complex_survey,
                                              survey_refusal)
-from metascience_agent.tools.estimates import check_estimate_ci
+from forensic_metascience_ai_toolkit.tools.estimates import check_estimate_ci
 
 #: label, OR, ci_low, ci_high, printed p -- read off the paper.
 S12889_ROWS = [
@@ -239,7 +239,7 @@ class TestTierTwoRefuses:
 
 class TestThePromptCarriesTheDeclaration:
     def test_the_note_quotes_the_paper_and_names_the_argument(self):
-        from metascience_agent.parallel import _survey_design_note
+        from forensic_metascience_ai_toolkit.parallel import _survey_design_note
         note = _survey_design_note(
             "NHANES sampling weights (WTMEC2YR) were applied to account for "
             "complex survey design.")
@@ -248,5 +248,5 @@ class TestThePromptCarriesTheDeclaration:
         assert "LARGER" in note and "SMALLER" in note, "the one-sided rule"
 
     def test_an_ordinary_paper_gets_nothing_appended(self):
-        from metascience_agent.parallel import _survey_design_note
+        from forensic_metascience_ai_toolkit.parallel import _survey_design_note
         assert _survey_design_note("A randomised trial of 240 participants.") == ""

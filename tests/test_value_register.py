@@ -3,8 +3,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import values as V
-from metascience_agent.tools.celltypes import parse_cells
+from forensic_metascience_ai_toolkit import values as V
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
 
 VARS = [{"id": "v1", "name": "BDI-II", "family": "likert_composite",
          "measurement_level": "interval", "discreteness": "discrete",
@@ -65,7 +65,7 @@ class TestAValueIsTheUnit:
         register promised checks the pipeline would decline. The test enshrined
         the promise instead of checking it against the pipeline, which is what
         it now does."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         reg = _register(self.CELLS, self.BIND)
         g = next(g for g in reg["groups"] if g["kind"] == "mean_sd")
         out = check_table(cells=self.CELLS, variables=VARS, bindings=self.BIND)
@@ -293,7 +293,7 @@ class TestVerdictsJoinBackOntoValues:
              "lower_bound": 0, "upper_bound": 1}]
 
     def _joined(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         reg = V.build_register(
             tables=[{"name": "t1", "parsed": parse_cells(self.CELLS),
                      "cells": self.CELLS}],
@@ -432,7 +432,7 @@ class TestTheThreeDefectsAnAdversarialReviewFound:
         honest (10/30 = 33.3); row 7 is not (20/30 = 66.7, printed 60.0). The
         honest row came away carrying the other's `suspicious` finding -- a
         false accusation rendered onto an honest value."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         cells = [{"raw": "10 (33.3)", "row": 2, "row_label": "Male", "n": 30},
                  {"raw": "20 (60.0)", "row": 7, "row_label": "Male", "n": 30}]
         reg = V.build_register(
@@ -568,7 +568,7 @@ class TestTheFiveMediumsAndTheLow:
         `forensic_kwargs` returns {} for `mean_se` while this table maps it,
         because one records what the paper PRINTED and the other decides what a
         check may CONSUME."""
-        from metascience_agent.tools.celltypes import ParsedCell
+        from forensic_metascience_ai_toolkit.tools.celltypes import ParsedCell
         se_cell = ParsedCell(raw="4.20 (0.21)", kind="mean_se", value=4.2, se=0.21)
         # `forensic_kwargs` declines to hand a standard error to a granularity
         # tool; the register still records both numbers, because the paper
@@ -886,7 +886,7 @@ class TestTheBatchIsAttachedWhereTheAnatomyExists:
         somebody looked."""
         import re
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "agent.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "agent.py").read_text()
         assert "classification_batch(register, variables=variables)" in src
         i_vars = src.index('variables = anatomy_obj.get("variables")')
         i_batch = src.index("classification_batch(register")
@@ -897,7 +897,7 @@ class TestTheBatchIsAttachedWhereTheAnatomyExists:
         the same `id`, and keeping both cost 21% of the artefact to say one
         thing twice."""
         src = (pathlib.Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "agent.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "agent.py").read_text()
         assert 'k != "context"' in src
         assert "context_is_on" in src
 
@@ -999,7 +999,7 @@ class TestCoverageIsStratified:
         return {"groups": groups}
 
     def test_the_reported_denominator_excludes_raw_data(self):
-        from metascience_agent.values import coverage
+        from forensic_metascience_ai_toolkit.values import coverage
 
         c = coverage(self._reg(reported=27, raw=6002))
         assert c["n_table_groups"] == 6029
@@ -1007,14 +1007,14 @@ class TestCoverageIsStratified:
         assert c["raw_data"]["n_groups"] == 6002
 
     def test_the_reported_rate_is_not_diluted_by_the_spreadsheet(self):
-        from metascience_agent.values import coverage
+        from forensic_metascience_ai_toolkit.values import coverage
 
         c = coverage(self._reg(reported=27, raw=6002))
         assert c["reported"]["n_checked"] == 1
         assert c["reported"]["coverage"] == round(1 / 27, 4)
 
     def test_a_paper_with_no_supplement_is_unchanged(self):
-        from metascience_agent.values import coverage
+        from forensic_metascience_ai_toolkit.values import coverage
 
         c = coverage(self._reg(reported=40, raw=0))
         assert c["reported"]["n_groups"] == c["n_table_groups"] == 40
@@ -1023,14 +1023,14 @@ class TestCoverageIsStratified:
     def test_raw_data_is_reported_not_hidden(self):
         """`detect_raw_duplication` consumes it. Dropping it would trade one
         wrong number for another."""
-        from metascience_agent.values import coverage
+        from forensic_metascience_ai_toolkit.values import coverage
 
         c = coverage(self._reg(reported=5, raw=100))
         assert c["raw_data"]["n_groups"] == 100
         assert "detect_raw_duplication" in c["raw_data"]["note"]
 
     def test_the_exclusive_states_still_cover_everything(self):
-        from metascience_agent.values import coverage
+        from forensic_metascience_ai_toolkit.values import coverage
 
         c = coverage(self._reg(reported=27, raw=6002))
         assert c["states_are_exclusive"] is True
@@ -1469,7 +1469,7 @@ class TestOneParserForHeaderSampleSizes:
         assert got == {"n": 59, "level": "column"}
 
     def test_both_readers_agree_on_a_stacked_header(self):
-        from metascience_agent.dispatch import _n_in_labels
+        from forensic_metascience_ai_toolkit.dispatch import _n_in_labels
         label = "PP Population, n = 318 | Cerebrolysin , n = 117"
         assert V._stated_n(label)["n"] == 117
         assert _n_in_labels({"col_label": label})[0] == ("col_label", 117), (
@@ -1479,8 +1479,8 @@ class TestOneParserForHeaderSampleSizes:
             "when n is too large")
 
     def test_the_refusal_names_the_wider_groupings_too(self):
-        from metascience_agent.dispatch import _refusal_reason
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.dispatch import _refusal_reason
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         reason = _refusal_reason(
             BY_NAME["grim_percentage"], None,
             {"col_label": "PP Population, n = 318 | Cerebrolysin , n = 117"})
@@ -1497,7 +1497,7 @@ class TestTwoListsThatLookAlikeAreNotOneList:
     def test_check_table_is_not_a_nameable_technique(self):
         """A finding names the specific check that fired, not the batch runner
         that ran it."""
-        from metascience_agent.registry import NOT_A_TECHNIQUE, technique_names
+        from forensic_metascience_ai_toolkit.registry import NOT_A_TECHNIQUE, technique_names
         assert "check_table" in NOT_A_TECHNIQUE
         assert "check_table" not in technique_names()
 
@@ -1509,7 +1509,7 @@ class TestTwoListsThatLookAlikeAreNotOneList:
         assert V.is_check_call({"tool": "mcp__x__check_table"}) is True
 
     def test_plumbing_is_neither(self):
-        from metascience_agent.registry import NOT_A_TECHNIQUE
+        from forensic_metascience_ai_toolkit.registry import NOT_A_TECHNIQUE
         for name in ("extract_pdf", "get_table", "parse_table"):
             assert name in NOT_A_TECHNIQUE
             assert V.is_check_call({"tool": f"mcp__x__{name}"}) is False
@@ -1531,7 +1531,7 @@ class TestEveryRegisteredCheckCanBeNamedAsItsOwnTechnique:
     """
 
     def _enum(self):
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         return set(prompts.findings_schema_v2()["properties"]["findings"]["items"]
                    ["properties"]["technique"]["enum"])
 
@@ -1880,7 +1880,7 @@ class TestAThousandsGroupCannotStartWithZero:
     """
 
     def _cell(self, raw):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         return parse_cell(raw)
 
     def test_the_p_value_read_as_one(self):
@@ -1910,7 +1910,7 @@ class TestAThousandsGroupCannotStartWithZero:
         """`values._num_and_decimals` reads the rule from the one place it is
         defined rather than carrying a second copy -- the defect this codebase
         found in seven separate number readers today."""
-        from metascience_agent.tools.celltypes import decimal_comma_repair
+        from forensic_metascience_ai_toolkit.tools.celltypes import decimal_comma_repair
         assert decimal_comma_repair("0,561") == "0.561"
         assert decimal_comma_repair("74,874") == "74,874"
         assert V._num_and_decimals("0,001")[0] == self._cell("0,001").value
@@ -1930,7 +1930,7 @@ class TestTheDocumentDecidesItsOwnSeparator:
     """
 
     def _infer(self, texts):
-        from metascience_agent.tools.celltypes import infer_decimal_convention
+        from forensic_metascience_ai_toolkit.tools.celltypes import infer_decimal_convention
         return infer_decimal_convention(texts)
 
     def test_witnesses_decide_a_comma_document(self):
@@ -1961,14 +1961,14 @@ class TestTheDocumentDecidesItsOwnSeparator:
         assert str(got["n_witnesses"]) in got["why"], "auditable, not asserted"
 
     def test_the_flag_changes_the_reading_and_only_the_reading(self):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         assert parse_cell("74,874").value == 74874.0
         assert parse_cell("74,874", decimal_comma=True).value == 74.874
 
     def test_the_quote_is_still_what_the_paper_printed(self):
         """`raw` always holds the cell as printed -- this function's own
         promise, and the field a reader checks a claim against."""
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         assert parse_cell("74,874", decimal_comma=True).raw == "74,874"
 
 
@@ -1984,7 +1984,7 @@ class TestACensoredValueIsABoundNotAPoint:
     """
 
     def _cell(self, raw):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         return parse_cell(raw)
 
     def test_the_bound_and_its_operator_are_both_read(self):
@@ -2027,7 +2027,7 @@ class TestACensoredValueIsABoundNotAPoint:
         """`denominator` was a field the per-cell path could see and the table
         path could not, which is a field that does not exist for half the
         pipeline. This one travels through `as_dict`."""
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         assert parse_cell("<0.001").as_dict()["censored"] == "<"
 
 
@@ -2044,7 +2044,7 @@ class TestTheReferenceCategoryIsAValueByDefinition:
     """
 
     def _cell(self, raw):
-        from metascience_agent.tools.celltypes import parse_cell
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
         return parse_cell(raw)
 
     def test_the_forms_that_actually_appear(self):

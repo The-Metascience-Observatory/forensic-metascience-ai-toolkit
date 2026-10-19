@@ -6,9 +6,9 @@ impossible" was the Level-5 headline in 6 of 36 eval runs, with a validated
 Replayed on all 767 kept rows: 19 capped, no gold finding below its range.
 """
 
-from metascience_agent import adjudicate
-from metascience_agent.findings_v2 import clamp_provisionals
-from metascience_agent.severity9 import TOOL_VERDICT_CAPS, clamp_provisional
+from forensic_metascience_ai_toolkit import adjudicate
+from forensic_metascience_ai_toolkit.findings_v2 import clamp_provisionals
+from forensic_metascience_ai_toolkit.severity9 import TOOL_VERDICT_CAPS, clamp_provisional
 
 
 def test_the_caps():

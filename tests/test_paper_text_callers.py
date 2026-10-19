@@ -30,7 +30,7 @@ from pathlib import Path
 
 import pytest
 
-SRC = Path("src/metascience_agent")
+SRC = Path("src/forensic_metascience_ai_toolkit")
 
 #: Every call site, and HOW it survives an empty return. Adding a caller means
 #: adding a line here, which is the point -- the line is cheap and the thinking
@@ -123,17 +123,17 @@ class TestTheTwoFailClosedCallersStillDo:
     """Spot-checks, because the registry above is prose and prose drifts."""
 
     def test_glyph_scan_reports_unknown_rather_than_clean(self, tmp_path):
-        from metascience_agent.glyphs import scan_paper
+        from forensic_metascience_ai_toolkit.glyphs import scan_paper
         d = tmp_path / "paper"; d.mkdir()
         r = scan_paper(d)
         assert r["clean"] is False and r["text_available"] is False
 
     def test_supplement_audit_is_three_valued(self, tmp_path):
-        from metascience_agent.supplements import audit
+        from forensic_metascience_ai_toolkit.supplements import audit
         d = tmp_path / "paper"; d.mkdir()
         assert audit(d)["missing"] is None
 
     def test_preregistration_does_not_claim_not_mentioned(self):
         """The caller that was actually live. #177's concrete harm."""
-        from metascience_agent.artefacts import preregistration
+        from forensic_metascience_ai_toolkit.artefacts import preregistration
         assert preregistration("")["status"] == "unknown_no_text"

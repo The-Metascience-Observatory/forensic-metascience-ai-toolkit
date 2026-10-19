@@ -39,7 +39,7 @@ export function frameLines(stream: Readable, onLine: (line: string) => void, onO
 
 function start(runtime: Runtime) {
   if (runtime.child && !runtime.child.killed) return runtime.child;
-  const child = spawn(pythonBin(), ["-m", "metascience_agent.workbench.service", ...(runtime === images ? ["--images-local"] : ["--index", indexPath()])], {
+  const child = spawn(pythonBin(), ["-m", "forensic_metascience_ai_toolkit.workbench.service", ...(runtime === images ? ["--images-local"] : ["--index", indexPath()])], {
     cwd: repoRoot(), stdio: ["pipe", "pipe", "pipe"],
     env: pythonEnv(),
   });

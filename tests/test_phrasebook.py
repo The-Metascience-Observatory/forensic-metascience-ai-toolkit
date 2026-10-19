@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.phrasebook import (
+from forensic_metascience_ai_toolkit.phrasebook import (
     DATA_DIR,
     PhrasebookError,
     context_snippet,

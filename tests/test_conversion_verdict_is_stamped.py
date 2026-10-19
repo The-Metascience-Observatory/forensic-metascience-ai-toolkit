@@ -29,7 +29,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.extraction import markdown_out as M
+from forensic_metascience_ai_toolkit.extraction import markdown_out as M
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 CORPUS = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on"
@@ -62,7 +62,7 @@ class TestTheVerdictIsRecorded:
         """FAILS OPEN IS THE ONE THING THIS MUST NOT DO. A missing verdict has
         to be distinguishable from a clean one, or the field is worse than
         absent -- it would certify health it never checked."""
-        import metascience_agent.glyphs as G
+        import forensic_metascience_ai_toolkit.glyphs as G
         monkeypatch.setattr(G, "scan", lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("boom")))
         rec = M.write_markdown(tmp_path, "text", "pdf")
         assert rec["text_is_clean"] is None

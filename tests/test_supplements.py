@@ -12,7 +12,7 @@ paper. The reader has to be told which one they are holding.
 """
 import pytest
 
-from metascience_agent.supplements import audit, find_references, write_declaration
+from forensic_metascience_ai_toolkit.supplements import audit, find_references, write_declaration
 
 
 def _declare(tmp_path, *names, role="supplements"):
@@ -95,7 +95,7 @@ class TestInlineAppendix:
         assert "eTable / eFigure (JAMA)" in refs
 
     def test_audit_and_gate_proceed_on_inline_appendix(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (tmp_path / "body.md").write_text(self.INLINE)
         a = audit(tmp_path)
         assert a["missing"] is False
@@ -184,7 +184,7 @@ class TestFailClosedWithoutText:
         assert audit(tmp_path)["text_available"] is True
 
     def test_the_gate_refuses(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         g = gate(tmp_path)
         assert g["proceed"] is False
         assert "could not be read" in g["message"]
@@ -193,7 +193,7 @@ class TestFailClosedWithoutText:
         """`not None` is True, so a single falsy test on `missing` would have
         let the unverifiable case straight through -- the same bug one level
         up. This pins that the gate branches on identity, not truthiness."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         g = gate(tmp_path)
         assert g["audit"]["missing"] is None
         assert g["proceed"] is False
@@ -201,7 +201,7 @@ class TestFailClosedWithoutText:
     def test_no_flag_runs_an_unreadable_paper(self, tmp_path):
         """2026-10-18: an article we cannot read refuses whatever is passed --
         `analyze` used to let `--ok-if-supplementary-missing` through here."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         g = gate(tmp_path, allow_incomplete=True)
         assert g["proceed"] is False
         assert "could not be read" in g["message"]
@@ -252,7 +252,7 @@ class TestAFileMustActuallyBeThere:
     def test_an_empty_placeholder_does_not_count_as_held(self, tmp_path):
         """The gate now warns rather than refuses, but a placeholder must still
         read as MISSING, or the warning (and the report's limitation) vanishes."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (self._cites(tmp_path) / "appendix.pdf").write_bytes(b"")
         _declare(tmp_path, "appendix.pdf")
         g = gate(tmp_path)
@@ -280,7 +280,7 @@ class TestSuppliedOnTheCommandLine:
         return d
 
     def test_a_supplied_file_outside_the_directory_satisfies_the_gate(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         d = self._cites(tmp_path)
         si = tmp_path / "elsewhere" / "etable.xlsx"
         si.parent.mkdir()
@@ -291,7 +291,7 @@ class TestSuppliedOnTheCommandLine:
 
     def test_a_zero_byte_supplied_file_does_not(self, tmp_path):
         """The gate's own override must not defeat the gate's own defence."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         d = self._cites(tmp_path)
         si = tmp_path / "etable.xlsx"
         si.write_bytes(b"")
@@ -301,7 +301,7 @@ class TestSuppliedOnTheCommandLine:
         assert "zero bytes" in g["audit"]["files_unusable"][0]["reason"]
 
     def test_a_supplied_file_that_is_not_its_claimed_format_does_not(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         d = self._cites(tmp_path)
         si = tmp_path / "etable.pdf"
         si.write_bytes(b"<!DOCTYPE html>")
@@ -311,7 +311,7 @@ class TestSuppliedOnTheCommandLine:
         """Two different questions. `--supplement` answers "do we hold the
         supplement" and says nothing about whether we can read the ARTICLE it
         belongs to; a scan that was never OCR'd is not fixed by an attachment."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         d = tmp_path / "paper"
         d.mkdir()
         si = tmp_path / "etable.xlsx"
@@ -335,7 +335,7 @@ class TestStatcheckUnescaping:
         """MEASURED: 93.8% of p-value inequalities in the corpus arrive as
         `&lt;`. statcheck looks for a literal `<`, so an escaped comparator is
         invisible to it. Unescaping recovers ~45-52% more statistics."""
-        from metascience_agent.tools import r_wrappers
+        from forensic_metascience_ai_toolkit.tools import r_wrappers
 
         captured = {}
 
@@ -377,36 +377,36 @@ class TestGate:
         return tmp_path
 
     def test_proceeds_with_a_warning(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         g = gate(self._paper(tmp_path))
         assert g["proceed"] is True
         assert g["message"].startswith("WARNING")
 
     def test_refusal_names_what_is_missing(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         msg = gate(self._paper(tmp_path))["message"]
         assert "eTable 3" in msg
 
     def test_warning_says_what_it_means_and_how_to_include_it(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         msg = gate(self._paper(tmp_path))["message"]
         assert "not reported" in msg and "limitation" in msg
         assert "--supplement" in msg
 
     def test_explicit_override_proceeds(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         g = gate(self._paper(tmp_path), allow_incomplete=True)
         assert g["proceed"] is True
         assert "WITHOUT" in g["message"]  # the old flag changes nothing
 
     def test_complete_paper_proceeds_silently(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (tmp_path / "body.md").write_text("A plain paper with no supplement.")
         g = gate(tmp_path)
         assert g["proceed"] is True and g["message"] == ""
 
     def test_present_supplement_proceeds(self, tmp_path):
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         self._paper(tmp_path)
         (tmp_path / "supplementary.pdf").write_bytes(b"%PDF")
         _declare(tmp_path, "supplementary.pdf")
@@ -415,18 +415,18 @@ class TestGate:
 
 class TestOverrideWarningWording:
     def test_it_warns_that_findings_may_be_artefacts(self):
-        from metascience_agent.supplements import OVERRIDE_WARNING
+        from forensic_metascience_ai_toolkit.supplements import OVERRIDE_WARNING
         assert "not reported" in OVERRIDE_WARNING
         assert "artefact" in OVERRIDE_WARNING
 
     def test_it_says_the_charge_would_be_unfair_to_authors(self):
         """The failure mode is an accusation against the authors for the
         operator's omission -- the report has to name that."""
-        from metascience_agent.supplements import OVERRIDE_WARNING
+        from forensic_metascience_ai_toolkit.supplements import OVERRIDE_WARNING
         assert "unfair" in OVERRIDE_WARNING.lower()
 
     def test_it_says_the_verdict_is_not_a_verdict_on_the_paper(self):
-        from metascience_agent.supplements import OVERRIDE_WARNING
+        from forensic_metascience_ai_toolkit.supplements import OVERRIDE_WARNING
         assert "not a verdict on the paper" in OVERRIDE_WARNING
 
 class TestRetrievalRecordDoesNotSpeakForThePaper:
@@ -462,7 +462,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
     def test_a_licence_wall_is_not_a_failed_download(self, tmp_path):
         """3 of 7 no-bundle skips. Saying "our retrieval failed" here sends the
         operator to retry something no retry can reach."""
-        from metascience_agent.supplements import retrieval_record, retrieval_sentence
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record, retrieval_sentence
         d = self._record(tmp_path, {
             "status": "none_found",
             "providers": [{"name": "europepmc_supplements", "status": "ok", "listed": 1}],
@@ -484,7 +484,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         """4 of 7. The fetcher names the bundle from the PMCID alone and counts
         it as `listed`; a 404 there says the bundle is not there, not that we
         fumbled a file somebody published."""
-        from metascience_agent.supplements import retrieval_record, retrieval_sentence
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record, retrieval_sentence
         d = self._record(tmp_path, {
             "status": "none_found",
             "providers": [{"name": "europepmc_supplements", "status": "ok", "listed": 1}],
@@ -502,7 +502,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
     def test_a_real_download_failure_is_still_ours(self, tmp_path):
         """The case the old test MEANT to cover, kept: a provider named a
         specific file and the transfer broke."""
-        from metascience_agent.supplements import retrieval_record, retrieval_sentence
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record, retrieval_sentence
         d = self._record(tmp_path, {
             "status": "none_found",
             "providers": [{"name": "plos", "status": "ok", "listed": 1}],
@@ -518,7 +518,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         assert "not evidence the authors published none" in s
 
     def test_nothing_listed_anywhere_is_a_real_negative(self, tmp_path):
-        from metascience_agent.supplements import retrieval_record, retrieval_sentence
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record, retrieval_sentence
         d = self._record(tmp_path, {
             "status": "none_found",
             "providers": [{"name": n, "status": "nothing_listed", "listed": 0}
@@ -530,13 +530,13 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         assert "3 providers" in retrieval_sentence(rec)
 
     def test_no_record_is_a_third_state_not_either_verdict(self, tmp_path):
-        from metascience_agent.supplements import retrieval_record
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record
         rec = retrieval_record(tmp_path)
         assert rec["verdict"] == "no_record"
         assert rec["present"] is False
 
     def test_an_unreadable_record_asserts_nothing(self, tmp_path):
-        from metascience_agent.supplements import retrieval_record
+        from forensic_metascience_ai_toolkit.supplements import retrieval_record
         (tmp_path / "x_supplementary_info.json").write_text("{not json")
         assert retrieval_record(tmp_path)["verdict"] == "unreadable_record"
 
@@ -545,7 +545,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         hint whether that was even possible. When a provider named a specific
         file and our download broke, the correct action is to RETRY -- and
         passing `--ok-if-supplementary-missing` would throw away a file that exists."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (tmp_path / "body.md").write_text("See Supplementary Table 2.")
         self._record(tmp_path, {
             "status": "none_found",
@@ -564,7 +564,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         """Three of the fresh sample. Retrying a subscription article's bundle
         can only ever fail, and telling an operator to do it wastes their time
         on the one case where a library actually would work."""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (tmp_path / "body.md").write_text("See Supplementary Table 2.")
         self._record(tmp_path, {
             "status": "none_found",
@@ -586,7 +586,7 @@ class TestRetrievalRecordDoesNotSpeakForThePaper:
         """Reading the fetch record improves what the operator is TOLD; it must
         never decide. (Greg's 2026-08-10 refuse-by-default was replaced by Dan's
         warn-and-run, 2026-10-18; the flag no longer changes anything.)"""
-        from metascience_agent.supplements import gate
+        from forensic_metascience_ai_toolkit.supplements import gate
         (tmp_path / "body.md").write_text("See Supplementary Table 2.")
         self._record(tmp_path, {
             "status": "none_found",

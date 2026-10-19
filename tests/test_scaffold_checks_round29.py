@@ -65,8 +65,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import registry
-from metascience_agent.scaffold import checks
+from forensic_metascience_ai_toolkit import registry
+from forensic_metascience_ai_toolkit.scaffold import checks
 
 ACCOUNT = (Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "papers" /
            "high_value_pdfs_to_run_on" / "10.1002--ajcp.70049" / "scaffold" / "account.json")

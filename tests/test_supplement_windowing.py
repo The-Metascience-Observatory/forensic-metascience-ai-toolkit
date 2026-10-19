@@ -22,7 +22,7 @@ import json
 import openpyxl
 import pytest
 
-from metascience_agent.extraction.supplements_read import (
+from forensic_metascience_ai_toolkit.extraction.supplements_read import (
     _OVERSIZED_CHARS, extract_supplement, get_supplement_table)
 
 
@@ -141,10 +141,10 @@ class TestItIsReachableFromTheModel:
     nothing can call is the same bug as a reader that cannot read."""
 
     def test_the_tool_is_registered(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         assert "get_supplement_table" in registry.BY_NAME
 
     def test_it_is_offered_to_both_stages(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         spec = registry.BY_NAME["get_supplement_table"]
         assert spec.stages

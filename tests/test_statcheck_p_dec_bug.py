@@ -40,7 +40,7 @@ import pytest
 
 statcheck = pytest.importorskip("statcheck", reason="statcheck is optional")
 
-from metascience_agent.tools.r_wrappers import (  # noqa: E402
+from forensic_metascience_ai_toolkit.tools.r_wrappers import (  # noqa: E402
     _patch_statcheck,
     _patch_statcheck_p_dec_bug,
 )
@@ -179,7 +179,7 @@ class TestScientificNotationIsConvertedNotGuessed:
         that, and reading it as "1500 at 0 dp" gives a window 100x too tight --
         the direction that accuses. The helper returns None and the shim then
         leaves upstream's value alone."""
-        from metascience_agent.tools.r_wrappers import _p_decimals
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import _p_decimals
         assert _p_decimals("1.5e3") is None    # [1450, 1550): -2 decimal places
         # BUT NOT EVERY POSITIVE EXPONENT. `2.5e1` is 25 asserted to 0 dp, and
         # [24.5, 25.5) is exactly the mantissa's own window -- expressible, so
@@ -198,7 +198,7 @@ class TestScientificNotationIsConvertedNotGuessed:
         rendered must not change the verdict -- the same invariant as
         TestCrossRenderingIsTheProperty, extended to scientific notation.
         """
-        from metascience_agent.tools.r_wrappers import _p_decimals
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import _p_decimals
         rows = [(d, t, p) for d, t, p in _honest(n=60, seed=3) if p > 0.0006]
         assert len(rows) > 30, "the fixture must retain enough decidable rows"
         sci = [f"t({d}) = {t:.2f}, p = {p:.1e}" for d, t, p in rows]
@@ -252,7 +252,7 @@ class TestBothRepairsReachBothEntryPoints:
 
     def test_both_statcheck_entry_points_install_the_repairs(self):
         import inspect
-        from metascience_agent.tools import r_wrappers as rw
+        from forensic_metascience_ai_toolkit.tools import r_wrappers as rw
         for fn in (rw.python_statcheck_text, rw._statcheck_pdf_via_vendored_reader):
             src = inspect.getsource(fn)
             assert "_patch_statcheck()" in src, (

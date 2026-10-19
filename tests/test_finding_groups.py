@@ -3,7 +3,7 @@ entry in the review list, and a finding's numbers are highlighted cell by cell.
 """
 import json
 
-from metascience_agent import finding_groups as FG  # noqa: N812
+from forensic_metascience_ai_toolkit import finding_groups as FG  # noqa: N812
 
 
 def _issue(i, tool="grim_check", sev=4, tables=(), pages=(), location=None,
@@ -65,8 +65,8 @@ class TestRule:
 
 class TestServicePaging:
     def _service(self, tmp_path, n=60):
-        from metascience_agent.workbench.catalog import Catalog
-        from metascience_agent.workbench.service import Service
+        from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+        from forensic_metascience_ai_toolkit.workbench.service import Service
         c = Catalog(tmp_path / "cache.sqlite3")
         rows = [('corpora', '[1]', {'id': 1, 'name': 'project'}),
                 ('papers', '[1]', {'id': 1, 'corpus_id': 1, 'dir': 'paper'}),
@@ -123,15 +123,15 @@ class TestCellAnchors:
 </tbody></table></table-wrap></sec></body></article>"""
 
     def _rows(self, paper):
-        from metascience_agent import grim_harness, prepass
+        from forensic_metascience_ai_toolkit import grim_harness, prepass
         sweep = grim_harness.sweep_grim(
             prepass.paper_tables(paper, include_supplements=True),
             [{"table": "T1", "percent_of_units": True}])
         return grim_harness.finding_rows(sweep, paper.name)
 
     def test_an_xml_cell_is_addressed_by_table_row_and_column(self, tmp_path):
-        from metascience_agent import anchors
-        from metascience_agent.extraction.xml_html import article_view
+        from forensic_metascience_ai_toolkit import anchors
+        from forensic_metascience_ai_toolkit.extraction.xml_html import article_view
         paper = tmp_path / "10.9999--demo"
         paper.mkdir()
         (paper / "10.9999--demo.xml").write_text(self.XML)
@@ -149,7 +149,7 @@ class TestCellAnchors:
         assert [a["kind"] for a in rows[0]["anchors"]] == ["xml_cell"]
 
     def test_persisted_cell_anchors_become_targets_with_no_file(self, tmp_path):
-        from metascience_agent import anchors, locators
+        from forensic_metascience_ai_toolkit import anchors, locators
         paper = tmp_path / "10.9999--demo"
         paper.mkdir()
         (paper / "10.9999--demo.xml").write_text(self.XML)
@@ -179,13 +179,13 @@ class TestPdfCellBox:
         doc.save(path)
 
     def _ctx(self, paper, cells):
-        from metascience_agent import anchors
+        from forensic_metascience_ai_toolkit import anchors
         ctx = anchors._paper_ctx(paper)
         ctx["tables"] = [{"cells": cells}]
         return ctx
 
     def test_the_kth_equal_value_gets_the_kth_box(self, tmp_path):
-        from metascience_agent import anchors
+        from forensic_metascience_ai_toolkit import anchors
         paper = tmp_path / "p"
         paper.mkdir()
         self._pdf(paper / "p.pdf", [("Accepting breech delivery", ["66.7", "65.9", "66.7"])])
@@ -199,7 +199,7 @@ class TestPdfCellBox:
         ctx["doc"].close()
 
     def test_a_count_mismatch_in_the_band_draws_no_box(self, tmp_path):
-        from metascience_agent import anchors
+        from forensic_metascience_ai_toolkit import anchors
         paper = tmp_path / "p"
         paper.mkdir()
         # The page prints 66.7 three times; the extracted row has it twice.

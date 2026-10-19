@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.flow import check_flow_arithmetic as check
+from forensic_metascience_ai_toolkit.tools.flow import check_flow_arithmetic as check
 
 CLUSTER = [{"label": "Schools assessed", "n": 30},
            {"label": "Schools randomized", "n": 24},
@@ -97,7 +97,7 @@ class TestTheUnitRelationIsThreeWay:
         (None, None, "same"),
     ])
     def test_relation_from_declared_units(self, a, b, expected):
-        from metascience_agent.tools.flow import _norm_unit, _unit_relation
+        from forensic_metascience_ai_toolkit.tools.flow import _norm_unit, _unit_relation
         cur = {"label": "stage a", "unit": _norm_unit(a)}
         nxt = {"label": "stage b", "unit": _norm_unit(b)}
         assert _unit_relation(cur, nxt) == expected
@@ -111,11 +111,11 @@ class TestTheUnitRelationIsThreeWay:
     def test_relation_inferred_from_labels(self, la, lb, expected):
         """RULE 1: only POSITIVE evidence of two DIFFERENT units narrows
         anything. A label naming no unit yields None and licenses nothing."""
-        from metascience_agent.tools.flow import _unit_relation
+        from forensic_metascience_ai_toolkit.tools.flow import _unit_relation
         assert _unit_relation({"label": la}, {"label": lb}) == expected
 
     def test_an_unrecognised_unit_is_kept_verbatim(self):
         """A vocabulary miss must not silently collapse two units into one."""
-        from metascience_agent.tools.flow import _norm_unit, _unit_relation
+        from forensic_metascience_ai_toolkit.tools.flow import _norm_unit, _unit_relation
         assert _norm_unit("knees") == "knees"
         assert _unit_relation({"unit": "knees"}, {"unit": "person"}) == "different"

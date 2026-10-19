@@ -5,8 +5,8 @@ runs: `sandbox_audit.json` read "clean: every tool call was on the validated
 forensic surface" with `n_unbacked_findings: 0`, while stage records in the
 same runs said `BREACH (unbacked): 8` and `BREACH (unbacked): 14`.
 """
-from metascience_agent.agent import _unbacked_findings
-from metascience_agent.core.prompts import NON_TOOL_TECHNIQUES
+from forensic_metascience_ai_toolkit.agent import _unbacked_findings
+from forensic_metascience_ai_toolkit.core.prompts import NON_TOOL_TECHNIQUES
 
 LEDGER = [{"tool_short": "grim_check", "validated": True}]
 

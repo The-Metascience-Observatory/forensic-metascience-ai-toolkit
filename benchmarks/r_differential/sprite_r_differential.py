@@ -79,7 +79,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "src"))
 sys.path.insert(0, str(HERE))
 
-from metascience_agent.tools.sprite import sprite_reconstruct  # noqa: E402
+from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct  # noqa: E402
 from fingerprint import SPRITE_SOURCES, code_sha256  # noqa: E402
 
 #: Python outcomes that assert impossibility. `search_exhausted` is NOT one --

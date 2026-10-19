@@ -1,6 +1,6 @@
 """Reassurance language is flagged by the pipeline, not only by the eval."""
 
-from metascience_agent import reassurance
+from forensic_metascience_ai_toolkit import reassurance
 from tests.test_parallel_pipeline import fakes, paper  # noqa: F401
 
 

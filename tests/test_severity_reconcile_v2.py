@@ -21,7 +21,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent import agent, severity9, severity_reconcile as SR
+from forensic_metascience_ai_toolkit import agent, severity9, severity_reconcile as SR
 
 ARCHIVE = pathlib.Path(__file__).resolve().parents[1] / "benchmarks" / "paper_reviews" / "runs"
 
@@ -226,7 +226,7 @@ class TestTheFieldItWritesIsLegalAndPipelineOnly:
     validator kept it green. v1.24.0 shipped exactly that."""
 
     def test_severity_source_is_declared_in_the_v2_schema(self):
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         props = (prompts.findings_schema_v2()
                  ["properties"]["findings"]["items"]["properties"])
         assert "severity_source" in props, (
@@ -235,7 +235,7 @@ class TestTheFieldItWritesIsLegalAndPipelineOnly:
     def test_no_producer_is_offered_the_slot(self):
         """A producer able to write its own `severity_source` could assert
         agreement with a tool that never ran."""
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         for p in prompts.PRODUCERS:
             try:
                 sub = prompts.producer_findings_schema(p)
@@ -246,7 +246,7 @@ class TestTheFieldItWritesIsLegalAndPipelineOnly:
 
     def test_an_annotated_finding_satisfies_the_items_schema(self):
         import jsonschema
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         items = (prompts.findings_schema_v2()
                  ["properties"]["findings"]["items"])
         doc = _doc({"finding_id": "f1", "technique": "grim", "severity": 7,

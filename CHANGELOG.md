@@ -1,13 +1,38 @@
 # Changelog
 
 The version this file tracks is `__version__` in
-[`src/metascience_agent/version.py`](src/metascience_agent/version.py) — the one
+[`src/forensic_metascience_ai_toolkit/version.py`](src/forensic_metascience_ai_toolkit/version.py) — the one
 place it is declared. `pyproject.toml` reads it from there, and
 `tests/test_version.py` fails if the two ever disagree.
 
 Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
+
+## [1.96.1] — 2026-10-19 — the import package is `forensic_metascience_ai_toolkit`
+
+PATCH: a rename, no change to any output. The prompt and registry hashes are
+unchanged (`4046c09965bd9de4`, `80515031f2a04ec0`), and so is the image code
+fingerprint (`eb73b22b05bf`).
+
+- **`src/metascience_agent/` is now `src/forensic_metascience_ai_toolkit/`**,
+  matching the distribution name `forensic-metascience-ai-toolkit` that the
+  project took on 2026-10-01. `metascience` and `metascience-test` are
+  unchanged.
+- **`metascience_agent` stays as an alias** (`src/metascience_agent/__init__.py`).
+  `import metascience_agent.X` returns the same module object as
+  `forensic_metascience_ai_toolkit.X`, never a second copy, and
+  `python -m metascience_agent.X` still runs, so archived commands and old
+  scripts keep working. Importing it raises a `DeprecationWarning`.
+- **What a review sends changed in one place: the MCP server command.** Each
+  stage now launches `python -m forensic_metascience_ai_toolkit.mcp_server`
+  (from `integration.forensic_mcp_module`, which `agent.py` now reads too
+  instead of its own literal). New parity oracle `parity_1_96_1.json`;
+  `test_1_96_1_changed_only_the_mcp_server_module_name` shows that the tree
+  with the old name restored captures the 1.93 oracle byte for byte.
+- **Recorded runs keep the name they ran under.** Transcripts, parity records
+  and fixtures that say `metascience_agent` were not rewritten; they are
+  records of what ran.
 
 ## [1.96.0] — 2026-10-19 — start a review from a DOI: `analyze --doi --run-full-on-everything`
 

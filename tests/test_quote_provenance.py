@@ -2,7 +2,7 @@
 
 `findings[].quote` is described in the schema as "verbatim reported text/values
 from the paper" and is populated on 505 of 505 findings across the corpus. It
-was never verified against the paper. MEASURED by `metascience_agent.quotes`
+was never verified against the paper. MEASURED by `forensic_metascience_ai_toolkit.quotes`
 over the 499 findings it can build a haystack for:
 
     verbatim   186  37%
@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.quotes import annotate, build_haystack, classify, normalise
+from forensic_metascience_ai_toolkit.quotes import annotate, build_haystack, classify, normalise
 
 def _has_paper_files(d) -> bool:
     """Is this a real paper directory, or a leftover shell?
@@ -131,7 +131,7 @@ class TestItIsPipelineSetAndSafe:
         findings = [{"quote": "no such text anywhere in this haystack",
                      "quote_verified": "verbatim",
                      "quote_source": "invented by the model"}]
-        from metascience_agent.quotes import classify
+        from forensic_metascience_ai_toolkit.quotes import classify
         v = classify(findings[0]["quote"], HAY)
         assert v["quote_verified"] != "verbatim"
 
@@ -148,7 +148,7 @@ class TestItIsPipelineSetAndSafe:
         that never recorded its path. Reproduced: the forgery came through as
         "verbatim". The strip is now unconditional; verification is what
         depends on the path."""
-        from metascience_agent.agent import _annotate_quotes
+        from forensic_metascience_ai_toolkit.agent import _annotate_quotes
         result = {"findings": {"findings": [
             {"id": "x", "quote": "fabricated",
              "quote_verified": "verbatim", "quote_source": "the paper's text"}]}}
@@ -173,7 +173,7 @@ class TestTheSchemaDeclaresWhatWeWrite:
 
     def test_the_three_fields_are_declared(self):
         s = json.loads(Path(
-            "src/metascience_agent/schema/findings.v2.schema.json"
+            "src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json"
         ).read_text())
         props = s["properties"]["findings"]["items"]["properties"]
         for k in ("quote_verified", "quote_source", "quote_problem"):
@@ -185,7 +185,7 @@ class TestTheSchemaDeclaresWhatWeWrite:
         paper" -- disjunctive and plural, which licenses a bag of values rather
         than a copied span, and never warned that the string is checked."""
         s = json.loads(Path(
-            "src/metascience_agent/schema/findings.v2.schema.json"
+            "src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json"
         ).read_text())
         d = s["properties"]["findings"]["items"]["properties"]["quote"]["description"]
         assert "CONTIGUOUS" in d
@@ -205,7 +205,7 @@ class TestTheViewer:
         `bundle.py` escapes `</` to `<\\/` for exactly this; the assertion is
         that the count of real closing tags still matches the opening ones.
         """
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         nasty = '</script><img src=x onerror=alert(1)>'
         html = render_viewer({"findings": [
             {"id": "x", "quote": nasty, "quote_verified": "verbatim",
@@ -215,11 +215,11 @@ class TestTheViewer:
             "a quote injected an extra closing tag")
 
     def test_the_quote_reaches_the_dom_through_the_escaper(self):
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         assert "esc(f.quote)" in render_viewer({})
 
     def test_the_heading_stops_promising_as_printed_for_assembled_text(self):
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({})
         assert "Values, assembled by this review" in html
         assert "Quoted by the review, not located" in html
@@ -227,7 +227,7 @@ class TestTheViewer:
     def test_an_unlocatable_quote_offers_no_jump_link(self):
         """A jump on text that is not in the document highlights nothing and
         leaves the reader believing they searched and the paper came up short."""
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({})
         assert "const findable = f.quote_verified==='verbatim'||f.quote_verified==='elided';" in html
 
@@ -267,7 +267,7 @@ class TestTableAndFigureMentionsAreLinks:
     """
 
     def test_the_linkifier_exists_and_is_applied_to_where(self):
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({})
         assert "function refLinks(escaped)" in html
         assert "refLinks(esc(f.location))" in html
@@ -278,7 +278,7 @@ class TestTableAndFigureMentionsAreLinks:
         must not be able to match inside an HTML entity -- that is the failure
         that bit the search box, where a needle matched inside `&#39;` and
         split it open."""
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({})
         assert "refLinks(esc(" in html
         assert "esc(refLinks(" not in html
@@ -286,7 +286,7 @@ class TestTableAndFigureMentionsAreLinks:
     def test_the_title_is_left_alone(self):
         """`fTitle` renders inside a clickable <summary>; a link there would
         fight the disclosure toggle."""
-        from metascience_agent.bundle import render_viewer
+        from forensic_metascience_ai_toolkit.bundle import render_viewer
         html = render_viewer({})
         assert "const where=esc(String(f.location||'').trim());" in html
 

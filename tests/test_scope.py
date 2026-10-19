@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import scope as S
+from forensic_metascience_ai_toolkit import scope as S
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -164,7 +164,7 @@ class TestTheScopeStatementIsHonestAboutTheCorpus:
 
 class TestItReachesTheReader:
     def test_the_standing_disclaimer_carries_the_short_form(self):
-        from metascience_agent.disclaimer import DISCLAIMER_LONG
+        from forensic_metascience_ai_toolkit.disclaimer import DISCLAIMER_LONG
         # Normalised: the constant is hard-wrapped, so a phrase can straddle a
         # newline and a literal `in` check fails on wording that is correct.
         flat = " ".join(DISCLAIMER_LONG.split())
@@ -173,7 +173,7 @@ class TestItReachesTheReader:
         assert "human randomised trials" in flat
 
     def test_the_closing_section_includes_the_full_scope_statement(self):
-        from metascience_agent.disclaimer import closing_section_markdown
+        from forensic_metascience_ai_toolkit.disclaimer import closing_section_markdown
         md = "\n".join(closing_section_markdown())
         assert "## What this has been tested on" in md
         assert "qualitative" in md
@@ -187,7 +187,7 @@ class TestTheRefusalCountIsNotReadAsADefectTally:
         return [{"location": f"L{i}", "reason": r} for i, r in enumerate(reasons)]
 
     def test_the_reading_names_our_share_against_the_total(self):
-        from metascience_agent.viewer_facts import refusal_tally
+        from forensic_metascience_ai_toolkit.viewer_facts import refusal_tally
         t = refusal_tally(self._rows(
             "Not applicable to this design.",
             "The paper reports no standard deviations.",
@@ -199,26 +199,26 @@ class TestTheRefusalCountIsNotReadAsADefectTally:
         assert "1 of them because this toolkit could not do it" in t["reading"]
 
     def test_when_none_are_ours_it_says_so_first(self):
-        from metascience_agent.viewer_facts import refusal_tally
+        from forensic_metascience_ai_toolkit.viewer_facts import refusal_tally
         t = refusal_tally(self._rows("Not applicable.", "The paper prints no exact p."))
         assert t["our_shortfall"] == 0
         assert "None" in t["reading"] and "limitation of this toolkit" in t["reading"]
 
     def test_an_empty_list_produces_no_sentence(self):
-        from metascience_agent.viewer_facts import refusal_tally
+        from forensic_metascience_ai_toolkit.viewer_facts import refusal_tally
         assert refusal_tally([])["reading"] == ""
 
     def test_unclassified_points_at_the_reason_rather_than_announcing_a_failure(self):
         """"not classified" was our bookkeeping word printed in a column headed
         "whose limit". A reader met it as a defect of unknown kind."""
-        from metascience_agent.viewer_facts import classify_refusal, refusal_tally
+        from forensic_metascience_ai_toolkit.viewer_facts import classify_refusal, refusal_tally
         c = classify_refusal("something the rules do not match at all zzz")
         assert c["key"] == "unclassified"          # the alarm still keys on this
         assert "classif" not in c["label"].lower()  # ...but the reader does not see it
         assert refusal_tally(self._rows("zzz nothing matches"))["classifier_failing"]
 
     def test_the_sentence_reaches_the_page(self):
-        src = (REPO / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+        src = (REPO / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         assert '"refusals": _vf.refusal_tally(' in src
         assert "D.facts.refusals.reading" in src
 
@@ -379,14 +379,14 @@ class TestNamingAReviewIsNotClaimingToBeOne:
     ]
 
     def test_naming_a_review_does_not_classify_the_paper_as_one(self):
-        from metascience_agent.scope import classify_document
+        from forensic_metascience_ai_toolkit.scope import classify_document
         wrong = [(n, classify_document(t, a)["kind"])
                  for n, t, a in self.NOT_A_REVIEW
                  if classify_document(t, a)["kind"] is not None]
         assert not wrong, f"primary studies reclassified as reviews: {wrong}"
 
     def test_a_paper_that_IS_a_review_is_still_caught(self):
-        from metascience_agent.scope import classify_document
+        from forensic_metascience_ai_toolkit.scope import classify_document
         wrong = [(n, classify_document(t, a)["kind"], want)
                  for n, t, a, want in self.IS_A_REVIEW
                  if classify_document(t, a)["kind"] != want]
@@ -396,7 +396,7 @@ class TestNamingAReviewIsNotClaimingToBeOne:
         """Not the pattern. If someone later tightens the locator and deletes
         the judge, this fails and says which half did the work."""
         import re
-        import metascience_agent.scope as S
+        import forensic_metascience_ai_toolkit.scope as S
         s = ("Heterogeneous treatment effect analysis was conducted using "
              "techniques of meta-analysis and the matching-smoothing method.")
         located = [m for _k, pat in S._ABSTRACT_PATTERNS
@@ -406,7 +406,7 @@ class TestNamingAReviewIsNotClaimingToBeOne:
                        for m in located)
 
     def test_a_design_named_as_the_reviews_MATERIAL_is_not_a_contradiction(self):
-        import metascience_agent.scope as S
+        import forensic_metascience_ai_toolkit.scope as S
         assert S._names_its_own_primary_design(
             "A meta-analysis of randomised controlled trials") is None
         assert S._names_its_own_primary_design(

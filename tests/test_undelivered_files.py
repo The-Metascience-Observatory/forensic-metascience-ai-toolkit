@@ -32,11 +32,11 @@ import pytest
 
 from tests.test_bundle import flat, review, section_html  # noqa: F401
 
-from metascience_agent.bundle import collect
-from metascience_agent.handoff import delivery_audit, undelivered_files
+from forensic_metascience_ai_toolkit.bundle import collect
+from forensic_metascience_ai_toolkit.handoff import delivery_audit, undelivered_files
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SRC = ROOT / "src" / "metascience_agent"
+SRC = ROOT / "src" / "forensic_metascience_ai_toolkit"
 
 SUPP = "/papers/x/EAT-58-1072-s001.docx"
 OVERFLOW = ("Error: result (175,829 characters across 6,332 lines) exceeds "
@@ -122,7 +122,7 @@ class TestARecoveredFileIsNotReportedAsLost:
     def test_the_spill_path_is_matched_despite_the_full_stop(self):
         """The harness sentence ends `...txt.` -- the first cut kept the full
         stop, matched nothing, and scored all 21 recoveries as zero."""
-        from metascience_agent.handoff import _spill_path
+        from forensic_metascience_ai_toolkit.handoff import _spill_path
         assert _spill_path(OVERFLOW) == SPILL
 
     def test_delivery_audit_also_credits_the_spill_read(self):

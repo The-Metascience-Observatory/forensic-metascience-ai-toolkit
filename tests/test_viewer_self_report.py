@@ -10,7 +10,7 @@ import pytest
 
 from tests.test_bundle import flat, review, section_html  # noqa: F401
 
-from metascience_agent.bundle import collect, render_viewer
+from forensic_metascience_ai_toolkit.bundle import collect, render_viewer
 
 
 class TestTheCoverageCaveatTravelsWithItsNumber:
@@ -182,7 +182,7 @@ class TestTheEmittedJavascriptIsWellFormed:
 
     def test_the_source_contains_no_null_bytes(self):
         import pathlib
-        import metascience_agent.bundle as B
+        import forensic_metascience_ai_toolkit.bundle as B
         raw = pathlib.Path(B.__file__).read_bytes()
         assert b"\x00" not in raw, "a null byte reached bundle.py"
 

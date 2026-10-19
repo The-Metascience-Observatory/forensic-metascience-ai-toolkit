@@ -66,7 +66,7 @@ def test_module_runs_without_agent_imports(data_file, tmp_path):
 import importlib.abc, runpy, sys
 class NoAgent(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname == "metascience_agent" or fullname.startswith("metascience_agent."):
+        if fullname == "forensic_metascience_ai_toolkit" or fullname.startswith("forensic_metascience_ai_toolkit."):
             raise AssertionError("Standalone execution attempted an agent import")
 sys.meta_path.insert(0, NoAgent())
 sys.path.insert(0, sys.argv.pop(1))

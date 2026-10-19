@@ -5,8 +5,8 @@ every finding_id; `tool_agent`/`science_agent` name archived files). Readers
 show people the display name, from `names.py`, derived from MODULE.md.
 """
 
-from metascience_agent import modules
-from metascience_agent.names import display, display_names
+from forensic_metascience_ai_toolkit import modules
+from forensic_metascience_ai_toolkit.names import display, display_names
 
 
 def test_every_stored_identifier_of_the_two_analysts_maps_to_its_new_name():
@@ -32,13 +32,13 @@ def test_channel_keys_and_unknowns():
 
 
 def test_the_report_shows_the_display_name_and_keeps_the_key():
-    from metascience_agent import report_v2
+    from forensic_metascience_ai_toolkit import report_v2
     src = open(report_v2.__file__, encoding="utf-8").read()
     assert "producer: {_display(f.get('producer'))}" in src
 
 
 def test_the_viewer_maps_every_stage_and_producer_it_shows():
-    from metascience_agent import bundle
+    from forensic_metascience_ai_toolkit import bundle
     src = open(bundle.__file__, encoding="utf-8").read()
     assert "const DN_MAP = __DISPLAY_NAMES__;" in src
     assert "esc(f.producer||'')" not in src and "esc(DN(f.producer||''))" in src

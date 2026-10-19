@@ -1,7 +1,7 @@
 """Every number the paper printed, and what each one turned out to be."""
 import re
 
-from metascience_agent import numerals as N
+from forensic_metascience_ai_toolkit import numerals as N
 
 
 class TestTheIndexIsExhaustive:
@@ -66,7 +66,7 @@ class TestTheDenominatorStaysIndependentOfTheFinder:
         """`BODY_PATTERNS` keeps earning its place as a positive classifier over
         what it does match well. What it misses is now `unclassified` -- visible
         -- instead of absent."""
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         text = "The effect held, M = 4.64, SD = 1.50, and p = .011 overall."
         rows = N.index(text)
         spans = [(i["offset"], i["offset"] + len(i["raw"])) for i in C._body_items(text)]
@@ -239,7 +239,7 @@ class TestTheFourthReaderOfTheMiddleDot:
     """
 
     def _toks(self, text):
-        from metascience_agent.numerals import tokens
+        from forensic_metascience_ai_toolkit.numerals import tokens
         return [m.group(0) for m in tokens(text)]
 
     def test_a_lancet_interval_is_three_numbers_not_seven_tokens(self):

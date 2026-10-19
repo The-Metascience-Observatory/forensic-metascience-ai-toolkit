@@ -5,8 +5,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from metascience_agent import agent
-from metascience_agent.evaluation.deterministic import run_reproduction
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.evaluation.deterministic import run_reproduction
 
 
 @pytest.mark.parametrize("command", [

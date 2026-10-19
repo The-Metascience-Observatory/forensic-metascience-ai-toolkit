@@ -23,7 +23,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction.jats import (
+from forensic_metascience_ai_toolkit.extraction.jats import (
     extract_xml_text_with_tables,
     get_table,
     table_index_entry,
@@ -158,7 +158,7 @@ class TestGetTableCarriesWhatTheCheckersNeed:
 
     def test_a_truncated_grid_says_so_in_the_strongest_terms(self):
         """The other case, where the caller really is missing a number."""
-        import metascience_agent.extraction.jats as J
+        import forensic_metascience_ai_toolkit.extraction.jats as J
 
         original = J._TABLE_CHAR_BUDGET
         try:
@@ -233,10 +233,10 @@ class TestNoTableCanSpill:
     def test_no_corpus_table_exceeds_the_ceiling(self):
         import json as _json
 
-        from metascience_agent.extraction.jats import (
+        from forensic_metascience_ai_toolkit.extraction.jats import (
             extract_xml_text_with_tables as _index,
         )
-        from metascience_agent.extraction.jats import find_xml as _find
+        from forensic_metascience_ai_toolkit.extraction.jats import find_xml as _find
 
         # Completeness is pinned by test_jats_corpus.test_the_corpus_is_complete;
         # the `n` floor below fails if the set shrinks.
@@ -264,7 +264,7 @@ class TestNoTableCanSpill:
     def test_repeated_warnings_are_collapsed(self):
         """235 copies of one fact is not 235 facts. That table's warnings were
         36,445 characters -- three times the size of the grid they described."""
-        from metascience_agent.extraction.jats import _collapse_warnings
+        from forensic_metascience_ai_toolkit.extraction.jats import _collapse_warnings
 
         got = _collapse_warnings([f"ragged row ['r{i}', '']: labels may shift"
                                   for i in range(235)])
@@ -272,7 +272,7 @@ class TestNoTableCanSpill:
         assert got[0].startswith("235x ")
 
     def test_a_lone_warning_is_left_exactly_as_written(self):
-        from metascience_agent.extraction.jats import _collapse_warnings
+        from forensic_metascience_ai_toolkit.extraction.jats import _collapse_warnings
 
         assert _collapse_warnings(["table is an image"]) == ["table is an image"]
 
@@ -298,10 +298,10 @@ class TestEveryTableArrivesWhole:
     CEILING = 40_000
 
     def _tables(self):
-        from metascience_agent.extraction.jats import (
+        from forensic_metascience_ai_toolkit.extraction.jats import (
             extract_xml_text_with_tables as index,
         )
-        from metascience_agent.extraction.jats import find_xml
+        from forensic_metascience_ai_toolkit.extraction.jats import find_xml
         for d in _corpus_paper_dirs():
             xml = find_xml(d)
             if xml is None:

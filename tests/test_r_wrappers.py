@@ -25,7 +25,7 @@ import subprocess
 
 import pytest
 
-from metascience_agent.tools.r_wrappers import _r_int, _r_num, r_sprite
+from forensic_metascience_ai_toolkit.tools.r_wrappers import _r_int, _r_num, r_sprite
 
 
 def _rsprite2_available() -> bool:
@@ -138,9 +138,9 @@ class TestAnAbsentEngineSaysSoInsteadOfReturningNothing:
         }
 
     def test_grim_names_the_missing_package(self, monkeypatch):
-        monkeypatch.setattr("metascience_agent.tools.r_wrappers.run_r_code",
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
                             lambda *a, **k: self._missing("scrutiny"))
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         r = r_grim(mean=5.06, n=28, decimals=2)
         assert r["available"] is False
         assert r["unavailable_reason"] == "package_missing"
@@ -152,7 +152,7 @@ class TestAnAbsentEngineSaysSoInsteadOfReturningNothing:
 
     def test_sprite_answers_the_severity_question_when_absent(self, monkeypatch):
         """Silence is not an answer: an absent engine still owes `indeterminate`."""
-        monkeypatch.setattr("metascience_agent.tools.r_wrappers.run_r_code",
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
                             lambda *a, **k: self._missing("rsprite2"))
         r = r_sprite(mean=4.0, sd=0.82, n=10, scale_min=1, scale_max=7, decimals=2)
         assert r["available"] is False
@@ -163,13 +163,13 @@ class TestAnAbsentEngineSaysSoInsteadOfReturningNothing:
 
     def test_an_absent_engine_is_distinguishable_from_a_disagreement(self, monkeypatch):
         """The whole point: three outcomes, three names."""
-        from metascience_agent.tools.r_wrappers import r_grim
-        monkeypatch.setattr("metascience_agent.tools.r_wrappers.run_r_code",
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
                             lambda *a, **k: self._missing("scrutiny"))
         absent = r_grim(mean=5.06, n=28, decimals=2)
 
         monkeypatch.setattr(
-            "metascience_agent.tools.r_wrappers.run_r_code",
+            "forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
             lambda *a, **k: {"success": True, "stdout": "GRIM_FAIL\n",
                              "stderr": "", "returncode": 0})
         disagreed = r_grim(mean=5.06, n=28, decimals=2)
@@ -178,9 +178,9 @@ class TestAnAbsentEngineSaysSoInsteadOfReturningNothing:
         assert disagreed["available"] is True and disagreed["consistent"] is False
 
     def test_no_rscript_is_its_own_reason(self, monkeypatch):
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         monkeypatch.setattr(
-            "metascience_agent.tools.r_wrappers.run_r_code",
+            "forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
             lambda *a, **k: {"success": False, "stdout": "",
                              "error": "R not installed or Rscript not in PATH"})
         r = r_grim(mean=5.06, n=28, decimals=2)
@@ -188,9 +188,9 @@ class TestAnAbsentEngineSaysSoInsteadOfReturningNothing:
         assert r["error"]
 
     def test_a_real_r_error_is_not_reported_as_a_missing_package(self, monkeypatch):
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         monkeypatch.setattr(
-            "metascience_agent.tools.r_wrappers.run_r_code",
+            "forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
             lambda *a, **k: {"success": False, "stdout": "",
                              "stderr": "Error in grim(): unused argument",
                              "returncode": 1})
@@ -221,12 +221,12 @@ class TestTheCrossCheckAsksTheSameQuestion:
             seen["code"] = code
             return {"success": True, "stdout": "GRIM_PASS\n"}
 
-        monkeypatch.setattr("metascience_agent.tools.r_wrappers.run_r_code",
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.tools.r_wrappers.run_r_code",
                             fake)
         return seen
 
     def test_percentage_is_converted_to_the_proportion_literal(self, monkeypatch):
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         seen = self._captured(monkeypatch)
         r_grim(mean=28, n=41, decimals=0, percentage=True)
         assert '"0.28"' in seen["code"], seen["code"]
@@ -235,20 +235,20 @@ class TestTheCrossCheckAsksTheSameQuestion:
         """grim_test_percentage reads a percentage at `decimals` dp as a
         proportion at `decimals + 2`. The two engines must format the SAME
         literal or they are not comparable."""
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         seen = self._captured(monkeypatch)
         r_grim(mean=9.6, n=93, decimals=1, percentage=True)
         assert '"0.096"' in seen["code"], seen["code"]
 
     def test_without_the_flag_the_mean_literal_is_unchanged(self, monkeypatch):
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         seen = self._captured(monkeypatch)
         r_grim(mean=5.06, n=28, decimals=2)
         assert '"5.06"' in seen["code"]
 
     def test_the_reply_says_which_question_was_answered(self, monkeypatch):
         """A reader of `notes` must be able to tell the two apart."""
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
         self._captured(monkeypatch)
         assert r_grim(mean=28, n=41, decimals=0)["asked_as"] == "mean"
         assert r_grim(mean=28, n=41, decimals=0,
@@ -261,8 +261,8 @@ class TestTheCrossCheckAsksTheSameQuestion:
     def test_against_live_r_the_two_engines_now_agree(self):
         """The end-to-end claim, run against the real package: asked the share
         question, R reaches the same verdict as grim_percentage."""
-        from metascience_agent.tools.grim import grim_test_percentage
-        from metascience_agent.tools.r_wrappers import r_grim
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import r_grim
 
         py = grim_test_percentage(28, 41, decimals=0, data_type="proportion")
         r = r_grim(mean=28, n=41, decimals=0, percentage=True)

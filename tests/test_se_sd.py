@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from metascience_agent.tools.se_sd import check_sd_or_se, _max_sd_from_range
+from forensic_metascience_ai_toolkit.tools.se_sd import check_sd_or_se, _max_sd_from_range
 
 
 class TestMaxSDFromRange:
@@ -133,7 +133,7 @@ class TestSdCeilingConsistency:
     @pytest.mark.parametrize("n", [2, 3, 10, 30, 100, 1000])
     def test_ceilings_agree(self, n):
         import math
-        from metascience_agent.tools.se_sd import _max_sd_from_range
+        from forensic_metascience_ai_toolkit.tools.se_sd import _max_sd_from_range
 
         data_range = 10.0
         expected = data_range / 2 * math.sqrt(n / (n - 1))  # sd_checks' bound
@@ -144,7 +144,7 @@ class TestSdCeilingConsistency:
         """Half the points at each extreme must NOT exceed the ceiling."""
         import statistics
 
-        from metascience_agent.tools.se_sd import _max_sd_from_range
+        from forensic_metascience_ai_toolkit.tools.se_sd import _max_sd_from_range
 
         half = n // 2
         sample = [0.0] * half + [10.0] * (n - half)

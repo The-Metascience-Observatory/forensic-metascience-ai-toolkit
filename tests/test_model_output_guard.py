@@ -13,8 +13,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import prepass
-from metascience_agent.prepass import reports_model_output, sweep_sd_range
+from forensic_metascience_ai_toolkit import prepass
+from forensic_metascience_ai_toolkit.prepass import reports_model_output, sweep_sd_range
 
 CORPUS = pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
 AJCP = CORPUS / "10.1002--ajcp.70049"
@@ -143,7 +143,7 @@ class TestOnTheRealPaperThatMotivatedIt:
         guard it produces none -- which is the property that makes improving
         the binder safe to attempt at all."""
         import re
-        from metascience_agent.prepass import _norm_label
+        from forensic_metascience_ai_toolkit.prepass import _norm_label
 
         kind = re.compile(
             r"\s*\((?:\s*(?:mean|sd|std|median|iqr|range|n|no|%|percent|se|sem"
@@ -203,7 +203,7 @@ class TestTheModelFacingToolHasTheSameGuard:
                 "provenance_verdict": "verbatim"}
 
     def _run(self, raw: str, col_label: str):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         return check_table(
             cells=[{"raw": raw, "row_label": "Inclusive decision making",
                     "col_label": col_label, "n": 64}],
@@ -239,7 +239,7 @@ class TestTheModelFacingToolHasTheSameGuard:
     def test_one_definition_shared_with_the_sweep(self):
         """Eleven hand-copied definitions of `ACCUSATORY` is why this is
         imported rather than restated."""
-        from metascience_agent import dispatch, prepass
+        from forensic_metascience_ai_toolkit import dispatch, prepass
         assert (dispatch._reports_model_output("Coefficient")
                 == prepass.reports_model_output(col_label="Coefficient"))
 
@@ -261,7 +261,7 @@ class TestTheDeclaredRangeReachesCheckSdOrSe:
                 "bounds_source": "stated"}
 
     def _run(self, raw="3.20 (0.06)"):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         return check_table(
             cells=[{"raw": raw, "row_label": "Anxiety",
                     "col_label": "Mean (SE)", "n": 100}],
@@ -274,8 +274,8 @@ class TestTheDeclaredRangeReachesCheckSdOrSe:
         assert out["severity"] != "indeterminate"
 
     def test_the_range_is_no_longer_dropped(self):
-        from metascience_agent.dispatch import _build_args
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.dispatch import _build_args
+        from forensic_metascience_ai_toolkit.registry import SPECS
         spec = next(s for s in SPECS if s.name == "check_sd_or_se")
         dropped: set[str] = set()
         args = _build_args(spec, {"decimals_sd": 2},
@@ -288,8 +288,8 @@ class TestTheDeclaredRangeReachesCheckSdOrSe:
     def test_it_only_aliases_and_never_invents(self):
         """The alias must not manufacture a bound where the variable declared
         none -- that is the route to a false accusation."""
-        from metascience_agent.dispatch import _build_args
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.dispatch import _build_args
+        from forensic_metascience_ai_toolkit.registry import SPECS
         spec = next(s for s in SPECS if s.name == "check_sd_or_se")
         args = _build_args(spec, {"decimals_sd": 2},
                            {"reported_value": 0.06, "n": 100,
@@ -298,8 +298,8 @@ class TestTheDeclaredRangeReachesCheckSdOrSe:
         assert "variable_range_max" not in args
 
     def test_an_explicit_target_name_is_not_overwritten(self):
-        from metascience_agent.dispatch import _build_args
-        from metascience_agent.registry import SPECS
+        from forensic_metascience_ai_toolkit.dispatch import _build_args
+        from forensic_metascience_ai_toolkit.registry import SPECS
         spec = next(s for s in SPECS if s.name == "check_sd_or_se")
         args = _build_args(spec, {"decimals_sd": 2},
                            {"reported_value": 0.06, "n": 100,

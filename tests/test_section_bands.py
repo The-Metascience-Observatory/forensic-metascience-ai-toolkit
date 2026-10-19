@@ -19,9 +19,9 @@ three faces: a lost percentage, a mistyped interval, and a silent group.
 
 import pytest
 
-from metascience_agent.extraction.jats import section_bands
-from metascience_agent.extraction.supplements_read import _finish
-from metascience_agent.tools.celltypes import parse_cell
+from forensic_metascience_ai_toolkit.extraction.jats import section_bands
+from forensic_metascience_ai_toolkit.extraction.supplements_read import _finish
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell
 
 STRATIFIED = [
     ["Measure", "Drug", "Placebo"],
@@ -63,7 +63,7 @@ class TestTheBandIsFound:
     def test_the_band_row_survives_for_composite(self):
         """Removing it deleted composite's input. It is non-numeric, so no check
         consumes it; it is carried for the reader that needs it."""
-        from metascience_agent.extraction.jats import fold_section_bands
+        from forensic_metascience_ai_toolkit.extraction.jats import fold_section_bands
 
         body, sections, _kept = fold_section_bands(STRATIFIED, 1)
         assert ["Sex, n (%)", "", ""] in body

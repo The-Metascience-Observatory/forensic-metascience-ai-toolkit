@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.blinding import (
+from forensic_metascience_ai_toolkit.blinding import (
     ALLOWED_SUFFIXES,
     BlindedPaper,
     audit_ledger,
@@ -25,10 +25,10 @@ from metascience_agent.blinding import (
     scrub_text,
     verify,
 )
-from metascience_agent.evaluation.corpus_run import paper_slug, resolve_paper_dir
-from metascience_agent.evaluation.harness import repo_root
-from metascience_agent.registry import SPECS
-from metascience_agent.paper_ids import doi_dirname
+from forensic_metascience_ai_toolkit.evaluation.corpus_run import paper_slug, resolve_paper_dir
+from forensic_metascience_ai_toolkit.evaluation.harness import repo_root
+from forensic_metascience_ai_toolkit.registry import SPECS
+from forensic_metascience_ai_toolkit.paper_ids import doi_dirname
 
 CANARY = "ZZQCANARYZZQ"
 
@@ -359,7 +359,7 @@ class TestIdentityBlindingNotJustMarkerBlinding:
 
     def _chain(self, tmp_path):
         from pathlib import Path
-        from metascience_agent import blinding
+        from forensic_metascience_ai_toolkit import blinding
         src = Path(self.SRC)
         bp = blinding.materialize(src, tmp_path)
         ids = blinding.derive_identifiers(src)
@@ -367,7 +367,7 @@ class TestIdentityBlindingNotJustMarkerBlinding:
         return bp, ids
 
     def test_the_filename_no_longer_carries_the_doi(self, tmp_path):
-        from metascience_agent import blinding
+        from forensic_metascience_ai_toolkit import blinding
         from pathlib import Path
         bp = blinding.materialize(Path(self.SRC), tmp_path)
         names = [p.name for p in bp.blinded_dir.rglob("*") if p.is_file()]
@@ -377,7 +377,7 @@ class TestIdentityBlindingNotJustMarkerBlinding:
             assert n.startswith(bp.paper_id) or Path(n).stem in {"body", "abstract"}
 
     def test_identity_is_gone_by_an_audit_that_derives_its_own_targets(self, tmp_path):
-        from metascience_agent import blinding
+        from forensic_metascience_ai_toolkit import blinding
         bp, ids = self._chain(tmp_path)
         assert len(ids) > 20, "identifiers must come from the document, not a manifest"
         assert blinding.identity_residue(bp.blinded_dir, ids) == []
@@ -390,7 +390,7 @@ class TestIdentityBlindingNotJustMarkerBlinding:
         """`history` never matched `<pub-history>`, so the blinding deleted the
         retraction's WORDS and shipped its DATE. The release-to-last-change gap
         alone separated the classes at AUC 0.785 (p = 0.038)."""
-        from metascience_agent import blinding
+        from forensic_metascience_ai_toolkit import blinding
         bp, _ = self._chain(tmp_path)
         text = "".join(p.read_text(errors="replace")
                        for p in bp.blinded_dir.rglob("*") if p.is_file())
@@ -401,7 +401,7 @@ class TestIdentityBlindingNotJustMarkerBlinding:
     def test_the_paper_itself_survives(self, tmp_path):
         """Blinding must not redact the evidence. An earlier version replaced
         'GABA' 103 times because the word appears in the title."""
-        from metascience_agent import blinding
+        from forensic_metascience_ai_toolkit import blinding
         bp, _ = self._chain(tmp_path)
         text = "".join(p.read_text(errors="replace")
                        for p in bp.blinded_dir.rglob("*") if p.is_file())
@@ -419,20 +419,20 @@ class TestRecognitionDetectorActuallyFires:
     IDS = {"author": "Laura Steenbergen", "doi": "10.1038/srep12770"}
 
     def test_it_catches_a_model_stating_the_status(self):
-        from metascience_agent.blinding import recognition_hits
+        from forensic_metascience_ai_toolkit.blinding import recognition_hits
         hits = recognition_hits(
             "I recall that this article has been retracted following an ORI "
             "investigation.", self.IDS)
         assert hits, "the tier that voids a run for stated recognition must fire"
 
     def test_it_catches_a_paraphrase_and_a_named_author(self):
-        from metascience_agent.blinding import recognition_hits
+        from forensic_metascience_ai_toolkit.blinding import recognition_hits
         assert recognition_hits("This is the withdrawn GABA study.", self.IDS)
         assert recognition_hits("Consistent with Steenbergen's design.", self.IDS)
 
     def test_ordinary_forensic_prose_is_not_flagged(self):
         """A detector that fires on normal output would be turned off."""
-        from metascience_agent.blinding import recognition_hits
+        from forensic_metascience_ai_toolkit.blinding import recognition_hits
         assert recognition_hits(
             "Table 2 reports a mean of 4.2, GRIM-inconsistent at n = 30 for one "
             "decimal place.", self.IDS) == []

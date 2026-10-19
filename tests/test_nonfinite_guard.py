@@ -15,13 +15,13 @@ import math
 
 import pytest
 
-from metascience_agent.tools.severity import refuse_if_nonfinite
-from metascience_agent.tools.grim import grim_test, grim_test_percentage
-from metascience_agent.tools.sd_checks import check_sd_range, grimmer_test
-from metascience_agent.tools.debit import debit_test
-from metascience_agent.tools.chi_squared import recalc_chi_squared
-from metascience_agent.tools.rivets import rivets_anova
-from metascience_agent.tools.heuristics import flag_uninformative_stat
+from forensic_metascience_ai_toolkit.tools.severity import refuse_if_nonfinite
+from forensic_metascience_ai_toolkit.tools.grim import grim_test, grim_test_percentage
+from forensic_metascience_ai_toolkit.tools.sd_checks import check_sd_range, grimmer_test
+from forensic_metascience_ai_toolkit.tools.debit import debit_test
+from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
+from forensic_metascience_ai_toolkit.tools.rivets import rivets_anova
+from forensic_metascience_ai_toolkit.tools.heuristics import flag_uninformative_stat
 
 NAN = float("nan")
 INF = float("inf")

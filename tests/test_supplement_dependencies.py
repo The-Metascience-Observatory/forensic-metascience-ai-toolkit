@@ -15,7 +15,7 @@ import importlib
 
 import pytest
 
-from metascience_agent.extraction.supplements_read import (
+from forensic_metascience_ai_toolkit.extraction.supplements_read import (
     READABLE,
     UNREADABLE,
     extract_supplement,
@@ -48,7 +48,7 @@ class TestPreflightWouldCatchTheirAbsence:
     to render it."""
 
     def test_both_are_checked(self):
-        from metascience_agent.preflight import fatal_checks
+        from forensic_metascience_ai_toolkit.preflight import fatal_checks
 
         names = " ".join(n for n, _, _ in fatal_checks(refresh=True))
         assert "python-docx" in names and "openpyxl" in names
@@ -59,8 +59,8 @@ class TestPreflightWouldCatchTheirAbsence:
         silent and expensive -- so an absent library must REFUSE the run."""
         import importlib as _il
 
-        from metascience_agent import preflight
-        from metascience_agent.preflight import PreflightError, assert_ready
+        from forensic_metascience_ai_toolkit import preflight
+        from forensic_metascience_ai_toolkit.preflight import PreflightError, assert_ready
 
         real = _il.import_module
 
@@ -78,7 +78,7 @@ class TestPreflightWouldCatchTheirAbsence:
 
     def test_they_are_not_merely_advisory_rows(self):
         """They must not sit in the non-blocking set."""
-        from metascience_agent.preflight import optional_checks
+        from forensic_metascience_ai_toolkit.preflight import optional_checks
 
         optional = " ".join(n for n, _, _ in optional_checks())
         assert "python-docx" not in optional and "openpyxl" not in optional

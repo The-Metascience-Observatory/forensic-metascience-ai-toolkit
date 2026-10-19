@@ -37,10 +37,10 @@ import json
 import statistics as st
 from pathlib import Path
 
-from metascience_agent.scaffold import (adjudication as A, adjudication_attach as AA,
+from forensic_metascience_ai_toolkit.scaffold import (adjudication as A, adjudication_attach as AA,
                                         adjudication_n as AN, checks,
                                         premise_reading as PR, premises, render)
-from metascience_agent.scaffold import __main__ as MAIN
+from forensic_metascience_ai_toolkit.scaffold import __main__ as MAIN
 
 BAD = {"suspicious", "highly_suspicious", "impossible"}
 

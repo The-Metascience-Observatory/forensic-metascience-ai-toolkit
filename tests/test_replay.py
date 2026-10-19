@@ -22,7 +22,7 @@ import pathlib
 
 import pytest
 
-from metascience_agent.evaluation import replay
+from forensic_metascience_ai_toolkit.evaluation import replay
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 CORPUS = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on"

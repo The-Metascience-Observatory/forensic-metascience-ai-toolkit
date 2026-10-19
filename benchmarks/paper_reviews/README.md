@@ -80,6 +80,6 @@ for one with a regression key. Put the PDF, and the review if there is one, in
 - `severity_expected`
 - `confidence`
 
-The code is in `src/metascience_agent/evaluation/`: `harness.py`, `judge.py`
+The code is in `src/forensic_metascience_ai_toolkit/evaluation/`: `harness.py`, `judge.py`
 and `deterministic.py`. The paths above are declared once, in
 `harness.BENCHMARK_DIR`.

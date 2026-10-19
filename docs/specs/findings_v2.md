@@ -486,11 +486,11 @@ distinction the whole repo is built on, applied to its own reviewing stage.
 
 ## 11. Metadata enrichment (A5 — owned here; resolves critic open #3)
 
-- **`src/metascience_agent/journal_names.py`** (new): `normalize(journal:
+- **`src/forensic_metascience_ai_toolkit/journal_names.py`** (new): `normalize(journal:
   str) -> str` — abbreviation expansion → variant standardization →
   HTML-entity fix, single-string port of the website repo's
   `data_ingestor.py` logic; data vendored to
-  `src/metascience_agent/data/journal_name_mappings.json` with an
+  `src/forensic_metascience_ai_toolkit/data/journal_name_mappings.json` with an
   attribution header; refresh verb `metascience refresh-journal-mappings`
   (**not implemented** at 1.77.0; `journal_names.normalize` exists).
   Unknown journal → passthrough (`journal_normalized == journal`, NEVER

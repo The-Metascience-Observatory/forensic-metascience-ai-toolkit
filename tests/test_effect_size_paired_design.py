@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.tools.effect_size import check_effect_plausibility as check
+from forensic_metascience_ai_toolkit.tools.effect_size import check_effect_plausibility as check
 
 # An honest within-subjects study: pre 50.0 (10.0), post 44.5 (10.0), n = 30,
 # correctly reporting d_z = 0.87. The between-groups recomputation gives 0.55.
@@ -46,8 +46,8 @@ class TestAPairedDesignIsRefusedNotAccused:
         """A second design list here would drift from the one
         `check_variance_dispersion` refuses on -- this codebase has found the
         same constant hand-copied eleven times with the copies disagreeing."""
-        from metascience_agent.tools.csf import _resolve_design
-        from metascience_agent.tools.effect_size import _design_is_paired
+        from forensic_metascience_ai_toolkit.tools.csf import _resolve_design
+        from forensic_metascience_ai_toolkit.tools.effect_size import _design_is_paired
         assert _design_is_paired("repeated measures")
         assert _resolve_design("repeated measures") == "repeated_measures"
         assert not _design_is_paired("parallel-group RCT")

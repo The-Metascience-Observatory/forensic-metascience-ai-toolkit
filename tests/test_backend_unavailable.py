@@ -19,7 +19,7 @@ from pathlib import Path
 import pytest
 
 
-from metascience_agent.llm_backend import (            # noqa: E402
+from forensic_metascience_ai_toolkit.llm_backend import (            # noqa: E402
     BackendUnavailable, FATAL_BACKEND_MARKERS, fatal_backend_reason,
 )
 
@@ -79,7 +79,7 @@ class TestBatchHandling:
         """`batch_analyze` already stops and skips the retry queue for
         PreflightError and BudgetUnsupported; this only had to reach them."""
         src = (Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "batch.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "batch.py").read_text()
         line = next(l for l in src.splitlines()
                     if "except (PreflightError" in l)
         assert "BackendUnavailable" in line
@@ -87,12 +87,12 @@ class TestBatchHandling:
     def test_probe_fails_open_when_the_cli_is_missing(self, monkeypatch):
         """The probe converts a refusal into one line. It must never become a
         new way for a healthy run to die."""
-        from metascience_agent import batch as B
+        from forensic_metascience_ai_toolkit import batch as B
         monkeypatch.setattr(B.shutil, "which", lambda _n: None)
         assert asyncio.run(B.probe_backend("grok")) is None
 
     def test_probe_fails_open_on_a_crash(self, monkeypatch):
-        from metascience_agent import batch as B
+        from forensic_metascience_ai_toolkit import batch as B
         monkeypatch.setattr(B.shutil, "which", lambda _n: "/bin/true")
 
         async def boom(*a, **k):
@@ -102,7 +102,7 @@ class TestBatchHandling:
         assert asyncio.run(B.probe_backend("grok")) is None
 
     def test_probe_reports_the_reason_when_the_account_refuses(self, monkeypatch):
-        from metascience_agent import batch as B
+        from forensic_metascience_ai_toolkit import batch as B
         monkeypatch.setattr(B.shutil, "which", lambda _n: "/bin/true")
 
         class _P:
@@ -120,7 +120,7 @@ class TestBatchHandling:
         separate argv entry makes it exit with "a value is required for
         '--single'", which carries no fatal marker -- so the probe failed open
         and the batch ran anyway. That happened on the first attempt."""
-        from metascience_agent import batch as B
+        from forensic_metascience_ai_toolkit import batch as B
         monkeypatch.setattr(B.shutil, "which", lambda n: f"/usr/bin/{n}")
         seen = {}
 
@@ -156,13 +156,13 @@ class TestPreflight:
         """Preflight's fatal checks are local and free by design. A billable
         round trip on every `_run_stage` would change what the command is for,
         so the live probe lives in `batch`, at the point of spend."""
-        from metascience_agent.preflight import backend_reachable_row
+        from forensic_metascience_ai_toolkit.preflight import backend_reachable_row
         name, good, detail = backend_reachable_row("grok")
         assert good is True, "the row must never block a run"
         assert "grok" in name
         assert "batch" in detail
 
     def test_assert_ready_does_not_consult_it(self):
-        from metascience_agent import preflight
+        from forensic_metascience_ai_toolkit import preflight
         names = [n for n, _g, _d in preflight.fatal_checks(refresh=True)]
         assert not any("reachable" in n for n in names)

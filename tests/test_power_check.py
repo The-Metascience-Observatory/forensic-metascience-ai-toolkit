@@ -10,7 +10,7 @@ import subprocess
 
 import pytest
 
-from metascience_agent.tools.power_check import required_n, verify_power_analysis
+from forensic_metascience_ai_toolkit.tools.power_check import required_n, verify_power_analysis
 
 
 def _r_available() -> bool:
@@ -130,7 +130,7 @@ class TestTheOneTailedReadingExistsOnlyAtDf1Equals1:
     """
 
     def test_a_one_df_F_gets_its_one_tailed_equivalent(self):
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.09)
         ot = r["one_tailed_equivalent"]
         assert abs(r["calculated_p"] - 0.18083) < 1e-4
@@ -140,13 +140,13 @@ class TestTheOneTailedReadingExistsOnlyAtDf1Equals1:
     def test_it_matches_the_paper_that_exposed_it(self):
         """The exact case: a reported 0.09 that the two-tailed recompute calls
         0.181 and the one-tailed calls 0.090."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         assert abs(recalc_f_to_p(1.93, 1, 19)["one_tailed_equivalent"]["p"] - 0.09) < 0.001
 
     def test_an_omnibus_F_has_NO_one_tailed_reading(self):
         """The identity holds only at df1 = 1. Offering a halved p for an
         omnibus F would invent a test that does not exist."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(3.4, 3, 40, reported_p=0.03)
         assert r["one_tailed_equivalent"]["p"] is None
         assert "df1 = 3" in r["one_tailed_equivalent"]["why"]
@@ -154,7 +154,7 @@ class TestTheOneTailedReadingExistsOnlyAtDf1Equals1:
     def test_the_two_tailed_value_stays_the_default(self):
         """Reported, never substituted: a paper that does not SAY it tested
         directionally has not earned the halving."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(4.65, 1, 13)
         assert abs(r["calculated_p"] - 0.05037) < 1e-4
         assert "STATES" in r["one_tailed_equivalent"]["caveat"]
@@ -181,7 +181,7 @@ class TestTheOneTailedReadingReachesTheSeverity:
         """1.93.0, statcheck's rule: the paper (checked 2026-10-18) never says
         it tested one-tailed, so the halved reading does not rescue it. The
         result names that reading, so the model cannot write that none exists."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.09, decimals_f=2, decimals_p=2)
         assert r["p_matches"] is False
         assert r["one_tailed_reconciles"] is True
@@ -190,7 +190,7 @@ class TestTheOneTailedReadingReachesTheSeverity:
         assert "ONE-tailed" in r["explanation"]
 
     def test_a_stated_one_tailed_test_no_longer_accuses(self):
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.09, decimals_f=2, decimals_p=2,
                           one_tailed_stated=True)
         assert r["p_matches"] is False, "still disagrees with the two-tailed interval"
@@ -207,7 +207,7 @@ class TestTheOneTailedReadingReachesTheSeverity:
     def test_it_does_not_forgive_a_p_too_small_even_for_one_tailed(self):
         """The escape hatch is arithmetic, not a blanket excuse. Halving 0.181
         gives 0.090; a reported 0.01 is not explained by directional testing."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.01, decimals_f=2, decimals_p=2)
         assert r["one_tailed_reconciles"] is False
         assert r["severity"] == "suspicious"
@@ -215,14 +215,14 @@ class TestTheOneTailedReadingReachesTheSeverity:
     def test_the_hatch_stays_shut_for_an_omnibus_F(self):
         """df1 > 1 has no one-tailed reading, so the downgrade must not apply --
         otherwise the fix for one false accusation opens a false all-clear."""
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.9, 3, 40, reported_p=0.03, decimals_f=1, decimals_p=2)
         assert r["one_tailed_reconciles"] is False
         assert r["severity"] == "suspicious"
         assert "severity_note" not in r
 
     def test_an_honest_two_tailed_report_is_untouched(self):
-        from metascience_agent.tools.anova import recalc_f_to_p
+        from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p
         r = recalc_f_to_p(1.93, 1, 19, reported_p=0.18, decimals_f=2, decimals_p=2)
         assert r["p_matches"] is True
         assert r["severity"] == "consistent"
@@ -235,7 +235,7 @@ class TestRequiredNIsAProperCheck:
     participants against a stated 34 -- exactly what it answers."""
 
     def test_with_actual_n_it_compares_designs(self):
-        from metascience_agent.tools.power_check import required_n
+        from forensic_metascience_ai_toolkit.tools.power_check import required_n
         r = required_n("two_sample_t", 0.5, actual_n=34)
         ds = r["design_sensitivity"]
         assert ds["required_n_total"] > ds["actual_n_total"]
@@ -244,16 +244,16 @@ class TestRequiredNIsAProperCheck:
     def test_being_underpowered_is_never_an_accusation(self):
         """A small study is not an erroneous one. Escalating here would
         manufacture a finding out of every honest pilot."""
-        from metascience_agent.tools.power_check import required_n
+        from forensic_metascience_ai_toolkit.tools.power_check import required_n
         assert required_n("two_sample_t", 0.5, actual_n=8)["severity"] == "consistent"
         assert required_n("two_sample_t", 0.5, actual_n=5000)["severity"] == "consistent"
 
     def test_without_actual_n_it_is_still_the_calculator(self):
-        from metascience_agent.tools.power_check import required_n
+        from forensic_metascience_ai_toolkit.tools.power_check import required_n
         assert "design_sensitivity" not in required_n("two_sample_t", 0.5)
 
     def test_the_explanation_names_the_selection_problem_not_misconduct(self):
-        from metascience_agent.tools.power_check import required_n
+        from forensic_metascience_ai_toolkit.tools.power_check import required_n
         e = required_n("two_sample_t", 0.5, actual_n=34)["explanation"]
         assert "selection inflates" in e and "CONTEXT, not an error" in e
 
@@ -274,20 +274,20 @@ class TestRecalcStatToPHasTheSameOneDfReading:
     """
 
     def test_the_one_df_note_no_longer_says_category_error(self):
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=1.93, kind="f", df=1, df2=19,
                              reported_p=0.09, decimals_stat=2, decimals_p=2, tails=2)
         assert "category error" not in (r.get("tails_note") or "")
         assert "t(k)^2" in r["tails_note"]
 
     def test_an_omnibus_F_still_gets_the_original_note(self):
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=1.9, kind="f", df=3, df2=40,
                              reported_p=0.03, decimals_stat=1, decimals_p=2, tails=2)
         assert "omnibus" in r["tails_note"]
 
     def test_the_real_case_is_flagged_unless_one_tailed_is_stated(self):
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         kw = dict(statistic=1.93, kind="f", df=1, df2=19,
                   reported_p=0.09, decimals_stat=2, decimals_p=2)
         r = recalc_stat_to_p(**kw)
@@ -300,7 +300,7 @@ class TestRecalcStatToPHasTheSameOneDfReading:
     def test_a_one_df_chi_squared_gets_the_same_treatment(self):
         """chi2(1) = z^2 has exactly the structure of F(1,k) = t(k)^2. Fixing
         one and not the other would leave the same false accusation available."""
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=3.5, kind="chi2", df=1,
                              reported_p=0.031, decimals_stat=1, decimals_p=3,
                              one_tailed_stated=True)
@@ -311,7 +311,7 @@ class TestRecalcStatToPHasTheSameOneDfReading:
         assert r["severity"] == "suspicious"
 
     def test_a_p_too_small_even_for_one_tailed_is_still_flagged(self):
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=1.93, kind="f", df=1, df2=19,
                              reported_p=0.01, decimals_stat=2, decimals_p=2)
         assert r["one_tailed_reconciles"] is False
@@ -320,7 +320,7 @@ class TestRecalcStatToPHasTheSameOneDfReading:
     def test_an_omnibus_over_claim_is_still_flagged(self):
         """The escape hatch must not open above one df, or the fix for a false
         accusation becomes a false all-clear."""
-        from metascience_agent.tools.stat_to_p import recalc_stat_to_p
+        from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
         r = recalc_stat_to_p(statistic=1.9, kind="f", df=3, df2=40,
                              reported_p=0.03, decimals_stat=1, decimals_p=2)
         assert r["severity"] == "suspicious"

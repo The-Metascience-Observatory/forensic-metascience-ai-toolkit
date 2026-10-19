@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import findings_v2 as fv2
+from forensic_metascience_ai_toolkit import findings_v2 as fv2
 
 
 def _row(slug, prov, computed_by="agent_code", technique="internal_contradiction"):
@@ -62,7 +62,7 @@ class TestTheModelCannotWriteItsOwnClampHistory:
         """A producer that could write this could assert it had been capped
         from a level it never claimed, or that it had not been capped at all --
         the same reason `severity` is pipeline-set."""
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         props = prompts.producer_findings_schema(producer)[
             "properties"]["findings"]["items"]["properties"]
         assert "provisional_severity_from" not in props
@@ -74,7 +74,7 @@ class TestTheModelCannotWriteItsOwnClampHistory:
         import pathlib
         schema = json.loads(
             (pathlib.Path(__file__).resolve().parents[1] / "src"
-             / "metascience_agent" / "schema"
+             / "forensic_metascience_ai_toolkit" / "schema"
              / "findings.v2.schema.json").read_text(encoding="utf-8"))
         props = schema["properties"]["findings"]["items"]["properties"]
         assert "provisional_severity_from" in props

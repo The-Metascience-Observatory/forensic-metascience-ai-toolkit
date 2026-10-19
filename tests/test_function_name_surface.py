@@ -34,7 +34,7 @@ import pathlib
 
 import pytest
 
-ROOT = pathlib.Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+ROOT = pathlib.Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
 
 #: `alias = existing_function` at module level. Every entry is a SECOND name for
 #: a function that already has one, which is the shape that makes a caller

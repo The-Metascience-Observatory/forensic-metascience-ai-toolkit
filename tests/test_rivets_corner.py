@@ -29,7 +29,7 @@ import itertools
 import pytest
 from scipy import stats
 
-from metascience_agent.tools.rivets import rivets_anova
+from forensic_metascience_ai_toolkit.tools.rivets import rivets_anova
 
 TIGHT = dict(means=[1.60] * 3, sds=[0.07] * 3, ns=[150] * 3)
 
@@ -84,12 +84,12 @@ class TestTheThresholdDeclarationIsReachable:
     BIG = dict(means=[1.0, 2.0, 3.0], sds=[0.5] * 3, ns=[20] * 3)
 
     def test_the_registry_exposes_it(self):
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         for name in ("rivets_anova", "rivets_independent_t"):
             assert "p_is_threshold" in R.BY_NAME[name].schema(), name
 
     def test_declaring_a_bound_over_mcp_reaches_the_threshold_rule(self):
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         got = R.BY_NAME["rivets_anova"].call(
             {**self.BIG, "reported_p": 0.001, "p_is_threshold": True})
         assert got["severity"] == "consistent"

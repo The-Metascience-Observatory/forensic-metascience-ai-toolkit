@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.composite import split_sections
+from forensic_metascience_ai_toolkit.composite import split_sections
 
 PAPER = Path("tests/fixtures/papers/high_value_pdfs_to_run_on/10.1038--s41537-025-00576-3/"
              "forensic_review_opus_08_09_2026_bundle/paper/"
@@ -108,7 +108,7 @@ class TestTheRealTable:
     structure makes recoverable."""
 
     def _sections(self):
-        from metascience_agent.extraction.jats import extract_xml_tables
+        from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_tables
         return split_sections(extract_xml_tables(PAPER)[1]["cells"])
 
     def test_it_finds_the_twelve_sections(self):
@@ -148,19 +148,19 @@ class TestARowOfMissingMarkersIsNotASectionHeading:
         return [{"raw": v, "row": r, "col": i} for i, v in enumerate(vals)]
 
     def test_a_repeated_missing_marker_is_not_a_banner(self):
-        from metascience_agent.composite import _is_banner
+        from forensic_metascience_ai_toolkit.composite import _is_banner
         for marker in ("NR", "n/a", "Not reported", "None", "--", "—",
                        "ND", "missing", "?"):
             assert not _is_banner(self._row(marker, marker, marker)), marker
 
     def test_a_real_group_heading_still_is_one(self):
-        from metascience_agent.composite import _is_banner
+        from forensic_metascience_ai_toolkit.composite import _is_banner
         assert _is_banner(self._row("Demographics", "Demographics"))
 
     def test_the_data_row_stays_in_its_section(self):
         """The consequence: no section labelled "NR", and the row's cells are
         still counted."""
-        from metascience_agent.composite import split_sections
+        from forensic_metascience_ai_toolkit.composite import split_sections
         cells = (self._row("Demographics", "Demographics", r=0)
                  + self._row("NR", "NR", "NR", r=1)
                  + self._row("Age", "41", "39", r=2))
@@ -173,6 +173,6 @@ class TestARowOfMissingMarkersIsNotASectionHeading:
         still carries the label column. When the two disagree the viewer
         redraws rows the analysis never saw, so they are kept in step."""
         import inspect
-        from metascience_agent import bundle
+        from forensic_metascience_ai_toolkit import bundle
         src = inspect.getsource(bundle)
         assert "_is_missing_marker" in src

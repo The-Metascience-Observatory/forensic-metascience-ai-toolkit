@@ -3,10 +3,10 @@ import json
 
 import pytest
 
-from metascience_agent.workbench.remote import Remote, key_filter
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository
-from metascience_agent.workbench.service import Service
+from forensic_metascience_ai_toolkit.workbench.remote import Remote, key_filter
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.service import Service
 
 
 def test_native_key_predicates_cover_scalar_composite_and_deleted_batches():
@@ -82,7 +82,7 @@ def test_finding_summary_carries_the_tool_basis_and_old_caches_are_backfilled(tm
     """Which tool triggered a finding reaches the cached summary (bounded:
     names and a reproduction prefix, never the full tool_verdict), and a cache
     made before the field existed reads `not_recorded` until backfilled."""
-    from metascience_agent.workbench.remote import TOOL_BASIS, summary_expr
+    from forensic_metascience_ai_toolkit.workbench.remote import TOOL_BASIS, summary_expr
     sql = summary_expr('findings')
     assert "'tool_basis'" in sql and TOOL_BASIS in sql
     assert "t.tool_verdict->'tool'" in sql
@@ -128,7 +128,7 @@ def test_finding_summary_carries_the_tool_basis_and_old_caches_are_backfilled(tm
 
 
 def test_finding_tool_order_of_evidence():
-    from metascience_agent.review_issues import finding_tool
+    from forensic_metascience_ai_toolkit.review_issues import finding_tool
     base = {'technique': 'grim_check'}
     assert finding_tool({**base, 'tool_verdict': {'tool': 'grimmer_check'}}) == {'tool': 'grimmer_check', 'source': 'tool_verdict'}
     assert finding_tool({**base, 'backing_call': {'tool_short': 'debit_check'}}) == {'tool': 'debit_check', 'source': 'tool_call'}

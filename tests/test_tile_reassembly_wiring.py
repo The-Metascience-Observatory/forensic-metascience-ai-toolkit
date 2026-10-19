@@ -96,10 +96,10 @@ class TestTheStampAndTheChildCarryTheFlag:
 
 class TestTheHostThreadsIt:
     def test_analyze_paper_and_the_cli_accept_it(self):
-        from metascience_agent import agent, parallel
+        from forensic_metascience_ai_toolkit import agent, parallel
         assert "image_reassemble_tiles" in inspect.signature(agent.analyze_paper).parameters
         assert "image_reassemble_tiles" in inspect.signature(parallel.analyze_paper_parallel).parameters
         src = inspect.getsource(parallel)
         assert "reassemble_tiles=image_reassemble_tiles" in src
-        from metascience_agent import cli
+        from forensic_metascience_ai_toolkit import cli
         assert "image_reassemble_tiles=reassemble_tiles" in inspect.getsource(cli)

@@ -26,7 +26,7 @@ Telling the reader costs nothing and decides nothing.
 import pathlib
 import pytest
 
-from metascience_agent import values as V
+from forensic_metascience_ai_toolkit import values as V
 
 CORPUS = pathlib.Path("tests/fixtures/papers/high_value_pdfs_to_run_on")
 

@@ -18,12 +18,12 @@ import pathlib
 
 import pytest
 
-from metascience_agent import verdicts
-from metascience_agent.core import prompts
-from metascience_agent.tools import severity as tool_severity
+from forensic_metascience_ai_toolkit import verdicts
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit.tools import severity as tool_severity
 
 SCHEMA_DIR = (pathlib.Path(__file__).resolve().parents[1]
-              / "src" / "metascience_agent" / "schema")
+              / "src" / "forensic_metascience_ai_toolkit" / "schema")
 
 
 class TestTheyComeFromTheVocabularyModules:
@@ -67,14 +67,14 @@ class TestTheLiveEvalPathStillWorks:
     produced and read as a malformed report."""
 
     def test_a_valid_severity_is_accepted(self):
-        from metascience_agent.evaluation import deterministic
+        from forensic_metascience_ai_toolkit.evaluation import deterministic
         out = deterministic.check_findings_json({"findings": [{
             "id": "f1", "location": "Table 1", "technique": "grim",
             "reproduction": "metascience grim 3.5 30", "severity": "suspicious"}]})
         assert not any("invalid severity" in p for p in out["problems"]), out
 
     def test_an_invented_severity_is_still_rejected(self):
-        from metascience_agent.evaluation import deterministic
+        from forensic_metascience_ai_toolkit.evaluation import deterministic
         out = deterministic.check_findings_json({"findings": [{
             "id": "f1", "location": "Table 1", "technique": "grim",
             "reproduction": "x", "severity": "extremely_bad"}]})
@@ -82,7 +82,7 @@ class TestTheLiveEvalPathStillWorks:
             "the severity vocabulary stopped being enforced")
 
     def test_the_verdict_check_still_reads_the_tuple(self):
-        from metascience_agent.evaluation import deterministic
+        from forensic_metascience_ai_toolkit.evaluation import deterministic
         assert deterministic.check_verdict(
             "does_not_reconcile", "does_not_reconcile")["valid_value"] is True
         assert deterministic.check_verdict(

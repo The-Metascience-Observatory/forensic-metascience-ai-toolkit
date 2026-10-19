@@ -2,7 +2,7 @@
 
 import pytest
 
-from metascience_agent.tools.rivets import (
+from forensic_metascience_ai_toolkit.tools.rivets import (
     rivets_independent_t,
     rivets_anova,
     _half_width,

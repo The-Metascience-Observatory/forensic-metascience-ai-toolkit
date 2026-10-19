@@ -21,7 +21,7 @@ import json
 
 import pytest
 
-from metascience_agent.extraction import markdown_out as M
+from forensic_metascience_ai_toolkit.extraction import markdown_out as M
 
 
 @pytest.fixture()
@@ -29,7 +29,7 @@ def paper(tmp_path, monkeypatch):
     d = tmp_path / "10.1234--demo"
     d.mkdir()
     monkeypatch.setattr(
-        "metascience_agent.extraction.jats.paper_text_with_source",
+        "forensic_metascience_ai_toolkit.extraction.jats.paper_text_with_source",
         lambda p: ("## Results\n\n[Table 1: Baseline — 4 rows x 3 cols]\n\n"
                    "t(28) = 2.10, p = .04.\n", "xml_publisher"))
     return d
@@ -52,7 +52,7 @@ class TestTheFolderIsWritten:
     def test_a_changed_source_regenerates(self, paper, monkeypatch):
         M.materialise(paper)
         monkeypatch.setattr(
-            "metascience_agent.extraction.jats.paper_text_with_source",
+            "forensic_metascience_ai_toolkit.extraction.jats.paper_text_with_source",
             lambda p: ("## Results\n\nrewritten entirely.\n", "xml_publisher"))
         assert M.materialise(paper)["action"] == "written"
         assert "rewritten" in M.body_path(paper).read_text()
@@ -69,7 +69,7 @@ class TestItRefusesToAssertThingsItDoesNotKnow:
         would turn our failure to read into an artifact asserting the paper is
         blank -- the substitution this whole toolkit exists to catch."""
         monkeypatch.setattr(
-            "metascience_agent.extraction.jats.paper_text_with_source",
+            "forensic_metascience_ai_toolkit.extraction.jats.paper_text_with_source",
             lambda p: ("", None))
         out = M.materialise(paper)
         assert out["action"] == "skipped"
@@ -85,7 +85,7 @@ class TestItRefusesToAssertThingsItDoesNotKnow:
         this is a convenience artifact, and the run has the text in memory."""
         def boom(*a, **k):
             raise PermissionError("read-only file system")
-        monkeypatch.setattr("metascience_agent.atomicio.atomic_write_text", boom)
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.atomicio.atomic_write_text", boom)
         out = M.materialise(paper)
         assert out["action"] == "failed" and "PermissionError" in out["error"]
 
@@ -104,7 +104,7 @@ class TestTheFolderIsNeverOurOwnInput:
         d5d8604), adding thousands of characters per paper, with the XML
         untouched both times. A fresh resolve costs 4.4 ms/paper."""
         import inspect
-        from metascience_agent.extraction.jats import paper_text_with_source
+        from forensic_metascience_ai_toolkit.extraction.jats import paper_text_with_source
         params = inspect.signature(paper_text_with_source).parameters
         assert "use_markdown_dir" not in params, \
             "the read-back was removed deliberately; see the comment in jats.py"
@@ -113,7 +113,7 @@ class TestTheFolderIsNeverOurOwnInput:
 
     def test_find_body_md_still_points_at_it(self, paper):
         """A pointer for prompts and callers is not a text source."""
-        from metascience_agent.extraction.jats import find_body_md
+        from forensic_metascience_ai_toolkit.extraction.jats import find_body_md
         M.materialise(paper)
         assert find_body_md(paper) == M.body_path(paper)
 
@@ -122,7 +122,7 @@ class TestFetchpdfMarkdownIsNeverASource:
     def test_from_xml_md_is_not_read(self, tmp_path):
         """418 of these sit in the corpora. 152 (36%) declare fewer tables than
         their XML holds, with the rows dissolved into the prose."""
-        from metascience_agent.extraction.jats import (
+        from forensic_metascience_ai_toolkit.extraction.jats import (
             _FETCHPDF_MARKDOWN_IS_NOT_A_SOURCE, find_body_md,
             paper_text_with_source)
         d = tmp_path / "10.1234--trap"
@@ -146,7 +146,7 @@ class TestTheGuaranteeIsMeasuredNotAsserted:
     """
 
     def _write(self, tmp_path, text):
-        from metascience_agent.extraction import markdown_out as M
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as M
         return M.write_markdown(tmp_path, text, "pdf")
 
     def test_a_pipe_table_in_the_text_makes_the_flag_false(self, tmp_path):
@@ -182,7 +182,7 @@ class TestTheGuaranteeIsMeasuredNotAsserted:
         """The run that motivated this: 3 tables, 0 placeholders, and a
         source.json claiming the tables were not inlined."""
         from pathlib import Path
-        from metascience_agent.extraction import markdown_out as M
+        from forensic_metascience_ai_toolkit.extraction import markdown_out as M
         body = Path("benchmarks/paper_reviews/runs/apple_cider/paper/body.md")
         if not body.is_file():
             import pytest

@@ -18,7 +18,7 @@ from metascience_observatory_image_analysis.image_forensics import pmc_figures a
 from metascience_observatory_image_analysis.image_forensics.image_analysis import analyze_paper_images  # noqa: E402
 from metascience_observatory_image_analysis.image_forensics.image_track import run_track  # noqa: E402
 
-SRC = Path(__file__).resolve().parent.parent / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parent.parent / "src" / "forensic_metascience_ai_toolkit"
 
 JATS = """<?xml version="1.0"?>
 <pmc-articleset><article xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -344,7 +344,7 @@ class TestAllPapers:
         d = corpus / "10.1--haspdf"; d.mkdir()
         (d / "10.1--haspdf.pdf").write_bytes(b"%PDF-1.4 stub")
         (d / "metadata.json").write_text("{}")
-        monkeypatch.setattr("metascience_agent.webapp_index.iter_paper_dirs", lambda c: [d])
+        monkeypatch.setattr("forensic_metascience_ai_toolkit.webapp_index.iter_paper_dirs", lambda c: [d])
         logs: list[str] = []
         s_default = PF.run_fetch(corpus, get=lambda u: (404, b"", ""), sleep=lambda s: None, log=logs.append)
         s_all = PF.run_fetch(corpus, get=lambda u: (404, b"", ""), sleep=lambda s: None, log=logs.append,

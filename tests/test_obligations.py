@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import obligations as O
+from forensic_metascience_ai_toolkit import obligations as O
 
 # The REAL writer, with only the model stages faked. Fixtures are re-exported
 # rather than reimplemented: a second canonical result would drift from the one
@@ -29,7 +29,7 @@ from .test_parallel_pipeline import fakes, paper, run  # noqa: F401
 @pytest.fixture()
 def written(paper, fakes, tmp_path):  # noqa: F811 -- pytest fixture injection
     """Drive the REAL writer and return the filenames it produced."""
-    from metascience_agent import parallel
+    from forensic_metascience_ai_toolkit import parallel
     out = tmp_path / "review"
     parallel.write_parallel_outputs(run(paper), out)
     return {f.name for f in out.rglob("*") if f.is_file()}, out
@@ -138,7 +138,7 @@ class TestFieldsInsideTheFilesAreOwedToo:
         list satisfies every obligation trivially."""
         import json
 
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         out = tmp_path / "review_fields"
         parallel.write_parallel_outputs(run(paper), out)
         doc = json.loads((out / "findings.v2.json").read_text())
@@ -162,7 +162,7 @@ class TestFieldsInsideTheFilesAreOwedToo:
 
         schema = json.loads(
             (pathlib.Path(__file__).resolve().parents[1] / "src"
-             / "metascience_agent" / "schema"
+             / "forensic_metascience_ai_toolkit" / "schema"
              / "findings.v2.schema.json").read_text(encoding="utf-8"))
         declared = set(schema["properties"]["findings"]["items"]["properties"])
         for ob in O.FINDING_FIELDS:
@@ -187,7 +187,7 @@ class TestConstraintsAreValidatedAtBothSeams:
 
     def test_a_post_adjudication_violation_is_invisible_pre_adjudication(self):
         """The fact that makes the second pass necessary."""
-        from metascience_agent import findings_v2 as fv2
+        from forensic_metascience_ai_toolkit import findings_v2 as fv2
         row = {"slug": "s", "producer": "tool_expert", "outcome": "pass",
                "provisional_severity": None, "technique": "grim_check",
                "title": "t" * 10, "description": "d" * 30, "location": "Table 2"}
@@ -196,7 +196,7 @@ class TestConstraintsAreValidatedAtBothSeams:
         assert fv2.validate_producer_constraints([adjudicated])
 
     def test_both_seams_are_merged_and_labelled(self):
-        from metascience_agent.parallel import _merge_constraint_problems
+        from forensic_metascience_ai_toolkit.parallel import _merge_constraint_problems
         pre = [{"index": 0, "slug": "a", "code": "x"}]
         post = [{"index": 0, "slug": "a", "code": "x"},
                 {"index": 1, "slug": "b", "code": "y"}]
@@ -204,13 +204,13 @@ class TestConstraintsAreValidatedAtBothSeams:
         assert [p["seen_at"] for p in out] == ["pre", "post"]
 
     def test_the_same_row_failing_two_constraints_stays_two_problems(self):
-        from metascience_agent.parallel import _merge_constraint_problems
+        from forensic_metascience_ai_toolkit.parallel import _merge_constraint_problems
         post = [{"index": 0, "slug": "a", "code": "x"},
                 {"index": 0, "slug": "a", "code": "y"}]
         assert len(_merge_constraint_problems([], post)) == 2
 
     def test_a_clean_run_still_reports_an_empty_list(self):
-        from metascience_agent.parallel import _merge_constraint_problems
+        from forensic_metascience_ai_toolkit.parallel import _merge_constraint_problems
         assert _merge_constraint_problems([], []) == []
 
     def test_the_real_writer_reports_the_key(self, written):
@@ -245,7 +245,7 @@ class TestTheWritersRealOutputsAreAllDeclared:
     }
 
     def test_nothing_the_writer_emits_is_unregistered(self):
-        from metascience_agent import obligations as O
+        from forensic_metascience_ai_toolkit import obligations as O
         stray = O.unregistered(self.WRITER_OUTPUTS)
         assert not stray, (
             f"{stray} can be written by write_parallel_outputs but is in "
@@ -258,7 +258,7 @@ class TestTheWritersRealOutputsAreAllDeclared:
         import inspect
         import re
 
-        from metascience_agent import parallel
+        from forensic_metascience_ai_toolkit import parallel
         src = inspect.getsource(parallel.write_parallel_outputs)
         literals = set(re.findall(r'_w\(\s*"([a-z_0-9.]+\.(?:json|md))"', src))
         unknown = literals - self.WRITER_OUTPUTS

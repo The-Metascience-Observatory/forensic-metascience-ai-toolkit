@@ -309,12 +309,12 @@ Declared now, so that a bad result cannot be re-narrated as a mixed one.
 
 ## 9. Analysis code
 
-`src/metascience_agent/evaluation/corpus.py`, committed together with this file and before any
+`src/forensic_metascience_ai_toolkit/evaluation/corpus.py`, committed together with this file and before any
 run. It takes `cells.jsonl` plus `manifest.csv` and emits every number in §7 with no free
 parameters left to choose:
 
 ```
-python -m metascience_agent.evaluation.corpus eval/runs/<run-id>/cells.jsonl --secondary
+python -m forensic_metascience_ai_toolkit.evaluation.corpus eval/runs/<run-id>/cells.jsonl --secondary
 ```
 
 `verdict()` evaluates the §8 failure conditions mechanically, so a failing run reports itself

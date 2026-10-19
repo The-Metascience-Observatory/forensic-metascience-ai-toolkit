@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction.jats import extract_xml_text_with_tables
+from forensic_metascience_ai_toolkit.extraction.jats import extract_xml_text_with_tables
 
 REPO = Path(__file__).resolve().parents[1]
 #: Every publisher XML the repository ships: the test fixtures plus the

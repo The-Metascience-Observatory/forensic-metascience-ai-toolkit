@@ -26,7 +26,7 @@ import pytest
 
 statcheck = pytest.importorskip("statcheck", reason="statcheck is optional")
 
-from metascience_agent.tools.r_wrappers import (  # noqa: E402
+from forensic_metascience_ai_toolkit.tools.r_wrappers import (  # noqa: E402
     _patch_statcheck_sign_bug,
 )
 

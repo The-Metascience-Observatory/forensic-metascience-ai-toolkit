@@ -18,7 +18,7 @@ The two new ones:
 """
 import pytest
 
-from metascience_agent.tools.r_wrappers import (
+from forensic_metascience_ai_toolkit.tools.r_wrappers import (
     normalise_for_statcheck,
     python_statcheck_text,
 )
@@ -100,13 +100,13 @@ class TestOneToolOneAnswer:
     def _patched(self, monkeypatch, tmp_path, text):
         pdf = tmp_path / "paper.pdf"
         pdf.write_bytes(b"%PDF-1.4 not really a pdf")
-        from metascience_agent.extraction import pdf as _pdf
+        from forensic_metascience_ai_toolkit.extraction import pdf as _pdf
         monkeypatch.setattr(_pdf, "extract_text_with_tables",
                             lambda *a, **k: {"text": text, "tables": []})
         return pdf
 
     def test_the_pdf_route_inherits_the_repairs(self, monkeypatch, tmp_path):
-        from metascience_agent.tools.r_wrappers import python_statcheck
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import python_statcheck
         pdf = self._patched(monkeypatch, tmp_path, self._TEXT)
         out = python_statcheck(str(pdf))
         assert out["pdf_reader"] == "docling"
@@ -115,7 +115,7 @@ class TestOneToolOneAnswer:
 
     def test_the_two_routes_agree_on_the_same_document(self, monkeypatch,
                                                        tmp_path):
-        from metascience_agent.tools.r_wrappers import (
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import (
             python_statcheck, python_statcheck_text)
         pdf = self._patched(monkeypatch, tmp_path, self._TEXT)
         a = python_statcheck(str(pdf))
@@ -128,7 +128,7 @@ class TestOneToolOneAnswer:
                                                       tmp_path):
         """The old PDF route had no `errors_explained_by_rounding` key at all,
         so a caller could not tell a rounding artefact from a real one."""
-        from metascience_agent.tools.r_wrappers import python_statcheck
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import python_statcheck
         pdf = self._patched(monkeypatch, tmp_path,
                             "the effect held, F(2, 33) = 5.76, p = .008.")
         out = python_statcheck(str(pdf))
@@ -139,10 +139,10 @@ class TestOneToolOneAnswer:
 
     def test_a_pdf_our_extractor_cannot_read_falls_back(self, monkeypatch,
                                                         tmp_path):
-        from metascience_agent.tools.r_wrappers import python_statcheck
+        from forensic_metascience_ai_toolkit.tools.r_wrappers import python_statcheck
         pdf = self._patched(monkeypatch, tmp_path, "")
         monkeypatch.setattr(
-            "metascience_agent.tools.r_wrappers._statcheck_pdf_via_vendored_reader",
+            "forensic_metascience_ai_toolkit.tools.r_wrappers._statcheck_pdf_via_vendored_reader",
             lambda p: {"success": True, "stats_found": 7,
                        "pdf_reader": "statcheck_pdfminer"})
         out = python_statcheck(str(pdf))

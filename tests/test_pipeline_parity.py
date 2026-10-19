@@ -48,13 +48,14 @@ P190 = ROOT / "tests" / "data" / "parity_1_90.json"
 P191 = ROOT / "tests" / "data" / "parity_1_91.json"
 P192 = ROOT / "tests" / "data" / "parity_1_92.json"
 P193 = ROOT / "tests" / "data" / "parity_1_93.json"
+P1961 = ROOT / "tests" / "data" / "parity_1_96_1.json"
 
 #: The pre-1.86 title bound, restored in the capture process for the scope
 #: tests: every producer subset's `title` is the stored schema's again, and
 #: the adjudicator's verdict rewrite is back to 90 with its old description.
 _OLD_TITLE_BOUND = (
     "import copy, functools\n"
-    "import metascience_agent.core.prompts as P\n"
+    "import forensic_metascience_ai_toolkit.core.prompts as P\n"
     "_sub = P.producer_findings_schema.__wrapped__\n"
     "@functools.lru_cache(maxsize=None)\n"
     "def _old_sub(producer, figures=False):\n"
@@ -77,7 +78,8 @@ _OLD_TITLE_BOUND = (
 
 
 def _capture(tmp_path, src_only_pythonpath: bool = False,
-             title_bound_90: bool = False) -> dict:
+             title_bound_90: bool = False,
+             old_package_name: bool = False) -> dict:
     # The image package comes from its own installed checkout.
     roots = [ROOT / "src", ROOT / "copy_paste_detector" / "src"]
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1",
@@ -85,12 +87,18 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
                                          + [os.environ.get("PYTHONPATH", "")])}
     out = tmp_path / "capture.json"
     script = [str(ROOT / "tests" / "parity_capture.py"), str(out)]
-    if src_only_pythonpath or title_bound_90:
+    if src_only_pythonpath or title_bound_90 or old_package_name:
         patch = ""
+        if old_package_name:
+            # Before 1.96.1 the MCP server was launched under the package's
+            # old import name, which the `metascience_agent` alias still serves.
+            patch += (
+                "import forensic_metascience_ai_toolkit.integration as I\n"
+                "I.forensic_mcp_module = 'metascience_agent.mcp_server'\n")
         if src_only_pythonpath:
             # The pre-1.85.1 server env: `<src>` alone, for the scope test.
             patch += (
-                "import metascience_agent.agent as A, metascience_agent.llm_backend as lb\n"
+                "import forensic_metascience_ai_toolkit.agent as A, forensic_metascience_ai_toolkit.llm_backend as lb\n"
                 "old = lambda inherited=None: str(lb._pkg_root())\n"
                 "A.forensic_pythonpath = lb.forensic_pythonpath = old\n")
         if title_bound_90:
@@ -107,7 +115,7 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
 
 def test_default_run_matches_the_newest_oracle(tmp_path):
     got = _capture(tmp_path)
-    want = json.loads(P193.read_text())
+    want = json.loads(P1961.read_text())
     assert set(got) == set(want) == {"claude", "codex", "grok"}
     for backend in want:
         for i, (g, w) in enumerate(zip(got[backend]["invocations"],
@@ -148,7 +156,7 @@ def test_phase3b_changed_only_what_the_models_are_told():
         assert "pipeline" in keys and "pipeline" not in old[backend]["document_keys"]
         old[backend]["document_keys"] = sorted(old[backend]["document_keys"] + ["pipeline"])
         if backend == "codex":
-            from metascience_agent.llm_backend import CODEX_SKILLS_CONFIG
+            from forensic_metascience_ai_toolkit.llm_backend import CODEX_SKILLS_CONFIG
             assert CODEX_SKILLS_CONFIG not in json.dumps(old[backend])
             for inv in new[backend]["invocations"]:
                 argv = inv["argv"]
@@ -207,7 +215,7 @@ def test_1_75b_changed_only_prompts_and_the_flow_tool():
     for o, n in zip(old["claude"]["invocations"], new["claude"]["invocations"]):
         i = o["argv"].index("--json-schema")
         assert o["argv"][i + 1] == n["argv"][i + 1], o["stage"]
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     flow = next(t for t in registry.SPECS if t.name == "check_flow_arithmetic")
     assert "also_reported" in flow.description
 
@@ -239,7 +247,7 @@ def test_1_79_changed_only_prompts_and_the_grim_description():
     for o, n in zip(old["claude"]["invocations"], new["claude"]["invocations"]):
         i = o["argv"].index("--json-schema")
         assert o["argv"][i + 1] == n["argv"][i + 1], o["stage"]
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     grim = next(t for t in registry.SPECS if t.name == "grim_check")
     assert "needs NO scale range" in grim.description
 
@@ -322,7 +330,8 @@ def test_1_85_1_changed_only_the_childrens_pythonpath(tmp_path):
     # registry; with those masked, and the pre-1.86 title bound restored, the
     # old value captures the 1.84 oracle.
     assert (_mask_system_prompts(_capture(tmp_path, src_only_pythonpath=True,
-                                          title_bound_90=True))
+                                          title_bound_90=True,
+                                          old_package_name=True))
             == _mask_system_prompts(old))
     for backend in old:
         for k in old[backend]:
@@ -344,7 +353,8 @@ def test_1_86_changed_only_the_title_bound_in_the_output_schemas(tmp_path):
     assert old != new
     # Since 1.87.0/1.88.0 system prompts and the registry differ too (masked;
     # the output schemas this test is about are not).
-    assert (_mask_system_prompts(_capture(tmp_path, title_bound_90=True))
+    assert (_mask_system_prompts(_capture(tmp_path, title_bound_90=True,
+                                          old_package_name=True))
             == _mask_system_prompts(old))
     for backend in old:
         for o, n in zip(old[backend]["invocations"], new[backend]["invocations"]):
@@ -393,7 +403,7 @@ def test_1_87_changed_only_the_tool_agents_prompt_and_registry():
             if o["stage"] != "tool_agent":
                 assert o == n, f"{backend} {o['stage']} changed"
     assert _mask_tool_agent_prompt(old) == _mask_tool_agent_prompt(new)
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     for name in ("recalc_stat_to_p", "recalc_chi_squared", "recalc_anova",
                  "recalc_f_to_p", "recalc_independent_t", "check_regression"):
         assert "p_relation" in registry.BY_NAME[name].schema(), name
@@ -431,7 +441,7 @@ def test_1_88_changed_only_system_prompts_and_the_stat_to_p_definition():
         for o, n in zip(old[backend]["invocations"], new[backend]["invocations"]):
             assert o != n, f"{backend} {o['stage']}: the rulebook reaches every role"
     assert _mask_system_prompts(old) == _mask_system_prompts(new)
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     spec = registry.BY_NAME["recalc_stat_to_p"]
     assert "OMIT `df`" in spec.description
     assert {"df_min", "df_max"} <= set(spec.schema())
@@ -454,7 +464,7 @@ def test_1_90_changed_only_the_p_tool_definitions():
         a, b = json.loads(json.dumps(old[backend])), json.loads(json.dumps(new[backend]))
         a["registry_sha256"] = b["registry_sha256"] = "<REGISTRY>"
         assert a == b, backend
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     for name in ("recalc_stat_to_p", "recalc_f_to_p", "recalc_anova",
                  "recalc_independent_t", "recalc_chi_squared", "check_regression"):
         assert "p_adjustment" in registry.BY_NAME[name].schema(), name
@@ -520,6 +530,25 @@ def test_1_93_changed_only_the_one_tailed_tool_definitions():
         a, b = json.loads(json.dumps(old[backend])), json.loads(json.dumps(new[backend]))
         a["registry_sha256"] = b["registry_sha256"] = "<REGISTRY>"
         assert a == b, backend
-    from metascience_agent import registry
+    from forensic_metascience_ai_toolkit import registry
     for name in ("recalc_stat_to_p", "recalc_f_to_p", "check_regression"):
         assert "one_tailed_stated" in registry.BY_NAME[name].schema(), name
+
+
+def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
+    """1.96.1 (2026-10-19): the import package was renamed
+    `metascience_agent` -> `forensic_metascience_ai_toolkit`, so every stage's
+    MCP server is now launched as `python -m
+    forensic_metascience_ai_toolkit.mcp_server`. Proved by construction: the
+    current tree with the OLD module name restored (served by the
+    `metascience_agent` alias) captures the 1.93 oracle byte for byte; and the
+    1.96.1 oracle differs from it, and names the new module."""
+    old = json.loads(P193.read_text())
+    new = json.loads(P1961.read_text())
+    assert old != new
+    assert _capture(tmp_path, old_package_name=True) == old
+    assert "forensic_metascience_ai_toolkit.mcp_server" in json.dumps(new)
+    for backend in old:
+        for k in old[backend]:
+            if k != "invocations":
+                assert old[backend][k] == new[backend][k], f"{backend} {k}"

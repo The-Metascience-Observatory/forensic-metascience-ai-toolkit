@@ -9,11 +9,11 @@ import os
 import threading
 from pathlib import Path
 
-from metascience_agent.workbench import catalog as catalog_module
-from metascience_agent.workbench.catalog import Catalog, project_for_root
+from forensic_metascience_ai_toolkit.workbench import catalog as catalog_module
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog, project_for_root
 from metascience_observatory_image_analysis.review_workbench.local_images import image_path
-from metascience_agent.workbench.monitor import FileMonitor
-from metascience_agent.workbench import notifications
+from forensic_metascience_ai_toolkit.workbench.monitor import FileMonitor
+from forensic_metascience_ai_toolkit.workbench import notifications
 
 
 def test_session_corpus_is_named_author_and_session():
@@ -70,7 +70,7 @@ def test_tests_never_reach_the_operator_caches():
 
 def test_cleanup_is_a_dry_run_until_applied_and_touches_only_roots(tmp_path):
     import tempfile
-    from metascience_agent.workbench import root_cleanup
+    from forensic_metascience_ai_toolkit.workbench import root_cleanup
     cache = tmp_path / 'cache.sqlite3'
     c = Catalog(cache)
     pytest_root = str(Path(tempfile.gettempdir()) / 'pytest-of-x' / 'pytest-1' / 'test_a0')

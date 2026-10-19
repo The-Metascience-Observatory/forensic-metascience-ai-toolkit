@@ -24,7 +24,7 @@ import subprocess
 import tempfile
 
 import pandas as pd
-from metascience_agent.paper_ids import doi_dirname
+from forensic_metascience_ai_toolkit.paper_ids import doi_dirname
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAPERS = os.path.join(HERE, "..", "papers")

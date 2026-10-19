@@ -14,7 +14,7 @@ import io
 
 import pytest
 
-from metascience_agent.scaffold import export
+from forensic_metascience_ai_toolkit.scaffold import export
 
 ACCOUNT = {
     "structure": {"version": 2},
@@ -99,6 +99,6 @@ class TestItIsWritten:
 
     def test_the_entry_point_writes_it_beside_the_account(self):
         import inspect
-        from metascience_agent.scaffold import __main__ as m
+        from forensic_metascience_ai_toolkit.scaffold import __main__ as m
         src = inspect.getsource(m.main)
         assert '(out / "values.csv").write_text(_export.values_csv(account)' in src

@@ -6,7 +6,7 @@ which is how it came to be mistaken for one; it moved here for that reason.
 
 Guidance was once written here, a test asserted every sweep tool appeared here,
 and the model never saw a word of it. What a model IS sent is assembled in
-`metascience_agent/core/prompts/__init__.py` (see AGENTS.md, "Prompts"): each
+`forensic_metascience_ai_toolkit/core/prompts/__init__.py` (see AGENTS.md, "Prompts"): each
 agent's `modules/<name>/prompt.md`, the shared `core/prompts/` text, and per
 tool only its MCP definition. So: **if guidance has to reach the model, it
 belongs in the `description` block of the tool family's

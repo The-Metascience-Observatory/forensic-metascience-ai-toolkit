@@ -35,7 +35,7 @@ class _Repo:
 
 
 def _repo(items):
-    from metascience_agent.workbench.repository import Repository
+    from forensic_metascience_ai_toolkit.workbench.repository import Repository
     repo = _Repo(items)
     repo.save_review_filter = Repository.save_review_filter.__get__(repo, _Repo)
     return repo

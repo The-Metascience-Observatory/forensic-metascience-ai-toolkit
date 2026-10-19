@@ -55,9 +55,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import verdicts as _verdicts
+from forensic_metascience_ai_toolkit import verdicts as _verdicts
 
-SCHEMAS = Path(__file__).resolve().parents[1] / "src/metascience_agent/schema"
+SCHEMAS = Path(__file__).resolve().parents[1] / "src/forensic_metascience_ai_toolkit/schema"
 
 #: An ASSERTED measurement, in this repo's own convention: the word used as a
 #: claim, not as an ordinary verb ("a value measured off a bar").
@@ -73,7 +73,7 @@ DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
 
 def _claims():
     from metascience_observatory_image_analysis.prompts import PROMPTS_DIR
-    from metascience_agent.core.prompts import prompt_files
+    from forensic_metascience_ai_toolkit.core.prompts import prompt_files
     for f in sorted({*SCHEMAS.rglob("*"), *PROMPTS_DIR.rglob("*"), *prompt_files()}):
         if f.is_dir() or f.suffix not in (".md", ".json"):
             continue
@@ -146,7 +146,7 @@ class TestEveryRequiredFieldIsExplainedSomewhere:
     def _required_unnamed(self):
         import json
         from pathlib import Path
-        from metascience_agent.core.prompts import prompt_files
+        from forensic_metascience_ai_toolkit.core.prompts import prompt_files
         prompts = "\n".join(f.read_text(encoding="utf-8") for f in prompt_files())
         out = []
 
@@ -184,7 +184,7 @@ class TestEveryRequiredFieldIsExplainedSomewhere:
         import json
         from pathlib import Path
         p = (Path(__file__).resolve().parents[1]
-             / "src/metascience_agent/schema/findings.v2.schema.json")
+             / "src/forensic_metascience_ai_toolkit/schema/findings.v2.schema.json")
         s = json.loads(p.read_text(encoding="utf-8"))
         st = (s["properties"]["anatomy"]["properties"]["hypotheses"]
               ["items"]["properties"]["status"])

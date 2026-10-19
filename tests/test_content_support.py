@@ -197,7 +197,7 @@ def test_pdf_geometry_verifies_stream_source_and_affine(packet,tmp_path):
 def test_workbench_read_never_generates_or_changes_baseline(packet,tmp_path,monkeypatch):
     import threading
     from types import SimpleNamespace
-    from metascience_agent.workbench.service import Service
+    from forensic_metascience_ai_toolkit.workbench.service import Service
     from metascience_observatory_image_analysis.review_workbench import content_support as access
     baseline=dict(id=packet['id'],rank={'score':7,'reasons':['unchanged']},publication_status='published',
                   measurements=copy.deepcopy(packet['measurements']),screening={'decision':'issue','validated':True},

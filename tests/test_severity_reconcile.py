@@ -9,8 +9,8 @@ import json
 
 import pytest
 
-from metascience_agent import severity_reconcile as SR
-from metascience_agent.bundle import render_viewer
+from forensic_metascience_ai_toolkit import severity_reconcile as SR
+from forensic_metascience_ai_toolkit.bundle import render_viewer
 
 
 def _finding(model, tool, **kw):

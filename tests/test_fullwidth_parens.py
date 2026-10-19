@@ -21,7 +21,7 @@ closing it would make precisely the cells whose denominator we would then have
 to guess -- the documented route from a coverage win to a false accusation
 (25e2f9f, reverted once for exactly this).
 """
-from metascience_agent.tools import celltypes
+from forensic_metascience_ai_toolkit.tools import celltypes
 
 
 class TestFullwidthParens:

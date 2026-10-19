@@ -1,6 +1,6 @@
 """A model as second reader of the account: what the pass is handed, what it
 may return, and that its output is marked as a reading throughout."""
-from metascience_agent.scaffold import review as RV
+from forensic_metascience_ai_toolkit.scaffold import review as RV
 
 
 def _account(n=30):
@@ -41,7 +41,7 @@ class TestTheReviewerIsServedEveryEvidenceSection:
     cap rises above the largest account we hold (230,093 characters)."""
 
     def _rendered(self) -> str:
-        from metascience_agent.scaffold import bind, render
+        from forensic_metascience_ai_toolkit.scaffold import bind, render
 
         from tests.test_scaffold import P1, P2, P3, _doc
         return render.render(bind.assemble(_doc(), P1, P2, P3))
@@ -112,7 +112,7 @@ class TestItIsMarkedAsAReading:
         assert rv["n_sampled"] == 2 and rv["cost_usd"] == 0.5
 
     def test_the_rendered_section_names_it_a_reading(self):
-        from metascience_agent.scaffold import render as R
+        from forensic_metascience_ai_toolkit.scaffold import render as R
         assert "readings to verify, not computed facts" in R.render.__code__.co_consts.__repr__() or \
                "readings to verify, not computed facts" in open(R.__file__, encoding="utf-8").read()
 
@@ -321,7 +321,7 @@ class TestTheAdjudicationGates:
         assert s["n_applied"] == 1 and _val(a, "val:1")["statistic"] == "se"
 
     def test_g3_a_quote_must_be_long_enough_and_occur_exactly_once(self):
-        from metascience_agent import quotes as Q
+        from forensic_metascience_ai_toolkit import quotes as Q
         for quote in ("Values are means.",           # verbatim, and printed twice
                       "means."):                     # under _MIN_FRAGMENT
             a = _acct()
@@ -413,7 +413,7 @@ class TestTheAdjudicationGates:
         assert any("field already adjudicated; append-only" in sk["why"] for sk in s["skipped"])
 
     def test_g8_an_adjudicated_kind_is_a_third_premise_tier(self):
-        from metascience_agent.scaffold import reconstruct as RC
+        from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
         assert "adjudicated" in RC.STATISTIC_BASES
         assert "adjudicated" in RC.RECON_SCHEMA["properties"]["cells"]["items"]["properties"][
             "numbers"]["items"]["properties"]["statistic_basis"]["enum"]
@@ -498,7 +498,7 @@ class TestTheAdjudicationGates:
         assert "kind_conflict" not in v and "statistic_disputed" not in v
 
     def test_g10_the_rendered_section_shows_the_anchor_and_names_agreement_as_reliability(self):
-        from metascience_agent.scaffold import render as R
+        from forensic_metascience_ai_toolkit.scaffold import render as R
         a = _acct()
         summary = RV.apply_adjudication(a, _adj(), _TEXT, side="a")
         # Rendered from the summary alone: this section is a function of the
@@ -511,7 +511,7 @@ class TestTheAdjudicationGates:
 
 class TestReferenceGroup:
     def test_an_unknown_reference_group_is_an_integrity_problem(self):
-        from metascience_agent.scaffold import schema as S
+        from forensic_metascience_ai_toolkit.scaffold import schema as S
         a = {k: {} for k in S.ACCOUNT_TOP_LEVEL}
         for k in ("procedures", "phases", "studies", "variables", "values", "comparisons", "claims",
                   "figure_panels", "supplements_referenced", "gaps", "accounting"):
@@ -524,7 +524,7 @@ class TestReferenceGroup:
         assert not any("reference group" in p for p in S.validate_account(a))
 
     def test_the_reading_schema_keeps_the_field_optional_so_cached_readings_load(self):
-        from metascience_agent.scaffold import reconstruct as RC
+        from forensic_metascience_ai_toolkit.scaffold import reconstruct as RC
         cell = RC.RECON_SCHEMA["properties"]["cells"]["items"]
         assert "reference_group_id" in cell["properties"] and "reference_group_id" not in cell["required"]
         rec = {"column_labels": ["AOR"], "cells": [{"row_label": "r", "section": None, "column_index": 1, "column_label": "AOR",

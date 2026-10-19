@@ -20,7 +20,7 @@ is why the recovery tests below are as detailed as the loss tests. An instrument
 that cries wolf about its own side gets switched off exactly as fast as one that
 stays silent.
 """
-from metascience_agent.handoff import delivery_audit
+from forensic_metascience_ai_toolkit.handoff import delivery_audit
 
 OVERFLOW = ("Error: result (3,241,286 characters across 139,991 lines) exceeds "
             "maximum allowed tokens. Output has been saved to /tmp/x")
@@ -95,8 +95,8 @@ class TestRecoveryIsRecognised:
 class TestItIsConsumed:
     def test_the_run_records_it(self):
         import pathlib
-        src = (lambda r: (r / "src/metascience_agent/agent.py").read_text(encoding="utf-8")
-                   + (r / "src/metascience_agent/parallel.py").read_text(encoding="utf-8")
+        src = (lambda r: (r / "src/forensic_metascience_ai_toolkit/agent.py").read_text(encoding="utf-8")
+                   + (r / "src/forensic_metascience_ai_toolkit/parallel.py").read_text(encoding="utf-8")
                    )(pathlib.Path(__file__).resolve().parents[1])
         # The live pipeline writes it in `parallel._write_delivery_and_source_coverage`.
         assert 'meta["delivery"] = delivery_audit(' in src
@@ -104,7 +104,7 @@ class TestItIsConsumed:
     def test_the_viewer_renders_it(self):
         import pathlib
         v = (pathlib.Path(__file__).resolve().parents[1]
-             / "src/metascience_agent/bundle.py").read_text(encoding="utf-8")
+             / "src/forensic_metascience_ai_toolkit/bundle.py").read_text(encoding="utf-8")
         assert "rm.delivery" in v, \
             "computed, attached, and rendered by nothing is this repo's signature defect"
         assert "Information that did not arrive" in v
@@ -173,8 +173,8 @@ def _cold_caches(paper_dir) -> list[str]:
     `analyze` now runs that command itself (`ensure_paper_extracted`), which is
     why this is a checkout-freshness gate and not a permanent exclusion.
     """
-    from metascience_agent import supplements
-    from metascience_agent.extraction import docling_tables as dl
+    from forensic_metascience_ai_toolkit import supplements
+    from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
     cold: list[str] = []
     for name in (supplements.present_files(paper_dir) or []):
@@ -210,7 +210,7 @@ class TestTheAuditCarriesAllThreeLegs:
         import pathlib
 
         import pytest
-        from metascience_agent.handoff import audit
+        from forensic_metascience_ai_toolkit.handoff import audit
         root = pathlib.Path(__file__).resolve().parents[1]
         paper = root / self.PAPER
         if not paper.is_dir():
@@ -247,13 +247,13 @@ class TestTheAuditCarriesAllThreeLegs:
     def test_a_declared_cli_only_tool_is_not_reported_as_stranded(self):
         """Counting our own decision as a defect is the same error as missing
         one: an audit that reads our choices back to us gets ignored."""
-        from metascience_agent.registry import CLI_ONLY
+        from forensic_metascience_ai_toolkit.registry import CLI_ONLY
         r = self._audit()["reachability"]
         assert r["ok"] is True and r["stranded"] == []
         assert set(r["cli_only"]) == set(CLI_ONLY)
 
     def test_ready_requires_all_three(self):
-        from metascience_agent.handoff import _finish
+        from forensic_metascience_ai_toolkit.handoff import _finish
         base = {"ready": True, "reachability": {"ok": True}}
         assert _finish(dict(base), None)["ready"] is True
         stranded = {"ready": True, "reachability": {"ok": False}}

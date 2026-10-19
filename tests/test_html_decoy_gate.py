@@ -18,7 +18,7 @@ import sys
 
 import pytest
 
-from metascience_agent.extraction.html import (
+from forensic_metascience_ai_toolkit.extraction.html import (
     _ARTICLE_TEXT_FLOOR,
     article_text_too_short,
     manual_fetch_needed,
@@ -97,7 +97,7 @@ def _builtin_article_gate(monkeypatch):
 def test_optional_validator_decision_is_respected(tmp_path, monkeypatch, accepted):
     from types import ModuleType, SimpleNamespace
 
-    from metascience_agent.extraction.html import _validate_not_a_landing_page
+    from forensic_metascience_ai_toolkit.extraction.html import _validate_not_a_landing_page
 
     calls = []
     module = ModuleType("fetchpdf.retrieval.validate")

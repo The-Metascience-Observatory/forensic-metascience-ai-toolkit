@@ -5,8 +5,8 @@ import sys
 
 import pytest
 
-from metascience_agent import test_performance as perf
-from metascience_agent import test_stack as stack
+from forensic_metascience_ai_toolkit import test_performance as perf
+from forensic_metascience_ai_toolkit import test_stack as stack
 
 
 @pytest.fixture

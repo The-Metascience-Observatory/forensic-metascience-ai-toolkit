@@ -19,9 +19,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent as A
-from metascience_agent import llm_backend as lb
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import agent as A
+from forensic_metascience_ai_toolkit import llm_backend as lb
+from forensic_metascience_ai_toolkit.llm_backend import (
     CLAUDE, CODEX, OPENROUTER, build_invocation, forensic_pythonpath,
 )
 
@@ -70,8 +70,8 @@ class TestHelper:
         monkeypatch.delenv("PYTHONPATH", raising=False)
         out = subprocess.run(
             [sys.executable, "-c",
-             "import copy_paste_detector, metascience_agent;"
-             "print(copy_paste_detector.__file__);print(metascience_agent.__file__)"],
+             "import copy_paste_detector, forensic_metascience_ai_toolkit;"
+             "print(copy_paste_detector.__file__);print(forensic_metascience_ai_toolkit.__file__)"],
             env={**os.environ, "PYTHONPATH": forensic_pythonpath()},
             capture_output=True, text=True, timeout=60, cwd=str(Path("/")),
         )
@@ -153,7 +153,7 @@ class TestEveryLaunchPath:
 
     def test_raw_track_child(self, monkeypatch, tmp_path):
         import asyncio
-        from metascience_agent.modules.raw_data import module as raw
+        from forensic_metascience_ai_toolkit.modules.raw_data import module as raw
         seen = {}
 
         async def fake_exec(*argv, **kw):

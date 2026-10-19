@@ -21,7 +21,7 @@ import json
 import pathlib
 import pytest
 
-from metascience_agent import corpus_state as CS
+from forensic_metascience_ai_toolkit import corpus_state as CS
 
 CORPUS = pathlib.Path("tests/fixtures/papers/high_value_pdfs_to_run_on")
 

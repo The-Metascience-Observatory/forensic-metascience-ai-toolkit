@@ -4,9 +4,9 @@ import contextlib
 import pytest
 from typer.testing import CliRunner
 
-from metascience_agent.cli import app as cli_app
-from metascience_agent.registry import BY_NAME
-from metascience_agent.anatomy import (
+from forensic_metascience_ai_toolkit.cli import app as cli_app
+from forensic_metascience_ai_toolkit.registry import BY_NAME
+from forensic_metascience_ai_toolkit.anatomy import (
     Hypothesis, PaperAnatomy, StatisticalTest, Study, Variable,
     anatomy_summary, assumption_risk, build_test_table,
     check_test_variable_compatibility, infer_narrative_tier,
@@ -109,7 +109,7 @@ class TestStatedBoundsNeedAVerifiedQuote:
         just write it: both record-building paths filter a model dict against
         the dataclass fields, so the laundering would simply move one level
         down. `PIPELINE_ONLY_FIELDS` strips it on both."""
-        from metascience_agent.anatomy import anatomy_from_findings
+        from forensic_metascience_ai_toolkit.anatomy import anatomy_from_findings
         forged = {
             "paper_id": "p",
             "anatomy": {"variables": [dict(self.BOUNDS, provenance_verdict="verbatim")]},
@@ -121,7 +121,7 @@ class TestStatedBoundsNeedAVerifiedQuote:
     def test_the_dispatch_path_strips_it_too(self):
         """check_table's per-variable path is the OTHER constructor, and it is
         the only one stage 2 has."""
-        from metascience_agent.dispatch import _as_variable
+        from forensic_metascience_ai_toolkit.dispatch import _as_variable
         v = _as_variable(dict(self.BOUNDS, provenance_verdict="verbatim"))
         assert v.provenance_verdict is None
         assert v.forensic_kwargs()["bound_source"] == "assumed"
@@ -170,7 +170,7 @@ class TestTheItemCountOnlyTravelsWhenItIsRight:
     def test_only_one_registered_tool_accepts_items_at_all(self):
         """If a second one ever appears, this gate has to be re-argued for it
         rather than silently inherited."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
         takers = sorted(s.name for s in R.SPECS
                         if any(p.name == "items" for p in s.params))
         assert takers == ["r_grim_ground_truth"]
@@ -178,7 +178,7 @@ class TestTheItemCountOnlyTravelsWhenItIsRight:
     def test_dispatch_still_re_exports_the_scoring_sets(self):
         """`dispatch.MEAN_SCORED` has callers; the canonical copy moved to
         anatomy so `forensic_kwargs` could reach it without a cycle."""
-        from metascience_agent import anatomy, dispatch
+        from forensic_metascience_ai_toolkit import anatomy, dispatch
         assert dispatch.MEAN_SCORED is anatomy.MEAN_SCORED
         assert dispatch.SUM_SCORED is anatomy.SUM_SCORED
 
@@ -207,7 +207,7 @@ class TestTheItemsCheckWeDidNotBuild:
     def _failure_rate(self, k, n, dp, trials=1500, seed=0):
         import random
 
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         rng = random.Random(seed)
         fails = 0
         for _ in range(trials):
@@ -249,7 +249,7 @@ class TestTheItemsCheckWeDidNotBuild:
     def test_the_refusal_that_would_have_been_replaced_still_stands(self):
         """What a mean-scored composite gets today, and must keep getting: a
         refusal that says why, not a verdict."""
-        from metascience_agent.dispatch import _composite_reason, _is_composite
+        from forensic_metascience_ai_toolkit.dispatch import _composite_reason, _is_composite
         v = {"family": "likert_composite", "derivation": "mean_of_items"}
         assert _is_composite(v) is True
         assert "manufacture an impossibility" in _composite_reason(v)
@@ -257,7 +257,7 @@ class TestTheItemsCheckWeDidNotBuild:
     def test_a_sum_scored_composite_is_still_checked_normally(self):
         """The refusal must not have widened. A sum score needs no `items` and
         ordinary GRIM is correct on it."""
-        from metascience_agent.dispatch import _is_composite
+        from forensic_metascience_ai_toolkit.dispatch import _is_composite
         assert _is_composite(
             {"family": "likert_composite", "derivation": "sum_of_items"}) is False
 
@@ -725,7 +725,7 @@ class TestAssumptionsAreStatedNotJustCounted:
     """
 
     def _anatomy(self, *test_types):
-        from metascience_agent.anatomy import PaperAnatomy, StatisticalTest, Study, Variable
+        from forensic_metascience_ai_toolkit.anatomy import PaperAnatomy, StatisticalTest, Study, Variable
         a = PaperAnatomy(paper_id="p")
         a.studies = [Study(id="s1", label="trial", design="parallel_rct", n=100)]
         a.variables = [Variable(id="v1", name="score", family="continuous",
@@ -740,18 +740,18 @@ class TestAssumptionsAreStatedNotJustCounted:
     def test_every_assumption_token_has_a_plain_language_description(self):
         """A token with no description would render as a bare label like
         `homogeneity_of_regression_slopes`, which tells a reader nothing."""
-        from metascience_agent.anatomy import ASSUMPTION_DESCRIPTIONS, TEST_ASSUMPTIONS
+        from forensic_metascience_ai_toolkit.anatomy import ASSUMPTION_DESCRIPTIONS, TEST_ASSUMPTIONS
         used = set().union(*TEST_ASSUMPTIONS.values())
         assert not sorted(used - set(ASSUMPTION_DESCRIPTIONS))
 
     def test_the_required_set_reaches_the_table_row(self):
-        from metascience_agent.anatomy import build_test_table
+        from forensic_metascience_ai_toolkit.anatomy import build_test_table
         row = build_test_table(self._anatomy("independent_t"))[0]
         assert set(row["assumptions_required"]) == {
             "normality", "homogeneity_of_variance", "independence"}
 
     def test_the_rendered_report_states_them_in_words(self):
-        from metascience_agent.anatomy import render_anatomy_markdown
+        from forensic_metascience_ai_toolkit.anatomy import render_anatomy_markdown
         md = render_anatomy_markdown(self._anatomy("independent_t"))
         assert "What each of these tests assumes" in md
         assert "Homogeneity of variance" in md
@@ -760,12 +760,12 @@ class TestAssumptionsAreStatedNotJustCounted:
     def test_each_test_type_is_described_once_not_once_per_test(self):
         """A paper with 40 t-tests has one assumption set; printing it 40 times
         would bury it."""
-        from metascience_agent.anatomy import render_anatomy_markdown
+        from forensic_metascience_ai_toolkit.anatomy import render_anatomy_markdown
         md = render_anatomy_markdown(self._anatomy(*["independent_t"] * 5))
         assert md.count("**independent_t**") == 1
 
     def test_distinct_test_types_each_get_their_own_set(self):
-        from metascience_agent.anatomy import render_anatomy_markdown
+        from forensic_metascience_ai_toolkit.anatomy import render_anatomy_markdown
         md = render_anatomy_markdown(self._anatomy("independent_t", "chi_squared"))
         assert "**independent_t**" in md and "**chi_squared**" in md
         assert "expected cell counts" in md
@@ -773,14 +773,14 @@ class TestAssumptionsAreStatedNotJustCounted:
     def test_the_section_says_these_are_not_accusations(self):
         """Unreported assumption checks are near-universal; a bare list of
         assumptions beside a forensic report would read as a charge sheet."""
-        from metascience_agent.anatomy import render_anatomy_markdown
+        from forensic_metascience_ai_toolkit.anatomy import render_anatomy_markdown
         md = render_anatomy_markdown(self._anatomy("independent_t"))
         assert "not as findings against the paper" in md
 
     def test_an_unknown_token_is_echoed_rather_than_dropped(self):
         """A silently missing assumption is worse than an unpolished one, and
         dropping it would also hide a typo in TEST_ASSUMPTIONS."""
-        from metascience_agent.anatomy import describe_assumptions
+        from forensic_metascience_ai_toolkit.anatomy import describe_assumptions
         assert describe_assumptions(["not_a_real_token"]) == ["not_a_real_token"]
 
 
@@ -808,7 +808,7 @@ class TestNoDeclaredFieldIsSilentlyDiscarded:
         import json
         from pathlib import Path
 
-        from metascience_agent.anatomy import (
+        from forensic_metascience_ai_toolkit.anatomy import (
             Hypothesis,
             StatisticalTest,
             Study,
@@ -816,7 +816,7 @@ class TestNoDeclaredFieldIsSilentlyDiscarded:
         )
         root = Path(__file__).resolve().parents[1]
         schema = json.loads(
-            (root / "src" / "metascience_agent" / "schema"
+            (root / "src" / "forensic_metascience_ai_toolkit" / "schema"
              / "findings.v2.schema.json").read_text(encoding="utf-8"))
         anatomy = schema["properties"]["anatomy"]["properties"]
         return anatomy, [("variables", Variable), ("tests", StatisticalTest),
@@ -838,7 +838,7 @@ class TestNoDeclaredFieldIsSilentlyDiscarded:
         )
 
     def test_the_field_whose_absence_cost_a_detection_is_present(self):
-        from metascience_agent.anatomy import Variable
+        from forensic_metascience_ai_toolkit.anatomy import Variable
         assert "derivation" in Variable.__dataclass_fields__
 
     def test_every_discard_states_a_reason(self):
@@ -859,7 +859,7 @@ class TestAnAssumptionDenialIsNotAnAssumptionCheck:
             "and independence cannot be assumed."]
 
     def test_the_denial_no_longer_clears_the_required_checks(self):
-        from metascience_agent.anatomy import StatisticalTest
+        from forensic_metascience_ai_toolkit.anatomy import StatisticalTest
         t = StatisticalTest(id="t1", test_type="independent_t",
                             assumption_checks_reported=list(self.FOOL))
         assert set(t.unreported_assumptions()) == {
@@ -868,26 +868,26 @@ class TestAnAssumptionDenialIsNotAnAssumptionCheck:
     def test_the_denial_is_KEPT_not_merely_dropped(self):
         """A stated non-check is information about the paper. Discarding it
         would be this codebase's own error in the other direction."""
-        from metascience_agent.anatomy import denied_assumption_labels
+        from forensic_metascience_ai_toolkit.anatomy import denied_assumption_labels
         assert denied_assumption_labels(self.FOOL) == {
             "normality", "homogeneity_of_variance", "independence"}
 
     def test_negation_scopes_over_a_LIST_not_just_the_first_item(self):
         """The first attempt cut on commas so a denial could not leak between
         list items, and thereby broke the commonest denial there is."""
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         r = C(["No checks of normality, homogeneity of variance or linearity "
                "were reported."])
         assert r["checked"] == set()
         assert r["denied"] == {"normality", "homogeneity_of_variance", "linearity"}
 
     def test_negation_scopes_BACKWARD_over_the_subjects_it_negates(self):
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         r = C(["Normality and sphericity were not assessed."])
         assert r["denied"] == {"normality", "sphericity"}
 
     def test_an_adversative_ends_the_negation_scope(self):
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         r = C(["Normality was assessed with Shapiro-Wilk, but sphericity was "
                "not tested."])
         assert "normality" in r["checked"]
@@ -897,13 +897,13 @@ class TestAnAssumptionDenialIsNotAnAssumptionCheck:
         """"No violations of normality were found" means the authors looked.
         Reading its "no" as a denial would turn an affirmative report into a
         missing one -- the same shape as `artefacts._NO_DEVIATION`."""
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         assert "normality" in C(["No violations of normality were found."])["checked"]
         assert "sphericity" in C(
             ["The sphericity assumption was not violated."])["checked"]
 
     def test_a_plain_list_of_real_checks_still_clears(self):
-        from metascience_agent.anatomy import normalize_assumption_labels as N
+        from forensic_metascience_ai_toolkit.anatomy import normalize_assumption_labels as N
         assert N(["Levene's test, Shapiro-Wilk, and Q-Q plots were inspected"]) == {
             "homogeneity_of_variance", "normality"}
 
@@ -911,7 +911,7 @@ class TestAnAssumptionDenialIsNotAnAssumptionCheck:
         """Papers write "Outliers were not examined"; a bare word boundary on
         the singular key missed it, costing both the suppression and the
         denial."""
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         assert C(["Outliers were not examined."])["denied"] == {"no_outliers"}
         assert C(["Outliers were inspected."])["checked"] == {"no_outliers"}
 
@@ -943,13 +943,13 @@ class TestPolysemousAssumptionKeys:
     ]
 
     def test_an_ambiguous_word_does_not_clear_an_assumption(self):
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         wrong = [(n, tok) for n, entry, tok in self.MUST_NOT_MATCH
                  if tok in (C([entry])["checked"] | C([entry])["denied"])]
         assert not wrong, f"polysemous keys still firing: {wrong}"
 
     def test_the_specific_forms_still_clear(self):
-        from metascience_agent.anatomy import normalize_assumption_labels as N
+        from forensic_metascience_ai_toolkit.anatomy import normalize_assumption_labels as N
         missing = [(n, tok) for n, entry, tok in self.MUST_STILL_MATCH
                    if tok not in N([entry])]
         assert not missing, f"narrowing the keys broke real checks: {missing}"
@@ -957,7 +957,7 @@ class TestPolysemousAssumptionKeys:
     def test_a_short_key_cannot_match_inside_a_word(self):
         """`in` matching let "icc" clear `independence` from any word
         containing those three letters."""
-        from metascience_agent.anatomy import normalize_assumption_labels as N
+        from forensic_metascience_ai_toolkit.anatomy import normalize_assumption_labels as N
         assert "independence" not in N(["Patients reported hiccups"])
 
 
@@ -985,7 +985,7 @@ class TestTheNamedOutlierTestsAreRecognised:
                "A GESD test screened for extreme values."]
 
     def _test(self, reported):
-        from metascience_agent.anatomy import StatisticalTest
+        from forensic_metascience_ai_toolkit.anatomy import StatisticalTest
         return StatisticalTest(id="t1", test_type="pearson_correlation",
                                assumption_checks_reported=list(reported))
 
@@ -997,7 +997,7 @@ class TestTheNamedOutlierTestsAreRecognised:
 
     @pytest.mark.parametrize("phrase", PHRASES)
     def test_each_phrasing_suppresses_the_false_claim(self, phrase):
-        from metascience_agent.anatomy import normalize_assumption_labels
+        from forensic_metascience_ai_toolkit.anatomy import normalize_assumption_labels
         assert "no_outliers" in normalize_assumption_labels([phrase]), phrase
         assert "no_outliers" not in self._test([phrase]).unreported_assumptions()
 
@@ -1012,7 +1012,7 @@ class TestTheNamedOutlierTestsAreRecognised:
     def test_a_denial_of_a_named_test_still_does_not_clear_it(self):
         """The `classify_assumption_mentions` rule applies to the new keys like
         any other: naming a test the paper says it did NOT run is not a check."""
-        from metascience_agent.anatomy import classify_assumption_mentions as C
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions as C
         r = C(["Grubbs' test was not performed."])
         assert "no_outliers" not in r["checked"]
         assert "no_outliers" in r["denied"]
@@ -1023,7 +1023,7 @@ class TestTheNamedOutlierTestsAreRecognised:
         """The 2026-08-18 discipline, applied to these four: a bare surname and
         a bare `Q test` (Cochran's Q, the heterogeneity Q) are not outlier
         evidence, and adding them would suppress a true claim."""
-        from metascience_agent.anatomy import ASSUMPTION_SYNONYMS
+        from forensic_metascience_ai_toolkit.anatomy import ASSUMPTION_SYNONYMS
         for bare in ("grubbs", "dixon", "q test", "tietjen", "moore", "deviate"):
             assert bare not in ASSUMPTION_SYNONYMS
 
@@ -1052,9 +1052,9 @@ class TestTheTwoTestVocabulariesCoverTheSameUniverse:
     def test_every_family_is_either_an_assumption_key_or_a_declared_refusal(self):
         """The drift guard. A family added to either list must be reconciled
         here, or this fails loudly rather than silently costing coverage."""
-        from metascience_agent.anatomy import (
+        from forensic_metascience_ai_toolkit.anatomy import (
             TEST_ASSUMPTIONS, TEST_FAMILIES_WITHOUT_ASSUMPTIONS, canonical_test_type)
-        from metascience_agent.scaffold.schema import TEST_FAMILIES
+        from forensic_metascience_ai_toolkit.scaffold.schema import TEST_FAMILIES
         unreconciled = [f for f in TEST_FAMILIES
                         if canonical_test_type(f) not in TEST_ASSUMPTIONS
                         and f not in TEST_FAMILIES_WITHOUT_ASSUMPTIONS]
@@ -1063,22 +1063,22 @@ class TestTheTwoTestVocabulariesCoverTheSameUniverse:
     def test_the_refusal_list_names_only_real_families(self):
         """A stale refusal would silently exempt a family that no longer exists
         while a real one went unchecked."""
-        from metascience_agent.anatomy import TEST_FAMILIES_WITHOUT_ASSUMPTIONS
-        from metascience_agent.scaffold.schema import TEST_FAMILIES
+        from forensic_metascience_ai_toolkit.anatomy import TEST_FAMILIES_WITHOUT_ASSUMPTIONS
+        from forensic_metascience_ai_toolkit.scaffold.schema import TEST_FAMILIES
         assert not set(TEST_FAMILIES_WITHOUT_ASSUMPTIONS) - set(TEST_FAMILIES)
 
     def test_every_assumption_key_can_be_named_in_a_scaffold_account(self):
         """The other direction: a test the assumption checker understands must
         be expressible in the closed enum, or the account records `other` and
         the knowledge is unreachable."""
-        from metascience_agent.anatomy import TEST_ASSUMPTIONS, canonical_test_type
-        from metascience_agent.scaffold.schema import TEST_FAMILIES
+        from forensic_metascience_ai_toolkit.anatomy import TEST_ASSUMPTIONS, canonical_test_type
+        from forensic_metascience_ai_toolkit.scaffold.schema import TEST_FAMILIES
         reachable = {canonical_test_type(f) for f in TEST_FAMILIES}
         assert not set(TEST_ASSUMPTIONS) - reachable
 
     @pytest.mark.parametrize("family", ["ancova", "mcnemar", "cox_regression", "log_rank"])
     def test_the_four_missing_families_are_now_nameable(self, family):
-        from metascience_agent.scaffold.schema import TEST_FAMILIES
+        from forensic_metascience_ai_toolkit.scaffold.schema import TEST_FAMILIES
         assert family in TEST_FAMILIES
 
     @pytest.mark.parametrize("family,expected", [
@@ -1120,7 +1120,7 @@ class TestTheTwoTestVocabulariesCoverTheSameUniverse:
         honest paper for not reporting a check its test never required, so they
         stay unmapped and the gate returns `indeterminate`, which is not an
         allegation."""
-        from metascience_agent.anatomy import TEST_FAMILIES_WITHOUT_ASSUMPTIONS
+        from forensic_metascience_ai_toolkit.anatomy import TEST_FAMILIES_WITHOUT_ASSUMPTIONS
         assert family in TEST_FAMILIES_WITHOUT_ASSUMPTIONS
         r = assumption_risk(self._test(family), None)
         assert r["severity"] == "indeterminate"
@@ -1158,7 +1158,7 @@ class TestACleanOutlierCheckIsNotADenial:
     """
 
     def _flags(self, phrase):
-        from metascience_agent.anatomy import classify_assumption_mentions
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions
         return classify_assumption_mentions([phrase])
 
     @pytest.mark.parametrize("phrase", [
@@ -1248,7 +1248,7 @@ class TestTheCleanResultRuleReachesTheOtherFourAssumptions:
     """
 
     def _flags(self, phrase):
-        from metascience_agent.anatomy import classify_assumption_mentions
+        from forensic_metascience_ai_toolkit.anatomy import classify_assumption_mentions
         return classify_assumption_mentions([phrase])
 
     @pytest.mark.parametrize("phrase,token", [
@@ -1295,7 +1295,7 @@ class TestTheCleanResultRuleReachesTheOtherFourAssumptions:
         """"No heterogeneity OF VARIANCE testing was undertaken" is a denial
         whose check word is three tokens past the noun. Without the optional
         prepositional phrase in the lookahead it would strip as a result."""
-        from metascience_agent.anatomy import _segment_denies
+        from forensic_metascience_ai_toolkit.anatomy import _segment_denies
         assert _segment_denies("No heterogeneity of variance testing was undertaken.")
         assert not _segment_denies("Levene's test revealed no heterogeneity of variance.")
 

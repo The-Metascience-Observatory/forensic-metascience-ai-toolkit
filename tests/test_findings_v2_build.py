@@ -17,9 +17,9 @@ import re
 
 import pytest
 
-from metascience_agent import findings_v2 as fv
-from metascience_agent import severity9
-from metascience_agent.findings_v2 import (
+from forensic_metascience_ai_toolkit import findings_v2 as fv
+from forensic_metascience_ai_toolkit import severity9
+from forensic_metascience_ai_toolkit.findings_v2 import (
     FINDING_ID_HASHER_VERSION,
     anchor_key,
     assign_finding_ids,
@@ -31,7 +31,7 @@ from metascience_agent.findings_v2 import (
     tool_verdict_for,
     validate_producer_constraints,
 )
-from metascience_agent.webapp_index import CHANNEL_STATES
+from forensic_metascience_ai_toolkit.webapp_index import CHANNEL_STATES
 
 _ID_RE = re.compile(r"^f_[0-9a-f]{16}$")
 
@@ -631,7 +631,7 @@ def test_fixed_non_tool_techniques_have_no_cap():
 def test_hand_arithmetic_takes_the_model_reading_cap():
     """1.91.0: the tools prompt promises `no_tool_exists` and
     `tool_existed_unused` the cap, and nothing applied it."""
-    from metascience_agent.severity9 import MODEL_READING_CAP
+    from forensic_metascience_ai_toolkit.severity9 import MODEL_READING_CAP
     rows = [_problem_row("no_tool_exists", 6),
             _problem_row("tool_existed_unused", 6),
             _problem_row("no_tool_exists", 2)]
@@ -794,7 +794,7 @@ def test_dict_form_with_stray_keys_is_refused():
 def test_channel_vocabulary_matches_the_v2_schema_enum():
     """One five-state vocabulary, three homes: webapp_index, this builder,
     and the schema. The schema's enum must be the same tuple verbatim."""
-    from metascience_agent.core.prompts import findings_schema_v2
+    from forensic_metascience_ai_toolkit.core.prompts import findings_schema_v2
     enum = findings_schema_v2()["properties"]["channels"][
         "additionalProperties"]["properties"]["state"]["enum"]
     assert enum == list(CHANNEL_STATES)
@@ -971,7 +971,7 @@ class TestABareUrlIsNotAFindingTitle:
         assert not fv.title_is_a_bare_url(None)
 
     def test_the_row_survives_and_the_link_moves_to_notes(self):
-        from metascience_agent.parallel import _rows_from_producer
+        from forensic_metascience_ai_toolkit.parallel import _rows_from_producer
         url = "https://en.wikipedia.org/wiki/Sodium_hypochlorite"
         rows = _rows_from_producer(
             {"findings": [{"title": url, "technique": "check_summation_batch",

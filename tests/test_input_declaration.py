@@ -38,7 +38,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import supplements as S
+from forensic_metascience_ai_toolkit import supplements as S
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -171,7 +171,7 @@ class TestTheRealPaperItWasFoundOn:
     def test_it_reaches_the_completeness_manifest(self):
         if not self.DIR.is_dir():
             pytest.skip("Romano not in this checkout")
-        from metascience_agent import completeness as C
+        from forensic_metascience_ai_toolkit import completeness as C
         m = C.build_manifest(self.DIR)
         # 325 items before the docx was recognised, 924 after.
         assert m["n_supplement_items"] > 500, (

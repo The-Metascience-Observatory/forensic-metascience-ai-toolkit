@@ -40,8 +40,8 @@ import json
 import shutil
 from pathlib import Path
 
-from metascience_agent import blinding
-from metascience_agent.evaluation.corpus_run import resolve_paper_dir
+from forensic_metascience_ai_toolkit import blinding
+from forensic_metascience_ai_toolkit.evaluation.corpus_run import resolve_paper_dir
 
 REPO = Path(__file__).resolve().parents[1]
 MANIFEST = REPO / "eval" / "ground_truth" / "manifest.csv"

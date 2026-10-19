@@ -10,7 +10,7 @@ variants: code execution is the run_python_script MCP tool, not a shell.
 
 import pytest
 
-from metascience_agent import llm_backend as lb
+from forensic_metascience_ai_toolkit import llm_backend as lb
 
 ARGS = dict(
     system_prompt="SYSTEM", allowed_tools=["mcp__forensic_metascience__x"],

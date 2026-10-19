@@ -29,7 +29,7 @@ row deletes a measurement from every check, which is the worse error. It must
 also actually help: more distinct labels than the row above, or there is
 nothing to gain and we leave the table alone.
 """
-from metascience_agent.extraction import supplements_read as S
+from forensic_metascience_ai_toolkit.extraction import supplements_read as S
 
 
 class TestARepeatedHeaderRowIsASpan:

@@ -10,10 +10,10 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import warrants as W
+from forensic_metascience_ai_toolkit import warrants as W
 
 SCHEMA = (Path(__file__).resolve().parents[1]
-          / "src/metascience_agent/schema/report.schema.json")
+          / "src/forensic_metascience_ai_toolkit/schema/report.schema.json")
 
 
 def _finding_base(**kw):
@@ -117,7 +117,7 @@ class TestItIsNotRedundantWithTheEvidenceClamp:
         is exempt from it. `multiplicity_report` will happily compute how many
         claims fail a correction the paper never undertook -- sound arithmetic
         about an obligation that is ours. Only the warrant sees that."""
-        from metascience_agent import severity_reconcile as SR
+        from forensic_metascience_ai_toolkit import severity_reconcile as SR
         f = _finding(warrant="field_norm", severity="impossible",
                      stage1_finding_ids=["s1"])
         res = {"report": {"findings": [f]},
@@ -174,7 +174,7 @@ class TestTheClampsReadTheSHAPEPRODUCTIONPRODUCES:
                 "findings": {"findings": []}}
 
     def test_the_supplied_norm_clamp_fires_on_the_production_shape(self):
-        from metascience_agent import warrants as W
+        from forensic_metascience_ai_toolkit import warrants as W
         staged = self._staged([_finding(warrant="field_norm",
                                         severity="impossible")])
         s = W.clamp_supplied_norms(staged)
@@ -183,7 +183,7 @@ class TestTheClampsReadTheSHAPEPRODUCTIONPRODUCES:
         assert staged["report_obj"]["findings"][0]["severity"] == "suspicious"
 
     def test_the_uncomputed_clamp_fires_on_the_production_shape(self):
-        from metascience_agent import severity_reconcile as SR
+        from forensic_metascience_ai_toolkit import severity_reconcile as SR
         staged = self._staged([_finding(severity="impossible",
                                         stage1_finding_ids=[])])
         s = SR.clamp_uncomputed(staged)
@@ -193,8 +193,8 @@ class TestTheClampsReadTheSHAPEPRODUCTIONPRODUCES:
         """Hand-built fixtures and the archive replay in
         tests/test_corpus_invariants.py pass `{"report": ...}`. The fallback
         keeps them working; it is not the production path."""
-        from metascience_agent import severity_reconcile as SR
-        from metascience_agent import warrants as W
+        from forensic_metascience_ai_toolkit import severity_reconcile as SR
+        from forensic_metascience_ai_toolkit import warrants as W
         legacy = {"report": {"findings": [_finding(warrant="field_norm")]}}
         assert W.clamp_supplied_norms(legacy)["n_findings"] == 1
         assert SR.clamp_uncomputed({"report": {"findings": [_finding()]}})["n_findings"] == 1
@@ -203,7 +203,7 @@ class TestTheClampsReadTheSHAPEPRODUCTIONPRODUCES:
         """The symptom that exposed it: an absent key in run_meta.json. A
         module that ran and a module that returned early are indistinguishable
         unless the summary is written unconditionally AND the writer is reached."""
-        from metascience_agent import warrants as W
+        from forensic_metascience_ai_toolkit import warrants as W
         staged = self._staged([_finding(warrant="logical")])
         W.clamp_supplied_norms(staged)
         assert "supplied_norm_clamp" in staged["run_meta"]

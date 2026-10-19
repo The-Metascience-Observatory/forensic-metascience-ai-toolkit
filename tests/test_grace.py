@@ -10,7 +10,7 @@ reconciled exactly.
 
 import pytest
 
-from metascience_agent import grace as G
+from forensic_metascience_ai_toolkit import grace as G
 
 
 def _rescued(reported, nearest, kind="printed_precision"):
@@ -123,7 +123,7 @@ class TestGraceIsActuallyConsumed:
 
     def test_check_regression_attaches_a_record(self):
         import scipy.stats as st
-        from metascience_agent.tools.regression import check_regression
+        from forensic_metascience_ai_toolkit.tools.regression import check_regression
         t = float(st.t.isf(0.0312 / 2, 200))
         r = check_regression(b=round(t * 0.01, 4), se=0.0100, df=200,
                              reported_p=0.031, decimals_b=4, decimals_se=4,
@@ -133,7 +133,7 @@ class TestGraceIsActuallyConsumed:
 
     def test_recording_does_not_change_the_verdict(self):
         import scipy.stats as st
-        from metascience_agent.tools.regression import check_regression
+        from forensic_metascience_ai_toolkit.tools.regression import check_regression
         t = float(st.t.isf(0.0312 / 2, 200))
         for reported in (0.031, 0.030, 0.032):
             r = check_regression(b=round(t * 0.01, 4), se=0.0100, df=200,

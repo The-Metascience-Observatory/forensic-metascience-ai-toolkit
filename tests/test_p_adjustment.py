@@ -2,7 +2,7 @@
 
 import pytest
 
-from metascience_agent.p_adjustment import declares_p_adjustment, p_adjustment_note
+from forensic_metascience_ai_toolkit.p_adjustment import declares_p_adjustment, p_adjustment_note
 
 
 @pytest.mark.parametrize("text, kind", [
@@ -45,7 +45,7 @@ def test_note_names_the_tools_and_keeps_the_over_claim_direction():
 
 
 # --- a stated one-tailed test (1.93.0, statcheck's OneTailedTxt rule) ---
-from metascience_agent.p_adjustment import declares_one_tailed, one_tailed_note  # noqa: E402
+from forensic_metascience_ai_toolkit.p_adjustment import declares_one_tailed, one_tailed_note  # noqa: E402
 
 
 @pytest.mark.parametrize("text", [
@@ -78,7 +78,7 @@ def test_the_note_names_the_parameter_and_the_tools():
 
 
 def test_the_batch_passes_the_row_key_through():
-    from metascience_agent.tools.regression import check_regression_batch
+    from forensic_metascience_ai_toolkit.tools.regression import check_regression_batch
     row = dict(b=0.110, se=0.050, reported_p=0.014, df=100, df_source="reported",
                decimals_b=3, decimals_se=3, decimals_p=3)
     assert check_regression_batch([row])["severity"] == "suspicious"

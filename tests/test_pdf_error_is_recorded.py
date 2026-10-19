@@ -14,7 +14,7 @@ import json
 
 import pytest
 
-from metascience_agent import agent, parallel, report_render
+from forensic_metascience_ai_toolkit import agent, parallel, report_render
 
 
 def _minimal_result():
@@ -68,7 +68,7 @@ class TestTheLegacyWrapper:
 class TestTheParallelWriter:
     @pytest.fixture
     def stub_report(self, monkeypatch):
-        from metascience_agent import report_v2
+        from forensic_metascience_ai_toolkit import report_v2
         monkeypatch.setattr(report_v2, "render_report_v2", lambda *a, **k: "# report\n")
 
     def _result(self, tmp_path):

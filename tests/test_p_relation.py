@@ -12,13 +12,13 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.tools.anova import recalc_f_to_p, recalc_one_way_anova
-from metascience_agent.tools.chi_squared import recalc_chi_squared
-from metascience_agent.tools.estimates import check_estimate_ci
-from metascience_agent.tools.regression import check_regression, check_regression_batch
-from metascience_agent.tools.stat_to_p import recalc_stat_to_p
-from metascience_agent.tools.ttest import (looks_like_printed_bound,
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.tools.anova import recalc_f_to_p, recalc_one_way_anova
+from forensic_metascience_ai_toolkit.tools.chi_squared import recalc_chi_squared
+from forensic_metascience_ai_toolkit.tools.estimates import check_estimate_ci
+from forensic_metascience_ai_toolkit.tools.regression import check_regression, check_regression_batch
+from forensic_metascience_ai_toolkit.tools.stat_to_p import recalc_stat_to_p
+from forensic_metascience_ai_toolkit.tools.ttest import (looks_like_printed_bound,
                                            recalc_independent_t,
                                            resolve_p_relation)
 

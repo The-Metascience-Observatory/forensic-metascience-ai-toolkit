@@ -18,7 +18,7 @@ apart writes the second into a review. See task #129.
 
 import pytest
 
-from metascience_agent.extraction import ocr
+from forensic_metascience_ai_toolkit.extraction import ocr
 from metascience_observatory_image_analysis.extraction.figures import (
     AS_PRINTED,
     MEASURED,
@@ -209,7 +209,7 @@ class TestTheProvenanceDecision:
         assert RELIABILITY_TIER[OCR_TEXT] == 2
 
     def test_the_registry_gate_refuses_an_exact_check_on_an_ocr_value(self):
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         spec = next(s for s in R.SPECS if s.name == "grim_check")
         out = spec.call({"mean": 5.19, "n": 28, "decimals": 2,
@@ -222,7 +222,7 @@ class TestTheProvenanceDecision:
         """A reader who is given the wrong reason cannot audit the refusal, and
         an operator who wants to lift it does the wrong thing: an OCR'd value
         needs re-READING, not re-measuring."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         spec = next(s for s in R.SPECS if s.name == "grim_check")
         out = spec.call({"mean": 5.19, "n": 28, "decimals": 2,
@@ -237,7 +237,7 @@ class TestTheProvenanceDecision:
     def test_a_measured_value_keeps_its_own_reason(self):
         """The two refusals must not converge on one sentence: they have
         different remedies, and only one of them has a remedy at all."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         spec = next(s for s in R.SPECS if s.name == "grim_check")
         out = spec.call({"mean": 5.19, "n": 28, "decimals": 2,
@@ -249,7 +249,7 @@ class TestTheProvenanceDecision:
 
     def test_a_printed_value_still_runs(self):
         """The gate must not have swallowed the ordinary case."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         spec = next(s for s in R.SPECS if s.name == "grim_check")
         out = spec.call({"mean": 5.19, "n": 28, "decimals": 2,
@@ -262,7 +262,7 @@ class TestTheProvenanceDecision:
         held its own literal copy of the measured set, so adding the OCR channel
         to the registry alone would have left the table path judging the very
         cells the per-cell path refuses."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
 
         cells = [{"raw": "5.19 (1.20)", "row_label": "Score", "n": 28}]
         variables = [{"id": "s", "family": "likert_item", "lower_bound": 1,
@@ -278,7 +278,7 @@ class TestTheModelIsToldTheValueExists:
         """A gate the model cannot address is a gate it will route around: it
         would pass `printed_table` for an OCR'd cell and the refusal never
         fires. The help string IS the MCP schema, so this is what it sees."""
-        from metascience_agent.registry import PROVENANCE_HELP
+        from forensic_metascience_ai_toolkit.registry import PROVENANCE_HELP
 
         assert "ocr_table" in PROVENANCE_HELP
         assert "misread" in PROVENANCE_HELP
@@ -307,7 +307,7 @@ class TestPreflightSaysWhetherThisMachineCanReadImages:
         supplement-dependency tests. A source-grep would now pass or fail on
         where the string happens to live, which is not the property worth
         testing."""
-        from metascience_agent.preflight import optional_checks
+        from forensic_metascience_ai_toolkit.preflight import optional_checks
         rows = [r for r in optional_checks() if r[0] == self.ROW]
         assert rows, f"`{self.ROW}` is not among the preflight checks at all"
         return rows[0]
@@ -318,7 +318,7 @@ class TestPreflightSaysWhetherThisMachineCanReadImages:
     def test_it_is_advisory_rather_than_fatal(self):
         """Membership in `optional_checks` IS the non-fatal property now --
         `assert_ready` raises on `fatal_checks` alone."""
-        from metascience_agent.preflight import fatal_checks
+        from forensic_metascience_ai_toolkit.preflight import fatal_checks
         assert self.ROW not in [r[0] for r in fatal_checks(refresh=True)], (
             "a paper with a text layer never touches OCR; blocking on it would "
             "refuse work that is still valid")

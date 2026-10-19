@@ -22,9 +22,9 @@ import pathlib
 
 import pytest
 
-from metascience_agent import corpus_state as CS
-from metascience_agent import numerals as N
-from metascience_agent import values as V
+from forensic_metascience_ai_toolkit import corpus_state as CS
+from forensic_metascience_ai_toolkit import numerals as N
+from forensic_metascience_ai_toolkit import values as V
 
 CORPUS = pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
 AJCP = CORPUS / "10.1002--ajcp.70049"          # XML-sourced: no table is inlined
@@ -56,7 +56,7 @@ class TestOneSpanRule:
         assert N.table_span("The mean was 41.87 in group A.", cells) is None
 
     def test_the_scaffold_delegates_rather_than_keeping_a_copy(self):
-        from metascience_agent.scaffold import document as D
+        from forensic_metascience_ai_toolkit.scaffold import document as D
         import inspect
         src = inspect.getsource(D._table_span)
         assert "_numerals.table_span" in src and "finditer" not in src, (
@@ -129,7 +129,7 @@ class TestSupplementProseIsServedAndCounted:
         return tmp_path
 
     def test_the_supplement_is_served_under_a_heading_naming_its_file(self, tmp_path):
-        from metascience_agent.scaffold import document as D
+        from forensic_metascience_ai_toolkit.scaffold import document as D
         doc = D.build(self._paper(tmp_path))
         assert "## SUPPLEMENT: paper_supplementary_info_1_s001.docx" in doc["text"]
         assert "The adjusted estimate was 0.031 in the same sample." in doc["text"]
@@ -143,7 +143,7 @@ class TestSupplementProseIsServedAndCounted:
         assert secs and secs[0]["name"] == "supplement: paper_supplementary_info_1_s001.docx"
 
     def test_the_supplements_numerals_are_a_bucket_of_the_one_floor(self, tmp_path):
-        from metascience_agent.scaffold import document as D
+        from forensic_metascience_ai_toolkit.scaffold import document as D
         doc = D.build(self._paper(tmp_path))
         by = doc["numeral_floor"]["by_source"]
         assert by["supplement_prose"]["n_total"] == 1
@@ -160,7 +160,7 @@ class TestSupplementProseIsServedAndCounted:
         assert doc["text"][row["offset"]:row["end"]] == "0.031"
 
     def test_the_articles_own_rows_do_not_move(self, tmp_path):
-        from metascience_agent.scaffold import document as D
+        from forensic_metascience_ai_toolkit.scaffold import document as D
         paper = self._paper(tmp_path)
         on, off = D.build(paper), D.build(paper, serve_supplement_text=False)
         keep = ("id", "offset", "end", "class", "printed", "role")

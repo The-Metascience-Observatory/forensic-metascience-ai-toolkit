@@ -162,9 +162,9 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import pytest
 
-from metascience_agent.scaffold import adjudication_attach as AA
-from metascience_agent.scaffold import checks, premises
-from metascience_agent.scaffold import premise_reading as PR
+from forensic_metascience_ai_toolkit.scaffold import adjudication_attach as AA
+from forensic_metascience_ai_toolkit.scaffold import checks, premises
+from forensic_metascience_ai_toolkit.scaffold import premise_reading as PR
 
 # --------------------------------------------------------------------------
 # THE FIXTURE

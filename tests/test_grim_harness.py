@@ -8,8 +8,8 @@ import json
 
 import pytest
 
-from metascience_agent import findings_v2
-from metascience_agent import grim_harness as G  # noqa: N812
+from forensic_metascience_ai_toolkit import findings_v2
+from forensic_metascience_ai_toolkit import grim_harness as G  # noqa: N812
 
 LIKERT = {"id": "v_item", "name": "a 1-9 item", "family": "likert_item",
           "discreteness": "discrete", "lower_bound": 1, "upper_bound": 9}
@@ -59,7 +59,7 @@ class TestColumnN:
 class TestPremise:
     def _target(self, raw, row="Male", col="Drug (n = 40)", decl=None, vars_=()):
         t = _table([(row, [raw])], [col])
-        from metascience_agent.prepass import _typed
+        from forensic_metascience_ai_toolkit.prepass import _typed
         cell = _typed(t["cells"])[0]
         return G.target_of(cell, t, decl, {v["id"]: v for v in vars_})
 
@@ -236,7 +236,7 @@ class TestFindingRows:
     def test_the_rows_satisfy_the_findings_schema(self):
         import jsonschema
 
-        from metascience_agent.core import prompts
+        from forensic_metascience_ai_toolkit.core import prompts
         schema = prompts.findings_schema_v2()
         doc = {"schema_version": "2.0", "paper_id": "p",
                "findings": G.finding_rows(self._sweep(), "p")}
@@ -298,7 +298,7 @@ class TestPipeline:
         return d
 
     def _messages(self, paper_dir, decl):
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         return [
             {"type": "assistant", "message": {"role": "assistant", "content": [
                 {"type": "tool_use", "id": "d1", "name": agent._mcp("declare_table"),
@@ -311,8 +311,8 @@ class TestPipeline:
     def _run(self, paper_dir):
         import asyncio
 
-        from metascience_agent import agent
-        from metascience_agent import pipeline_config as pc
+        from forensic_metascience_ai_toolkit import agent
+        from forensic_metascience_ai_toolkit import pipeline_config as pc
         return asyncio.run(agent.analyze_paper(str(paper_dir), mode="parallel",
                                                pipeline=pc.load("tools_only")))
 
@@ -330,7 +330,7 @@ class TestPipeline:
         sweep = doc["coverage"]["grim_sweep"]
         assert sweep["checked"] == 6 and sweep["n_declarations"] == 1
         assert sweep["line"].startswith("GRIM sweep:")
-        from metascience_agent.report_v2 import render_report_v2
+        from forensic_metascience_ai_toolkit.report_v2 import render_report_v2
         assert "- GRIM sweep: 6 mean/percentage cell(s)" in render_report_v2(
             doc, r.get("run_meta"))
 
@@ -363,11 +363,11 @@ class TestDoclingCaptions:
         ("eTable 4. Outcomes", "eTable 4"),
     ])
     def test_the_label_comes_from_the_resolved_caption(self, caption, label):
-        from metascience_agent.extraction.docling_tables import _label_and_caption
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _label_and_caption
         assert _label_and_caption(self._T(caption), 7, doc=None) == (label, caption)
 
     def test_no_caption_falls_back_to_the_ordinal(self):
-        from metascience_agent.extraction.docling_tables import _label_and_caption
+        from forensic_metascience_ai_toolkit.extraction.docling_tables import _label_and_caption
         t = self._T("")
         t.captions = []
         assert _label_and_caption(t, 3, doc=None) == ("Table 3", "")
@@ -379,7 +379,7 @@ class TestUserPrompt:
 
     @pytest.mark.parametrize("layout", ["xml", "html", "pdf_md", "pdf"])
     def test_every_layout_names_the_step_and_the_directory(self, tmp_path, layout):
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         d = tmp_path / "p"
         kw = {"xml": d / "p.xml"} if layout == "xml" else (
             {"html": d / "p.html"} if layout == "html" else {})
@@ -391,7 +391,7 @@ class TestUserPrompt:
         assert f"`paper_dir` `{d}`" in text and "`declare_table`" in text
 
     def test_a_toolset_without_declare_table_drops_the_block(self, tmp_path):
-        from metascience_agent import agent, parallel
+        from forensic_metascience_ai_toolkit import agent, parallel
         text = agent._build_sweep_prompt(None, tmp_path / "p.pdf", "p",
                                          paper_dir=tmp_path)
         kept = parallel._restrict_user_prompt(text, frozenset({"declare_table"}))

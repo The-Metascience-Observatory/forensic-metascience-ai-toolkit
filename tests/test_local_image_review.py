@@ -4,13 +4,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 import pytest
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench import image_review_host
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench import image_review_host
 image_review_host.configure_service()  # the host lends its storage first, as at runtime
 from metascience_observatory_image_analysis.review_workbench.local_images import ImageCatalog,LocalImages  # noqa: E402
 from metascience_observatory_image_analysis.review_workbench.local_image_import import copy_cache,project_run,ingest_run  # noqa: E402
 from metascience_observatory_image_analysis.review_workbench.local_image_service import LocalImageService  # noqa: E402
-from metascience_agent.workbench.repository import Repository  # noqa: E402
+from forensic_metascience_ai_toolkit.workbench.repository import Repository  # noqa: E402
 from tests.test_workbench_catalog import seed  # noqa: E402
 
 
@@ -102,7 +102,7 @@ def test_navigation_bounded_and_missing_detail_is_not_empty(local):
 
 
 def test_import_is_idempotent_and_refuses_digest_conflict(local,tmp_path):
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     run=dict(id='fresh',execution_id='fresh_e',component='image_forensics',paper='nested/paper',status='completed',items=[],artifacts={})
     run['sealed_digest']=digest(run)
     execution=dict(id='fresh_e',name='Fresh',requested_components=['image_forensics'],status='completed')
@@ -123,7 +123,7 @@ def test_retired_run_cannot_be_opened_or_restored(local,tmp_path):
     r=local.rows_for('runs','run_uid',['r_old'])[0];r['retired_at']='today';r['retirement_reason']='user_requested_rerun'
     with local.db:local.put('runs',r)
     with pytest.raises(LookupError,match='retired'):images.item(dict(project='project',run='r_old',item='i_0'))
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     run=dict(id='r_old',execution_id='e_old',component='image_forensics',paper='nested/paper',status='completed',items=[],artifacts={})
     run['sealed_digest']=digest(run)
     assert not ingest_run(local,'project',tmp_path,run)
@@ -179,7 +179,7 @@ def test_latest_queue_uses_ingested_headers(local,monkeypatch):
 
 def test_sealed_publication_is_consumed_without_host_or_network(local,tmp_path,monkeypatch):
     from metascience_observatory_image_analysis import integration
-    from metascience_agent.analysis_runs import Archive
+    from forensic_metascience_ai_toolkit.analysis_runs import Archive
     from tests.test_analysis_history import execution,run,item
     monkeypatch.setattr(integration,'notify_published',None)
     archive=Archive(tmp_path);execution(archive,'local_execution')
@@ -232,7 +232,7 @@ def test_projection_consumes_only_applied_text_demotion(local):
 
 def test_retained_text_panel_audit_includes_panels_without_findings(local,tmp_path,monkeypatch):
     import hashlib
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     def object_bytes(body,name):
         data=json.dumps(body).encode();sha=hashlib.sha256(data).hexdigest()
         path=tmp_path/'.analysis_runs/objects'/sha[:2]/sha
@@ -345,7 +345,7 @@ def test_project_count_includes_local_retained_image_runs_but_not_refusals(tmp_p
 
 
 def test_shared_feed_decision_sort_matches_local_order():
-    from metascience_agent.workbench.repository import sort_feed_items
+    from forensic_metascience_ai_toolkit.workbench.repository import sort_feed_items
     rows=[dict(id='u',rank={'score':9}),dict(id='fp',decision={'decision':'false_positive'},rank={'score':1}),
           dict(id='c',reviews={'conflict':True},rank={'score':1}),dict(id='ti',decision={'decision':'true_issue'},rank={'score':1}),
           dict(id='chart',decision={'decision':'false_positive_chart'},rank={'score':1})]
@@ -356,7 +356,7 @@ def test_shared_feed_decision_sort_matches_local_order():
 def test_ingested_items_are_typed_from_the_panel_index(local,tmp_path):
     """Journal-ingested runs had no derived type rows, so every item read
     `untyped` and the type filter offered nothing else (2026-09-26)."""
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     from metascience_observatory_image_analysis.review_workbench.local_image_import import backfill_types
     paper=tmp_path/'typed'/'paper'/'panels';paper.mkdir(parents=True)
     (paper/'panel_index.json').write_text(json.dumps({'panels':[
@@ -432,7 +432,7 @@ def test_reconcile_stops_between_runs_when_the_service_is_stopping(local,tmp_pat
     run, so a run skipped at stop time imports on the next start."""
     import threading
     from metascience_observatory_image_analysis.review_workbench.local_image_import import reconcile
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     archive=tmp_path/'.analysis_runs';(archive/'runs').mkdir(parents=True)
     run=dict(id='r_new',execution_id='e_new',component='image_forensics',paper='nested/paper',status='completed',items=[],artifacts={})
     run['sealed_digest']=digest(run)
@@ -447,7 +447,7 @@ def test_reconcile_stops_between_runs_when_the_service_is_stopping(local,tmp_pat
 
 
 def _sealed_corpus(root, rid='r_fresh'):
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     archive=root/'.analysis_runs';(archive/'runs').mkdir(parents=True)
     run=dict(id=rid,execution_id='e_'+rid,component='image_forensics',paper='paper',status='completed',items=[],artifacts={})
     run['sealed_digest']=digest(run)
@@ -561,7 +561,7 @@ def test_ingest_root_registers_the_project_with_the_shared_workbench(local,tmp_p
     store but the landing page (the SHARED workbench's list) never heard of
     the project. Importing must register it there too."""
     import sqlite3
-    from metascience_agent.workbench import notifications
+    from forensic_metascience_ai_toolkit.workbench import notifications
     from metascience_observatory_image_analysis.review_workbench.local_image_import import ingest_root
     shared=tmp_path/'workbench_shared.sqlite3'
     with sqlite3.connect(shared) as conn:conn.execute('create table notifications(path text primary key)')
@@ -773,7 +773,7 @@ def test_spot_check_samples_automatic_demotions_by_kind_with_a_seed(local):
 
 
 def test_a_decision_on_an_earlier_run_is_offered_only_for_provably_same_evidence(local,tmp_path):
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     def run(rid,when,sha,uid='p.pdf:xref1'):
         item=dict(id='within:nested/paper:IMGDUP-1',kind='within',detector_kind='transformed_match',paper={'dir':'nested/paper'},
                   panels=[dict(uid=uid,paper_dir='nested/paper',image=f'__runs/{rid}/a_p1',crop_box=[0,0,10,10])],rank={'score':1})
@@ -803,7 +803,7 @@ def test_a_decision_on_an_earlier_run_is_offered_only_for_provably_same_evidence
 
 
 def test_queue_knows_which_items_have_their_evidence_on_this_computer(local,tmp_path):
-    from metascience_agent.analysis_runs import digest
+    from forensic_metascience_ai_toolkit.analysis_runs import digest
     import hashlib
     blob=b'panel pixels';sha=hashlib.sha256(blob).hexdigest()
     objects=tmp_path/'.analysis_runs/objects'/sha[:2];objects.mkdir(parents=True);(objects/sha).write_bytes(blob)

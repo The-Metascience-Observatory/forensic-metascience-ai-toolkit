@@ -21,7 +21,7 @@ import json
 
 import pytest
 
-from metascience_agent import preflight
+from forensic_metascience_ai_toolkit import preflight
 
 
 def _paper(tmp_path, name, *, channel=None, chars=0):

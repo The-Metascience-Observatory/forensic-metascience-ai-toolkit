@@ -14,8 +14,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.core import prompts
-from metascience_agent import quotes as _q
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import quotes as _q
 from metascience_observatory_image_analysis.image_forensics.image_corpus import (
     _title_similarity,
     apply_cross_paper_adjudication,

@@ -32,10 +32,10 @@ from pathlib import Path
 import jsonschema
 
 from metascience_observatory_image_analysis.image_forensics import image_track as IT
-from metascience_agent import severity9
-from metascience_agent.core import prompts
-from metascience_agent import text_track as TT
-from metascience_agent.findings_v2 import validate_producer_constraints
+from forensic_metascience_ai_toolkit import severity9
+from forensic_metascience_ai_toolkit.core import prompts
+from forensic_metascience_ai_toolkit import text_track as TT
+from forensic_metascience_ai_toolkit.findings_v2 import validate_producer_constraints
 
 FINDING = prompts.findings_schema_v2()["properties"]["findings"]["items"]
 
@@ -558,7 +558,7 @@ class TestTextEnvelope:
         paper = tmp_path / "10.1--x"
         paper.mkdir(exist_ok=True)
         monkeypatch.setattr(
-            "metascience_agent.tools.tortured_phrases."
+            "forensic_metascience_ai_toolkit.tools.tortured_phrases."
             "detect_tortured_phrases",
             lambda *a, **k: copy.deepcopy(result or TEXT_RESULT))
         return TT.run_track(paper, **kwargs)

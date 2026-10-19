@@ -5,7 +5,7 @@ agreement 0.907, worst 0.709, best 0.982. 9,490 numbers agreed; 1,953 did not.
 The per-paper rate is the triage signal and the disagreeing values are the work
 list."""
 
-from metascience_agent.agreement import compare, suspect_values
+from forensic_metascience_ai_toolkit.agreement import compare, suspect_values
 
 A = "Age was 65 ± 1.17 years, p < 0.05, n = 68 patients."
 
@@ -70,7 +70,7 @@ class TestTheBibliographyWasInflatingIt:
                compare(self.A, self.B, analytic=True)["agreement"]
 
     def test_a_download_stamp_is_dropped(self):
-        from metascience_agent.agreement import analytic_only
+        from forensic_metascience_ai_toolkit.agreement import analytic_only
         t = ("# Body\n\n## Results\n\nthe effect was 2.5\n"
              "15525279, 2016, 78, Part_8, Downloaded from onlinelibrary.wiley.com\n")
         out = analytic_only(t)
@@ -80,7 +80,7 @@ class TestTheBibliographyWasInflatingIt:
         """The retained fraction was measured at 70-93% of each document and
         within a few points across sources on the same paper, so this is not
         quietly cutting one extractor more than another."""
-        from metascience_agent.agreement import analytic_only
+        from forensic_metascience_ai_toolkit.agreement import analytic_only
         keep = len(analytic_only(self.A)) / len(self.A)
         assert 0.2 < keep < 1.0
 
@@ -114,14 +114,14 @@ class TestTheSignIsPartOfTheNumber:
         assert r["agreement"] < 1.0, "a flipped sign is a disagreement"
 
     def test_a_negative_number_survives_reading(self):
-        from metascience_agent.agreement import _numbers
+        from forensic_metascience_ai_toolkit.agreement import _numbers
         assert _numbers("d = -0.85")["-0.85"] == 1
         assert _numbers("d = -0.85")["0.85"] == 0
 
     def test_an_interval_is_not_read_as_a_negative_number(self):
         """`1.08-1.9` is a range whose upper bound is positive. Allowing a
         leading minus must not turn the separator into one."""
-        from metascience_agent.agreement import _numbers
+        from forensic_metascience_ai_toolkit.agreement import _numbers
         got = _numbers("CI 1.08-1.9")
         assert got["1.08"] == 1 and got["1.9"] == 1 and got["-1.9"] == 0
 
@@ -129,7 +129,7 @@ class TestTheSignIsPartOfTheNumber:
         """`COVID-19` is one word. The guard that knows this lives beside the
         pattern in `numerals.tokens`, so a caller cannot take one without the
         other."""
-        from metascience_agent.agreement import _numbers
+        from forensic_metascience_ai_toolkit.agreement import _numbers
         assert _numbers("COVID-19 patients")["-19"] == 0
 
     def test_a_leading_plus_is_normalised_but_a_minus_never_is(self):
@@ -159,6 +159,6 @@ class TestASharedLexerRemovesIndependenceToo:
         assert compare("effect -1.6", "effect 1.6")["agreement"] < 1.0
 
     def test_a_lancet_reading_is_not_shredded_before_comparison(self):
-        from metascience_agent.agreement import _numbers
+        from forensic_metascience_ai_toolkit.agreement import _numbers
         assert _numbers("-5·077")["-5.077"] == 1
         assert _numbers("-5·077")["077"] == 0

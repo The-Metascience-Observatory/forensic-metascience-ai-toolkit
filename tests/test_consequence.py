@@ -12,9 +12,9 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import consequence as C
-from metascience_agent.bundle import render_viewer
-from metascience_agent.report_render import SEVERITY_RANK, markdown_to_html, sort_findings
+from forensic_metascience_ai_toolkit import consequence as C
+from forensic_metascience_ai_toolkit.bundle import render_viewer
+from forensic_metascience_ai_toolkit.report_render import SEVERITY_RANK, markdown_to_html, sort_findings
 
 
 def _ledger(*results):
@@ -320,7 +320,7 @@ class TestViewerLadderHasOneSource:
         assert "__SEVERITY_ORDER__" not in self._viewer()
 
     def test_the_injected_order_is_the_python_ladder(self):
-        from metascience_agent.tools.severity import SEVERITY_LEVELS
+        from forensic_metascience_ai_toolkit.tools.severity import SEVERITY_LEVELS
         m = re.search(r"const order=(\{.*?\});", self._viewer())
         assert m, "the injected severity order is gone"
         assert json.loads(m.group(1)) == {s: i for i, s in enumerate(SEVERITY_LEVELS)}

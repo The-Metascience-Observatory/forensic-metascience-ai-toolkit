@@ -9,7 +9,7 @@ import asyncio
 
 import pytest
 
-from metascience_agent import usage_guard
+from forensic_metascience_ai_toolkit import usage_guard
 
 
 USAGE_TEXT = (
@@ -295,7 +295,7 @@ class TestCliOverrides:
         command.
         """
         from typer.main import get_command
-        from metascience_agent.cli import app
+        from forensic_metascience_ai_toolkit.cli import app
         cmd = get_command(app).commands[command_name]
         names: set[str] = set()
         for p in cmd.params:
@@ -320,7 +320,7 @@ class TestCliOverrides:
         """
         from pathlib import Path
         src = (Path(__file__).resolve().parents[1]
-               / "src" / "metascience_agent" / "cli.py").read_text()
+               / "src" / "forensic_metascience_ai_toolkit" / "cli.py").read_text()
         weekly = src.find("except WeeklyLimitReached")
         crash = src.find("except BaseException")
         assert weekly != -1 and crash != -1 and weekly < crash, (
@@ -459,7 +459,7 @@ def test_probe_usage_garbage_output_fails_open(monkeypatch):
 def test_run_stage_guards_before_spawning_claude(monkeypatch):
     """The hook must sit in _run_stage, so sweep, editorial and repair calls are
     all covered by one guard."""
-    from metascience_agent import agent
+    from forensic_metascience_ai_toolkit import agent
 
     order = []
 
@@ -497,7 +497,7 @@ def test_grok_backend_never_spawns_a_usage_probe(monkeypatch):
         raise AssertionError("grok has no /usage probe")
 
     monkeypatch.setattr(usage_guard.asyncio, "create_subprocess_exec", fake_exec)
-    from metascience_agent.llm_backend import GROK
+    from forensic_metascience_ai_toolkit.llm_backend import GROK
     result = asyncio.run(usage_guard.probe_usage(backend=GROK))
     assert result is usage_guard.UNSUPPORTED
     assert spawned == []

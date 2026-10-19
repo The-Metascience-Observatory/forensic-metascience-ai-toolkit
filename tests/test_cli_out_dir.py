@@ -4,8 +4,8 @@ duplicate experiment, surfaced to the operator BEFORE any spend."""
 
 from pathlib import Path
 
-from metascience_agent.cli import _analyze_out_dir
-from metascience_agent.version import __version__
+from forensic_metascience_ai_toolkit.cli import _analyze_out_dir
+from forensic_metascience_ai_toolkit.version import __version__
 
 
 class TestAnalyzeOutDir:
@@ -67,6 +67,6 @@ class TestAnalyzeOutDir:
         assert same2 == [out]
 
     def test_batch_shares_the_same_default_name(self):
-        from metascience_agent.cli import _versioned_review_dirname
+        from forensic_metascience_ai_toolkit.cli import _versioned_review_dirname
         assert _versioned_review_dirname("grok-4.6") == \
             f"forensic_review_grok-4-6_v{__version__}"

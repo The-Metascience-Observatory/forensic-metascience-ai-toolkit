@@ -33,8 +33,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent.dispatch import _clamp_shared_denominator, check_table
-from metascience_agent.tools.estimates import check_estimate_ci
+from forensic_metascience_ai_toolkit.dispatch import _clamp_shared_denominator, check_table
+from forensic_metascience_ai_toolkit.tools.estimates import check_estimate_ci
 
 ACCUSATORY = {"suspicious", "highly_suspicious", "impossible"}
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -147,7 +147,7 @@ class TestTheSweepIsQuietOnHonestPapers:
 
     @pytest.fixture(scope="class")
     def sweep(self):
-        from metascience_agent import prepass
+        from forensic_metascience_ai_toolkit import prepass
         dirs = sorted({x.parent for c in self.CORPORA
                        for x in (REPO / c).rglob("*.xml")})
         if len(dirs) < 20:
@@ -255,7 +255,7 @@ class TestAFourDigitSampleSizeIsNotThreeDigits:
                 for i, (lab, c, p) in enumerate(rows)]
 
     def test_the_header_n_is_read_whole(self):
-        from metascience_agent.dispatch import header_ns
+        from forensic_metascience_ai_toolkit.dispatch import header_ns
         for label, expected in [("Early Adolescent Group (N=2749)", 2749),
                                 ("Males (N = 1165)", 1165),
                                 ("Total (N = 10432)", 10432),
@@ -269,8 +269,8 @@ class TestAFourDigitSampleSizeIsNotThreeDigits:
 
     def test_an_honest_column_is_not_accused(self):
         """The end-to-end proof, through the shipping path."""
-        from metascience_agent.tools.celltypes import parse_cells
-        from metascience_agent.values import build_register, check_stated_denominators
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.values import build_register, check_stated_denominators
         cells = self._cells(self.HEADER, self.ROWS)
         reg = build_register(tables=[{"name": "Table 1",
                                       "parsed": parse_cells(cells), "cells": cells}])
@@ -281,8 +281,8 @@ class TestAFourDigitSampleSizeIsNotThreeDigits:
     def test_the_guard_did_not_buy_quiet_by_disarming_the_check(self):
         """A real disagreement in the same shape must still be caught, or the
         test above passes for the wrong reason."""
-        from metascience_agent.tools.celltypes import parse_cells
-        from metascience_agent.values import build_register, check_stated_denominators
+        from forensic_metascience_ai_toolkit.tools.celltypes import parse_cells
+        from forensic_metascience_ai_toolkit.values import build_register, check_stated_denominators
         wrong = [("Female", 1237, 45.0), ("Current smoker", 247, 31.0)]
         cells = self._cells(self.HEADER, wrong)
         reg = build_register(tables=[{"name": "Table 1",
@@ -328,7 +328,7 @@ class TestABandDoesNotBindTheRowsBeneathIt:
     ]
 
     def _rows(self, labels):
-        from metascience_agent.values import binding_candidates
+        from forensic_metascience_ai_toolkit.values import binding_candidates
         return {r["row_label"]: r for r in binding_candidates(labels, self.VARS)}
 
     #: What each leaked row SHOULD bind to. Two are recoverable once the band
@@ -380,7 +380,7 @@ class TestABandDoesNotBindTheRowsBeneathIt:
         vs = self.VARS + [{"id": "v_fid2", "family": "likert_composite",
                            "lower_bound": 1, "upper_bound": 7,
                            "name": "EBP fidelity (also printed as 'EBP adherence' in Table 1)"}]
-        from metascience_agent.values import binding_candidates
+        from forensic_metascience_ai_toolkit.values import binding_candidates
         for label in ("1", "2 or 3", "  7  "):
             r = binding_candidates([label], vs)[0]
             assert r["status"] == "unmatched", (label, r["candidates"])
@@ -405,13 +405,13 @@ class TestABandDoesNotBindTheRowsBeneathIt:
         Under the wrong variable the row acquires a 0-3 ceiling and SPRITE is
         applicable; under the right one it is refused for want of an upper
         bound. Same printed numbers, opposite verdict."""
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
         r = sprite_reconstruct(mean=35.78, sd=33.74, n=64,
                                scale_min=0, scale_max=3,
                                bound_source="stated", discreteness_source="stated")
         assert r["severity"] == "impossible", r["severity"]
 
-        from metascience_agent.dispatch import _drop_unbounded
+        from forensic_metascience_ai_toolkit.dispatch import _drop_unbounded
         v_ta = dict(self.VARS[0])
         v_members = dict(self.VARS[1])
         kept_wrong, _ = _drop_unbounded(
@@ -444,13 +444,13 @@ class TestADerivedStatisticIsNotAPrintedOne:
     PAPER = REPO / "tests/fixtures/papers/high_value_pdfs_to_run_on" / "10.1002--ajcp.70049"
 
     def test_the_model_cannot_write_the_verdict(self):
-        from metascience_agent.anatomy import PIPELINE_ONLY_FIELDS
+        from forensic_metascience_ai_toolkit.anatomy import PIPELINE_ONLY_FIELDS
         assert "statistic_in_text" in PIPELINE_ONLY_FIELDS
 
     def test_a_derived_wald_z_is_caught(self):
         if not self.PAPER.is_dir():
             pytest.skip("corpus paper not present in this checkout")
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         res = {"findings": {"anatomy": {"tests": [
             {"id": "t1", "test_type": "poisson_regression", "location": "Table 2",
              "statistic_value": 2.658},
@@ -463,7 +463,7 @@ class TestADerivedStatisticIsNotAPrintedOne:
         pass for the wrong reason."""
         if not self.PAPER.is_dir():
             pytest.skip("corpus paper not present in this checkout")
-        from metascience_agent import agent
+        from forensic_metascience_ai_toolkit import agent
         res = {"findings": {"anatomy": {"tests": [
             {"id": "t1", "test_type": "other", "location": "Table 1",
              "statistic_value": 35.78},
@@ -477,7 +477,7 @@ class TestADerivedStatisticIsNotAPrintedOne:
         numbers -- stamps `present` because "10" occurs in every paper. Anything
         that later gates on this field must gate on `absent`, and the docstring
         is where that is recorded."""
-        import metascience_agent.anatomy as A
+        import forensic_metascience_ai_toolkit.anatomy as A
         import inspect
         src = inspect.getsource(A)
         assert "may GATE a tool on `absent` and may never LICENSE one on" in src
@@ -505,7 +505,7 @@ class TestAShortStubDoesNotMatchInsideALongerWord:
            "name": "EBP fidelity (also printed as 'EBP adherence' in Table 1)"}]
 
     def _status(self, label):
-        from metascience_agent.values import binding_candidates
+        from forensic_metascience_ai_toolkit.values import binding_candidates
         return binding_candidates([label], self.VS)[0]
 
     def test_a_level_word_does_not_bind_inside_a_longer_word(self):
@@ -546,12 +546,12 @@ class TestACitationYearIsNotAMeasurement:
                      "at baseline ("]
 
     def test_it_classifies_both_house_styles(self):
-        from metascience_agent.numerals import _CITATION
+        from forensic_metascience_ai_toolkit.numerals import _CITATION
         for s in self.CITATIONS:
             assert _CITATION.search(s), s
 
     def test_and_removes_nothing_that_is_a_measurement(self):
-        from metascience_agent.numerals import _CITATION
+        from forensic_metascience_ai_toolkit.numerals import _CITATION
         for s in self.NOT_CITATIONS:
             assert not _CITATION.search(s), s
 
@@ -560,7 +560,7 @@ class TestACitationYearIsNotAMeasurement:
         passes. It does not -- an author with no comma before the year never
         matches `_CITATION`. A false claim in a docstring is how the next
         person builds on a premise nobody checked."""
-        from metascience_agent.numerals import _CITATION
+        from forensic_metascience_ai_toolkit.numerals import _CITATION
         assert not _CITATION.search("prior work (Wood ")
         assert _CITATION.search("prior work (Wood, ")
 
@@ -628,7 +628,7 @@ class TestAnAbbreviationDoesNotStealAnotherVariablesRefusal:
     def test_the_abbreviation_itself_still_anchors(self):
         """And the recall `108e9ec6` bought is not reverted: a variable named
         `BMI` still scores against a sentence of its own paper."""
-        from metascience_agent.scaffold import premises
+        from forensic_metascience_ai_toolkit.scaffold import premises
         v = {"id": "v", "name": "BMI", "label": "BMI", "printed_as": []}
         words = premises._sentence_words("BMI was measured at entry.")
         assert premises.anchor_score(v, words) == 1.0

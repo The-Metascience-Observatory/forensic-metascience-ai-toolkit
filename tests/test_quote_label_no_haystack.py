@@ -4,10 +4,10 @@
 (`build_haystack` returns `{}` -- e.g. a scanned PDF with no text layer, or a
 package with no body.md/XML): it strips `quote_verified` and returns the
 findings unstamped, because "no haystack is not a verdict on any quote"
-(src/metascience_agent/quotes.py, `annotate`).
+(src/forensic_metascience_ai_toolkit/quotes.py, `annotate`).
 
 The viewer then converts that deliberate silence into the affirmative promise:
-`quoteLabel` (src/metascience_agent/bundle.py) returns "As printed" for every
+`quoteLabel` (src/forensic_metascience_ai_toolkit/bundle.py) returns "As printed" for every
 value of `quote_verified` other than "stitched"/"unverified" -- including
 ABSENT. The label's own docstring calls "As printed" "a promise: that these
 words are in the paper", made here about a paper nobody could open. That is
@@ -25,8 +25,8 @@ import subprocess
 
 import pytest
 
-from metascience_agent.bundle import render_viewer
-from metascience_agent.quotes import annotate
+from forensic_metascience_ai_toolkit.bundle import render_viewer
+from forensic_metascience_ai_toolkit.quotes import annotate
 
 _DOM_STUB = r"""
 const fs = require('fs');

@@ -14,8 +14,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.analysis_runs import Archive, project_root
-from metascience_agent.history_runtime import prepare_report_revision, result_archive
+from forensic_metascience_ai_toolkit.analysis_runs import Archive, project_root
+from forensic_metascience_ai_toolkit.history_runtime import prepare_report_revision, result_archive
 
 
 def _staged(tmp_path):
@@ -69,7 +69,7 @@ def test_without_a_pin_the_old_lookup_still_applies(tmp_path):
 
 def test_parallel_pins_the_root_where_the_parent_is_recorded():
     """The pin is set at the same place the parent is attached to the result."""
-    source = (Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+    source = (Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
               / "parallel.py").read_text()
     attach = source.index('result["run_meta"]["history"] = parent')
     pin = source.index('result["history_root"] = str(history.root)')

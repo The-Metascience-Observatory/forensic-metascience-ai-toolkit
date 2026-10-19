@@ -3,7 +3,7 @@
 def test_sync_error_leads_with_the_server_refusal_not_the_ipv6_route():
     """Measured 2026-10-01: libpq reported an IPv6 'Cannot assign requested
     address' first while every IPv4 address said the Neon quota was exceeded."""
-    from metascience_agent.workbench.remote import describe_error
+    from forensic_metascience_ai_toolkit.workbench.remote import describe_error
     quota = 'ERROR:  Your account or project has exceeded the quota. Upgrade your plan to increase limits.'
     ipv6 = 'Cannot assign requested address\n\tIs the server running on that host and accepting TCP/IP connections?'
     lines = ['connection is bad: connection to server at "2600::1", port 5432 failed: ' + ipv6,

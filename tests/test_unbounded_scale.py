@@ -17,7 +17,7 @@ when `bound_source` is assumed. The other two have no such cap.
 """
 import pytest
 
-from metascience_agent.dispatch import UNBOUNDED_REASON, check_table
+from forensic_metascience_ai_toolkit.dispatch import UNBOUNDED_REASON, check_table
 
 LABEL = "Number of coalition members"
 
@@ -102,7 +102,7 @@ class TestStatedBoundsStillWork:
         assert "sprite_reconstruct" in _ran(r)
 
     def test_a_stated_bound_still_licenses_impossible_at_the_tool(self):
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
         r = sprite_reconstruct(35.78, 33.74, n=64, scale_min=1, scale_max=7,
                                data_type="likert", decimals_mean=2, decimals_sd=2,

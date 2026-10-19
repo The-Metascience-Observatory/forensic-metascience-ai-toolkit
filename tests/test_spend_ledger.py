@@ -13,7 +13,7 @@ with no call-site changes.
 
 import asyncio
 
-from metascience_agent import agent
+from forensic_metascience_ai_toolkit import agent
 
 
 def _stage(cost):

@@ -1,7 +1,7 @@
 # SPOT (Son et al. 2025) -- full read, and what it means for this toolkit
 
 **Status:** analysis, 2026-08-18. Supersedes the preliminary pass of 2026-08-13
-that produced the docstring in `src/metascience_agent/evaluation/agreement.py`.
+that produced the docstring in `src/forensic_metascience_ai_toolkit/evaluation/agreement.py`.
 **Author:** drafted by Claude at Greg's direction. Every number below is traced
 to a source; claims the paper makes and claims I derived are labelled separately
 and never mixed inside a sentence.
@@ -278,7 +278,7 @@ Not flattery in either direction.
    clustering fixed before any scored run, with cluster bootstrap over 16
    misconduct cases rather than 30 papers. SPOT's exhaustiveness convention was
    necessarily settled after seeing model output.
-6. **Synthetic controls.** `src/metascience_agent/simulation.py` generates
+6. **Synthetic controls.** `src/forensic_metascience_ai_toolkit/simulation.py` generates
    negative controls correct by construction and positive controls with a
    single injected flaw, deterministic and free of API calls.
 
@@ -342,8 +342,8 @@ on their corpus rather than ours.
 
 **A2. The prompt pair, as a documented baseline.** Generation prompt and
 LLM-judge prompt are verbatim in Appendix F.2 and in `prompts.py`. Worth reading
-against our prompts (now `src/metascience_agent/modules/*/prompt.md` and the
-shared `src/metascience_agent/core/prompts/`) -- note in particular that their
+against our prompts (now `src/forensic_metascience_ai_toolkit/modules/*/prompt.md` and the
+shared `src/forensic_metascience_ai_toolkit/core/prompts/`) -- note in particular that their
 generation prompt explicitly scopes out presentational, rhetorical, stylistic and
 citation issues, which is the same boundary our scope module enforces, reached
 independently.

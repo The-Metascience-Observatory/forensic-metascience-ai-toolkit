@@ -15,7 +15,7 @@ the supplementary materials!"
 """
 import pytest
 
-from metascience_agent import author_questions as AQ
+from forensic_metascience_ai_toolkit import author_questions as AQ
 
 REAL_BAD_QUESTION = (
     "Supplementary eTable 5 contains the BIC and other fit indices used to "

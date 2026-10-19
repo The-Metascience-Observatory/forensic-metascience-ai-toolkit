@@ -4,9 +4,9 @@ import json
 
 from typer.testing import CliRunner
 
-from metascience_agent import llm_backend
-from metascience_agent.cli import app
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import llm_backend
+from forensic_metascience_ai_toolkit.cli import app
+from forensic_metascience_ai_toolkit.llm_backend import (
     parse_codex_models,
     parse_grok_models,
 )

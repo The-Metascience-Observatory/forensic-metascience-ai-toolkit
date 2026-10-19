@@ -31,7 +31,7 @@ import subprocess
 
 import pytest
 
-from metascience_agent.bundle import render_viewer
+from forensic_metascience_ai_toolkit.bundle import render_viewer
 
 NODE = shutil.which("node")
 

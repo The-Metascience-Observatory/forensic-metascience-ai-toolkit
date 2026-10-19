@@ -18,8 +18,8 @@ import pathlib
 
 import pytest
 
-from metascience_agent import webapp_index as W
-from metascience_agent.report_render import severity_rank
+from forensic_metascience_ai_toolkit import webapp_index as W
+from forensic_metascience_ai_toolkit.report_render import severity_rank
 
 CORPUS = pathlib.Path(__file__).resolve().parents[1] / "tests/fixtures/papers/high_value_pdfs_to_run_on"
 
@@ -82,7 +82,7 @@ class TestSeverityRankUnderstandsBothLadders:
     def test_the_accusatory_boundary_is_preserved(self):
         """`severity9.ACCUSATORY_MIN` is 3, which is where `suspicious`
         begins."""
-        from metascience_agent.severity9 import ACCUSATORY_MIN
+        from forensic_metascience_ai_toolkit.severity9 import ACCUSATORY_MIN
         assert severity_rank(ACCUSATORY_MIN) == severity_rank("suspicious")
         assert severity_rank(ACCUSATORY_MIN - 1) > severity_rank("suspicious")
 

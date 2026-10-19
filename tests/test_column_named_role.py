@@ -15,7 +15,7 @@ would manufacture exactly the accusation this repository exists to avoid.
 """
 import pytest
 
-from metascience_agent import values as V
+from forensic_metascience_ai_toolkit import values as V
 
 
 class TestAColumnHeaderCanNameTheRole:

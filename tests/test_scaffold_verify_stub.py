@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent.scaffold import reconstruct
+from forensic_metascience_ai_toolkit.scaffold import reconstruct
 
 
 def _cells(rows: list[tuple[str, list[str]]], cols: list[str]) -> list[dict]:

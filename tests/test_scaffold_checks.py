@@ -22,7 +22,7 @@ import json
 
 import pytest
 
-from metascience_agent.scaffold import bind, checks, structure
+from forensic_metascience_ai_toolkit.scaffold import bind, checks, structure
 
 # --------------------------------------------------------------------------
 # A fixture paper whose every answer is known by construction.
@@ -138,7 +138,7 @@ _ROWS: list[tuple[str, list[tuple[int, str, list[dict]]]]] = [
 
 
 def _w7_doc() -> dict:
-    from metascience_agent import numerals, sections
+    from forensic_metascience_ai_toolkit import numerals, sections
     cells = []
     for ri, (rl, cols) in enumerate(_ROWS, start=1):
         for ci, raw, entries in cols:
@@ -388,7 +388,7 @@ class TestKnownAnswers:
     def test_the_same_call_with_the_default_scale_would_have_accused(self):
         """The control for the test above: the accusation is real, and it is the
         bound rather than the arithmetic that produces it."""
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         assert grim_test(35.78, 64, decimals=2, data_type="count")["severity"] == "suspicious"
         assert grim_test(35.78, 64, decimals=2, data_type="count",
                          scale_min=None, scale_max=None)["severity"] == "consistent"
@@ -566,15 +566,15 @@ def _primary_of(record: dict) -> str:
 
 class TestTheBridgeContract:
     def test_every_family_names_a_registered_tool(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         for fam, tool, _ in checks.FAMILIES:
             assert tool in registry.BY_NAME, (fam, tool)
 
     def test_the_census_tool_names_are_the_registrys_own(self):
         """The census's names were stale in five of seven rows when the bridge
         came to call them. Corrected in place; pinned here."""
-        from metascience_agent import registry
-        from metascience_agent.scaffold import applicability
+        from forensic_metascience_ai_toolkit import registry
+        from forensic_metascience_ai_toolkit.scaffold import applicability
         for fam, tools, _ in applicability.FAMILIES:
             for name in [t.strip() for t in tools.split("/")]:
                 if name.startswith("("):
@@ -672,7 +672,7 @@ class TestTheBridgeContract:
         verdicts. What it removes is the requirement that a paper print a
         sentence about the granularity of its own counts, which
         `var:ebp_reach` on ajcp.70049 does not."""
-        from metascience_agent.tools.grim import HARD_DISCRETENESS_SOURCES
+        from forensic_metascience_ai_toolkit.tools.grim import HARD_DISCRETENESS_SOURCES
         assert "discreteness_assumed" in checks.REASONS
         seen = set()
         for r in w7_checks["checks"]:
@@ -689,7 +689,7 @@ class TestTheBridgeContract:
         like and not a claim about the instrument -- so it still needs the
         paper's sentence, and round 2 built its whole first cluster out of a
         continuous measurement typed `integer_score`."""
-        from metascience_agent.scaffold import premises
+        from forensic_metascience_ai_toolkit.scaffold import premises
         by_id = {v["id"]: v for v in w7["variables"]}
         reach = by_id["var:reach"]["granularity"]["verification"]
         assert reach["discreteness_source"] == premises.NECESSARY_DISCRETENESS
@@ -713,21 +713,21 @@ class TestTheBridgeContract:
                 assert "n_that_would_fit" not in r["premises"].get("n", {})
 
     def test_the_codestamp_names_this_module(self):
-        from metascience_agent.scaffold import codestamp
+        from forensic_metascience_ai_toolkit.scaffold import codestamp
         assert "scaffold/checks.py" in codestamp.MODULES
         assert codestamp.stamp()["modules"]["scaffold/checks.py"]
 
 
 class TestSection16:
     def test_the_render_says_so_when_no_checks_were_run(self, w7):
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         md = render.render(w7, W7_TEXT)
         assert "## 16. Checks run on the account's own premises" in md
         assert "Not run for this account" in md
         assert "## 17. What this form cannot show" in md
 
     def test_the_render_carries_the_checks_when_they_were(self, w7, w7_checks):
-        from metascience_agent.scaffold import render
+        from forensic_metascience_ai_toolkit.scaffold import render
         md = render.render(w7, W7_TEXT, {**w7_checks, "structure_version": None,
                                          "structure_status": None,
                                          "account_sha256": "0" * 64, "code": {}})
@@ -903,7 +903,7 @@ class TestTheAccountsOwnIntegrityRecordIsRead:
         """THE PINNING TEST FOR THE ONE STRING JOIN. `values_with_problems`
         reads messages `validate_account` writes, so a message in a new shape
         must fail here rather than going quietly unread."""
-        from metascience_agent.scaffold import schema as _schema
+        from forensic_metascience_ai_toolkit.scaffold import schema as _schema
         acc = {"studies": [{"id": "st:1", "groups": [], "phases": []}],
                "variables": [], "procedures": [], "comparisons": [], "claims": [],
                "values": [
@@ -933,7 +933,7 @@ class TestTheAccountsOwnIntegrityRecordIsRead:
             assert _schema.values_with_problems([p]), f"unrecognised message: {p}"
 
     def test_it_does_not_read_a_problem_about_something_else(self):
-        from metascience_agent.scaffold import schema as _schema
+        from forensic_metascience_ai_toolkit.scaffold import schema as _schema
         assert _schema.values_with_problems(
             ["variable `var:x` names unknown study `st:9`",
              "duplicate variable id `var:x`",

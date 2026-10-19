@@ -3,7 +3,7 @@
 When that root is missing from sys.path the bare project folder at the repo
 root is imported as an EMPTY namespace package, and the stock error is
 "cannot import name ... (unknown location)", which names nothing a reader can
-act on. `metascience_agent.tools`, the first importer, must instead say what to
+act on. `forensic_metascience_ai_toolkit.tools`, the first importer, must instead say what to
 do. The shadow is reproduced with an attribute-less module in a child
 interpreter, so the parent's imported modules are untouched.
 """
@@ -11,13 +11,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-SRC = Path(__file__).resolve().parents[1] / "src" / "metascience_agent"
+SRC = Path(__file__).resolve().parents[1] / "src" / "forensic_metascience_ai_toolkit"
 
 _SHADOWED = """
 import sys, types
 sys.modules["copy_paste_detector"] = types.ModuleType("copy_paste_detector")
 try:
-    import metascience_agent.tools
+    import forensic_metascience_ai_toolkit.tools
 except ImportError as exc:
     print(exc)
 else:

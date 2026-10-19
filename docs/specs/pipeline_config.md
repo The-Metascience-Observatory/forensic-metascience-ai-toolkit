@@ -2,7 +2,7 @@
 
 A pipeline says which **modules** a run uses and which **tools** the tools
 agent may call. It is a YAML file. The shipped ones live in
-`src/metascience_agent/pipelines/`, and any path works.
+`src/forensic_metascience_ai_toolkit/pipelines/`, and any path works.
 
 ```yaml
 schema_version: 1

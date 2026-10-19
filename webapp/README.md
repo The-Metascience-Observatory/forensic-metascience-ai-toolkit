@@ -23,8 +23,8 @@ live project list. See [storage](../docs/workbench_storage.md).
 # from the repo root
 # use the interpreter the metascience CLI runs under (machine-specific)
 PY=$(metascience python)
-$PY -m metascience_agent.workbench.service --migrate
-$PY -m metascience_agent.workbench.service --sync --index webapp/data/index.json
+$PY -m forensic_metascience_ai_toolkit.workbench.service --migrate
+$PY -m forensic_metascience_ai_toolkit.workbench.service --sync --index webapp/data/index.json
 
 cd webapp && npm install && npm run dev      # http://localhost:3100 (or the next free port if 3100 is taken)
 ```

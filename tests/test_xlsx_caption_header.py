@@ -32,7 +32,7 @@ because a measurement that leaves the body stops existing for every check.
 """
 import pytest
 
-from metascience_agent.extraction import supplements_read as S
+from forensic_metascience_ai_toolkit.extraction import supplements_read as S
 
 
 class TestACaptionRowIsNotAHeader:

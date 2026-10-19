@@ -20,8 +20,8 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import agent
-from metascience_agent.llm_backend import (
+from forensic_metascience_ai_toolkit import agent
+from forensic_metascience_ai_toolkit.llm_backend import (
     OPENROUTER,
     BudgetUnsupported,
     build_invocation,
@@ -29,7 +29,7 @@ from metascience_agent.llm_backend import (
     resolve_backend,
 )
 
-LOOP = "metascience_agent.openrouter_loop"
+LOOP = "forensic_metascience_ai_toolkit.openrouter_loop"
 SCHEMA = {"type": "object", "properties": {"verdict": {"type": "string"}},
           "required": ["verdict"], "additionalProperties": False}
 
@@ -278,7 +278,7 @@ class TestTheBackend:
         assert failed["ok"] is False
 
     def test_preflight_names_the_missing_key(self, monkeypatch):
-        from metascience_agent import preflight
+        from forensic_metascience_ai_toolkit import preflight
         monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
         rows = preflight.fatal_checks(refresh=True, backend="openrouter")
         name, ok, detail = rows[0]

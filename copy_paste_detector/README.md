@@ -129,7 +129,7 @@ held-out assignments, annotation contract and evaluation report.
 Copy a complete `runs/cp_.../` folder, then in the parent environment:
 
 ```sh
-python -m metascience_agent.analysis_history import-copy /path/to/corpus \
+python -m forensic_metascience_ai_toolkit.analysis_history import-copy /path/to/corpus \
   --paper /path/to/corpus/paper --file /path/to/runs/cp_...
 ```
 

@@ -10,8 +10,8 @@ are inherited, never reimplemented.
 """
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.dispatch import COMPOSITE_FAMILIES, check_table
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.dispatch import COMPOSITE_FAMILIES, check_table
 
 
 def _t(cells, variables=None, bindings=None, **kw):
@@ -225,7 +225,7 @@ class TestTheDispatchKeySpaceIsComplete:
     def test_every_kind_crossed_with_every_data_type_has_a_row(self):
         from itertools import product
 
-        from metascience_agent.dispatch import (
+        from forensic_metascience_ai_toolkit.dispatch import (
             CANONICAL_DATA_TYPES,
             DISPATCH,
             DISPATCHABLE_KINDS,
@@ -237,15 +237,15 @@ class TestTheDispatchKeySpaceIsComplete:
         assert not extra, f"DISPATCH rows outside the declared key space: {sorted(extra)}"
 
     def test_the_kinds_match_celltypes_minus_the_never_dispatch_set(self):
-        from metascience_agent.dispatch import DISPATCHABLE_KINDS, NEVER_DISPATCH
-        from metascience_agent.tools.celltypes import CELL_KINDS
+        from forensic_metascience_ai_toolkit.dispatch import DISPATCHABLE_KINDS, NEVER_DISPATCH
+        from forensic_metascience_ai_toolkit.tools.celltypes import CELL_KINDS
         assert DISPATCHABLE_KINDS == set(CELL_KINDS) - set(NEVER_DISPATCH)
 
     def test_the_data_types_match_what_anatomy_can_actually_produce(self):
         """If a new family maps to a new data_type, this fails before the hole
         can reach a paper."""
-        from metascience_agent.anatomy import DISTRIBUTION_FAMILIES, Variable
-        from metascience_agent.dispatch import CANONICAL_DATA_TYPES
+        from forensic_metascience_ai_toolkit.anatomy import DISTRIBUTION_FAMILIES, Variable
+        from forensic_metascience_ai_toolkit.dispatch import CANONICAL_DATA_TYPES
         produced = {
             Variable(id=f"v{i}", name="x", family=fam).forensic_kwargs()["data_type"]
             for i, fam in enumerate(DISTRIBUTION_FAMILIES)
@@ -259,7 +259,7 @@ class TestTheDispatchKeySpaceIsComplete:
         than the undeclared case, unless the empty row is a documented decision
         in WHY_NOT.
         """
-        from metascience_agent.dispatch import (
+        from forensic_metascience_ai_toolkit.dispatch import (
             CANONICAL_DATA_TYPES,
             DISPATCH,
             DISPATCHABLE_KINDS,
@@ -296,7 +296,7 @@ class TestARefusalNamesItsOwnDischarge:
              "lower_bound": 0, "upper_bound": 66}]
 
     def _run(self, cells):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         return check_table(cells=cells, variables=self.VARS,
                            bindings={"dFMA total": "v1"})
 
@@ -325,14 +325,14 @@ class TestARefusalNamesItsOwnDischarge:
         assert "footnote" in reason or "participants" in reason
 
     def test_a_refusal_for_something_other_than_n_is_unchanged(self):
-        from metascience_agent.dispatch import _refusal_reason
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.dispatch import _refusal_reason
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         spec = BY_NAME["check_estimate_ci"]
         assert _refusal_reason(spec, None, {"col_label": "x"}) == (
             "required inputs not present in this cell")
 
     def test_thousands_grouped_group_sizes_are_read(self):
-        from metascience_agent.dispatch import _n_in_labels
+        from forensic_metascience_ai_toolkit.dispatch import _n_in_labels
         assert _n_in_labels({"col_label": "Total (N = 1,204)"}) == [("col_label", 1204)]
         assert _n_in_labels({"row_label": "Placebo n=51"}) == [("row_label", 51)]
 
@@ -353,7 +353,7 @@ class TestCompositeScoringDecidesTheDenominator:
             "n_items": 9, "lower_bound": 0, "upper_bound": 27}
 
     def _run(self, derivation=None):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         v = dict(self.BASE)
         if derivation:
             v["derivation"] = derivation
@@ -361,14 +361,14 @@ class TestCompositeScoringDecidesTheDenominator:
                            bindings={"PHQ-9 total": "v1"})
 
     def test_variable_keeps_the_field_at_all(self):
-        from metascience_agent.anatomy import Variable
+        from forensic_metascience_ai_toolkit.anatomy import Variable
         assert Variable(id="v", name="v", derivation="sum_of_items").derivation \
             == "sum_of_items"
 
     def test_the_loaders_no_longer_drop_it(self):
         """`_as_variable` and `_pick` both filter to dataclass fields, so the
         field's absence WAS the drop."""
-        from metascience_agent.dispatch import _as_variable
+        from forensic_metascience_ai_toolkit.dispatch import _as_variable
         assert _as_variable({"id": "v", "family": "likert_composite",
                              "derivation": "sum_of_items"}).derivation == "sum_of_items"
 
@@ -426,7 +426,7 @@ class TestTheRefusalCarriesItsOwnCure:
     """
 
     def _undeclared(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         return check_table([
             {"raw": "48.90 (14.46)", "row_label": "Age", "col_label": "A", "n": 60},
             {"raw": "48.10 (13.02)", "row_label": "Age", "col_label": "B", "n": 58},
@@ -447,7 +447,7 @@ class TestTheRefusalCarriesItsOwnCure:
         """`would_unlock` is SIMULATED through the real resolver and DISPATCH,
         never written out -- a second copy of the routing table is the thing
         this module exists to avoid."""
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         r = self._undeclared()
         age = next(t for t in r["declaration_template"] if t["row_label"] == "Age")
         promised = set(age["would_unlock"]["count"]["runs"])
@@ -473,7 +473,7 @@ class TestTheRefusalCarriesItsOwnCure:
             assert "never whichever" in t["caution"]
 
     def test_a_declared_table_needs_no_form(self):
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         r = check_table(
             [{"raw": "48.90 (14.46)", "row_label": "Age", "col_label": "A", "n": 60}],
             variables=[{"id": "age", "name": "Age", "family": "count",
@@ -566,7 +566,7 @@ class TestASectionDenominatorRescuesTheCellsThatCarryNone:
         """`impossible` admits no innocent explanation, so this repo reserves it
         for exact arithmetic on values the PAPER PRINTED. A denominator we
         reconstructed is not printed, however well it verifies."""
-        from metascience_agent.dispatch import _stamp_derived_n
+        from forensic_metascience_ai_toolkit.dispatch import _stamp_derived_n
         rec = {"severity": "impossible"}
         _stamp_derived_n(rec, {"n": 100, "n_source": "x", "section": "S", "column": "c"})
         assert rec["severity"] == "highly_suspicious"

@@ -1,7 +1,7 @@
 """Tests for the duplication / copy-paste detector."""
 
-from metascience_agent.tools.duplication import detect_duplication
-from metascience_agent.tools.tableparse import parse_table
+from forensic_metascience_ai_toolkit.tools.duplication import detect_duplication
+from forensic_metascience_ai_toolkit.tools.tableparse import parse_table
 
 # Four identical (mean, SD) affect pairs appearing in two tables that a paper
 # presents as separate studies with different participants.
@@ -445,12 +445,12 @@ class TestTheChanceGateOnlyEverClears:
     """
 
     def test_drop_to_never_escalates(self):
-        from metascience_agent.tools.duplication import _TIERS, _drop_to
+        from forensic_metascience_ai_toolkit.tools.duplication import _TIERS, _drop_to
         for cur in _TIERS:
             for target in _TIERS:
                 out = _drop_to(cur, target)
                 assert _TIERS.index(out) >= _TIERS.index(cur), (cur, target, out)
 
     def test_an_unknown_tier_is_left_alone(self):
-        from metascience_agent.tools.duplication import _drop_to
+        from forensic_metascience_ai_toolkit.tools.duplication import _drop_to
         assert _drop_to("impossible", "consistent") == "impossible"

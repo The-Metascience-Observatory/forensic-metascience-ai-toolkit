@@ -30,14 +30,14 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent import __version__
-from metascience_agent.report_render import resolve_run_stamp
-from metascience_agent.version import NOT_RECORDED, git_state, pipeline_version
+from forensic_metascience_ai_toolkit import __version__
+from forensic_metascience_ai_toolkit.report_render import resolve_run_stamp
+from forensic_metascience_ai_toolkit.version import NOT_RECORDED, git_state, pipeline_version
 
 PYPROJECT = Path(__file__).resolve().parents[1] / "pyproject.toml"
 CHANGELOG = Path(__file__).resolve().parents[1] / "CHANGELOG.md"
 VERSION_PY = (Path(__file__).resolve().parents[1]
-              / "src" / "metascience_agent" / "version.py")
+              / "src" / "forensic_metascience_ai_toolkit" / "version.py")
 
 
 def _report():
@@ -62,7 +62,7 @@ class TestOneSourceOfTruth:
     def test_pyproject_points_at_version_py(self):
         text = PYPROJECT.read_text()
         assert "[tool.hatch.version]" in text
-        assert 'path = "src/metascience_agent/version.py"' in text
+        assert 'path = "src/forensic_metascience_ai_toolkit/version.py"' in text
 
     def test_version_py_is_the_declaration(self):
         assert re.search(r'^__version__ = "', VERSION_PY.read_text(), flags=re.MULTILINE)
@@ -166,7 +166,7 @@ def test_the_cli_prints_the_composite():
     """`metascience version` is how you check whether a report came from this
     checkout, so it has to print the same string the report stamps."""
     out = subprocess.run(
-        [os.environ.get("PYTHON", "python3"), "-m", "metascience_agent.cli", "version"],
+        [os.environ.get("PYTHON", "python3"), "-m", "forensic_metascience_ai_toolkit.cli", "version"],
         capture_output=True, text=True,
         env={**os.environ, "PYTHONPATH": os.pathsep.join(["src", "copy_paste_detector/src"])},
         cwd=Path(__file__).resolve().parents[1], timeout=120,

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from metascience_agent import register_view as RV
+from forensic_metascience_ai_toolkit import register_view as RV
 
 
 class TestNumeralOffsetsAreVerifiedNotTrusted:

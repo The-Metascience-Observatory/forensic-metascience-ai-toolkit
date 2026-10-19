@@ -33,7 +33,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.extraction.jats import _Counter, _sections
+from forensic_metascience_ai_toolkit.extraction.jats import _Counter, _sections
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -114,7 +114,7 @@ class TestTheCorpusRatchet:
 
     def test_section_title_loss_has_not_got_worse(self):
         import glob
-        from metascience_agent.extraction.jats import _local, _section_title
+        from forensic_metascience_ai_toolkit.extraction.jats import _local, _section_title
 
         tot = kept = 0
         for x in glob.glob(str(REPO / "**/*.xml"), recursive=True):

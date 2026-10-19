@@ -25,7 +25,7 @@ from pathlib import Path
 import pytest
 
 from metascience_observatory_image_analysis.image_forensics import image_track as IT
-from metascience_agent.agent import (
+from forensic_metascience_ai_toolkit.agent import (
     _run_image_track,
     _validate_image_track_output,
 )

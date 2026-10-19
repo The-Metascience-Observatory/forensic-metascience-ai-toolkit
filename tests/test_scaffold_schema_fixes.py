@@ -9,10 +9,10 @@ every location printed `p.?` because XML has no pages.
 """
 from __future__ import annotations
 
-from metascience_agent.scaffold import bind as B
-from metascience_agent.scaffold import document as D
-from metascience_agent.scaffold import render as R
-from metascience_agent.scaffold import schema as S
+from forensic_metascience_ai_toolkit.scaffold import bind as B
+from forensic_metascience_ai_toolkit.scaffold import document as D
+from forensic_metascience_ai_toolkit.scaffold import render as R
+from forensic_metascience_ai_toolkit.scaffold import schema as S
 
 
 def _cmp(**kw) -> dict:

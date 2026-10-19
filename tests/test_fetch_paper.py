@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from metascience_agent import agent, cli, fetch_paper, raw_track, supplements
+from forensic_metascience_ai_toolkit import agent, cli, fetch_paper, raw_track, supplements
 
 DOI = "10.1234/Journal.ABC-5"
 DIRNAME = "10.1234--journal.abc-5"

@@ -19,7 +19,7 @@ import json
 
 import pytest
 
-from metascience_agent.agent import STAGE1_TOOLS, STAGE2_TOOLS, _GUARD_CONSEQUENCE, _annotate_reproductions, _mcp, _sandbox_audit, _stage_meta, _tool_call_ledger, _unbacked_findings
+from forensic_metascience_ai_toolkit.agent import STAGE1_TOOLS, STAGE2_TOOLS, _GUARD_CONSEQUENCE, _annotate_reproductions, _mcp, _sandbox_audit, _stage_meta, _tool_call_ledger, _unbacked_findings
 
 
 def _msgs(*calls):
@@ -137,7 +137,7 @@ class TestReproductionsAreExecuted:
 
     def test_the_static_check_alone_passes_the_broken_command(self):
         """The old behaviour, reproduced against the same command."""
-        from metascience_agent.evaluation.deterministic import validate_reproduction
+        from forensic_metascience_ai_toolkit.evaluation.deterministic import validate_reproduction
         assert validate_reproduction(RUNS_BUT_FAILS)["valid"] is True
 
     def test_executing_it_suppresses_it(self):
@@ -162,7 +162,7 @@ class TestReproductionsAreExecuted:
         report that line belongs to. `run_reproduction`'s premise -- "a pure
         local computation with no network access" -- does not hold for
         analyze/batch/eval/preflight."""
-        import metascience_agent.agent as agent
+        import forensic_metascience_ai_toolkit.agent as agent
 
         def _boom(command, timeout=90):
             raise AssertionError(f"executed a paid subcommand: {command}")
@@ -275,7 +275,7 @@ class TestTheDataTypeConsequenceIsWhatTheCodeDoes:
         ("sprite", (128.43, 15.21, 100)),
     ])
     def test_the_defaulted_guard_refuses_rather_than_accuses(self, fn, args):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
 
         name = {"grim": "grim_check", "grimmer": "grimmer_check",
                 "sprite": "sprite_reconstruct"}[fn]
@@ -297,7 +297,7 @@ class TestTheDataTypeConsequenceIsWhatTheCodeDoes:
         outside the ASSUMED 1-7 scale -- verdicts riding on our invented
         bound, now correctly capped at `suspicious`. With bound_source=
         'stated' the sweep is still 495/495 `impossible`.)"""
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
 
         assert grim_test(128.43, 100, data_type="likert")["severity"] == "suspicious"
         # `discreteness_source="stated"` holds the measurement fixed at what it

@@ -12,13 +12,13 @@ try {
   fs.writeFileSync(path.join(scratch, 'checkout_probe.py'), `
 import importlib.util, json
 print(json.dumps({name: getattr(importlib.util.find_spec(name), 'origin', None) for name in
-    ['metascience_agent', 'copy_paste_detector', 'metascience_observatory_image_analysis']}))
+    ['forensic_metascience_ai_toolkit', 'copy_paste_detector', 'metascience_observatory_image_analysis']}))
 `);
   process.env.PYTHONPATH = scratch;
   // The inherited path must survive too: this module exists only there.
   const found = await pyModuleJson('checkout_probe', []);
   const repo = path.resolve(process.cwd(), '..');
-  for (const [name, folder] of Object.entries({metascience_agent: 'src',
+  for (const [name, folder] of Object.entries({forensic_metascience_ai_toolkit: 'src',
     copy_paste_detector: 'copy_paste_detector/src'})) {
     assert.equal(found[name], path.join(repo, folder, name, '__init__.py'));
   }

@@ -7,9 +7,9 @@ are advisory, so these are now enforced in code and pinned here.
 """
 import pytest
 
-from metascience_agent.tools import debit_test, grim_test
-from metascience_agent.tools.grim import grim_test_percentage
-from metascience_agent.tools.grimu import grimu_check, grimu_coexistence
+from forensic_metascience_ai_toolkit.tools import debit_test, grim_test
+from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
+from forensic_metascience_ai_toolkit.tools.grimu import grimu_check, grimu_coexistence
 
 NON_ACCUSATORY = {"indeterminate", "consistent", "suspicious"}
 
@@ -181,8 +181,8 @@ class TestCategoricalShares:
 
     @staticmethod
     def _table(var, label, raw):
-        from metascience_agent import declared
-        from metascience_agent.dispatch import check_table
+        from forensic_metascience_ai_toolkit import declared
+        from forensic_metascience_ai_toolkit.dispatch import check_table
         try:
             return check_table([{"raw": raw, "row_label": label,
                                  "col_label": "All", "n": 30}],
@@ -208,7 +208,7 @@ class TestCategoricalShares:
     def test_the_variable_record_still_describes_the_variable(self):
         """Only the percentage reading changes; a mean of ordinal codes is
         still integer data, and DISPATCH is keyed on the family's own type."""
-        from metascience_agent.dispatch import _as_variable
+        from forensic_metascience_ai_toolkit.dispatch import _as_variable
         for var, plain in ((self.SEX, "nominal"), (self.NYHA, "integer")):
             v = _as_variable(var)
             assert v.forensic_kwargs()["data_type"] == plain

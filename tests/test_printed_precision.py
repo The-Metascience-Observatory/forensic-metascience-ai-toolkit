@@ -16,11 +16,11 @@ precision has to be captured at parse time, from the raw string.
 """
 import pytest
 
-from metascience_agent import registry as R
-from metascience_agent.dispatch import _build_args, check_table
-from metascience_agent.tools.celltypes import _dp, parse_cell
-from metascience_agent.tools.estimates import check_estimate_ci
-from metascience_agent.tools.se_sd import check_sd_or_se
+from forensic_metascience_ai_toolkit import registry as R
+from forensic_metascience_ai_toolkit.dispatch import _build_args, check_table
+from forensic_metascience_ai_toolkit.tools.celltypes import _dp, parse_cell
+from forensic_metascience_ai_toolkit.tools.estimates import check_estimate_ci
+from forensic_metascience_ai_toolkit.tools.se_sd import check_sd_or_se
 
 
 class TestDecimalPlaces:
@@ -172,7 +172,7 @@ class TestPrecisionChangesTheVerdict:
 
 class TestNoCircularImport:
     def test_dispatch_imports_standalone(self):
-        """`import metascience_agent.dispatch` first used to raise ImportError.
+        """`import forensic_metascience_ai_toolkit.dispatch` first used to raise ImportError.
 
         It worked only because every real entry point happened to import
         `registry` before it.
@@ -181,7 +181,7 @@ class TestNoCircularImport:
         import sys
 
         r = subprocess.run(
-            [sys.executable, "-c", "import metascience_agent.dispatch"],
+            [sys.executable, "-c", "import forensic_metascience_ai_toolkit.dispatch"],
             capture_output=True, text=True,
         )
         assert r.returncode == 0, r.stderr

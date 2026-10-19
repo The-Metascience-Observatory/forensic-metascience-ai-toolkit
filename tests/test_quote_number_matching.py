@@ -8,7 +8,7 @@ all-clears about the quote's own accuracy -- the class this module exists to
 stop.
 """
 
-from metascience_agent.quotes import classify, normalise
+from forensic_metascience_ai_toolkit.quotes import classify, normalise
 
 
 def H(paper: str) -> dict:

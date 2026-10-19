@@ -12,7 +12,7 @@ one panel blanked the whole document.
 """
 import re
 
-from metascience_agent import bundle
+from forensic_metascience_ai_toolkit import bundle
 
 
 def _show_source() -> str:
@@ -92,7 +92,7 @@ class TestTheEvidenceBannerDenominator:
 
     def _src(self):
         import inspect
-        from metascience_agent import bundle
+        from forensic_metascience_ai_toolkit import bundle
         return inspect.getsource(bundle)
 
     def test_the_denominator_no_longer_reads_report_obj(self):

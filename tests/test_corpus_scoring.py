@@ -12,7 +12,7 @@ import math
 
 import pytest
 
-from metascience_agent.evaluation.corpus import (
+from forensic_metascience_ai_toolkit.evaluation.corpus import (
     ACCUSATORY,
     ACCUSATORY_SECONDARY,
     FIRE,
@@ -31,7 +31,7 @@ from metascience_agent.evaluation.corpus import (
     score,
     verdict,
 )
-from metascience_agent.evaluation.harness import repo_root
+from forensic_metascience_ai_toolkit.evaluation.harness import repo_root
 
 ALL8 = "grim,grimmer,sprite,debit,statcheck,baseline_similarity,digit_preference,duplication"
 

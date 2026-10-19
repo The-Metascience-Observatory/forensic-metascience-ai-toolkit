@@ -1,5 +1,5 @@
 """Complete-run selection and queue fields survive the compact sync boundary."""
-from metascience_agent.workbench.remote import summary_expr
+from forensic_metascience_ai_toolkit.workbench.remote import summary_expr
 
 
 def test_cross_batch_selection_family_is_carried_over_sync():

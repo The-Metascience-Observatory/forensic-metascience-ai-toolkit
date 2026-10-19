@@ -1,7 +1,7 @@
 """Locators: a missing place is none, never page 1."""
 from pathlib import Path
 
-from metascience_agent.locators import (
+from forensic_metascience_ai_toolkit.locators import (
     _locate, _locate_in_sections, candidates_for_issue, locate_issue,
     locators_for_paper, quoted_fragments,
 )
@@ -251,7 +251,7 @@ def test_folded_xml_quote_hits_pdf_page():
 
 
 def _fold_page(text):
-    from metascience_agent.locators import _fold
+    from forensic_metascience_ai_toolkit.locators import _fold
     return _fold(text)
 
 
@@ -280,7 +280,7 @@ def _sections_with_table():
 
 
 def test_table_cell_quote_anchors_exactly_and_names_its_row():
-    from metascience_agent.locators import _locate_in_sections
+    from forensic_metascience_ai_toolkit.locators import _locate_in_sections
     got = _locate_in_sections(
         "| Group | F (1.29) = 37.3 | F (1.29) = 24.8 |", _sections_with_table())
     assert got["method"] == "table_verbatim"
@@ -290,7 +290,7 @@ def test_table_cell_quote_anchors_exactly_and_names_its_row():
 
 def test_a_table_hit_is_labelled_by_its_table_not_by_Floats():
     """The containing section is often literally named "Floats"."""
-    from metascience_agent.locators import _xml_target
+    from forensic_metascience_ai_toolkit.locators import _xml_target
     t = _xml_target(
         {"id": "f_1:a", "quote": "| Group | F (1.29) = 37.3 |", "label": ""},
         _sections_with_table())
@@ -300,7 +300,7 @@ def test_a_table_hit_is_labelled_by_its_table_not_by_Floats():
 
 
 def test_prose_wins_over_a_table_row_for_the_same_quote():
-    from metascience_agent.locators import _locate_in_sections
+    from forensic_metascience_ai_toolkit.locators import _locate_in_sections
     secs = _sections_with_table()
     secs.insert(0, {"page_num": 1, "section": "Results",
                     "text": "Group F (1.29) = 37.3 was observed.", "tables": []})
@@ -312,7 +312,7 @@ def test_prose_wins_over_a_table_row_for_the_same_quote():
 def test_a_token_hit_on_two_rows_is_not_a_location():
     """Grids collide far more readily than prose: two candidate rows is a
     region, not a place, and a mark drawn on the wrong row is an accusation."""
-    from metascience_agent.locators import _locate_in_sections
+    from forensic_metascience_ai_toolkit.locators import _locate_in_sections
     secs = [{
         "page_num": 2, "section": "Floats", "text": "",
         "tables": [{"table_num": 1, "data": [
@@ -325,7 +325,7 @@ def test_a_token_hit_on_two_rows_is_not_a_location():
 
 
 def test_a_unique_token_row_does_locate():
-    from metascience_agent.locators import _locate_in_sections
+    from forensic_metascience_ai_toolkit.locators import _locate_in_sections
     secs = [{
         "page_num": 2, "section": "Floats", "text": "",
         "tables": [{"table_num": 1, "data": [
@@ -342,7 +342,7 @@ def test_one_quote_yields_one_candidate_with_a_unique_id():
     """A target id is `{cand_id}:xml`, so two candidates sharing an id mint two
     targets the viewer cannot tell apart. MEASURED: 101 of 260 issues carried
     the same quote twice under the same id."""
-    from metascience_agent.locators import candidates_for_issue
+    from forensic_metascience_ai_toolkit.locators import candidates_for_issue
     got = candidates_for_issue({"passages": [
         {"id": "a", "quote": "the mean was 3.53"},
         {"id": "a", "quote": "the  mean   was 3.53"},   # same, re-rendered
@@ -353,7 +353,7 @@ def test_one_quote_yields_one_candidate_with_a_unique_id():
 
 
 def test_two_passages_that_collide_on_id_but_not_on_quote_both_survive():
-    from metascience_agent.locators import candidates_for_issue
+    from forensic_metascience_ai_toolkit.locators import candidates_for_issue
     got = candidates_for_issue({"passages": [
         {"id": "a", "quote": "the mean was 3.53"},
         {"id": "a", "quote": "the SD was 1.20"},

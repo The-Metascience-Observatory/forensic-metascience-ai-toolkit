@@ -9,8 +9,8 @@ stands on its own -- an older import with no execution row must not vanish.
 """
 import json
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
 from tests.test_workbench_catalog import seed
 
 

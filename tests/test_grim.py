@@ -1,8 +1,8 @@
 """Tests for GRIM and GRIMMER tests."""
 
 import pytest
-from metascience_agent.tools.grim import grim_test, grim_test_percentage
-from metascience_agent.tools.sd_checks import grimmer_test
+from forensic_metascience_ai_toolkit.tools.grim import grim_test, grim_test_percentage
+from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
 
 
 
@@ -300,7 +300,7 @@ class TestGRIMSweep:
     def test_ballot_1989_first_value(self):
         """grim('0.491', n) should be TRUE for n in
         {53, 55, 57, 106, 108, 110, 112, 114, 116, 159, 161} (per intro doc)."""
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         # Test as proportion 0.491 reported to 3dp.
         result = grim_sweep([0.491], n_max=161, decimals=3, value_type="proportion")
@@ -311,7 +311,7 @@ class TestGRIMSweep:
     def test_ballot_1989_intersection_empty(self):
         """The three percentages 49.1, 16.2, 17.4 cannot share a common n
         in [2, 161]; their joint viable set is empty (Heathers' diagnosis)."""
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         # n_max=161 is Ballot's own reported N, so the range is stated, not
         # ours -- which is what licenses the `impossible` verdict.
@@ -322,7 +322,7 @@ class TestGRIMSweep:
 
     def test_unique_intersection(self):
         """Two percentages that DO share a unique n."""
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         # 50.0% and 25.0% both pass GRIM at n=4 (k=2, k=1) and many others;
         # use a tight range to force uniqueness.
@@ -396,7 +396,7 @@ class TestGRIMSweepRangeGuard:
     VALS = [34.0, 98.0, 16.4]
 
     def test_empty_intersection_with_assumed_range_refuses(self):
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         r = grim_sweep(self.VALS, n_max=200, n_min=20, decimals=1)
         assert r["joint_viable_ns"] == []
@@ -404,7 +404,7 @@ class TestGRIMSweepRangeGuard:
         assert "range" in r["explanation"].lower()
 
     def test_empty_intersection_with_stated_n_is_impossible(self):
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         # Same values, but the paper itself claims N <= 200: the range is the
         # paper's own, so the empty intersection is about the paper.
@@ -414,7 +414,7 @@ class TestGRIMSweepRangeGuard:
         assert r["severity"] == "impossible"
 
     def test_stated_n_but_raised_n_min_still_refuses(self):
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         # n_max is the paper's, but n_min=20 is OURS: a true n in [2, 19]
         # was never checked, so the range is not provably exhaustive.
@@ -423,7 +423,7 @@ class TestGRIMSweepRangeGuard:
         assert r["severity"] == "indeterminate"
 
     def test_range_that_brackets_the_truth_finds_it(self):
-        from metascience_agent.tools.grim import grim_sweep
+        from forensic_metascience_ai_toolkit.tools.grim import grim_sweep
 
         r = grim_sweep(self.VALS, n_max=300, n_min=20, decimals=1)
         assert 250 in r["joint_viable_ns"]
@@ -434,7 +434,7 @@ class TestReconstruct2x2:
     """Heathers' INTERVENTION/CONTROL example: 63.7%/44.9%, n=180, χ²=6.407."""
 
     def test_unique_with_chi2_filter(self):
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
 
         # With tight χ² tolerance, the canonical (58,40,33,49) solution is unique.
         result = reconstruct_2x2(
@@ -449,7 +449,7 @@ class TestReconstruct2x2:
         assert cand["chi2_match"] is True
 
     def test_multiple_solutions_without_filter(self):
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
 
         result = reconstruct_2x2(
             pct_col1=63.7, pct_col2=44.9, n_total=180, decimals=1,
@@ -466,7 +466,7 @@ class TestReconstruct2x2:
         assert canonical is not None
 
     def test_impossible_when_total_too_small(self):
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
 
         # No 2x2 with n_total=4 can produce 63.7% and 44.9% at 1dp precision.
         result = reconstruct_2x2(63.7, 44.9, n_total=4, decimals=1)
@@ -478,7 +478,7 @@ class TestReconstruct2x2:
         observational split (149 vs 29) reconstructs perfectly; declaring it
         `impossible` was OUR heuristic exclusion published as a claim about the
         paper, at the strongest severity the toolkit has."""
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
 
         result = reconstruct_2x2(pct_col1=36.91, pct_col2=37.93, n_total=178, decimals=2)
         assert result["severity"] == "consistent"
@@ -490,7 +490,7 @@ class TestReconstruct2x2:
         assert "imbalanced" in result["explanation"]
 
     def test_genuinely_unreconstructable_is_still_impossible(self):
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
         # Checked over EVERY split, not only balanced ones.
         result = reconstruct_2x2(33.33, 66.67, n_total=7, decimals=2)
         assert result["severity"] == "impossible"
@@ -500,14 +500,14 @@ class TestReconstruct2x2:
         """A reported chi-squared that matches no reconstruction is not proof the
         table is impossible -- the recompute is Pearson, so a Yates or rounded
         chi-squared mismatches a valid table. Decline, do not accuse."""
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
         result = reconstruct_2x2(63.7, 44.9, n_total=180, decimals=1,
                                  reported_chi2=999.0, chi2_tolerance=0.01)
         assert result["severity"] == "indeterminate"
         assert result["n_solutions"] == 0
 
     def test_precondition_errors_carry_a_severity(self):
-        from metascience_agent.tools.grim import reconstruct_2x2
+        from forensic_metascience_ai_toolkit.tools.grim import reconstruct_2x2
         assert reconstruct_2x2(50.0, 50.0, n_total=2)["severity"] == "indeterminate"
         assert reconstruct_2x2(50.0, 50.0, n_total=100,
                                value_type="nonsense")["severity"] == "indeterminate"
@@ -523,7 +523,7 @@ class TestRealWorldExamples:
         BMI: range 27-34, mean=30.6, SD=3.1, n=30
         SPRITE shows bimodal distribution (many 27s and 34s)
         """
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
         result = sprite_reconstruct(
             mean=30.6,
@@ -562,7 +562,7 @@ class TestGrimSweepTriesTruncationBeforeAccusing:
 
     @staticmethod
     def _sweep(values, n_max=119, source="stated"):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         return BY_NAME["grim_sweep"].call({
             "values": values, "n_max": n_max, "n_min": 2, "decimals": 1,
             "value_type": "percentage", "n_max_source": source})
@@ -624,7 +624,7 @@ class TestGrimSweepTriesTruncationBeforeAccusing:
     def test_the_two_grim_tools_now_agree_about_truncation(self):
         """The asymmetry itself, stated as a property: a value a truncating
         reporter would print must not be `impossible` in either tool."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         single = BY_NAME["grim_check"].call(
             {"mean": 3.46, "n": 30, "decimals": 2, "data_type": "likert"})
         assert single["severity"] != "impossible"
@@ -648,7 +648,7 @@ class TestGrimPercentageTriesTruncationToo:
 
     @staticmethod
     def _pct(percentage, n, decimals=1):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         return BY_NAME["grim_percentage"].call(
             {"percentage": percentage, "n": n, "decimals": decimals,
              "data_type": "proportion"})
@@ -691,7 +691,7 @@ class TestGrimPercentageTriesTruncationToo:
     def test_all_three_grim_tools_now_agree_about_truncation(self):
         """State the family property, since the asymmetry was the actual bug in
         two of the three."""
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         assert BY_NAME["grim_check"].call(
             {"mean": 3.46, "n": 30, "decimals": 2,
              "data_type": "likert"})["severity"] != "impossible"
@@ -702,7 +702,7 @@ class TestGrimPercentageTriesTruncationToo:
         assert self._pct(9.6, 93)["severity"] != "impossible"
 
     def test_the_integrity_card_no_longer_claims_round_half_only(self):
-        from metascience_agent.registry import BY_NAME
+        from forensic_metascience_ai_toolkit.registry import BY_NAME
         card = BY_NAME["grim_percentage"].integrity_card()
         assumptions = " ".join(card["assumptions"])
         assert "truncation" in assumptions.lower()
@@ -725,13 +725,13 @@ class TestTruncationIsCountedNotAccused:
     evidence in itself. Same shape as `flag_round_n`."""
 
     def test_the_severity_never_reaches_the_findings_as_suspicious(self):
-        from metascience_agent.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
         r = grim_test_percentage(percentage=9.6, n=93, decimals=1,
                                  data_type="proportion")
         assert r["severity"] == "consistent"
 
     def test_but_the_convention_is_still_named(self):
-        from metascience_agent.tools.grim import grim_test_percentage
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test_percentage
         r = grim_test_percentage(percentage=9.6, n=93, decimals=1,
                                  data_type="proportion")
         assert r["failure_mode"] == "rounding_convention"
@@ -740,7 +740,7 @@ class TestTruncationIsCountedNotAccused:
     def test_a_genuine_granularity_failure_is_still_impossible(self):
         """The de-escalation is for the CONVENTION, not for arithmetic that no
         convention rescues."""
-        from metascience_agent.tools.grim import grim_test
+        from forensic_metascience_ai_toolkit.tools.grim import grim_test
         r = grim_test(mean=5.19, n=10, decimals=2, data_type="likert",
                       scale_min=1, scale_max=7, bound_source="stated",
                       discreteness_source="stated")
@@ -765,9 +765,9 @@ class TestTruncationIsCountedNotAccused:
         `overall_severity` line in the batch aggregate. A source-string test
         that survives the behaviour it pins is not a test. This one calls the
         tools."""
-        from metascience_agent.tools.debit import debit_test
-        from metascience_agent.tools.sd_checks import grimmer_test
-        from metascience_agent.tools.sprite import sprite_reconstruct
+        from forensic_metascience_ai_toolkit.tools.debit import debit_test
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.tools.sprite import sprite_reconstruct
 
         d = debit_test(0.20, 0.40, 30)
         assert d["severity"] == "consistent"
@@ -786,7 +786,7 @@ class TestTruncationIsCountedNotAccused:
         """A convention that stops being a finding and is counted nowhere has
         simply been deleted, and the whole argument for de-escalating it was
         that the AGGREGATE is where it means something."""
-        from metascience_agent.agent import checks_tally
+        from forensic_metascience_ai_toolkit.agent import checks_tally
         out = checks_tally(None, {"findings": []})
         rc = out["rounding_convention"]
         assert set(rc) >= {"n_fit_only_under_truncation", "n_granularity_checks"}
@@ -806,8 +806,8 @@ class TestTruncationIsCountedNotAccused:
         field it reads, and nothing caught it because a zero counter looks
         exactly like a clean paper. Drive this one with a real tool result."""
         import json
-        from metascience_agent.agent import checks_tally
-        from metascience_agent.tools.sd_checks import grimmer_test
+        from forensic_metascience_ai_toolkit.agent import checks_tally
+        from forensic_metascience_ai_toolkit.tools.sd_checks import grimmer_test
 
         r = grimmer_test(mean=3.0, sd=1.0, n=10, scale_min=1, scale_max=7,
                          data_type="likert", bound_source="stated")
@@ -898,7 +898,7 @@ class TestAnAbsentBoundIsNotAnInventedOne:
         assert "no stated bounds" in none["methodology"]
 
     def test_the_registry_passes_a_none_bound_through(self):
-        from metascience_agent import registry
+        from forensic_metascience_ai_toolkit import registry
         r = registry.BY_NAME["grim_check"].call(
             {"mean": 35.78, "n": 64, "decimals": 2, "data_type": "count",
              "scale_min": None, "scale_max": None})

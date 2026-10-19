@@ -71,12 +71,12 @@ def pytest_ignore_collect(collection_path, config):
 def image_package():
     """Request this in a test that exercises the image analysis package: it is
     skipped, by name, in a run where the package is absent or blocked."""
-    from metascience_agent.image_plugin import available
+    from forensic_metascience_ai_toolkit.image_plugin import available
     if not available():
         pytest.skip("needs the image analysis package (absent or blocked)")
 
 
-from metascience_agent.test_runner import apply_default_parallelism  # noqa: E402
+from forensic_metascience_ai_toolkit.test_runner import apply_default_parallelism  # noqa: E402
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -138,7 +138,7 @@ def _no_live_findings_db(monkeypatch, tmp_path_factory):
     monkeypatch.setenv("METASCIENCE_ENV_FILE",
                        str(tmp_path_factory.mktemp("noenv") / "absent.env"))
     try:
-        from metascience_agent import db_push
+        from forensic_metascience_ai_toolkit import db_push
     except ImportError:
         yield
         return
@@ -174,7 +174,7 @@ def _no_operator_text_ocr(monkeypatch):
     OCR localization tests explicitly supply a deterministic adapter. Real OCR
     acceptance is a separate archived-fixture replay, with engine provenance.
     """
-    from metascience_agent.image_plugin import available, load
+    from forensic_metascience_ai_toolkit.image_plugin import available, load
     if not available():
         return None
     text_support = load("image_forensics.text_support")

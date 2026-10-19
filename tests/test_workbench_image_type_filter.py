@@ -8,8 +8,8 @@ classification is not evidence. The repository joins it at read time.
 """
 import json
 
-from metascience_agent.workbench.catalog import Catalog
-from metascience_agent.workbench.repository import Repository
+from forensic_metascience_ai_toolkit.workbench.catalog import Catalog
+from forensic_metascience_ai_toolkit.workbench.repository import Repository
 from tests.test_workbench_catalog import seed
 
 

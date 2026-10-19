@@ -20,7 +20,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.prepass import paper_tables
+from forensic_metascience_ai_toolkit.prepass import paper_tables
 
 XML_HEAD = ('<?xml version="1.0"?><article xmlns:xlink="http://www.w3.org/1999/xlink">'
             "<front><article-meta><title-group><article-title>T</article-title>"
@@ -49,7 +49,7 @@ def _paper(tmp_path, wraps, with_pdf_cache=True):
     if with_pdf_cache:
         import json
 
-        from metascience_agent.extraction import docling_tables as dl
+        from forensic_metascience_ai_toolkit.extraction import docling_tables as dl
 
         c = dl._cache_path(pdf)
         c.parent.mkdir(parents=True, exist_ok=True)

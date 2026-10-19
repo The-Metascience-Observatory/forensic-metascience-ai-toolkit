@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from metascience_agent.agent import record_spend, reset_spend, spend_so_far
+from forensic_metascience_ai_toolkit.agent import record_spend, reset_spend, spend_so_far
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -63,7 +63,7 @@ class TestAnalyzeDoesNotDumpTheReport:
     def test_analyze_does_not_print_the_report_markdown(self):
         import inspect
 
-        from metascience_agent.cli import analyze
+        from forensic_metascience_ai_toolkit.cli import analyze
 
         src = inspect.getsource(analyze)
         assert "Markdown(result[\"report\"])" not in src
@@ -74,7 +74,7 @@ class TestAnalyzeDoesNotDumpTheReport:
 
 class TestAnalyzeSummary:
     def test_counts_every_rung_including_zeros(self):
-        from metascience_agent.cli import _finding_counts
+        from forensic_metascience_ai_toolkit.cli import _finding_counts
 
         counts = _finding_counts({
             "report_obj": {"findings": [
@@ -90,7 +90,7 @@ class TestAnalyzeSummary:
 
     def test_a_failed_editorial_falls_back_to_the_sweep(self):
         """Five zeros on a sweep that found things would read as a clean paper."""
-        from metascience_agent.cli import _finding_counts
+        from forensic_metascience_ai_toolkit.cli import _finding_counts
 
         counts = _finding_counts({
             "report_obj": None,
@@ -103,7 +103,7 @@ class TestAnalyzeSummary:
         assert counts["consistent"] == 1
 
     def test_an_unrecognised_severity_is_not_dumped_into_indeterminate(self):
-        from metascience_agent.cli import _finding_counts
+        from forensic_metascience_ai_toolkit.cli import _finding_counts
 
         counts = _finding_counts({
             "report_obj": {"findings": [{"severity": "not-a-rung"}]},
@@ -111,7 +111,7 @@ class TestAnalyzeSummary:
         assert counts["indeterminate"] == 0
 
     def test_runtime_format(self):
-        from metascience_agent.cli import _fmt_runtime
+        from forensic_metascience_ai_toolkit.cli import _fmt_runtime
 
         assert _fmt_runtime(None) == "not recorded"
         assert _fmt_runtime(12.34) == "12.3s"
@@ -120,7 +120,7 @@ class TestAnalyzeSummary:
         assert _fmt_runtime(7323) == "2h 2m 3s"
 
     def test_summary_prints_verdict_counts_runtime_only(self, capsys):
-        from metascience_agent.cli import _print_analyze_summary
+        from forensic_metascience_ai_toolkit.cli import _print_analyze_summary
 
         _print_analyze_summary({
             "verdict": "does_not_reconcile",

@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from metascience_agent.tools.debit import (
+from forensic_metascience_ai_toolkit.tools.debit import (
     debit_test,
     debit_test_batch,
     _expected_sample_sd,
@@ -132,7 +132,7 @@ class TestBatchNeverLaundersARefusalIntoAClearVerdict:
 
     def test_batch_with_no_declared_data_type_does_not_report_consistent(self):
         """The exact MCP path: `data_type` unset, so the registry passes None."""
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         spec = {s.name: s for s in R.SPECS}["debit_check_batch"]
         result = spec.call({"rows": [dict(r) for r in self.ROWS]})
@@ -142,7 +142,7 @@ class TestBatchNeverLaundersARefusalIntoAClearVerdict:
         assert result["applicable"] is False
 
     def test_batch_agrees_with_the_single_cell_tool_on_the_same_input(self):
-        from metascience_agent import registry as R
+        from forensic_metascience_ai_toolkit import registry as R
 
         specs = {s.name: s for s in R.SPECS}
         row = self.ROWS[0]

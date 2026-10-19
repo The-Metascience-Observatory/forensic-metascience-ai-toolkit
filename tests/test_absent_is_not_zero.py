@@ -11,7 +11,7 @@ import tempfile
 
 import pytest
 
-from metascience_agent.bundle import _run_facts
+from forensic_metascience_ai_toolkit.bundle import _run_facts
 
 
 def _wall(meta: dict) -> str:
@@ -59,14 +59,14 @@ class TestTheBenchmarkDenominatorIsVisible:
     `--flawed 15` request, so the rate ROSE as the generator got worse."""
 
     def test_the_benchmark_reports_what_it_excluded(self):
-        from metascience_agent.simulation import benchmark
+        from forensic_metascience_ai_toolkit.simulation import benchmark
         result = benchmark(n_clean=4, n_flawed_per_kind=15, seed0=1000)
         for kind, s in result["sensitivity"].items():
             assert "undetectable" in s, kind
             assert s["total"] + s["undetectable"] == 15, kind
 
     def test_the_rate_uses_the_reduced_denominator_deliberately(self):
-        from metascience_agent.simulation import benchmark
+        from forensic_metascience_ai_toolkit.simulation import benchmark
         result = benchmark(n_clean=4, n_flawed_per_kind=15, seed0=1000)
         for s in result["sensitivity"].values():
             if s["total"]:
@@ -75,7 +75,7 @@ class TestTheBenchmarkDenominatorIsVisible:
     def test_the_renderer_prints_the_excluded_column(self):
         """The data always said how many; the table did not."""
         import inspect
-        from metascience_agent import cli
+        from forensic_metascience_ai_toolkit import cli
         src = inspect.getsource(cli)
         assert '"not flawed"' in src
         assert "undetectable" in src

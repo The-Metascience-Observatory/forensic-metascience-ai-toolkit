@@ -20,7 +20,7 @@ it was being deleted for the shape of its minus sign.
 """
 import unicodedata
 
-from metascience_agent.tools.celltypes import parse_cell, parse_cells, repair_unicode
+from forensic_metascience_ai_toolkit.tools.celltypes import parse_cell, parse_cells, repair_unicode
 
 CI = "b (95% CI)"
 

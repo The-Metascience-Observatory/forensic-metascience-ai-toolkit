@@ -5,7 +5,7 @@ Results (30 -> 21 -> 15) passed, and the review said "the flow reconciles";
 the abstract put 16 rats, not 21, at the second operation.
 """
 
-from metascience_agent.tools.flow import check_flow_arithmetic
+from forensic_metascience_ai_toolkit.tools.flow import check_flow_arithmetic
 
 
 def _stages(also=None):

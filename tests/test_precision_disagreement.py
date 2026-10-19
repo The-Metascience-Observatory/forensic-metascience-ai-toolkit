@@ -16,8 +16,8 @@ into an accusation, and nothing in the pipeline was comparing the two readings.
 
 import pytest
 
-from metascience_agent.agreement import compare
-from metascience_agent.tools.grim import _mean_passes_grim
+from forensic_metascience_ai_toolkit.agreement import compare
+from forensic_metascience_ai_toolkit.tools.grim import _mean_passes_grim
 
 
 class TestTheDecimalCountDecidesTheVerdict:

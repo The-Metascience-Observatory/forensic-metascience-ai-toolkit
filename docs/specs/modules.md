@@ -6,7 +6,7 @@ names modules; this document is the contract those modules and the core keep.
 ## A module is a folder
 
 ```
-src/metascience_agent/modules/
+src/forensic_metascience_ai_toolkit/modules/
   <name>/MODULE.md   frontmatter = the module's definition; body = its documentation
   <name>/module.py   MODULE = <instance>; producers implement `run`, the finaliser `finalize`
   base.py            ModuleDef, ModuleResult, Module
@@ -117,7 +117,7 @@ pipeline's `backend:`, then the environment, then the default.
 ## The OpenRouter backend (Phase 3c)
 
 `backend: {name: openrouter, model: <openrouter slug>}` runs a module on our
-own agent loop, `metascience_agent.openrouter_loop`,
+own agent loop, `forensic_metascience_ai_toolkit.openrouter_loop`,
 launched as a subprocess like the CLIs. It speaks Claude's stream-json, so the
 runner, ledger and transcripts need no new branch:
 
@@ -161,7 +161,7 @@ the old names no longer counts as done for the batch skip and is re-run once.
 
 `raw_data` runs `copy_paste_detector.detect_paper_duplication` over the
 paper's spreadsheets and CSVs (top level plus `raw_track.SUPPLEMENT_SUBDIRS`)
-in a child process (`python -m metascience_agent.raw_track`, killed after
+in a child process (`python -m forensic_metascience_ai_toolkit.raw_track`, killed after
 `METASCIENCE_RAW_DATA_TIMEOUT`, default 900 s). Opt-in: `raw_data_only`, or
 `full_raw_data` (`full` plus this module, still a complete review).
 
@@ -180,7 +180,7 @@ An agent module's system prompt is `modules/<name>/prompt.md` (MODULE.md
 `prompt: prompt.md`); the text every role shares is `core/prompts/`
 (`rulebook.md`, `rulebook_roles.md`, `reproduction.md`, `grok_mcp_route.md`).
 `core/prompts/__init__.py` assembles them (the `metascience_agent/prompts/`
-package was retired 2026-10-18; schemas are `metascience_agent/schema/`).
+package was retired 2026-10-18; schemas are `forensic_metascience_ai_toolkit/schema/`).
 `prompts.PROMPT_FILES` maps the old names to them, so `_read("tool_expert.md")`
 still works; what is sent is byte-identical (the parity oracle). Scanners of
 prompt text read `prompts.prompt_files()`.

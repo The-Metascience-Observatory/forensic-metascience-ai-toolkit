@@ -19,8 +19,8 @@ import json
 
 import pytest
 
-from metascience_agent import agent, obligations, parallel
-from metascience_agent.parallel import TOOL_AGENT_TOOLS
+from forensic_metascience_ai_toolkit import agent, obligations, parallel
+from forensic_metascience_ai_toolkit.parallel import TOOL_AGENT_TOOLS
 
 
 def _ledger(*names, allowed=None):
@@ -206,7 +206,7 @@ class TestTheGuardAuditReachesEveryAgent:
 
     def test_the_block_is_the_shape_the_viewer_reads(self):
         """`_guards_by_stage` keeps only stages whose `guards` is a dict."""
-        from metascience_agent import bundle
+        from forensic_metascience_ai_toolkit import bundle
         doc = self._audit(_ledger(agent._mcp("grim_check")))
         assert bundle._guards_by_stage(doc), (
             "the viewer's guard pane would still be empty")

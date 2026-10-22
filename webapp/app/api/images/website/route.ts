@@ -6,6 +6,7 @@ import { errMsg } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { pyJson, pyModuleJson, repoRoot } from "@/lib/python";
 import { workbench } from "@/lib/workbench";
+import { OVERRIDE_LOG, overrideConfirmed, overrideLine } from "@/lib/embargoOverride";
 import { FINDINGS_JSON, IMAGE_DIR, IMAGE_URL, citationFrom, findingId, normalisePubpeerUrl, pngSize,
   type WebsiteFinding } from "@/lib/websiteFinding";
 
@@ -67,7 +68,11 @@ export async function POST(req: Request) {
     paperDir = String(target.directory);
   } catch (e) { return fail(`Could not find the paper folder: ${errMsg(e)}`, 404); }
   const marker = embargoMarker(paperDir);
-  if (marker) return fail(`Refused: ${marker} marks this corpus as under a selection embargo, so nothing from it may be published.`, 403);
+  // Lifted only by a typed confirmation, checked HERE; one finding per request.
+  if (marker && !overrideConfirmed(field("embargoOverride"))) {
+    return NextResponse.json({ error: `Refused: ${marker} marks this corpus as under a selection embargo, so nothing from it may be published.`,
+      code: "embargo", marker }, { status: 403 });
+  }
 
   let doi: string, citation: WebsiteFinding["citation"] | null;
   try {
@@ -91,6 +96,14 @@ export async function POST(req: Request) {
   let id = findingId(citation, taken);
   while (fs.existsSync(path.join(imageDir, `${id}.png`))) { taken.add(id); id = findingId(citation, taken); }
 
+  // The override is recorded before anything is written to the website: if the
+  // record cannot be kept, nothing is published.
+  if (marker) {
+    try {
+      fs.appendFileSync(path.join(path.dirname(marker), OVERRIDE_LOG),
+        overrideLine({ project, dir, doi, website_id: id, marker }));
+    } catch (e) { return fail(`Could not record the embargo override, so nothing was published: ${errMsg(e)}`, 500); }
+  }
   const entry: WebsiteFinding = {
     id, doi, citation, pubpeerUrl, submitted, summary,
     image: { src: `${IMAGE_URL}/${id}.png`, width: size.width, height: size.height, alt },
@@ -107,7 +120,7 @@ export async function POST(req: Request) {
     return fail(`Writing the website files failed: ${errMsg(e)}`, 500);
   }
   return NextResponse.json({
-    id, doi, website: site,
+    id, doi, website: site, ...(marker ? { embargoOverridden: marker } : {}),
     files: [path.relative(site, findingsPath), path.relative(site, pngPath)],
     page: `/forensic-metascience-ai-toolkit/findings/image-findings#${id}`,
     entry,

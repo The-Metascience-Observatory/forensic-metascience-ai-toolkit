@@ -343,7 +343,7 @@ function saveBlob(blob: Blob, name: string) {
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
 
-type WebsiteResult = { id: string; website: string; files: string[]; page: string };
+type WebsiteResult = { id: string; website: string; files: string[]; page: string; embargoOverridden?: string };
 
 /** "Add to website": the PubPeer link and comment for this finding, sent
  *  with the current summary figure to the Observatory website checkout. */
@@ -358,10 +358,14 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<WebsiteResult | null>(null);
+  // Set when the server refuses because the corpus is under a selection embargo;
+  // the override is then offered, for this one finding, behind a typed phrase.
+  const [embargo, setEmbargo] = useState<string | null>(null);
+  const [typed, setTyped] = useState("");
   const urlOk = !!normalisePubpeerUrl(url);
   const labels = [...new Set(item.panels.map(p => p.figure_label).filter(Boolean))].join(" and ");
 
-  async function submit() {
+  async function submit(override = false) {
     setBusy(true); setError(null);
     try {
       const form = new FormData();
@@ -369,8 +373,10 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
       form.set("pubpeerUrl", url); form.set("summary", summary); form.set("submitted", date);
       form.set("alt", `Annotated ${labels || "figure"} with the matching regions outlined.`);
       form.set("image", await exportBlob(), "summary.png");
+      if (override) form.set("embargoOverride", typed);
       const response = await fetch("/api/images/website", { method: "POST", body: form });
       const body = await response.json().catch(() => ({}));
+      if (response.status === 403 && body.code === "embargo") { setEmbargo(String(body.marker || "")); return; }
       if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
       setDone(body as WebsiteResult);
     } catch (e) { setError(String(e instanceof Error ? e.message : e)); }
@@ -382,6 +388,7 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
     <div style={box}>
       <span>Added to the website as <b>{done.id}</b>: wrote {done.files.map(f => <code key={f} style={{ marginRight: 6 }}>{f}</code>)}
         in <code>{done.website}</code>. Nothing is public until the website is committed and deployed.</span>
+      {done.embargoOverridden && <span role="status">The selection embargo was overridden for this finding; recorded in <code>EMBARGO_OVERRIDES.jsonl</code> beside <code>{done.embargoOverridden}</code>.</span>}
       <span className="muted">It will appear at <code>{done.page}</code>.</span>
       <div><button type="button" onClick={onClose}>ok</button></div>
     </div>
@@ -410,8 +417,24 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
         <input type="date" value={date} onChange={e => setDate(e.target.value)} />
       </label>
       {error && <span role="alert" style={{ color: "var(--sev-impossible)" }}>{error}</span>}
+      {embargo !== null && (
+        <div role="alert" style={{ border: "2px solid var(--sev-impossible)", borderRadius: 6, padding: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+          <b>This corpus is under a selection embargo.</b>
+          <span><code>{embargo}</code> marks it as selected for a possible False Claims Act action, where publishing our own
+            findings can spoil the claim. Override only if you have decided to publish this finding. It applies to this
+            one finding, the marker is left in place, and the override is written to <code>EMBARGO_OVERRIDES.jsonl</code> beside it.</span>
+          <label style={{ display: "flex", gap: 6, alignItems: "center" }}>type <code>OVERRIDE EMBARGO</code> to confirm
+            <input value={typed} onChange={e => setTyped(e.target.value)} style={{ flex: 1, minWidth: 160 }} autoComplete="off" />
+          </label>
+          <div>
+            <button type="button" onClick={() => submit(true)}
+                    disabled={busy || typed.trim() !== "OVERRIDE EMBARGO" || !urlOk || !summary.trim() || !dir || !date}>
+              {busy ? "adding…" : "override embargo and add to website"}</button>
+          </div>
+        </div>
+      )}
       <div style={{ display: "flex", gap: 8 }}>
-        <button type="button" onClick={submit} disabled={busy || !urlOk || !summary.trim() || !dir || !date}>
+        <button type="button" onClick={() => submit(false)} disabled={busy || !urlOk || !summary.trim() || !dir || !date}>
           {busy ? "adding…" : "add to website"}</button>
         <button type="button" onClick={onClose} disabled={busy}>cancel</button>
       </div>

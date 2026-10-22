@@ -42,3 +42,46 @@ export function PaperReferences({ item }: { item: Item }) {
     </section>
   );
 }
+
+/** First author only, "et al." when there are more. `metadata.json` separates
+ *  authors with semicolons; a record with no separator is one author. */
+function firstAuthorEtAl(authors: string | null | undefined): string {
+  const list = (authors || "").split(";").map((a) => a.trim()).filter(Boolean);
+  if (!list.length) return "";
+  return list.length > 1 ? `${list[0]} et al.` : list[0];
+}
+
+/** The shown paper's reference, in the left pane under the item buttons
+ *  (Dan, 2026-10-22): first author et al., the title as the link to its DOI,
+ *  journal in italics, volume in bold. The reference is for orientation, so
+ *  it never claims more than the record holds: a missing field is omitted. */
+export function PaperReference({ paper }: { paper: PaperHead | undefined }) {
+  if (!paper) return null;
+  const { journal, year } = citationParts(paper);
+  const volume = String(paper.volume ?? "").trim();
+  const issue = String(paper.issue ?? "").trim();
+  const pages = (paper.pages || "").trim();
+  const authors = firstAuthorEtAl(paper.authors);
+  const doi = doiLink(paper.doi
+    || (paper.dir?.includes("--") ? paper.dir.replace("--", "/") : null));
+  const title = (paper.title || "").replace(/\.\s*$/, "");
+  const titleNode = !title
+    ? <span className="muted">title not recorded</span>
+    : doi
+      ? <a href={doi.href} target="_blank" rel="noreferrer">{title}</a>
+      : <>{title}</>;
+  return (
+    <section aria-label="Paper reference" style={{ margin: "8px 0", overflowWrap: "anywhere" }}>
+      <p style={{ margin: 0 }}>
+        {authors && <>{authors} </>}
+        {year && <>({year}). </>}
+        {titleNode}.
+        {journal && <> <span className="journal-title">{journal}</span></>}
+        {volume && <> <b>{volume}</b></>}
+        {issue && <>({issue})</>}
+        {pages && <>{volume || issue ? ":" : " "}{pages}</>}
+        {(journal || volume || issue || pages) && "."}
+      </p>
+    </section>
+  );
+}

@@ -41,7 +41,7 @@ function SummaryFigureLauncher({ project, item, boxes, sizes }: { project: strin
 }
 import { AuthorEmails } from "./AuthorEmails";
 import { MissedDuplicationPanel, missedBoxes, regionFor, type MissedDraft } from "./MissedDuplication";
-import { PaperReferences } from "./PaperReferences";
+import { PaperReference, PaperReferences } from "./PaperReferences";
 import { imagePdfBoxes, type ImagePdfBox } from "@/lib/imagePdfBoxes";
 import { describeTransform } from "@/lib/affine";
 import { REVIEW_QUEUED_MESSAGE } from "@/lib/reviewSync";
@@ -447,6 +447,7 @@ export function ImageItem({ project, projectName, itemId }: {
           <AuthorEmails project={project} item={item} />
           <MissedDuplicationPanel project={project} item={item} draft={missed} setDraft={setMissed} canDraw={!!pdfUrl} />
           <button type="button" aria-expanded={detailsOpen} onClick={()=>setDetailsOpen(v=>!v)}>{detailsOpen ? "Hide details" : "Details"}</button>
+          {item.kind !== "cross" && <PaperReference paper={shownPaper} />}
           {detailsOpen && <ImageDetails project={project} run={item.run_id} itemId={item.id}/>}
         </aside>
 

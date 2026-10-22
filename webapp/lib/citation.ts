@@ -75,9 +75,19 @@ export function pubpeerSearchLink(
 }
 
 /** A recorded publication URL takes precedence over the DOI search fallback. */
-export function pubpeerLink(doi: string | null | undefined, publicationUrl?: string | null) {
+export function pubpeerLink(
+  doi: string | null | undefined,
+  publicationUrl?: string | null,
+  title?: string | null,
+) {
   if (publicationUrl && /^https:\/\/pubpeer\.com\/publications\/[a-z0-9]+\/?$/i.test(publicationUrl)) {
     return { href: publicationUrl, label: "PubPeer page" };
   }
-  return pubpeerSearchLink(doi);
+  const bySearch = pubpeerSearchLink(doi);
+  if (bySearch) return bySearch;
+  // A paper with no DOI (some journals issue none) can still be looked up by
+  // its title. Weaker than a DOI match, so the label says so.
+  const t = (title || "").trim();
+  if (!t) return null;
+  return { href: `https://pubpeer.com/search?q=${encodeURIComponent(t)}`, label: "PubPeer title search" };
 }

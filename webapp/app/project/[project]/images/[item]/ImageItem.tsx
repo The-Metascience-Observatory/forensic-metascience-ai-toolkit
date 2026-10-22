@@ -324,6 +324,7 @@ export function ImageItem({ project, projectName, itemId }: {
     shownPaper?.doi
     || (shownPaper?.dir?.includes("--") ? shownPaper.dir.replace("--", "/") : null),
     shownPaper?.pubpeer_url,
+    shownPaper?.title,
   );
   const paneTargets = item.targets.filter((t) => t.paper_dir === shownPanel?.paper_dir
     && (!t.document_path || t.document_path === documentPath
@@ -353,7 +354,7 @@ export function ImageItem({ project, projectName, itemId }: {
         </div>
         {pubpeer && (
           <a href={pubpeer.href} target="_blank" rel="noreferrer"
-             title={pubpeer.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper's DOI"}
+             title={pubpeer.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper (by DOI, or by title when it has none)"}
              style={{ fontSize: 12, flexShrink: 0 }}>PubPeer →</a>
         )}
         <div style={{ flex: 1 }} />
@@ -510,7 +511,7 @@ export function ImageItem({ project, projectName, itemId }: {
                         }}>{revealing ? "opening…" : "show in folder"}</button>
                 {pubpeer && (
                   <a href={pubpeer.href} target="_blank" rel="noreferrer"
-                     title={pubpeer.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper's DOI"}>
+                     title={pubpeer.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper (by DOI, or by title when it has none)"}>
                     {pubpeer.label}
                   </a>
                 )}

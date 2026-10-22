@@ -1,9 +1,21 @@
-import { citationParts, doiLink } from "@/lib/citation";
+import { citationParts, doiLink, pubpeerLink } from "@/lib/citation";
 import type { Item, PaperHead } from "@/app/images/lib";
 
 /** Authors as recorded; `metadata.json` separates them with semicolons. */
 function authorLine(authors: string | null | undefined): string {
   return (authors || "").split(";").map((a) => a.trim()).filter(Boolean).join(", ");
+}
+
+function PubPeerButton({ paper }: { paper: PaperHead }) {
+  const link = pubpeerLink(
+    paper.doi || (paper.dir?.includes("--") ? paper.dir.replace("--", "/") : null),
+    paper.pubpeer_url, paper.title);
+  if (!link) return <span className="muted"> · no DOI or title to search PubPeer with</span>;
+  return (
+    <> · <a href={link.href} target="_blank" rel="noreferrer"
+            title={link.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper"}>
+      {link.label} →</a></>
+  );
 }
 
 function Reference({ paper }: { paper: PaperHead }) {
@@ -36,7 +48,7 @@ export function PaperReferences({ item }: { item: Item }) {
     <section aria-label="Papers" style={{ margin: "8px 0", overflowWrap: "anywhere" }}>
       {papers.map((paper, i) => (
         <p key={i} style={{ margin: "0 0 6px" }}>
-          <b>{"AB"[i]}</b> · <Reference paper={paper} />
+          <b>{"AB"[i]}</b> · <Reference paper={paper} /><PubPeerButton paper={paper} />
         </p>
       ))}
     </section>
@@ -81,6 +93,7 @@ export function PaperReference({ paper }: { paper: PaperHead | undefined }) {
         {issue && <>({issue})</>}
         {pages && <>{volume || issue ? ":" : " "}{pages}</>}
         {(journal || volume || issue || pages) && "."}
+        <PubPeerButton paper={paper} />
       </p>
     </section>
   );

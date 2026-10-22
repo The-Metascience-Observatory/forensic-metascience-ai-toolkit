@@ -18,7 +18,7 @@ function pubpeerLinks(item: Item): { label: string; href: string; title: string 
   const dirs = [...new Set(item.panels.map(p => p.paper_dir).filter(Boolean))];
   return dirs.flatMap((dir, i) => {
     const paper = papers.find(p => p?.dir === dir);
-    const link = pubpeerLink(paper?.doi || (dir.includes("--") ? dir.replace("--", "/") : null), paper?.pubpeer_url);
+    const link = pubpeerLink(paper?.doi || (dir.includes("--") ? dir.replace("--", "/") : null), paper?.pubpeer_url, paper?.title);
     if (!link) return [];
     return [{ href: link.href, label: dirs.length > 1 ? `PubPeer ${"AB"[i] || i + 1}` : "PubPeer",
       title: `${link.label}: ${paper?.title || dir}` }];

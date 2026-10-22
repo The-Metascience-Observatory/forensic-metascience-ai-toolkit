@@ -359,9 +359,8 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<WebsiteResult | null>(null);
   // Set when the server refuses because the corpus is under a selection embargo;
-  // the override is then offered, for this one finding, behind a typed phrase.
+  // the override is then offered, for this one finding, as "submit anyway".
   const [embargo, setEmbargo] = useState<string | null>(null);
-  const [typed, setTyped] = useState("");
   const urlOk = !!normalisePubpeerUrl(url);
   const labels = [...new Set(item.panels.map(p => p.figure_label).filter(Boolean))].join(" and ");
 
@@ -373,7 +372,7 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
       form.set("pubpeerUrl", url); form.set("summary", summary); form.set("submitted", date);
       form.set("alt", `Annotated ${labels || "figure"} with the matching regions outlined.`);
       form.set("image", await exportBlob(), "summary.png");
-      if (override) form.set("embargoOverride", typed);
+      if (override) form.set("embargoOverride", "submit-anyway");
       const response = await fetch("/api/images/website", { method: "POST", body: form });
       const body = await response.json().catch(() => ({}));
       if (response.status === 403 && body.code === "embargo") { setEmbargo(String(body.marker || "")); return; }
@@ -423,13 +422,10 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
           <span><code>{embargo}</code> marks it as selected for a possible False Claims Act action, where publishing our own
             findings can spoil the claim. Override only if you have decided to publish this finding. It applies to this
             one finding, the marker is left in place, and the override is written to <code>EMBARGO_OVERRIDES.jsonl</code> beside it.</span>
-          <label style={{ display: "flex", gap: 6, alignItems: "center" }}>type <code>OVERRIDE EMBARGO</code> to confirm
-            <input value={typed} onChange={e => setTyped(e.target.value)} style={{ flex: 1, minWidth: 160 }} autoComplete="off" />
-          </label>
           <div>
             <button type="button" onClick={() => submit(true)}
-                    disabled={busy || typed.trim() !== "OVERRIDE EMBARGO" || !urlOk || !summary.trim() || !dir || !date}>
-              {busy ? "adding…" : "override embargo and add to website"}</button>
+                    disabled={busy || !urlOk || !summary.trim() || !dir || !date}>
+              {busy ? "adding…" : "submit anyway"}</button>
           </div>
         </div>
       )}

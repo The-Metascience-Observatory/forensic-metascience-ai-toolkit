@@ -3,23 +3,26 @@
  *  for ONE finding at a time. The marker itself is never edited or removed.
  *
  *  Why it exists (Dan, 2026-10-22: "I want to override and publish some of
- *  these"): the marker says it is lifted only by the corpus owner's explicit
- *  decision. The phrase must be typed, and the server checks it, so a stray
- *  click or a script cannot lift it. Every override is appended to
- *  EMBARGO_OVERRIDES.jsonl beside the marker, written BEFORE the website files
- *  are, so a publication with no record cannot happen. */
-export const OVERRIDE_PHRASE = "OVERRIDE EMBARGO";
+ *  these"; later "just have a submit anyway button"): the marker says it is
+ *  lifted only by the corpus owner's explicit decision. The decision is the
+ *  click on "submit anyway", which appears only AFTER the server has refused,
+ *  and the server requires its flag, so a plain submit still cannot lift the
+ *  embargo. Every override is appended to EMBARGO_OVERRIDES.jsonl beside the
+ *  marker, written BEFORE the website files are, so a publication with no
+ *  record cannot happen. */
+export const OVERRIDE_FIELD = "embargoOverride";
+export const OVERRIDE_VALUE = "submit-anyway";
 export const OVERRIDE_LOG = "EMBARGO_OVERRIDES.jsonl";
 
-export const overrideConfirmed = (typed: string | null | undefined): boolean =>
-  (typed ?? "").trim() === OVERRIDE_PHRASE;
+export const overrideConfirmed = (value: string | null | undefined): boolean =>
+  (value ?? "").trim() === OVERRIDE_VALUE;
 
 export type OverrideRecord = {
   at: string; action: "website_publication"; project: string; dir: string;
-  doi: string; website_id: string; marker: string; confirmed_phrase: string;
+  doi: string; website_id: string; marker: string; confirmed_by: string;
 };
 
-export const overrideLine = (r: Omit<OverrideRecord, "at" | "action" | "confirmed_phrase">,
+export const overrideLine = (r: Omit<OverrideRecord, "at" | "action" | "confirmed_by">,
                              now: Date = new Date()): string =>
   JSON.stringify({ at: now.toISOString(), action: "website_publication",
-    ...r, confirmed_phrase: OVERRIDE_PHRASE }) + "\n";
+    ...r, confirmed_by: "submit anyway button" }) + "\n";

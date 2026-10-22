@@ -50,3 +50,22 @@ const stalePanel={...panel,document:{id:'main-id',path:'/expired/work/main.pdf',
  placements:[{...placement,document_id:'main-id',document_path:'/expired/work/main.pdf'}]};
 assert.equal(imagePdfBoxes({...item,panels:[stalePanel],papers:[{dir:'paper',pdf:'__runs/exact/main'}]},[[200,100]])[0].documentPath,'__runs/exact/main');
 assert.deepEqual(imagePdfBoxes({...item,panels:[stalePanel],papers:[{dir:'paper',pdf:null}]},[[200,100]]),[]);
+
+// A whole-image duplication (same image placed twice) has no inlier box: the box
+// is the whole PANEL on both sides, not the whole figure. Panel is 200x100 and
+// covers parent x=200..600, y=100..300 -> PDF x=130..290, y=110..190.
+for (const kind of ['near_duplicate_phash','identical_stream','same_xref_reused']) {
+  const whole = imagePdfBoxes({...item, detector_kind: kind, measurements: {}}, [[200,100],[200,100]]);
+  assert.equal(whole.length, 2, kind);
+  assert.deepEqual(whole[0].points, [[130,110],[290,110],[290,190],[130,190]], kind);
+  assert.deepEqual(whole[1].points, whole[0].points, kind);
+  assert.deepEqual(whole.map(b => b.tid), ['pair:a:0','pair:b:0'], kind);
+  assert.equal(whole[0].color, whole[1].color, kind);
+}
+// A localized kind with no region still draws nothing (no invented box), and a
+// measured region wins over the whole-panel fallback.
+assert.deepEqual(imagePdfBoxes({...item, detector_kind: 'transformed_match', measurements: {}}, [[200,100],[200,100]]), []);
+assert.equal(imagePdfBoxes({...item, detector_kind: 'near_duplicate_phash'}, [[200,100],[200,100]]).length, 2);
+assert.deepEqual(imagePdfBoxes({...item, detector_kind: 'near_duplicate_phash',
+  measurements: {inlier_box_a:[0,0,50,50], inlier_box_b:[0,0,50,50]}}, [[200,100],[200,100]])[0].points[0], [130,110]);
+console.log('Whole-image duplication: whole-panel box on both sides, no invented box for localized kinds');

@@ -46,6 +46,13 @@ export function projectImagePolygon(panel: Panel, pl: Placement, size: [number, 
   });
 }
 
+/** Detector kinds whose match IS the whole panel: the same image placed twice
+ *  (identical stream, same xref, or a near-identical perceptual hash). They
+ *  carry no inlier box, so without this the summary figure drew nothing for
+ *  them (Dan, 2026-10-22, Lab Invest 2019 Fig 5 C vs E). */
+export const WHOLE_IMAGE_KINDS: ReadonlySet<string> =
+  new Set(["near_duplicate_phash", "identical_stream", "same_xref_reused"]);
+
 export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[]): ImagePdfBox[] {
   const result: ImagePdfBox[] = [];
   const ms = item.measurements ?? {};
@@ -53,9 +60,13 @@ export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[]): I
   item.panels.forEach((panel, side) => {
     const size = sizes[side];
     if (!size || (clone && side > 0)) return;
+    const localized = side === 0 ? ms.inlier_box_a : ms.inlier_box_b;
+    // A whole-image duplication has no measured region: its box is the whole
+    // panel (its own crop of the figure, not the entire figure), on BOTH sides.
+    const wholePanel = !clone && !finite(localized, 4) && WHOLE_IMAGE_KINDS.has(item.detector_kind ?? "");
     const regions = clone && Array.isArray(ms.regions)
       ? ms.regions.map((r: { bbox?: number[]; polygon?: number[][] }) => r)
-      : [{ bbox: side === 0 ? ms.inlier_box_a : ms.inlier_box_b, polygon: undefined }];
+      : [{ bbox: wholePanel ? [0, 0, size[0], size[1]] : localized, polygon: undefined }];
     for (const [regionIndex, record] of regions.entries()) {
       const region = record.bbox;
       if (!finite(region, 4)) continue;

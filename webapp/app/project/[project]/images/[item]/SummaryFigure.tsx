@@ -389,7 +389,7 @@ function AddToWebsite({ project, item, exportBlob, onClose }: {
   return (
     <div style={box}>
       <b>Add to website</b>
-      <span className="muted">The figure as shown now (with any crop, edits and the logo) goes to the image-findings page with this comment.</span>
+      <span className="muted">The figure as shown now (with any crop and edits, and the logo if ticked) goes to the image-findings page with this comment.</span>
       {dirs.length > 1 && (
         <label style={{ display: "flex", gap: 6, alignItems: "center" }}>paper the comment is on
           <select value={dir} onChange={e => setDir(e.target.value)}>
@@ -456,7 +456,9 @@ export function SummaryFigureButton({ project, item, boxes, sizes, autoStart }: 
   const [history, setHistory] = useState<HTMLCanvasElement[]>([]);
   const [floating, setFloating] = useState<Floating | null>(null);
   const [selection, setSelection] = useState<PixelRect | null>(null);
-  const [brand, setBrand] = useState(true);
+  // The "found at the Metascience Observatory" logo, bottom right. Off by default
+  // (Dan, 2026-10-22); the checkbox turns it on for a figure that wants it.
+  const [brand, setBrand] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [website, setWebsite] = useState(false);

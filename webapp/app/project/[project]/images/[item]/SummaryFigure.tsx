@@ -257,6 +257,7 @@ function annotateFigure(figure: RenderedFigure, percent: number): HTMLCanvasElem
   const out = blank(figure.canvas.width, figure.canvas.height);
   const ctx = out.getContext("2d")!;
   ctx.drawImage(figure.canvas, 0, 0);
+  if (percent <= 0) return out; // 0 = boxes removed
   for (const box of figure.boxes) drawBox(ctx, { ...box,
     points: box.dashed ? box.points : expandFigureBox(box.points, percent, box.limit) }, 1, box.dashed);
   return out;
@@ -789,7 +790,7 @@ export function SummaryFigureButton({ project, item, boxes, sizes, autoStart }: 
   const canExpand = boxPercent !== undefined && !floating && !!generated.current?.boxes.some(b => !b.dashed);
   const changeBoxSize = (percent: number) => {
     if (!canExpand || !generated.current) return;
-    const next = Math.max(100, Math.min(1000, percent));
+    const next = percent <= 0 ? 0 : Math.max(100, Math.min(1000, percent));
     const canvas = annotateFigure(generated.current, next);
     boxScales.current.set(canvas, next);
     push(canvas); setSelection(null);
@@ -887,9 +888,11 @@ export function SummaryFigureButton({ project, item, boxes, sizes, autoStart }: 
             </div>
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
               <b>Match boxes</b>
-              <button type="button" onClick={() => changeBoxSize((boxPercent ?? 100) + 25)} disabled={!canExpand || (boxPercent ?? 100) >= 1000}>expand boxes +25%</button>
-              <button type="button" onClick={() => changeBoxSize((boxPercent ?? 100) - 25)} disabled={!canExpand || boxPercent === 100}>shrink boxes −25%</button>
-              <span>{boxPercent !== undefined ? `${boxPercent}%` : "custom edits"}</span>
+              <button type="button" onClick={() => changeBoxSize(boxPercent === 0 ? 100 : (boxPercent ?? 100) + 25)} disabled={!canExpand || (boxPercent ?? 100) >= 1000}>expand boxes +25%</button>
+              <button type="button" onClick={() => changeBoxSize((boxPercent ?? 100) - 25)} disabled={!canExpand || boxPercent === 100 || boxPercent === 0}>shrink boxes −25%</button>
+              <button type="button" onClick={() => changeBoxSize(0)} disabled={!canExpand || boxPercent === 0}
+                      title="Remove the match boxes from the figure (original boxes brings them back)">remove boxes</button>
+              <span>{boxPercent === 0 ? "boxes removed" : boxPercent !== undefined ? `${boxPercent}%` : "custom edits"}</span>
               <button type="button" onClick={() => changeBoxSize(100)} disabled={!canExpand || boxPercent === 100}>original boxes</button>
               <span className="muted">{boxPercent === undefined || floating
                 ? "Reset image edits to adjust the match boxes."

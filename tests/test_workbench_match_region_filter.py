@@ -144,5 +144,8 @@ def test_transformation_and_incomplete_coverage_filter_before_pagination(tmp_pat
                             'transformation': 'combined', 'coverage': 'incomplete'})
         assert result['pagination']['total'] == 1
         assert result['items'][0]['id'] == 'i_0'
+        # "any": every measured non-translation match; the other items are pure translations.
+        result = repo.feed({'project': 'project', 'run': 'r_old', 'verdict': 'all', 'transformation': 'any'})
+        assert [i['id'] for i in result['items']] == ['i_0']
     finally:
         c.close()

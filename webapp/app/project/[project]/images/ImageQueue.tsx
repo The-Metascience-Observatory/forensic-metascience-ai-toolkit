@@ -357,7 +357,7 @@ export function ImageQueue({ project, projectName }: {
         </label>
         <label>Transformation
           <select value={filter.transformation || "all"} onChange={e => setF({transformation: e.target.value as Filter["transformation"]})}>
-            {["all", "translation", "rotation", "resizing", "reflection", "combined", "unknown"].map(value => <option key={value} value={value}>{value}</option>)}
+            {["all", "any", "translation", "rotation", "resizing", "reflection", "combined", "unknown"].map(value => <option key={value} value={value} title={value === "any" ? "Any rotation, resizing, reflection or combination: everything except direct duplications / crops (translation) and unmeasured matches" : undefined}>{value}</option>)}
           </select>
         </label>
         <label title="Incomplete means a saved stage was skipped, failed or capped. Unknown means no complete coverage claim was recorded.">Coverage

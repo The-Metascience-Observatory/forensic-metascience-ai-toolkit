@@ -127,6 +127,9 @@ def test_transformation_and_incomplete_coverage_filter_before_pagination(tmp_pat
     assert transformation_kind(candidate(rotation_deg=37, scale=1, flip=False)) == 'rotation'
     assert transformation_kind(candidate(rotation_deg=37, scale=.5, flip=True)) == 'combined'
     assert transformation_kind(candidate()) == 'unknown'
+    assert transformation_kind(candidate(rotation_deg=-10, scale=1, flip=False)) == 'translation'
+    assert transformation_kind(candidate(rotation_deg=-10.5, scale=1, flip=False)) == 'rotation'
+    assert transformation_kind(candidate(rotation_deg=5, scale=.5, flip=False)) == 'resizing'
     c = Catalog(tmp_path/'transform.sqlite')
     try:
         seed(c)
@@ -144,8 +147,8 @@ def test_transformation_and_incomplete_coverage_filter_before_pagination(tmp_pat
                             'transformation': 'combined', 'coverage': 'incomplete'})
         assert result['pagination']['total'] == 1
         assert result['items'][0]['id'] == 'i_0'
-        # "any": every measured non-translation match; the other items are pure translations.
-        result = repo.feed({'project': 'project', 'run': 'r_old', 'verdict': 'all', 'transformation': 'any'})
+        # "any suspicious": rotation > 10 deg, reflection or a combination; the other items are pure translations.
+        result = repo.feed({'project': 'project', 'run': 'r_old', 'verdict': 'all', 'transformation': 'any_suspicious'})
         assert [i['id'] for i in result['items']] == ['i_0']
     finally:
         c.close()

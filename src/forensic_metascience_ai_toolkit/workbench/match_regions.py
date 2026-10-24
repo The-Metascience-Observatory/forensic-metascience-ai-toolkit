@@ -54,6 +54,11 @@ def region_kind(coverage, max_percent=DEFAULT_MAX_PERCENT):
 
 
 TRANSFORMATION_MODES = ('translation', 'rotation', 'resizing', 'reflection', 'combined', 'unknown')
+#: A rotation counts only past this many degrees, either direction; a few degrees of tilt is registration noise.
+ROTATION_MIN_DEGREES = 10
+#: The queue's "any suspicious" filter: a measured rotation or reflection, alone or combined. Resizing alone is
+#: routine rescaling, and `unknown` means the transformation was never measured.
+SUSPICIOUS_TRANSFORMATIONS = ('rotation', 'reflection', 'combined')
 
 
 def transformation_kind(item):
@@ -62,7 +67,7 @@ def transformation_kind(item):
     if not _number(angle) or not _number(scale) or scale <= 0 or not isinstance(flip, bool):
         return 'unknown'
     changes = [name for name, present in (
-        ('rotation', abs((angle + 180) % 360 - 180) > 1),
+        ('rotation', abs((angle + 180) % 360 - 180) > ROTATION_MIN_DEGREES),
         ('resizing', abs(scale - 1) > .02), ('reflection', flip)) if present]
     return 'combined' if len(changes) > 1 else changes[0] if changes else 'translation'
 

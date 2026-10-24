@@ -328,7 +328,7 @@ export type Filter = { text_context?: "exclude" | "include" | "only"; verdict: "
                        lookalike?: "all" | "yes" | "no";
                        match_region?: "all" | "partial_both" | "partial_one" | "large_both" | "unknown";
                        region_max_percent?: number;
-                       transformation?: "all" | "any" | "translation" | "rotation" | "resizing" | "reflection" | "combined" | "unknown";
+                       transformation?: "all" | "any_suspicious" | "translation" | "rotation" | "resizing" | "reflection" | "combined" | "unknown";
                        coverage?: "all" | "incomplete" | "unknown";
                        /** Whether the item's placements name two different figures of one
                         *  paper (`different_figures`), one figure (`same_figure`), another
@@ -461,7 +461,7 @@ export function restoreFilter(value: unknown): Filter {
     lookalike: saved.lookalike === "yes" || saved.lookalike === "no" ? saved.lookalike : "all",
     match_region: MATCH_REGIONS.some(([value]) => value === saved.match_region)
       ? saved.match_region as Filter["match_region"] : "all",
-    transformation: ["any", "translation", "rotation", "resizing", "reflection", "combined", "unknown"].includes(String(saved.transformation))
+    transformation: ["any_suspicious", "translation", "rotation", "resizing", "reflection", "combined", "unknown"].includes(String(saved.transformation))
       ? saved.transformation as Filter["transformation"] : "all",
     coverage: ["incomplete", "unknown"].includes(String(saved.coverage)) ? saved.coverage as Filter["coverage"] : "all",
     figure_span: FIGURE_SPANS.some(([value]) => value === saved.figure_span) ? saved.figure_span as FigureSpan : "all",

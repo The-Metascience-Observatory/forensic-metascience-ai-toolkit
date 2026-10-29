@@ -261,9 +261,12 @@ print(grim_test(mean=5.51, n=30, scale_min=1, scale_max=7)["consistent"])  # Fal
 
 ## License
 
-**Free for noncommercial use.** Two limits apply:
+**Free for noncommercial use.** Three conditions apply:
 
 - **No commercial use.** You may not sell it, offer paid services built on it, or use it inside a for-profit company. For a commercial license, email dan@metascienceobservatory.org. 
 - **Less than 500 papers.** Before analyzing more than 500 papers in total across your organization, email dan@metascienceobservatory.org for permission. (If you are using it for bulk analysis, the Metascience Observatory would like to be involved.)  
+- **Cite it.** Any published work that uses the toolkit or its output (papers, preprints, reports, PubPeer comments, datasets, talks) must credit it by name with the version you used and the repository URL, and say if you modified it. Tools built on it must say so in their documentation. Use the citation in [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button), for example:
 
-The full terms are the in [LICENSE](LICENSE), a non-commercial license based off [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0).
+  > The Metascience Observatory (2026). Forensic Metascience AI Toolkit (version 1.100.0) [Computer software]. https://github.com/The-Metascience-Observatory/forensic-metascience-ai-toolkit
+
+The full terms are in [LICENSE](LICENSE), a non-commercial license based off [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0).

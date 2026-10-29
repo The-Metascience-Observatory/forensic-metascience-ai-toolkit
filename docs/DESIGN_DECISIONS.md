@@ -297,9 +297,11 @@ README.
 
 ### Licence
 
-The PolyForm Noncommercial License 1.0.0 plus two additional terms (see
-`LICENSE`): no commercial use, and written permission before analyzing more
-than 500 papers. PolyForm's `Required Notice:` line carries the attribution.
+The PolyForm Noncommercial License 1.0.0 plus three additional terms (see
+`LICENSE`): no commercial use, written permission before analyzing more than
+500 papers, and attribution: published work that uses the toolkit or its
+output must cite it (`CITATION.cff` gives the form), and derived works must
+say they are based on it. PolyForm's `Required Notice:` line covers copies.
 **It does not cover the
 publishers' PDFs** stored in the corpora — the code licence cannot license
 third-party articles.

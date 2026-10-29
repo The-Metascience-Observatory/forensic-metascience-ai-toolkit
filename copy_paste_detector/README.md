@@ -189,7 +189,7 @@ imports the full agent.
 
 ## Attribution
 
-Extracted from the MIT-licensed Forensic Metascience AI Toolkit. Digit-information
+Extracted from the Forensic Metascience AI Toolkit. Digit-information
 weighting, derived-value discounts, regularity discounts and occurrence weighting
 follow ideas published for inspection in Markus Englund's `copy-paste-detective`
 (source-available, all rights reserved). This is an independent implementation;

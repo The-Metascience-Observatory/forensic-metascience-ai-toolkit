@@ -1,6 +1,6 @@
 """Focused Word-table reader preserving the detector's historical input grid.
 
-The normalization helpers originate in the MIT-licensed agent's JATS and
+The normalization helpers originate in the toolkit's JATS and
 supplement readers. Parity tests cover this intentionally independent subset.
 """
 

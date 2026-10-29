@@ -14,7 +14,7 @@ Three independent reasons, each sufficient on its own:
    against identifiable authors.
 2. **The prose is not ours.** These reviews are third-party authored. Publishing
    them would need the author's agreement, which we do not have on file.
-3. **The PDFs are third-party copyrighted articles.** The repository's MIT
+3. **The PDFs are third-party copyrighted articles.** The repository's
    licence covers our code. It does not and cannot license the publishers'
    articles stored alongside it.
 

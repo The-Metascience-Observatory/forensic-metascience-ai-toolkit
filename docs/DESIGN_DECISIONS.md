@@ -297,11 +297,10 @@ README.
 
 ### Licence
 
-Changed from MIT on 2026-10-18 to the PolyForm Noncommercial License 1.0.0
-plus two additional terms (see `LICENSE`): no commercial use, and written
-permission before analyzing more than 500 papers. PolyForm's own `Required
-Notice:` line keeps the attribution MIT gave us. Versions distributed under
-MIT stay MIT; a licence change cannot be applied retroactively. **It does not cover the
+The PolyForm Noncommercial License 1.0.0 plus two additional terms (see
+`LICENSE`): no commercial use, and written permission before analyzing more
+than 500 papers. PolyForm's `Required Notice:` line carries the attribution.
+**It does not cover the
 publishers' PDFs** stored in the corpora — the code licence cannot license
 third-party articles.
 

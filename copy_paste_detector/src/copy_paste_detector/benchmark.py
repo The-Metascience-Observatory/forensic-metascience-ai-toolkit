@@ -100,6 +100,8 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
     evaluated_papers = flagged_papers = 0
     ai_requested = decided_candidates = retained_candidates = 0
     file_states = Counter()
+    any_kind_hit = half_hit = 0
+    by_split = {}
     for label in gold:
         run = runs.get(label["paper_id"])
         record = {
@@ -207,6 +209,12 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                 and g["severity"] in {"suspicious", "highly_suspicious"}
             ]
             in_scope = issue["kind"] in SUPPORTED
+            # Secondary readings, reported beside the strict one, never instead:
+            # the labeller's guess at detector_kinds can differ from the kind
+            # that legitimately localises the same cells.
+            any_kind = {**issue, "detector_kinds": sorted(SUPPORTED)}
+            found_any_kind = bool(covering(actionable, any_kind))
+            half_covered = (coverage(actionable, any_kind) or 0) >= 0.5
             state = (
                 "unverified"
                 if not verified
@@ -229,6 +237,7 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                     "state": state,
                     "candidate_ids": [g["id"] for g in found],
                     "cells_covered": coverage(actionable, issue),
+                    "found_any_kind": found_any_kind,
                     "retained_ids": [g["id"] for g in keep],
                 }
             )
@@ -239,6 +248,12 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                 retained += bool(keep)
                 supported += available and in_scope
                 supported_hit += bool(found) and in_scope
+                if available and in_scope:
+                    any_kind_hit += found_any_kind
+                    half_hit += half_covered
+                    split = by_split.setdefault(record["split"], [0, 0])
+                    split[0] += bool(found)
+                    split[1] += 1
         details.append(record)
     rng = random.Random(seed)
     selected = rng.sample(sorted(unflagged, key=lambda r: r["paper_id"]), min(20, len(unflagged)))
@@ -252,6 +267,12 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
         "verified_issues_with_available_sources": evaluable,
         "candidate_recall_all_verified": ratio(hit, positives),
         "candidate_recall_available_supported": ratio(supported_hit, supported),
+        "cell_localised_recall_any_kind": ratio(any_kind_hit, supported),
+        "half_cells_covered_recall_any_kind": ratio(half_hit, supported),
+        **{
+            f"candidate_recall_available_supported_{name}": ratio(*counts)
+            for name, counts in sorted(by_split.items())
+        },
         "retained_recall_all_verified": ratio(retained, positives if ai_requested else 0),
         "ai_requested_papers": ai_requested,
         "ai_retention_of_definite_candidates": ratio(retained_candidates, decided_candidates),

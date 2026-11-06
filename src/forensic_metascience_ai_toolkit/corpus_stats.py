@@ -65,7 +65,7 @@ def _current_doc(paper_dir: Path) -> dict | None:
     lost to its own migrated legacy doc (caught live by the first
     --verify run, 2026-08-21: file mode and the DB picked different runs
     for the same paper)."""
-    from .webapp_index import run_kind
+    from .webapp_index import NOT_A_REVIEW_KINDS, run_kind
     # An image-only sweep run (kind `image_track`) is never the paper's
     # current REVIEW while a full review exists, however new it is; it only
     # stands in when there is nothing else.
@@ -81,7 +81,8 @@ def _current_doc(paper_dir: Path) -> dict | None:
             except Exception:  # noqa: BLE001
                 when = ""
         kind = run_kind(doc)
-        if kind == "partial_review":
+        if kind in NOT_A_REVIEW_KINDS:
+            # A component detector's run (rngdetect) is not the review either.
             # A partial pipeline (one tool, no adjudicator, ...) is an
             # experiment, never the paper's review: corpus statistics drawn
             # from it would mix a one-tool fire rate into the review's.

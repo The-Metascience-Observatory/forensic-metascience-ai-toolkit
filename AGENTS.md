@@ -179,7 +179,11 @@ Readers of a converted document's `legacy` block (`db_push`, `discovery`,
   The opt-in `raw_data` module (2026-10-15; pipelines `raw_data_only`,
   `full_raw_data`) runs the copy-paste detector over the paper's
   spreadsheets as producer `raw_data_track`: quarantined, one row per
-  (file, kind), never the headline.
+  (file, kind), never the headline. The separately distributed seeded-RNG
+  detector (`rngdetect`) is not a module: its exporter writes a
+  `forensic_review_rng/` run per paper, producer and run kind `rng_track`,
+  a `discovery.COMPONENT_RUN_KINDS` member that is shown beside the review
+  and never selected AS the review (1.101.0).
   See [docs/specs/modules.md](docs/specs/modules.md).
 - **Tool layer, names and backends (Phases 3b-5, 2026-10-13).**
   - `metascience tool list|describe|run` (`tool_cli.py`) runs ANY registered

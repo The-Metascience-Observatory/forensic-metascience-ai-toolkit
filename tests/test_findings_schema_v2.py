@@ -395,7 +395,7 @@ class TestProducerVocabulary:
 
     def test_the_schema_and_the_module_agree_on_the_producer_list(self):
         assert tuple(FINDING["properties"]["producer"]["enum"]) == prompts.PRODUCERS
-        assert len(prompts.PRODUCERS) == 9   # harness, 2026-10-18
+        assert len(prompts.PRODUCERS) == 10   # rng_track, 1.101.0 (harness 2026-10-18)
 
 
 class TestChannelVocabularyHasOneHome:

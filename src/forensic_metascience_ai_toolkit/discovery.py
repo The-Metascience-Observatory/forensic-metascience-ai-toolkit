@@ -14,6 +14,35 @@ CHANNEL_STATES = ("ran", "ran_result_discarded", "refused", "did_not_run",
 
 _BUNDLE_SUFFIX = "_bundle"
 
+#: Run kinds that are ONE DETECTOR'S run beside a paper's review, never the
+#: review: their findings are shown with the review's, but they never supply
+#: the paper's verdict, latest run, numeric-channel state or worst severity.
+#: `rng_track` is the seeded-RNG detector's exporter (`forensic_review_rng/`).
+COMPONENT_RUN_KINDS = frozenset({"rng_track"})
+
+#: Run kinds that never stand as the paper's review: partial pipelines
+#: (experiments) and component runs. Readers test membership here rather
+#: than comparing to one literal, so a new component kind is one edit.
+NOT_A_REVIEW_KINDS = frozenset({"partial_review"}) | COMPONENT_RUN_KINDS
+
+
+def dir_run_kind(review_dir: Path) -> str | None:
+    """`run_kind` of a review directory's findings.v2.json; None without one."""
+    try:
+        doc = json.loads((Path(review_dir) / "findings.v2.json").read_text())
+    except (OSError, ValueError):
+        return None
+    return run_kind(doc) if isinstance(doc, dict) else None
+
+
+def review_dirs_reviews_first(paper_dir: Path) -> list[Path]:
+    """`review_dirs`, with component runs (`COMPONENT_RUN_KINDS`) moved after
+    every other directory: a default "newest usable run" pick must land on the
+    paper's review, not on a detector's newer track-only run."""
+    dirs = review_dirs(paper_dir)
+    comp = [d for d in dirs if dir_run_kind(d) in COMPONENT_RUN_KINDS]
+    return [d for d in dirs if d not in comp] + comp
+
 
 def review_dirs(paper_dir: Path) -> list[Path]:
     """Every review directory in a paper, newest first, bundles excluded.
@@ -56,6 +85,12 @@ def run_kind(doc: dict | None) -> str:
         if uses and uses <= {"image_analysis"}:
             return "image_track"
         return "partial_review"
+    # A component detector's track-only run (spec: findings_v2.md 1.1). Checked
+    # before `legacy`, which every reader of the paper's review accepts: an
+    # rngdetect run read as `legacy` would replace a newer-dated full review.
+    if "rng_track" in ch and _state("tool_expert") != "ran" \
+            and _state("image_forensics") != "ran":
+        return "rng_track"
     if _state("tool_expert") == "ran":
         return "full_review"
     if _state("image_forensics") == "ran":

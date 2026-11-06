@@ -23,6 +23,9 @@ _EXTRA = {
     "tortured_phrases": "Text forensics (tortured phrases)",   # channel key
     "adjudication": "Adjudicator",
     "harness": "Harness sweep (deterministic)",   # producer, not a module
+    # Producer AND run kind of the separately distributed rngdetect exporter;
+    # it is not a module of this pipeline.
+    "rng_track": "Seeded-RNG detector (rngdetect)",
     # The producer `migrate-v2` stamped on rows converted from the serial
     # pipeline's findings.json (the archived fixtures and old corpora).
     "legacy_sweep": "Serial-pipeline sweep (converted)",

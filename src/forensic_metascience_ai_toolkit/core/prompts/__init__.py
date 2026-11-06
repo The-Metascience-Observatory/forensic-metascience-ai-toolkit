@@ -544,6 +544,10 @@ PRODUCERS: tuple[str, ...] = (
     "image_track",
     "text_track",
     "raw_data_track",
+    # The separately distributed seeded-RNG detector (`rngdetect`,
+    # metascience-observatory-rng-detector): its exporter writes one
+    # track-only run per paper, `forensic_review_rng/`, run kind `rng_track`.
+    "rng_track",
     # The harness sweeps that file findings (`grim_harness.finding_rows`,
     # 2026-10-18). Written by code from the tools agent's declarations, never
     # by a model, which is why it is not that agent's producer.
@@ -552,6 +556,12 @@ PRODUCERS: tuple[str, ...] = (
     "legacy_sweep",
     "legacy_editorial",
 )
+
+#: Deterministic tracks: code-written rows that may carry `quarantined` /
+#: `quarantine_reason` (spec section 4). Readers that treat track rows apart
+#: from the analysts' import this rather than keeping their own tuple.
+TRACK_PRODUCERS: tuple[str, ...] = ("image_track", "text_track", "raw_data_track",
+                                    "rng_track")
 
 #: The six fixed non-tool technique values (spec section 1.2). Everything else
 #: in the technique enum is DERIVED from `registry.SPECS` at load time, so a
@@ -724,7 +734,7 @@ def producer_findings_schema(producer: str, figures: bool = False) -> dict:
 
     finding = schema["properties"]["findings"]["items"]
     stripped = _NOT_PRODUCER_WRITTEN
-    if producer not in ("image_track", "text_track", "raw_data_track"):
+    if producer not in TRACK_PRODUCERS:
         stripped = stripped + _TRACK_ONLY
     if producer != "science_error":
         stripped = stripped + _SCIENCE_ONLY

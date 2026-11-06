@@ -38,6 +38,12 @@ from . import consequence as _consequence
 from .report_render import SEVERITY_RANK
 from .review_io import load_review
 from .webapp_index import review_dirs
+from .discovery import review_dirs_reviews_first
+from .core.prompts import TRACK_PRODUCERS
+
+#: Producers of separately distributed deterministic detectors that file their
+#: own run (`discovery.COMPONENT_RUN_KINDS`); `finding_tool` names the detector.
+COMPONENT_PRODUCERS = frozenset({"rng_track"})
 
 _WARRANT_LATE = {"field_norm", "", None}
 
@@ -60,12 +66,16 @@ def _v2_numeric_issues(
     surfacing the medicina rematch, 2026-08-21). Only analyst rows map here -- the
     doc's image_track/text_track copies are SKIPPED because the paper-level
     track files already feed `_image_issues`/`_text_issues`, and mapping
-    both would show every image finding twice.
+    both would show every image finding twice. A component detector's own run
+    (`discovery.COMPONENT_RUN_KINDS`, e.g. rngdetect) holds nothing BUT its
+    track rows and has no other reader, so its rows map here.
     """
     doc = _read_json(d / "findings.v2.json")
     if not isinstance(doc, dict) or not isinstance(doc.get("findings"), list):
         return None
-    return _v2_issues_from_doc(doc, d.name)
+    from .discovery import COMPONENT_RUN_KINDS, run_kind
+    return _v2_issues_from_doc(doc, d.name,
+                               include_tracks=run_kind(doc) in COMPONENT_RUN_KINDS)
 
 
 #: The tool named by a generated reproduction (`agent.py` writes
@@ -128,6 +138,11 @@ def finding_tool(f: dict) -> dict:
     technique = f.get("technique")
     if technique and technique in _registry_tools():
         return {"tool": technique, "source": "technique"}
+    # A separately distributed deterministic detector (no registry tool): the
+    # detector itself is the evidence, never "the analyst's own reading".
+    if f.get("computed_by") == "deterministic_track" \
+            and f.get("producer") in COMPONENT_PRODUCERS:
+        return {"tool": f["producer"], "source": "component"}
     return {"tool": MODEL_JUDGEMENT, "source": "model_judgement"}
 
 
@@ -145,7 +160,7 @@ def _v2_issues_from_doc(doc: dict, run_name: str, *, include_tracks=False) -> tu
         fid = str(f.get("finding_id") or f.get("slug") or "")
         if fid:
             by_id[fid] = f
-        if not include_tracks and f.get("producer") in ("image_track", "text_track", "raw_data_track"):
+        if not include_tracks and f.get("producer") in TRACK_PRODUCERS:
             continue
         if f.get("outcome") != "problem":
             continue
@@ -174,6 +189,10 @@ def _v2_issues_from_doc(doc: dict, run_name: str, *, include_tracks=False) -> tu
             "severity_9": sev9 if isinstance(sev9, int) else None,
             "severity_is_provisional": bool(f.get("severity_is_provisional")),
             "impossible": bool(f.get("impossible")),
+            # A quarantined detector's row is a lead, not a finding of record
+            # (findings_v2.md section 9.3); the reader has to be able to see it.
+            "quarantined": bool(f.get("quarantined")),
+            "quarantine_reason": f.get("quarantine_reason") if f.get("quarantined") else None,
             "adjudication_action": action,
             "adjudication_rationale": (f.get("adjudication") or {}).get("rationale"),
             "technique": f.get("technique"),
@@ -557,7 +576,8 @@ def collect_issues(paper_dir: Path, run: str | None = None) -> dict:
     if historical is not None:
         return historical
     requested = run
-    all_rdirs = review_dirs(paper_dir)
+    # Component runs (rngdetect) last: the default pick is the paper's review.
+    all_rdirs = review_dirs_reviews_first(paper_dir)
     rdirs = all_rdirs
     if run:
         picked = [d for d in all_rdirs if d.name == run]

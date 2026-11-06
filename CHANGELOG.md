@@ -9,6 +9,36 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.101.0] — 2026-11-06 — the seeded-RNG detector's runs (`rng_track`)
+
+MINOR: a paper can now carry a new producer's findings. Nothing the toolkit's
+own pipeline produces changes; what is new is a run that the separately
+distributed `rngdetect` package (metascience-observatory-rng-detector) writes
+beside a paper's review, `forensic_review_rng/findings.v2.json`.
+
+- **New producer and run kind `rng_track`.** In `PRODUCERS`, the schema enum,
+  `TRACK_PRODUCERS` (so the producer subset keeps `quarantined` /
+  `quarantine_reason`) and `names` ("Seeded-RNG detector (rngdetect)"); the
+  generated `constants.gen.ts` follows. `discovery.run_kind` returns
+  `rng_track` for a document with an `rng_track` channel and no full review.
+- **A component run is not the paper's review.** Read as `legacy`, a
+  newer-dated rngdetect run would have replaced the full review as the paper's
+  latest run, verdict, numeric channel state and worst severity in
+  `webapp_index`, as `corpus_stats._current_doc`, and as the default run of
+  `collect_issues`. One vocabulary now decides it:
+  `discovery.COMPONENT_RUN_KINDS` and `NOT_A_REVIEW_KINDS` (the old
+  `!= "partial_review"` comparisons), and `review_dirs_reviews_first` orders
+  component runs after every review. The SQL readers already filter on
+  `kind in ('full_review','legacy')` and are unchanged.
+- **How its rows read.** `finding_tool` names the detector (`source:
+  component`, "Found by this detector") instead of "No tool backs this
+  finding: the analyst's own reading". Issue rows now carry `quarantined` and
+  `quarantine_reason` (they were dropped, so every quarantined row looked like
+  a finding of record), and the review page shows a dashed "quarantined" pill
+  whose tooltip is the detector's reason. A component run's own rows map in
+  the file-based issue path when that run is served.
+- Tests: `tests/test_rng_track.py` (known-positive for each rule above).
+
 ## [1.100.0] — 2026-10-19 — the serial pipeline's output layout is no longer read
 
 MINOR: no finding or severity a live run produces changes. What changes is

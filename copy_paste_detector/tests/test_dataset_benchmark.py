@@ -7,7 +7,7 @@ import pytest
 from test_paper_batch import csv_data
 
 from copy_paste_detector.batch import run_batch
-from copy_paste_detector.benchmark import matches, score
+from copy_paste_detector.benchmark import coverage, covering, matches, score
 from copy_paste_detector.datasets import import_local, sample_frame, split_families
 from copy_paste_detector.storage import file_hash
 
@@ -93,6 +93,32 @@ def test_matching_requires_actual_labeled_cells():
     assert matches(group, issue)
     issue["cells"] = []
     assert not matches(group, issue)
+
+
+def test_block_issue_is_covered_by_several_groups_not_by_flags_elsewhere():
+    def ref(c):
+        return {"file": "a.csv", "sheet": "a.csv", "cell": c}
+
+    issue = {
+        "kind": "row_pair",
+        "detector_kinds": ["row_pair", "column_sequence"],
+        "cells": [ref(c) for c in ("B2", "C2", "B9", "C9", "B3", "C3", "B10", "C10")],
+    }
+    seq_b = {
+        "kind": "column_sequence",
+        "cells_a": [ref("B2"), ref("B3")],
+        "cells_b": [ref("B9"), ref("B10")],
+    }
+    seq_c = {
+        "kind": "column_sequence",
+        "cells_a": [ref("C2"), ref("C3")],
+        "cells_b": [ref("C9"), ref("C10")],
+    }
+    elsewhere = {"kind": "repeated_value", "cells": [ref("D40"), ref("D41")]}
+    assert covering([seq_b, seq_c, elsewhere], issue) == [seq_b, seq_c]
+    assert covering([seq_b, elsewhere], issue) == []
+    assert coverage([seq_b], issue) == 0.5
+    assert covering([seq_b, seq_c], {**issue, "detector_kinds": ["row_pair"]}) == []
 
 
 def test_scorecard_separates_missing_and_unverified(tmp_path):

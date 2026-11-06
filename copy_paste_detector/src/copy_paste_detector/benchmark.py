@@ -38,6 +38,43 @@ def matches(group, issue):
     )
 
 
+def _hits(ref, wanted):
+    return all(
+        ref.get(k) == wanted[k] for k in ("file", "sheet", "cell", "source_sha256") if k in wanted
+    )
+
+
+def covering(groups, issue):
+    """Groups that together cover every annotated cell, or [] if they do not.
+
+    A copied block is legitimately reported as several groups (one sequence per
+    column, one pair per row), so requiring a single group to span the whole
+    issue scored a fully detected block as missed. Only groups of an admissible
+    kind that touch the issue are pooled; flags elsewhere never count.
+    """
+    expected = issue.get("cells", [])
+    if not expected:
+        return []
+    kinds = issue.get("detector_kinds", [issue["kind"]])
+    touching = [
+        g
+        for g in groups
+        if g.get("kind") in kinds and any(_hits(r, w) for r in cells(g) for w in expected)
+    ]
+    pooled = [r for g in touching for r in cells(g)]
+    if all(any(_hits(r, w) for r in pooled) for w in expected):
+        return touching
+    return []
+
+
+def coverage(groups, issue):
+    expected = issue.get("cells", [])
+    kinds = issue.get("detector_kinds", [issue["kind"]])
+    pooled = [r for g in groups if g.get("kind") in kinds for r in cells(g)]
+    covered = sum(any(_hits(r, w) for r in pooled) for w in expected)
+    return covered / len(expected) if expected else None
+
+
 def ratio(numerator, denominator):
     return {
         "numerator": numerator,
@@ -160,7 +197,9 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                 raise ValueError(
                     f"{label['paper_id']}: verified issue needs source hashes, cells and evidence_url"
                 )
-            found = [g for g in groups if matches(g, issue)]
+            # A cleared (consistent/indeterminate) group is not a detection.
+            found = covering(actionable, issue)
+            below = not found and bool(covering(groups, issue))
             keep = [
                 g
                 for g in found
@@ -179,6 +218,8 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                 if keep
                 else "candidate_only"
                 if found
+                else "found_below_threshold"
+                if below
                 else "missed"
             )
             record["issues"].append(
@@ -187,6 +228,7 @@ def score(labels, run_index, output, *, reviews=None, seed=20260910):
                     "kind": issue["kind"],
                     "state": state,
                     "candidate_ids": [g["id"] for g in found],
+                    "cells_covered": coverage(actionable, issue),
                     "retained_ids": [g["id"] for g in keep],
                 }
             )

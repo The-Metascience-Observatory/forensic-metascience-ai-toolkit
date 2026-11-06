@@ -101,16 +101,21 @@ older run directories remain immutable history.
 
 ```sh
 copy-paste-dataset discover --output cases
+copy-paste-dataset download --catalog cases/catalog.json --incoming downloads
 copy-paste-dataset import --catalog cases/catalog.json \
-  --incoming /path/to/downloads --output acquired
+  --incoming downloads --output acquired
 copy-paste-batch acquired/manifest.jsonl --output-dir runs --backend grok --resume
 copy-paste-benchmark --labels labels.jsonl --run-index runs/index.json --output score
 ```
 
 Discovery records all Science Detective entries and exact Dryad version/file IDs
-and published checksums. It fetches public metadata only. Download files through
-your browser, preserve names, and keep original/corrected files in separate
-folders. Import matches filename **and repository checksum**, computes SHA-256,
+and published checksums. It fetches public metadata only. Dryad refuses
+anonymous file downloads, so `download` authenticates with API client
+credentials (`DRYAD_CLIENT_ID` / `DRYAD_CLIENT_SECRET`, from the environment or
+`--env-file`, default `.env`), keeps a file only when its bytes match the
+published digest, and writes `download_receipt.json`. Files can also be fetched
+through a browser into `incoming/<file_id>/<filename>`. Rerunning skips verified
+files; `--pause` slows requests after HTTP 429. Import matches filename **and repository checksum**, computes SHA-256,
 refuses conflicting existing bytes and retains missing requested files in the
 manifest. A missing file cannot become a negative result.
 

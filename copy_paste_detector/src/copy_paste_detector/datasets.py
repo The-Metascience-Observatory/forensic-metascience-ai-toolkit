@@ -608,6 +608,7 @@ def main(argv=None):
     dl.add_argument("--catalog", type=Path, required=True)
     dl.add_argument("--incoming", type=Path, required=True)
     dl.add_argument("--env-file", type=Path, default=Path(".env"))
+    dl.add_argument("--pause", type=float, default=1.1, help="seconds between requests")
     s = sub.add_parser("sample")
     s.add_argument("--frame", type=Path, required=True)
     s.add_argument("--output", type=Path, required=True)
@@ -620,7 +621,8 @@ def main(argv=None):
     elif args.command == "frame":
         result = build_frame(args.output, args.pages, args.retry_failed, args.cached_only)
     elif args.command == "download":
-        result = download(args.catalog, args.incoming, dryad_token(*_credentials(args.env_file)))
+        token = dryad_token(*_credentials(args.env_file))
+        result = download(args.catalog, args.incoming, token, pause=args.pause)
     elif args.command == "import":
         result = import_local(args.catalog, args.incoming, args.output)
     else:

@@ -33,7 +33,10 @@ required. It will deliberately list missing versions/files as unavailable.
 
 ## Label contract
 
-Start with `labels.pending.jsonl`. A paper/version record contains `paper_id`,
+The drafted, cell-checked ledger is `labels.jsonl` (see [MANIFEST.md](MANIFEST.md)
+for where the bytes live and how to rebuild them); `labels.pending.jsonl` is the
+pre-acquisition placeholder it replaced. Recheck every cell against the bytes
+with `check_labels.py --root <ground_truth>` after any label edit. A paper/version record contains `paper_id`,
 `family_id`, `split`, `verification_status`, `source_sha256` keyed by original
 filename, and `issues`. Each issue needs an immutable `id`, `kind`, status,
 `evidence_url`, `cells`, reviewer, verification date and explanation. Cells use

@@ -56,6 +56,15 @@ def value(path, sheet, cell):
             return rows[row - 1][col - 1]
         except IndexError:
             return None
+    if path.suffix.lower() == ".xls":
+        import xlrd
+
+        ws = xlrd.open_workbook(str(path)).sheet_by_name(sheet)
+        letters = "".join(ch for ch in cell if ch.isalpha())
+        col = 0
+        for ch in letters:
+            col = col * 26 + ord(ch.upper()) - 64
+        return ws.cell_value(int(cell[len(letters) :]) - 1, col - 1)
     wb = book(str(path))
     if sheet not in wb.sheetnames:
         raise KeyError(f"no sheet {sheet!r} in {path.name}")

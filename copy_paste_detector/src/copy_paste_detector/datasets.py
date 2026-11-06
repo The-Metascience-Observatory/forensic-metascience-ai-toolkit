@@ -1,12 +1,16 @@
-"""Public metadata discovery, version-checked local imports and frozen sampling.
+"""Public metadata discovery, version-checked downloads/imports and frozen sampling.
 
-No authenticated downloads: users supply files through their normal browser.
-Metadata snapshots are retained so later corrections cannot relabel older data.
+Dryad serves file bytes only to API clients (anonymous requests get 401/403), so
+`download` takes DRYAD_CLIENT_ID/DRYAD_CLIENT_SECRET; files can still be supplied
+by hand through `import`. Either way a file is kept only when its bytes match the
+published digest. Metadata snapshots are retained so later corrections cannot
+relabel older data.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import re
@@ -123,6 +127,129 @@ class Metadata:
                 }
             )
         return out
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
+
+
+def dryad_token(client_id, client_secret):
+    """OAuth2 client-credentials token for the Dryad API."""
+    body = urllib.parse.urlencode(
+        {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+        }
+    ).encode()
+    req = urllib.request.Request(
+        DRYAD + "/oauth/token",
+        data=body,
+        headers={"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+    )
+    with urllib.request.urlopen(req, timeout=30) as response:
+        return json.loads(response.read().decode("utf-8"))["access_token"]
+
+
+def _fetch_bytes(url, token, attempts=3):
+    # Dryad answers with a redirect to a presigned S3 URL. The bearer token must
+    # not follow it: S3 rejects a request carrying two auth mechanisms.
+    opener = urllib.request.build_opener(_NoRedirect)
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "User-Agent": "copy-paste-detector/0.2 benchmark research",
+                },
+            )
+            try:
+                with opener.open(req, timeout=60) as response:
+                    return response.read()
+            except urllib.error.HTTPError as exc:
+                if exc.code not in {301, 302, 303, 307, 308}:
+                    raise
+                location = urllib.parse.urljoin(url, exc.headers["Location"])
+            with urllib.request.urlopen(location, timeout=120) as response:
+                return response.read()
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {429, 500, 502, 503, 504} or attempt == attempts - 1:
+                raise
+            time.sleep(float(exc.headers.get("Retry-After", 30 * (attempt + 1))))
+
+
+def download(catalog, incoming, token, *, fetch=_fetch_bytes, pause=1.1):
+    """Fetch every supported catalog file into `incoming/<file_id>/<filename>`.
+
+    Bytes are kept only when they match the published digest; a mismatch or a
+    failed request is recorded and nothing is written, so `import` reports the
+    file as missing rather than importing the wrong version.
+    """
+    incoming = Path(incoming)
+    incoming.mkdir(parents=True, exist_ok=True)
+    wanted = {}
+    for case in json.loads(Path(catalog).read_text())["cases"]:
+        for dataset in case["datasets"]:
+            for version in dataset["versions"]:
+                for f in version["files"]:
+                    if f["supported"]:
+                        wanted.setdefault(f["file_id"], f)
+    receipts = []
+    for file_id, f in sorted(wanted.items(), key=lambda kv: int(kv[0])):
+        target = incoming / file_id / Path(f["filename"]).name
+        record = {"file_id": file_id, "filename": f["filename"], "path": str(target)}
+        if not f.get("digest") or not f.get("digest_type"):
+            record["status"] = "checksum_unavailable"
+        elif target.exists() and file_hash(target, f["digest_type"]) == f["digest"]:
+            record["status"] = "already_verified"
+        elif not f.get("download_url"):
+            record["status"] = "no_download_url"
+        else:
+            try:
+                data = fetch(f["download_url"], token)
+            except (OSError, ValueError) as exc:
+                record.update(status="download_failed", error=str(exc))
+            else:
+                h = hashlib.new(f["digest_type"].replace("-", ""))
+                h.update(data)
+                if h.hexdigest() != f["digest"]:
+                    record.update(status="checksum_mismatch", received_bytes=len(data))
+                else:
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    tmp = target.with_name(target.name + ".part")
+                    tmp.write_bytes(data)
+                    tmp.replace(target)
+                    record["status"] = "verified"
+            time.sleep(pause)
+        receipts.append(record)
+    atomic_json(
+        incoming / "download_receipt.json",
+        {"downloaded_at": now(), "catalog_sha256": file_hash(catalog), "files": receipts},
+    )
+    counts = defaultdict(int)
+    for r in receipts:
+        counts[r["status"]] += 1
+    return {"files_requested": len(receipts), **dict(sorted(counts.items()))}
+
+
+def _credentials(env_file):
+    import os
+
+    values = {}
+    if env_file and Path(env_file).exists():
+        for line in Path(env_file).read_text().splitlines():
+            key, sep, value = line.partition("=")
+            if sep and key.strip() in {"DRYAD_CLIENT_ID", "DRYAD_CLIENT_SECRET"}:
+                values[key.strip()] = value.strip().strip("\"'")
+    values.update(
+        {k: os.environ[k] for k in ("DRYAD_CLIENT_ID", "DRYAD_CLIENT_SECRET") if os.environ.get(k)}
+    )
+    missing = {"DRYAD_CLIENT_ID", "DRYAD_CLIENT_SECRET"} - set(values)
+    if missing:
+        raise SystemExit(f"download needs {', '.join(sorted(missing))} (environment or --env-file)")
+    return values["DRYAD_CLIENT_ID"], values["DRYAD_CLIENT_SECRET"]
 
 
 def discover(output):
@@ -477,6 +604,10 @@ def main(argv=None):
     i.add_argument("--catalog", type=Path, required=True)
     i.add_argument("--incoming", type=Path, required=True)
     i.add_argument("--output", type=Path, required=True)
+    dl = sub.add_parser("download")
+    dl.add_argument("--catalog", type=Path, required=True)
+    dl.add_argument("--incoming", type=Path, required=True)
+    dl.add_argument("--env-file", type=Path, default=Path(".env"))
     s = sub.add_parser("sample")
     s.add_argument("--frame", type=Path, required=True)
     s.add_argument("--output", type=Path, required=True)
@@ -488,6 +619,8 @@ def main(argv=None):
         result = discover(args.output)
     elif args.command == "frame":
         result = build_frame(args.output, args.pages, args.retry_failed, args.cached_only)
+    elif args.command == "download":
+        result = download(args.catalog, args.incoming, dryad_token(*_credentials(args.env_file)))
     elif args.command == "import":
         result = import_local(args.catalog, args.incoming, args.output)
     else:

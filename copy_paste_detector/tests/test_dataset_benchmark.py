@@ -179,3 +179,76 @@ def test_stale_import_bytes_are_refused(tmp_path):
     path.unlink()
     with pytest.raises(ValueError, match="Existing import"):
         import_local(catalog, incoming, tmp_path / "out")
+
+
+def _download_catalog(tmp_path, digest):
+    catalog = tmp_path / "catalog.json"
+    files = [
+        {
+            "filename": "data.csv",
+            "file_id": "7",
+            "supported": True,
+            "digest": digest,
+            "digest_type": "md5",
+            "download_url": "https://example.invalid/api/v2/files/7/download",
+        },
+        {"filename": "readme.pdf", "file_id": "8", "supported": False},
+    ]
+    version = {"version_id": "1", "files": files}
+    catalog.write_text(
+        json.dumps(
+            {
+                "cases": [
+                    {
+                        "case_id": "c",
+                        "family_id": "f",
+                        "paper_doi": "p",
+                        "datasets": [{"doi": "d", "versions": [version, version]}],
+                    }
+                ]
+            }
+        )
+    )
+    return catalog
+
+
+def test_download_keeps_only_bytes_matching_published_digest(tmp_path):
+    import hashlib
+
+    from copy_paste_detector.datasets import download
+
+    good = b"a,b\n1.234,5.678\n"
+    calls = []
+
+    def fetch(url, token):
+        calls.append((url, token))
+        return good
+
+    catalog = _download_catalog(tmp_path, hashlib.md5(good).hexdigest())
+    result = download(catalog, tmp_path / "in", "tok", fetch=fetch, pause=0)
+    # Shared file ids across versions are fetched once; unsupported files never.
+    assert result == {"files_requested": 1, "verified": 1}
+    assert calls == [("https://example.invalid/api/v2/files/7/download", "tok")]
+    assert (tmp_path / "in/7/data.csv").read_bytes() == good
+    again = download(catalog, tmp_path / "in", "tok", fetch=fetch, pause=0)
+    assert again == {"files_requested": 1, "already_verified": 1}
+    assert len(calls) == 1
+    imported = import_local(catalog, tmp_path / "in", tmp_path / "imported")
+    assert imported["verified_files"] == 2
+
+
+def test_download_refuses_wrong_bytes_and_records_failures(tmp_path):
+    from copy_paste_detector.datasets import download
+
+    catalog = _download_catalog(tmp_path, "0" * 32)
+    result = download(catalog, tmp_path / "in", "t", fetch=lambda u, t: b"other", pause=0)
+    assert result == {"files_requested": 1, "checksum_mismatch": 1}
+    assert not (tmp_path / "in/7").exists()
+
+    def boom(url, token):
+        raise OSError("connection reset")
+
+    failed = download(catalog, tmp_path / "in2", "t", fetch=boom, pause=0)
+    assert failed == {"files_requested": 1, "download_failed": 1}
+    receipt = json.loads((tmp_path / "in2/download_receipt.json").read_text())
+    assert receipt["files"][0]["error"] == "connection reset"

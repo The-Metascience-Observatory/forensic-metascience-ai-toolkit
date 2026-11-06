@@ -677,7 +677,11 @@ Nearly every false accusation found in this repo was of the second kind.
   a mere functional dependency is near-vacuous on low-cardinality data and
   capped 15 columns on the first attempt, and a 3-parameter fit through <= 3
   distinct points is exact by construction, so binary columns are excluded.
-  Row-pair evidence still has NO chance model — the remaining known gap.
+  Row-pair evidence has only a CLEARING chance gate (`row_pairs.py`, an
+  independence product of matched-value frequencies): it can drop or cap a
+  pair, never raise one, and it is skipped when the rarest matched value
+  occurs on just the two rows, i.e. for most accusing pairs. No model supports
+  escalating a row pair — the remaining known gap.
 - **A stage CLI's stdout is a regular file we tail, never a pipe**
   (`runtime._FileLineReader`). `claude -p` exits 0 having DROPPED whatever
   it had not written when its pipe was full; 7 of 57 stages of a 20-worker

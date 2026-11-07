@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import json
+import re
 from pathlib import Path
 from .analysis_runs import Archive, read
 
@@ -55,8 +56,19 @@ def encode_for_postgres(value) -> str:
     The importer already treats a NUL as a conflict to report
     (workbench/importer.py); here it is dropped, because a caption with a stray
     control byte is still the caption and a corpus that cannot sync is worse.
+
+    ONLY AN ESCAPE, NEVER TEXT THAT SPELLS ONE. A plain `.replace` also matched
+    the six characters `\\u0000` written out in a string -- encoded as
+    `\\\\u0000` -- and removed half of the escaped backslash, leaving `\\ `,
+    which Postgres rejects ("Escape sequence \"\\ \" is invalid"). MEASURED
+    2026-11-07: model transcripts in cerebrolysin_papers quote the text
+    `\\u0000`, and the whole corpus sync failed on them. An escape is a
+    backslash preceded by an even number of backslashes.
     """
-    return json.dumps(value, default=str).replace("\\u0000", "")
+    return _NUL_ESCAPE.sub(r"\1", json.dumps(value, default=str))
+
+
+_NUL_ESCAPE = re.compile(r"(?<!\\)((?:\\\\)*)\\u0000")
 
 def migration_sql():
     source = Path(__file__).with_name("analysis_history.sql")

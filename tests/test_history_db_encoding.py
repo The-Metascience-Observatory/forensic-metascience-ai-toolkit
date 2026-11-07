@@ -82,3 +82,12 @@ def test_sync_batch_keeps_a_run_payload_well_under_the_jsonb_cap():
     corpus that hit it was well under 100 KB; the batch must leave an order of
     magnitude of headroom, because the next corpus's manifests will be bigger."""
     assert H.SYNC_BATCH * 100_000 < 268_435_455 / 10
+
+
+def test_text_that_spells_a_nul_escape_is_kept_verbatim():
+    # MEASURED 2026-11-07: transcripts quoting the six characters \u0000 had
+    # half their escaped backslash removed, and Postgres rejected `\ `.
+    value = {"t": "stored at \\u0000 C", "both": "a\\\x00b", "two": "\\\\u0000"}
+    out = H.encode_for_postgres(value)
+    assert json.loads(out) == {"t": "stored at \\u0000 C", "both": "a\\b",
+                               "two": "\\\\u0000"}

@@ -95,3 +95,37 @@ class TestSeverityRankUnderstandsBothLadders:
         `indeterminate`; ranking a typo as a real verdict is what this
         function's docstring exists to prevent."""
         assert severity_rank(bad) is None
+
+
+class TestDepositsAndAdminFoldersAreNotPapers:
+    """MEASURED 2026-11-07 on cerebrolysin_papers: a fetchpdf deposit folder,
+    `<stem>_data_artifacts/<DOI-named deposit>/`, made its paper look like a
+    folder of papers, so 10 papers with PDFs were never swept; and the
+    underscore admin folders and `search_scripts_and_data/` were swept as
+    papers."""
+
+    def _paper(self, root, slug):
+        d = root / slug
+        d.mkdir()
+        (d / f"{slug}.pdf").write_bytes(b"%PDF-1.4")
+        return d
+
+    def test_a_paper_with_a_deposit_folder_is_one_paper(self, tmp_path):
+        p = self._paper(tmp_path, "10.1007--s10072-019-04053-5")
+        dep = p / "10.1007--s10072-019-04053-5_data_artifacts" / "10.7910_dvn_2fnzq8"
+        dep.mkdir(parents=True)
+        (dep / "data.csv").write_text("x\n")
+        assert W._is_paper_internal(dep.parent.name)
+        assert [d.name for d in W.iter_paper_dirs(tmp_path)] == [p.name]
+
+    @pytest.mark.parametrize("name", [
+        "_pmid_duplicates_20261105", "_prior_run_reports_20261103",
+        "_sources", "search_scripts_and_data",
+    ])
+    def test_admin_folders_are_neither_papers_nor_nests(self, tmp_path, name):
+        paper = self._paper(tmp_path, "10.1000--real")
+        admin = tmp_path / name
+        admin.mkdir()
+        (admin / "manifest.csv").write_text("x\n")
+        self._paper(admin, "10.1000--set-aside-duplicate")
+        assert [d.name for d in W.iter_paper_dirs(tmp_path)] == [paper.name]

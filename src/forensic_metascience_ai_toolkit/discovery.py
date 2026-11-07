@@ -66,7 +66,20 @@ def run_kind(doc: dict | None) -> str:
 _NOT_A_PAPER = frozenset({
     "done", "failed", "logs", "reviews", "blinded", "priority",
     "prioritized_cerebrolysin_papers", "already_retracted", "retracted",
+    # cerebrolysin_papers keeps its acquisition scripts and their outputs here.
+    "search_scripts_and_data",
 })
+
+
+def _is_scaffolding_name(name: str) -> bool:
+    """Hidden (`.x`) and underscore-prefixed (`_x`) directories are corpus
+    administration, never papers: `_pmid_duplicates_<date>/` (papers moved
+    aside as duplicates of others), `_prior_run_reports_<date>/`, `_sources/`,
+    `_build/`, `_excluded/`. MEASURED 2026-11-07 on cerebrolysin_papers: the
+    two underscore folders there were swept as papers in their own right, one
+    of them a folder of duplicate papers the corpus had deliberately set aside.
+    No paper slug in any corpus on disk starts with `_`."""
+    return name.startswith((".", "_"))
 
 
 _NESTED_PAPER_DIRS = frozenset({
@@ -109,6 +122,12 @@ def _is_paper_internal(name: str) -> bool:
             # DOI-prefixed image directories otherwise look like child papers,
             # making discovery descend past the actual paper and omit it.
             or name.endswith(("_images", "_figures"))
+            # fetchpdf's linked deposits, `<stem>_data_artifacts/<deposit>/`
+            # (supplements.DATA_ARTIFACT_INFIX). A DOI-named deposit inside
+            # it made the PAPER look like a folder of papers: measured
+            # 2026-11-07, 10 of 970 cerebrolysin papers were never swept and
+            # `<deposit>` folders were listed in their place.
+            or name.endswith("_data_artifacts")
             or name.startswith("forensic_review")
             or name.startswith("bundle_")
             or name.endswith("_bundle"))
@@ -121,7 +140,7 @@ def _looks_like_paper_leaf(d: Path) -> bool:
     paper's `panels/` or `forensic_review/` must not make the paper itself
     look like a nest.
     """
-    if not d.is_dir() or d.name.startswith(".") or d.name in _NOT_A_PAPER:
+    if not d.is_dir() or _is_scaffolding_name(d.name) or d.name in _NOT_A_PAPER:
         return False
     if _is_paper_internal(d.name):
         return False
@@ -153,7 +172,7 @@ def _has_paper_children(d: Path) -> bool:
 
 
 def _should_descend(d: Path) -> bool:
-    if not d.is_dir() or d.name.startswith("."):
+    if not d.is_dir() or _is_scaffolding_name(d.name):
         return False
     if d.name in _NESTED_PAPER_DIRS:
         return True
@@ -251,7 +270,7 @@ def looks_like_paper(d: Path) -> bool:
     case: it is non-empty and not in `_NOT_A_PAPER`, but its children are the
     papers.
     """
-    if not d.is_dir() or d.name.startswith(".") or d.name in _NOT_A_PAPER:
+    if not d.is_dir() or _is_scaffolding_name(d.name) or d.name in _NOT_A_PAPER:
         return False
     if _is_paper_internal(d.name):
         return False

@@ -19,6 +19,10 @@ live project list. See [storage](../docs/workbench_storage.md).
 
 ## Run
 
+Needs Node.js 20.9 or newer (Next 16); `npm test` needs 22.6+ for
+`--experimental-strip-types`. This machine's `/usr/bin/node` is 18, which Next
+16 refuses by name: use the nvm one (`nvm use 22`) or put it first on `PATH`.
+
 ```bash
 # from the repo root
 # use the interpreter the metascience CLI runs under (machine-specific)

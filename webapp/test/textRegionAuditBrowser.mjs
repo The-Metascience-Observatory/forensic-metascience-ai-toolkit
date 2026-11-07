@@ -3,14 +3,14 @@ import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {deflateSync} from 'node:zlib';
+import {addReact} from './reactGlobals.mjs';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage({viewport:{width:1000,height:900}});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.route('http://audit.test/**',route=>route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="80"><rect width="100" height="80" fill="white"/><text x="10" y="23" font-size="12">Label</text><circle cx="60" cy="50" r="15" fill="#78967a"/></svg>'}));
  await page.setContent('<div id="root"></div>');
- await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
- await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+ await addReact(page);
  const packed=Buffer.alloc(1000);
  for(let y=10;y<=25;y++)for(let x=8;x<=44;x++){const i=y*100+x;packed[i>>3]|=128>>(i&7);}
  const loc={provenance:{device:'cuda:0',execution:{runtime:{hardware:{name:'Fixture accelerator'}}}},status:'measured',reason:'synthetic localization fixture',size:[100,80],polygons:[[[8,10],[44,10],[44,25],[8,25]]],mask_bits:deflateSync(packed).toString('base64'),mask_fraction:16*37/8000};

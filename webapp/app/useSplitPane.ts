@@ -51,7 +51,7 @@ export type SplitPane = {
    */
   settled: number;
   /** Put this on the element the percentage is measured against. */
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLDivElement | null>;
   /** Spread onto an empty `<div>` sitting between the two panes. */
   separatorProps: ComponentPropsWithoutRef<"div">;
 };

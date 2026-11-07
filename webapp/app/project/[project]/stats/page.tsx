@@ -31,11 +31,12 @@ async function loadFindings(project: string, technique: string, offset: number) 
 }
 
 export default async function StatsPage(
-  { params, searchParams }: {
-    params: { project: string };
-    searchParams?: { technique?: string; offset?:string };
+  props: {
+    params: Promise<{ project: string }>;
+    searchParams: Promise<{ technique?: string; offset?:string }>;
   },
 ) {
+  const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   const project = decodeURIComponent(params.project);
   const technique = searchParams?.technique || "";
   const offset=Math.max(0,Number(searchParams?.offset)||0);

@@ -27,8 +27,13 @@ for(const route of ['settings','draft','metadata','index','stats','viewed','reve
   assert.equal((await api.POST(req)).status,403,route);
  }
 }
-for(const headers of [{},{origin:'http://localhost:3100'},{'sec-fetch-site':'same-origin'}])
- assert.equal(rejectCrossOrigin(new Request('http://localhost:3100/api/settings',{headers})),null);
+for(const headers of [{},{origin:'http://localhost:3100'},{'sec-fetch-site':'same-origin'},
+  // serve.mjs prints 127.0.0.1 while Next reports localhost in req.url.
+  {origin:'http://127.0.0.1:3100'},{origin:'http://[::1]:3100'}])
+ assert.equal(rejectCrossOrigin(new Request('http://localhost:3100/api/settings',{headers})),null,JSON.stringify(headers));
+// Loopback aliases only: another port or scheme, or a rebinding name, stays refused.
+for(const origin of ['http://127.0.0.1:3101','https://127.0.0.1:3100','http://rebind.invalid:3100','http://127.0.0.2:3100','not a url'])
+ assert.equal(rejectCrossOrigin(new Request('http://localhost:3100/api/settings',{headers:{origin,host:'rebind.invalid:3100'}}))?.status,403,origin);
 const root=mkdtempSync(path.join(tmpdir(),'audit-media-'));let browser;
 try {
  const file=path.join(root,'evidence.html');

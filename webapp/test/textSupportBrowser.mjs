@@ -2,13 +2,13 @@ import {chromium} from 'playwright';
 import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage({viewport:{width:900,height:800}});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.setContent('<div id="root"></div>');
- await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
- await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+ await addReact(page);
  await page.evaluate(()=>window.modules={'react':window.React,'@/app/images/lib':{mediaUrl:(p,d,image)=>image}});
  const code=ts.transpileModule(readFileSync('app/project/[project]/images/[item]/TextSupport.tsx','utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
  await page.addScriptTag({content:`(()=>{const exports={};const require=n=>window.modules[n];${code}\nwindow.TextSupport=exports.TextSupport})();`});

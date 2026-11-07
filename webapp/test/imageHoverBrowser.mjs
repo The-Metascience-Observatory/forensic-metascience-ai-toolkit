@@ -2,14 +2,14 @@ import {chromium} from 'playwright';
 import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
   const page = await browser.newPage({viewport:{width:1500,height:1000}});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.setContent('<button id="hover">Hover panel</button><div id="root"></div>');
   await page.addStyleTag({content:readFileSync('app/globals.css','utf8')});
-  await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
-  await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+  await addReact(page);
   await page.evaluate(()=>window.modules={react:window.React});
   const modules=[
     ['./affine.ts','lib/affine.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],

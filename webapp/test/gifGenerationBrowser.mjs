@@ -2,14 +2,14 @@ import { chromium } from 'playwright';
 import ts from 'typescript';
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
   const page = await browser.newPage({viewport:{width:1000,height:650}});
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.route('http://localhost/gif-test',route=>route.fulfill({contentType:'text/html',body:'<div style="width:900px;height:550px"><div id="root"></div></div>'}));
   await page.goto('http://localhost/gif-test');
-  await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
-  await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+  await addReact(page);
   await page.evaluate(()=>window.modules={react:window.React});
   await page.addScriptTag({content:`(()=>{const exports={};const module={exports};${readFileSync('node_modules/gifenc/dist/gifenc.js','utf8')}\nwindow.modules.gifenc=module.exports;})();`});
   for(const [name,file] of [

@@ -28,36 +28,67 @@ export function cacheRoot({ env = process.env, platform = process.platform, home
 // Next joins distDir and tsconfigPath onto the project folder, so both are
 // returned relative to it. METASCIENCE_NEXT_LOCAL_BUILD=0 keeps the old
 // in-checkout folder.
+//
+// Since Next 16 a distDir or tsconfig outside the project folder is refused
+// (InvalidDistDirError; Turbopack: "leaves the filesystem root"), and neither
+// check follows symlinks. So the checkout holds ONE symlink,
+// `.next-cache-<hash>` (gitignored by `.next*`), to this checkout's cache
+// folder, and `dist`/`tsconfig` are reached through it; `absDist` is the real
+// folder. A Mac checkout of the same Dropbox folder has another cache path,
+// so another link, and neither machine rewrites the other's.
+// Dropbox does not follow a symlink out of the synced folder.
 export function localBuild(name, { webappDir = WEBAPP_DIR, env = process.env, ...where } = {}) {
   if (env.METASCIENCE_NEXT_LOCAL_BUILD === '0') {
-    return { dist: name, absDist: path.resolve(webappDir, name), tsconfig: null };
+    return { dist: name, absDist: path.resolve(webappDir, name), link: null, tsconfig: null };
   }
   const key = createHash('sha256').update(webappDir).digest('hex').slice(0, 10);
-  const root = path.join(cacheRoot({ env, ...where }), key);
-  const absDist = path.isAbsolute(name) ? name : path.join(root, path.basename(name));
+  const root = path.isAbsolute(name) ? path.dirname(name) : path.join(cacheRoot({ env, ...where }), key);
+  const base = path.basename(name);
+  // Named for its target, so an absolute METASCIENCE_NEXT_DIST gets its own link.
+  const linkKey = createHash('sha256').update(root).digest('hex').slice(0, 10);
+  const link = { path: path.join(webappDir, `.next-cache-${linkKey}`), target: root };
+  const via = (p) => path.relative(webappDir, path.join(link.path, p));
   return {
-    dist: path.relative(webappDir, absDist),
-    absDist,
-    tsconfig: path.relative(webappDir, path.join(absDist, '..', `tsconfig.${path.basename(absDist).replace(/^\.+/, '')}.json`)),
+    dist: via(base),
+    absDist: path.join(root, base),
+    link,
+    tsconfig: via(`tsconfig.${base.replace(/^\.+/, '')}.json`),
   };
 }
 
+// Point the checkout's link at its cache folder. A real directory under the
+// link's name is someone's data, never deleted: refuse by name.
+export function linkBuild(build) {
+  if (!build.link) return;
+  const { path: at, target } = build.link;
+  let st = null;
+  try { st = fs.lstatSync(at); } catch {}
+  if (st && !st.isSymbolicLink()) {
+    throw new Error(`${at} exists and is not a symlink; move it away so it can point at ${target}.`);
+  }
+  if (st && fs.readlinkSync(at) === target) return;
+  if (st) fs.rmSync(at, { force: true });
+  fs.symlinkSync(target, at, 'junction');
+}
+
 // Next appends `<distDir>/types/**/*.ts` to whichever tsconfig it reads. Given
-// the checked-in one, every machine would add its own cache path to it, so
-// Next reads a generated file that extends it. baseUrl pins `@/*` to the
-// webapp: without it Next resolves paths from the generated file's folder.
+// the checked-in one, every machine would add its own link name to it, so
+// Next reads a generated file that extends it. Turbopack resolves a tsconfig
+// inside the project only, so every path in it is RELATIVE to where Next sees
+// it -- through the link, one folder below the webapp -- never absolute: with
+// absolute `extends`/`baseUrl` Turbopack could not resolve `@/*` (2026-11-07).
 export function localTsconfig(build, webappDir = WEBAPP_DIR) {
-  const at = (p) => path.join(webappDir, p);
+  const from = path.dirname(path.resolve(webappDir, build.tsconfig));
+  const rel = (p) => path.relative(from, path.resolve(webappDir, p)) || '.';
+  const types = path.relative(from, path.resolve(webappDir, build.dist));
   return {
-    extends: at('tsconfig.json'),
-    compilerOptions: { baseUrl: webappDir, plugins: [{ name: 'next' }] },
-    // The relative entry is the exact string Next looks for before appending
-    // its own; the absolute one is what TypeScript actually reads.
+    extends: rel('tsconfig.json'),
+    compilerOptions: { baseUrl: rel('.'), plugins: [{ name: 'next' }] },
     include: [
-      at('next-env.d.ts'), at('**/*.ts'), at('**/*.tsx'),
-      path.join(build.absDist, 'types/**/*.ts'), `${build.dist}/types/**/*.ts`,
+      rel('next-env.d.ts'), rel('**/*.ts'), rel('**/*.tsx'),
+      `${types}/types/**/*.ts`, `${types}/dev/types/**/*.ts`,
     ],
-    exclude: [at('node_modules')],
+    exclude: [rel('node_modules')],
   };
 }
 
@@ -67,6 +98,7 @@ export function localTsconfig(build, webappDir = WEBAPP_DIR) {
 function prepareLocalBuild(build) {
   fs.mkdirSync(build.absDist, { recursive: true });
   if (!build.tsconfig) return;
+  linkBuild(build);
   const modules = path.join(build.absDist, '..', 'node_modules');
   const target = path.join(WEBAPP_DIR, 'node_modules');
   let current = null;

@@ -9,6 +9,56 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-07 — the workbench runs on Next 16 and React 19
+
+No finding, review event or artifact format changes. Next 14.2.35 was the last
+14.x release, and `npm audit --omit=dev` listed one critical advisory group for
+it (18 Next.js advisories: DoS, request smuggling, SSRF, cache poisoning, XSS)
+fixed only in 15/16. It now lists none.
+
+- **Next 16.4.5, React 19.3.** The eight pages that read `params` or
+  `searchParams` await them (they are promises since Next 15); `RefObject`
+  types allow `null` (React 19). Nothing uses `cookies()`, `headers()` or a
+  server `fetch`, and every page and route handler was already
+  `force-dynamic`, so the caching-default changes alter nothing here.
+- **Node.js 20.9 or newer** (`engines`). Next 16 refuses the system Node 18
+  by name; the README says so.
+- **Build folder stays in `~/.cache/metascience-webapp`, reached through a
+  link.** Next 16 refuses a `distDir` or tsconfig outside the project
+  (`InvalidDistDirError`; Turbopack: "leaves the filesystem root"), so
+  `scripts/serve.mjs` keeps one symlink per checkout, `webapp/.next-cache-<hash>`
+  (gitignored by `.next*`), to the cache folder, and passes `distDir` and the
+  generated tsconfig through it. The generated tsconfig uses relative paths:
+  with absolute `extends`/`baseUrl`, Turbopack could not resolve `@/*`. A real
+  folder under the link's name is refused by name, never deleted.
+- `next-env.d.ts` is now gitignored: Next 16 rewrites it on every dev/build
+  with this machine's link path. `agentRules: false` stops `next dev` writing
+  an `AGENTS.md` into the webapp.
+- **Saves from `http://127.0.0.1:<port>` were refused as cross-origin** (Next
+  14 and 16 alike): Next reports `req.url` as `localhost`, and `serve.mjs`
+  prints and binds 127.0.0.1 since 3cfa3b9c. `rejectCrossOrigin` treats
+  `localhost`, `127.0.0.1` and `[::1]` as one origin when scheme and port
+  match; the Host header is not trusted (DNS rebinding), and other ports,
+  schemes and names stay refused.
+- React 19 ships no UMD builds. The ten component tests that injected
+  `react/umd/*` load React's CommonJS builds through `test/reactGlobals.mjs`,
+  which also keeps `ReactDOM.render` for them as `createRoot` under
+  `flushSync`; `xmlPaperBrowser` loads Next's compiled `react-dom/client`.
+- Measured: `npm test` passes. Of the 18 browser tests run against
+  `npm start`, 12 pass, 2 skip for want of their opt-in fixtures
+  (`clonePdfBrowser`, `onDemandVideoBrowser`), and the four that fail (`browser`, `imageScreeningStatus`,
+  `infiniteQueueBrowser`, `workbench-browser`) fail identically on Next 14:
+  their fixture projects (`image_discovery_2026-09*`) are no longer on disk,
+  and `imageScreeningStatus` mocks `method=item` where the page now asks for
+  `item_core`. A queue → item → save → reload check on
+  `cerebrolysin_papers` passed against a disposable copy of the local image
+  store.
+- **The dev race was not reproduced, before or after.** From a cold
+  `npm run dev`, requesting `/`, `/project/cerebrolysin_papers` and
+  `/api/projects` together returned 200 three times in 6 runs on Next 14 and 5
+  on Next 16 (no `useState` null-dispatcher error). The upgrade is therefore
+  not evidence that the race is gone.
+
 ## [1.100.0] — 2026-10-19 — the serial pipeline's output layout is no longer read
 
 MINOR: no finding or severity a live run produces changes. What changes is

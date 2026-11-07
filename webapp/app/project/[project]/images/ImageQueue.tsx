@@ -46,7 +46,7 @@ function thumb(project: string, it: Item): string | null {
   return rel ? mediaUrl(project, dir, rel) + "&variant=thumbnail" : null;
 }
 
-function QueueThumbnail({src, root, item}: {src: string; item: Item; root: React.RefObject<HTMLDivElement>}) {
+function QueueThumbnail({src, root, item}: {src: string; item: Item; root: React.RefObject<HTMLDivElement | null>}) {
   const image = useRef<HTMLImageElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {

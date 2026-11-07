@@ -2,13 +2,13 @@ import { chromium } from 'playwright';
 import ts from 'typescript';
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage();
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.setContent('<div id="root"></div>');
- await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
- await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+ await addReact(page);
  const code=ts.transpileModule(readFileSync('app/project/[project]/images/[item]/VideoGeneration.tsx','utf8'),{
    compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
  await page.addScriptTag({content:`(()=>{const exports={};const require=()=>window.React;${code}\nwindow.videoModule=exports;})();`});

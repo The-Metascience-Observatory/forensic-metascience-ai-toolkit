@@ -2,6 +2,7 @@ import {chromium} from 'playwright';
 import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 
 // Render the real queue with its compact API shape, not a full detail fixture.
 const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
@@ -12,8 +13,7 @@ try {
   await page.route('http://queue.test/',route=>route.fulfill({contentType:'text/html',body:'<div id="root"></div>'}));
   await page.route('http://queue.test/api/media?**',route=>route.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="80"><rect width="100" height="80" fill="gray"/></svg>'}));
   await page.goto('http://queue.test/');
-  await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
-  await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+  await addReact(page);
   await page.evaluate(()=>{
     const noop=()=>{};
     window.modules={react:React,

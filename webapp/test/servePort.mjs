@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:net';
 import path from 'node:path';
-import { cacheRoot, choosePort, isPortFree, listenHost, localBuild, localTsconfig } from '../scripts/serve.mjs';
+import { cacheRoot, choosePort, isPortFree, linkBuild, listenHost, localBuild, localTsconfig } from '../scripts/serve.mjs';
 
 function occupy(port) {
   return new Promise((resolve, reject) => {
@@ -57,21 +57,50 @@ assert.equal(cacheRoot({ ...linux, env: { METASCIENCE_NEXT_CACHE: '/fast' } }), 
 const dev = localBuild('.next-dev', linux);
 assert.ok(dev.absDist.startsWith('/home/u/.cache/metascience-webapp/'), dev.absDist);
 assert.equal(path.basename(dev.absDist), '.next-dev');
-assert.equal(path.resolve(webappDir, dev.dist), dev.absDist, 'distDir is joined onto the project folder');
-assert.equal(path.basename(dev.tsconfig), 'tsconfig.next-dev.json');
-assert.notEqual(
-  localBuild('.next-dev', { ...linux, webappDir: '/other/checkout/webapp' }).absDist, dev.absDist,
-  'two checkouts never share a build folder',
-);
-assert.equal(localBuild('/abs/build', linux).absDist, '/abs/build');
+// Next 16 refuses a distDir or tsconfig outside the project: both are reached
+// through one link inside the webapp whose target is the cache folder.
+assert.equal(path.dirname(dev.link.path), webappDir, 'the link sits in the webapp');
+assert.match(path.basename(dev.link.path), /^\.next-cache-[0-9a-f]{10}$/, 'gitignored by `.next*`');
+assert.equal(dev.link.target, path.dirname(dev.absDist));
+assert.equal(path.resolve(webappDir, dev.dist), path.join(dev.link.path, '.next-dev'), 'distDir is inside the project folder');
+assert.ok(!dev.dist.startsWith('..') && !path.isAbsolute(dev.dist));
+assert.equal(path.resolve(webappDir, dev.tsconfig), path.join(dev.link.path, 'tsconfig.next-dev.json'));
+const review = localBuild('.next-review', linux);
+assert.equal(review.link.path, dev.link.path, 'dev and review share one link per checkout');
+const other = localBuild('.next-dev', { ...linux, webappDir: '/other/checkout/webapp' });
+assert.notEqual(other.absDist, dev.absDist, 'two checkouts never share a build folder');
+assert.notEqual(path.basename(other.link.path), path.basename(dev.link.path), 'nor a link name, so Dropbox copies never collide');
+const abs = localBuild('/abs/build', linux);
+assert.equal(abs.absDist, '/abs/build');
+assert.equal(abs.link.target, '/abs');
+assert.notEqual(abs.link.path, dev.link.path, 'an absolute build folder gets its own link');
 assert.deepEqual(
   localBuild('.next-dev', { ...linux, env: { METASCIENCE_NEXT_LOCAL_BUILD: '0' } }),
-  { dist: '.next-dev', absDist: path.join(webappDir, '.next-dev'), tsconfig: null },
+  { dist: '.next-dev', absDist: path.join(webappDir, '.next-dev'), link: null, tsconfig: null },
 );
 const ts = localTsconfig(dev, webappDir);
-assert.equal(ts.extends, path.join(webappDir, 'tsconfig.json'));
-assert.equal(ts.compilerOptions.baseUrl, webappDir, '`@/*` resolves from the webapp, not the cache');
-assert.ok(ts.include.includes(`${dev.dist}/types/**/*.ts`), 'Next finds its own entry and leaves tsconfig.json alone');
+assert.equal(ts.extends, '../tsconfig.json', 'relative: Turbopack resolves inside the project only');
+assert.equal(ts.compilerOptions.baseUrl, '..', '`@/*` resolves from the webapp, not the cache');
+assert.ok(ts.include.includes('.next-dev/types/**/*.ts'));
+assert.ok(ts.include.every((p) => !path.isAbsolute(p)));
+
+// The link is replaced when stale and never replaces a real folder.
+{
+  const fs = await import('node:fs');
+  const os = await import('node:os');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'serve-link-'));
+  try {
+    const at = path.join(tmp, 'link'); const t1 = path.join(tmp, 'a'); const t2 = path.join(tmp, 'b');
+    fs.mkdirSync(t1); fs.mkdirSync(t2);
+    linkBuild({ link: { path: at, target: t1 } });
+    assert.equal(fs.readlinkSync(at), t1);
+    linkBuild({ link: { path: at, target: t2 } });
+    assert.equal(fs.readlinkSync(at), t2);
+    fs.rmSync(at); fs.mkdirSync(at);
+    assert.throws(() => linkBuild({ link: { path: at, target: t1 } }), /is not a symlink/);
+    assert.ok(fs.statSync(at).isDirectory());
+  } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+}
 
 console.log('serve port: occupied fallback, review-port skip, start refusal, and local build folder passed');
 

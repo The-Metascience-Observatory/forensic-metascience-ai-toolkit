@@ -3,14 +3,14 @@ import { chromium } from 'playwright';
 import ts from 'typescript';
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage();
  page.on('pageerror',e=>console.error(e.message));
  page.setDefaultTimeout(10000);
  await page.setContent('<div id="root"></div>');
- await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
- await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+ await addReact(page);
  for(const [name,path] of [['requestCache','lib/requestCache.ts'],['sync','lib/reviewSync.ts'],['status','app/CacheStatus.tsx'],['item','app/images/useFeed.ts']]) {
   const code=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
   await page.addScriptTag({content:`window.modules ||= {}; (()=>{const exports={};const require=n=>n==='next/navigation'?{usePathname:()=>window.testPath || '/project/project/papers'}:n==='react'?window.React:n==='@/lib/requestCache'?window.modules.requestCache:window.modules.sync;${code}\nwindow.modules[${JSON.stringify(name)}]=exports;})();`});

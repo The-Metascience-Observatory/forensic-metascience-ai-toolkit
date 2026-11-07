@@ -2,6 +2,7 @@ import {chromium} from 'playwright';
 import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 // Imported image results must reach the landing page: every catalog project
 // gets its image-review counts joined, and image projects the catalog does
 // not list yet are appended rather than hidden (Yadong Huang's, 2026-09-30).
@@ -16,8 +17,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage();
  await page.setContent('<div id="root"></div>');
- await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
- await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+ await addReact(page);
  const code=ts.transpileModule(readFileSync('app/ProjectsTable.tsx','utf8'),{
    compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
  await page.addScriptTag({content:`(()=>{const exports={};const require=()=>React;${code}\nwindow.ProjectsTable=exports.ProjectsTable;})();`});

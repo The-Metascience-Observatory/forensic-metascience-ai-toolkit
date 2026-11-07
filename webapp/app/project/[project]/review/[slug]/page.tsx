@@ -2,10 +2,11 @@ import { Reviewer } from "./Reviewer";
 
 export const dynamic = "force-dynamic";
 
-export default function ReviewPage({
-  params,
-  searchParams,
-}: { params: { project: string; slug: string }; searchParams?: { dir?: string } }) {
+export default async function ReviewPage(props: {
+  params: Promise<{ project: string; slug: string }>;
+  searchParams: Promise<{ dir?: string }>;
+}) {
+  const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   return (
     <Reviewer
       project={decodeURIComponent(params.project)}

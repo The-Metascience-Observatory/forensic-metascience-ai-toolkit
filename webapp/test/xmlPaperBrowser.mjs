@@ -9,19 +9,21 @@ try {
   await page.setContent('<div id="root" style="height:650px"></div>');
   await page.addStyleTag({content:readFileSync('app/globals.css','utf8')});
   // Use Next's actual renderer: its innerHTML prop handling differs from the
-  // standalone React UMD build and used to discard overlays on navigation.
+  // standalone React build and used to discard overlays on navigation.
   await page.evaluate(()=>window.modules={});
   for(const [name,file] of [
     ['next/dist/compiled/react','react/cjs/react.development.js'],
     ['next/dist/compiled/scheduler','scheduler/cjs/scheduler.development.js'],
     ['next/dist/compiled/react-dom','react-dom/cjs/react-dom.development.js'],
+    // React 19 moved createRoot to react-dom/client.
+    ['next/dist/compiled/react-dom/client','react-dom/cjs/react-dom-client.development.js'],
   ]) {
     const code=readFileSync(`node_modules/next/dist/compiled/${file}`,'utf8');
     await page.addScriptTag({content:`(()=>{const exports={};const module={exports};const process={env:{NODE_ENV:'development'}};const require=n=>window.modules[n];${code}\nwindow.modules[${JSON.stringify(name)}]=module.exports;})();`});
   }
   await page.evaluate(()=>{
     window.React=window.modules.react=window.modules['next/dist/compiled/react'];
-    window.ReactDOM=window.modules['next/dist/compiled/react-dom'];
+    window.ReactDOM={...window.modules['next/dist/compiled/react-dom'],...window.modules['next/dist/compiled/react-dom/client']};
   });
   const modules=[
     ['@/lib/flipArrow','lib/flipArrow.ts'],

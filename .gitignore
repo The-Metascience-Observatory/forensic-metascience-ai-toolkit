@@ -38,6 +38,9 @@ webapp/public/pdf.worker.min.mjs
 webapp/.next*
 # TypeScript's incremental-compile cache
 webapp/*.tsbuildinfo
+# Next 16 rewrites it on every dev/build with this machine's build-folder
+# link (`.next-cache-<hash>`), so it is generated, not source.
+webapp/next-env.d.ts
 
 run_logs
 run_logs/*

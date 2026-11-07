@@ -2,6 +2,7 @@ import {chromium} from 'playwright';
 import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
+import {addReact} from './reactGlobals.mjs';
 
 const fixturePath=process.env.METASCIENCE_CLONE_PDF_FIXTURE;
 if (!fixturePath) {
@@ -23,8 +24,7 @@ try {
   });
   await page.goto('http://clone-pdf.test/');
   await page.addStyleTag({content:readFileSync('app/globals.css','utf8')});
-  await page.addScriptTag({path:'node_modules/react/umd/react.development.js'});
-  await page.addScriptTag({path:'node_modules/react-dom/umd/react-dom.development.js'});
+  await addReact(page);
   await page.evaluate(async()=>window.modules={react:window.React,'pdfjs-dist':await import('http://clone-pdf.test/pdf.mjs')});
   for(const [name,file] of [
     ['@/lib/flipArrow','lib/flipArrow.ts'],

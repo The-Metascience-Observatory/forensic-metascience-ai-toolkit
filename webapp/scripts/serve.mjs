@@ -80,6 +80,14 @@ function prepareLocalBuild(build) {
   if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== body) fs.writeFileSync(file, body);
 }
 
+// The workbench serves local papers, reviews and file paths with no
+// authentication, so it listens on loopback only. Measured 2026-11-07: both
+// servers accepted connections on every interface. Set
+// METASCIENCE_WEBAPP_HOST=0.0.0.0 to expose it on purpose.
+export function listenHost(env = process.env) {
+  return env.METASCIENCE_WEBAPP_HOST || '127.0.0.1';
+}
+
 export function isPortFree(port) {
   return new Promise((resolve) => {
     const server = createServer();
@@ -138,7 +146,7 @@ if (isMain) {
   }
   const next = createRequire(import.meta.url).resolve('next/dist/bin/next');
   console.log(`Build folder: ${build.absDist}`);
-  const child = spawn(process.execPath, [next, mode, ...(mode === 'build' ? [] : ['-p', String(port)])], {
+  const child = spawn(process.execPath, [next, mode, ...(mode === 'build' ? [] : ['-p', String(port), '-H', listenHost()])], {
     stdio: 'inherit',
     env: {
       ...process.env, PORT: String(port),

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:net';
 import path from 'node:path';
-import { cacheRoot, choosePort, isPortFree, localBuild, localTsconfig } from '../scripts/serve.mjs';
+import { cacheRoot, choosePort, isPortFree, listenHost, localBuild, localTsconfig } from '../scripts/serve.mjs';
 
 function occupy(port) {
   return new Promise((resolve, reject) => {
@@ -74,3 +74,7 @@ assert.equal(ts.compilerOptions.baseUrl, webappDir, '`@/*` resolves from the web
 assert.ok(ts.include.includes(`${dev.dist}/types/**/*.ts`), 'Next finds its own entry and leaves tsconfig.json alone');
 
 console.log('serve port: occupied fallback, review-port skip, start refusal, and local build folder passed');
+
+// Loopback unless exposure is asked for by name.
+assert.equal(listenHost({}), '127.0.0.1');
+assert.equal(listenHost({ METASCIENCE_WEBAPP_HOST: '0.0.0.0' }), '0.0.0.0');

@@ -159,8 +159,9 @@ the old names no longer counts as done for the batch skip and is re-run once.
 
 ## The raw-data module (2026-10-15)
 
-`raw_data` runs `copy_paste_detector.detect_paper_duplication` over the
-paper's spreadsheets and CSVs (top level plus `raw_track.SUPPLEMENT_SUBDIRS`)
+`raw_data` runs `copy_paste_detector.detect_paper_duplication` (a separate
+repository since 2026-11-06, reached through `copypaste_plugin`; without it the
+module reads `unavailable`, not clean) over the paper's spreadsheets and CSVs (top level plus `raw_track.SUPPLEMENT_SUBDIRS`)
 in a child process (`python -m forensic_metascience_ai_toolkit.raw_track`, killed after
 `METASCIENCE_RAW_DATA_TIMEOUT`, default 900 s). Opt-in: `raw_data_only`, or
 `full_raw_data` (`full` plus this module, still a complete review).

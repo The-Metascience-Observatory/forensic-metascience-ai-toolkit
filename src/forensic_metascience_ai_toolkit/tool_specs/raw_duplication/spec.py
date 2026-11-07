@@ -2,7 +2,8 @@
 
 Each ToolSpec below was moved verbatim from registry.py (Phase 3a of the
 modular refactor). Its MCP description and integrity card live in
-TOOL.md beside this file; the implementation is in `copy_paste_detector.detector`.
+TOOL.md beside this file; the implementation is in `copy_paste_detector.detector`, a separate
+repository reached through `copypaste_plugin` (`tools.detect_raw_duplication`).
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ from ...registry import (
     Param,
     ToolSpec,
 )
-from copy_paste_detector import detect_raw_duplication
+from ...tools import detect_raw_duplication
 from .. import descriptions
 
 DESCRIPTIONS = descriptions(__file__)

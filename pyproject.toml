@@ -168,17 +168,12 @@ pdf = []
 [project.scripts]
 metascience = "forensic_metascience_ai_toolkit.cli:app"
 metascience-test = "forensic_metascience_ai_toolkit.test_runner:main"
-copy-paste-detect = "copy_paste_detector.cli:main"
-copy-paste-batch = "copy_paste_detector.batch:main"
-copy-paste-dataset = "copy_paste_detector.datasets:main"
-copy-paste-benchmark = "copy_paste_detector.benchmark:main"
 
 [tool.hatch.build.targets.wheel]
-# The toolkit and the copy-paste detector, from their canonical source
-# directories. The image analysis package is distributed separately (a
-# private repository that depends on this one) and is NOT bundled; the
-# toolkit runs without it (`forensic_metascience_ai_toolkit.image_plugin`).
-packages = ["src/forensic_metascience_ai_toolkit", "copy_paste_detector/src/copy_paste_detector"]
+# The toolkit only. The image analysis package and the copy-paste detector
+# are separate repositories, checked out beside this one and NOT bundled; the
+# toolkit runs without either (`image_plugin`, `copypaste_plugin`).
+packages = ["src/forensic_metascience_ai_toolkit"]
 
 # The `html` extra below points at a sibling checkout via a `file://` URL
 # (fetchpdf is not on PyPI). Newer hatchling refuses to build ANY metadata
@@ -219,7 +214,7 @@ select = ["E9", "F"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["tests", "copy_paste_detector/tests"]
+testpaths = ["tests"]
 # NOT parallel via addopts -- deliberately. `-n`/`--dist` are supplied by
 # the pytest-xdist plugin, and pytest parses `addopts` before any plugin or
 # conftest.py gets a chance to run, so hardcoding them here means bare

@@ -113,8 +113,18 @@ def capture_backend(backend: str, root: Path) -> list[dict]:
     # are the machine's, not the tree's (an image checkout, say), so they are
     # dropped before anything else is normalised. A no-op on older trees,
     # which never sent them.
+    # Since 2026-11-06 the detector's root is a SIBLING checkout, not
+    # `<REPO>/copy_paste_detector/src`. Where it sits is the machine's layout,
+    # not the invocation's content, so it is normalised to the token the
+    # oracles already record; the invocation itself is unchanged.
+    from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
+    sibling = sibling_source_root(Path(src_root))
+    if sibling is not None:
+        subs.insert(0, (str(sibling), "<REPO>/copy_paste_detector/src"))
     ours = {Path(src_root).resolve(),
             (Path(src_root).parent / "copy_paste_detector" / "src").resolve()}
+    if sibling is not None:
+        ours.add(sibling.resolve())
     extras: list[str] = []
     for entry in os.environ.get("PYTHONPATH", "").split(os.pathsep):
         if entry and Path(entry).resolve() not in ours and entry not in extras:

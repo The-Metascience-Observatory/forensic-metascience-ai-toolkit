@@ -230,7 +230,7 @@ def test_index_rebuild_recovers_manifest(tmp_path):
     assert len(a.feed()["items"]) == 1
 
 
-def test_portable_copy_import_is_idempotent_and_checks_bytes(tmp_path):
+def test_portable_copy_import_is_idempotent_and_checks_bytes(tmp_path, copypaste_package):
     from copy_paste_detector.portable import save_run
     from forensic_metascience_ai_toolkit.analysis_history import import_copy
 
@@ -445,7 +445,7 @@ def test_tool_capture_precedes_truncation_and_uses_frozen_input(tmp_path, monkey
     assert returned["path"] == str(source)
 
 
-def test_portable_failed_attempt_keeps_its_error_without_input(tmp_path):
+def test_portable_failed_attempt_keeps_its_error_without_input(tmp_path, copypaste_package):
     from copy_paste_detector.portable import save_run
     from forensic_metascience_ai_toolkit.analysis_history import import_copy
 

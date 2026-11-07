@@ -31,7 +31,8 @@ async def run_raw_track(paper_dir, timeout_s: float | None = None) -> dict:
     proc = await asyncio.create_subprocess_exec(
         sys.executable, "-m", "forensic_metascience_ai_toolkit.raw_track", str(paper_dir),
         stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
-        # The child imports copy_paste_detector: from THIS tree, not the .pth.
+        # The child imports copy_paste_detector from the sibling checkout when
+        # there is one (`forensic_source_roots`), else the installed package.
         env=_agent._build_track_env(), start_new_session=True)
     try:
         out, err = await asyncio.wait_for(proc.communicate(), timeout_s)
@@ -70,8 +71,23 @@ async def run_raw_track(paper_dir, timeout_s: float | None = None) -> dict:
     return record
 
 
+def unavailable_record() -> dict:
+    """A raw-data branch that was configured but could not run because the
+    copy-paste detector is not installed. NOT a clean result: `ran` is false
+    and the detail says the spreadsheets were not examined."""
+    return {"ran": False, "is_error": False, "execution_status": "unavailable",
+            "error_subtype": "copypaste_plugin_unavailable",
+            "detail": "copy-paste detector not installed; the spreadsheets were "
+                      "NOT examined. This is not a clean result.",
+            "output": {}, "wall_seconds": 0.0}
+
+
 class RawData(Module):
     async def run(self, ctx, needed) -> ModuleResult:
+        from ...copypaste_plugin import available
+        if not available():
+            record = unavailable_record()
+            return ModuleResult(self.name, record=record, limitations=[record["detail"]])
         record = await run_raw_track(ctx.paper_dir)
         limitations = []
         if record["is_error"]:

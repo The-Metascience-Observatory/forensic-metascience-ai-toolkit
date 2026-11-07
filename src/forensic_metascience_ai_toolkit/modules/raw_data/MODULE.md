@@ -8,7 +8,8 @@ display: Raw data (copy-paste detector)
 ---
 # Raw data
 
-The copy-paste detector (`copy_paste_detector.detect_paper_duplication`) over
+The copy-paste detector (`copy_paste_detector.detect_paper_duplication`, its
+own repository, an optional plugin; absent, this module reads `unavailable`) over
 the paper's spreadsheets and CSVs: the top level plus the allowlisted
 supplement folders (`raw_track.SUPPLEMENT_SUBDIRS`). It runs in a child
 process, calls no model, and is opt-in: add `- use: raw_data` to a pipeline,

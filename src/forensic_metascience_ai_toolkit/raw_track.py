@@ -69,8 +69,10 @@ def scan(paper_dir: str | Path) -> dict:
     `{"files": [], ...}` with no detector result when there is nothing to
     read: that is "did not run", not "found nothing".
     """
-    from copy_paste_detector.paper import detect_paper_duplication
-    from copy_paste_detector.readers import DetectionLimits
+    from .copypaste_plugin import load
+
+    detect_paper_duplication = load("paper").detect_paper_duplication
+    DetectionLimits = load("readers").DetectionLimits
 
     base = Path(paper_dir)
     files = structured_files(base)

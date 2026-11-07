@@ -87,16 +87,17 @@ def provenance(component, **extra):
         version = load("version").__version__ if image_installed else "not_installed"
     from .integration import metadata_provenance
     host_provenance = metadata_provenance() if metadata_provenance and component not in {"image_forensics", "copy_paste"} else {}
+    from .copypaste_plugin import available as _copypaste_available
+    copypaste_installed = component != "copy_paste" or _copypaste_available()
     if component == "copy_paste":
-        # The parent wheel embeds this package without a separate distribution.
-        # Read the version of the code actually loaded, including editable installs.
-        from copy_paste_detector import __version__ as version
+        # A separate repository since 2026-11-06: stamp the version of the code
+        # actually loaded (editable installs included), or say it is absent.
+        from .copypaste_plugin import load as _load_copypaste
+        version = _load_copypaste().__version__ if copypaste_installed else "not_installed"
 
     fingerprint = None
-    if component == "copy_paste":
-        import copy_paste_detector
-
-        folder = Path(copy_paste_detector.__file__).parent
+    if component == "copy_paste" and copypaste_installed:
+        folder = Path(_load_copypaste().__file__).parent
         fingerprint = digest(
             {
                 p.name: hashlib.sha256(p.read_bytes()).hexdigest()

@@ -8,6 +8,8 @@ never the headline. A paper with no spreadsheet is `did_not_run`, never clean.
 import asyncio
 import json
 
+import pytest
+
 from forensic_metascience_ai_toolkit import adjudicate, agent, raw_track
 from forensic_metascience_ai_toolkit import pipeline_config as pc
 from tests.test_parallel_pipeline import fakes, paper  # noqa: F401
@@ -52,6 +54,7 @@ class TestTheRows:
         (tmp_path / "data.csv").write_text(_csv_with_copied_rows())
         return raw_track.scan(tmp_path)
 
+    @pytest.mark.usefixtures("copypaste_package")
     def test_copied_rows_fire_and_are_one_row_per_file_and_kind(self, tmp_path):
         out = self._scan(tmp_path)
         assert out["result"]["n_row_pairs"] >= 10
@@ -79,6 +82,7 @@ class TestTheRows:
 
 
 class TestThePipeline:
+    @pytest.mark.usefixtures("copypaste_package")
     def test_raw_data_only_files_quarantined_rows(self, paper, fakes):
         (paper / "data.csv").write_text(_csv_with_copied_rows())
         res = _run(paper)
@@ -89,6 +93,7 @@ class TestThePipeline:
         assert res["run_meta"]["stages"]["raw_data"]["ran"] is True
         assert fakes["calls"] == [], "no model is called"
 
+    @pytest.mark.usefixtures("copypaste_package")
     def test_no_spreadsheet_is_did_not_run_not_clean_and_not_an_error(
             self, paper, fakes):
         res = _run(paper)
@@ -128,6 +133,7 @@ class TestTheRunVerb:
     """`metascience run PIPELINE PAPER` is `analyze PAPER --pipeline PIPELINE`,
     with every further analyze option passed through."""
 
+    @pytest.mark.usefixtures("copypaste_package")
     def test_it_runs_the_named_pipeline_and_passes_options_through(
             self, paper, fakes, monkeypatch):
         from typer.testing import CliRunner
@@ -148,6 +154,7 @@ class TestTheRunVerb:
 
 
 class TestPartialCoverageReachesTheReport:
+    @pytest.mark.usefixtures("copypaste_package")
     def test_a_partial_scan_says_so_in_the_limitations(self, paper, fakes,
                                                        monkeypatch):
         from forensic_metascience_ai_toolkit.modules.raw_data import module as raw_mod
@@ -164,6 +171,7 @@ class TestPartialCoverageReachesTheReport:
         assert any("PARTIAL" in l and "raw-data" in l
                    for l in res["limitations"]), res["limitations"]
 
+    @pytest.mark.usefixtures("copypaste_package")
     def test_a_timeout_is_named(self, paper, fakes, monkeypatch):
         from forensic_metascience_ai_toolkit.modules.raw_data import module as raw_mod
 

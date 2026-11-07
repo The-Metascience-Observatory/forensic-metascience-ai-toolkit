@@ -35,8 +35,25 @@ class _BlockImagePackage:
 if _BLOCKED:
     sys.meta_path.insert(0, _BlockImagePackage())
 
+#: `METASCIENCE_BLOCK_COPYPASTE_PLUGIN=1` does the same for the copy-paste
+#: detector, a separate repository since 2026-11-06: files whose module-level
+#: imports reach it belong to its suite and are not collected.
+_CP_BLOCKED = os.environ.get("METASCIENCE_BLOCK_COPYPASTE_PLUGIN", "").strip() not in ("", "0")
+_CP_PACKAGE = "copy_paste_detector"
 
-def needs_image_package(path: Path) -> bool:
+
+class _BlockCopyPastePackage:
+    def find_spec(self, name, path=None, target=None):
+        if name == _CP_PACKAGE or name.startswith(_CP_PACKAGE + "."):
+            raise ModuleNotFoundError(f"copy-paste detector blocked: {name}", name=name)
+        return None
+
+
+if _CP_BLOCKED:
+    sys.meta_path.insert(0, _BlockCopyPastePackage())
+
+
+def needs_image_package(path: Path, package: str = _IMAGE_PACKAGE) -> bool:
     """A test file whose MODULE-LEVEL imports reach the image package cannot
     even be collected without it; it belongs to the image package's suite.
     Every other file is collected, so a test that fails for want of the
@@ -47,7 +64,7 @@ def needs_image_package(path: Path) -> bool:
         tree = ast.parse(text)
     except (OSError, SyntaxError):
         return False
-    if "from tests.source_paths import IMAGE_ROOT" in text:
+    if package == _IMAGE_PACKAGE and "from tests.source_paths import IMAGE_ROOT" in text:
         return True     # e.g. a zero-test stub that loads the image suite's helpers
     for node in tree.body:
         names = ([a.name for a in node.names] if isinstance(node, ast.Import)
@@ -56,14 +73,18 @@ def needs_image_package(path: Path) -> bool:
         if isinstance(node, ast.ImportFrom) and node.module:
             names += [f"{node.module}.{a.name}" for a in node.names]
         for name in names:
-            if name == _IMAGE_PACKAGE or name.startswith(_IMAGE_PACKAGE + "."):
+            if name == package or name.startswith(package + "."):
                 return True
     return False
 
 
 def pytest_ignore_collect(collection_path, config):
-    if _BLOCKED and collection_path.suffix == ".py" and collection_path.name.startswith("test_"):
-        return True if needs_image_package(Path(collection_path)) else None
+    if collection_path.suffix != ".py" or not collection_path.name.startswith("test_"):
+        return None
+    if _BLOCKED and needs_image_package(Path(collection_path)):
+        return True
+    if _CP_BLOCKED and needs_image_package(Path(collection_path), _CP_PACKAGE):
+        return True
     return None
 
 
@@ -74,6 +95,15 @@ def image_package():
     from forensic_metascience_ai_toolkit.image_plugin import available
     if not available():
         pytest.skip("needs the image analysis package (absent or blocked)")
+
+
+@pytest.fixture
+def copypaste_package():
+    """Request this in a test that exercises the copy-paste detector: it is
+    skipped, by name, in a run where the package is absent or blocked."""
+    from forensic_metascience_ai_toolkit.copypaste_plugin import available
+    if not available():
+        pytest.skip("needs the copy-paste detector (absent or blocked)")
 
 
 from forensic_metascience_ai_toolkit.test_runner import apply_default_parallelism  # noqa: E402

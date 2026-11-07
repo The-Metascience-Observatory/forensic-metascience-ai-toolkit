@@ -12,48 +12,6 @@ evidence the code already holds.
 import pytest
 
 
-class TestGeocodeExclusionNeedsTheValues:
-    """`_is_geocode` excluded a column from EVERY comparison in the duplication
-    check, so unlike the other two this does not merely mislabel -- the evidence
-    never reaches the reader in any form.
-
-    MEASURED 2026-08-18: the bare token `tract` was in `_GEOCODE_NAMES`, so a
-    column headed `corticospinal tract FA` was dropped as a
-    "geographic/administrative code". This repository's own corpus is 309
-    NEUROSCIENCE papers, where white-matter tract measurements are among the
-    most commonly tabulated numbers there are.
-    """
-
-    def test_the_neuroscience_columns_no_longer_match_by_name(self):
-        from copy_paste_detector.screening import _geocode_name_candidate
-        for name in ("corticospinal tract FA", "tract volume mm3",
-                     "white matter tract"):
-            assert not _geocode_name_candidate(name), name
-
-    def test_census_tract_still_matches_by_name(self):
-        """The narrowing must not blind the screen to the real thing."""
-        from copy_paste_detector.screening import _geocode_name_candidate
-        assert _geocode_name_candidate("census_tract")
-        assert _geocode_name_candidate("respondent zip")
-
-    def test_a_fractional_value_refuses_the_exclusion(self):
-        """The second line of defence: even a genuine geocode NAME is overruled
-        by values that cannot be a code. A ZIP is never 0.42."""
-        from copy_paste_detector.screening import _is_geocode
-        assert _is_geocode("census_tract", [1001.0, 1002.0]) is True
-        assert _is_geocode("census_tract", [1001.5, 1002.3]) is False
-
-    def test_a_real_geocode_is_still_excluded(self):
-        from copy_paste_detector.screening import _is_geocode
-        assert _is_geocode("respondent zip", [90210.0, 10001.0, 60601.0]) is True
-
-    def test_an_empty_column_does_not_confirm_a_code(self):
-        """Nothing observed is not evidence of a code -- returning True here
-        would restore the silent exclusion by another route."""
-        from copy_paste_detector.screening import _values_look_like_codes
-        assert _values_look_like_codes([]) is False
-
-
 class TestSupplementDenialIsNotACitation:
     """`gate()` returns proceed=False and refuses a PAID run. VERIFIED
     2026-08-18: "No supplementary material is provided for this article."

@@ -1,6 +1,7 @@
 """Agent compatibility and Word-reader parity for the standalone detector.
 
-Algorithm and false-positive regressions live in copy_paste_detector/tests.
+Algorithm and false-positive regressions live in the detector's own repository
+(../metascience-observatory-copypaste-detector/tests).
 """
 
 from __future__ import annotations
@@ -83,7 +84,10 @@ def test_existing_agent_cli_and_registry_use_same_result(tmp_path):
         csv.writer(handle).writerows(rows)
     expected = detect_raw_duplication(str(path))
     spec = BY_NAME["detect_raw_duplication"]
-    assert spec.fn is detect_raw_duplication
+    # The registry holds the toolkit's plugin wrapper, not the detector's
+    # function; both must give the same answer.
+    from forensic_metascience_ai_toolkit.tools import detect_raw_duplication as via_plugin
+    assert spec.fn is via_plugin
     assert spec.fn(str(path)) == expected
     result = CliRunner().invoke(app, ["tool", "run", "detect_raw_duplication",
                                       "--json", json.dumps({"path": str(path)})])

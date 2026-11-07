@@ -84,9 +84,11 @@ export function repoRoot(): string {
 }
 
 /** The toolkit's own source roots come from THIS checkout, whatever an
- * editable install points at. The image package is a separate repository
- * (since 1.77.0) checked out BESIDE the toolkit, so its root is the sibling
- * `../metascience-observatory-image-analysis`; where that is absent (a
+ * editable install points at. The image package (since 1.77.0) and the
+ * copy-paste detector (since 2026-11-06) are separate repositories checked out
+ * BESIDE the toolkit, so their roots are the siblings
+ * `../metascience-observatory-image-analysis` and
+ * `../metascience-observatory-copypaste-detector`; where one is absent (a
  * worktree, a machine without the package) Python skips the entry and the
  * installed package, if any, is used. */
 export function pythonEnv(): NodeJS.ProcessEnv {
@@ -95,7 +97,7 @@ export function pythonEnv(): NodeJS.ProcessEnv {
     ...process.env,
     PYTHONPATH: [
       path.join(repo, "src"),
-      path.join(repo, "copy_paste_detector", "src"),
+      path.join(repo, "..", "metascience-observatory-copypaste-detector", "src"),
       path.join(repo, "..", "metascience-observatory-image-analysis", "src"),
       process.env.PYTHONPATH,
     ].filter(Boolean).join(path.delimiter),

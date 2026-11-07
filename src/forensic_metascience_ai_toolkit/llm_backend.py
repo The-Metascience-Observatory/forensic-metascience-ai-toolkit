@@ -1867,8 +1867,9 @@ def _pkg_root() -> Path:
 
 
 def forensic_source_roots() -> list[Path]:
-    """The source roots of THIS tree: `<root>/src` and, when it is beside it,
-    `<root>/copy_paste_detector/src`.
+    """The source roots of THIS tree: `<root>/src` and, when that checkout
+    is beside the repository, the copy-paste detector's
+    `<root>/../metascience-observatory-copypaste-detector/src`.
 
     A child process that gets only `<root>/src` resolves `copy_paste_detector`
     through the editable install's `.pth`, i.e. whatever the SHARED checkout
@@ -1877,12 +1878,15 @@ def forensic_source_roots() -> list[Path]:
     peer changed `copy_paste_detector` on main mid-day -- the server died on
     `cannot import name '_compat' from 'copy_paste_detector'
     (.../Dropbox/.../copy_paste_detector/src/...)`. A non-editable install has
-    no sibling `copy_paste_detector/src`, and the package is then in
-    site-packages beside this one, so only the first root is returned."""
+    no sibling checkout, and the package (if installed) is then in
+    site-packages beside this one, so only the first root is returned. The
+    detector moved to its own repository on 2026-11-06; a worktree outside
+    the shared folder has no sibling either and uses the installed package."""
+    from .copypaste_plugin import sibling_source_root
     src = _pkg_root()
     roots = [src]
-    detector = src.parent / "copy_paste_detector" / "src"
-    if (detector / "copy_paste_detector").is_dir():
+    detector = sibling_source_root(src)
+    if detector is not None:
         roots.append(detector)
     return roots
 

@@ -31,8 +31,7 @@ def test_a_printing_tool_does_not_reach_the_protocol_stream():
     ]
     env = {**os.environ, "METASCIENCE_MCP_STAGE": "tool_agent",
            "PYTHONPATH": os.pathsep.join(
-               [str(ROOT / "src"), str(ROOT / "copy_paste_detector" / "src"),
-                os.environ.get("PYTHONPATH", "")])}
+               [str(ROOT / "src"), os.environ.get("PYTHONPATH", "")])}
     proc = subprocess.run(
         [sys.executable, "-m", "forensic_metascience_ai_toolkit.mcp_server"],
         input="".join(json.dumps(c) + "\n" for c in calls),

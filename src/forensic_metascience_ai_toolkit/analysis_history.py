@@ -1030,9 +1030,11 @@ def sheet(root, rid, aid, selected_sheet=None, highlights=None):
     if not named.exists():
         shutil.copyfile(source, named)
     if archive.run(rid).get("component") == "copy_paste" and highlights:
-        from copy_paste_detector.review_grid import evidence_grid
+        from .copypaste_plugin import available, load
 
-        return evidence_grid(named, selected_sheet, highlights)
+        # Without the detector the sheet is still shown, with plain highlights.
+        if available():
+            return load("review_grid").evidence_grid(named, selected_sheet, highlights)
     return read_sheet(named, selected_sheet, highlights or [])
 
 

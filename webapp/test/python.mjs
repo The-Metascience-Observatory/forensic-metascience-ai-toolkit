@@ -18,17 +18,18 @@ print(json.dumps({name: getattr(importlib.util.find_spec(name), 'origin', None) 
   // The inherited path must survive too: this module exists only there.
   const found = await pyModuleJson('checkout_probe', []);
   const repo = path.resolve(process.cwd(), '..');
-  for (const [name, folder] of Object.entries({forensic_metascience_ai_toolkit: 'src',
-    copy_paste_detector: 'copy_paste_detector/src'})) {
-    assert.equal(found[name], path.join(repo, folder, name, '__init__.py'));
+  const toolkit = 'forensic_metascience_ai_toolkit';
+  assert.equal(found[toolkit], path.join(repo, 'src', toolkit, '__init__.py'));
+  // The image package and the copy-paste detector are their own repositories,
+  // checked out beside the toolkit and optional. Where a sibling checkout
+  // exists, it must win over any installed copy; elsewhere (a worktree, a
+  // plugin-less machine) the bridge has nothing of its own to assert.
+  for (const [name, checkout] of Object.entries({
+    metascience_observatory_image_analysis: 'metascience-observatory-image-analysis',
+    copy_paste_detector: 'metascience-observatory-copypaste-detector'})) {
+    const sibling = path.join(repo, '..', checkout, 'src', name, '__init__.py');
+    if (fs.existsSync(sibling)) assert.equal(found[name], sibling);
   }
-  // The image package is its own repository, checked out beside the toolkit
-  // and optional. Where the sibling checkout exists, it must win over any
-  // installed copy; elsewhere (a worktree, a plugin-less machine) the bridge
-  // has nothing of its own to assert.
-  const image = 'metascience_observatory_image_analysis';
-  const sibling = path.join(repo, '..', 'metascience-observatory-image-analysis', 'src', image, '__init__.py');
-  if (fs.existsSync(sibling)) assert.equal(found[image], sibling);
 } finally {
   if (oldPath === undefined) delete process.env.PYTHONPATH;
   else process.env.PYTHONPATH = oldPath;

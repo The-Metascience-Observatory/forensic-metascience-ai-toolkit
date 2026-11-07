@@ -663,8 +663,9 @@ class TestServerImportsThisTree:
         parts = forensic_pythonpath().split(os.pathsep)
         src = Path(A.__file__).resolve().parent.parent
         assert parts[0] == str(src)
-        detector = src.parent / "copy_paste_detector" / "src"
-        if detector.is_dir():
+        from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
+        detector = sibling_source_root(src)
+        if detector is not None:
             assert str(detector) in parts
 
     def test_every_backend_hands_the_server_both(self, tmp_path, monkeypatch):

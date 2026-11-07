@@ -348,9 +348,10 @@ class TestTheChildOwnsItsStdout:
         # 2026-10-18 in a worktree: `cannot import name '_compat'`) through
         # the editable install, which may name a different checkout than the
         # one under test.
-        detector = SRC.parent.parent / "copy_paste_detector" / "src"
+        from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
+        detector = sibling_source_root(SRC.parent)
         env = {**os.environ, "PYTHONPATH": os.pathsep.join(
-            [str(SRC.parent), str(detector), str(IMAGE_SRC.parent)])}
+            [str(SRC.parent), *([str(detector)] if detector else []), str(IMAGE_SRC.parent)])}
         proc = subprocess.run(cmd, capture_output=True, text=True, env=env,
                               timeout=300)
         assert proc.returncode == 0, proc.stderr[-800:]

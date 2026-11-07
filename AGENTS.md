@@ -119,15 +119,13 @@ Readers of a converted document's `legacy` block (`db_push`, `discovery`,
   debug a single test serially with clean, non-interleaved output. Outside
   the venv a globally-installed pytest/hydra plugin can break collection; the
   workaround is
-  `PYTHONPATH=src:copy_paste_detector/src python3 -m pytest tests/ -q`
+  `PYTHONPATH=src python3 -m pytest tests/ -q`
   (`PYTEST_DISABLE_PLUGIN_AUTOLOAD=1` turns xdist off; pass `-p xdist` as
   well if you need that workaround *and* parallelism). That PYTHONPATH is
-  how tests import both packages outside the venv. The raw-data detector
-  lives in `copy_paste_detector/`; an editable install (`pip install -e .`)
-  adds both source roots to its `.pth`. The image analysis package is a
-  separate repository (see Architecture); install it editable from its own
-  checkout AFTER the toolkit, and add its `src` to `PYTHONPATH` in a worktree
-  run that needs it.
+  how tests import the toolkit outside the venv. The image analysis package
+  and the copy-paste detector are separate repositories (see Architecture);
+  install each editable from its own checkout AFTER the toolkit, and add its
+  `src` to `PYTHONPATH` in a worktree run that needs it.
 - PDF rendering tries `wkhtmltopdf`, the WeasyPrint Python library, then
   `pandoc` with an available PDF engine. It is optional and best-effort;
   a failed render is recorded in `run_meta.pdf_error`.
@@ -179,7 +177,8 @@ Readers of a converted document's `legacy` block (`db_push`, `discovery`,
   The opt-in `raw_data` module (2026-10-15; pipelines `raw_data_only`,
   `full_raw_data`) runs the copy-paste detector over the paper's
   spreadsheets as producer `raw_data_track`: quarantined, one row per
-  (file, kind), never the headline.
+  (file, kind), never the headline. Without the detector installed it reads
+  `unavailable` ("the spreadsheets were NOT examined"), never clean.
   See [docs/specs/modules.md](docs/specs/modules.md).
 - **Tool layer, names and backends (Phases 3b-5, 2026-10-13).**
   - `metascience tool list|describe|run` (`tool_cli.py`) runs ANY registered
@@ -305,6 +304,25 @@ Readers of a converted document's `legacy` block (`db_push`, `discovery`,
   is engine-independent. A column break needs support from 60% of multi-word
   lines, which is what stops a spanning caption shredding the grid.
 - `report_render.py` — markdown → HTML → PDF (best-effort).
+- **The copy-paste detector is a separate repository** (since 2026-11-06):
+  `copy_paste_detector`, checked out beside this one as
+  `../metascience-observatory-copypaste-detector` (history kept, with its
+  ground-truth benchmark under `benchmarks/`; the data files are outside git,
+  see its `benchmarks/MANIFEST.md`) and installed editable after the toolkit.
+  It imports nothing from the toolkit. Host code reaches it ONLY through
+  `copypaste_plugin.py` (`load`, `available`, `sibling_source_root`,
+  `CopyPastePluginUnavailable`), pinned by
+  `tests/test_runs_without_copypaste_plugin.py`. Without it the toolkit runs:
+  `detect_raw_duplication` stays registered and refuses by name
+  (`copypaste_plugin_unavailable`, `indeterminate`), the `raw_data` module
+  reads `unavailable`, provenance stamps `not_installed`, `metascience
+  copy-paste` errors, and preflight names it (non-fatal). Child processes and
+  the webapp put the sibling's `src` second on `PYTHONPATH` when it exists
+  (`llm_backend.forensic_source_roots`, `webapp/lib/python.ts`), else use the
+  installed package. `METASCIENCE_BLOCK_COPYPASTE_PLUGIN=1` runs this suite as
+  a detector-less install; tests that need it take the `copypaste_package`
+  fixture. Detector algorithms, its tests and the copy-paste benchmark live
+  in that repository.
 - **Image analysis is a separate, private package** (since 2026-10-16):
   `metascience_observatory_image_analysis`, its own repository, checked out
   beside this one as `../metascience-observatory-image-analysis` and installed
@@ -670,7 +688,7 @@ Nearly every false accusation found in this repo was of the second kind.
   `n_rows_implicated` are now distinct keys. Budget truncation UNDER-counts and
   the caveat says so.
 - **A column that is an exact linear function of two OTHERS is not independent
-  evidence** (`_linearly_derived`, `copy_paste_detector/screening.py`). `QALY-SG` was
+  evidence** (`_linearly_derived`, `screening.py` in the detector repository). `QALY-SG` was
   exactly `0.125*(SG-V2) + 0.125*(SG-V7)` across 193 rows, so a chance tie on
   the inputs forced a tie in the output and one coincidence scored as three
   matches. The test must be an EXACT linear fit over an over-determined design:
@@ -866,8 +884,8 @@ them -- add explicit paths, never `git add -A`. A fresh worktree can also hold G
 `tests/fixtures/papers/` and `eval/ground_truth/papers` (about 33 corpus tests then fail).
 `git lfs checkout tests/fixtures/papers eval/ground_truth/papers` fills them from the
 local LFS store without a download. The editable install points at the
-Dropbox checkout, so in a worktree put that worktree's two source roots on
-`PYTHONPATH` (and the image checkout's `src` when testing against it);
+Dropbox checkout, so in a worktree put that worktree's `src` on
+`PYTHONPATH` (and the image or copy-paste checkout's `src` when testing against it);
 otherwise tests import the other tree's code.
 
 ## Pushing (standing rule)

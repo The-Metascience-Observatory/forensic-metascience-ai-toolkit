@@ -168,7 +168,7 @@ def test_the_cli_prints_the_composite():
     out = subprocess.run(
         [os.environ.get("PYTHON", "python3"), "-m", "forensic_metascience_ai_toolkit.cli", "version"],
         capture_output=True, text=True,
-        env={**os.environ, "PYTHONPATH": os.pathsep.join(["src", "copy_paste_detector/src"])},
+        env={**os.environ, "PYTHONPATH": "src"},
         cwd=Path(__file__).resolve().parents[1], timeout=120,
     )
     assert out.returncode == 0, out.stderr

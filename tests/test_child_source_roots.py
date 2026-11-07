@@ -10,6 +10,12 @@ grok and claude with `MCPUnavailable` mid-batch. The fix is one helper,
 (claude MCP config, grok config.toml, codex `-c` env, the codex stdio probe,
 the skill launch's `metascience tool run`, the OpenRouter loop, the
 deterministic tracks) carries it.
+
+Since 2026-11-06 the detector is its own repository, checked out BESIDE the
+toolkit (`../metascience-observatory-copypaste-detector`). Where that sibling
+exists its `src` is the second root; where it does not (a worktree outside the
+shared folder) the toolkit's own root leads alone and the installed package is
+used, so the detector-specific tests skip.
 """
 import json
 import os
@@ -21,13 +27,16 @@ import pytest
 
 from forensic_metascience_ai_toolkit import agent as A
 from forensic_metascience_ai_toolkit import llm_backend as lb
+from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
 from forensic_metascience_ai_toolkit.llm_backend import (
     CLAUDE, CODEX, OPENROUTER, build_invocation, forensic_pythonpath,
 )
 
 ROOT = Path(lb.__file__).resolve().parents[2]
 SRC = ROOT / "src"
-DETECTOR = ROOT / "copy_paste_detector" / "src"
+DETECTOR = sibling_source_root(SRC)
+OURS = [SRC.resolve()] + ([DETECTOR.resolve()] if DETECTOR else [])
+needs_sibling = pytest.mark.skipif(DETECTOR is None, reason="no sibling detector checkout")
 FORENSIC = "mcp__forensic_metascience__grim_check"
 
 
@@ -37,20 +46,20 @@ def _entries(pythonpath: str) -> list[Path]:
 
 def _assert_both_roots_first(pythonpath: str) -> None:
     got = _entries(pythonpath)
-    assert got[:2] == [SRC.resolve(), DETECTOR.resolve()], pythonpath
+    assert got[:len(OURS)] == OURS, pythonpath
 
 
 class TestHelper:
+    @needs_sibling
     def test_this_tree_has_the_detector_beside_it(self):
-        # The premise of every other test here: a source checkout (editable
-        # or worktree) carries copy_paste_detector/src beside src/.
         assert (DETECTOR / "copy_paste_detector" / "__init__.py").is_file()
 
     def test_both_roots_of_this_tree_lead(self, monkeypatch):
         monkeypatch.delenv("PYTHONPATH", raising=False)
         _assert_both_roots_first(forensic_pythonpath())
-        assert len(_entries(forensic_pythonpath())) == 2
+        assert len(_entries(forensic_pythonpath())) == len(OURS)
 
+    @needs_sibling
     def test_caller_entries_are_kept_after_ours_without_duplicates(self, tmp_path):
         extra = tmp_path / "image_src"
         inherited = os.pathsep.join([str(DETECTOR), "", str(extra), str(SRC)])
@@ -62,6 +71,7 @@ class TestHelper:
         # importable through it.
         assert "" not in forensic_pythonpath(os.pathsep).split(os.pathsep)
 
+    @needs_sibling
     def test_known_positive_the_child_imports_this_trees_detector(self, monkeypatch):
         """The real proof, not the string: a child given this env imports
         copy_paste_detector from THIS tree. In a worktree whose editable

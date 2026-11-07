@@ -30,15 +30,18 @@ from pathlib import Path
 
 import pytest
 
+from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
 from tests.source_paths import IMAGE_SRC
 
 SRC = Path(__file__).resolve().parent.parent / "src"
-#: All three source roots of THIS checkout. `src` alone let a child import
-#: the image package from whatever editable install the interpreter has --
-#: another checkout's, in a worktree -- so the child ran code this test
-#: never wrote.
+#: Every source root under test: the toolkit's, the sibling copy-paste
+#: detector's (its own repository since 2026-11-06) and the image package's.
+#: `src` alone let a child import the image package from whatever editable
+#: install the interpreter has -- another checkout's, in a worktree -- so the
+#: child ran code this test never wrote.
 _ROOT = SRC.parent
-CHILD_PATH = os.pathsep.join([*(str(_ROOT / p) for p in ("src", "copy_paste_detector/src")),
+_DETECTOR = sibling_source_root(_ROOT / "src")
+CHILD_PATH = os.pathsep.join([str(_ROOT / "src"), *([str(_DETECTOR)] if _DETECTOR else []),
                               *([str(IMAGE_SRC.parent)] if IMAGE_SRC else [])])
 
 PAIRS = [

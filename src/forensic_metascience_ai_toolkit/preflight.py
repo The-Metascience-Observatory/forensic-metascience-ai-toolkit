@@ -218,6 +218,17 @@ def backend_reachable_row(backend=None) -> CheckRow:
             "batch there in one line")
 
 
+def _copypaste_check():
+    """The raw-data detector is a separate repository (2026-11-06): its absence
+    is non-fatal, but a run's spreadsheets then go unexamined, so say so."""
+    from .copypaste_plugin import INSTALL_HINT, available, load
+    if not available():
+        return ("Raw-data duplication (copy-paste detector)", False,
+                INSTALL_HINT + "; the raw_data module and detect_raw_duplication refuse")
+    return ("Raw-data duplication (copy-paste detector)", True,
+            f"{load().__version__} at {Path(load().__file__).parent}")
+
+
 def optional_checks() -> list[CheckRow]:
     """Checks that are reported but never block a run.
 
@@ -285,6 +296,7 @@ def optional_checks() -> list[CheckRow]:
                       "`pip install -e .`); quotes get no page number, the "
                       "viewer has no page images, scanned PDFs cannot be OCR'd"),
         ("Panel duplication (image forensics)", pst["available"], panel_detail),
+        _copypaste_check(),
         ("R (cross-checks)", r_ok, r_detail),
         ("PDF renderer", renderer is not None,
          "present" if renderer else "absent; report.pdf will be skipped"),

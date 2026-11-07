@@ -316,6 +316,7 @@ class TestCli:
         assert fp.calls and fp.calls[0]["output_dir"] == str(tmp_path / DIRNAME)
         assert fp.calls[0]["max_data_artifact_bytes"] == 3 * 1024 * 1024
 
+    @pytest.mark.usefixtures("copypaste_package")
     def test_fetched_data_reach_the_detector_and_run_meta(self, fake, tmp_path):
         """No model: fetch everything, then the raw-data module alone over the
         folder. The deposit CSV must be read and the fetch must reach

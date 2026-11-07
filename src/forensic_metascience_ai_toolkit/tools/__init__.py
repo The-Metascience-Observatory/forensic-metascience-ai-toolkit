@@ -118,21 +118,23 @@ from .tableparse import (
 from .duplication import (
     detect_duplication,
 )
-# The raw-data detector is its own package, rooted at copy_paste_detector/src.
-# Without that root on sys.path, the bare project folder at the repo root
-# imports as an EMPTY namespace package and the stock error reads "cannot
-# import name ... (unknown location)", which names nothing a reader can act on.
-try:
-    from copy_paste_detector import detect_raw_duplication
-except ImportError as _exc:
-    raise ImportError(
-        "copy_paste_detector is not importable. The package lives in "
-        "copy_paste_detector/src, NOT under src/: re-run `pip install -e .` "
-        "(an editable install made before 2026-09-08 lists only src/), or put "
-        "copy_paste_detector/src on PYTHONPATH. With the real root missing, the "
-        "bare copy_paste_detector/ project folder at the repo root shadows the "
-        "package as an empty namespace, which is why this reads 'unknown location'."
-    ) from _exc
+
+
+def detect_raw_duplication(path: str, sheet=None, exclude_columns=None,
+                           data_context: str = "unknown", max_row_pairs: int = 5000,
+                           **kwargs) -> dict:
+    """The raw-data detector, a separate repository since 2026-11-06, reached
+    through `copypaste_plugin`. Without it the tool stays registered and
+    REFUSES by name (`indeterminate`): an absent detector is not a file with
+    no duplication."""
+    from ..copypaste_plugin import available, load, unavailable_record
+    if not available():
+        return unavailable_record()
+    return load().detect_raw_duplication(
+        path, sheet=sheet, exclude_columns=exclude_columns, data_context=data_context,
+        max_row_pairs=max_row_pairs, **kwargs)
+
+
 # `analyze_paper_images` lives in `image_forensics/image_analysis.py`, which
 # imports `.quarantine` and `.severity` from THIS package. An eager import here
 # is a cycle whenever the detector is imported first -- which is exactly what

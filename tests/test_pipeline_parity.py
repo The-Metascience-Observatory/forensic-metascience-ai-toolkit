@@ -83,7 +83,8 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
              title_bound_90: bool = False,
              old_package_name: bool = False) -> dict:
     # The image package comes from its own installed checkout.
-    roots = [ROOT / "src", ROOT / "copy_paste_detector" / "src"]
+    from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
+    roots = [ROOT / "src", *filter(None, [sibling_source_root(ROOT / "src")])]
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1",
            "PYTHONPATH": os.pathsep.join([str(r) for r in roots]
                                          + [os.environ.get("PYTHONPATH", "")])}

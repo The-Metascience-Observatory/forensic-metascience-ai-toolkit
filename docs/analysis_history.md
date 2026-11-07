@@ -78,6 +78,7 @@ metascience history-sync /path/to/project
 metascience copy-paste /path/to/input.xlsx \
   --project-root /path/to/project --paper /path/to/project/paper
 
+# copy-paste-detect comes with the detector's own repository (optional plugin)
 copy-paste-detect /path/to/input.xlsx --run-dir /path/to/portable-runs
 metascience history-import-copy /path/to/portable-runs/<run-id> \
   --project-root /path/to/project --paper /path/to/project/paper

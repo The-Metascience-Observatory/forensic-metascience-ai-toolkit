@@ -9,6 +9,33 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-07 — the copy-paste detector is its own repository
+
+No finding changes when the detector is installed. `copy_paste_detector/` and
+`benchmarks/copy_paste/` moved, with their history (`git subtree split`), to
+`../metascience-observatory-copypaste-detector` (benchmark under `benchmarks/`).
+The toolkit no longer bundles the package or its `copy-paste-*` scripts.
+
+- **An optional plugin, like the image package.** Host code reaches it only
+  through `copypaste_plugin` (static test). Without it: `detect_raw_duplication`
+  stays registered and refuses (`copypaste_plugin_unavailable`,
+  `indeterminate`), the `raw_data` module reads `unavailable` with "the
+  spreadsheets were NOT examined", provenance stamps `not_installed`,
+  `metascience copy-paste` errors, and preflight shows a non-fatal row.
+- Child processes and the webapp put the sibling checkout's `src` on
+  `PYTHONPATH` when it exists, else use the installed package. The parity
+  capture maps that root to the token the oracles already record, so the
+  oracles are unchanged.
+- `METASCIENCE_BLOCK_COPYPASTE_PLUGIN=1` runs the suite as a detector-less
+  install; the tests that need it take the `copypaste_package` fixture.
+  `tests/test_detector_import_guard.py` (the in-repo shadowing guard) is gone
+  with the folder; the geocode-screen tests moved to the detector's repository.
+- Measured: the full suite with the detector installed, 13,427 passed and 2
+  failed, both in image-package tests unrelated to the move (video labels;
+  search checkpoints off by default since image 0.27.0). With it blocked
+  (13,406 passed), the same 2 fail, 9 detector-dependent tests skip by name
+  and the two test files that import the detector are not collected.
+
 ## [Unreleased] — 2026-11-07 — the workbench runs on Next 16 and React 19
 
 No finding, review event or artifact format changes. Next 14.2.35 was the last

@@ -3648,7 +3648,12 @@ def copy_paste_history_cmd(path: Path, project_root: Path = typer.Option(..., "-
                           exclude_column: Optional[list[str]] = typer.Option(None, "--exclude-column"),
                           highlight_out: Optional[Path] = typer.Option(None, "--highlight-out")):
     """Run the standalone detector and preserve its versioned project history."""
-    from copy_paste_detector import detect_raw_duplication, highlight_workbook
+    from .copypaste_plugin import CopyPastePluginUnavailable, load
+    try:
+        detector = load()
+    except CopyPastePluginUnavailable as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    detect_raw_duplication, highlight_workbook = detector.detect_raw_duplication, detector.highlight_workbook
     from .analysis_runs import Archive, provenance, now
     from .analysis_history import capture_copy
     history = Archive(project_root)

@@ -43,7 +43,7 @@ import { AuthorEmails } from "./AuthorEmails";
 import { MissedDuplicationPanel, missedBoxes, regionFor, type MissedDraft } from "./MissedDuplication";
 import { PaperReference, PaperReferences } from "./PaperReferences";
 import { imagePdfBoxes, type ImagePdfBox } from "@/lib/imagePdfBoxes";
-import { describeTransform } from "@/lib/affine";
+import { describeTransform, orientationLabel, placementOrientation, toPrinted } from "@/lib/affine";
 import { REVIEW_QUEUED_MESSAGE } from "@/lib/reviewSync";
 import {
   parseStoredZoom, zoomIn, zoomOut, ZOOM_FIT, ZOOM_KEY,
@@ -176,7 +176,29 @@ export function ImageItem({ project, projectName, itemId }: {
   const panelErrors=mediaErrors.key===imageSources?mediaErrors.errors:[];
   const panelImages=loadedImages.key===imageSources?loadedImages.images:[];
   const panelSizes=useMemo(() => panelImages.map(image => image ? [image.naturalWidth,image.naturalHeight] as [number,number] : null),[loadedImages,imageSources]);
-  const pdfMatches=useMemo(()=>item?imagePdfBoxes(item,panelSizes):[],[item,panelSizes]);
+  // A PDF may store a stream upside down or mirrored and undo that in its
+  // placement matrix; the detector's pixels and measurements are the STORED
+  // ones. The comparator shows both panels as printed (`lib/affine`
+  // placementOrientation / toPrinted), so it agrees with the PDF pane. Pairs
+  // only: a clone's exhibit overlay is drawn in the stored frame.
+  const printed=useMemo(()=>{
+    const ms0=item?.measurements ?? {};
+    const pair=!!item && item.detector_kind!=="intra_panel_clone" && item.panels.length===2;
+    const reads=(item?.panels||[]).map((p,i)=>{const size=panelSizes[i];return pair&&size?placementOrientation(p.placements,size):{orientation:null,note:null};});
+    const sizeB=panelSizes[1];
+    const ms=pair&&sizeB&&panelSizes[0]?toPrinted(ms0,reads[0]?.orientation??null,reads[1]?.orientation??null,sizeB):ms0;
+    const notes=reads.map((r,i)=>r.orientation?`${"AB"[i]} is stored ${orientationLabel(r.orientation)} relative to the page`:r.note?`${"AB"[i]}: ${r.note}`:null).filter(Boolean);
+    return {reads,ms,notes,raw:ms===ms0?null:describeTransform(ms0)};
+  },[item,panelSizes]);
+  const printedImages=useMemo(()=>panelImages.map((image,i)=>{
+    const o=printed.reads[i]?.orientation;
+    if(!image||!o)return image;
+    const c=document.createElement("canvas");c.width=o.width;c.height=o.height;
+    const ctx=c.getContext("2d");if(!ctx)return image;
+    ctx.setTransform(o.m[0],o.m[1],o.m[2],o.m[3],o.m[4],o.m[5]);ctx.drawImage(image,0,0);
+    return c;
+  }),[panelImages,printed]);
+  const pdfMatches=useMemo(()=>item?imagePdfBoxes(item,panelSizes,printed.ms):[],[item,panelSizes,printed]);
   // A decision recorded on an earlier run of this item, offered only when the
   // service PROVES the evidence is the same (panel pixels and crops); one
   // click records it again here, with its provenance. Never applied silently.
@@ -299,7 +321,7 @@ export function ImageItem({ project, projectName, itemId }: {
   const pa = item.panels[0], pb = item.panels[1];
   const srcA = pa?.image ? mediaUrl(project, pa.paper_dir, pa.image) : null;
   const srcB = pb?.image ? mediaUrl(project, pb.paper_dir, pb.image) : null;
-  const ms = item.measurements ?? {};
+  const ms = printed.ms;
   const boxA = (ms.inlier_box_a as number[] | undefined) || null;
   const boxB = (ms.inlier_box_b as number[] | undefined) || null;
   const regions = (ms.regions as { role: string; bbox: number[] }[] | undefined) || null;
@@ -465,7 +487,12 @@ export function ImageItem({ project, projectName, itemId }: {
                 Panel images could not be served: {panelErrors.join("; ")}
               </p>
             )}
-            <Comparator key={JSON.stringify([project, item.run_id, item.id])} imgA={panelImages[0] || null} imgB={panelImages[item.detector_kind === "intra_panel_clone" ? 0 : 1] || null} srcA={srcA} srcB={item.kind === "within" && item.detector_kind === "intra_panel_clone" ? null : srcB}
+            {printed.notes.length > 0 && (
+              <p className="muted" style={{ margin: "2px 0 4px", fontSize: 12 }}>
+                Shown as printed: {printed.notes.join("; ")}.{printed.raw ? ` Detector's reading on the stored pixels: ${printed.raw}.` : ""}
+              </p>
+            )}
+            <Comparator key={JSON.stringify([project, item.run_id, item.id])} imgA={printedImages[0] || null} imgB={printedImages[item.detector_kind === "intra_panel_clone" ? 0 : 1] || null} srcA={srcA} srcB={item.kind === "within" && item.detector_kind === "intra_panel_clone" ? null : srcB}
                         boxA={boxA as never} boxB={boxB as never} affine={ms.affine}
                         labelA={pa?.figure_label || ""}
                         labelB={pb?.figure_label || ""}

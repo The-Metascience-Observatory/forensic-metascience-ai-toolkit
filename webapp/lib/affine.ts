@@ -108,3 +108,109 @@ export function viewModes(hasVideo: boolean): View[] {
   const base: View[] = ["side", "blink", "overlay"];
   return hasVideo ? [...base, "video"] : base;
 }
+
+/**
+ * PAGE ORIENTATION (2026-11-08, Dan: 10.1101/2022.11.28.22282811 IMGDUP-2
+ * showed A upside down beside an upright B, while the PDF pane showed the two
+ * identical). The detector compares an embedded stream's STORED pixels, and a
+ * PDF may store a stream upside down or mirrored and undo that in the
+ * placement matrix (there `[52.2, 0, 0, -46.9, ...]`). The measured "mirrored,
+ * rotation −179.9°" was then the producer's storage, not the authors' copy.
+ *
+ * `placementOrientation` reads the placement matrix (and the page's own
+ * rotation) into a signed-permutation map from stored pixels to pixels as
+ * printed; only right-angle orientations are handled, anything else (or
+ * placements that disagree) leaves the panel as stored and says why.
+ * `toPrinted` re-expresses a pair's measurements in that frame, keeping the
+ * detector's convention (under `flip`, affine and `inlier_box_b` are in the
+ * mirrored-B frame). Nothing here touches stored findings.
+ */
+export type Orientation = { m: M; width: number; height: number };
+type PlacementLike = { transform?: number[]; page_rotation?: number };
+
+export function placementOrientation(placements: PlacementLike[] | undefined, size: [number, number]):
+    { orientation: Orientation | null; note: string | null } {
+  const signs: string[] = [];
+  let lin: [number, number, number, number] | null = null;   // X = p x + q y ; Y = r x + s y
+  for (const pl of placements || []) {
+    const t = pl.transform;
+    if (!Array.isArray(t) || t.length !== 6 || !t.every((v) => Number.isFinite(v))) continue;
+    // PyMuPDF: page X = a u + c v + e, Y = b u + d v + f (u, v in the unit image square, y down).
+    let [p, q, r, s] = [t[0], t[2], t[1], t[3]];
+    const rot = (((pl.page_rotation || 0) % 360) + 360) % 360;
+    // The displayed page: 90 -> (h - Y, X), 180 -> (w - X, h - Y), 270 -> (Y, w - X).
+    if (rot === 90) [p, q, r, s] = [-r, -s, p, q];
+    else if (rot === 180) [p, q, r, s] = [-p, -q, -r, -s];
+    else if (rot === 270) [p, q, r, s] = [r, s, -p, -q];
+    else if (rot !== 0) return { orientation: null, note: "page rotation is not a right angle; panels shown as stored" };
+    const big = Math.max(Math.abs(p), Math.abs(q), Math.abs(r), Math.abs(s));
+    if (!big) continue;
+    const tol = big * 1e-3;
+    let cand: [number, number, number, number];
+    if (Math.abs(q) < tol && Math.abs(r) < tol) cand = [Math.sign(p), 0, 0, Math.sign(s)];
+    else if (Math.abs(p) < tol && Math.abs(s) < tol) cand = [0, Math.sign(q), Math.sign(r), 0];
+    else return { orientation: null, note: "placed at an angle; panels shown as stored" };
+    signs.push(cand.join(","));
+    lin = cand;
+  }
+  if (!lin) return { orientation: null, note: null };
+  if (new Set(signs).size > 1) return { orientation: null, note: "placements drawn in different orientations; panels shown as stored" };
+  const [p, q, r, s] = lin;
+  if (p === 1 && s === 1) return { orientation: null, note: null };   // stored as printed
+  const [w, h] = size;
+  const tx = (p < 0 ? w : 0) + (q < 0 ? h : 0);
+  const ty = (r < 0 ? w : 0) + (s < 0 ? h : 0);
+  const swapped = p === 0;
+  return { orientation: { m: [p, r, q, s, tx, ty], width: swapped ? h : w, height: swapped ? w : h }, note: null };
+}
+
+function boundsThrough(box: Box, m: M): Box {
+  const q = quadThrough(box, m);
+  const xs = q.map((p) => p[0]), ys = q.map((p) => p[1]);
+  return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
+}
+
+const round = (v: number, k: number) => Math.round(v * 10 ** k) / 10 ** k;
+const isBox = (b: unknown): b is Box => Array.isArray(b) && b.length === 4 && b.every((v) => Number.isFinite(v));
+
+/** A pair's measurements with A and B as printed. `sizeB` is B's STORED size. */
+export function toPrinted(ms: Record<string, unknown>, oa: Orientation | null, ob: Orientation | null,
+    sizeB: [number, number]): Record<string, unknown> {
+  if (!oa && !ob) return ms;
+  const I: M = [1, 0, 0, 1, 0, 0];
+  const mA = oa ? oa.m : I, mB = ob ? ob.m : I;
+  const wB2 = ob ? ob.width : sizeB[0];
+  const flip = ms.flip === true;
+  const out: Record<string, unknown> = { ...ms, page_oriented: true };
+  if (isBox(ms.inlier_box_a)) out.inlier_box_a = boundsThrough(ms.inlier_box_a, mA).map((v) => round(v, 1));
+  let boxB: Box | null = isBox(ms.inlier_box_b) ? (flip ? mirrorBox(ms.inlier_box_b, sizeB[0]) : ms.inlier_box_b) : null;
+  if (boxB) boxB = boundsThrough(boxB, mB);
+  const stored = fromAffine(ms.affine);
+  const invA = invert(mA);
+  let newFlip: boolean;
+  if (stored && invA) {
+    const printed = compose(mB, compose(toOriginalB(stored, flip, sizeB[0]), invA));
+    newFlip = printed[0] * printed[3] - printed[1] * printed[2] < 0;
+    const kept = newFlip ? compose(mirrorX(wB2), printed) : printed;
+    out.affine = [[kept[0], kept[2], kept[4]], [kept[1], kept[3], kept[5]]].map((row) => row.map((v) => round(v, 6)));
+    out.rotation_deg = round(Math.atan2(kept[1], kept[0]) * 180 / Math.PI, 1);
+    out.scale = round(Math.sqrt(Math.abs(printed[0] * printed[3] - printed[1] * printed[2])), 3);
+  } else {
+    const det = (m: M) => m[0] * m[3] - m[1] * m[2];
+    newFlip = flip !== (det(mA) * det(mB) < 0);
+  }
+  if (boxB) out.inlier_box_b = (newFlip ? mirrorBox(boxB, wB2) : boxB).map((v) => round(v, 1));
+  out.flip = newFlip;
+  return out;
+}
+
+/** Words for an orientation: what the PDF does to the stored pixels when it prints them. */
+export function orientationLabel(o: Orientation): string {
+  const [p, r, q, s] = o.m;
+  if (p === -1 && s === 1) return "mirrored left-right";
+  if (p === 1 && s === -1) return "flipped top-bottom";
+  if (p === -1 && s === -1) return "turned 180°";
+  if (q === 1 && r === -1) return "turned 90° anticlockwise";
+  if (q === -1 && r === 1) return "turned 90° clockwise";
+  return "transposed";
+}

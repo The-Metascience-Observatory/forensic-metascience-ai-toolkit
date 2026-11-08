@@ -51,7 +51,8 @@ export function Comparator({ imgA, imgB: suppliedImgB, srcA, srcB, boxA, boxB, a
   labelA, labelB, exhibit, regions, video = null, videoActions, fitNonce = 0, measurements }: {
   measurements?: Record<string, unknown>;
   srcA: string | null; srcB: string | null;
-  imgA: HTMLImageElement | null; imgB: HTMLImageElement | null;
+  /** an image, or a canvas holding it as printed (`ImageItem` printedImages) */
+  imgA: HTMLImageElement | HTMLCanvasElement | null; imgB: HTMLImageElement | HTMLCanvasElement | null;
   boxA?: Box | null; boxB?: Box | null;
   affine?: unknown;
   /** the detector matched B mirrored left-right: its affine and box are in that frame */

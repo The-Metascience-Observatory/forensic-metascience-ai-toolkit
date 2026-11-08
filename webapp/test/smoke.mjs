@@ -86,8 +86,8 @@ import { revealArgv } from "../lib/reveal.ts";
 import { mergePdfBoxes } from "../lib/pdfBoxes.ts";
 import { REVIEW_QUEUED_MESSAGE, reviewSyncCompleted } from "../lib/reviewSync.ts";
 import {
-  describeTransform, fromAffine, fromBoxes, invert, isAxisAligned, mirrorBox, quadThrough,
-  toOriginalB, viewModes,
+  describeTransform, fromAffine, fromBoxes, invert, isAxisAligned, mirrorBox, placementOrientation, quadThrough,
+  toOriginalB, toPrinted, viewModes,
 } from "../lib/affine.ts";
 import {
   availableViews, canToggle, canZoomIn, canZoomOut, defaultView,
@@ -823,6 +823,39 @@ assert.equal(fx, 295);
 assert.equal(fy, 5);
 assert.deepEqual(toOriginalB(AFF, false, 303), AFF);
 assert.deepEqual(mirrorBox([10, 20, 50, 40], 300), [250, 20, 290, 40]);
+
+// Page orientation: `within:10.1101--2022.11.28.22282811:IMGDUP-2`. A's stream
+// is stored upside down and placed with d < 0, so the PDF prints it upright;
+// the detector's "mirrored, rotation -179.9" is that storage. As printed, the
+// pair is a plain 0.33x copy: no flip, no turn, and the boxes still contain
+// each other through the affine.
+{
+  const A = [558, 404], B = [183, 131];
+  const oa = placementOrientation([{ transform: [52.16, 0, -0, -46.86, 289.87, 439.99] }], A);
+  assert.equal(oa.note, null);
+  assert.deepEqual(oa.orientation.m, [1, 0, 0, -1, 0, 404]);
+  assert.equal(placementOrientation([{ transform: [418.15, 0, 0, 643.85, 88.4, 72.05] }], B).orientation, null);
+  const ms = { affine: [[-0.329389, 0.000785, 183.412865], [-0.000785, -0.329389, 133.534858]],
+    inlier_box_a: [33.8, 147.3, 220.9, 349.8], inlier_box_b: [110.8, 18.3, 172.8, 84.7],
+    scale: 0.329, rotation_deg: -179.9, flip: true };
+  const pr = toPrinted(ms, oa.orientation, null, B);
+  assert.equal(pr.flip, false);
+  assert.ok(Math.abs(pr.rotation_deg) < 0.5, String(pr.rotation_deg));
+  assert.equal(pr.scale, 0.329);
+  assert.equal(describeTransform(pr), "rotation −0.1°, scale 0.329");
+  const mapped = quadThrough(pr.inlier_box_a, fromAffine(pr.affine));
+  assert.ok(within(centre(mapped), pr.inlier_box_b), JSON.stringify([mapped, pr.inlier_box_b]));
+  // Untouched when neither side needs turning.
+  assert.equal(toPrinted(ms, null, null, B), ms);
+  // Placements that disagree, or an oblique placement, leave the panel as stored and say so.
+  assert.ok(placementOrientation([{ transform: [1, 0, 0, 1, 0, 0] }, { transform: [1, 0, 0, -1, 0, 0] }], A).note);
+  assert.ok(placementOrientation([{ transform: [1, 1, -1, 1, 0, 0] }], A).note);
+  // A quarter turn swaps the printed size.
+  const q = placementOrientation([{ transform: [0, 10, -10, 0, 0, 0] }], [40, 20]).orientation;
+  assert.equal(q.width, 20); assert.equal(q.height, 40);
+  const corners = quadThrough([0, 0, 40, 20], q.m).flat();
+  assert.ok(corners.every((v) => v >= 0 && v <= 40));
+}
 
 // The caption fragment says what the transform is, and nothing when the
 // measurements record no transform at all (an old manifest).

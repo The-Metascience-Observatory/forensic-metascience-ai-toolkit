@@ -53,9 +53,13 @@ export function projectImagePolygon(panel: Panel, pl: Placement, size: [number, 
 export const WHOLE_IMAGE_KINDS: ReadonlySet<string> =
   new Set(["near_duplicate_phash", "identical_stream", "same_xref_reused"]);
 
-export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[]): ImagePdfBox[] {
+/** `printed`: the measurements as printed (`affine.toPrinted`), used only to
+ * decide the reflection arrows -- the boxes are projected from the STORED
+ * measurements, which is what the placement matrix maps onto the page. */
+export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[], printed?: Record<string, unknown>): ImagePdfBox[] {
   const result: ImagePdfBox[] = [];
   const ms = item.measurements ?? {};
+  const reflected = !printed || printed.flip === true;
   const clone = item.detector_kind === "intra_panel_clone";
   item.panels.forEach((panel, side) => {
     const size = sizes[side];
@@ -85,7 +89,7 @@ export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[]): I
         const points = clone && Array.isArray(record.polygon)
           ? projectImagePolygon(panel, pl, size, record.polygon) : projectImageBox(panel, pl, size, box);
         if (points) result.push({ page: pl.page, tid: `${item.id}:${side === 0 ? "a" : "b"}:${k}`,
-          paperDir: panel.paper_dir, documentPath, points, flipDirection: matchDirection(ms, clone ? regionIndex : side, clone), regionLabel: clone ? (regionIndex === 0 ? "A" : "B") : undefined,
+          paperDir: panel.paper_dir, documentPath, points, flipDirection: reflected ? matchDirection(ms, clone ? regionIndex : side, clone) : undefined, regionLabel: clone ? (regionIndex === 0 ? "A" : "B") : undefined,
           color: DUPLICATION_COLORS[clone ? regionIndex % DUPLICATION_COLORS.length : 0] });
       });
     }

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent, ReactNode } from "react";
 
 import { citationParts, displayFirstAuthor, doiLink, pubpeerSearchLink }
-  from "../../../../Citation";
+  from "@/lib/citation";
 import { readReviewer } from "../../../../ReviewerChip";
 import { caughtUpHref, reviewHref, type NavRef } from "@/lib/nav";
 import { primaryJumpTarget, surfaceOf, type Target } from "@/lib/targets";

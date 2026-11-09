@@ -413,7 +413,9 @@ class Remote:
                 f'select t.id,{TOOL_BASIS},{LOCATION_BASIS},{TRACK_BASIS} from findings t '
                 'where t.id=any(%s)', [ids]).fetchall()
             self.bytes += len(json.dumps(rows, default=str).encode())
-            found = {row[0]: row[1:] for row in rows}
+            # Three summary columns; a shorter row (an older fake or a partial
+            # select) pads with nulls rather than raising mid-backfill.
+            found = {row[0]: (tuple(row[1:]) + (None, None, None))[:3] for row in rows}
             with catalog.lock, catalog.db:
                 catalog.db.executemany(
                     "update records set body=json_set(body,'$.tool_basis',json(?),"

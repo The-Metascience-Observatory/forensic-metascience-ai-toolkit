@@ -82,9 +82,11 @@ def test_finding_summary_carries_the_tool_basis_and_old_caches_are_backfilled(tm
     """Which tool triggered a finding reaches the cached summary (bounded:
     names and a reproduction prefix, never the full tool_verdict), and a cache
     made before the field existed reads `not_recorded` until backfilled."""
-    from forensic_metascience_ai_toolkit.workbench.remote import TOOL_BASIS, summary_expr
+    from forensic_metascience_ai_toolkit.workbench.remote import TOOL_BASIS, TRACK_BASIS, summary_expr
     sql = summary_expr('findings')
     assert "'tool_basis'" in sql and TOOL_BASIS in sql
+    # A detector track's queue facts ride in the same bounded summary.
+    assert "'track_basis'" in sql and TRACK_BASIS in sql and "t.record->'inputs'->'tier'" in TRACK_BASIS
     assert "t.tool_verdict->'tool'" in sql
     assert "left(t.record->>'reproduction',200)" in sql
     c = Catalog(tmp_path/'cache.sqlite3')
@@ -105,13 +107,14 @@ def test_finding_summary_carries_the_tool_basis_and_old_caches_are_backfilled(tm
             calls = 0
             def execute(self, sql, values):
                 self.calls += 1
-                assert TOOL_BASIS in sql and 'to_jsonb(t)' not in sql
+                assert TOOL_BASIS in sql and TRACK_BASIS in sql and 'to_jsonb(t)' not in sql
                 return self
             def fetchall(self):
                 return [(1, {'tool_verdict': None, 'backing_call': None,
                              'reproduction_source': 'generated_from_tool_call',
                              'reproduction': "metascience tool run grimmer_check --json '{}'"},
-                         {'location': 'Table 2, row 3', 'pages': [4], 'tables': ['Table 2']})]
+                         {'location': 'Table 2, row 3', 'pages': [4], 'tables': ['Table 2']},
+                         {'tier': 1, 'excess_bits': 40.0})]
         remote = Remote(); connection = Connection()
         remote.connect = lambda: connection
         remote.refresh_tool_summaries(c)

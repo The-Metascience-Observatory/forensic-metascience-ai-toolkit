@@ -6,16 +6,22 @@ import { useEffect, useMemo, useState } from "react";
 
 /** `/api/sheet`: one worksheet as a grid, with the finding's cells marked. */
 type SheetGrid = {
-  sheets?: string[]; sheet?: string; error?: string; preview_note?: string; n_rows?: number;
-  column_labels?: string[]; rows: string[][]; row_numbers?: number[];
+  sheets?: string[]; sheet?: string; error?: string; preview_note?: string; truncated?: boolean;
+  n_rows?: number; column_labels?: string[]; rows?: string[][]; row_numbers?: number[];
   highlights?: { r: number; c: number }[];
+};
+
+/** The spreadsheet a finding names: `Artefact` with the fields this pane reads. */
+type SheetArtefact = Artefact & {
+  relpath?: string; basename?: string; sheet?: string | null; cells?: unknown[];
+  confidence?: string; highlight_relpath?: string;
 };
 
 export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
   project: string;
   slug: string;
   dir: string;
-  artefact: Artefact;
+  artefact: SheetArtefact;
   label: string;
 }) {
   const [grid, setGrid] = useState<SheetGrid | null>(null);
@@ -92,7 +98,7 @@ export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
           )}
         </span>
       </div>
-      {grid?.sheets?.length > 1 && (
+      {grid?.sheets && grid.sheets.length > 1 && (
         <div style={{ display: "flex", gap: 4, padding: "4px 10px",
                       borderBottom: "1px solid var(--line)", overflowX: "auto" }}>
           {grid.sheets.map((name: string) => (

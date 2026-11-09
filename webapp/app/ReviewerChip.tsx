@@ -9,21 +9,48 @@ export function readReviewer(): string {
   return window.localStorage.getItem(KEY) || "";
 }
 
+type Me = { mode: "local" | "hosted"; email: string | null; name: string | null; role: string };
+
 export function ReviewerChip() {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
+  const [hosted, setHosted] = useState(false);
   const [known, setKnown] = useState<string[]>(["Dan Elton"]);
 
   useEffect(() => {
-    const saved = readReviewer();
-    setName(saved);
-    if (!saved) setOpen(true);
-    fetch("/api/settings")
-      .then((r) => r.json())
-      .then((s) => {
-        if (Array.isArray(s.known_reviewers)) setKnown(s.known_reviewers);
+    let cancelled = false;
+    fetch("/api/me")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((me: Me | null) => {
+        if (cancelled) return;
+        if (me?.mode === "hosted" && me.name) {
+          // Signed in through Cloudflare Access: the server decides the name.
+          // It is mirrored into localStorage so the pages that read
+          // `readReviewer()` before posting keep working; the server ignores
+          // the body's value in this mode anyway.
+          setHosted(true);
+          setName(me.name);
+          setOpen(false);
+          try { window.localStorage.setItem(KEY, me.name); } catch { /* private window */ }
+          return;
+        }
+        const saved = readReviewer();
+        setName(saved);
+        if (!saved) setOpen(true);
+        fetch("/api/settings")
+          .then((r) => r.json())
+          .then((s) => {
+            if (!cancelled && Array.isArray(s.known_reviewers)) setKnown(s.known_reviewers);
+          })
+          .catch(() => undefined);
       })
-      .catch(() => undefined);
+      .catch(() => {
+        if (cancelled) return;
+        const saved = readReviewer();
+        setName(saved);
+        if (!saved) setOpen(true);
+      });
+    return () => { cancelled = true; };
   }, []);
 
   function save(next: string) {
@@ -34,6 +61,13 @@ export function ReviewerChip() {
     setOpen(false);
   }
 
+  if (hosted) {
+    return (
+      <span title="Signed in through Cloudflare Access" style={{ fontSize: 12 }}>
+        {name ? `Reviewing as ${name}` : "Signing in…"}
+      </span>
+    );
+  }
   if (!open) {
     return (
       <button onClick={() => setOpen(true)} title="Change reviewer identity"

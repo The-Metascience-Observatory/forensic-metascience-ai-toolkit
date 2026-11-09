@@ -4,7 +4,15 @@ export function reviewSyncCompleted(previousPending: number, currentPending: num
   return previousPending > currentPending;
 }
 
-export type ReviewSyncState = {synced_at?:string;ready?:boolean;error?:string;file_monitor_error?:string;warmup_error?:string;pending_writes?:number;pending_errors?:string[]};
+export type ReviewSyncState = {
+  synced_at?: string;
+  ready?: boolean;
+  error?: string;
+  file_monitor_error?: string;
+  warmup_error?: string;
+  pending_writes?: number;
+  pending_errors?: string[];
+};
 
 // Only local status is polled. A save wakes the database worker separately.
 export function watchReviewSync(options: {
@@ -13,8 +21,12 @@ export function watchReviewSync(options: {
   completed: () => void;
   visible: () => boolean;
 }) {
-  let stopped = false, running = false, requested = false;
-  let previousPending = 0, saves = 0, observedSaves = 0;
+  let stopped = false,
+    running = false,
+    requested = false;
+  let previousPending = 0,
+    saves = 0,
+    observedSaves = 0;
   let timer: ReturnType<typeof setTimeout> | undefined;
   const schedule = (delay: number) => {
     clearTimeout(timer);
@@ -22,9 +34,15 @@ export function watchReviewSync(options: {
   };
   async function read() {
     if (stopped) return;
-    if (running) { requested = true; return; }
+    if (running) {
+      requested = true;
+      return;
+    }
     clearTimeout(timer);
-    if (!options.visible()) { schedule(30000); return; }
+    if (!options.visible()) {
+      schedule(30000);
+      return;
+    }
     running = true;
     const generation = saves;
     let delay = 30000;
@@ -35,28 +53,41 @@ export function watchReviewSync(options: {
       // A response started before the latest save cannot acknowledge that save.
       if (generation === saves && typeof state.pending_writes === "number") {
         const pending = Number(state.pending_writes || 0);
-        const completed = reviewSyncCompleted(previousPending, pending) ||
+        const completed =
+          reviewSyncCompleted(previousPending, pending) ||
           (generation > observedSaves && pending === 0);
         previousPending = pending;
-        if (pending === 0) { observedSaves = generation; }
+        if (pending === 0) {
+          observedSaves = generation;
+        }
         if (completed) options.completed();
         if (pending > 0) delay = 5000;
       }
     } catch {
       delay = 5000;
-      if (!stopped) options.update({error: "Local service unavailable"});
+      if (!stopped) options.update({ error: "Local service unavailable" });
     } finally {
       running = false;
       if (!stopped) {
-        if (requested) { requested = false; schedule(0); }
-        else schedule(delay);
+        if (requested) {
+          requested = false;
+          schedule(0);
+        } else schedule(delay);
       }
     }
   }
   void read();
   return {
-    saved() { saves++; void read(); },
-    refresh() { void read(); },
-    stop() { stopped = true; clearTimeout(timer); },
+    saved() {
+      saves++;
+      void read();
+    },
+    refresh() {
+      void read();
+    },
+    stop() {
+      stopped = true;
+      clearTimeout(timer);
+    },
   };
 }

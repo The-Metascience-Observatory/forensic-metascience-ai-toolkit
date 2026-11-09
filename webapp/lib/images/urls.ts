@@ -2,7 +2,12 @@
 import { mediaUrl as buildMediaUrl } from "@/lib/mediaUrl";
 
 /** Image-track media: `lib/mediaUrl` with this track as the default component. */
-export function mediaUrl(project: string, dir: string, rel: string, component = "image_forensics"): string {
+export function mediaUrl(
+  project: string,
+  dir: string,
+  rel: string,
+  component = "image_forensics",
+): string {
   return buildMediaUrl(project, dir, rel, component);
 }
 

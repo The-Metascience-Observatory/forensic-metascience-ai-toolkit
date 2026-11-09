@@ -21,13 +21,18 @@ export const DECISIONS: [string, string, string][] = [
 ];
 
 export function judgmentDecision(it: Item): string {
-  return it.screening?.decision || (it.cleared ? "automatic_clearance" : it.adjudication?.verdict ? "legacy" : "missing");
+  return (
+    it.screening?.decision ||
+    (it.cleared ? "automatic_clearance" : it.adjudication?.verdict ? "legacy" : "missing")
+  );
 }
 
 export function verdictLabel(it: Item): string {
-  if (judgmentDecision(it) === "automatic_clearance") return "Automatically cleared — AI not needed";
+  if (judgmentDecision(it) === "automatic_clearance")
+    return "Automatically cleared — AI not needed";
   if (judgmentDecision(it) === "missing") return "No saved AI judgment";
-  if (it.screening?.decision) return `Saved AI judgment: ${it.screening.decision} · ${it.screening.confidence || "confidence unavailable"}`;
+  if (it.screening?.decision)
+    return `Saved AI judgment: ${it.screening.decision} · ${it.screening.confidence || "confidence unavailable"}`;
   if (it.cleared) return "cleared";
   const v = it.adjudication?.verdict;
   if (!v) return "not adjudicated";
@@ -43,27 +48,41 @@ export function fmt(v: unknown, digits = 2): string {
 }
 
 export function evidenceLabel(source?: string): string {
-  return source === "producer" ? "preserved by the producer"
-    : source === "captured_at_import" ? "captured at import; original bytes unverified"
-    : source === "partial_log" || source === "partial_report" ? "partial historical record; original media unavailable"
-    : "historical provenance unknown";
+  return source === "producer"
+    ? "preserved by the producer"
+    : source === "captured_at_import"
+      ? "captured at import; original bytes unverified"
+      : source === "partial_log" || source === "partial_report"
+        ? "partial historical record; original media unavailable"
+        : "historical provenance unknown";
 }
 
 /** One text line per rendition, best-pixels one marked; the state note when the
  *  ledger is not current. Pure, so the item page's rendering is testable. */
-export function renditionLines(fs: FigureSources | undefined): { note: string | null; lines: string[] } {
+export function renditionLines(fs: FigureSources | undefined): {
+  note: string | null;
+  lines: string[];
+} {
   if (!fs) return { note: null, lines: [] };
   const state = fs.state || "absent";
-  const note = state === "current" ? null
-    : state.startsWith("absent") ? "Ledger absent: run metascience image-figure-sources"
-    : state.startsWith("stale") ? `Ledger stale: ${state.replace(/^stale:?\s*/, "") || "inputs changed"}`
-    : `Ledger ${state}`;
-  const bestId = typeof fs.best_pixels === "string" ? fs.best_pixels : fs.best_pixels?.rendition_id ?? null;
+  const note =
+    state === "current"
+      ? null
+      : state.startsWith("absent")
+        ? "Ledger absent: run metascience image-figure-sources"
+        : state.startsWith("stale")
+          ? `Ledger stale: ${state.replace(/^stale:?\s*/, "") || "inputs changed"}`
+          : `Ledger ${state}`;
+  const bestId =
+    typeof fs.best_pixels === "string" ? fs.best_pixels : (fs.best_pixels?.rendition_id ?? null);
   const lines = (fs.renditions || []).map((r) => {
     const size = r.width != null && r.height != null ? `${r.width}x${r.height}` : "size unknown";
     const best = bestId != null && r.rendition_id === bestId;
-    return `${r.source || "unknown source"} ${size} · ${r.link || "link unmeasured"}`
-      + (r.framing ? ` · ${r.framing}` : "") + (best ? " · best pixels" : "");
+    return (
+      `${r.source || "unknown source"} ${size} · ${r.link || "link unmeasured"}` +
+      (r.framing ? ` · ${r.framing}` : "") +
+      (best ? " · best pixels" : "")
+    );
   });
   return { note, lines };
 }

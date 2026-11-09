@@ -7,11 +7,16 @@ import { badProject } from "@/lib/paths";
 export const dynamic = "force-dynamic";
 
 type TechRow = {
-  technique: string; computed_by: string; n_papers_ran: number;
-  n_papers_fired: number; fire_rate: number | null;
+  technique: string;
+  computed_by: string;
+  n_papers_ran: number;
+  n_papers_fired: number;
+  fire_rate: number | null;
   n_findings: { problem: number; pass: number; undecided: number };
-  n_impossible: number; by_severity: Record<string, number>;
-  n_discarded_by_adjudicator: number; n_screen_flags: number;
+  n_impossible: number;
+  by_severity: Record<string, number>;
+  n_discarded_by_adjudicator: number;
+  n_screen_flags: number;
 };
 
 async function loadStats(project: string) {
@@ -28,25 +33,38 @@ async function loadStats(project: string) {
 
 async function loadFindings(project: string, technique: string, offset: number) {
   const { workbench } = await import("@/lib/workbench");
-  try {return await workbench("findings",{project,technique,offset,limit:50});}
-  catch {return null;}
+  try {
+    return await workbench("findings", { project, technique, offset, limit: 50 });
+  } catch {
+    return null;
+  }
 }
 
-export default async function StatsPage(
-  props: {
-    params: Promise<{ project: string }>;
-    searchParams: Promise<{ technique?: string; offset?:string }>;
-  },
-) {
+export default async function StatsPage(props: {
+  params: Promise<{ project: string }>;
+  searchParams: Promise<{ technique?: string; offset?: string }>;
+}) {
   const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   const project = decodeURIComponent(params.project);
   // The project names a folder under the papers root; the API route checks
   // this and so must the page that reads corpus_stats.json directly.
   if (badProject(project)) notFound();
   const technique = searchParams?.technique || "";
-  const offset=Math.max(0,Number(searchParams?.offset)||0);
-  const result = technique ? await loadFindings(project, technique,offset) : null;
-  const drill=result?.rows as {finding_id:string;paper_id:string;run_id:string;severity:number|null;impossible:boolean;title:string;producer:string;journal:string;year:number|null}[] | undefined;
+  const offset = Math.max(0, Number(searchParams?.offset) || 0);
+  const result = technique ? await loadFindings(project, technique, offset) : null;
+  const drill = result?.rows as
+    | {
+        finding_id: string;
+        paper_id: string;
+        run_id: string;
+        severity: number | null;
+        impossible: boolean;
+        title: string;
+        producer: string;
+        journal: string;
+        year: number | null;
+      }[]
+    | undefined;
   const stats = await loadStats(project);
   if (!stats) {
     return (
@@ -65,28 +83,33 @@ export default async function StatsPage(
     <main style={{ padding: 24, maxWidth: 1100 }}>
       <h1>{project} — statistics</h1>
       <p>
-        {stats.n_papers_with_v2}/{stats.n_papers} papers carry findings-v2
-        documents (generated {stats.generated_at}). Every rate below names its
-        denominator; “ran” includes runs whose result was discarded — a check
-        that ran and retained nothing still ran.
+        {stats.n_papers_with_v2}/{stats.n_papers} papers carry findings-v2 documents (generated{" "}
+        {stats.generated_at}). Every rate below names its denominator; “ran” includes runs whose
+        result was discarded — a check that ran and retained nothing still ran.
       </p>
 
       <h2>Fires per technique</h2>
       <table>
         <thead>
           <tr>
-            <th>technique</th><th>computed by</th><th>papers ran</th>
-            <th>papers fired</th><th>rate</th><th>impossible</th>
-            <th>discarded by adjudicator</th><th>severity spread</th>
+            <th>technique</th>
+            <th>computed by</th>
+            <th>papers ran</th>
+            <th>papers fired</th>
+            <th>rate</th>
+            <th>impossible</th>
+            <th>discarded by adjudicator</th>
+            <th>severity spread</th>
           </tr>
         </thead>
         <tbody>
           {techs.map((r) => (
             <tr key={`${r.technique}:${r.computed_by}`}>
               <td>
-                <Link href={`/project/${encodeURIComponent(project)}/stats?technique=${encodeURIComponent(r.technique)}`}
-                      style={r.technique === technique
-                        ? { fontWeight: 700 } : undefined}>
+                <Link
+                  href={`/project/${encodeURIComponent(project)}/stats?technique=${encodeURIComponent(r.technique)}`}
+                  style={r.technique === technique ? { fontWeight: 700 } : undefined}
+                >
                   {r.technique}
                 </Link>
               </td>
@@ -97,14 +120,23 @@ export default async function StatsPage(
               <td>{r.n_impossible}</td>
               <td>{r.n_discarded_by_adjudicator}</td>
               <td>
-                {Object.entries(r.by_severity).sort().map(([sev, n]) => (
-                  <span key={sev} title={sev9Label(Number(sev))}
-                        style={{ background: sev9Color(Number(sev)),
-                                 color: "white", borderRadius: 3,
-                                 padding: "0 5px", marginRight: 4 }}>
-                    S{sev}×{n}
-                  </span>
-                ))}
+                {Object.entries(r.by_severity)
+                  .sort()
+                  .map(([sev, n]) => (
+                    <span
+                      key={sev}
+                      title={sev9Label(Number(sev))}
+                      style={{
+                        background: sev9Color(Number(sev)),
+                        color: "white",
+                        borderRadius: 3,
+                        padding: "0 5px",
+                        marginRight: 4,
+                      }}
+                    >
+                      S{sev}×{n}
+                    </span>
+                  ))}
               </td>
             </tr>
           ))}
@@ -115,38 +147,61 @@ export default async function StatsPage(
         <>
           <h2>
             Findings — {technique}{" "}
-            <Link href={`/project/${encodeURIComponent(project)}/stats`}
-                  style={{ fontSize: 13, fontWeight: 400 }}>clear</Link>
+            <Link
+              href={`/project/${encodeURIComponent(project)}/stats`}
+              style={{ fontSize: 13, fontWeight: 400 }}
+            >
+              clear
+            </Link>
           </h2>
           {drill == null ? (
-            <p>The findings query failed; run it from the CLI:{" "}
+            <p>
+              The findings query failed; run it from the CLI:{" "}
               <code>metascience findings-query &lt;root&gt; --technique {technique}</code>
             </p>
           ) : drill.length === 0 ? (
-            <p>No kept problem findings carry this technique — fires shown in
-               the table above may all be discarded or belong to other runs.</p>
+            <p>
+              No kept problem findings carry this technique — fires shown in the table above may all
+              be discarded or belong to other runs.
+            </p>
           ) : (
             <table>
               <thead>
-                <tr><th>severity</th><th>title</th><th>paper</th>
-                    <th>producer</th><th>journal</th><th>year</th></tr>
+                <tr>
+                  <th>severity</th>
+                  <th>title</th>
+                  <th>paper</th>
+                  <th>producer</th>
+                  <th>journal</th>
+                  <th>year</th>
+                </tr>
               </thead>
               <tbody>
                 {drill.slice(0, 200).map((f) => (
                   <tr key={`${f.run_id}:${f.finding_id}`}>
                     <td>
-                      {f.severity == null ? "—" : (
-                        <span title={sev9Label(f.severity)}
-                              style={{ background: sev9Color(f.severity),
-                                       color: "white", borderRadius: 3,
-                                       padding: "0 5px" }}>
-                          S{f.severity}{f.impossible ? " ⚠" : ""}
+                      {f.severity == null ? (
+                        "—"
+                      ) : (
+                        <span
+                          title={sev9Label(f.severity)}
+                          style={{
+                            background: sev9Color(f.severity),
+                            color: "white",
+                            borderRadius: 3,
+                            padding: "0 5px",
+                          }}
+                        >
+                          S{f.severity}
+                          {f.impossible ? " ⚠" : ""}
                         </span>
                       )}
                     </td>
                     <td>{f.title}</td>
                     <td>
-                      <Link href={`/project/${encodeURIComponent(project)}/review/${encodeURIComponent(f.paper_id)}?run=${encodeURIComponent(f.run_id)}`}>
+                      <Link
+                        href={`/project/${encodeURIComponent(project)}/review/${encodeURIComponent(f.paper_id)}?run=${encodeURIComponent(f.run_id)}`}
+                      >
                         {f.paper_id}
                       </Link>
                     </td>
@@ -158,27 +213,51 @@ export default async function StatsPage(
               </tbody>
             </table>
           )}
-          {result && <p>Showing {offset+1}–{offset+(drill?.length || 0)} of {result.pagination.total}.{" "}
-            {offset>0 && <Link href={`?technique=${encodeURIComponent(technique)}&offset=${Math.max(0,offset-50)}`}>Previous 50</Link>}{" "}
-            {result.pagination.next_offset!==null && <Link href={`?technique=${encodeURIComponent(technique)}&offset=${result.pagination.next_offset}`}>Next 50</Link>}
-          </p>}
+          {result && (
+            <p>
+              Showing {offset + 1}–{offset + (drill?.length || 0)} of {result.pagination.total}.{" "}
+              {offset > 0 && (
+                <Link
+                  href={`?technique=${encodeURIComponent(technique)}&offset=${Math.max(0, offset - 50)}`}
+                >
+                  Previous 50
+                </Link>
+              )}{" "}
+              {result.pagination.next_offset !== null && (
+                <Link
+                  href={`?technique=${encodeURIComponent(technique)}&offset=${result.pagination.next_offset}`}
+                >
+                  Next 50
+                </Link>
+              )}
+            </p>
+          )}
         </>
       )}
 
       <h2>Channels</h2>
       <table>
         <thead>
-          <tr><th>channel</th><th>ran</th><th>ran, result discarded</th>
-              <th>refused</th><th>did not run</th><th>unknown</th></tr>
+          <tr>
+            <th>channel</th>
+            <th>ran</th>
+            <th>ran, result discarded</th>
+            <th>refused</th>
+            <th>did not run</th>
+            <th>unknown</th>
+          </tr>
         </thead>
         <tbody>
           {Object.entries(channels).map(([name, st]) => {
             const s = st as Record<string, number>;
             return (
               <tr key={name}>
-                <td>{displayName(name)}</td><td>{s.ran}</td>
-                <td>{s.ran_result_discarded}</td><td>{s.refused}</td>
-                <td>{s.did_not_run}</td><td>{s.unknown}</td>
+                <td>{displayName(name)}</td>
+                <td>{s.ran}</td>
+                <td>{s.ran_result_discarded}</td>
+                <td>{s.refused}</td>
+                <td>{s.did_not_run}</td>
+                <td>{s.unknown}</td>
               </tr>
             );
           })}
@@ -188,20 +267,24 @@ export default async function StatsPage(
       <h2>By journal</h2>
       <table>
         <thead>
-          <tr><th>journal</th><th>papers</th><th>papers fired</th>
-              <th>problem findings</th><th>impossible</th><th>worst</th></tr>
+          <tr>
+            <th>journal</th>
+            <th>papers</th>
+            <th>papers fired</th>
+            <th>problem findings</th>
+            <th>impossible</th>
+            <th>worst</th>
+          </tr>
         </thead>
         <tbody>
-          {(stats.by_journal ?? []).slice(0, 40).map(
-            (j: Record<string, unknown>) => (
+          {(stats.by_journal ?? []).slice(0, 40).map((j: Record<string, unknown>) => (
             <tr key={String(j.journal_normalized)}>
               <td>{String(j.journal_normalized)}</td>
               <td>{Number(j.n_papers)}</td>
               <td>{Number(j.n_papers_fired)}</td>
               <td>{Number(j.n_findings_problem)}</td>
               <td>{Number(j.n_impossible)}</td>
-              <td>{j.worst_severity == null ? "—"
-                   : sev9Label(Number(j.worst_severity))}</td>
+              <td>{j.worst_severity == null ? "—" : sev9Label(Number(j.worst_severity))}</td>
             </tr>
           ))}
         </tbody>
@@ -210,8 +293,13 @@ export default async function StatsPage(
       <h2>By year</h2>
       <table>
         <thead>
-          <tr><th>year</th><th>papers</th><th>papers fired</th>
-              <th>problem findings</th><th>impossible</th></tr>
+          <tr>
+            <th>year</th>
+            <th>papers</th>
+            <th>papers fired</th>
+            <th>problem findings</th>
+            <th>impossible</th>
+          </tr>
         </thead>
         <tbody>
           {(stats.by_year ?? []).map((y: Record<string, unknown>) => (

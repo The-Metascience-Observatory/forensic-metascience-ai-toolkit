@@ -14,8 +14,10 @@
  * mirror back on, so a quad or a warp lands on the panel as printed.
  */
 
-export type Box = [number, number, number, number];
-export type M = [number, number, number, number, number, number];
+import type { Box, Matrix } from "./geometry/types.ts";
+
+export type { Box };
+export type M = Matrix;
 export type View = "side" | "blink" | "overlay" | "video";
 
 export function invert(m: M): M | null {

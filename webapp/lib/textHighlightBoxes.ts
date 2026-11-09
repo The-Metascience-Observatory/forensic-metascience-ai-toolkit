@@ -1,3 +1,8 @@
+/** Merging the word boxes of a located QUOTE into highlight rectangles
+ *  (one per line). This is the text-finding highlighter; the image boxes
+ *  are `imagePdfBoxes` / `imageXmlBoxes`, and `targets.boxesOf` pulls the
+ *  boxes out of finding targets. The module was `pdfBoxes`, a name that
+ *  clashed with both. */
 /** Paint-time cleanup of locator rectangles. Does not change locators. */
 
 export type PdfBox = {
@@ -39,7 +44,7 @@ function absorb(into: PdfBox, b: PdfBox) {
  * Drop boxes that vanish on screen, then fuse collinear neighbours so one
  * quote-line is one strip. Different `tid`s stay separate (two highlights).
  */
-export function mergePdfBoxes(
+export function mergeTextBoxes(
   boxes: PdfBox[],
   sx = 1,
   sy = 1,

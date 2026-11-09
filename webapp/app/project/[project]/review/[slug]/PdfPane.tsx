@@ -4,11 +4,11 @@ import { loadPdfjs } from "@/lib/pdfjs";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import { mergePdfBoxes } from "@/lib/pdfBoxes";
+import { mergeTextBoxes } from "@/lib/textHighlightBoxes";
 import { SEV_FILL } from "@/lib/severity";
 import { appendFlipArrow } from "@/lib/flipArrow";
 import type { ImagePdfBox } from "@/lib/imagePdfBoxes";
-import { pdfBoxes } from "@/lib/targets";
+import { boxesOf } from "@/lib/targets";
 import { FindBar, useFindShortcut } from "./FindBar";
 
 type Box = { x0: number; y0: number; x1: number; y1: number };
@@ -311,7 +311,7 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
       }
       pages.current = slots;
       const loc = latestLocator.current;
-      firstPage = Math.max(0, Math.min(pdf.numPages - 1, (loc?.page || pdfBoxes(loc)[0]?.page || 1) - 1));
+      firstPage = Math.max(0, Math.min(pdf.numPages - 1, (loc?.page || boxesOf(loc)[0]?.page || 1) - 1));
       const pump = async () => {
         if (pumping || gone) return;
         pumping = true;
@@ -387,7 +387,7 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
     if (!ready) return;
     const slots = pages.current;
     for (const slot of slots) slot.overlay.innerHTML = "";
-    const boxes = pdfBoxes(locator);
+    const boxes = boxesOf(locator);
     const canBox = boxes.length > 0;
     const focusTid = focusTargetId || null;
     const focusTarget = (locator?.targets || []).find((t) => t.id === focusTid);
@@ -406,7 +406,7 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
         const sx = slot.vw / slot.unscaledW;
         const sy = slot.vh / slot.unscaledH;
         const onPage = boxes.filter((b) => (b.page ?? locator?.page) === n);
-        const merged = mergePdfBoxes(onPage, sx, sy);
+        const merged = mergeTextBoxes(onPage, sx, sy);
         for (const box of merged) {
           const el = document.createElement("div");
           el.className = "pdf-finding";
@@ -561,12 +561,12 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
             Could not render the PDF ({err}).
           </p>
         )}
-        {locator && locator.confidence === "none" && pdfBoxes(locator).length === 0 && (
+        {locator && locator.confidence === "none" && boxesOf(locator).length === 0 && (
           <p className="muted" style={{ fontSize: 12 }}>
             Location unknown — no page jump, no highlight. We will not invent one.
           </p>
         )}
-        {locator && locator.confidence === "page" && pdfBoxes(locator).length === 0 && (
+        {locator && locator.confidence === "page" && boxesOf(locator).length === 0 && (
           <p className="muted" style={{ fontSize: 12 }}>
             {locator.method === "placement_page"
               ? `Figure on p. ${locator.page} — we know the page, not a box to paint.`

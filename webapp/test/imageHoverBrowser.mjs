@@ -12,7 +12,7 @@ try {
   await addReact(page);
   await page.evaluate(()=>window.modules={react:window.React});
   const modules=[
-    ['./affine.ts','lib/affine.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
+    ['./affine.ts','lib/affine.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
     ['@/lib/flipArrow','lib/flipArrow.ts'],
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],

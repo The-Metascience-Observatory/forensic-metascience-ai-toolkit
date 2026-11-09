@@ -15,7 +15,7 @@ try {
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['./FlipArrow','app/images/FlipArrow.tsx'],
-    ['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],
+    ['./paneDocument.ts','lib/paneDocument.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],
     ['comparator','app/project/[project]/images/[item]/Comparator.tsx'],
   ]) {
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;

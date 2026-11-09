@@ -135,7 +135,7 @@ export function highlightJumps(
   return out;
 }
 
-export function pdfBoxes(locator: {
+export function boxesOf(locator: {
   targets?: Target[];
   boxes?: Target["boxes"];
   page?: number | null;

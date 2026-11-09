@@ -40,7 +40,7 @@ try {
     window.feed={items:window.items,counts:{items:6,papers:1},notes:[],runs:[],pagination:{total:6,next_offset:null}};
   });
   const modules=[
-    ['./affine.ts','lib/affine.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
+    ['./affine.ts','lib/affine.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
     ['@/lib/flipArrow','lib/flipArrow.ts'],['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],['queue','app/project/[project]/images/ImageQueue.tsx'],
   ];

@@ -14,7 +14,7 @@ try {
   await page.addScriptTag({content:`(()=>{const exports={};const module={exports};${readFileSync('node_modules/gifenc/dist/gifenc.js','utf8')}\nwindow.modules.gifenc=module.exports;})();`});
   for(const [name,file] of [
     ['@/lib/affine','lib/affine.ts'],['@/lib/flipArrow','lib/flipArrow.ts'],
-    ['./flipArrow.ts','lib/flipArrow.ts'],['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],
+    ['./flipArrow.ts','lib/flipArrow.ts'],['./paneDocument.ts','lib/paneDocument.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],
     ['comparator','app/project/[project]/images/[item]/Comparator.tsx'],
   ]) {
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;

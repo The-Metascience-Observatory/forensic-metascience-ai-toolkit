@@ -1,7 +1,8 @@
+import { matchDirection, type FlipDirection } from "./flipArrow.ts";
+import { cropToParent, finite, isRect, matchRegions, unmirror } from "./geometry/project.ts";
+import type { Box, Crop, Size } from "./geometry/types.ts";
 import { isPdfReference, paneDocument } from "./paneDocument.ts";
 import type { Item, Panel, Placement } from "./types/images.ts";
-
-import { matchDirection, type FlipDirection } from "./flipArrow.ts";
 
 export const DUPLICATION_COLORS = ["#00FFDD", "#FFFF00", "#39FF14"] as const;
 export type ImagePdfBox = {
@@ -9,9 +10,6 @@ export type ImagePdfBox = {
   points: [number, number][]; color: string;
   regionLabel?: string; flipDirection?: FlipDirection;
 };
-
-const finite = (xs: unknown, n: number): xs is number[] =>
-  Array.isArray(xs) && xs.length === n && xs.every((x) => typeof x === "number" && Number.isFinite(x));
 
 /** Detector pixels -> parent stream pixels -> unrotated PDF -> displayed PDF.
  * Only exact placements can locate a subregion; a parent/page-only location
@@ -30,16 +28,16 @@ export function projectImagePolygon(panel: Panel, pl: Placement, size: [number, 
       || polygon.length < 3 || polygon.some(p => !finite(p, 2))) return null;
   if (pl.bbox_kind === "crop_exact" && !finite(panel.crop_box, 4)) return null;
   const [pw, ph] = pl.parent_size;
-  const crop = panel.crop_box ?? [0, 0, ph, pw]; // row/column order
-  if (!finite(crop, 4) || crop[2] <= crop[0] || crop[3] <= crop[1]) return null;
-  const [r0, c0, r1, c1] = crop;
+  const crop = (panel.crop_box ?? [0, 0, ph, pw]) as Crop; // row/column order
+  if (!isRect(crop)) return null;
   const [a, b, c, d, e, f] = pl.transform;
   if (Math.abs(a * d - b * c) < 1e-10) return null;
   const rotation = ((pl.page_rotation || 0) % 360 + 360) % 360;
   if (![0, 90, 180, 270].includes(rotation) || (rotation && !finite(pl.page_size, 2))) return null;
   return polygon.map(([x, y]) => {
-    const u = (c0 + x / size[0] * (c1 - c0)) / pw;
-    const v = (r0 + y / size[1] * (r1 - r0)) / ph;
+    // Panel pixels -> parent figure pixels -> the placement's unit square.
+    const [px, py] = cropToParent([x, y], size as Size, crop);
+    const u = px / pw, v = py / ph;
     const X = a * u + c * v + e, Y = b * u + d * v + f;
     const [w, h] = pl.page_size || [0, 0];
     return rotation === 90 ? [h - Y, X] : rotation === 180 ? [w - X, h - Y]
@@ -69,15 +67,13 @@ export function imagePdfBoxes(item: Item, sizes: ([number, number] | null)[], pr
     // A whole-image duplication has no measured region: its box is the whole
     // panel (its own crop of the figure, not the entire figure), on BOTH sides.
     const wholePanel = !clone && !finite(localized, 4) && WHOLE_IMAGE_KINDS.has(item.detector_kind ?? "");
-    const regions = clone && Array.isArray(ms.regions)
-      ? ms.regions.map((r: { bbox?: number[]; polygon?: number[][] }) => r)
-      : [{ bbox: wholePanel ? [0, 0, size[0], size[1]] : localized, polygon: undefined }];
+    const regions = wholePanel ? [{ bbox: [0, 0, size[0], size[1]], polygon: undefined }]
+      : matchRegions(ms, side, clone);
     for (const [regionIndex, record] of regions.entries()) {
       const region = record.bbox;
       if (!finite(region, 4)) continue;
       // The detector's B coordinates are mirrored when flip is true.
-      const box = !clone && side === 1 && ms.flip === true
-        ? [size[0] - region[2], region[1], size[0] - region[0], region[3]] : region;
+      const box = unmirror(region as Box, side, size, ms.flip === true, clone);
       panel.placements.forEach((pl, k) => {
         // Retained media paths replace the source filename; match by the
         // stable document ID before using that archived path.

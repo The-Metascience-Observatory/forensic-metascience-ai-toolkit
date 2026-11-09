@@ -15,7 +15,7 @@ import {
 } from "../lib/targets.ts";
 import { findQuoteSpans, fold } from "../lib/haystack.ts";
 import { revealArgv } from "../lib/reveal.ts";
-import { mergePdfBoxes } from "../lib/pdfBoxes.ts";
+import { mergeTextBoxes } from "../lib/textHighlightBoxes.ts";
 import { REVIEW_QUEUED_MESSAGE, reviewSyncCompleted } from "../lib/reviewSync.ts";
 import {
   describeTransform, fromAffine, fromBoxes, invert, isAxisAligned, mirrorBox, placementOrientation, quadThrough,
@@ -544,25 +544,25 @@ test("smoke", async () => {
   assert.equal(highlightJumps(mixed, "pdf")[0].target.id, "a:pdf");
 
   assert.deepEqual(
-    mergePdfBoxes([{ page: 1, x0: 0, y0: 0, x1: 1, y1: 1 }]),
+    mergeTextBoxes([{ page: 1, x0: 0, y0: 0, x1: 1, y1: 1 }]),
     [],
   );
   assert.deepEqual(
-    mergePdfBoxes([
+    mergeTextBoxes([
       { page: 1, tid: "a", x0: 0, y0: 10, x1: 50, y1: 20 },
       { page: 1, tid: "a", x0: 52, y0: 10, x1: 100, y1: 20 },
     ]),
     [{ page: 1, tid: "a", x0: 0, y0: 10, x1: 100, y1: 20 }],
   );
   assert.equal(
-    mergePdfBoxes([
+    mergeTextBoxes([
       { page: 1, tid: "a", x0: 0, y0: 10, x1: 80, y1: 20 },
       { page: 1, tid: "a", x0: 0, y0: 30, x1: 80, y1: 40 },
     ]).length,
     2,
   );
   assert.equal(
-    mergePdfBoxes([
+    mergeTextBoxes([
       { page: 1, tid: "a", x0: 0, y0: 10, x1: 40, y1: 20 },
       { page: 1, tid: "b", x0: 41, y0: 10, x1: 80, y1: 20 },
     ]).length,

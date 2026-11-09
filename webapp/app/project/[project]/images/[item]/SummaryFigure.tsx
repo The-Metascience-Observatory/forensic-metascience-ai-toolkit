@@ -25,8 +25,9 @@ function pubpeerLinks(item: Item): { label: string; href: string; title: string 
       title: `${link.label}: ${paper?.title || dir}` }];
   });
 }
-import { adjoiningFigureRect, expandFigureBox, FIGURE_MARGIN_PT, brandMetrics, chooseLayout, grabCursor, grabSelection, isCrossPaper, nativeSides, nativeSummaryGroups, normaliseRect, referenceRuns, scaleRect, stageBounds, summaryGroups, wrapRuns,
-  type Grab, type ImageSummaryGroup, type PdfSummaryGroup, type PixelRect, type ReferenceMeta, type Run, type SummaryGroup } from "@/lib/summaryFigure";
+import { adjoiningFigureRect, expandFigureBox, FIGURE_MARGIN_PT, chooseLayout, isCrossPaper, nativeSides, nativeSummaryGroups, summaryGroups, type ImageSummaryGroup, type PdfSummaryGroup, type SummaryGroup } from "@/lib/summaryGroups";
+import { brandMetrics, grabCursor, grabSelection, normaliseRect, scaleRect, stageBounds, type Grab, type PixelRect } from "@/lib/cropEditor";
+import { referenceRuns, wrapRuns, type ReferenceMeta, type Run } from "@/lib/citation";
 
 // Output resolution: the longer side of each figure crop, in pixels.
 const TARGET_PX = 1600;

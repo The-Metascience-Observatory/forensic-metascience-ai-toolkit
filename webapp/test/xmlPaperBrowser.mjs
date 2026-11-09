@@ -34,7 +34,7 @@ try {
     ['@/lib/haystack','lib/haystack.ts'],['@/lib/severity','lib/severity.ts'],
     ['./FindBar','app/project/[project]/review/[slug]/FindBar.tsx'],
     ['@/lib/xmlFigures','lib/xmlFigures.ts'],
-    ['@/lib/imageXmlBoxes','lib/imageXmlBoxes.ts'],
+    ['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imageXmlBoxes','lib/imageXmlBoxes.ts'],
     ['@/lib/xmlImageOverlays','lib/xmlImageOverlays.ts'],
     ['../../review/[slug]/HtmlArticlePane','app/project/[project]/review/[slug]/HtmlArticlePane.tsx'],
     ['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],

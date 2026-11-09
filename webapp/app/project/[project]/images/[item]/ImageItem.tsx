@@ -21,7 +21,7 @@ const ImageDetails=dynamic(()=>import("./ImageDetails").then(m=>m.ImageDetails),
 const XmlPaperPane=dynamic(()=>import("./XmlPaperPane").then(m=>m.XmlPaperPane),{ssr:false,loading:()=> <p>Loading paper…</p>});
 import { canReadXml } from "@/lib/xmlFigures";
 import { NativeImagePane } from "./NativeImagePane";
-import { nativeSides, summaryGroups } from "@/lib/summaryFigure";
+import { nativeSides, summaryGroups } from "@/lib/summaryGroups";
 import type { ImageSize } from "@/lib/imageXmlBoxes";
 // The 760-line figure editor loads on the first click, not with every item.
 const SummaryFigureButton=dynamic(()=>import("./SummaryFigure").then(m=>m.SummaryFigureButton),{loading:()=> <span>Loading the figure editor…</span>});

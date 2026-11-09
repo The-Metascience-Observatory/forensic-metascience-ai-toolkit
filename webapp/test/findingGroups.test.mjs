@@ -1,7 +1,7 @@
 import { test } from "vitest";
 import assert from 'node:assert/strict';
 import {entryStarts, stepEntry, isGroupStart, readGrouped} from '../lib/findingGroups.ts';
-import {jumpable, surfaceOf, pdfBoxes, xmlCells, highlightJumps} from '../lib/targets.ts';
+import {jumpable, surfaceOf, boxesOf, xmlCells, highlightJumps} from '../lib/targets.ts';
 
 test("findingGroups", async () => {
   // The grouping rule itself runs in the service: tests/test_finding_groups.py.
@@ -32,7 +32,7 @@ test("findingGroups", async () => {
   assert.equal(jumpable({...pageOnly, confidence:'none', page:null}), false);
   assert.equal(surfaceOf(xml), 'xml');
   assert.equal(surfaceOf(pdf), 'pdf');
-  assert.deepEqual(pdfBoxes({targets:[xml, pdf, pageOnly]}).map(b => b.tid), [pdf.id]);
+  assert.deepEqual(boxesOf({targets:[xml, pdf, pageOnly]}).map(b => b.tid), [pdf.id]);
   assert.deepEqual(xmlCells([xml, pdf]), [{id:xml.id, tableNum:1, row:3, col:3}]);
   // One cell, two surfaces: one comparison group, not two.
   assert.equal(highlightJumps([xml, pdf, pageOnly], 'pdf').length, 2);

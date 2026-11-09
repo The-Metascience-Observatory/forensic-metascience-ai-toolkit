@@ -1,13 +1,12 @@
 /** PDF image bounds in the same displayed-page frame used by review boxes.
  * Read image paints from the page itself, including strips absent from the
  * finding's panel list. Text, paths and image masks cannot extend a figure. */
-type Matrix = [number, number, number, number, number, number];
-type Rect = [number, number, number, number];
-const multiply = (a: Matrix, b: Matrix): Matrix => [
-  a[0] * b[0] + a[2] * b[1], a[1] * b[0] + a[3] * b[1],
-  a[0] * b[2] + a[2] * b[3], a[1] * b[2] + a[3] * b[3],
-  a[0] * b[4] + a[2] * b[5] + a[4], a[1] * b[4] + a[3] * b[5] + a[5],
-];
+import { compose } from "./affine.ts";
+import type { Matrix, Rect } from "./geometry/types.ts";
+
+// `compose(outer, inner)` is the same 2x3 product this module once spelled
+// out as `multiply(a, b)`: a's matrix applied after b's.
+const multiply = compose;
 export function pdfImageRects(list: { fnArray: number[]; argsArray: unknown[][] }, ops: Record<string, number>,
                               viewport: { transform: number[] }): Rect[] {
   let matrix: Matrix = [1, 0, 0, 1, 0, 0];

@@ -91,3 +91,96 @@ export function pubpeerLink(
   if (!t) return null;
   return { href: `https://pubpeer.com/search?q=${encodeURIComponent(t)}`, label: "PubPeer title search" };
 }
+
+// ---- reference line for the summary figure (moved from summaryFigure.ts) ----
+
+export type ReferenceMeta = {
+  authors_list?: { given?: string | null; family?: string | null; full?: string | null }[] | null;
+  authors?: string | null; title?: string | null; journal?: string | null;
+  volume?: string | number | null; issue?: string | number | null; pages?: string | null;
+  year?: string | number | null;
+};
+
+const MAX_AUTHORS = 20;
+const initials = (given: string) => given.split(/\s+/).filter(Boolean)
+  .map(t => t.split("-").map(p => p.replace(/\.$/, "")).filter(Boolean).map(p => `${p[0].toUpperCase()}.`).join("-"))
+  .join(" ");
+const trimStop = (s: string) => s.trim().replace(/[.\s]+$/, "");
+
+/** A run of reference text; the journal name is the italic one. */
+export type Run = { text: string; italic?: boolean };
+
+/** One reference line: `Chetty, C., Dontula, R., & Lakka, S. S. (2011).
+ * Title. *Journal*, 417(2), 874-879.` No DOI -- the figure is for readers,
+ * and the DOI is on every other surface. Missing pieces are omitted, never
+ * printed as "None"; returns [] when there is nothing but a DOI to say. */
+export function referenceRuns(meta: ReferenceMeta | null | undefined): Run[] {
+  if (!meta) return [];
+  let names = (meta.authors_list || []).map(a => {
+    const family = (a.family || "").trim(), given = (a.given || "").trim();
+    return family ? (given ? `${family}, ${initials(given)}` : family) : (a.full || "").trim();
+  }).filter(Boolean);
+  if (!names.length && meta.authors) {
+    names = meta.authors.split(";").map(n => n.trim()).filter(Boolean).map(n => {
+      const parts = n.split(/\s+/);
+      return parts.length > 1 ? `${parts[parts.length - 1]}, ${initials(parts.slice(0, -1).join(" "))}` : n;
+    });
+  }
+  const authors = names.length > MAX_AUTHORS
+    ? `${names.slice(0, MAX_AUTHORS - 1).join(", ")}, ... ${names[names.length - 1]}`
+    : names.length > 1 ? `${names.slice(0, -1).join(", ")}, & ${names[names.length - 1]}` : names[0] || "";
+  const year = meta.year == null || meta.year === "" ? "" : String(meta.year);
+  const title = trimStop(meta.title || "");
+  const journal = trimStop(meta.journal || "");
+  const volume = String(meta.volume ?? "").trim(), issue = String(meta.issue ?? "").trim();
+  const rest = [volume ? `${volume}${issue ? `(${issue})` : ""}` : issue ? `(${issue})` : "",
+    (meta.pages || "").trim().replace(/-/g, "–")].filter(Boolean).join(", ");
+  if (!title && !journal && !rest) return [];
+  const lead = [authors && `${trimStop(authors)}.`, year && `(${year}).`, title && `${title}.`].filter(Boolean).join(" ");
+  const runs: Run[] = [];
+  if (lead) runs.push({ text: journal || rest ? `${lead} ` : lead });
+  if (journal) runs.push({ text: journal, italic: true });
+  if (journal || rest) runs.push({ text: `${journal && rest ? ", " : ""}${rest}.` });
+  return runs;
+}
+
+export function formatReference(meta: ReferenceMeta | null | undefined): string {
+  return referenceRuns(meta).map(r => r.text).join("");
+}
+
+/** Greedy word wrap of styled runs against a width measure (canvas
+ * `measureText` in the page, a character count in tests). A word may change
+ * style midway ("*Cancer*,"); a single overlong word keeps its line. Each
+ * line comes back as runs with adjacent same-style pieces merged. */
+export function wrapRuns(runs: Run[], width: number, measure: (s: string, italic: boolean) => number): Run[][] {
+  const words: Run[][] = [];
+  let word: Run[] = [];
+  for (const run of runs) for (const piece of run.text.split(/(\s+)/)) {
+    if (!piece) continue;
+    if (/^\s+$/.test(piece)) { if (word.length) words.push(word); word = []; }
+    else word.push({ text: piece, italic: !!run.italic });
+  }
+  if (word.length) words.push(word);
+  const push = (line: Run[], piece: Run) => {
+    const last = line[line.length - 1];
+    if (last && !!last.italic === !!piece.italic) last.text += piece.text; else line.push({ ...piece });
+  };
+  const size = (line: Run[]) => line.reduce((s, r) => s + measure(r.text, !!r.italic), 0);
+  const lines: Run[][] = [];
+  let line: Run[] = [];
+  for (const w of words) {
+    const next = line.map(r => ({ ...r }));
+    if (next.length) push(next, { text: " ", italic: !!next[next.length - 1].italic && !!w[0].italic });
+    w.forEach(r => push(next, r));
+    if (line.length && size(next) > width) {
+      lines.push(line); line = [];
+      w.forEach(r => push(line, r));
+    } else line = next;
+  }
+  if (line.length) lines.push(line);
+  return lines;
+}
+
+export function wrapText(text: string, width: number, measure: (s: string) => number): string[] {
+  return wrapRuns([{ text }], width, s => measure(s)).map(l => l.map(r => r.text).join(""));
+}

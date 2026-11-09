@@ -12,11 +12,20 @@ export function nativeSource(uid: string): { folder: string; file: string } | nu
   return m ? { folder: m[1].split(':')[0], file: m[2] } : null;
 }
 
-/** Match source identity, never a collapsed display label (e.g. Extended Data). */
-export function panelFigure(panel: Panel, figures: XmlFigure[]): XmlFigure | undefined {
+/** The paper-relative paths that could be this panel's source image: the
+ *  figure it was cut from, its own image, and the native file its retained
+ *  uid names. Shared by the figure match here and the graphic match in
+ *  `imageXmlBoxes`. */
+export function panelSourcePaths(panel: Panel): string[] {
   const paths = [panel.parent_image, panel.image].filter((p): p is string => Boolean(p));
   const native = nativeSource(panel.uid);
   if (native) paths.push(`${native.folder}/${native.file}`);
+  return paths;
+}
+
+/** Match source identity, never a collapsed display label (e.g. Extended Data). */
+export function panelFigure(panel: Panel, figures: XmlFigure[]): XmlFigure | undefined {
+  const paths = panelSourcePaths(panel);
   const exact = figures.filter(f => f.graphics.some(g => g.relpath && paths.includes(g.relpath)));
   if (exact.length === 1) return exact[0];
   // Retained panel UIDs preserve the source filename even when media paths are

@@ -1,14 +1,9 @@
 import { test } from "vitest";
 import assert from 'node:assert/strict';
 import { imagePdfBoxes } from '../lib/imagePdfBoxes.ts';
-import { chooseLayout, figureRect, summaryGroups, FIGURE_MARGIN_PT } from '../lib/summaryFigure.ts';
-import { formatReference, wrapText } from '../lib/summaryFigure.ts';
-import { isCrossPaper } from '../lib/summaryFigure.ts';
-import { referenceRuns, wrapRuns } from '../lib/summaryFigure.ts';
-import { normaliseRect, stageBounds, brandMetrics } from '../lib/summaryFigure.ts';
-import { grabSelection, grabCursor, scaleRect } from '../lib/summaryFigure.ts';
-import { nativeSides, nativeSummaryGroups } from '../lib/summaryFigure.ts';
-import { adjoiningFigureRect, expandFigureBox } from '../lib/summaryFigure.ts';
+import { chooseLayout, figureRect, summaryGroups, FIGURE_MARGIN_PT, isCrossPaper, nativeSides, nativeSummaryGroups, adjoiningFigureRect, expandFigureBox } from '../lib/summaryGroups.ts';
+import { formatReference, wrapText, referenceRuns, wrapRuns } from '../lib/citation.ts';
+import { normaliseRect, stageBounds, brandMetrics, grabSelection, grabCursor, scaleRect } from '../lib/cropEditor.ts';
 import { pdfImageRects } from '../lib/summaryPdfGeometry.ts';
 
 test("summaryFigure", async () => {

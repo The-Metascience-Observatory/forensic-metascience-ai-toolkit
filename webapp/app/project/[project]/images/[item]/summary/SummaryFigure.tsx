@@ -6,6 +6,7 @@ import type { Item } from "@/app/images/lib";
 import { pubpeerLink } from "@/lib/citation";
 import { NEON, type CropEditor } from "./CropEditor";
 import { AddToWebsite } from "./AddToWebsiteForm";
+import { AuthorEmails } from "../AuthorEmails";
 
 /** One PubPeer link per paper of the finding (its page when recorded, else
  *  a DOI search), labelled A/B on a cross-paper item. Same rule as the page. */
@@ -56,7 +57,19 @@ export function SummaryFigure({ project, item, editor, meta, error, busy, websit
                 display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
     <div onClick={e => e.stopPropagation()}
          style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 6, padding: 12,
-                  maxWidth: "100%", maxHeight: "100%", overflow: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                  maxWidth: "100%", maxHeight: "100%", overflow: "auto", display: "flex", flexDirection: "row", gap: 12 }}>
+      {/* The addresses a PubPeer post notifies, beside the figure it will
+          carry: read as soon as the dialog opens, each with a copy button. */}
+      <aside aria-label="Author e-mails"
+             style={{ flex: "0 0 240px", width: 240, overflow: "auto", fontSize: 12, alignSelf: "stretch",
+                      borderRight: "1px solid var(--line)", paddingRight: 10 }}>
+        <b>Author e-mails</b>
+        <p className="muted" style={{ fontSize: 11, margin: "4px 0 0" }}>
+          From the paper&apos;s PDF, or its XML when there is no PDF; for PubPeer&apos;s notify field.
+        </p>
+        <AuthorEmails project={project} item={item} autoStart />
+      </aside>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
       <div ref={toolbarRef} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
         <b>Summary figure{edited ? " (edited)" : ""}</b>
@@ -136,6 +149,7 @@ export function SummaryFigure({ project, item, editor, meta, error, busy, websit
                 onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}
                 style={{ display: "block", maxWidth: "100%", maxHeight: `calc(100vh - ${Math.ceil(toolbarH) + 84}px)`, width: "auto", height: "auto",
                          userSelect: "none" }} />
+      </div>
       </div>
     </div>
   </div>, document.body

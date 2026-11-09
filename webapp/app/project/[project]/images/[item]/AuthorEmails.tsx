@@ -1,7 +1,7 @@
 "use client";
 
 import { loadPdfjs } from "@/lib/pdfjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { isPdfReference, mediaUrl, type Item } from "@/app/images/lib";
 import { extractEmails, xmlEmails } from "@/lib/emails";
 
@@ -46,10 +46,17 @@ async function pdfEmails(url: string): Promise<string[]> {
   }
 }
 
+/** PubPeer's notify-authors field takes one line of addresses. */
+export function joinEmails(emails: readonly string[]): string {
+  return emails.join(", ");
+}
+
 /** Author e-mail addresses read from each paper's PDF (or its XML when it
- *  has none), for a PubPeer
- *  submission. One list per paper: a cross-paper item has two author sets. */
-export function AuthorEmails({ project, item }: { project: string; item: Item }) {
+ *  has none), for a PubPeer submission. One list per paper: a cross-paper
+ *  item has two author sets. `autoStart` reads the paper as soon as the
+ *  component mounts (the summary-figure dialog, where the addresses are
+ *  wanted at once); the item page keeps the explicit button. */
+export function AuthorEmails({ project, item, autoStart = false }: { project: string; item: Item; autoStart?: boolean }) {
   const [found, setFound] = useState<Found[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
@@ -58,19 +65,32 @@ export function AuthorEmails({ project, item }: { project: string; item: Item })
 
   const papers = [...new Map((item.papers.length ? item.papers : [item.paper])
     .filter(p => p?.dir).map(p => [p.dir, p])).values()];
+  const paperKey = papers.map(p => `${p.dir}\u0000${p.pdf ?? ""}`).join("|");
+  const runId = item.run_id;
 
-  async function run() {
+  const run = useCallback(async () => {
     setBusy(true);
     const out: Found[] = [];
     for (const p of papers) {
       try {
         if (isPdfReference(p.pdf)) { out.push({ dir: p.dir, source: "PDF", emails: await pdfEmails(mediaUrl(project, p.dir, p.pdf)) }); continue; }
-        const emails = await paperXmlEmails(project, item.run_id, p.dir);
+        const emails = await paperXmlEmails(project, runId, p.dir);
         out.push(emails ? { dir: p.dir, source: "XML", emails } : { dir: p.dir, error: "no PDF or XML on disk" });
       } catch (e) { out.push({ dir: p.dir, error: String(e instanceof Error ? e.message : e) }); }
     }
     setFound(out); setBusy(false);
-  }
+    // `papers` is derived from the item; `paperKey` stands in for it so the
+    // callback changes exactly when the papers do.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project, runId, paperKey]);
+
+  // Once per item when asked to start on its own; a re-extract is still the button.
+  const startedFor = useRef<string | null>(null);
+  useEffect(() => {
+    if (!autoStart || startedFor.current === key || !papers.length) return;
+    startedFor.current = key;
+    void run();
+  }, [autoStart, key, run, papers.length]);
 
   async function copy(dir: string, email: string) {
     await navigator.clipboard.writeText(email);
@@ -91,6 +111,13 @@ export function AuthorEmails({ project, item }: { project: string; item: Item })
                 ? "No e-mail address found in the PDF text (it may be an image, or list none)."
                 : "No e-mail address found in the XML (it may list none)."}</p>
             : <>
+                {f.emails.length > 1 && (
+                  <button type="button" style={{ fontSize: 11, marginTop: 4 }}
+                          title="Copy every address, comma-separated, for PubPeer's notify-authors field"
+                          onClick={() => void copy(f.dir, joinEmails(f.emails))}>
+                    {copied === `${f.dir}\u0000${joinEmails(f.emails)}` ? "copied all" : `copy all ${f.emails.length}`}
+                  </button>
+                )}
                 <ul style={{ margin: "2px 0", paddingLeft: 16 }}>
                   {f.emails.map(e => (
                     <li key={e} style={{ marginBottom: 2 }}>

@@ -9,6 +9,15 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — summary figure dialog lists the authors' e-mails
+
+The figure editor (`Summary figure` on an image item) has a panel on its
+left with the author e-mail addresses read from the paper's PDF, or its XML
+when there is no PDF, extracted as soon as the dialog opens, each with a copy
+button and a "copy all" that joins them for PubPeer's notify-authors field.
+The item page's own `AuthorEmails` block keeps its explicit button. Vitest
+now cleans up rendered components between tests (`test/setup.ts`).
+
 ## [Unreleased] — 2026-11-09 — webapp hosted mode behind Cloudflare Access
 
 One codebase, two modes. Without `METASCIENCE_ACCESS_TEAM` and

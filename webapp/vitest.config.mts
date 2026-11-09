@@ -20,6 +20,7 @@ export default defineConfig({
   },
   test: {
     include: ["test/**/*.test.{ts,tsx,mjs}"],
+    setupFiles: ["test/setup.ts"],
     environment: "node",
     testTimeout: 30_000,
     hookTimeout: 30_000,

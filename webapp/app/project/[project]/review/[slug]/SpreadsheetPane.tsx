@@ -1,16 +1,24 @@
 "use client";
 
+import type { Artefact } from "@/lib/types/review";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { useEffect, useMemo, useState } from "react";
+
+/** `/api/sheet`: one worksheet as a grid, with the finding's cells marked. */
+type SheetGrid = {
+  sheets?: string[]; sheet?: string; error?: string; preview_note?: string; n_rows?: number;
+  column_labels?: string[]; rows: string[][]; row_numbers?: number[];
+  highlights?: { r: number; c: number }[];
+};
 
 export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
   project: string;
   slug: string;
   dir: string;
-  artefact: any;
+  artefact: Artefact;
   label: string;
 }) {
-  const [grid, setGrid] = useState<any>(null);
+  const [grid, setGrid] = useState<SheetGrid | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const identity = `${project}:${dir}:${artefact.relpath || artefact.basename}:${artefact.sheet || ""}`;
   const [selection, setSelection] = useState({ identity, sheet: artefact.sheet || "" });
@@ -24,7 +32,7 @@ export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
 
   useEffect(() => {
     const q = new URLSearchParams({
-      project, slug, dir, f: artefact.relpath || artefact.basename,
+      project, slug, dir, f: artefact.relpath || artefact.basename || "",
     });
     if (sheet) q.set("sheet", sheet);
     if (highlights && highlights !== "[]") q.set("highlights", highlights);

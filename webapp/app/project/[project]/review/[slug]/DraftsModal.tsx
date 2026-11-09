@@ -1,5 +1,6 @@
 "use client";
 
+import type { Issue, ReviewState } from "@/lib/types/review";
 import { useEffect, useMemo, useState } from "react";
 
 import { legacyToNine, sev9Label } from "@/lib/constants.gen";
@@ -10,8 +11,8 @@ import { legacyToNine, sev9Label } from "@/lib/constants.gen";
 export function DraftsModal({ project, dir, issues, review, onClose }: {
   project: string;
   dir: string;
-  issues: any[];
-  review: any;
+  issues: Issue[];
+  review: ReviewState | null;
   onClose: () => void;
 }) {
   const [kind, setKind] = useState<"pubpeer" | "letter">("pubpeer");
@@ -68,8 +69,8 @@ export function DraftsModal({ project, dir, issues, review, onClose }: {
         `/api/draft?project=${encodeURIComponent(project)}&dir=${encodeURIComponent(dir)}`,
       ).then((r) => r.json()).catch(() => null);
       if (list?.drafts) setExisting(list.drafts);
-    } catch (e: any) {
-      setErr(String(e.message || e));
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }

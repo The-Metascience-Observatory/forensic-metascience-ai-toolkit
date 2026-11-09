@@ -2,6 +2,7 @@
  *  as the workbench service returns them. Types only, so lib/ modules and
  *  app/ components share one definition without lib/ importing app/.
  *  `app/images/lib.ts` re-exports every name for its existing importers. */
+import type { Judgments } from "./review";
 import type { LatestInfo, RunOption } from "./runs";
 
 export type Subfigure = { status: string; raw?: string | null; normalized?: string | null };
@@ -101,7 +102,7 @@ export type Item = {
   review_conflict?: boolean;
   record_revision?: string;
   content_support?: ContentSupportData;
-  reviews?: {conflict?:boolean;reviewers?:any[];history?:any[]};
+  reviews?: Judgments;
   screening_attempts?: unknown[];
   run_status?: string;
   coverage_status?: string;

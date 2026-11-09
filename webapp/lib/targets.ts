@@ -7,6 +7,7 @@ export type Target = {
   file?: string | null;
   page?: number | null;
   boxes?: { page?: number; x0: number; y0: number; x1: number; y1: number }[];
+  section?: string | null;
   section_index?: number | null;
   sheet?: string | null;
   cells?: { sheet?: string; row?: number; col?: number }[];

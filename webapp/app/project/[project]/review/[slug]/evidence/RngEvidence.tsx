@@ -1,5 +1,6 @@
 "use client";
 
+import type { Issue } from "@/lib/types/review";
 import { hitCellIndex, inputFacts, maxDelta, valuePairs, valuesArePrinted,
          type RngInputs, type TableGrid } from "@/lib/rngEvidence";
 import { CopyButton } from "../CopyButton";
@@ -66,16 +67,17 @@ function TableGridView({ grid }: { grid: TableGrid }) {
  *  measured inputs, the observed values beside the generator's, every
  *  matched block, the table grid when the match is in a table, and the
  *  replay snippet. Renders nothing until the row's detail has loaded. */
-export function RngEvidence({ issue }: { issue: any }) {
-  const inputs: RngInputs | null = issue?.inputs ?? null;
-  const reported = issue?.reported ?? {};
-  const computed = issue?.computed ?? {};
+export function RngEvidence({ issue }: { issue: Issue }) {
+  const inputs = (issue.inputs ?? null) as RngInputs | null;
+  const reported = issue.reported ?? {};
+  const computed = issue.computed ?? {};
   const facts = inputFacts(inputs);
-  const printed = valuesArePrinted(inputs, reported.units);
-  const pairs = valuePairs(reported.observed_first_values, computed.generated_first_values,
-                           { printed });
+  const units = typeof reported.units === "string" ? reported.units : undefined;
+  const printed = valuesArePrinted(inputs, units);
+  const pairs = valuePairs(reported.observed_first_values as unknown[] | undefined,
+                           computed.generated_first_values as unknown[] | undefined, { printed });
   const blocks: Block[] = Array.isArray(computed.blocks) ? computed.blocks : [];
-  const grid: TableGrid | null = computed.table_grid ?? null;
+  const grid = (computed.table_grid ?? null) as TableGrid | null;
   const replay = typeof computed.replay === "string" ? computed.replay : "";
   if (!facts.length && !pairs.length && !blocks.length && !replay && !grid) return null;
   const off = pairs.filter((p) => p.off).length;
@@ -102,7 +104,7 @@ export function RngEvidence({ issue }: { issue: any }) {
           <summary>
             Observed vs generated: {pairs.length} shown
             {inputs?.n_values ? ` of ${inputs.n_values}` : ""}
-            {reported.units ? ` (${reported.units})` : ""}
+            {units ? ` (${units})` : ""}
             {agreement ? `, ${agreement}` : ""}
           </summary>
           <table className="grid rng-values">
@@ -125,7 +127,8 @@ export function RngEvidence({ issue }: { issue: any }) {
         <details>
           <summary>
             Matched blocks: {blocks.length} listed
-            {computed.n_blocks_not_listed ? `, ${computed.n_blocks_not_listed} more not listed` : ""}
+            {typeof computed.n_blocks_not_listed === "number" && computed.n_blocks_not_listed > 0
+              ? `, ${computed.n_blocks_not_listed} more not listed` : ""}
           </summary>
           <div style={{ overflow: "auto", maxHeight: 240 }}>
             <table className="grid">
@@ -149,8 +152,8 @@ export function RngEvidence({ issue }: { issue: any }) {
           <CopyButton text={replay} label="Copy replay" title="Copy the reproduction snippet" />
         </details>
       )}
-      {issue?.notes && (
-        <p className="muted" style={{ fontSize: 11, margin: "4px 0 0" }}>{String(issue.notes)}</p>
+      {issue.notes && (
+        <p className="muted" style={{ fontSize: 11, margin: "4px 0 0" }}>{issue.notes}</p>
       )}
     </section>
   );

@@ -1,4 +1,5 @@
 "use client";
+import type { Judgments } from "@/lib/types/review";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { watchReviewSync, type ReviewSyncState } from "@/lib/reviewSync";
@@ -33,7 +34,7 @@ export function CacheStatus(){
  {state.warmup_error && ' · project summary computed on demand'}
  {!!state.pending_writes && ` · ${state.pending_writes} decision(s) pending sync`}{' '}<a href="/files">Local files</a></span>;
 }
-export function ReviewJudgments({reviews}:{reviews?:{conflict?:boolean;reviewers?:any[];history?:any[]}}){
+export function ReviewJudgments({reviews}:{reviews?: Judgments}){
  if(!reviews?.reviewers?.length)return null;
  return <div style={{fontSize:12}}>{reviews.conflict&&<strong>Reviewers disagree — all judgments retained.</strong>}
  {reviews.reviewers.map(r=><p key={r.reviewer}>{r.reviewer}: {r.decision} · {r.at}{r.pending?' · pending sync':''}{r.note?` — ${r.note}`:''}</p>)}

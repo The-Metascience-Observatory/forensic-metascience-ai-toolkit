@@ -369,8 +369,8 @@ export function CopyQueue({ project }: { project: string }) {
                   artefact={{
                     relpath: item.input_file,
                     basename: item.input_file.split("/").pop() || item.input_file,
-                    cells: item.group.cells || [],
-                    sheet: item.group.sheet || "",
+                    cells: (item.group.cells as unknown[] | undefined) || [],
+                    sheet: typeof item.group.sheet === "string" ? item.group.sheet : "",
                   }}
                 />
               </div>

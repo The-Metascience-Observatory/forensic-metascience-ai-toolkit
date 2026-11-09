@@ -1,5 +1,6 @@
 "use client";
 
+import type { Issue, IssueGroup, IssueReview, ReviewState } from "@/lib/types/review";
 import { useEffect, useState } from "react";
 
 import { displayName, legacyToNine, sev9Color, sev9Label } from "@/lib/constants.gen";
@@ -39,7 +40,7 @@ function ToolBadge({ tool, source }: { tool?: string | null; source?: string }) 
 
 const HIDE_KEY = "metascience.hideBelowSev";
 
-function sevNine(iss: any): number | null {
+function sevNine(iss: Issue): number | null {
   if (typeof iss.severity_9 === "number") return iss.severity_9;
   return legacyToNine(iss.severity);
 }
@@ -85,7 +86,7 @@ function emptyMessage(source?: IssueSource | null): string {
 
 /** One group's header: tool, place, count, worst severity. Click to open. */
 function GroupHeader({ group, open, onOpen }: {
-  group: any; open: boolean; onOpen: () => void;
+  group: IssueGroup; open: boolean; onOpen: () => void;
 }) {
   return (
     <div data-group-header={group.id} onClick={onOpen}
@@ -134,9 +135,9 @@ function Stepper({ jumps, focusKey, onJump }: {
 
 export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump,
   focusTargetId, preferredSurface, source, grouped, onGrouped }: {
-  issues: any[];
+  issues: Issue[];
   at: number;
-  review: any;
+  review: ReviewState | null;
   onFocus: (i: number) => void;
   onSave: (patch: Record<string, unknown>) => void;
   locById?: Map<string, { targets?: Target[] }>;
@@ -172,7 +173,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
   // with no ladder value never hides (absence is not "low"), and the row
   // the keyboard is on always shows so arrow-walking cannot vanish.
   const entries = issues.map((iss, i) => ({ iss, i }));
-  const isHidden = (iss: any, i: number) => {
+  const isHidden = (iss: Issue, i: number) => {
     if (!hideBelow || i === at) return false;
     const n = sevNine(iss);
     return typeof n === "number" && n < hideBelow;
@@ -230,11 +231,11 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
         const firstShown = !!gid && !headed.has(gid);
         if (gid) headed.add(gid);
         const header = gid && firstShown ? (
-          <GroupHeader key={`h-${gid}`} group={iss.group} open={isOpen(gid)}
+          <GroupHeader key={`h-${gid}`} group={iss.group as IssueGroup} open={isOpen(gid)}
                        onOpen={() => toggleGroup(gid, i)} />
         ) : null;
         if (gid && !isOpen(gid)) return header;
-        const saved = review?.issues?.[iss.id] || {};
+        const saved: IssueReview = review?.issues?.[iss.id] || {};
         const focused = i === at;
         // Columns by the row's producer first (a detector track declares its
         // own vocabulary), else image or numeric by kind.
@@ -260,7 +261,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
               borderLeft: `3px solid ${
                 typeof iss.severity_9 === "number"
                   ? sev9Color(iss.severity_9)
-                  : SEV_COLOR[iss.severity] || "var(--line)"}`,
+                  : SEV_COLOR[iss.severity ?? ""] || "var(--line)"}`,
               borderRadius: 4, padding: 8, marginBottom: 8,
               background: focused ? "var(--focus)" : "transparent",
               cursor: "pointer",
@@ -294,12 +295,12 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
               ) : legacyToNine(iss.severity) !== null ? (
                 <span className="pill"
                       title="mapped from a legacy 5-level run — not an assigned 1–9"
-                      style={{ color: SEV_COLOR[iss.severity] || "var(--muted)" }}>
+                      style={{ color: SEV_COLOR[iss.severity ?? ""] || "var(--muted)" }}>
                   {sev9Label(legacyToNine(iss.severity) as number)} (legacy)
                 </span>
               ) : (
                 <span className="pill" style={{
-                  color: SEV_COLOR[iss.severity] || "var(--muted)",
+                  color: SEV_COLOR[iss.severity ?? ""] || "var(--muted)",
                 }}>{(iss.severity || iss.kind || "").replace(/_/g, " ")}</span>
               )}
             </div>

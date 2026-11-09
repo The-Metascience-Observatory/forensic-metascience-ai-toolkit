@@ -9,7 +9,8 @@
  * click away because it is the document of record for how the page LOOKED.
  */
 
-import { jumpable } from "./targets.ts";
+import { jumpable, type Target } from "./targets.ts";
+import type { Article, Artefact, Issue } from "./types/review.ts";
 
 export type Surface = "pdf" | "xml" | "sheet" | "none";
 
@@ -23,14 +24,14 @@ export function parseStoredView(raw: string | null | undefined): Surface | null 
   return raw === "pdf" || raw === "xml" ? raw : null;
 }
 
-export function sheetArtefact(issue: any): any {
-  return (issue?.artefacts || []).find((a: any) => SHEET_KINDS.has(a.kind));
+export function sheetArtefact(issue: Issue | null | undefined): Artefact | undefined {
+  return (issue?.artefacts || []).find((a) => SHEET_KINDS.has(a.kind ?? ""));
 }
 
 /** A PDF the FINDING names, as opposed to the paper's own main PDF. */
-export function extraPdfArtefact(issue: any, article: any): any {
+export function extraPdfArtefact(issue: Issue | null | undefined, article: Article | null | undefined): Artefact | undefined {
   return (issue?.artefacts || []).find(
-    (a: any) => a.kind === "pdf" && a.relpath && a.relpath !== article?.pdf_relpath,
+    (a) => a.kind === "pdf" && a.relpath && a.relpath !== article?.pdf_relpath,
   );
 }
 
@@ -42,7 +43,7 @@ export function extraPdfArtefact(issue: any, article: any): any {
  * so the XML view is gated on `has_xml` as well.
  */
 export function availableViews(
-  article: any,
+  article: Article | null | undefined,
   sheetFound: boolean,
   extraPdfFound: boolean,
 ): Surface[] {
@@ -93,16 +94,16 @@ export type UnanchoredReason =
 
 export function unanchoredReason(
   surface: Surface,
-  issue: any,
-  targets: any[] | undefined,
+  issue: Issue | null | undefined,
+  targets: Target[] | undefined,
   hasXmlQuote: boolean,
 ): UnanchoredReason {
   if (surface !== "xml") return null;
   if (hasXmlQuote) return null;
 
   const all = targets || [];
-  if (all.some((t: any) => t.kind === "xml_cell" && jumpable(t))) return null;
-  const xmlT = all.find((t: any) => t.kind === "xml_text");
+  if (all.some((t) => t.kind === "xml_cell" && jumpable(t))) return null;
+  const xmlT = all.find((t) => t.kind === "xml_text");
   if (xmlT && xmlT.section) {
     return { code: "section_only", section: String(xmlT.section) };
   }
@@ -113,7 +114,7 @@ export function unanchoredReason(
     return { code: "supplement", file: String(sheet.basename || sheet.relpath || "") };
   }
   const pdfJump = all.some(
-    (t: any) => (t.kind === "pdf_text" || t.kind === "pdf_bbox" || t.kind === "pdf_cell")
+    (t) => (t.kind === "pdf_text" || t.kind === "pdf_bbox" || t.kind === "pdf_cell")
       && jumpable(t),
   );
   if (pdfJump) return { code: "pdf_only" };

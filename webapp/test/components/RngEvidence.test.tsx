@@ -4,8 +4,13 @@ import { expect, test } from "vitest";
 
 import { RngEvidence } from "@/app/project/[project]/review/[slug]/evidence/RngEvidence";
 import { renderEvidence } from "@/app/project/[project]/review/[slug]/evidence";
+import type { Issue } from "@/lib/types/review";
 
-const tableIssue = {
+/** Fixtures carry only what the renderer reads; the row's identity fields
+ *  are not part of what is under test. */
+const asIssue = (x: object) => x as unknown as Issue;
+
+const tableIssue = asIssue({
   producer: "rng_track",
   inputs: { generator: "numpy_legacy:normal:even", seed: 123, tier: 2, excess_bits: 41.2,
             log10_chance: -12.4, n_values: 12, table: "Table 3", column: "q" },
@@ -21,7 +26,7 @@ const tableIssue = {
                   hit_cells: { "0": [[1, 2], [2, 2]] } },
   },
   notes: "Reproduce with: rngdetect screen …",
-};
+});
 
 test("a table hit renders facts, exact value pairs, the shaded grid cells and the replay", () => {
   const { container } = render(<RngEvidence issue={tableIssue} />);
@@ -40,17 +45,18 @@ test("a table hit renders facts, exact value pairs, the shaded grid cells and th
 });
 
 test("a figure hit flags nothing against a printed step and reports max delta", () => {
-  const issue = { producer: "rng_track", inputs: { generator: "r_mt:rnorm", seed: 42, tier: 1, page: 6, n_values: 6349 },
+  const issue = asIssue({ producer: "rng_track",
+    inputs: { generator: "r_mt:rnorm", seed: 42, tier: 1, page: 6, n_values: 6349 },
     reported: { observed_first_values: [480.245, 468.135], units: "data units" },
-    computed: { generated_first_values: [480.247, 468.137], blocks: [] } };
+    computed: { generated_first_values: [480.247, 468.137], blocks: [] } });
   const { container } = render(<RngEvidence issue={issue} />);
   expect(container.textContent).toMatch(/max \|Δ\| 0\.002/);
   expect(container.querySelectorAll("tr[data-off]").length).toBe(0);
 });
 
 test("the renderer map answers by stored producer and nothing for others", () => {
-  expect(renderEvidence({ producer: "tool_expert", inputs: { x: 1 } })).toBeNull();
-  expect(renderEvidence({ producer: "rng_track", inputs: { seed: 1 } })).not.toBeNull();
-  const { container } = render(<RngEvidence issue={{ producer: "rng_track" }} />);
+  expect(renderEvidence(asIssue({ producer: "tool_expert", inputs: { x: 1 } }))).toBeNull();
+  expect(renderEvidence(asIssue({ producer: "rng_track", inputs: { seed: 1 } }))).not.toBeNull();
+  const { container } = render(<RngEvidence issue={asIssue({ producer: "rng_track" })} />);
   expect(container.innerHTML).toBe("");
 });

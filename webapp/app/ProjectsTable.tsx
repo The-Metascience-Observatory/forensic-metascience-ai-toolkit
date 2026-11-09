@@ -85,11 +85,11 @@ export function ProjectsTable({ projects }: { projects: ProjectSummary[] }) {
     }
   }
 
-  async function run(project: string, body: Record<string, unknown>, after?: (out: any) => void) {
+  async function run(project: string, body: Record<string, unknown>, after?: (out: DeletePlan) => void) {
     setBusy(project); setErr(null);
     try {
       const out = await projectAction({ project, ...body });
-      if (after) after(out); else window.location.reload();
+      if (after) after(out as DeletePlan); else window.location.reload();
     } catch (e) {
       setErr(`${project}: ${e instanceof Error ? e.message : String(e)}`);
     } finally { setBusy(null); }

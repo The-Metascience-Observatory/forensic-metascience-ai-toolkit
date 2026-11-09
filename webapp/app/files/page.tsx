@@ -1,7 +1,8 @@
 "use client";
+import type { Root } from "@/lib/types/review";
 import { useEffect, useState } from "react";
 export default function Files() {
-  const [roots, setRoots] = useState<any[]>([]),
+  const [roots, setRoots] = useState<Root[]>([]),
     [message, setMessage] = useState(""),
     [failed, setFailed] = useState(false);
   const [project, setProject] = useState(""),

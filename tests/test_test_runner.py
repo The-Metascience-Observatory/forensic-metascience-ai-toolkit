@@ -179,3 +179,23 @@ def test_stack_dispatches_without_nesting_pytest(monkeypatch):
     monkeypatch.setattr(test_stack, "main", lambda args: calls.append(args) or 3)
     assert test_runner.main(["--stack", "-n", "12", "-q"]) == 3
     assert calls == [["-n", "12", "-q"]]
+
+
+def test_stack_runs_vitest_once_and_browser_scripts_singly(tmp_path):
+    """The webapp's offline tests are Vitest files, not node scripts: one
+    `web-unit` lane runs them (a `.test.mjs` file fed to plain node fails with
+    "Vitest failed to find the current suite"), the lint is its own lane, and
+    only the real browser scripts run one by one -- never the helpers they
+    import or the live-server scripts."""
+    from forensic_metascience_ai_toolkit.test_stack import stack_jobs
+    test = tmp_path / "webapp" / "test"
+    test.mkdir(parents=True)
+    for name in ("decisions.test.mjs", "reactGlobals.mjs", "swrGlobals.mjs", "run-scripts.mjs",
+                 "browser.mjs", "auditSecurity.mjs", "clonePdfBrowser.mjs"):
+        (test / name).write_text("")
+    jobs = {name: cmd for name, cmd, _ in stack_jobs(tmp_path, [], "node")}
+    assert jobs["web-unit"] == ["node", "node_modules/vitest/vitest.mjs", "run"]
+    assert jobs["web-lint"][1].endswith("eslint.js")
+    assert {n for n in jobs if n.startswith("web-")} == {
+        "web-unit", "web-lint", "web-auditSecurity", "web-clonePdfBrowser"}
+    assert "--experimental-strip-types" not in jobs["web-auditSecurity"]

@@ -66,15 +66,17 @@ def stack_jobs(root: Path, pytest_args: list[str], node: str) -> list[tuple[str,
         "workbench-browser.mjs",
         "performance.mjs",
     }
+    # Helpers the scripts import, not tests themselves.
+    helpers = {"reactGlobals.mjs", "swrGlobals.mjs", "run-scripts.mjs"}
+    # The offline unit and component tests are Vitest files (`test/*.test.mjs`,
+    # `test/components/*.test.tsx`), one lane; the browser scripts (canvas,
+    # image decoding, pdf.js, GIF, the security audit) stay one lane each.
+    jobs.append(("web-unit", [node, "node_modules/vitest/vitest.mjs", "run"], web))
+    jobs.append(("web-lint", [node, "node_modules/eslint/bin/eslint.js", "."], web))
     for script in sorted((web / "test").glob("*.mjs")):
-        if script.name not in live_scripts:
-            jobs.append(
-                (
-                    f"web-{script.stem}",
-                    [node, "--experimental-strip-types", str(script.relative_to(web))],
-                    web,
-                )
-            )
+        if script.name in live_scripts or script.name in helpers or script.name.endswith(".test.mjs"):
+            continue
+        jobs.append((f"web-{script.stem}", [node, str(script.relative_to(web))], web))
     return jobs
 
 

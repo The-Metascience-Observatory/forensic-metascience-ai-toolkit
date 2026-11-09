@@ -152,6 +152,8 @@ def _worst_severity(counts: dict[str, int]) -> str | None:
 
 
 from forensic_metascience_ai_toolkit.discovery import run_kind as run_kind
+from forensic_metascience_ai_toolkit.discovery import COMPONENT_RUN_KINDS as COMPONENT_RUN_KINDS
+from forensic_metascience_ai_toolkit.discovery import NOT_A_REVIEW_KINDS as NOT_A_REVIEW_KINDS
 
 
 def scan_run(review_dir: Path) -> dict:
@@ -303,7 +305,9 @@ def numeric_channel(runs: list[dict]) -> dict:
                         "been run on this paper")
     # An image-only run (`image-sweep`, kind `image_track`) writes a v2
     # document too; it says nothing about the numeric pipeline.
-    numeric = [r for r in runs if r.get("kind") != "image_track"]
+    # A component detector's run (rngdetect) says nothing about it either.
+    numeric = [r for r in runs if r.get("kind") != "image_track"
+               and r.get("kind") not in COMPONENT_RUN_KINDS]
     if not numeric:
         return _channel("did_not_run",
                         "only image-track run(s) on this paper: the numeric "
@@ -1097,8 +1101,9 @@ def scan_paper(paper_dir: Path, *, corpus_root: Path | None = None,
     # A PARTIAL PIPELINE never supplies the paper's verdict or counts: a
     # one-tool or unadjudicated run is an experiment, listed in `runs` but not
     # the review the paper row summarises (`run_kind`, pipeline_config.py).
+    # Nor does a component detector's run (`NOT_A_REVIEW_KINDS`), however new.
     latest = next((r for r in runs if r["status"] in ("complete", "partial")
-                   and r.get("kind") != "partial_review"), None)
+                   and r.get("kind") not in NOT_A_REVIEW_KINDS), None)
     review = review_state(paper_dir)
     # Catalog discovery must not reconstruct exhibits or decode PDF image streams.
     # The retained image catalog supplies review counts independently.
@@ -1128,7 +1133,7 @@ def scan_paper(paper_dir: Path, *, corpus_root: Path | None = None,
         "worst_severity_9": max(
             (r["worst_severity_9"] for r in runs
              if isinstance(r.get("worst_severity_9"), int)
-             and r.get("kind") != "partial_review"), default=None),
+             and r.get("kind") not in NOT_A_REVIEW_KINDS), default=None),
         # Standing groups the adjudicator left unexplained or never judged;
         # `insufficient_evidence` survivors sit beside it, NOT inside it —
         # the table tooltip names them, so "couldn't judge" neither inflates

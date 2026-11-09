@@ -82,7 +82,19 @@ provisional/final split (a divergence is now two fields, not a sidecar).
 ### 1.1 `producer` enum
 
 `tool_expert | science_error | image_track | text_track | raw_data_track |
-fast_screen | legacy_sweep | legacy_editorial`
+rng_track | harness | fast_screen | legacy_sweep | legacy_editorial`
+
+`rng_track` (added 1.101.0) is the separately distributed seeded-RNG detector
+(`rngdetect`, metascience-observatory-rng-detector). Its exporter writes one
+track-only document per screened paper, `forensic_review_rng/findings.v2.json`,
+with an `rng_track` channel, `adjudication.ran: false`, `computed_by:
+deterministic_track`, technique `no_tool_exists` (it is not a registry tool),
+and quarantined rows. `discovery.run_kind` gives such a document the run kind
+`rng_track`, a member of `discovery.COMPONENT_RUN_KINDS`: listed beside the
+paper's review with its findings shown, but never the paper's latest run,
+verdict, numeric channel, worst severity or current corpus-stats document
+(`NOT_A_REVIEW_KINDS`). Before it had a kind of its own it would have read as
+`legacy`, which every reader accepts as the paper's review.
 
 `raw_data_track` (added 1.76) is the opt-in `raw_data` module's copy-paste
 detector over a paper's spreadsheets: quarantined, one row per (file, kind),

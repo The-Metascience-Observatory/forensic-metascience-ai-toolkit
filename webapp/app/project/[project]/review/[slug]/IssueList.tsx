@@ -326,6 +326,13 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
                 <span className="pill" title={iss.adjudication_rationale || undefined}
                       style={{ color: "var(--muted)" }}>discarded</span>
               )}
+              {/* A quarantined detector's row is a lead, not a finding of
+                  record (findings_v2.md 9.3); the reason is the detector's. */}
+              {iss.quarantined && (
+                <span className="pill" data-quarantined
+                      title={iss.quarantine_reason || "quarantined detector signal"}
+                      style={{ color: "var(--muted)", borderStyle: "dashed" }}>quarantined</span>
+              )}
               {typeof iss.severity_9 === "number" ? (
                 <span className="pill"
                       title={iss.severity_is_provisional

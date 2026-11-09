@@ -193,6 +193,7 @@ export const DISPLAY_NAMES: Record<string, string> = {
   "legacy_sweep": "Serial-pipeline sweep (converted)",
   "raw_data": "Raw data (copy-paste detector)",
   "raw_data_track": "Raw data (copy-paste detector)",
+  "rng_track": "Seeded-RNG detector (rngdetect)",
   "science_agent": "Scientific proofreading agent",
   "science_error": "Scientific proofreading agent",
   "scientific_proofreading_agent": "Scientific proofreading agent",

@@ -96,7 +96,7 @@ create table runs (
   id bigint generated always as identity primary key,
   paper_id bigint not null references papers(id),
   run_uid text unique not null,      -- Part A's r_<hash>; screens mint their own
-  kind text not null,                -- full_review|screen|image_track|text_track|legacy —
+  kind text not null,                -- full_review|screen|image_track|text_track|rng_track|legacy —
                                      -- TEXT + app validation, not CHECK: run kinds evolve
   name text,                         -- forensic_review* dir name; NULL for DB-native screens
   status text check (status in ('complete','partial','failed','incomplete')),

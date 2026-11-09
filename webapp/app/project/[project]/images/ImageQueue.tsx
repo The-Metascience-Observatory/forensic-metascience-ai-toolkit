@@ -1,36 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { readReviewer } from "@/app/ReviewerChip";
 import { RunSelector } from "@/app/RunSelector";
 import { useSearchParams, useRouter } from "next/navigation";
-import { FlipArrow } from "@/app/images/FlipArrow";
-import { previewBoxes } from "@/lib/imagePreview";
-import { boxCorners, matchDirection } from "@/lib/flipArrow";
 import { HoverPreview } from "@/app/images/HoverPreview";
 import { useInfiniteFeed } from "@/app/images/useInfiniteFeed";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useQueueFilters } from "./useQueueFilters";
+import { BULK_REASONS, useBulkReview } from "./useBulkReview";
+import { useQueueKeyboard } from "./QueueKeyboard";
+import { QueueThumbnailCell, type HoverTarget } from "./QueueThumbnail";
 
 import {
-  DEFAULT_FILTER, FIGURE_SPANS, type Filter, type Item, itemHref,
-  mediaUrl, readFilter, verdictLabel, queueHref,
+  DEFAULT_FILTER, FIGURE_SPANS, type Filter, itemHref,
+  verdictLabel, queueHref,
   paperColumn, cycleQueueSort, queueSortMark, queueAriaSort, QUEUE_SORTS, queueSortOf, queueSortFirst,
   MATCH_REGIONS, matchRegionLabel,
 } from "@/app/images/lib";
-
-// v4: the default now includes unscreened candidates; a saved v3 default hid them.
-const FILTER_KEY = "metascience.images.filter.v4";
-
-// Why a whole filter's worth of candidates is a false positive. Recorded on
-// the event as `bulk_reason` beside the generic `false_positive` decision --
-// the decision vocabulary stays as it is, and the reason is what makes the
-// labels usable as a regression fixture instead of a count.
-const BULK_REASONS = [
-  ["chart_or_graph", "Charts, graphs or graphics"],
-  ["channel_overlay", "Colour-channel overlay or merge"],
-  ["caption_disclosed_zoom", "Overview/detail disclosed in the caption"],
-  ["other", "Other (see note)"],
-] as const;
 
 const JUDGMENTS = [
   ["issue", "Issue"], ["unresolved", "Unresolved"], ["innocuous", "Innocuous"],
@@ -38,178 +24,30 @@ const JUDGMENTS = [
   ["missing", "No saved AI judgment"], ["legacy", "Legacy adjudication"],
 ] as const;
 
-function thumb(project: string, it: Item): string | null {
-  // Archived exhibits may still contain the old explanatory text bands.
-  const panel = it.panels.find(p => p.image);
-  const rel = panel?.image || it.exhibit;
-  const dir = panel?.image ? panel.paper_dir : it.paper.dir;
-  return rel ? mediaUrl(project, dir, rel) + "&variant=thumbnail" : null;
-}
-
-function QueueThumbnail({src, root, item}: {src: string; item: Item; root: React.RefObject<HTMLDivElement | null>}) {
-  const image = useRef<HTMLImageElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting)) { setVisible(true); observer.disconnect(); }
-    }, {root: root.current, rootMargin: `${root.current?.clientHeight || 800}px 0px`});
-    if (image.current) observer.observe(image.current);
-    return () => observer.disconnect();
-  }, [root]);
-  const side = item.panels.findIndex(p => p.image);
-  const ms = item.measurements ?? {};
-  const size = side === 0 ? ms.panel_px_a : side === 1 ? ms.panel_px_b : null;
-  const clone = item.detector_kind === 'intra_panel_clone';
-  const boxes = Array.isArray(size) && size.length === 2 ? previewBoxes(ms, side, size as [number,number], clone) : [];
-  return <div style={{position:'relative',width:130,height:60}}><img ref={image} src={visible ? src : undefined} alt="" decoding="async" width={130} height={60}
-    style={{width:130,height:60,display:"block",objectFit:"contain",background:"var(--media-bg)"}} />
-    {visible && Array.isArray(size) && boxes.length > 0 && <svg viewBox={`0 0 ${size[0]} ${size[1]}`} aria-label="Matching regions"
-      style={{position:'absolute',inset:0,width:'100%',height:'100%',pointerEvents:'none'}}>
-      {boxes.map((box,i)=><g key={i}>
-        <rect x={box[0]} y={box[1]} width={box[2]-box[0]} height={box[3]-box[1]} fill="none" stroke="#00FFDD" strokeWidth={2} vectorEffect="non-scaling-stroke" />
-        <FlipArrow points={boxCorners(box)} direction={matchDirection(ms,clone ? i : side,clone)} color="#00FFDD" />
-      </g>)}
-    </svg>}
-  </div>;
-}
-
-/** How much of a bulk save is KNOWN to have happened when it did not finish. */
-class BulkOutcome extends Error {
-  constructor(readonly kind: "refused" | "partial" | "unknown", message: string, readonly saved = 0) { super(message); }
-}
-
 export function ImageQueue({ project, projectName }: {
   project: string; projectName: string;
 }) {
   const router = useRouter();
   const selection = useSearchParams().get("run") || "latest";
-  const filterKey = `${FILTER_KEY}.${project}.${selection}`;
-  const [filter, setFilter] = useState<Filter>(DEFAULT_FILTER);
-  const [filterLoaded,setFilterLoaded]=useState<string | null>(null);
-  const {feed,error:feedError,loading,facetsLoading,loadMore,refresh:load}=useInfiniteFeed(project,selection,filter,filterLoaded===filterKey);
-  const rows = feed?.items || [];
   const [cursor, setCursor] = useState(0);
-  const [checked, setChecked] = useState<Set<string>>(new Set());
-  const [saving, setSaving] = useState(false);
-  const savingRef = useRef(false);
-  const [bulkMessage, setBulkMessage] = useState("");
-  const [bulkReason, setBulkReason] = useState<string>(BULK_REASONS[0][0]);
-  const selectAll = useRef<HTMLInputElement>(null);
-  const rowKey = (it: Item) => JSON.stringify([it.run_id, it.id]);
-  const selectedRows = rows.filter(it => checked.has(rowKey(it)));
-  const allChecked = rows.length > 0 && selectedRows.length === rows.length;
-  useEffect(() => {
-    if (selectAll.current) selectAll.current.indeterminate = selectedRows.length > 0 && !allChecked;
-  }, [selectedRows.length, allChecked]);
-  useEffect(() => { setChecked(new Set()); setBulkMessage(""); }, [filterKey, filter]);
-  function toggleAll() {
-    setChecked(allChecked ? new Set() : new Set(rows.map(rowKey)));
-  }
-  // ONE request for the whole selection. It used to be one request per row:
-  // measured at ~630 ms each, so 1,944 selected rows took twenty minutes, and
-  // each request re-refreshed the service projection and bumped the revision
-  // the reviewer's own queue was paging through.
-  //
-  // The save is a background job, polled for progress. What a failure means
-  // depends on what is KNOWN: a refusal the service answered before saving
-  // ("saved 0") is nothing saved; a lost connection or an unknown job is an
-  // unknown outcome, and the queue is reloaded to show what was saved.
-  async function runBulk(payload: Record<string, unknown>, label: string) {
-    const response = await fetch("/api/images/bulk", {
-      method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify(payload),
-    }).catch(error => { throw new BulkOutcome("unknown", String(error)); });
-    const started = await response.json().catch(() => ({}));
-    if (!response.ok || started.error || !started.job) throw new BulkOutcome(response.ok ? "unknown" : "refused", started.error || response.statusText);
-    let misses = 0;
-    for (;;) {
-      await new Promise(resolve => setTimeout(resolve, 400));
-      let job;
-      try {
-        const poll = await fetch(`/api/images/bulk?job=${encodeURIComponent(started.job.id)}`);
-        const body = await poll.json();
-        if (!poll.ok || body.error) throw new Error(body.error || poll.statusText);
-        job = body.job; misses = 0;
-      } catch (error) {
-        if (++misses >= 5) throw new BulkOutcome("unknown", String(error));
-        continue;
-      }
-      const p = job.progress || {};
-      if (job.state === "running") {
-        setBulkMessage(p.to_save != null ? `${label}: ${(p.processed || 0).toLocaleString()} of ${p.to_save.toLocaleString()} processed, ${(p.saved || 0).toLocaleString()} saved…` : `${label}: preparing…`);
-        continue;
-      }
-      if (job.state === "done") return job.result;
-      throw new BulkOutcome((p.saved || 0) > 0 ? "partial" : "refused", job.error, p.saved || 0);
-    }
-  }
-  function outcomeMessage(error: unknown, unchanged: string) {
-    if (error instanceof BulkOutcome) {
-      if (error.kind === "refused") return `Nothing was saved${unchanged}. ${error.message}`;
-      if (error.kind === "partial") return `${error.saved.toLocaleString()} decisions were saved before the job stopped; the reloaded queue shows which. ${error.message}`;
-    }
-    return `The outcome is unknown: some decisions may have been saved; the reloaded queue shows what was. ${error instanceof Error ? error.message : String(error)}`;
-  }
-  async function markFalsePositive() {
-    if (savingRef.current || !selectedRows.length) return;
-    const reviewer = readReviewer().trim();
-    if (!reviewer) { setBulkMessage("Set your name in the header before recording a decision."); return; }
-    savingRef.current = true; setSaving(true);
-    const targets = [...selectedRows];
-    setBulkMessage(`Saving ${targets.length.toLocaleString()}…`);
-    try {
-      const result = await runBulk({project, decision: "false_positive", reviewer,
-          items: targets.map(it => ({run: it.run_id, id: it.id}))}, "Saving");
-      const failed = new Set<string>((result.failed || []).map((f: {id: string; run?: string}) => f.run ? rowKey({run_id: f.run, id: f.id} as Item) : f.id));
-      // Only the rows that failed stay selected, so a retry is the same click.
-      setChecked(new Set(targets.filter(it => failed.has(rowKey(it)) || failed.has(it.id)).map(rowKey)));
-      setBulkMessage(`${result.saved} of ${targets.length} saved locally as False positive; `
-        + "database sync runs in the background."
-        + (failed.size ? ` ${failed.size} failed and remain selected. ${result.failed[0].error}` : ""));
-    } catch (error) {
-      setBulkMessage(outcomeMessage(error, "; the selection is unchanged"));
-    }
-    savingRef.current = false; setSaving(false);
-    window.dispatchEvent(new Event("workbench-review"));
-    load();
-  }
-  async function markFilterFalsePositive() {
-    if (savingRef.current) return;
-    const reviewer = readReviewer().trim();
-    if (!reviewer) { setBulkMessage("Set your name in the header before recording a decision."); return; }
-    const total = feed?.pagination?.total;
-    if (!total) { setBulkMessage("Nothing matches the current filter."); return; }
-    const label = BULK_REASONS.find(([value]) => value === bulkReason)?.[1] || bulkReason;
-    if (!window.confirm(`Mark all ${total.toLocaleString()} items matching the current filter `
-        + `as False positive (${label})? Items that already carry a decision are left alone.`)) return;
-    savingRef.current = true; setSaving(true);
-    setBulkMessage(`Saving ${total.toLocaleString()} decisions…`);
-    try {
-      const r = await runBulk({project, run: selection, component: "image_forensics", ...filter,
-          decision: "false_positive", reason: bulkReason, note: label,
-          reviewer, expected_total: total}, "Saving");
-      setBulkMessage(`${r.saved} of ${r.matched} saved as False positive (${label}).`
-        + (r.skipped_already_decided ? ` ${r.skipped_already_decided} already had a decision and were left alone.` : "")
-        + (r.failed?.length ? ` ${r.failed.length} failed: ${r.failed[0].error}` : "")
-        + " Database sync runs in the background.");
-      setChecked(new Set());
-    } catch (error) { setBulkMessage(outcomeMessage(error, "")); }
-    savingRef.current = false; setSaving(false);
-    window.dispatchEvent(new Event("workbench-review"));
-    load();
-  }
   const scrollHost = useRef<HTMLDivElement>(null);
   const sentinel = useRef<HTMLDivElement>(null);
   const restored = useRef(false);
   const arrowTarget = useRef<number | null>(null);
+  const [hover, setHover] = useState<HoverTarget | null>(null);
+  const resetNavigation = useCallback(() => {
+    restored.current=false; arrowTarget.current=null; setCursor(0); setHover(null);
+    if (scrollHost.current) scrollHost.current.scrollTop=0;
+  }, []);
+  const { filter, filterKey, filterLoaded, updateFilter } = useQueueFilters(project, selection, resetNavigation);
+  const {feed,error:feedError,loading,facetsLoading,loadMore,refresh:load}=useInfiniteFeed(project,selection,filter,filterLoaded===filterKey);
+  const rows = feed?.items || [];
+  const { checked, setChecked, rowKey, selectedRows, allChecked, selectAll, toggleAll,
+    saving, bulkMessage, bulkReason, setBulkReason, markFalsePositive, markFilterFalsePositive,
+  } = useBulkReview({ project, selection, filter, filterKey, feed, rows, load });
   const nextOffset = feed?.pagination?.next_offset;
-  const [hover, setHover] = useState<{ it: Item; x: number; y: number } | null>(null);
   const positionKey = `images.queue.${project}.${selection}`;
   const filterStamp = JSON.stringify(filter);
-  useEffect(() => {
-    restored.current=false; arrowTarget.current=null; setCursor(0); setHover(null);
-    setFilter(readFilter(filterKey)); setFilterLoaded(filterKey);
-    if (scrollHost.current) scrollHost.current.scrollTop=0;
-  }, [filterKey]);
   useEffect(() => {
     if (!feed || restored.current) return;
     try {
@@ -234,49 +72,13 @@ export function ImageQueue({ project, projectName }: {
     if (sentinel.current) observer.observe(sentinel.current);
     return () => observer.disconnect();
   }, [loading, feedError, nextOffset, loadMore]);
-  function selectRow(index: number) {
-    setCursor(index);
-    const row=scrollHost.current?.querySelector<HTMLElement>(`[data-row-index="${index}"]`);
-    row?.focus({preventScroll:true});
-    row?.scrollIntoView({block:"nearest"});
-  }
-  useEffect(() => {
-    if (arrowTarget.current != null && arrowTarget.current < rows.length) {
-      selectRow(arrowTarget.current); arrowTarget.current=null;
-    }
-    if (feed && cursor >= rows.length) setCursor(Math.max(0,rows.length-1));
-  }, [rows.length, feed, cursor]);
+  useQueueKeyboard({ rows, cursor, setCursor, feed, nextOffset, loadMore, project, selection, router, scrollHostRef: scrollHost, arrowTargetRef: arrowTarget });
 
   function setF(next: Partial<Filter>) {
-    const f = { ...filter, ...next };
-    setFilter(f); restored.current=true; arrowTarget.current=null; setHover(null);
+    updateFilter(next); restored.current=true; arrowTarget.current=null; setHover(null);
     if (scrollHost.current) scrollHost.current.scrollTop=0;
     setCursor(0);
-    try { window.localStorage.setItem(filterKey, JSON.stringify(f)); } catch { /* fine */ }
   }
-
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.defaultPrevented) return;
-      const tag = (e.target as HTMLElement | null)?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-      if ((e.target as HTMLElement | null)?.isContentEditable) return;
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        e.preventDefault();
-        if (!rows.length) return;
-        const index=cursor + (e.key === "ArrowDown" ? 1 : -1);
-        if (index >= rows.length && nextOffset != null) { arrowTarget.current=index; loadMore(); }
-        else selectRow(Math.max(0,Math.min(rows.length-1,index)));
-      }
-      else if (e.key === "Enter" && rows[cursor] && tag !== "BUTTON" && tag !== "A") {
-        e.preventDefault();
-        router.push(itemHref(project, rows[cursor].id, selection));
-      }
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [rows, cursor, project, router, selection, nextOffset, loadMore]);
-
 
   const counts = feed?.counts || {};
   const nDecided = counts.decided;
@@ -520,7 +322,6 @@ export function ImageQueue({ project, projectName }: {
           </thead>
           <tbody>
             {rows.map((it, i) => {
-              const t = thumb(project, it);
               const focused = i === cursor;
               return (
                 <tr key={`${it.run_id}:${it.id}`} data-row-index={i} tabIndex={-1} aria-current={focused ? "true" : undefined}
@@ -536,15 +337,8 @@ export function ImageQueue({ project, projectName }: {
                           if (value) next.add(rowKey(it)); else next.delete(rowKey(it)); return next; });
                       }} /> {i + 1}
                   </label></td>
-                  <td style={{ ...td, width: 140 }}
-                      onMouseEnter={(e) => setHover({ it, x: e.clientX, y: e.clientY })}
-                      onMouseLeave={() => setHover(null)}>
-                    {t ? (
-                      <Link prefetch={false} href={itemHref(project, it.id, selection)}>
-                        <QueueThumbnail key={t} src={t} item={it} root={scrollHost} />
-                      </Link>
-                    ) : <span className="muted">no image</span>}
-                  </td>
+                  <QueueThumbnailCell project={project} selection={selection} it={it} root={scrollHost}
+                                      style={{ ...td, width: 140 }} onHover={setHover} />
                   <td style={td} title={it.rank.reasons.join("\n")}>
                     <b>{it.rank.score}</b>
                     {it.rank.lookalike && (

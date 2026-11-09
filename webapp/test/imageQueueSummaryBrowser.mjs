@@ -42,7 +42,9 @@ try {
   const modules=[
     ['./affine.ts','lib/affine.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
     ['@/lib/flipArrow','lib/flipArrow.ts'],['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
-    ['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/images/urls','lib/images/urls.ts'],['@/lib/images/filters','lib/images/filters.ts'],['@/lib/images/sort','lib/images/sort.ts'],['@/lib/images/labels','lib/images/labels.ts'],['@/lib/images/geometry','lib/images/geometry.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],['queue','app/project/[project]/images/ImageQueue.tsx'],
+    ['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/images/urls','lib/images/urls.ts'],['@/lib/images/filters','lib/images/filters.ts'],['@/lib/images/sort','lib/images/sort.ts'],['@/lib/images/labels','lib/images/labels.ts'],['@/lib/images/geometry','lib/images/geometry.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],
+    ['./useQueueFilters','app/project/[project]/images/useQueueFilters.ts'],['./useBulkReview','app/project/[project]/images/useBulkReview.ts'],['./QueueKeyboard','app/project/[project]/images/QueueKeyboard.ts'],['./QueueThumbnail','app/project/[project]/images/QueueThumbnail.tsx'],
+    ['queue','app/project/[project]/images/ImageQueue.tsx'],
   ];
   for(const [name,file] of modules){
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;

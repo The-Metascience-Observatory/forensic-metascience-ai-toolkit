@@ -1,5 +1,7 @@
 import { jsonError } from "@/lib/err";
+import { withReviewer } from "@/lib/auth";
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 import { workbench } from "@/lib/workbench";
 export const dynamic="force-dynamic";
@@ -16,8 +18,10 @@ export const dynamic="force-dynamic";
 // kept saving.
 export async function POST(req:Request){
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req);
+  if (refused) return refused;
  try{
-  const body=await req.json();
+  const body = withReviewer(req, await req.json());
   if(!body?.project)return NextResponse.json({error:"project required"},{status:400});
   if(!body?.decision)return NextResponse.json({error:"decision required"},{status:400});
   return NextResponse.json({ok:true,job:await workbench("review_filter_start",{component:"image_forensics",...body})});

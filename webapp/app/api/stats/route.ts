@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 import path from "node:path";
 import fsp from "node:fs/promises";
@@ -34,6 +35,7 @@ export async function GET(req: Request) {
 /** Recompute. The CLI writes corpus_stats.json beside the corpus. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   const url = new URL(req.url);
   const project = url.searchParams.get("project") || "";
   if (!project || badProject(project)) {

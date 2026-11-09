@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 
 import { asRecord, errMsg } from "@/lib/err";
@@ -9,6 +10,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let raw: unknown;
   try {
     raw = await req.json();

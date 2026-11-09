@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 
 import { asRecord, errMsg } from "@/lib/err";
@@ -19,6 +20,7 @@ export async function GET() {
  * collection folder itself must never take every other project with it. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let body: Record<string, unknown> | null = null;
   try { body = asRecord(await req.json()); } catch { /* handled below */ }
   if (!body || typeof body.project !== "string" || !body.project) {

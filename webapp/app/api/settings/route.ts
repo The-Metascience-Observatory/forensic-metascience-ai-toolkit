@@ -1,4 +1,6 @@
+import { identity } from "@/lib/auth";
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 import fs from "node:fs";
 import path from "node:path";
@@ -9,12 +11,19 @@ import { scanNow } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  return NextResponse.json(loadSettings());
+/** Hosted mode: a reviewer sees the names only. The rest (absolute paths,
+ *  `python_bin`, the directory's emails) describes the server. */
+export async function GET(req: Request) {
+  const refused = guard(req); if (refused) return refused;
+  const settings = loadSettings();
+  const who = identity(req);
+  if (who && who.role !== "admin") return NextResponse.json({ known_reviewers: settings.known_reviewers });
+  return NextResponse.json(settings);
 }
 
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let raw: unknown;
   try {
     raw = await req.json();

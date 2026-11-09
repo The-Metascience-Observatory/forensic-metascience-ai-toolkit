@@ -32,6 +32,8 @@ test("reveal", async () => {
   vm.runInNewContext(code,{exports:endpoint,process:{platform:'linux'},URL,require:name=>({
     'next/server':{NextResponse:Response},
     '@/lib/mutation':{rejectCrossOrigin},
+    // Local mode: the hosted-mode guard (test/routeGuard.test.mjs) lets everything through.
+    '@/lib/routeGuard':{guard:()=>null},
     '@/lib/err':{errMsg:e=>e.message},
     '@/lib/workbench':{workbench:async(method,params)=>{
       resolved={method,params}; if(resolverError)throw resolverError;

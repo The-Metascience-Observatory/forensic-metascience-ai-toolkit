@@ -1,5 +1,6 @@
 import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { workbench } from "@/lib/workbench";
 
 export const dynamic = "force-dynamic";
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req);
   if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   try {
     const body = await req.json().catch(() => ({}));
     const component = typeof body?.component === "string" && body.component ? body.component : "image_forensics";

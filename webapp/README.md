@@ -242,3 +242,138 @@ selection races, historical media and PDF rendering, range requests, CSV and
 summary exports, and run-scoped review writes (the writes are mocked). Set
 `METASCIENCE_TEST_URL` or `METASCIENCE_TEST_PROJECT` to use another instance or
 an imported project with two recoverable image runs.
+
+## Hosting
+
+One codebase, one build, two modes. With no hosted variables set the app is
+the local workbench described above: loopback bind, a free-text reviewer name
+in the header, every route available, no sign-in. Set
+`METASCIENCE_ACCESS_TEAM` and `METASCIENCE_ACCESS_AUD` and it runs in
+**hosted mode**: Cloudflare Access decides who gets in, `proxy.ts` verifies
+the Access token Cloudflare attaches to every request (`jose`, RS256 against
+`https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`, audience and
+issuer checked) and forwards the verified email to the handlers in
+`x-ms-reviewer-email` (a client-supplied copy is stripped in both modes).
+Without a valid token every `/api/*` request is `401 {error}` and every page
+is a minimal "Sign in through Cloudflare Access" page, so a misconfigured
+Access application fails closed. The server still binds 127.0.0.1; only the
+tunnel reaches it.
+
+**Identity.** `GET /api/me` returns `{mode, email, name, role}`. The header
+chip shows "Reviewing as <name>" and cannot be edited. Every write
+(`/api/review`, `/api/images` POST, `/api/images/bulk`, `/api/images/missed`,
+`/api/images/viewed`, `/api/viewed`, `/api/workbench` POST) records the
+signed-in reviewer and ignores any `reviewer` in the body. The name comes
+from the **reviewer directory**, a `reviewers` array in the settings file
+(`lib/settings.ts` names its location per platform):
+
+```json
+"reviewers": [
+  { "email": "delton17@gmail.com", "name": "Dan Elton", "role": "admin" },
+  { "email": "colleague@example.org", "name": "A. Colleague", "role": "reviewer" }
+]
+```
+
+It is seeded with the first entry when absent. The `name` is what the Python
+service stores as `reviewer`, so rows recorded locally as "Dan Elton" stay
+joined to the same person. An invited email that is not in the directory is
+still a reviewer, shown by its address; add it to the directory to give it a
+display name. `known_reviewers` is the union of the directory's names and the
+free-text ones.
+
+**Roles** (`lib/routeGuard.ts`, one table). Admin-only in hosted mode:
+`/api/projects` POST (delete), `/api/settings` POST, `/api/workbench` POST
+with `register_root`, `map_paper`, `register_file` or `sync`, `/api/index`
+POST, `/api/metadata` POST, `/api/images/reference` POST, `/api/images/sync`
+POST, `/api/stats` POST, `/api/draft` POST (a paid model call),
+`/api/images/website` POST. Refused for everyone in hosted mode:
+`/api/reveal` (it opens a file manager on the server). `GET /api/settings`
+returns only `{known_reviewers}` to non-admins: no absolute paths, no
+`python_bin`. Everything else is open to any signed-in reviewer.
+
+**Origin.** Behind the tunnel the browser sends `Origin: https://<public
+host>` while Node sees `http://<host>`, so `METASCIENCE_PUBLIC_ORIGIN` names
+the public origin and counts as same-origin, and `x-forwarded-proto` is
+honoured for that host only. Local-mode rules (loopback aliases, no trust in
+`Host`) are unchanged.
+
+### Operator steps
+
+The example hostname is `review.metascienceobservatory.org`; substitute your
+own. This machine already runs a tunnel (`~/.cloudflared/config.yml`), so the
+app is one more ingress rule on it.
+
+1. Add the ingress rule before the catch-all in `~/.cloudflared/config.yml`:
+
+   ```yaml
+   ingress:
+     - hostname: review.metascienceobservatory.org
+       service: http://127.0.0.1:3101
+     # ... existing rules ...
+     - service: http_status:404
+   ```
+
+   and route the name to the tunnel:
+
+   ```bash
+   cloudflared tunnel route dns <tunnel-name> review.metascienceobservatory.org
+   ```
+
+2. Run cloudflared as a user service so it survives logouts and reboots:
+
+   ```bash
+   mkdir -p ~/.config/systemd/user
+   cat > ~/.config/systemd/user/cloudflared.service <<'UNIT'
+   [Unit]
+   Description=Cloudflare Tunnel
+   After=network-online.target
+
+   [Service]
+   ExecStart=/usr/bin/cloudflared tunnel run
+   Restart=on-failure
+
+   [Install]
+   WantedBy=default.target
+   UNIT
+   systemctl --user enable --now cloudflared
+   loginctl enable-linger "$USER"
+   ```
+
+3. In Cloudflare Zero Trust (`https://one.dash.cloudflare.com`): **Access →
+   Applications → Add an application → Self-hosted**, application domain
+   `review.metascienceobservatory.org`. Add an **Allow** policy whose
+   include rule lists the invited emails (or an email list), with
+   **One-time PIN** and/or **Google** as login methods. Save, open the
+   application's **Overview** and copy its **Application Audience (AUD)
+   Tag**. The team name is the `<team>` in `<team>.cloudflareaccess.com`
+   (Settings → Custom Pages → Team domain).
+
+4. Build once, then start in hosted mode with the three variables set.
+   `start:hosted` refuses to start if any is missing, because a hosted
+   deployment that fell back to local mode would be an open server behind
+   the tunnel; `start` prints the mode it detected either way.
+
+   ```bash
+   cd webapp && npm run build
+   METASCIENCE_ACCESS_TEAM=<team> \
+   METASCIENCE_ACCESS_AUD=<aud-tag> \
+   METASCIENCE_PUBLIC_ORIGIN=https://review.metascienceobservatory.org \
+   npm run start:hosted
+   ```
+
+   Keep the variables out of the Dropbox checkout (a systemd user unit's
+   `Environment=` lines, or a file under `~/.config` read with
+   `EnvironmentFile=`), the same way the settings file stays local.
+
+5. Add each invited reviewer to the Access policy **and** to the
+   `reviewers` directory in the settings file with the display name their
+   decisions should carry. Check `https://review.metascienceobservatory.org/api/me`
+   after signing in: it should name you and your role.
+
+Checks: `test/auth.test.mjs` mints tokens against a stubbed JWKS (valid,
+missing, expired, wrong audience, wrong issuer, unknown key, header
+stripping), `test/routeGuard.test.mjs` runs the route × role × mode matrix,
+and `npm run test:security` exercises the hosted rules through the real route
+handlers (no token → 401, body `reviewer` ignored, `/api/reveal` → 403,
+admin routes → 403 for a reviewer, the public origin accepted with
+`x-forwarded-proto: https`).

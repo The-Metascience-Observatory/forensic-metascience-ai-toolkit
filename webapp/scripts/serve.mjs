@@ -120,6 +120,34 @@ export function listenHost(env = process.env) {
   return env.METASCIENCE_WEBAPP_HOST || '127.0.0.1';
 }
 
+// Hosted mode (lib/accessToken.ts): Cloudflare Access in front, the app
+// verifying its token. `start:hosted` refuses to start with any of the three
+// variables unset, because a hosted deployment that silently fell back to
+// local mode would be an open server behind the tunnel.
+export const HOSTED_VARS = ['METASCIENCE_ACCESS_TEAM', 'METASCIENCE_ACCESS_AUD', 'METASCIENCE_PUBLIC_ORIGIN'];
+
+export function hostedMode(env = process.env) {
+  return Boolean((env.METASCIENCE_ACCESS_TEAM || '').trim() && (env.METASCIENCE_ACCESS_AUD || '').trim());
+}
+
+export function requireHostedEnv(env = process.env) {
+  const missing = HOSTED_VARS.filter((k) => !(env[k] || '').trim());
+  if (missing.length) {
+    throw new Error(`start:hosted needs ${HOSTED_VARS.join(', ')}; missing: ${missing.join(', ')}. See webapp/README.md "Hosting".`);
+  }
+  let origin;
+  try { origin = new URL(env.METASCIENCE_PUBLIC_ORIGIN.trim()); } catch {}
+  if (!origin || origin.protocol !== 'https:') {
+    throw new Error(`METASCIENCE_PUBLIC_ORIGIN must be an https origin, got ${env.METASCIENCE_PUBLIC_ORIGIN}`);
+  }
+}
+
+export function modeBanner(env = process.env) {
+  if (!hostedMode(env)) return 'Mode: local (no sign-in; loopback only)';
+  const origin = (env.METASCIENCE_PUBLIC_ORIGIN || '').trim() || '(METASCIENCE_PUBLIC_ORIGIN unset: browser saves will be refused)';
+  return `Mode: hosted (Cloudflare Access team ${env.METASCIENCE_ACCESS_TEAM.trim()}, public origin ${origin})`;
+}
+
 export function isPortFree(port) {
   return new Promise((resolve) => {
     const server = createServer();
@@ -154,8 +182,11 @@ export async function choosePort(
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
-  const mode = process.argv[2] || 'start';
-  if (!['build', 'start', 'dev'].includes(mode)) throw new Error('Expected build, start, or dev');
+  const argMode = process.argv[2] || 'start';
+  if (!['build', 'start', 'dev', 'start:hosted'].includes(argMode)) throw new Error('Expected build, start, start:hosted, or dev');
+  if (argMode === 'start:hosted') requireHostedEnv();
+  const mode = argMode === 'start:hosted' ? 'start' : argMode;
+  if (mode !== 'build') console.log(modeBanner());
   prepareAssets();
   const preferred = Number(process.env.PORT || (mode === 'dev' ? 3100 : 3101));
   if (!Number.isInteger(preferred) || preferred <= 0) {

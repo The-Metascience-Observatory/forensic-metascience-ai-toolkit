@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 
 import { errMsg } from "@/lib/err";
@@ -13,6 +14,7 @@ export const dynamic = "force-dynamic";
  *  through /api/media's registered-root and archived-hash validation. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let body: { component?: string; project?: string; dir?: string; f?: string };
   try {
     body = await req.json();

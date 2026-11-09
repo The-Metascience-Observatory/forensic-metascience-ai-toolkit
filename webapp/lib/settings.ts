@@ -33,6 +33,27 @@ export const DEFAULT_PAPERS_ROOT =
 
 export const DEFAULT_REVIEWERS = ["Dan Elton"];
 
+export type Role = "reviewer" | "admin";
+/** One entry of the hosted-mode reviewer directory: the Cloudflare Access
+ *  email, the display name the Python service records as `reviewer`, and
+ *  the role `lib/routeGuard.ts` gates on. Local mode ignores it. */
+export interface Reviewer { email: string; name: string; role: Role }
+export const DEFAULT_DIRECTORY: Reviewer[] = [{ email: "delton17@gmail.com", name: "Dan Elton", role: "admin" }];
+
+export function asDirectory(v: unknown): Reviewer[] {
+  if (!Array.isArray(v)) return [];
+  const out: Reviewer[] = [];
+  for (const x of v) {
+    if (!x || typeof x !== "object") continue;
+    const r = x as Record<string, unknown>;
+    const email = typeof r.email === "string" ? r.email.trim().toLowerCase() : "";
+    if (!email || out.some((o) => o.email === email)) continue;
+    const name = typeof r.name === "string" && r.name.trim() ? r.name.trim() : email;
+    out.push({ email, name, role: r.role === "admin" ? "admin" : "reviewer" });
+  }
+  return out;
+}
+
 const DATA_DIR = path.join(process.cwd(), "data");
 /** Machine configuration must never live in the Dropbox checkout. */
 export function settingsPath(): string {
@@ -72,7 +93,9 @@ function readLocalSettings(): Partial<Settings> {
 export interface Settings {
   python_bin?: string;
   papers_root: string;
+  /** Every display name: the directory's names plus the free-text ones. */
   known_reviewers: string[];
+  reviewers: Reviewer[];
 }
 
 export function indexPath(): string {
@@ -87,10 +110,14 @@ export function loadSettings(): Settings {
   const reviewers = Array.isArray(onDisk.known_reviewers)
     ? onDisk.known_reviewers.filter((x): x is string => typeof x === "string")
     : [];
+  // Seeded, not written: a settings file without a directory behaves as if
+  // it held the default one until the next save persists it.
+  const directory = "reviewers" in onDisk ? asDirectory(onDisk.reviewers) : DEFAULT_DIRECTORY;
   return {
     python_bin: onDisk.python_bin,
     papers_root: hostPath(envRoot || onDisk.papers_root || DEFAULT_PAPERS_ROOT),
-    known_reviewers: [...new Set([...DEFAULT_REVIEWERS, ...reviewers])],
+    known_reviewers: [...new Set([...DEFAULT_REVIEWERS, ...directory.map((r) => r.name), ...reviewers])],
+    reviewers: directory,
   };
 }
 
@@ -99,17 +126,22 @@ function asStringList(v: unknown): string[] {
   return v.filter((x): x is string => typeof x === "string");
 }
 
-export function saveSettings(next: Settings): Settings {
+/** `reviewers` omitted keeps the directory on disk (or the default). */
+export function saveSettings(next: Omit<Settings, "reviewers"> & { reviewers?: Reviewer[] }): Settings {
   const file = settingsPath();
   const current = readLocalSettings();
   fs.mkdirSync(path.dirname(file), { recursive: true });
+  const directory = Array.isArray(next.reviewers) ? asDirectory(next.reviewers)
+    : "reviewers" in current ? asDirectory(current.reviewers) : DEFAULT_DIRECTORY;
   const merged: Settings = {
     python_bin: next.python_bin ?? current.python_bin,
     papers_root: path.resolve(hostPath(next.papers_root)),
     known_reviewers: [...new Set([
       ...DEFAULT_REVIEWERS,
+      ...directory.map((r) => r.name),
       ...asStringList(next.known_reviewers),
     ])],
+    reviewers: directory,
   };
   fs.writeFileSync(file, JSON.stringify(merged, null, 2) + "\n", { mode: 0o600 });
   return merged;

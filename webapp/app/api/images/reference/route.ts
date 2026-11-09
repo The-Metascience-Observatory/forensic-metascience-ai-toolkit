@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 
 import { errMsg } from "@/lib/err";
@@ -15,6 +16,7 @@ export const dynamic = "force-dynamic";
  *  that cache file. One failed paper is named, never fatal to the others. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let body: { project?: unknown; dirs?: unknown };
   try { body = await req.json(); } catch { return NextResponse.json({ error: "bad JSON" }, { status: 400 }); }
   const project = typeof body?.project === "string" ? body.project : "";

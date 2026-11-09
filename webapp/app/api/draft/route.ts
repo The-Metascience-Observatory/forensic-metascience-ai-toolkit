@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -13,6 +14,7 @@ export const dynamic = "force-dynamic";
  * posts anywhere; the human copies the text out themselves. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   const body = await req.json().catch(() => ({}));
   const { project, dir, kind, finding_ids } = body as {
     project?: string; dir?: string; kind?: string; finding_ids?: string[];

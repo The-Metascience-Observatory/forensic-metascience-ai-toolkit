@@ -9,6 +9,30 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp hosted mode behind Cloudflare Access
+
+One codebase, two modes. Without `METASCIENCE_ACCESS_TEAM` and
+`METASCIENCE_ACCESS_AUD` nothing changes (loopback, free-text reviewer,
+every route). With them, `proxy.ts` verifies the Cloudflare Access token on
+every request (`jose`, RS256 against the team's key set, audience and issuer
+checked) and forwards the verified email in a server-set header that a
+client-supplied copy can never spoof; no token means 401 for `/api/*` and a
+sign-in page otherwise, so a misconfigured Access application fails closed.
+`lib/auth.ts` maps the email through a reviewer directory in the settings
+file (display name, role) so existing rows keyed "Dan Elton" stay joined;
+every write records that name and ignores the body's `reviewer`;
+`lib/routeGuard.ts` holds the one admin/forbidden table (deletes, settings,
+roots, scans, metadata writes, paid drafts, website publication and the
+shared-record sync are admin-only; opening a file manager on the server is
+refused); `GET /api/settings` hides paths from non-admins; `GET /api/me`
+says who is signed in; `rejectCrossOrigin` accepts `METASCIENCE_PUBLIC_ORIGIN`
+with the forwarded scheme for that host only; `npm run start:hosted` refuses
+to start with a variable unset. Operator steps (tunnel ingress, DNS route,
+user service, Access application) are in the README's "Hosting" section;
+none were performed by the toolkit. Tests: `test/auth.test.mjs` (minted RS256
+tokens against a stubbed key set), `test/routeGuard.test.mjs` (the matrix),
+and hosted-mode cases in the Playwright security audit.
+
 ## [Unreleased] — 2026-11-09 — webapp: SWR replaces the home-grown client cache and polling
 
 Same cadences (30 s refresh, 5 s while a decision is pending, refresh on

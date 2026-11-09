@@ -1,4 +1,5 @@
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 
 import { errMsg } from "@/lib/err";
@@ -19,6 +20,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   try {
     const index = await scanNow();
     return NextResponse.json({ ok: true, n_projects: index.n_projects,

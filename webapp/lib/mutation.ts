@@ -32,10 +32,11 @@ function sameOrigin(origin: string, url: URL, forwardedProto: string | null): bo
   const trusted = publicOrigin();
   if (!trusted) return false;
   if (o.origin === trusted) return true;
-  // The tunnel terminates TLS: the request reaches Node as http://<host>.
-  if (forwardedProto && o.hostname === url.hostname && o.port === url.port
-      && o.protocol === `${forwardedProto.split(",")[0].trim()}:`) return true;
-  return false;
+  // The tunnel terminates TLS, so the request reaches Node as http://<host>;
+  // the forwarded scheme is honoured for the public host only, never for a
+  // Host header of the client's choosing.
+  const proto = forwardedProto ? forwardedProto.split(",")[0].trim() : "";
+  return Boolean(proto) && url.host === new URL(trusted).host && o.origin === `${proto}://${url.host}`;
 }
 
 export function rejectCrossOrigin(req: Request): Response | null {

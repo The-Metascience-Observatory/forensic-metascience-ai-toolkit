@@ -7,12 +7,15 @@ import { byteRange } from "@/lib/byteRange";
 import { cacheControl, mediaDisposition, mediaType } from "@/lib/media";
 import { workbenchTimed, serverTiming } from "@/lib/workbench";
 
-
 export const dynamic = "force-dynamic";
 
-export async function GET(req: Request) { return serve(req, false); }
+export async function GET(req: Request) {
+  return serve(req, false);
+}
 
-export async function HEAD(req: Request) { return serve(req, true); }
+export async function HEAD(req: Request) {
+  return serve(req, true);
+}
 
 async function serve(req: Request, head: boolean) {
   const url = new URL(req.url);
@@ -20,17 +23,28 @@ async function serve(req: Request, head: boolean) {
   const component = url.searchParams.get("component") || "";
   const dir = url.searchParams.get("dir") || "";
   const file = url.searchParams.get("f") || "";
-  if (!project || !dir || !file) return NextResponse.json({ error: "project, dir, f required" }, { status: 400 });
+  if (!project || !dir || !file)
+    return NextResponse.json({ error: "project, dir, f required" }, { status: 400 });
   try {
     const variant = url.searchParams.get("variant");
-    if (variant && variant !== "thumbnail") return NextResponse.json({ error: "Unknown media variant" }, { status: 400 });
-    const first = await workbenchTimed("artifact", {component, project, dir, f: file, variant}, {signal:req.signal});
+    if (variant && variant !== "thumbnail")
+      return NextResponse.json({ error: "Unknown media variant" }, { status: 400 });
+    const first = await workbenchTimed(
+      "artifact",
+      { component, project, dir, f: file, variant },
+      { signal: req.signal },
+    );
     const timings = first.timings;
     let resolved = first.value;
     if (variant === "thumbnail" && !resolved.thumbnail_ready) {
-      const generated=await workbenchTimed("thumbnail", {component, project, dir, f: file}, {signal:req.signal});
-      resolved=generated.value;
-      for(const [key,value] of Object.entries(generated.timings))timings[key]=(timings[key] || 0)+value;
+      const generated = await workbenchTimed(
+        "thumbnail",
+        { component, project, dir, f: file },
+        { signal: req.signal },
+      );
+      resolved = generated.value;
+      for (const [key, value] of Object.entries(generated.timings))
+        timings[key] = (timings[key] || 0) + value;
     }
     const abs = resolved.path;
     const mediaName = resolved.record.name;
@@ -41,21 +55,37 @@ async function serve(req: Request, head: boolean) {
       "Content-Type": mediaType(mediaName),
       "Server-Timing": serverTiming(timings),
       "Content-Disposition": mediaDisposition(mediaName, url.searchParams.get("download") === "1"),
-      "Accept-Ranges": "bytes", "Cache-Control": cacheControl(file, variant),
-      "ETag": etag, "Last-Modified": modified,
+      "Accept-Ranges": "bytes",
+      "Cache-Control": cacheControl(file, variant),
+      ETag: etag,
+      "Last-Modified": modified,
       "X-Content-Type-Options": "nosniff",
-      ...(mediaType(mediaName).startsWith("text/html") ? {
-        "Content-Security-Policy": "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'",
-      } : {}),
+      ...(mediaType(mediaName).startsWith("text/html")
+        ? {
+            "Content-Security-Policy":
+              "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'",
+          }
+        : {}),
     };
     const noneMatch = req.headers.get("if-none-match");
-    if ((noneMatch && (noneMatch === "*" || noneMatch.split(",").some((s) => s.trim().replace(/^W\//, "") === etag)))
-        || (!noneMatch && req.headers.get("if-modified-since") === modified)) {
+    if (
+      (noneMatch &&
+        (noneMatch === "*" ||
+          noneMatch.split(",").some((s) => s.trim().replace(/^W\//, "") === etag))) ||
+      (!noneMatch && req.headers.get("if-modified-since") === modified)
+    ) {
       return new NextResponse(null, { status: 304, headers });
     }
     const ifRange = req.headers.get("if-range");
-    const range = byteRange(!ifRange || ifRange === etag || ifRange === modified ? req.headers.get("range") : null, st.size);
-    if (range === false) return new NextResponse(null, { status: 416, headers: { ...headers, "Content-Range": `bytes */${st.size}` } });
+    const range = byteRange(
+      !ifRange || ifRange === etag || ifRange === modified ? req.headers.get("range") : null,
+      st.size,
+    );
+    if (range === false)
+      return new NextResponse(null, {
+        status: 416,
+        headers: { ...headers, "Content-Range": `bytes */${st.size}` },
+      });
     headers["Content-Length"] = String(range ? range.end - range.start + 1 : st.size);
     if (range) headers["Content-Range"] = `bytes ${range.start}-${range.end}/${st.size}`;
     if (head) return new NextResponse(null, { status: range ? 206 : 200, headers });
@@ -63,7 +93,10 @@ async function serve(req: Request, head: boolean) {
     const abort = () => stream.destroy();
     req.signal.addEventListener("abort", abort, { once: true });
     stream.on("close", () => req.signal.removeEventListener("abort", abort));
-    return new NextResponse(Readable.toWeb(stream) as ReadableStream, { status: range ? 206 : 200, headers });
+    return new NextResponse(Readable.toWeb(stream) as ReadableStream, {
+      status: range ? 206 : 200,
+      headers,
+    });
   } catch (e) {
     return NextResponse.json({ error: errMsg(e) }, { status: 404 });
   }

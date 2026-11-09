@@ -86,6 +86,39 @@ left alone.
 metascience fetch-metadata --project-dir /path/to/papers
 ```
 
+## RNG findings (and other detector tracks)
+
+A separately distributed detector files its run beside the paper's review as a
+component run (`forensic_review_rng/`, producer and run kind `rng_track`), and
+the webapp reviews it with the same page and the same storage as any finding:
+
+- **Queue:** `/project/<project>/detector/rng_track` (`/project/<project>/rng`
+  redirects there) lists every kept row of that producer, strongest first
+  (tier, then excess bits), with its paper, title and review state; filter
+  `undecided` / `decided`. Clicking a row opens the paper review page on the
+  page that holds that finding (`?finding=<id>`). The route is keyed by the
+  stored producer value so a spectra or copy-paste track plugs in by name.
+- **Paper page:** an `rng_track` row shows the detector's own evidence under
+  its description: generator, seed, stream position, tier, excess bits,
+  observed vs generated values (table values are checked against their
+  printed precision; figure coordinates report max |Δ|, the fit residual being
+  the criterion), the matched blocks, the table grid with matched cells shaded
+  (Europe PMC hits), and the replay snippet with a copy button. The PDF pane
+  highlights the detector's `page_bbox` anchors; an XML-only paper highlights
+  the `table_cell` anchors in the rendered article.
+- **Decisions:** the vocabulary is the producer's own
+  (`review_io.DECISIONS_BY_PRODUCER`, generated into `lib/constants.gen.ts`):
+  true issue, disclosed / legitimate simulation, legitimate random algorithm,
+  parse artefact, unsure. Saved like every other decision (run-scoped, outbox,
+  shared database).
+- **Getting runs in:** from the detector checkout,
+  `rngdetect export-workbench RUN_DIR PROJECT --push` (per-paper PDF/figure
+  screens) or `rngdetect export-workbench --europepmc RUN_DIR PROJECT_ROOT
+  --pmcids FILE [--verdicts CSV] --push` (Europe PMC table hits, one XML-only
+  paper folder per article), with the toolkit's `src` on `PYTHONPATH`; then
+  **Sync records** here. Register the project folder under **Local files** so
+  the PDF or XML can be shown.
+
 ## Image findings
 
 Each image-duplication card prints the recorded PDF pages next to the

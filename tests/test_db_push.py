@@ -202,6 +202,25 @@ class TestPushSemantics:
         recs = D.push_paper(paper, conn=conn)
         assert recs[0]["review_orphans"] == ["numeric:ghost"]
 
+    def test_a_paper_level_verdict_is_not_an_orphan(self, tmp_path):
+        """An imported detector-track review carries the paper's verdict
+        under `__paper__` beside its findings: a key that joins no finding
+        by design, and must not be reported as a stale one."""
+        paper = _paper(tmp_path, with_review={
+            "schema_version": "2.0",
+            "issues": {"numeric:t1": {"decision": "true_issue"},
+                       D.PAPER_REVIEW_KEY: {"decision": "true_issue",
+                                            "verdict_scope": "paper"},
+                       "numeric:ghost": {"decision": "correct_minor"}},
+            "runs": {"forensic_review": {"issues": {
+                "numeric:t1": {"decision": "true_issue"},
+                D.PAPER_REVIEW_KEY: {"decision": "true_issue",
+                                     "verdict_scope": "paper"},
+                "numeric:ghost": {"decision": "correct_minor"}}}}})
+        conn = FakeConn(_script())
+        recs = D.push_paper(paper, conn=conn)
+        assert recs[0]["review_orphans"] == ["numeric:ghost"]
+
 
 class TestQueryFindings:
     """The SQL twin of the file-scan findings query. The LIVE drift check
@@ -320,6 +339,27 @@ class TestPushReviews:
         assert rec == {"pushed": 0, "unchanged": 1, "unmatched": []}
         assert not any(s.startswith("insert into reviews")
                        for s, _ in conn.executed)
+
+    def test_a_paper_level_verdict_pushes_with_no_finding(self, tmp_path):
+        paper = tmp_path / "c" / "10.9--p"
+        paper.mkdir(parents=True)
+        entry = {"decision": "disclosed_simulation", "reviewer": "dan",
+                 "at": "2026-11-09T10:00:00Z", "verdict_scope": "paper"}
+        (paper / "review.json").write_text(json.dumps({
+            "schema_version": "2.0",
+            "runs": {"forensic_review_rng": {"issues": {
+                "f_" + "8" * 16: entry, D.PAPER_REVIEW_KEY: entry}}}}))
+        conn = FakeConn([
+            ("select id from runs where paper_id", (77,)),
+            ("select id from users where legacy_name", (5,)),
+        ])                                   # the findings lookup misses
+        rec = D.push_reviews(conn, 11, paper)
+        assert rec["pushed"] == 2 and rec["unmatched"] == []
+        ins = [p for s, p in conn.executed if s.startswith("insert into reviews")]
+        keys = {p[3]: p for p in ins}
+        assert keys[D.PAPER_REVIEW_KEY][2] is None          # finding_pk
+        assert keys[D.PAPER_REVIEW_KEY][5] == "disclosed_simulation"
+        assert json.loads(keys[D.PAPER_REVIEW_KEY][10])["verdict_scope"] == "paper"
 
     def test_an_unknown_run_is_reported_never_dropped(self, tmp_path):
         conn = FakeConn([])          # the run-name lookup misses

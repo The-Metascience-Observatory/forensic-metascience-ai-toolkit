@@ -375,6 +375,11 @@ def push_run(conn, doc: dict, meta: dict, paper_dir: Path,
             known = {(f.get("legacy") or {}).get("original_id")
                      for f in findings} | {f.get("finding_id")
                                            for f in findings}
+            # A paper-level verdict (an imported detector-track review puts
+            # the paper's decision under `__paper__` beside its findings)
+            # joins no finding by design; `push_reviews` stores it with a
+            # null `finding_pk`. It is not an orphan.
+            known.add(PAPER_REVIEW_KEY)
             orphans = sorted(k for k in keys if k not in known)
         except Exception:  # noqa: BLE001
             orphans = ["review.json unreadable"]
@@ -382,6 +387,9 @@ def push_run(conn, doc: dict, meta: dict, paper_dir: Path,
             "paper_pk": paper_id,
             "n_findings": len(findings), "review_orphans": orphans}
 
+
+#: review.json issue key of a verdict on the paper as a whole (no finding).
+PAPER_REVIEW_KEY = "__paper__"
 
 _REVIEW_ENTRY_KEYS = ("decision", "note", "submitted_to_pubpeer",
                       "submitted_to_editor", "pubpeer_url", "reviewer", "at")

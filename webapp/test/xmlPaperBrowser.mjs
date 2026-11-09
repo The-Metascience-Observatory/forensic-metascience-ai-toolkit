@@ -2,6 +2,7 @@ import { chromium } from 'playwright';
 import ts from 'typescript';
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
+import { addSwr } from './swrGlobals.mjs';
 const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
   const page = await browser.newPage({viewport:{width:900,height:700}});
@@ -25,12 +26,13 @@ try {
     window.React=window.modules.react=window.modules['next/dist/compiled/react'];
     window.ReactDOM={...window.modules['next/dist/compiled/react-dom'],...window.modules['next/dist/compiled/react-dom/client']};
   });
+  await addSwr(page);
   const modules=[
     ['@/lib/flipArrow','lib/flipArrow.ts'],
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['./FlipArrow','app/images/FlipArrow.tsx'],
-    ['@/lib/requestCache','lib/requestCache.ts'],
+    ['@/lib/getJson','lib/getJson.ts'],
     ['@/lib/haystack','lib/haystack.ts'],['@/lib/severity','lib/severity.ts'],
     ['./FindBar','app/components/FindBar.tsx'],['@/app/components/FindBar','app/components/FindBar.tsx'],
     ['@/lib/xmlFigures','lib/xmlFigures.ts'],

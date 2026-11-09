@@ -3,6 +3,7 @@ import ts from 'typescript';
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {addReact} from './reactGlobals.mjs';
+import {addSwr} from './swrGlobals.mjs';
 const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
 try {
   const page = await browser.newPage({viewport:{width:1500,height:1000}});
@@ -11,13 +12,14 @@ try {
   await page.addStyleTag({content:readFileSync('app/globals.css','utf8')});
   await addReact(page);
   await page.evaluate(()=>window.modules={react:window.React});
+  await addSwr(page);
   const modules=[
     ['./affine.ts','lib/affine.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
     ['@/lib/flipArrow','lib/flipArrow.ts'],
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['./FlipArrow','app/images/FlipArrow.tsx'],
-    ['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/images/urls','lib/images/urls.ts'],['@/lib/images/filters','lib/images/filters.ts'],['@/lib/images/sort','lib/images/sort.ts'],['@/lib/images/labels','lib/images/labels.ts'],['@/lib/images/geometry','lib/images/geometry.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/requestCache','lib/requestCache.ts'],
+    ['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/mediaUrl','lib/mediaUrl.ts'],['@/lib/images/urls','lib/images/urls.ts'],['@/lib/images/filters','lib/images/filters.ts'],['@/lib/images/sort','lib/images/sort.ts'],['@/lib/images/labels','lib/images/labels.ts'],['@/lib/images/geometry','lib/images/geometry.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/getJson','lib/getJson.ts'],
     ['./lib','app/images/lib.ts'],['./useFeed','app/images/useFeed.ts'],
     ['./PanelPreview','app/images/PanelPreview.tsx'],['hover','app/images/HoverPreview.tsx'],
   ];

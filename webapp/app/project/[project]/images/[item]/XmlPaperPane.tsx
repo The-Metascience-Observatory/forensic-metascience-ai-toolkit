@@ -1,16 +1,25 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import useSWR from "swr";
 import type { Item, Panel } from "@/app/images/lib";
 import { HtmlArticlePane } from "../../review/[slug]/HtmlArticlePane";
 import { NativeImagePane } from "./NativeImagePane";
 import { panelFigure, type XmlFigure } from "@/lib/xmlFigures";
-import { RequestCache } from "@/lib/requestCache";
+import { getJson } from "@/lib/getJson";
 import { imageXmlBoxes, type ImageSize } from "@/lib/imageXmlBoxes";
 
-type Source = { article: { mode: string; html?: string; warning?: string; figures?: XmlFigure[] } };
+type Source = { article: { mode: string; html?: string; warning?: string; figures?: XmlFigure[] }; error?: string };
+type SourceKey = ["source", string, string, string, string];
 
-const sources = new RequestCache<Source>(20);
+async function fetchSource([, project, dir, run, component]: SourceKey): Promise<Source> {
+  const query = new URLSearchParams({ method: "source", project, dir, run, component });
+  const source = await getJson<Source>(`/api/workbench?${query}`).catch((error: unknown) => {
+    throw new Error((error instanceof Error && error.message) || "Paper could not be loaded");
+  });
+  if (source.error) throw new Error(source.error);
+  return source;
+}
 
 /** Independent loading keeps the comparator and review decisions immediately usable. */
 export function XmlPaperPane({
@@ -32,48 +41,26 @@ export function XmlPaperPane({
   item?: Item;
   sizes?: (ImageSize | null)[];
 }) {
-  const key = JSON.stringify([project, panel.paper_dir, run, component]);
-  const [, update] = useState(0);
+  const key: SourceKey = ["source", project, panel.paper_dir, run, component];
   const [navigation, setNavigation] = useState<{ key: string; anchor: string; nonce: number }>();
   const [native, setNative] = useState<string>();
   const [showBoxes, setShowBoxes] = useState(true);
-  const panelKey = `${key}:${panel.uid}`;
+  const panelKey = `${key.join("\u0000")}:${panel.uid}`;
+  // Reuse the article immediately between findings, but revalidate sources
+  // on navigation, focus and while visible so changed files cannot stay hidden.
+  const { data, error, mutate } = useSWR<Source, Error>(key, fetchSource, {
+    refreshInterval: 30000,
+    revalidateOnFocus: true,
+    refreshWhenHidden: false,
+  });
+  const seenRevision = useRef(revision);
   useEffect(() => {
-    const unsubscribe = sources.subscribe(key, () => update((n) => n + 1));
-    const refresh = () =>
-      sources.load(key, async (signal) => {
-        const query = new URLSearchParams({
-          method: "source",
-          project,
-          dir: panel.paper_dir,
-          run,
-          component,
-        });
-        const response = await fetch(`/api/workbench?${query}`, { signal });
-        const source = await response.json();
-        if (!response.ok || source.error)
-          throw new Error(source.error || "Paper could not be loaded");
-        return source;
-      });
-    // Reuse the article immediately between findings, but revalidate sources
-    // on navigation, focus and while visible so changed files cannot stay hidden.
-    void refresh();
-    const visibleRefresh = () => {
-      if (document.visibilityState === "visible") void refresh();
-    };
-    const timer = window.setInterval(visibleRefresh, 30000);
-    window.addEventListener("focus", visibleRefresh);
-    return () => {
-      unsubscribe();
-      window.clearInterval(timer);
-      window.removeEventListener("focus", visibleRefresh);
-    };
-  }, [key, revision]);
-  const entry = sources.entry(key);
+    if (seenRevision.current === revision) return;
+    seenRevision.current = revision;
+    void mutate();
+  }, [revision, mutate]);
   const current =
-    entry.data || entry.error
-      ? { source: entry.error ? undefined : entry.data, error: entry.error }
-      : undefined;
+    data || error ? { source: error ? undefined : data, error: error?.message } : undefined;
   const article = current?.source?.article;
   const figures = useMemo(() => article?.figures || [], [article]);
   const boxes = useMemo(

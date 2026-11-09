@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { errorMessage, postJson } from "@/lib/getJson";
 
 export function RefreshCountsButton() {
   const router = useRouter();
@@ -12,13 +13,11 @@ export function RefreshCountsButton() {
     setBusy(true);
     setErr(null);
     try {
-      const res = await fetch("/api/workbench", { method: "POST", headers:{"content-type":"application/json"}, body:JSON.stringify({method:"sync"}) });
-      const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error || res.statusText);
+      await postJson("/api/workbench", { method: "sync" });
       router.refresh();
       setBusy(false);
     } catch (e: unknown) {
-      setErr(e instanceof Error ? e.message : String(e));
+      setErr(errorMessage(e));
       setBusy(false);
     }
   }

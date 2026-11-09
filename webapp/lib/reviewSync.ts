@@ -14,80 +14,43 @@ export type ReviewSyncState = {
   pending_errors?: string[];
 };
 
-// Only local status is polled. A save wakes the database worker separately.
-export function watchReviewSync(options: {
-  read: () => Promise<ReviewSyncState>;
-  update: (state: ReviewSyncState) => void;
-  completed: () => void;
-  visible: () => boolean;
-}) {
-  let stopped = false,
-    running = false,
-    requested = false;
-  let previousPending = 0,
-    saves = 0,
-    observedSaves = 0;
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const schedule = (delay: number) => {
-    clearTimeout(timer);
-    if (!stopped) timer = setTimeout(() => void read(), delay);
-  };
-  async function read() {
-    if (stopped) return;
-    if (running) {
-      requested = true;
-      return;
-    }
-    clearTimeout(timer);
-    if (!options.visible()) {
-      schedule(30000);
-      return;
-    }
-    running = true;
-    const generation = saves;
-    let delay = 30000;
-    try {
-      const state = await options.read();
-      if (stopped) return;
-      options.update(state);
-      // A response started before the latest save cannot acknowledge that save.
-      if (generation === saves && typeof state.pending_writes === "number") {
-        const pending = Number(state.pending_writes || 0);
-        const completed =
-          reviewSyncCompleted(previousPending, pending) ||
-          (generation > observedSaves && pending === 0);
-        previousPending = pending;
-        if (pending === 0) {
-          observedSaves = generation;
-        }
-        if (completed) options.completed();
-        if (pending > 0) delay = 5000;
-      }
-    } catch {
-      delay = 5000;
-      if (!stopped) options.update({ error: "Local service unavailable" });
-    } finally {
-      running = false;
-      if (!stopped) {
-        if (requested) {
-          requested = false;
-          schedule(0);
-        } else schedule(delay);
-      }
-    }
+/** One status response, with the save generation its request was made under
+ *  (`ReviewSyncTracker.saves` at that moment). */
+export type ReviewSyncReading = { state: ReviewSyncState; generation: number };
+
+/** Status polling cadence (docs/workbench_storage.md, "Queues and production
+ *  review"): 30 s normally, 5 s while writes are pending or the local service
+ *  is unreachable. Shaped as SWR's `refreshInterval(data)` callback. */
+export const REVIEW_SYNC_IDLE_MS = 30000;
+export const REVIEW_SYNC_PENDING_MS = 5000;
+export function reviewSyncInterval(reading?: ReviewSyncReading, failed = false): number {
+  if (failed) return REVIEW_SYNC_PENDING_MS;
+  return (reading?.state.pending_writes ?? 0) > 0 ? REVIEW_SYNC_PENDING_MS : REVIEW_SYNC_IDLE_MS;
+}
+
+/** Decides, from successive status readings, when a saved decision has
+ *  reached the database -- the moment the item and queue views must refresh
+ *  their judgments. Only local status is polled; a save wakes the database
+ *  worker separately. A reading acknowledges a save when the pending count
+ *  dropped, or when a save was announced and the service reports none
+ *  pending. A response requested before the latest save cannot acknowledge
+ *  that save, so each reading carries the generation it was requested under. */
+export class ReviewSyncTracker {
+  /** Saves announced so far (`workbench-review` events). */
+  saves = 0;
+  private previousPending = 0;
+  private observedSaves = 0;
+  saved() {
+    this.saves++;
   }
-  void read();
-  return {
-    saved() {
-      saves++;
-      void read();
-    },
-    refresh() {
-      void read();
-    },
-    stop() {
-      stopped = true;
-      clearTimeout(timer);
-    },
-  };
+  observe(reading: ReviewSyncReading): boolean {
+    if (reading.generation !== this.saves || typeof reading.state.pending_writes !== "number") return false;
+    const pending = Number(reading.state.pending_writes || 0);
+    const completed =
+      reviewSyncCompleted(this.previousPending, pending) ||
+      (reading.generation > this.observedSaves && pending === 0);
+    this.previousPending = pending;
+    if (pending === 0) this.observedSaves = reading.generation;
+    return completed;
+  }
 }

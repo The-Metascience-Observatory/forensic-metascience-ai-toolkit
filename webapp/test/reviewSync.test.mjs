@@ -1,46 +1,48 @@
 import { test } from "vitest";
 import assert from 'node:assert/strict';
-import { watchReviewSync } from '../lib/reviewSync.ts';
+import { ReviewSyncTracker, reviewSyncInterval, reviewSyncCompleted } from '../lib/reviewSync.ts';
 
-test("reviewSync", async () => {
-  const original = {setTimeout, clearTimeout, now:Date.now};
-  let now=0, timerId=0, timers=new Map();
-  globalThis.setTimeout=(fn,delay)=>{const id=++timerId;timers.set(id,{fn,at:now+delay});return id;};
-  globalThis.clearTimeout=id=>timers.delete(id);
-  Date.now=()=>now;
-  const flush=async()=>{for(let i=0;i<10;i++)await Promise.resolve();};
-  const tick=async(ms)=>{now+=ms;for(const [id,t] of [...timers])if(t.at<=now){timers.delete(id);t.fn();}await flush();};
-  let pending=0, failed=false, completed=0, reads=0, resolveRead, held=false, state;
-  const watcher=watchReviewSync({
-   read:async()=>{reads++;if(held)return new Promise(r=>resolveRead=r);if(failed)throw Error('offline');return {pending_writes:pending};},
-   update:s=>state=s, completed:()=>completed++, visible:()=>true,
-  });
-  try {
-   await flush();
-   // Already synchronized before the first post-save status response.
-   watcher.saved();await flush();assert.equal(completed,1);
-   pending=1;watcher.saved();await flush();
-   const start=now;pending=0;await tick(4999);assert.equal(completed,1);
-   await tick(1);assert.equal(completed,2);
-   console.log('simulated acknowledgment-to-refresh delay:',now-start,'ms');
-   assert.equal([...timers.values()][0].at-now,30000);
-   // Saves arriving during a request force one fresh read, never overlapping reads.
-   held=true;watcher.refresh();const before=reads;
-   watcher.saved();watcher.saved();assert.equal(reads,before);
-   resolveRead({pending_writes:0});await flush();assert.equal(completed,2);
-   held=false;await tick(0);assert.equal(reads,before+1);assert.equal(completed,3);
-   // Partial batch completion refreshes judgments even with another event pending.
-   pending=2;watcher.saved();await flush();pending=1;await tick(5000);assert.equal(completed,4);
-   failed=true;await tick(5000);assert.match(state.error,/unavailable/);
-   assert.equal([...timers.values()][0].at-now,5000);
-   failed=false;pending=0;await tick(5000);assert.equal(completed,5);
-   // Pending writes keep the five-second cadence.
-   pending=1;watcher.saved();await flush();await tick(30000);
-   assert.equal([...timers.values()][0].at-now,5000);
-   held=true;watcher.refresh();watcher.stop();resolveRead({pending_writes:0});await flush();
-   assert.equal(timers.size,0);assert.equal(completed,5);
-   console.log('review sync: immediate/delayed completion, concurrent saves, partial batches, offline recovery, backoff and cleanup passed');
-  } finally {
-   watcher.stop();globalThis.setTimeout=original.setTimeout;globalThis.clearTimeout=original.clearTimeout;Date.now=original.now;
-  }
+// The cadence rules behind the status bar's SWR hook (app/CacheStatus.tsx):
+// when a status reading acknowledges a save, and how soon the next read
+// follows. The hook's wiring (reads on save and focus, the synced event,
+// unmount stopping the poll, offline recovery) is exercised in
+// test/components/CacheStatus*.test.tsx against a controlled transport.
+test("reviewSync", () => {
+  const tracker = new ReviewSyncTracker();
+  const reading = (pending, generation = tracker.saves) => ({ state: { pending_writes: pending }, generation });
+  // The first reading, before any save, acknowledges nothing.
+  assert.equal(tracker.observe(reading(0)), false);
+  assert.equal(reviewSyncInterval(reading(0)), 30000);
+  // Already synchronized before the first post-save status response.
+  tracker.saved(); assert.equal(tracker.observe(reading(0)), true);
+  // Delayed: the save shows as pending, polled every five seconds until it drains.
+  tracker.saved(); assert.equal(tracker.observe(reading(1)), false);
+  assert.equal(reviewSyncInterval(reading(1)), 5000);
+  assert.equal(tracker.observe(reading(0)), true);
+  assert.equal(reviewSyncInterval(reading(0)), 30000);
+  // Saves arriving during a request: the response that was requested before
+  // them cannot acknowledge them; the next fresh reading does, once.
+  const stale = reading(0);
+  tracker.saved(); tracker.saved();
+  assert.equal(tracker.observe(stale), false);
+  assert.equal(tracker.observe(reading(0)), true);
+  assert.equal(tracker.observe(reading(0)), false, 'acknowledged once');
+  // Partial batch completion refreshes judgments even with another event pending.
+  tracker.saved(); assert.equal(tracker.observe(reading(2)), false);
+  assert.equal(tracker.observe(reading(1)), true);
+  // Offline keeps the five-second cadence; recovery acknowledges the drained batch.
+  assert.equal(reviewSyncInterval(undefined, true), 5000);
+  assert.equal(reviewSyncInterval(reading(0), true), 5000);
+  assert.equal(tracker.observe(reading(0)), true);
+  // Pending writes keep the five-second cadence; a status without a count
+  // neither acknowledges nor changes it.
+  tracker.saved(); assert.equal(tracker.observe(reading(1)), false);
+  assert.equal(reviewSyncInterval(reading(1)), 5000);
+  assert.equal(tracker.observe({ state: {}, generation: tracker.saves }), false);
+  assert.equal(reviewSyncInterval({ state: {}, generation: tracker.saves }), 30000);
+  assert.equal(reviewSyncInterval(undefined), 30000);
+  assert.equal(tracker.observe(reading(0)), true);
+  assert.equal(reviewSyncCompleted(1, 0), true);
+  assert.equal(reviewSyncCompleted(0, 0), false);
+  console.log('review sync: immediate/delayed completion, concurrent saves, partial batches, offline and pending cadence passed');
 });

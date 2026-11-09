@@ -1,100 +1,75 @@
 "use client";
-import { useEffect, useState } from "react";
-import { RequestCache } from "@/lib/requestCache";
+import { useEffect } from "react";
+import useSWR, { mutate as mutateGlobal, unstable_serialize, type Cache } from "swr";
+import { errorMessage, getJson } from "@/lib/getJson";
 import type { Feed, Item } from "./lib";
-const feeds = new Map<string, Feed>();
-const listeners = new Set<() => void>();
-const pending = new Map<string, Promise<Feed>>();
-const keyOf = (p: string, r: string, c: string, options: Record<string, unknown> = {}) =>
-  JSON.stringify([p, r, c, options]);
+
+// Records are cached and polled by SWR, keyed by the request they answer.
+// Every mounted hook on a key shares one request; an interval and window
+// focus revalidate while the page is visible; the `workbench-review` and
+// `workbench-review-synced` events are the explicit "a decision changed,
+// refetch now" triggers that let one component invalidate another.
+const REFRESH_MS = 30000;
+const ITEM_TIMEOUT_MS = 10000;
+const POLLING = { refreshInterval: REFRESH_MS, revalidateOnFocus: true, refreshWhenHidden: false } as const;
+
+type FeedOptions = Record<string, unknown>;
+type FeedKey = ["feed", string, string, string, FeedOptions];
+type ItemKey = ["item", string, string, string, string, string | null, string];
+
+const feedKey = (project: string, run: string, component: string, options: FeedOptions): FeedKey => [
+  "feed", project, run, component, options,
+];
+const itemKey = (
+  project: string, run: string, component: string, item: string, owner: string | null, method: string,
+): ItemKey => ["item", project, run, component, item, owner, method];
+
+async function fetchFeed([, project, run, component, options]: FeedKey): Promise<Feed> {
+  const params = new URLSearchParams({
+    project,
+    run,
+    component,
+    ...Object.fromEntries(
+      Object.entries(options).map(([k, v]) => [k, Array.isArray(v) ? JSON.stringify(v) : String(v)]),
+    ),
+  });
+  return (await getJson<{ feed: Feed }>(`/api/images?${params}`)).feed;
+}
+
+function fetchItem([, project, run, component, item, owner, method]: ItemKey): Promise<Item> {
+  const params = new URLSearchParams({ method, project, run, component, item, ...(owner ? { owner } : {}) });
+  return getJson<Item>(`/api/workbench?${params}`, AbortSignal.timeout(ITEM_TIMEOUT_MS));
+}
+
+/** Apply a saved decision to every cached feed of this project, run and
+ *  component (whatever its paging or filter options), then announce it. */
 export function updateFeed(
   project: string,
   update: (f: Feed) => Feed,
   run = "latest",
   component = "image_forensics",
 ) {
-  for (const [key, feed] of feeds) {
-    const [p, r, c] = JSON.parse(key);
-    if (p === project && r === run && c === component) feeds.set(key, update(feed));
-  }
-  listeners.forEach((f) => f());
+  void mutateGlobal<Feed>(
+    (key) =>
+      Array.isArray(key) && key[0] === "feed" && key[1] === project && key[2] === run && key[3] === component,
+    (feed) => (feed ? update(feed) : feed),
+    { revalidate: false },
+  );
   window.dispatchEvent(new Event("workbench-review"));
 }
-export function loadFeed(
-  project: string,
-  rebuild = false,
-  run = "latest",
-  component = "image_forensics",
-  options: Record<string, unknown> = {},
-): Promise<Feed> {
-  const key = keyOf(project, run, component, options),
-    old = pending.get(key);
-  if (old) return old;
-  const params = new URLSearchParams({
-    project,
-    run,
-    component,
-    ...Object.fromEntries(
-      Object.entries(options).map(([k, v]) => [
-        k,
-        Array.isArray(v) ? JSON.stringify(v) : String(v),
-      ]),
-    ),
-    ...(rebuild ? { rebuild: "1" } : {}),
-  });
-  const task = fetch(`/api/images?${params}`)
-    .then(async (r) => {
-      const b = await r.json();
-      if (!r.ok) throw new Error(b.error || r.statusText);
-      feeds.set(key, b.feed);
-      if (feeds.size > 64) feeds.delete(feeds.keys().next().value!);
-      listeners.forEach((f) => f());
-      return b.feed;
-    })
-    .finally(() => pending.delete(key));
-  pending.set(key, task);
-  return task;
-}
+
 export function useFeed(
   project: string,
   run = "latest",
   component = "image_forensics",
-  options: Record<string, unknown> = {},
+  options: FeedOptions = {},
   enabled = true,
 ) {
-  const key = keyOf(project, run, component, options);
-  const [state, setState] = useState<{ key: string; feed: Feed | null; error: string | null }>({
-    key,
-    feed: null,
-    error: null,
-  });
-  useEffect(() => {
-    if (!enabled) return;
-    let active = true;
-    const sync = () => {
-      if (active) setState({ key, feed: feeds.get(key) || null, error: null });
-    };
-    const refresh = () => {
-      if (document.hidden) return;
-      void loadFeed(project, false, run, component, JSON.parse(key)[3]).catch((e) => {
-        if (active) setState({ key, feed: feeds.get(key) || null, error: String(e) });
-      });
-    };
-    listeners.add(sync);
-    sync();
-    refresh();
-    const timer = setInterval(refresh, 30000);
-    window.addEventListener("focus", refresh);
-    return () => {
-      active = false;
-      listeners.delete(sync);
-      clearInterval(timer);
-      window.removeEventListener("focus", refresh);
-    };
-  }, [project, run, component, key, enabled]);
-  return state.key === key ? state : { key, feed: null, error: null };
+  const key = feedKey(project, run, component, options);
+  const { data, error } = useSWR<Feed>(enabled ? key : null, fetchFeed, POLLING);
+  return { key: unstable_serialize(key), feed: data ?? null, error: error ? errorMessage(error) : null };
 }
-const items = new RequestCache<Item>(64);
+
 export function useItem(
   project: string,
   run: string,
@@ -103,55 +78,24 @@ export function useItem(
   owner?: string,
   method = "item",
 ) {
-  const key = JSON.stringify([project, run, component, item, owner, method]);
-  const [, render] = useState(0);
+  const key = item ? itemKey(project, run, component, item, owner ?? null, method) : null;
+  const serialized = key ? unstable_serialize(key) : "";
+  const { data, error, mutate } = useSWR<Item>(key, fetchItem, POLLING);
   useEffect(() => {
-    if (!item) return;
-    const unsubscribe = items.subscribe(key, () => render((n) => n + 1));
-    const refresh = (force = false) => {
-      if (document.hidden && items.entry(key).data) return;
-      const p = new URLSearchParams({
-        method,
-        project,
-        run,
-        component,
-        item,
-        ...(owner ? { owner } : {}),
-      });
-      void items.load(
-        key,
-        async (signal) => {
-          const r = await fetch(`/api/workbench?${p}`, {
-            signal: AbortSignal.any([signal, AbortSignal.timeout(10000)]),
-          });
-          const b = await r.json();
-          if (!r.ok) throw new Error(b.error);
-          return b;
-        },
-        force,
-      );
-    };
-    const changed = () => refresh(true),
-      focused = () => refresh();
-    refresh();
+    if (!serialized) return;
+    const changed = () => void mutate();
     window.addEventListener("workbench-review", changed);
     window.addEventListener("workbench-review-synced", changed);
-    window.addEventListener("focus", focused);
-    const timer = setInterval(focused, 30000);
     return () => {
-      unsubscribe();
-      clearInterval(timer);
       window.removeEventListener("workbench-review", changed);
       window.removeEventListener("workbench-review-synced", changed);
-      window.removeEventListener("focus", focused);
     };
-  }, [key, project, run, component, item, owner, method]);
-  const entry = items.entry(key);
+  }, [serialized, mutate]);
   return {
-    key,
-    item: entry.data || null,
-    error: entry.error || null,
-    loading: !entry.data && !entry.error,
+    key: serialized,
+    item: data ?? null,
+    error: error ? errorMessage(error) : null,
+    loading: !data && !error,
     refresh: () => window.dispatchEvent(new Event("workbench-review")),
   };
 }
@@ -159,33 +103,20 @@ export function useItem(
 // Decoded panel images kept alive for the items just ahead of the reviewer;
 // dropping the Image object can cancel its download.
 const warmImages: HTMLImageElement[] = [];
-/** Load an item's compact record and then its panel images, so moving to it
- *  renders from cache. Resolves to the record (or undefined on failure). */
+/** Load an item's compact record into the SWR cache and then its panel
+ *  images, so moving to it renders from cache. `cache` (the SWR cache from
+ *  `useSWRConfig`) lets an already-loaded record skip the request. Resolves
+ *  to the record (or undefined on failure). */
 export async function prefetchItem(
   project: string,
   run: string,
   item: string,
   mediaUrl?: (dir: string, ref: string) => string,
+  cache?: Cache<Item>,
 ): Promise<Item | undefined> {
-  const key = JSON.stringify([project, run, "image_forensics", item, undefined, "item_core"]);
-  if (!items.entry(key).data) {
-    const p = new URLSearchParams({
-      method: "item_core",
-      project,
-      run,
-      component: "image_forensics",
-      item,
-    });
-    await items.load(key, async (signal) => {
-      const r = await fetch(`/api/workbench?${p}`, {
-        signal: AbortSignal.any([signal, AbortSignal.timeout(10000)]),
-      });
-      const value = await r.json();
-      if (!r.ok) throw new Error(value.error);
-      return value;
-    });
-  }
-  const data = items.entry(key).data;
+  const key = itemKey(project, run, "image_forensics", item, null, "item_core");
+  const cached = cache?.get(unstable_serialize(key))?.data;
+  const data = cached ?? (await mutateGlobal<Item>(key, fetchItem(key), { revalidate: false }).catch(() => undefined));
   if (data && mediaUrl) {
     for (const panel of data.panels || []) {
       if (!panel.image) continue;

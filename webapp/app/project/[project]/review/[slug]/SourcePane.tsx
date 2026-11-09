@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 
 import { HtmlArticlePane } from "./HtmlArticlePane";
-import { PdfPane } from "./PdfPane";
+import { PdfPane } from "@/app/components/pdf/PdfPane";
 import { PdfZoomControls } from "./PdfZoomControls";
 import { SpreadsheetPane } from "./SpreadsheetPane";
 import { jumpable, xmlCells } from "@/lib/targets";

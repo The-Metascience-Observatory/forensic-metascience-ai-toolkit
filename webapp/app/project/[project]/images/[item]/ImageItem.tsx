@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { pubpeerLink } from "@/lib/citation";
 import { readReviewer } from "@/app/ReviewerChip";
 import { useSplitPane } from "@/app/useSplitPane";
-const PdfPane=dynamic(()=>import("@/app/project/[project]/review/[slug]/PdfPane").then(m=>m.PdfPane),{ssr:false,loading:()=> <p>Loading paper…</p>});
+const PdfPane=dynamic(()=>import("@/app/components/pdf/PdfPane").then(m=>m.PdfPane),{ssr:false,loading:()=> <p>Loading paper…</p>});
 import { PdfZoomControls } from "@/app/project/[project]/review/[slug]/PdfZoomControls";
 import { Comparator } from "./Comparator";
 const VideoTools=dynamic(()=>import("./VideoGeneration").then(m=>m.VideoTools),{loading:()=> <span>Loading video tools…</span>});

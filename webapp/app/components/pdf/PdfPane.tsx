@@ -9,7 +9,7 @@ import { SEV_FILL } from "@/lib/severity";
 import { appendFlipArrow } from "@/lib/flipArrow";
 import type { ImagePdfBox } from "@/lib/imagePdfBoxes";
 import { boxesOf } from "@/lib/targets";
-import { FindBar, useFindShortcut } from "./FindBar";
+import { FindBar, useFindShortcut } from "@/app/components/FindBar";
 
 type Box = { x0: number; y0: number; x1: number; y1: number };
 

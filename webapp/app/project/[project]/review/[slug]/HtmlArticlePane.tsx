@@ -6,7 +6,7 @@ import { findQuoteSpans } from "@/lib/haystack";
 import { SEV_FILL } from "@/lib/severity";
 import type { XmlImageBox } from "@/lib/imageXmlBoxes";
 import { mountXmlImageOverlays } from "@/lib/xmlImageOverlays";
-import { FindBar, useFindShortcut } from "./FindBar";
+import { FindBar, useFindShortcut } from "@/app/components/FindBar";
 
 function clearMarks(root: HTMLElement, cls: string) {
   root.querySelectorAll(`mark.${cls}`).forEach((m) => {

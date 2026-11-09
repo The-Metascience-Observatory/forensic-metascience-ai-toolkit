@@ -9,6 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp: shared panes and the image library split
+
+No visible change. `PdfPane` and `FindBar`, used by both the paper review
+page and the image item page, live in `app/components/` instead of a route
+folder. The 260 remaining lines of `app/images/lib.ts` are five modules under
+`lib/images/` (`urls`, `filters`, `sort`, `labels`, `geometry`); the old
+module is a re-export barrel, so its 25 importers are unchanged.
+
 ## [Unreleased] — 2026-11-09 — webapp geometry: one crop mapping, one mirror rule, one region reader
 
 No visible change; the boxes land where they did (pinned by the moved

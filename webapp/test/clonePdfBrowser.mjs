@@ -33,8 +33,8 @@ try {
     ['./FlipArrow','app/images/FlipArrow.tsx'],
     ['./paneDocument.ts','lib/paneDocument.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/textHighlightBoxes','lib/textHighlightBoxes.ts'],
     ['@/lib/severity','lib/severity.ts'],['@/lib/targets','lib/targets.ts'],
-    ['./FindBar','app/project/[project]/review/[slug]/FindBar.tsx'],
-    ['pdf','app/project/[project]/review/[slug]/PdfPane.tsx'],
+    ['./FindBar','app/components/FindBar.tsx'],['@/app/components/FindBar','app/components/FindBar.tsx'],
+    ['pdf','app/components/pdf/PdfPane.tsx'],
   ]) {
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
     await page.addScriptTag({content:`(()=>{const exports={};const require=n=>window.modules[n];${code}\nwindow.modules[${JSON.stringify(name)}]=exports;})();`});

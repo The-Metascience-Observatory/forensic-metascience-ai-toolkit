@@ -9,6 +9,41 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — detector tracks are reviewable: anchors, vocabularies, evidence, a queue
+
+No finding or record format changes. The seeded-RNG detector's runs
+(`rng_track`, 1.101.0) now REVIEW in the workbench rather than merely list.
+Every seam is keyed by producer or anchor kind, never by "rng", so the
+spectra and copy-paste tracks plug in by writing the same records.
+
+- **A detector's minimal anchors locate** (`locators._producer_anchor_targets`).
+  A `page_bbox` record becomes a `pdf_bbox` target (PDF points, top-left
+  origin, no conversion; boxes on one page fold into one target; a page with
+  no box is `page` confidence; page < 1 is skipped, never defaulted) and a
+  `table_cell` record with the toolkit's table address becomes an `xml_cell`
+  target when the paper has XML. Computed, persisted (sealed runs:
+  `located_by: producer_anchors`) and disk paths all translate them. Until
+  now an rng row had a quote-less locator with zero targets: nothing
+  highlighted.
+- Issue rows carry the producer's `anchors`, `inputs` and `notes`
+  (`review_issues._v2_issues_from_doc`).
+- **Decision vocabularies per producer.** `review_io.RNG_DECISIONS`
+  (`true_issue | disclosed_simulation | random_algorithm | artefact | unsure`),
+  `DECISIONS_BY_PRODUCER`, `decisions_for`; generated into `constants.gen.ts`
+  with `decisionsFor`. The webapp's button layouts moved to `lib/decisions.ts`,
+  pinned to the generated lists by `test/decisions.mjs`.
+- **Evidence renderers by producer** (`review/[slug]/evidence/`): `rng_track`
+  shows generator, seed, tier, excess bits, observed vs generated values
+  (flagging a pair beyond half the printed precision), matched blocks, the
+  table grid when filed, and the replay snippet with a copy button.
+- **A detector queue**, `/project/<p>/detector/<producer>` (`/rng` redirects
+  to `rng_track`): `findings_page(sort='track')` orders by tier then excess
+  bits from a bounded `track_basis` summary (`remote.TRACK_BASIS`, backfilled
+  by the tool-summary refresh, stamp 3), filters `decided=0|1`, and each row
+  names its paper folder, title and review state. Its link opens the paper
+  page on the page holding that finding (`paper(finding=...)` →
+  `focus_index`).
+
 ## [Unreleased] — 2026-11-07 — the copy-paste detector is its own repository
 
 No finding changes when the detector is installed. `copy_paste_detector/` and

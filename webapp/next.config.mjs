@@ -13,6 +13,13 @@ const nextConfig = {
         destination: "/project/:project/images/:item",
         permanent: true,
       },
+      {
+        // The seeded-RNG queue is the first detector queue; the generic route
+        // is keyed by the stored producer value.
+        source: "/project/:project/rng",
+        destination: "/project/:project/detector/rng_track",
+        permanent: false,
+      },
     ];
   },
   // scripts/serve.mjs points both at this machine's cache, outside Dropbox,

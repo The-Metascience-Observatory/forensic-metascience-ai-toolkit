@@ -360,3 +360,84 @@ def test_two_passages_that_collide_on_id_but_not_on_quote_both_survive():
     ]})
     assert len(got) == 2
     assert len(set(c["id"] for c in got)) == 2
+
+
+# --- a detector's own minimal anchors (rng_track and kin) -------------------
+
+def _rng_issue(anchors):
+    return {"id": "f_rng1", "kind": "numeric", "producer": "rng_track",
+            "anchors": anchors}
+
+
+def test_producer_page_bbox_anchor_is_a_pdf_bbox_target(tmp_path):
+    loc = locate_issue(_rng_issue([{"kind": "page_bbox", "file": "paper.pdf",
+                                    "page": 6, "bbox": [351.4, 383.9, 540.1, 506.6]}]),
+                       tmp_path, pdf=tmp_path / "paper.pdf")
+    [t] = loc["targets"]
+    assert t["kind"] == "pdf_bbox" and t["confidence"] == "bbox" and t["page"] == 6
+    assert t["passage_key"] == "f_rng1:pg6"
+    assert t["file"] is None, "the article's own PDF is not a separate file"
+    assert t["boxes"] == [{"page": 6, "x0": 351.4, "y0": 383.9, "x1": 540.1,
+                           "y1": 506.6, "tid": t["id"]}]
+    assert loc["page"] == 6 and loc["boxes"] == t["boxes"]
+    assert loc["confidence"] == "bbox" and loc["method"] == "producer_bbox"
+
+
+def test_two_producer_boxes_on_one_page_are_one_target(tmp_path):
+    loc = locate_issue(_rng_issue([
+        {"kind": "page_bbox", "page": 3, "bbox": [0, 0, 10, 10]},
+        {"kind": "page_bbox", "page": 3, "bbox": [20, 20, 30, 30]},
+        {"kind": "page_bbox", "page": 5, "bbox": [1, 1, 2, 2]},
+    ]), tmp_path)
+    assert [t["page"] for t in loc["targets"]] == [3, 5]
+    assert len(loc["targets"][0]["boxes"]) == 2
+
+
+def test_producer_page_without_a_box_is_page_confidence_never_page_one(tmp_path):
+    loc = locate_issue(_rng_issue([{"kind": "page_bbox", "page": 4}]), tmp_path)
+    [t] = loc["targets"]
+    assert t["confidence"] == "page" and t["boxes"] == [] and t["page"] == 4
+    for bad in (0, -1, None, "6", True):
+        assert locate_issue(_rng_issue([{"kind": "page_bbox", "page": bad,
+                                         "bbox": [0, 0, 1, 1]}]),
+                            tmp_path)["targets"] == []
+
+
+def test_producer_box_in_a_supplement_names_that_file(tmp_path):
+    loc = locate_issue(_rng_issue([{"kind": "page_bbox", "file": "supp.pdf",
+                                    "page": 2, "bbox": [0, 0, 1, 1]}]),
+                       tmp_path, pdf=tmp_path / "paper.pdf")
+    assert loc["targets"][0]["file"] == "supp.pdf"
+
+
+def test_table_cell_anchor_is_an_xml_cell_target_only_with_xml(tmp_path):
+    cell = {"kind": "table_cell", "table": "Table 3", "table_num": 3,
+            "row": 5, "col": 2, "raw": "0.2447", "cells": ["r5c2"]}
+    sections = [{"page_num": 1, "section": "Results", "text": "x"}]
+    loc = locate_issue(_rng_issue([cell]), tmp_path, sections=sections)
+    [t] = loc["targets"]
+    assert t["kind"] == "xml_cell" and t["confidence"] == "exact"
+    assert (t["table_num"], t["row"], t["col"]) == (3, 5, 2)
+    assert t["label"] == "Table 3: 0.2447" and t["passage_key"] == "f_rng1:T3"
+    assert locate_issue(_rng_issue([cell]), tmp_path)["targets"] == []
+    # a cell without an integer address names nothing
+    assert locate_issue(_rng_issue([{"kind": "table_cell", "table": "Table 3"}]),
+                        tmp_path, sections=sections)["targets"] == []
+
+
+def test_enriched_anchors_still_win_over_producer_records():
+    from forensic_metascience_ai_toolkit.locators import persisted_locators
+    enriched = {"anchor_id": "f_1:a:pdf", "kind": "pdf_text", "page": 2,
+                "quote": "q", "confidence": "exact", "boxes": []}
+    got = persisted_locators([{"id": "f_1", "anchors": [enriched]}])["locators"]
+    assert got[0]["located_by"] == "persisted_anchors"
+
+
+def test_persisted_locators_translate_producer_anchors_for_a_sealed_run():
+    from forensic_metascience_ai_toolkit.locators import persisted_locators
+    got = persisted_locators([
+        _rng_issue([{"kind": "page_bbox", "page": 6, "bbox": [1, 2, 3, 4]}]),
+        {"id": "f_none", "anchors": [{"kind": "quote", "quote": "no id"}]},
+    ])["locators"]
+    assert [l["issue_id"] for l in got] == ["f_rng1"]
+    assert got[0]["located_by"] == "producer_anchors" and got[0]["page"] == 6

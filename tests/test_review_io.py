@@ -253,3 +253,21 @@ def test_generic_image_false_positive_survives_save_and_reload(tmp_path, decisio
         "reviewer": "Bulk reviewer",
     })
     assert image_issue_decisions(tmp_path) == {"IMGDUP-1": decision}
+
+
+def test_a_detector_track_declares_its_own_vocabulary():
+    """rng_track's decisions are accepted end to end and chosen by producer;
+    the numeric and image vocabularies are untouched."""
+    from forensic_metascience_ai_toolkit.review_io import (
+        ALL_DECISIONS, DECISIONS_BY_PRODUCER, IMAGE_DECISIONS, NUMERIC_DECISIONS,
+        RNG_DECISIONS, decisions_for, merge_review)
+    assert set(RNG_DECISIONS) <= ALL_DECISIONS
+    assert DECISIONS_BY_PRODUCER["rng_track"] == RNG_DECISIONS
+    assert decisions_for("numeric", "rng_track") == RNG_DECISIONS
+    assert decisions_for("numeric", "tool_expert") == NUMERIC_DECISIONS
+    assert decisions_for("image", None) == IMAGE_DECISIONS
+    assert "disclosed_simulation" not in NUMERIC_DECISIONS + IMAGE_DECISIONS
+    merged = merge_review({}, {"issue_id": "f_rng1", "decision": "disclosed_simulation",
+                               "run": "forensic_review_rng"})
+    assert merged["runs"]["forensic_review_rng"]["issues"]["f_rng1"]["decision"] \
+        == "disclosed_simulation"

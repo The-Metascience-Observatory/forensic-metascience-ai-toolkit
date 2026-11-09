@@ -53,6 +53,7 @@ class TestParity:
 
     def test_the_file_carries_the_decision_vocabularies(self):
         text = W.target_path().read_text()
-        for probe in ("false_positive", "true_issue", "ran_result_discarded",
+        for probe in ("false_positive", "true_issue", "ran_result_discarded", "disclosed_simulation",
+                      "DECISIONS_BY_PRODUCER", "decisionsFor",
                       "legacyToNine", "GENERATED FILE"):
             assert probe in text

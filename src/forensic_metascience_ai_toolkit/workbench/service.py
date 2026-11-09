@@ -291,15 +291,32 @@ class Service(ImageServiceMixin):
         # GROUP FINDINGS (default on): one tool family in one table or page
         # range is one ENTRY, and pagination counts entries, so a group is
         # never split across pages. Off: today's flat list.
+        # A queue links here by finding id (`?finding=f_...`): the page that
+        # holds it is served, whatever offset the client sent, and its index
+        # on that page comes back as `focus_index`. Absent or unknown: None.
+        focus=args.get('finding')
+        def names(i): return focus and (i.get('id')==focus or str(i.get('detail_key'))==str(focus))
+        def focus_offset(units,grouped):
+            if not focus: return None
+            for n,u in enumerate(units):
+                if any(names(i) for i in (u if grouped else [u])):
+                    limit=max(1,min(100,int(args.get('limit') or 50)))
+                    return (n//limit)*limit
+            return None
         if str(args.get('group','1')).lower() not in ('0','false','off'):
             from ..finding_groups import group_issues
             entries=group_issues(issues)
+            fo=focus_offset(entries,True)
+            if fo is not None: args={**args,'offset':fo}
             shown,pagination=page(entries,args)
             visible=[i for e in shown for i in e]
             pagination.update(grouped=True,findings_total=len(issues))
         else:
+            fo=focus_offset(issues,False)
+            if fo is not None: args={**args,'offset':fo}
             visible,pagination=page(issues,args)
             pagination.update(grouped=False,findings_total=len(issues))
+        focus_index=next((k for k,i in enumerate(visible) if names(i)),None)
         for n,i in enumerate(visible,start=pagination['offset']+1):
             if i.get('priority') is None: i['priority']=n
         def model(r):
@@ -328,7 +345,7 @@ class Service(ImageServiceMixin):
         nav={'prev':ref(papers[at-1]) if at>0 else None,'next':ref(papers[at+1]) if 0<=at<len(papers)-1 else None}
         return dict(paper=repo.paper_row(p),project=args['project'],nav=nav,locators={},
             article={'mode':'none','warning':'Loading local source…'},sync=self.catalog.status(),
-            issues=dict(issues=visible,pagination=pagination,review=review,headline={},
+            issues=dict(issues=visible,focus_index=focus_index,pagination=pagination,review=review,headline={},
                 latest_run=latest['run_uid'] if latest else (selected[-1]['run_uid'] if selected else None),
                 available_runs=[o['id'] for o in options],run_options=options[:100],n_runs=len(options),
                 source={'kind':'database','status':latest.get('execution_status') or latest.get('status') if latest else 'not_requested',

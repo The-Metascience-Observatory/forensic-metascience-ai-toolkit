@@ -175,3 +175,22 @@ class TestHowTheRowReads:
         """Same rule as the other tracks: hidden unless include_tracks."""
         issues, _, _ = review_issues._v2_issues_from_doc(_rng_doc(), "r")
         assert issues == []
+
+
+    def test_the_issue_carries_the_detectors_records_and_inputs(self):
+        """The row's minimal anchors, measured inputs and notes reach the
+        issue: the review page locates and renders from them."""
+        row = {**_rng_row(),
+               "anchors": [{"kind": "page_bbox", "file": "p.pdf", "page": 6,
+                            "bbox": [1.0, 2.0, 3.0, 4.0]}],
+               "inputs": {"generator": "numpy_legacy:normal:even", "seed": 42,
+                          "tier": 1, "excess_bits": 2960.8},
+               "notes": "jitter axis also matched"}
+        issues, _, _ = review_issues._v2_issues_from_doc(_rng_doc([row]), "r",
+                                                         include_tracks=True)
+        iss = issues[0]
+        assert iss["anchors"] == row["anchors"]
+        assert iss["inputs"]["seed"] == 42 and iss["notes"] == row["notes"]
+        from forensic_metascience_ai_toolkit.locators import persisted_locators
+        loc = persisted_locators([iss])["locators"][0]
+        assert loc["page"] == 6 and loc["confidence"] == "bbox"

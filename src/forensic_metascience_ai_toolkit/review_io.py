@@ -82,7 +82,36 @@ IMAGE_DECISIONS = (
     "unsure",
 )
 TEXT_DECISIONS = NUMERIC_DECISIONS
-ALL_DECISIONS = frozenset(NUMERIC_DECISIONS + IMAGE_DECISIONS + LEGACY_DECISIONS)
+# A separately distributed detector track declares its own vocabulary, keyed
+# by its STORED producer (never a display name: the producer is hashed into
+# finding ids). The seeded-RNG detector (`rng_track`): a match is the paper's
+# own data presented as measured (`true_issue`), a simulation the paper
+# discloses, a legitimately random algorithm (random assignment, bootstrap,
+# a seeded demo), or a parse artefact. `artefact` is this track's false
+# positive; `history_publication` keys rejections on `false_positive*`, which
+# is moot while every rng row is quarantined and never publishes -- revisit
+# there before an rng row can publish.
+RNG_DECISIONS = (
+    "true_issue",
+    "disclosed_simulation",
+    "random_algorithm",
+    "artefact",
+    "unsure",
+)
+DECISIONS_BY_PRODUCER: dict[str, tuple[str, ...]] = {
+    "rng_track": RNG_DECISIONS,
+}
+ALL_DECISIONS = frozenset(
+    NUMERIC_DECISIONS + IMAGE_DECISIONS + LEGACY_DECISIONS
+    + tuple(d for v in DECISIONS_BY_PRODUCER.values() for d in v))
+
+
+def decisions_for(kind: str | None, producer: str | None = None) -> tuple[str, ...]:
+    """The vocabulary one issue row offers: the producer's own when it
+    declares one, else image or numeric by the row's kind."""
+    if producer and producer in DECISIONS_BY_PRODUCER:
+        return DECISIONS_BY_PRODUCER[producer]
+    return IMAGE_DECISIONS if kind == "image" else NUMERIC_DECISIONS
 
 # Per-issue fields the API shortcut may set. A PubPeer comment is often
 # one post covering several findings, so the same keys also live on

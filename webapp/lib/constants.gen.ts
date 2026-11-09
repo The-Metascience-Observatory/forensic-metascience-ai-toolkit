@@ -181,6 +181,18 @@ export const NUMERIC_DECISIONS = ["correct_minor", "correct_significant", "false
 
 export const IMAGE_DECISIONS = ["false_positive", "false_positive_other", "false_positive_same_condition", "false_positive_chart", "false_positive_overlay", "false_positive_supplement", "false_positive_magnification", "false_positive_scale_bar", "false_positive_channels", "false_positive_logo", "true_issue", "unsure"] as const;
 
+export const RNG_DECISIONS = ["true_issue", "disclosed_simulation", "random_algorithm", "artefact", "unsure"] as const;
+
+export const DECISIONS_BY_PRODUCER: Record<string, readonly string[]> = {
+  "rng_track": [
+    "true_issue",
+    "disclosed_simulation",
+    "random_algorithm",
+    "artefact",
+    "unsure"
+  ]
+};
+
 export const CHANNEL_STATES = ["ran", "ran_result_discarded", "refused", "did_not_run", "unknown"] as const;
 
 export const DISPLAY_NAMES: Record<string, string> = {
@@ -237,4 +249,13 @@ export function legacyToNine(sev5: string | null | undefined): number | null {
  * The stored values never change: they are hashed into finding ids. */
 export function displayName(id: string | null | undefined): string {
   return id ? DISPLAY_NAMES[id] ?? id : "";
+}
+
+/** The decision vocabulary one issue offers: the producer's own when it
+ * declares one (`review_io.DECISIONS_BY_PRODUCER`), else image or numeric
+ * by the row's kind. Keyed by the STORED producer value. */
+export function decisionsFor(kind: string | null | undefined,
+                             producer: string | null | undefined): readonly string[] {
+  if (producer && producer in DECISIONS_BY_PRODUCER) return DECISIONS_BY_PRODUCER[producer];
+  return kind === "image" ? IMAGE_DECISIONS : NUMERIC_DECISIONS;
 }

@@ -38,7 +38,8 @@ HEADER = """// GENERATED FILE -- do not edit.
 
 def render() -> str:
     from . import severity9
-    from .review_io import IMAGE_DECISIONS, NUMERIC_DECISIONS
+    from .review_io import (DECISIONS_BY_PRODUCER, IMAGE_DECISIONS,
+                            NUMERIC_DECISIONS, RNG_DECISIONS)
     from .webapp_index import CHANNEL_STATES
 
     ladder = severity9.as_json()
@@ -55,6 +56,11 @@ def render() -> str:
                  + json.dumps(list(NUMERIC_DECISIONS)) + " as const;\n")
     lines.append("export const IMAGE_DECISIONS = "
                  + json.dumps(list(IMAGE_DECISIONS)) + " as const;\n")
+    lines.append("export const RNG_DECISIONS = "
+                 + json.dumps(list(RNG_DECISIONS)) + " as const;\n")
+    lines.append("export const DECISIONS_BY_PRODUCER: Record<string, readonly string[]> = "
+                 + json.dumps({k: list(v) for k, v in DECISIONS_BY_PRODUCER.items()},
+                              indent=2, sort_keys=True) + ";\n")
     lines.append("export const CHANNEL_STATES = "
                  + json.dumps(list(CHANNEL_STATES)) + " as const;\n")
     from .names import display_names
@@ -92,6 +98,15 @@ export function legacyToNine(sev5: string | null | undefined): number | null {
  * The stored values never change: they are hashed into finding ids. */
 export function displayName(id: string | null | undefined): string {
   return id ? DISPLAY_NAMES[id] ?? id : "";
+}
+
+/** The decision vocabulary one issue offers: the producer's own when it
+ * declares one (`review_io.DECISIONS_BY_PRODUCER`), else image or numeric
+ * by the row's kind. Keyed by the STORED producer value. */
+export function decisionsFor(kind: string | null | undefined,
+                             producer: string | null | undefined): readonly string[] {
+  if (producer && producer in DECISIONS_BY_PRODUCER) return DECISIONS_BY_PRODUCER[producer];
+  return kind === "image" ? IMAGE_DECISIONS : NUMERIC_DECISIONS;
 }
 """)
     return "\n".join(lines)

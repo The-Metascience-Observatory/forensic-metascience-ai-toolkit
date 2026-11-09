@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState } from "react";
 
 import { displayName, legacyToNine, sev9Color, sev9Label } from "@/lib/constants.gen";
 import { SEV_COLOR } from "@/lib/severity";
 import { highlightJumps, passageKey, STEPPER_AT, type Target } from "@/lib/targets";
+import { decisionColumnsFor } from "@/lib/decisions";
+import { CopyButton } from "./CopyButton";
+import { renderEvidence } from "./evidence";
 
 /** How the tool tag was established (`review_issues.finding_tool`). Only the
  *  first two mean a recorded tool run backs the row; a technique label is the
@@ -33,62 +36,6 @@ function ToolBadge({ tool, source }: { tool?: string | null; source?: string }) 
     </span>
   );
 }
-
-function CopyQuote({ text }: { text: string }) {
-  const [ok, setOk] = useState(false);
-  async function copy(e: MouseEvent) {
-    e.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
-    }
-    setOk(true);
-    window.setTimeout(() => setOk(false), 1200);
-  }
-  return (
-    <button type="button" onClick={copy} style={{ fontSize: 11, marginTop: 6 }}
-            title="Copy this quote for a PubPeer comment">
-      {ok ? "Copied" : "Copy quote"}
-    </button>
-  );
-}
-
-const NUMERIC_COLS = [
-  [
-    ["correct_minor", "Correct — minor issue"],
-    ["correct_significant", "Correct — significant issue"],
-  ],
-  [
-    ["false_positive", "False positive"],
-  ],
-] as const;
-
-const IMAGE_COLS = [
-  [
-    ["true_issue", "True issue"],
-    ["unsure", "Unsure"],
-  ],
-  [
-    ["false_positive", "False positive"],
-    ["false_positive_same_condition", "FP — same condition"],
-    ["false_positive_other", "FP — other"],
-    ["false_positive_chart", "FP — chart / label"],
-    ["false_positive_overlay", "FP — channel overlay"],
-    ["false_positive_supplement", "FP — own supplement"],
-    ["false_positive_magnification", "FP — magnification"],
-    ["false_positive_scale_bar", "False positive: scale bar"],
-    ["false_positive_channels", "False positive: different channels"],
-    ["false_positive_logo", "False positive: logo"],
-  ],
-] as const;
 
 const HIDE_KEY = "metascience.hideBelowSev";
 
@@ -289,7 +236,9 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
         if (gid && !isOpen(gid)) return header;
         const saved = review?.issues?.[iss.id] || {};
         const focused = i === at;
-        const decisionCols = iss.kind === "image" ? IMAGE_COLS : NUMERIC_COLS;
+        // Columns by the row's producer first (a detector track declares its
+        // own vocabulary), else image or numeric by kind.
+        const decisionCols = decisionColumnsFor(iss);
         const jumps = focused && onJump
           ? highlightJumps(locById?.get(iss.id)?.targets, preferredSurface)
           : [];
@@ -389,6 +338,9 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
             {iss.plain && (
               <p style={{ margin: "6px 0 0", fontSize: 13 }}>{iss.plain}</p>
             )}
+            {/* A detector track's own evidence (observed vs generated values,
+                replay), by producer; nothing for rows without a renderer. */}
+            {focused && renderEvidence(iss)}
             {Array.isArray(iss.artefacts) && iss.artefacts[0] && (
               <p className="muted" style={{ fontSize: 11, margin: "4px 0 0" }}>
                 <span className="pill">{iss.artefacts[0].kind || "file"}</span>
@@ -414,7 +366,8 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
                   borderLeft: "2px solid var(--line)", color: "var(--muted)",
                   fontSize: 12,
                 }}>“{iss.quote}”</blockquote>
-                <CopyQuote text={iss.quote} />
+                <CopyButton text={iss.quote} label="Copy quote"
+                            title="Copy this quote for a PubPeer comment" />
               </div>
             )}
             {jumps.length > STEPPER_AT && (

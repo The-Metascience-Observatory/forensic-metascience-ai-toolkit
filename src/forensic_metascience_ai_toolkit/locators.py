@@ -427,6 +427,116 @@ def _sheet_targets(issue: dict) -> list[dict]:
     return out
 
 
+_PRODUCER_ANCHOR_KINDS = frozenset({"page_bbox", "table_cell"})
+
+
+def _page_number(raw) -> int | None:
+    """A 1-based page from a producer record, or None. Never page 1 by
+    default: a missing place is none."""
+    if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        return None
+    page = int(raw)
+    return page if page >= 1 else None
+
+
+def _producer_anchor_targets(issue: dict, *, main_pdf_name: str | None = None,
+                             has_xml: bool = True) -> list[dict]:
+    """Targets from a finding's MINIMAL producer anchors (anchors.md section 5:
+    `page_bbox` / `table_cell` records that carry no `anchor_id`).
+
+    A separately distributed detector (rngdetect's `rng_track`, and any later
+    `*_track` producer) writes its run without the toolkit's annotator, so
+    these records are the only place its finding can name: a region of a
+    page in PDF points (top-left origin, as PyMuPDF measures and PdfPane
+    paints: no conversion), or a cell of the article's own table addressed
+    the way `extraction/xml_html` renders it (`table_num` in document order,
+    1-based `row` with the folded header as row 1, 0-based `col`). The
+    translation is keyed by anchor kind, never by producer, so a spectra or
+    copy-paste track plugs in by writing the same records.
+
+    Boxes on one page fold into ONE `pdf_bbox` target (one passage per page,
+    the image-placement rule in `locate_issue`); a record with a page and no
+    usable box is a `page`-confidence target; a page below 1 or a cell
+    without an integer address is skipped, never defaulted. `table_cell`
+    records become `xml_cell` targets only when the paper has XML to render
+    them in. `file` is set only for a PDF other than the article's own."""
+    iid = str(issue.get("id") or "")
+    anchors = issue.get("anchors")
+    if not isinstance(anchors, list):
+        return []
+    by_page: dict[int, list[dict]] = {}
+    file_by_page: dict[int, str | None] = {}
+    pages_only: list[int] = []
+    cells: list[dict] = []
+    seen_cells: set[tuple] = set()
+    for a in anchors:
+        if (not isinstance(a, dict) or a.get("anchor_id")
+                or a.get("kind") not in _PRODUCER_ANCHOR_KINDS):
+            continue
+        if a["kind"] == "page_bbox":
+            page = _page_number(a.get("page"))
+            if page is None:
+                continue
+            file = a.get("file")
+            rel = None
+            if isinstance(file, str) and file:
+                name = Path(file).name
+                if main_pdf_name is None or name != main_pdf_name:
+                    rel = name if Path(file).is_absolute() else file
+            file_by_page.setdefault(page, rel)
+            bbox = a.get("bbox")
+            if (isinstance(bbox, (list, tuple)) and len(bbox) == 4
+                    and all(isinstance(x, (int, float)) and not isinstance(x, bool)
+                            for x in bbox)):
+                by_page.setdefault(page, []).append(
+                    {"page": page, "x0": float(bbox[0]), "y0": float(bbox[1]),
+                     "x1": float(bbox[2]), "y1": float(bbox[3])})
+            else:
+                pages_only.append(page)
+            continue
+        if not has_xml:
+            continue
+        address = tuple(a.get(k) for k in ("table_num", "row", "col"))
+        if any(isinstance(v, bool) or not isinstance(v, (int, float)) for v in address):
+            continue
+        table_num, row, col = (int(v) for v in address)
+        if (table_num, row, col) in seen_cells:
+            continue
+        seen_cells.add((table_num, row, col))
+        table = str(a.get("table") or f"Table {table_num}")
+        raw = a.get("raw")
+        cells.append({
+            "id": f"{iid}:cell-{table_num}-r{row}c{col}:xml",
+            "passage_key": f"{iid}:T{table_num}",
+            "kind": "xml_cell",
+            "label": f"{table}: {raw}" if raw not in (None, "") else table,
+            "quote": None, "file": None, "page": None, "boxes": [],
+            "section_index": None,
+            "table_num": table_num, "row": row, "col": col, "raw": raw,
+            "confidence": "exact", "method": "table_cell",
+        })
+    targets: list[dict] = []
+    for page in sorted(by_page):
+        tid = f"{iid}:page:{page}"
+        boxes = by_page[page]
+        for b in boxes:
+            b["tid"] = tid
+        targets.append({
+            "id": tid, "passage_key": f"{iid}:pg{page}", "kind": "pdf_bbox",
+            "label": f"p. {page}", "quote": None, "file": file_by_page.get(page),
+            "page": page, "boxes": boxes, "section_index": None,
+            "confidence": "bbox", "method": "producer_bbox",
+        })
+    for page in sorted(set(pages_only) - set(by_page)):
+        targets.append({
+            "id": f"{iid}:page:{page}", "passage_key": f"{iid}:pg{page}",
+            "kind": "pdf_bbox", "label": f"p. {page}", "quote": None,
+            "file": file_by_page.get(page), "page": page, "boxes": [],
+            "section_index": None, "confidence": "page", "method": "producer_page",
+        })
+    return targets + cells
+
+
 def _pdf_target(cand: dict, pages: list[str], body_norm: str,
                 pdf: Path | None, doc, file_rel: str | None) -> dict:
     loc = locate(cand["quote"], pages, body_norm)
@@ -636,6 +746,11 @@ def locate_issue(issue: dict, paper_dir: Path, *,
             if xt["confidence"] != "none":
                 targets.append(xt)
     targets.extend(_sheet_targets(issue))
+    # A detector's own records (rng_track and kin): the only place such a
+    # row can name, since no annotator ran on it.
+    targets.extend(_producer_anchor_targets(
+        issue, main_pdf_name=(pdf.name if pdf is not None else None),
+        has_xml=bool(sections)))
     out["targets"] = targets
     return _apply_primary(out, targets)
 
@@ -684,11 +799,17 @@ def persisted_locators(issues: list[dict] | None) -> dict:
         if not isinstance(iss, dict):
             continue
         translated = _targets_from_anchors(iss.get("anchors"))
+        located_by = "persisted_anchors"
         if translated is None:
-            continue
+            # Not enriched, but a detector's own minimal records still
+            # describe the file its run read (a sealed rng_track run).
+            translated = _producer_anchor_targets(iss)
+            located_by = "producer_anchors"
+            if not translated:
+                continue
         loc = _apply_primary({**_empty(str(iss.get("id") or "")),
                               "targets": translated}, translated)
-        loc["located_by"] = "persisted_anchors"
+        loc["located_by"] = located_by
         out.append(loc)
     return {"locators": out}
 

@@ -12,7 +12,7 @@ export function PapersPage({project}:{project:string}){
  load();const timer=setInterval(load,30000);window.addEventListener('focus',load);return()=>{controller.abort();clearInterval(timer);window.removeEventListener('focus',load);};
  },[project,offset,q,sort]);
  return <div className="page"><a href="/">← projects</a><h1>{project}</h1>
- <p><a href={`/project/${encodeURIComponent(project)}/images`}>Image findings</a>{' · '}<a href={`/project/${encodeURIComponent(project)}/copypaste`}>Copy/paste findings</a>{' · '}<a href={`/project/${encodeURIComponent(project)}/stats`}>Statistics</a></p>
+ <p><a href={`/project/${encodeURIComponent(project)}/images`}>Image findings</a>{' · '}<a href={`/project/${encodeURIComponent(project)}/copypaste`}>Copy/paste findings</a>{' · '}<a href={`/project/${encodeURIComponent(project)}/detector/rng_track`}>RNG findings</a>{' · '}<a href={`/project/${encodeURIComponent(project)}/stats`}>Statistics</a></p>
  <label>Search <input value={q} onChange={e=>{setQ(e.target.value);setOffset(0);}} placeholder="title, DOI, or folder (10.1007--s004010050748)" aria-label="Search papers by title, DOI, or folder name" style={{minWidth:280}} /></label>{' '}
  <button disabled={!offset} onClick={()=>setOffset(Math.max(0,offset-50))}>Previous 50</button> {total?offset+1:0}–{offset+papers.length} of {total}{' '}
  <button disabled={offset+50>=total} onClick={()=>setOffset(offset+50)}>Next 50</button>

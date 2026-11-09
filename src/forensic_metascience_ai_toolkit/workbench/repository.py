@@ -306,7 +306,11 @@ class Repository(SharedImageQueueMixin):
                 if args.get('journal') and args['journal']!=p.get('journal'):continue
                 if args.get('year') and str(args['year'])!=str(p.get('year')):continue
                 rows.append({**f,'paper_id':p.get('paper_slug') or Path(p.get('dir') or '').name,
-                             'run_id':r['run_uid'],'journal':p.get('journal'),'year':p.get('year'),'detail_key':db_primary_key(f)})
+                             'run_id':r['run_uid'],'journal':p.get('journal'),'year':p.get('year'),'detail_key':db_primary_key(f),
+                             # What a cross-paper queue lists and links by: the
+                             # paper's folder and title, and the row's review state.
+                             'dir':p.get('dir'),'paper_title':p.get('title'),
+                             'reviews':self.judgments(r['run_uid'],f['finding_id'])})
         for rid in ids:
             r=self.runs[rid]
             for raw in self.items_by_run.get(rid,[]):
@@ -324,7 +328,22 @@ class Repository(SharedImageQueueMixin):
                                  producer=component(r),technique=candidate.get('detector_kind'),severity=None,
                                  impossible=False,journal=p.get('journal'),year=p.get('year'),component_item=raw['id'],
                                  reviews=candidate['reviews']))
-        rows.sort(key=lambda f:(-(f.get('severity') or 0),f['finding_id']))
+        decided=str(args.get('decided') or '')
+        if decided in ('0','1'):
+            rows=[f for f in rows if bool(((f.get('reviews') or {}).get('decision')))==(decided=='1')]
+        if args.get('sort')=='track':
+            # A detector track's queue: tier first (1 is the strongest class),
+            # then the evidence beyond the search size, from the bounded
+            # `track_basis` summary (`remote.TRACK_BASIS`); rows without one
+            # sort last, never as tier 0.
+            def basis(f):
+                b=f.get('track_basis')
+                return b if isinstance(b,dict) else {}
+            def num(v,default):
+                return v if isinstance(v,(int,float)) and not isinstance(v,bool) else default
+            rows.sort(key=lambda f:(num(basis(f).get('tier'),99),-num(basis(f).get('excess_bits'),0.0),f['finding_id']))
+        else:
+            rows.sort(key=lambda f:(-(f.get('severity') or 0),f['finding_id']))
         result,pagination=page(rows,args)
         return {'rows':result,'pagination':pagination,'sync':self.catalog.status()}
 

@@ -11,6 +11,8 @@ import './imageLocator.mjs';
 import './requestCache.mjs';
 import './infiniteFeed.mjs';
 import './servePort.mjs';
+import './decisions.mjs';
+import './rngEvidence.mjs';
 import { restoreFilter, DEFAULT_FILTER, DECISIONS,
   cycleQueueSort, paperColumn, nextUndecidedIn, judgmentDecision, verdictLabel } from '../app/images/lib.ts';
 assert.deepEqual(restoreFilter({...DEFAULT_FILTER,adjudicator:'Saved AI judgment: issue · low',offset:100}),DEFAULT_FILTER);

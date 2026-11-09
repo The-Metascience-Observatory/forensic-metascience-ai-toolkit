@@ -88,6 +88,15 @@ LOCATION_BASIS = ("jsonb_build_object("
                   f"from jsonb_array_elements({_ANCHORS}) a) s where v is not null))")
 
 
+#: A detector track's measured inputs, for a cross-paper queue to sort and
+#: label by (`repository.findings_page(sort='track')`): tier, bits, the
+#: generator and seed, counts and the table/column/page named. Scalars only;
+#: the row's full `inputs` stay in the record. Null for rows without inputs.
+TRACK_BASIS = picked("t.record->'inputs'",
+                     ['tier', 'excess_bits', 'log10_chance', 'generator', 'seed',
+                      'n_values', 'n_blocks', 'match_kind', 'table', 'column', 'page'])
+
+
 def summary_expr(table, base='to_jsonb(t)'):
     if table == 'runs':
         return f"({base}-'meta'-'history_record') || jsonb_build_object('history_record'," + picked(
@@ -113,7 +122,7 @@ def summary_expr(table, base='to_jsonb(t)'):
     if table == 'findings':
         return (f"({base}-'record'-'anchors'-'anchor_summary'-'web_sources'-'tool_verdict'-'adjudication'-'description'-'basis')"
                 f" || jsonb_build_object('tool_basis',{TOOL_BASIS},"
-                f"'location_basis',{LOCATION_BASIS})")
+                f"'location_basis',{LOCATION_BASIS},'track_basis',{TRACK_BASIS})")
     return base
 
 
@@ -386,8 +395,9 @@ class Remote:
         completion. Until it has run, such a row reads `not_recorded` -- never
         "model judgement", which would be a claim the cache cannot make.
         """
-        # 2: `location_basis` joined `tool_basis` (1.83.0); one pass fills both.
-        stamp = [2, catalog.state('db_identity')]
+        # 2: `location_basis` joined `tool_basis` (1.83.0); 3: `track_basis`
+        # (the rng_track queue). One pass fills all three.
+        stamp = [3, catalog.state('db_identity')]
         if catalog.state('tool_summary_schema') == stamp:
             return
         after = ''
@@ -400,16 +410,18 @@ class Remote:
                 return
             ids = [json.loads(key)[0] for key in keys]
             rows = self.connect().execute(
-                f'select t.id,{TOOL_BASIS},{LOCATION_BASIS} from findings t '
+                f'select t.id,{TOOL_BASIS},{LOCATION_BASIS},{TRACK_BASIS} from findings t '
                 'where t.id=any(%s)', [ids]).fetchall()
             self.bytes += len(json.dumps(rows, default=str).encode())
             found = {row[0]: row[1:] for row in rows}
             with catalog.lock, catalog.db:
                 catalog.db.executemany(
                     "update records set body=json_set(body,'$.tool_basis',json(?),"
-                    "'$.location_basis',json(?)) where entity='findings' and key=?",
-                    [(json.dumps((found.get(i) or (None, None))[0]),
-                      json.dumps((found.get(i) or (None, None))[1]), key)
+                    "'$.location_basis',json(?),'$.track_basis',json(?)) "
+                    "where entity='findings' and key=?",
+                    [(json.dumps((found.get(i) or (None, None, None))[0]),
+                      json.dumps((found.get(i) or (None, None, None))[1]),
+                      json.dumps((found.get(i) or (None, None, None))[2]), key)
                      for i, key in zip(ids, keys)])
             after = keys[-1]
 

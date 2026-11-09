@@ -214,6 +214,14 @@ def _v2_issues_from_doc(doc: dict, run_name: str, *, include_tracks=False) -> tu
             # unbacked editorial row always took.
             "stage1_finding_ids": [fid] if f.get("computed_by") == "registry_tool" else [],
             "passages": passages,
+            # The producer's own records and measured inputs travel with the
+            # row: a detector track (rng_track) has no quote, so its minimal
+            # `page_bbox` / `table_cell` anchors are the only locator source
+            # (`locators._producer_anchor_targets`), and its `inputs` are what
+            # an evidence renderer shows (generator, seed, excess bits).
+            "anchors": [a for a in (f.get("anchors") or []) if isinstance(a, dict)],
+            "inputs": f.get("inputs") if isinstance(f.get("inputs"), dict) else None,
+            "notes": f.get("notes"),
             "artefacts": [],
             "extras": {},
         })

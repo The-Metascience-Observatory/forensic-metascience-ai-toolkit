@@ -56,6 +56,11 @@ export function Reviewer({ project, slug, dir }: {
   const [review, setReview] = useState<any>(null);
   const searchParams = useSearchParams(), router = useRouter();
   const run = searchParams.get("run");
+  // `?finding=<id>` (a queue link): the service serves the page holding it
+  // and names its index; consumed once that page is on screen, so paging
+  // and j/k afterwards are the reader's own.
+  const focusFinding = searchParams.get("finding");
+  const focusConsumed = useRef(false);
   const setRun = (value:string) => { const q=new URLSearchParams(searchParams.toString()); q.set("run",value); router.push(`?${q}`); };
   const [draftsOpen, setDraftsOpen] = useState(false);
   const saveChain = useRef(Promise.resolve());
@@ -132,7 +137,7 @@ export function Reviewer({ project, slug, dir }: {
     let cancel = false;
     setData(null); setErr(null); setAt(0);
     setFocusTargetId(null); setForceSurface(null);
-    fetch(`/api/paper?offset=${offset}&group=${grouped ? 1 : 0}&project=${encodeURIComponent(project)}&slug=${encodeURIComponent(slug)}${dir ? `&dir=${encodeURIComponent(dir)}` : ""}${run ? `&run=${encodeURIComponent(run)}` : ""}`)
+    fetch(`/api/paper?offset=${offset}&group=${grouped ? 1 : 0}&project=${encodeURIComponent(project)}&slug=${encodeURIComponent(slug)}${dir ? `&dir=${encodeURIComponent(dir)}` : ""}${run ? `&run=${encodeURIComponent(run)}` : ""}${focusFinding && !focusConsumed.current ? `&finding=${encodeURIComponent(focusFinding)}` : ""}`)
       .then(async (r) => {
         const body = await r.json();
         if (!r.ok) throw new Error(body.error || r.statusText);
@@ -142,6 +147,13 @@ export function Reviewer({ project, slug, dir }: {
         if (cancel) return;
         setData(body);
         setReview(body.issues?.review || { issues: {}, paper: {} });
+        const fi = body.issues?.focus_index;
+        if (typeof fi === "number") {
+          const po = body.issues?.pagination?.offset;
+          if (typeof po === "number" && po !== offset) setOffset(po);
+          else focusConsumed.current = true;
+          setAt(fi);
+        }
         const sourceParams=new URLSearchParams({method:"source",project,slug,dir:body.paper.dir,run:run || "latest"});
         fetch(`/api/workbench?${sourceParams}`).then(async r=>{const source=await r.json();if(!r.ok)throw new Error(source.error);
           if(!cancel)setData((prev:any)=>prev&&({...prev,article:source.article,locators:prev.locators?.locators?.length ? prev.locators : source.locators}));

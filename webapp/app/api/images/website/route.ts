@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 import { errMsg } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
+import { guard } from "@/lib/routeGuard";
 import { pyJson, pyModuleJson, repoRoot } from "@/lib/python";
 import { workbench } from "@/lib/workbench";
 import { OVERRIDE_LOG, overrideConfirmed, overrideLine } from "@/lib/embargoOverride";
@@ -15,10 +16,20 @@ export const dynamic = "force-dynamic";
 const MAX_PNG_BYTES = 25 * 1024 * 1024;
 const EMBARGO_MARKER = "EMBARGO.json";
 
-/** The website checkout: METASCIENCE_WEBSITE_DIR, else the sibling of this repo. */
+/** The website checkout: METASCIENCE_WEBSITE_DIR, else the nearest
+ * `metascience_observatory_website` holding findings.json beside this repo or
+ * beside any folder above it (the toolkit sits one level deeper than the
+ * website, in AA_forensic_metascience/). Falls back to the sibling path so the
+ * error names a concrete location. */
 function websiteDir(): string {
   const env = (process.env.METASCIENCE_WEBSITE_DIR || "").trim();
-  return path.resolve(env || path.join(repoRoot(), "..", "metascience_observatory_website"));
+  if (env) return path.resolve(env);
+  const sibling = path.resolve(repoRoot(), "..", "metascience_observatory_website");
+  for (let d = path.resolve(repoRoot(), ".."); ; d = path.dirname(d)) {
+    const candidate = path.join(d, "metascience_observatory_website");
+    if (fs.existsSync(path.join(candidate, FINDINGS_JSON))) return candidate;
+    if (path.dirname(d) === d) return sibling;
+  }
 }
 
 /** The first EMBARGO.json at or above the paper folder. A corpus under a
@@ -40,6 +51,7 @@ const fail = (error: string, status = 400) => NextResponse.json({ error }, { sta
  *  deploying stay with the person, so nothing here reaches the public site. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
+  const refused = guard(req); if (refused) return refused;
   let form: FormData;
   try { form = await req.formData(); } catch { return fail("expected multipart form data"); }
   const field = (k: string) => { const v = form.get(k); return typeof v === "string" ? v.trim() : ""; };

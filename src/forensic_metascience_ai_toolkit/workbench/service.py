@@ -434,7 +434,15 @@ class Service(ImageServiceMixin):
                 if not selected:
                     return {'article':{'mode':'none','warning':'No source recorded for this paper in the selected run.'},'locators':{},'availability':'not_recorded'}
             else:
-                selected=self.repo.selected_runs(args['project'],selection,kind,p['id'])
+                try:
+                    selected=self.repo.selected_runs(args['project'],selection,kind,p['id'])
+                except ValueError:
+                    # The page names a run of another component -- a detector's
+                    # own run (rng_track) opened from its queue. The run on
+                    # screen is the run whose source is wanted; only `latest`
+                    # is bound to the comprehensive review.
+                    if selection=='latest': raise
+                    selected=self.repo.selected_runs(args['project'],selection,None,p['id'])
             r=selected[-1] if selected else None
             def for_paper(artifact):
                 scope=artifact.get('record',{}).get('paper')

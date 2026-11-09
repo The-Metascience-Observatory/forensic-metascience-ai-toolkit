@@ -99,3 +99,13 @@ def test_paper_page_serves_the_page_holding_the_named_finding(catalog):
     assert grouped['issues'][grouped['focus_index']]['id'] == 'f_3'
     unknown = s.handle('paper', {**base, 'offset': '2', 'finding': 'f_nope'})['issues']
     assert unknown['focus_index'] is None and unknown['pagination']['offset'] == 2
+
+
+def test_source_for_an_explicitly_selected_detector_run_is_not_refused(catalog, tmp_path):
+    """Opened from the queue, the page names the rng_track run; the source
+    read used to look for it among comprehensive runs only and raise."""
+    s = Service(catalog, Offline(), background=False)
+    got = s.handle('source', {'project': 'project', 'slug': 'paper', 'dir': 'paper', 'run': 'r_rng'})
+    assert 'article' in got and 'not recorded' not in json.dumps(got)
+    with pytest.raises(ValueError, match='not recorded'):
+        s.handle('source', {'project': 'project', 'slug': 'paper', 'dir': 'paper', 'run': 'r_missing'})

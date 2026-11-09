@@ -57,16 +57,24 @@ export function printedPrecision(values: readonly number[]): number {
   return Number(`1e-${d}`);
 }
 
-/** Observed/generated pairs over the common prefix; a pair is `off` when the
- *  difference exceeds half the printed precision of the observed values. */
+/** Observed/generated pairs over the common prefix.
+ *
+ *  `printed` (a table or spreadsheet value, which the paper printed to a
+ *  known number of decimals): a pair is `off` when the difference exceeds
+ *  half the printed step, since an exact reproduction must round to the
+ *  printed digits. Not printed (a coordinate read off a figure, in data
+ *  units): the values are measurements with the renderer's own error, there
+ *  is no printed step to hold them to, and the detector's fit residual is
+ *  the match criterion; nothing is flagged and the panel reports max |Δ|. */
 export function valuePairs(
   observed: readonly unknown[] | null | undefined,
   generated: readonly unknown[] | null | undefined,
+  { printed = true }: { printed?: boolean } = {},
 ): ValuePair[] {
   const obs = (observed ?? []).map(Number);
   const gen = (generated ?? []).map(Number);
   const n = Math.min(obs.length, gen.length);
-  const tol = printedPrecision(obs.filter(Number.isFinite)) / 2 + 1e-12;
+  const tol = printed ? printedPrecision(obs.filter(Number.isFinite)) / 2 + 1e-12 : Infinity;
   const out: ValuePair[] = [];
   for (let i = 0; i < n; i++) {
     const delta = obs[i] - gen[i];
@@ -74,6 +82,22 @@ export function valuePairs(
                off: !Number.isFinite(delta) || Math.abs(delta) > tol });
   }
   return out;
+}
+
+/** Were the observed values printed by the paper (a table or sheet), or
+ *  measured off a figure? The exporter says so in `reported.units` ("data
+ *  units" for coordinates) and names the table for table hits. */
+export function valuesArePrinted(inputs: RngInputs | null | undefined,
+                                 units: string | null | undefined): boolean {
+  if (inputs?.table) return true;
+  return !/data units|coordinate|pixel/i.test(units || "");
+}
+
+/** The largest |Δ| of the pairs, or null. */
+export function maxDelta(pairs: readonly ValuePair[]): number | null {
+  let m: number | null = null;
+  for (const p of pairs) if (Number.isFinite(p.delta)) m = Math.max(m ?? 0, Math.abs(p.delta));
+  return m;
 }
 
 /** `numpy_legacy:normal:even` -> "NumPy legacy (np.random.seed) · normal · even". */

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { decimals, printedPrecision, valuePairs, generatorLabel, inputFacts,
-         hitCellIndex } from '../lib/rngEvidence.ts';
+         hitCellIndex, valuesArePrinted, maxDelta } from '../lib/rngEvidence.ts';
 
 assert.equal(decimals(0.2447), 4);
 assert.equal(decimals(12), 0);
@@ -39,4 +39,13 @@ assert.equal(idx.get('3,1'), 0);
 assert.equal(idx.get('5,2'), 1);
 assert.equal(idx.has('9,9'), false);
 assert.equal(hitCellIndex(null).size, 0);
+// Coordinates measured off a figure have no printed step: never flagged, max |Δ| reported.
+const measured = valuePairs([480.245, 468.135], [480.247, 468.137], { printed: false });
+assert.deepEqual(measured.map((p) => p.off), [false, false]);
+assert.ok(Math.abs(maxDelta(measured) - 0.002) < 1e-9);
+assert.equal(maxDelta([]), null);
+assert.equal(valuesArePrinted({ page: 6 }, 'data units'), false);
+assert.equal(valuesArePrinted({ table: 'Table 2' }, 'data units'), true);
+assert.equal(valuesArePrinted(null, 'table values as printed'), true);
+assert.equal(valuesArePrinted(null, null), true);
 console.log('rngEvidence ok');

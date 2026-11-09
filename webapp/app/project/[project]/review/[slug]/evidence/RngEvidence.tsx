@@ -1,7 +1,7 @@
 "use client";
 
-import { hitCellIndex, inputFacts, valuePairs, type RngInputs, type TableGrid }
-  from "@/lib/rngEvidence";
+import { hitCellIndex, inputFacts, maxDelta, valuePairs, valuesArePrinted,
+         type RngInputs, type TableGrid } from "@/lib/rngEvidence";
 import { CopyButton } from "../CopyButton";
 
 type Block = Record<string, unknown>;
@@ -71,12 +71,18 @@ export function RngEvidence({ issue }: { issue: any }) {
   const reported = issue?.reported ?? {};
   const computed = issue?.computed ?? {};
   const facts = inputFacts(inputs);
-  const pairs = valuePairs(reported.observed_first_values, computed.generated_first_values);
+  const printed = valuesArePrinted(inputs, reported.units);
+  const pairs = valuePairs(reported.observed_first_values, computed.generated_first_values,
+                           { printed });
   const blocks: Block[] = Array.isArray(computed.blocks) ? computed.blocks : [];
   const grid: TableGrid | null = computed.table_grid ?? null;
   const replay = typeof computed.replay === "string" ? computed.replay : "";
   if (!facts.length && !pairs.length && !blocks.length && !replay && !grid) return null;
   const off = pairs.filter((p) => p.off).length;
+  const worst = maxDelta(pairs);
+  const agreement = printed
+    ? (off ? `${off} beyond printed precision` : "all within printed precision")
+    : (worst === null ? "" : `max |Δ| ${fmt(worst)} (measured coordinates; the fit residual is the criterion)`);
   return (
     <section data-evidence="rng_track" onClick={(e) => e.stopPropagation()}
              style={{ marginTop: 8, fontSize: 12 }}>
@@ -97,7 +103,7 @@ export function RngEvidence({ issue }: { issue: any }) {
             Observed vs generated: {pairs.length} shown
             {inputs?.n_values ? ` of ${inputs.n_values}` : ""}
             {reported.units ? ` (${reported.units})` : ""}
-            {off ? `, ${off} beyond printed precision` : ", all within printed precision"}
+            {agreement ? `, ${agreement}` : ""}
           </summary>
           <table className="grid rng-values">
             <thead><tr><th>#</th><th>observed</th><th>generated</th><th>Δ</th></tr></thead>

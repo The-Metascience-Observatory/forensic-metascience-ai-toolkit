@@ -9,6 +9,28 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp: the four large components are modules; review payloads typed
+
+No visible change; every split moved code by line range and kept URLs,
+request bodies, keyboard maps, storage keys and strings. Checked by the
+Vitest suite, the seven Playwright scripts, the build and a live load of
+the RNG finding page.
+
+- `SummaryFigure.tsx` (932 lines) → `images/[item]/summary/` (renderers,
+  canvas drawing, composition, crop-editor hook, fetches, PNG export,
+  add-to-website form, dialog, button). `ImageItem.tsx` (578) → a 144-line
+  composition over `useItemData`, `useItemKeys`, `usePrefetchNeighbours`
+  and `ItemLayout`. `ImageQueue.tsx` (614) → 408 lines over
+  `useQueueFilters`, `useBulkReview`, `useQueueKeyboard` and
+  `QueueThumbnail`. `Reviewer.tsx` (511) → 353 over `usePaperReview` and
+  `useReviewKeys`. `PdfPane.tsx` (583) → 202 over `usePdfDocument`,
+  `textLayer` and `paintHits`.
+- `lib/types/review.ts` (`Issue`, `Judgments`, `ReviewEvent`, `IssueGroup`,
+  `Artefact`, `Article`, `ReviewState`) replaces `any` across the paper
+  page, the evidence renderers, the source view, the panes and the status
+  bar: 30 of 62 explicit-any warnings gone.
+- Thirty-odd one-line source files expanded with Prettier.
+
 ## [Unreleased] — 2026-11-09 — webapp: shared panes and the image library split
 
 No visible change. `PdfPane` and `FindBar`, used by both the paper review

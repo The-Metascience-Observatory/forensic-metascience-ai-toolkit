@@ -34,6 +34,8 @@ try {
     ['./paneDocument.ts','lib/paneDocument.ts'],['../affine.ts','lib/affine.ts'],['./geometry/project.ts','lib/geometry/project.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/textHighlightBoxes','lib/textHighlightBoxes.ts'],
     ['@/lib/severity','lib/severity.ts'],['@/lib/targets','lib/targets.ts'],
     ['./FindBar','app/components/FindBar.tsx'],['@/app/components/FindBar','app/components/FindBar.tsx'],
+    ['@/lib/pdfjs','lib/pdfjs.ts'],
+    ['./textLayer','app/components/pdf/textLayer.ts'],['./paintHits','app/components/pdf/paintHits.ts'],['./usePdfDocument','app/components/pdf/usePdfDocument.ts'],
     ['pdf','app/components/pdf/PdfPane.tsx'],
   ]) {
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;

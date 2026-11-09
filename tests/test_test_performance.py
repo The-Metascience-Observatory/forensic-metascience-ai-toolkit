@@ -108,10 +108,14 @@ def test_stack_includes_both_python_roots_and_no_live_services(tmp_path):
     jobs = stack.stack_jobs(tmp_path, ["-q"], "node")
     python = next(command for name, command, _ in jobs if name == "python")
     assert python == [sys.executable, "-m", "pytest", "-q"]  # pyproject owns both roots
+    # One Vitest lane and one ESLint lane for the webapp, plus a lane per
+    # plain browser script; live-server scripts and helpers are excluded.
     assert {name for name, _, _ in jobs} == {
         "python",
         "typescript",
         "lint-inert",
+        "web-unit",
+        "web-lint",
         "web-smoke",
         "web-reviewSyncBrowser",
         "web-newRegression",

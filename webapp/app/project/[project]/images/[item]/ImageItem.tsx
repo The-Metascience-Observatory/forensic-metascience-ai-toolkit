@@ -44,7 +44,6 @@ import { MissedDuplicationPanel, missedBoxes, regionFor, type MissedDraft } from
 import { PaperReference, PaperReferences } from "./PaperReferences";
 import { imagePdfBoxes, type ImagePdfBox } from "@/lib/imagePdfBoxes";
 import { describeTransform, orientationLabel, placementOrientation, toPrinted } from "@/lib/affine";
-import { REVIEW_QUEUED_MESSAGE } from "@/lib/reviewSync";
 import {
   parseStoredZoom, zoomIn, zoomOut, ZOOM_FIT, ZOOM_KEY,
 } from "@/lib/sourceView";
@@ -434,7 +433,7 @@ export function ImageItem({ project, projectName, itemId }: {
               {carryOffers.offers.slice(0, 1).map(o => (
                 <p key={o.event_id} style={{ margin: 0 }}>
                   Decided <b>{o.decision}</b> by {o.reviewer} on run <span className="mono">{o.run}</span>{o.at ? ` (${String(o.at).slice(0, 10)})` : ""}.
-                  Same evidence: the panels' archived pixels and crop boxes match.{" "}
+                  Same evidence: the panels&apos; archived pixels and crop boxes match.{" "}
                   <button type="button" onClick={() => decide(o.decision, false, undefined, o.run)}>Confirm for this run</button>
                 </p>
               ))}

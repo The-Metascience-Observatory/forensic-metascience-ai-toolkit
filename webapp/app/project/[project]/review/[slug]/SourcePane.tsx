@@ -244,6 +244,8 @@ export function SourcePane({ project, slug, dir, article, issue, locator, extras
           >
             <button
               type="button"
+              // A download of an API media URL, not a page navigation.
+              // eslint-disable-next-line @next/next/no-location-assign-relative-destination
               onClick={() => { window.location.href = `${pdfUrl}&download=1`; }}
               title="Download this PDF"
               aria-label="Download this PDF"

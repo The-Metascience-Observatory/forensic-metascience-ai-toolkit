@@ -1,3 +1,5 @@
+import "server-only";
+
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -79,8 +81,13 @@ export function pythonBin(): string {
   return process.platform === "win32" ? "python" : "python3";
 }
 
+/** The toolkit checkout the bridge runs against. `METASCIENCE_TOOLKIT_ROOT`
+ * names it explicitly (a hosted deployment, a worktree, a webapp started
+ * from elsewhere); otherwise it is the parent of this webapp folder, which
+ * is how the checkout is laid out. */
 export function repoRoot(): string {
-  return path.resolve(process.cwd(), "..");
+  const configured = process.env.METASCIENCE_TOOLKIT_ROOT;
+  return configured ? path.resolve(configured) : path.resolve(process.cwd(), "..");
 }
 
 /** The toolkit's own source roots come from THIS checkout, whatever an

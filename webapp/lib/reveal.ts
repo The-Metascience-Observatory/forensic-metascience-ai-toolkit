@@ -1,3 +1,5 @@
+import "server-only";
+
 import { execFile } from "node:child_process";
 import { existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";

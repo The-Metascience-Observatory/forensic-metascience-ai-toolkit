@@ -1,5 +1,5 @@
 import { displayFirstAuthor } from "./citation.ts";
-import type { Paper } from "./store";
+import type { Paper } from "./types/catalog.ts";
 
 const RUN_AT = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/;
 

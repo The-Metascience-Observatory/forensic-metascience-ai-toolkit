@@ -31,7 +31,7 @@ try {
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['./FlipArrow','app/images/FlipArrow.tsx'],
-    ['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/pdfBoxes','lib/pdfBoxes.ts'],
+    ['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/pdfBoxes','lib/pdfBoxes.ts'],
     ['@/lib/severity','lib/severity.ts'],['@/lib/targets','lib/targets.ts'],
     ['./FindBar','app/project/[project]/review/[slug]/FindBar.tsx'],
     ['pdf','app/project/[project]/review/[slug]/PdfPane.tsx'],

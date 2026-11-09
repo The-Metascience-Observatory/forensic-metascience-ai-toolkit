@@ -37,7 +37,7 @@ try {
     ['@/lib/imageXmlBoxes','lib/imageXmlBoxes.ts'],
     ['@/lib/xmlImageOverlays','lib/xmlImageOverlays.ts'],
     ['../../review/[slug]/HtmlArticlePane','app/project/[project]/review/[slug]/HtmlArticlePane.tsx'],
-    ['@/app/images/lib','app/images/lib.ts'],
+    ['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],
     ['./NativeImagePane','app/project/[project]/images/[item]/NativeImagePane.tsx'],
     ['xml','app/project/[project]/images/[item]/XmlPaperPane.tsx'],
   ];

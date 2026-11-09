@@ -1,3 +1,5 @@
+import "server-only";
+
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import type { Readable } from "node:stream";
 import { pythonBin, pythonEnv, repoRoot } from "./python.ts";

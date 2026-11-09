@@ -68,7 +68,7 @@ export default async function DetectorQueuePage(props: {
       ) : result.rows.length === 0 ? (
         <p>No rows for this producer in the synchronized catalog for this project
            {decided ? " under this filter" : ""}. An absent row is not a clean paper: check the
-           run's channel state on the paper page.</p>
+           run&apos;s channel state on the paper page.</p>
       ) : (
         <>
           <table className="grid">

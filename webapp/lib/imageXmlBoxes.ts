@@ -1,4 +1,4 @@
-import type { Item, Panel } from '../app/images/lib.ts';
+import type { Item, Panel } from './types/images.ts';
 import { nativeSource, type XmlFigure } from './xmlFigures.ts';
 
 import { matchDirection, type FlipDirection } from './flipArrow.ts';

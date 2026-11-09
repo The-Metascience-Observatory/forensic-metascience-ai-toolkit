@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { citationLine, displayFirstAuthor } from "@/lib/citation";
 import { sev9Color, sev9Label } from "@/lib/constants.gen";
 import { sev9Of } from "@/lib/projectTableSort";
-import type { Paper } from "@/lib/store";
+import type { Paper } from "@/lib/types/catalog";
 import {
   compactRunAt,
   cycleSort,

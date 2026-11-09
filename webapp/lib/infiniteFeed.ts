@@ -1,4 +1,4 @@
-import type { Feed } from '../app/images/lib';
+import type { Feed } from './types/images.ts';
 
 /** Keep every appended page in one repository revision, including after reviews.
  *

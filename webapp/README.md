@@ -19,9 +19,9 @@ live project list. See [storage](../docs/workbench_storage.md).
 
 ## Run
 
-Needs Node.js 20.9 or newer (Next 16); `npm test` needs 22.6+ for
-`--experimental-strip-types`. This machine's `/usr/bin/node` is 18, which Next
-16 refuses by name: use the nvm one (`nvm use 22`) or put it first on `PATH`.
+Needs Node.js 20.9 or newer (Next 16). This machine's `/usr/bin/node` is 18,
+which Next 16 refuses by name: use the nvm one (`nvm use 22`) or put it first
+on `PATH`.
 
 ```bash
 # from the repo root
@@ -142,18 +142,37 @@ section scroll rather than a box.
 
 ## Checks
 
-`npm test` is offline: `smoke.mjs` (helpers, byte ranges, filter restore,
-infinite-queue paging, serve ports), `reviewSync.mjs`, and `python.mjs`.
-`npm run build` includes the TypeScript check. Live scripts need a running
-app and a named corpus; they are not part of `npm test`:
+Offline, no server, no database (`npm test` runs Vitest):
 
-- `test:browser`, `test:history`, `test:infinite-scroll`, `test:performance`,
-  `test:review-sync-browser`
-- `node --experimental-strip-types test/workbench.mjs` and
-  `test/workbench-browser.mjs` (documented in the storage guide)
+- `npm test` — unit tests (`test/*.test.mjs`: helpers, byte ranges, filter
+  restore, infinite-queue paging, serve ports, review sync, decision
+  vocabularies, RNG evidence) and component tests under jsdom with Testing
+  Library (`test/components/*.test.tsx`: projects table, text support, video
+  generation, cache status). `test/python.test.mjs` exercises the Python
+  bridge and skips itself where the toolkit interpreter is absent.
+- `npm run lint` — ESLint (`eslint.config.mjs`: Next's rules, plus `lib/`
+  may not import `app/`). The React Compiler hook rules and `no-explicit-any`
+  are warnings until the component splits burn them down; errors must stay
+  at zero. `npm run format` / `format:check` run Prettier.
+- `npm run typecheck` — `tsc --noEmit`. `npm run build` includes it too.
+- `npm run test:components` — the Playwright component scripts that need a
+  real browser: canvas drawing, image decoding, pdf.js and GIF encoding
+  (`cloneComparatorBrowser`, `clonePdfBrowser`, `gifGenerationBrowser`,
+  `imageHoverBrowser`, `imageQueueSummaryBrowser`, `textRegionAuditBrowser`,
+  `xmlPaperBrowser`). Install Chromium once with `npx playwright install
+  chromium`. A script without its opt-in fixture prints `SKIPPED` and the
+  runner (`test/run-scripts.mjs`) counts it as skipped, never as a pass.
+- `npm run test:security` — `auditSecurity.mjs`: cross-origin refusal on every
+  mutation route, sandboxed HTML evidence, ranges and cache headers.
 
-For browser verification, install Chromium once with
-`npx playwright install chromium`, start the app, then run:
+Live scripts need a running app and a named corpus; they are not part of the
+offline set: `npm run test:live` (or singly `test:browser`, `test:history`,
+`test:infinite-scroll`, `test:performance`), plus `node test/workbench.mjs`
+and `test/workbench-browser.mjs` (documented in the storage guide). GitHub
+Actions runs lint, typecheck, the offline tests and the build on every
+webapp change (`.github/workflows/webapp.yml`).
+
+For browser verification, start the app, then run:
 
 ```bash
 METASCIENCE_TEST_URL=http://localhost:3100 \
@@ -167,6 +186,17 @@ hotkeys, suffix ranges, conditional requests and browser errors. Override
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to use an existing Chromium installation.
 `METASCIENCE_NEXT_DIST=.next-audit` isolates validation builds from a running
 development server.
+
+### Layout
+
+`lib/` is the layer `app/` builds on and never imports `app/` (enforced by
+lint). Record types shared by both live in `lib/types/` (`images.ts`,
+`runs.ts`, `catalog.ts`); `app/images/lib.ts` re-exports the image ones.
+Server-only modules (`lib/python.ts`, `workbench.ts`, `reveal.ts`,
+`settings.ts`, `store.ts`, `paths.ts`) carry `import "server-only"`, so a
+client component that imports one fails the build instead of shipping Node
+code. `METASCIENCE_TOOLKIT_ROOT` names the toolkit checkout the Python bridge
+runs against; by default it is the parent of this folder.
 
 ### Versioned run history
 

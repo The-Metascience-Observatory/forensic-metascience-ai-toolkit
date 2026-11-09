@@ -17,7 +17,7 @@ try {
     ['./flipArrow.ts','lib/flipArrow.ts'],
     ['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
     ['./FlipArrow','app/images/FlipArrow.tsx'],
-    ['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/requestCache','lib/requestCache.ts'],
+    ['./paneDocument.ts','lib/paneDocument.ts'],['@/lib/paneDocument','lib/paneDocument.ts'],['@/lib/imagePdfBoxes','lib/imagePdfBoxes.ts'],['@/lib/requestCache','lib/requestCache.ts'],
     ['./lib','app/images/lib.ts'],['./useFeed','app/images/useFeed.ts'],
     ['./PanelPreview','app/images/PanelPreview.tsx'],['hover','app/images/HoverPreview.tsx'],
   ];

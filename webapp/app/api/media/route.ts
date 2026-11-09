@@ -24,7 +24,9 @@ async function serve(req: Request, head: boolean) {
   try {
     const variant = url.searchParams.get("variant");
     if (variant && variant !== "thumbnail") return NextResponse.json({ error: "Unknown media variant" }, { status: 400 });
-    let {value:resolved,timings} = await workbenchTimed("artifact", {component, project, dir, f: file, variant}, {signal:req.signal});
+    const first = await workbenchTimed("artifact", {component, project, dir, f: file, variant}, {signal:req.signal});
+    const timings = first.timings;
+    let resolved = first.value;
     if (variant === "thumbnail" && !resolved.thumbnail_ready) {
       const generated=await workbenchTimed("thumbnail", {component, project, dir, f: file}, {signal:req.signal});
       resolved=generated.value;

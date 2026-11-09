@@ -1,4 +1,4 @@
-import type { Panel } from '../app/images/lib.ts';
+import type { Panel } from './types/images.ts';
 
 export type XmlFigure = {
   id: string; anchor: string; label: string; caption: string;

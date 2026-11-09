@@ -1,17 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Item } from "@/app/images/lib";
+import type { Item, VideoJob } from "@/lib/types/images";
 
-export type VideoJob = {
-  status: "idle" | "queued" | "running" | "ready" | "failed";
-  can_generate: boolean;
-  reason?: string | null;
-  error?: string | null;
-  video?: string | null;
-  thumbnail?: string | null;
-  revision?: string;
-};
+export type { VideoJob };
 
 export function useVideoGeneration(project: string, item: Item | null | undefined, enabled = true) {
   const key = JSON.stringify([project, item?.run_id, item?.id, item?.record_revision]);

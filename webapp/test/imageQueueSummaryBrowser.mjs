@@ -42,7 +42,7 @@ try {
   const modules=[
     ['./affine.ts','lib/affine.ts'],['@/lib/imagePreview','lib/imagePreview.ts'],
     ['@/lib/flipArrow','lib/flipArrow.ts'],['@/app/images/FlipArrow','app/images/FlipArrow.tsx'],
-    ['@/app/images/lib','app/images/lib.ts'],['queue','app/project/[project]/images/ImageQueue.tsx'],
+    ['@/lib/paneDocument','lib/paneDocument.ts'],['@/app/images/lib','app/images/lib.ts'],['queue','app/project/[project]/images/ImageQueue.tsx'],
   ];
   for(const [name,file] of modules){
     const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;

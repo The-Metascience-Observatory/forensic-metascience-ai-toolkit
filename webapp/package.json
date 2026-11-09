@@ -8,9 +8,16 @@
     "dev": "node scripts/serve.mjs dev",
     "build": "node scripts/serve.mjs build",
     "start": "node scripts/serve.mjs start",
-    "test": "node --experimental-strip-types test/settings.mjs && node --experimental-strip-types test/smoke.mjs && node --experimental-strip-types test/reviewSync.mjs && node --experimental-strip-types test/python.mjs",
     "postinstall": "node scripts/prepare-assets.mjs",
-    "test:review-sync-browser": "node test/reviewSyncBrowser.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:components": "node test/run-scripts.mjs test/cloneComparatorBrowser.mjs test/clonePdfBrowser.mjs test/gifGenerationBrowser.mjs test/imageHoverBrowser.mjs test/imageQueueSummaryBrowser.mjs test/textRegionAuditBrowser.mjs test/xmlPaperBrowser.mjs",
+    "test:security": "node test/auditSecurity.mjs",
+    "test:live": "node test/run-scripts.mjs test/browser.mjs test/run-history.mjs test/infiniteQueueBrowser.mjs test/bulkImageReviewBrowser.mjs test/imageScreeningStatus.mjs test/onDemandVideoBrowser.mjs test/workbench-browser.mjs test/workbench.mjs",
     "test:browser": "node test/browser.mjs",
     "test:history": "node test/run-history.mjs",
     "test:performance": "node test/imageQueueFilters.mjs && node test/performance.mjs",
@@ -21,13 +28,24 @@
     "next": "^16.4.5",
     "pdfjs-dist": "^4.8.69",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "server-only": "^0.0.1",
+    "swr": "^2.5.1"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
+    "jsdom": "^31.0.0",
     "playwright": "^1.56.1",
-    "typescript": "^5.6.2"
+    "prettier": "^3.9.10",
+    "typescript": "^5.6.2",
+    "vitest": "^5.1.0"
   }
 }

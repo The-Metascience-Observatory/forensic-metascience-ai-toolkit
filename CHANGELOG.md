@@ -9,6 +9,38 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp toolchain and layering
+
+No finding, review or record format changes; the webapp's checks and
+layout only.
+
+- **Vitest replaces the plain-node scripts and the transpile-into-a-page
+  harness** for everything that does not need a real browser: 26 pure
+  scripts became `test/*.test.mjs` (eight of them had never been wired into
+  `npm test`), and four Playwright component tests (projects table, text
+  support, review sync, video generation) are Testing Library tests under
+  jsdom. The seven scripts that draw on a canvas, decode images, run pdf.js
+  or encode GIFs stay on Playwright behind `npm run test:components`, whose
+  runner counts a fixture-less script as SKIPPED, never as a pass; the
+  security audit is `npm run test:security`; live-server checks are
+  `npm run test:live`. `server-only` is aliased to an empty module in tests.
+- **ESLint and Prettier** (`eslint.config.mjs`, Next's rules). First run:
+  313 errors, 30 warnings. The React Compiler hook rules and
+  `no-explicit-any` are warnings with a burn-down note; `<img>` is allowed
+  (media is streamed by `/api/media`); the eight remaining errors were
+  fixed. `npm run lint` is at zero errors and runs in GitHub Actions with
+  typecheck, the offline tests and the build (`.github/workflows/webapp.yml`).
+- **`lib/` no longer imports `app/`** (lint-enforced). The image record
+  types moved to `lib/types/images.ts` (re-exported by `app/images/lib.ts`),
+  the run picker types to `lib/types/runs.ts`, the index types to
+  `lib/types/catalog.ts`; the pane-document rules to `lib/paneDocument.ts`.
+  Server modules carry `import "server-only"`. `METASCIENCE_TOOLKIT_ROOT`
+  names the toolkit checkout for the Python bridge (default: the parent of
+  `webapp/`).
+- Housekeeping: seven stale `.next*` build folders (about 400 MB in Dropbox)
+  deleted, the tracked `tsconfig.tsbuildinfo` untracked, `app/Citation.tsx`
+  removed in favour of `lib/citation`.
+
 ## [Unreleased] — 2026-11-09 — detector tracks are reviewable: anchors, vocabularies, evidence, a queue
 
 No finding or record format changes. The seeded-RNG detector's runs

@@ -1,4 +1,5 @@
-import { paneDocument, type Item } from "../app/images/lib.ts";
+import { paneDocument } from "./paneDocument.ts";
+import type { Item } from "./types/images.ts";
 import { projectImagePolygon, type ImagePdfBox } from "./imagePdfBoxes.ts";
 import { imageXmlBoxes, type ImageSize, type XmlImageBox } from "./imageXmlBoxes.ts";
 import { canReadXml, type XmlFigure } from "./xmlFigures.ts";

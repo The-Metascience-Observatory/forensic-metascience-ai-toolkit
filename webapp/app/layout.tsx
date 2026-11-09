@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CacheStatus } from "./CacheStatus";
 import { DeleteProgress } from "./DeleteProgress";
 import type { Metadata } from "next";
@@ -22,9 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="shell">
           <header className="topbar">
-            <a href="/" style={{ fontWeight: 600, color: "var(--fg)" }}>
+            <Link href="/" style={{ fontWeight: 600, color: "var(--fg)" }}>
               Rapid review
-            </a>
+            </Link>
             <div style={{ marginLeft: "auto", display: "flex",
                           alignItems: "center", gap: 8 }}>
               <CacheStatus /><ThemeToggle />

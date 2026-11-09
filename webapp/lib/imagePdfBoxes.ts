@@ -1,4 +1,5 @@
-import { paneDocument, isPdfReference, type Item, type Panel, type Placement } from "../app/images/lib.ts";
+import { isPdfReference, paneDocument } from "./paneDocument.ts";
+import type { Item, Panel, Placement } from "./types/images.ts";
 
 import { matchDirection, type FlipDirection } from "./flipArrow.ts";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { mediaUrl } from "@/lib/mediaUrl";
 import type { Item, VideoJob } from "@/lib/types/images";
 
 export type { VideoJob };
@@ -82,7 +83,8 @@ export function useVideoGeneration(project: string, item: Item | null | undefine
         setState({ key, embedded: startedWith, job, error: error instanceof Error ? error.message : String(error), recovering: true });
     });
   };
-  const thumbnailUrl = job?.thumbnail && item ? `/api/media?${new URLSearchParams({component:"image_forensics",project, dir: item.paper.dir, f: job.thumbnail, download: "1"})}` : null;
+  const thumbnailUrl = job?.thumbnail && item
+    ? mediaUrl(project, item.paper.dir, job.thumbnail, "image_forensics", { download: true }) : null;
   return { job, thumbnailUrl, recovering: currentState && !!state.recovering, error: currentState ? state.error : undefined, generating: submitting === key, generate, refresh };
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { mediaUrl } from "@/lib/mediaUrl";
 import { useEffect, useMemo, useState } from "react";
 
 export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
@@ -51,10 +52,7 @@ export function SpreadsheetPane({ project, slug, dir, artefact, label }: {
     return s;
   }, [grid]);
 
-  const download = (rel: string) =>
-    `/api/media?project=${encodeURIComponent(project)}`
-    + `&dir=${encodeURIComponent(dir)}&f=${encodeURIComponent(rel)}`
-    + `&download=1`;
+  const download = (rel: string) => mediaUrl(project, dir, rel, null, { download: true });
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>

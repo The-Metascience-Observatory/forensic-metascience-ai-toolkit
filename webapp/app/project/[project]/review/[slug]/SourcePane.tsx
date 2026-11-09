@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
 
 import { HtmlArticlePane } from "./HtmlArticlePane";
 import { PdfPane } from "./PdfPane";
@@ -13,27 +13,14 @@ import {
   unanchoredReason, zoomIn, zoomOut, ZOOM_FIT, ZOOM_KEY,
   type Surface, type UnanchoredReason,
 } from "@/lib/sourceView";
-
-function mediaUrl(project: string, dir: string, rel: string) {
-  return `/api/media?project=${encodeURIComponent(project)}`
-    + `&dir=${encodeURIComponent(dir)}&f=${encodeURIComponent(rel)}`;
-}
+import { mediaUrl } from "@/lib/mediaUrl";
+import { useSplitPane } from "@/app/useSplitPane";
 
 const EXHIBIT_KEY = "metascience.exhibit";
 const EXHIBIT_DEFAULT = 82;
 const EXHIBIT_MIN = 40;
 const EXHIBIT_MAX = 92;
 
-function clampExhibit(pct: number): number {
-  return Math.min(EXHIBIT_MAX, Math.max(EXHIBIT_MIN, pct));
-}
-
-function readExhibitPct(): number {
-  if (typeof window === "undefined") return EXHIBIT_DEFAULT;
-  const n = Number(window.localStorage.getItem(EXHIBIT_KEY));
-  if (Number.isFinite(n) && n >= EXHIBIT_MIN && n <= EXHIBIT_MAX) return n;
-  return EXHIBIT_DEFAULT;
-}
 
 export function SourcePane({ project, slug, dir, article, issue, locator, extras,
   surface, canSwitch, onSurface, focusTargetId }: {
@@ -111,54 +98,15 @@ export function SourcePane({ project, slug, dir, article, issue, locator, extras
     setRefitNonce((i) => i + 1);
   }, [applyZoom]);
 
-  const colRef = useRef<HTMLDivElement>(null);
-  const exhibitPctRef = useRef(EXHIBIT_DEFAULT);
-  const [exhibitPct, setExhibitPct] = useState(EXHIBIT_DEFAULT);
-  const [dragging, setDragging] = useState(false);
-
-  useEffect(() => {
-    const n = readExhibitPct();
-    exhibitPctRef.current = n;
-    setExhibitPct(n);
-  }, []);
-
-  const applyExhibit = useCallback((pct: number) => {
-    const next = clampExhibit(pct);
-    exhibitPctRef.current = next;
-    setExhibitPct(next);
-  }, []);
-
-  const onGutterPointerDown = useCallback((e: PointerEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragging(true);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  }, []);
-
-  const onGutterPointerMove = useCallback((e: PointerEvent<HTMLDivElement>) => {
-    if (e.buttons === 0 || !colRef.current) return;
-    const rect = colRef.current.getBoundingClientRect();
-    if (rect.height <= 0) return;
-    applyExhibit(((e.clientY - rect.top) / rect.height) * 100);
-  }, [applyExhibit]);
-
-  const onGutterPointerUp = useCallback(() => {
-    setDragging(false);
-    window.localStorage.setItem(EXHIBIT_KEY, String(exhibitPctRef.current));
-  }, []);
-
-  const onGutterKeyDown = useCallback((e: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault();
-      e.stopPropagation();
-      applyExhibit(exhibitPctRef.current + (e.key === "ArrowDown" ? 2 : -2));
-      window.localStorage.setItem(EXHIBIT_KEY, String(exhibitPctRef.current));
-    }
-  }, [applyExhibit]);
+  // Exhibit/source split: a standing preference, like the page's main split.
+  const exhibit = useSplitPane({ storageKey: EXHIBIT_KEY, axis: "y", def: EXHIBIT_DEFAULT,
+                                 min: EXHIBIT_MIN, max: EXHIBIT_MAX,
+                                 label: "Resize exhibit and source panes", storage: "local" });
 
   return (
     <div
-      className={`source-col${dragging ? " dragging" : ""}`}
-      ref={colRef}
+      className={`source-col${exhibit.dragging ? " dragging" : ""}`}
+      ref={exhibit.containerRef}
     >
       {revealError && <p role="alert" style={{color: "var(--sev-highly)", margin: 10}}>{revealError}</p>}
       {warning && surface !== "sheet" && (
@@ -178,7 +126,7 @@ export function SourcePane({ project, slug, dir, article, issue, locator, extras
         <div
           className="exhibit-strip"
           style={pdfUrl || surface === "xml" || surface === "sheet"
-            ? { flex: `0 0 ${exhibitPct}%` }
+            ? { flex: `0 0 ${exhibit.pct}%` }
             : { flex: "1 1 auto" }}
         >
           {exhibitUrl && (
@@ -217,21 +165,7 @@ export function SourcePane({ project, slug, dir, article, issue, locator, extras
         </div>
       )}
       {hasMedia && (pdfUrl || surface === "xml" || surface === "sheet") && (
-        <div
-          className={`split-gutter split-gutter-row${dragging ? " dragging" : ""}`}
-          role="separator"
-          aria-orientation="horizontal"
-          aria-label="Resize exhibit and source panes"
-          aria-valuemin={EXHIBIT_MIN}
-          aria-valuemax={EXHIBIT_MAX}
-          aria-valuenow={Math.round(exhibitPct)}
-          tabIndex={0}
-          onPointerDown={onGutterPointerDown}
-          onPointerMove={onGutterPointerMove}
-          onPointerUp={onGutterPointerUp}
-          onPointerCancel={onGutterPointerUp}
-          onKeyDown={onGutterKeyDown}
-        />
+        <div {...exhibit.separatorProps} />
       )}
       <div style={{ flex: 1, minHeight: 0, position: "relative" }}>
         {surface === "pdf" && (

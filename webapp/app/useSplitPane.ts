@@ -25,17 +25,23 @@ import type {
 
 export type SplitAxis = "x" | "y";
 
-function readPct(key: string, def: number, min: number, max: number): number {
+export type SplitStorage = "session" | "local";
+
+function store(kind: SplitStorage): Storage {
+  return kind === "local" ? window.localStorage : window.sessionStorage;
+}
+
+function readPct(key: string, def: number, min: number, max: number, kind: SplitStorage): number {
   if (typeof window === "undefined") return def;
   try {
-    const n = Number(window.sessionStorage.getItem(key));
+    const n = Number(store(kind).getItem(key));
     if (Number.isFinite(n) && n >= min && n <= max) return n;
   } catch { /* storage blocked: the default is a fine answer */ }
   return def;
 }
 
-function storePct(key: string, pct: number): void {
-  try { window.sessionStorage.setItem(key, String(pct)); } catch { /* fine */ }
+function storePct(key: string, pct: number, kind: SplitStorage): void {
+  try { store(kind).setItem(key, String(pct)); } catch { /* fine */ }
 }
 
 export type SplitPane = {
@@ -56,13 +62,17 @@ export type SplitPane = {
   separatorProps: ComponentPropsWithoutRef<"div">;
 };
 
-export function useSplitPane({ storageKey, axis, def, min, max, label }: {
+export function useSplitPane({ storageKey, axis, def, min, max, label, storage = "session" }: {
   storageKey: string;
   axis: SplitAxis;
   def: number;
   min: number;
   max: number;
   label: string;
+  /** `session` (default) for a reading posture that lasts a queue; `local`
+   *  for a standing preference, which is what the paper review page's
+   *  findings/source split and the exhibit/source split have always been. */
+  storage?: SplitStorage;
 }): SplitPane {
   const [pct, setPct] = useState(def);
   const [dragging, setDragging] = useState(false);
@@ -73,10 +83,10 @@ export function useSplitPane({ storageKey, axis, def, min, max, label }: {
   // Read after mount, never during render: the server has no sessionStorage,
   // and a first paint that disagreed with it would be a hydration mismatch.
   useEffect(() => {
-    const n = readPct(storageKey, def, min, max);
+    const n = readPct(storageKey, def, min, max, storage);
     pctRef.current = n;
     setPct(n);
-  }, [storageKey, def, min, max]);
+  }, [storageKey, def, min, max, storage]);
 
   const apply = useCallback((next: number) => {
     const v = Math.min(max, Math.max(min, next));
@@ -109,8 +119,8 @@ export function useSplitPane({ storageKey, axis, def, min, max, label }: {
   const onPointerUp = useCallback(() => {
     setDragging(false);
     setSettled((n) => n + 1);
-    storePct(storageKey, pctRef.current);
-  }, [storageKey]);
+    storePct(storageKey, pctRef.current, storage);
+  }, [storageKey, storage]);
 
   const onKeyDown = useCallback((e: ReactKeyboardEvent<HTMLDivElement>) => {
     const less = axis === "x" ? "ArrowLeft" : "ArrowUp";
@@ -121,8 +131,8 @@ export function useSplitPane({ storageKey, axis, def, min, max, label }: {
     e.stopPropagation();
     apply(pctRef.current + (e.key === more ? 2 : -2));
     setSettled((n) => n + 1);
-    storePct(storageKey, pctRef.current);
-  }, [apply, axis, storageKey]);
+    storePct(storageKey, pctRef.current, storage);
+  }, [apply, axis, storageKey, storage]);
 
   const separatorProps: ComponentPropsWithoutRef<"div"> = {
     className: `split-gutter${axis === "y" ? " split-gutter-row" : ""}${dragging ? " dragging" : ""}`,

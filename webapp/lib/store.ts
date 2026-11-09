@@ -86,48 +86,12 @@ function realOrSelf(p: string): string {
   try { return fs.realpathSync(p); } catch { return path.resolve(p); }
 }
 
-/**
- * Resolve a file inside a project. THE SECURITY BOUNDARY.
- *
- * `dir` is corpus-relative (`done/10.x`, `grok_run/10.x`, or `10.x`).
- * `rel` is paper-relative. Backslashes are accepted and folded to `/`.
- * Symlinks that escape the papers root are refused.
- */
-export async function resolveInProject(
-  project: string, dir: string, rel: string
-): Promise<string> {
-  const settings = loadSettings();
-  const papersRoot = realOrSelf(settings.papers_root);
-  if (badProject(project)) {
-    throw new Error("bad project");
-  }
-  const paperDir = posixRel(dir);
-  const fileRel = posixRel(rel);
-  if (badRel(fileRel)) {
-    throw new Error("path must be relative to the paper directory");
-  }
-  if (badRel(paperDir)) {
-    throw new Error("bad paper directory");
-  }
-  const projectRoot = path.join(papersRoot, project);
-  const realProject = await fsp.realpath(projectRoot);
-  if (realProject !== papersRoot && !contained(papersRoot, realProject)) {
-    throw new Error("project escapes the papers root");
-  }
-  const target = path.resolve(realProject, paperDir, fileRel);
-  let realTarget: string;
-  try {
-    realTarget = await fsp.realpath(target);
-  } catch {
-    throw new Error("no such file");
-  }
-  if (!contained(realProject, realTarget)) {
-    throw new Error("path escapes the project");
-  }
-  const st = await fsp.stat(realTarget);
-  if (!st.isFile()) throw new Error("not a file");
-  return realTarget;
-}
+// Media and reveal paths are resolved and contained by the Python service
+// (`artifact` / `reveal_target` in workbench/service.py): realpath, inside
+// the registered root, hash-checked. The TypeScript `resolveInProject` that
+// once did this had no callers left and was deleted (2026-11-09), so nothing
+// here reads as a boundary that is not one. `paperAbsDir` below is the
+// remaining path check, for the few routes that read a paper folder directly.
 
 export async function paperAbsDir(project: string, dir: string): Promise<string> {
   const settings = loadSettings();

@@ -1,5 +1,6 @@
 "use client";
 
+import { loadPdfjs } from "@/lib/pdfjs";
 import { createPortal } from "react-dom";
 import { pdfImageRects } from "@/lib/summaryPdfGeometry";
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
@@ -45,8 +46,7 @@ function renderGroup(project: string, group: SummaryGroup): Promise<RenderedFigu
 }
 
 async function renderPdfGroup(project: string, group: PdfSummaryGroup): Promise<RenderedFigure> {
-  const pdfjs = await import("pdfjs-dist");
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  const pdfjs = await loadPdfjs();
   const pdf = await pdfjs.getDocument({ url: mediaUrl(project, group.paperDir, group.documentPath), withCredentials: false }).promise;
   try {
     const page = await pdf.getPage(group.page);

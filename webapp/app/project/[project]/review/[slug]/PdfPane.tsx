@@ -1,5 +1,6 @@
 "use client";
 
+import { loadPdfjs } from "@/lib/pdfjs";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { PDFDocumentProxy } from "pdfjs-dist";
@@ -228,9 +229,8 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
     let gone = false;
     let task: import("pdfjs-dist").PDFDocumentLoadingTask | undefined;
     setDocument(null); setErr(null); setReady(false);
-    void import("pdfjs-dist").then(async (pdfjs) => {
+    void loadPdfjs().then(async (pdfjs) => {
       if (gone) return;
-      pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
       task = pdfjs.getDocument({ url, withCredentials: false });
       const doc = await task.promise;
       if (!gone) setDocument(doc);
@@ -280,7 +280,7 @@ export function PdfPane({ url, locator, label, severity, focusTargetId,
       rendered.delete(n);
     };
     void (async () => {
-      const pdfjs = await import("pdfjs-dist");
+      const pdfjs = await loadPdfjs();
       if (gone) return;
       hostEl.innerHTML = "";
       setNPages(pdf.numPages);

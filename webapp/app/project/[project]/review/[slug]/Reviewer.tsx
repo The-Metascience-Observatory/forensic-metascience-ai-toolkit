@@ -3,8 +3,9 @@
 import { RunSelector } from "@/app/RunSelector";
 import {useSearchParams,useRouter} from "next/navigation";
 import { ReviewJudgments } from "@/app/CacheStatus";
+import { useSplitPane } from "@/app/useSplitPane";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { citationParts, displayFirstAuthor, doiLink, pubpeerSearchLink }
   from "@/lib/citation";
@@ -20,20 +21,9 @@ import { DraftsModal } from "./DraftsModal";
 import { IssueList } from "./IssueList";
 import { SourcePane } from "./SourcePane";
 
+// The findings/source split is a standing preference (localStorage), unlike
+// the image item's session-scoped panes; see `useSplitPane`.
 const SPLIT_KEY = "metascience.split";
-const SPLIT_MIN = 20;
-const SPLIT_MAX = 80;
-
-function readSplit(): number {
-  if (typeof window === "undefined") return 50;
-  const n = Number(window.localStorage.getItem(SPLIT_KEY));
-  if (Number.isFinite(n) && n >= SPLIT_MIN && n <= SPLIT_MAX) return n;
-  return 50;
-}
-
-function clampSplit(pct: number): number {
-  return Math.min(SPLIT_MAX, Math.max(SPLIT_MIN, pct));
-}
 
 export function Reviewer({ project, slug, dir }: {
   project: string; slug: string; dir?: string | null;
@@ -64,16 +54,8 @@ export function Reviewer({ project, slug, dir }: {
   const setRun = (value:string) => { const q=new URLSearchParams(searchParams.toString()); q.set("run",value); router.push(`?${q}`); };
   const [draftsOpen, setDraftsOpen] = useState(false);
   const saveChain = useRef(Promise.resolve());
-  const [leftPct, setLeftPct] = useState(50);
-  const [dragging, setDragging] = useState(false);
-  const leftPctRef = useRef(50);
-  const splitRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const n = readSplit();
-    leftPctRef.current = n;
-    setLeftPct(n);
-  }, []);
+  const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
+                               label: "Resize findings and source panes", storage: "local" });
 
   // Record that a HUMAN opened this paper. CLIENT-SIDE ON PURPOSE: the stats
   // page links here with next/link, which prefetches on viewport entry and
@@ -98,39 +80,6 @@ export function Reviewer({ project, slug, dir }: {
       keepalive: true,
     }).catch(() => { /* nothing here is worth interrupting a review for */ });
   }, [project, slug, dir]);
-
-  const applySplit = useCallback((pct: number) => {
-    const next = clampSplit(pct);
-    leftPctRef.current = next;
-    setLeftPct(next);
-  }, []);
-
-  const onGutterPointerDown = useCallback((e: PointerEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragging(true);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  }, []);
-
-  const onGutterPointerMove = useCallback((e: PointerEvent<HTMLDivElement>) => {
-    if (e.buttons === 0 || !splitRef.current) return;
-    const rect = splitRef.current.getBoundingClientRect();
-    if (rect.width <= 0) return;
-    applySplit(((e.clientX - rect.left) / rect.width) * 100);
-  }, [applySplit]);
-
-  const onGutterPointerUp = useCallback(() => {
-    setDragging(false);
-    window.localStorage.setItem(SPLIT_KEY, String(leftPctRef.current));
-  }, []);
-
-  const onGutterKeyDown = useCallback((e: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-      e.preventDefault();
-      e.stopPropagation();
-      applySplit(leftPctRef.current + (e.key === "ArrowRight" ? 2 : -2));
-      window.localStorage.setItem(SPLIT_KEY, String(leftPctRef.current));
-    }
-  }, [applySplit]);
 
   useEffect(() => {
     if (grouped === null) return;
@@ -450,8 +399,8 @@ export function Reviewer({ project, slug, dir }: {
                      issues={issues} review={review}
                      onClose={() => setDraftsOpen(false)} />
       )}
-      <div className={`split${dragging ? " dragging" : ""}`} ref={splitRef}>
-        <section className="split-left" style={{ width: `${leftPct}%` }}>
+      <div className={`split${split.dragging ? " dragging" : ""}`} ref={split.containerRef}>
+        <section className="split-left" style={{ width: `${split.pct}%` }}>
           {data.issues?.source?.kind === "database" && (
             <p className="muted" style={{fontSize:12}}>
               Shared findings from this computer’s synchronized cache.
@@ -540,21 +489,7 @@ export function Reviewer({ project, slug, dir }: {
             </p>
           </div>
         </section>
-        <div
-          className={`split-gutter${dragging ? " dragging" : ""}`}
-          role="separator"
-          aria-orientation="vertical"
-          aria-label="Resize findings and source panes"
-          aria-valuemin={SPLIT_MIN}
-          aria-valuemax={SPLIT_MAX}
-          aria-valuenow={Math.round(leftPct)}
-          tabIndex={0}
-          onPointerDown={onGutterPointerDown}
-          onPointerMove={onGutterPointerMove}
-          onPointerUp={onGutterPointerUp}
-          onPointerCancel={onGutterPointerUp}
-          onKeyDown={onGutterKeyDown}
-        />
+        <div {...split.separatorProps} />
         <section className="split-right">
           <SourcePane
             project={project}

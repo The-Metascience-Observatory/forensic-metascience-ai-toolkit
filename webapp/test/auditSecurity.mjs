@@ -9,13 +9,14 @@ import vm from 'node:vm';
 import ts from 'typescript';
 import {chromium} from 'playwright';
 import {rejectCrossOrigin} from '../lib/mutation.ts';
+import {errMsg, jsonError} from '../lib/err.ts';
 import {mediaType,mediaDisposition,cacheControl} from '../lib/media.ts';
 import {byteRange} from '../lib/byteRange.ts';
 function endpoint(file,modules={}) {
  const exports={};
  const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
  vm.runInNewContext(code,{exports,URL,Response,ReadableStream,TextEncoder,process,require:name=>({
-  'next/server':{NextResponse:Response},'@/lib/mutation':{rejectCrossOrigin},...modules,
+  'next/server':{NextResponse:Response},'@/lib/mutation':{rejectCrossOrigin},'@/lib/err':{errMsg,jsonError},...modules,
  }[name] || new Proxy({}, {get:()=>()=>{throw Error(`Unexpected side effect: ${name}`);}}))});
  return exports;
 }

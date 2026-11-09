@@ -17,6 +17,13 @@ function queryOf(project: string, run: string, filter: Record<string, unknown>, 
   return new URLSearchParams({project, run, component:'image_forensics',
     ...Object.fromEntries(Object.entries(filter).map(([k,v]) => [k,Array.isArray(v) ? JSON.stringify(v) : String(v)])), ...extra});
 }
+async function postJson(url: string, payload: unknown, signal: AbortSignal) {
+  const response = await fetch(url, {method:'POST', headers:{'content-type':'application/json'},
+    body:JSON.stringify(payload), signal});
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(body.error || response.statusText);
+  return body;
+}
 async function getJson(url: string, signal: AbortSignal) {
   const response = await fetch(url, {signal});
   const body = await response.json();
@@ -31,8 +38,10 @@ export function useInfiniteFeed(project: string, run: string, filter: Filter, en
   const request = useCallback((mode: 'refresh' | 'more', rebuild = false, force = false) => {
     if (!enabled) return;
     void cache.load(key, signal => queuePages(cache.entry(key).data || [], mode, async offset => {
-      const params = queryOf(project, run, JSON.parse(key)[2], {offset:String(offset), facets:'none',
-        ...(rebuild && offset === 0 ? {rebuild:'1'} : {})});
+      // "Sync records" pulls changed shared records first. A write, so its
+      // own POST (it used to ride on the GET as `rebuild=1`), then the read.
+      if (rebuild && offset === 0) await postJson('/api/images/sync', {component:'image_forensics'}, signal);
+      const params = queryOf(project, run, JSON.parse(key)[2], {offset:String(offset), facets:'none'});
       return (await getJson(`/api/images?${params}`, signal)).feed as Feed;
     }), force);
   }, [key, project, run, enabled]);

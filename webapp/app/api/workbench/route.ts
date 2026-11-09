@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { NextResponse } from "next/server";
 import { workbench, workbenchTimed, serverTiming } from "@/lib/workbench";
@@ -9,7 +10,7 @@ export async function GET(req: Request) {
   if (!READ.has(method)) return NextResponse.json({error:"Unknown method"},{status:400});
   delete params.method;
   try { const {value,timings}=await workbenchTimed(method, params, {signal:req.signal}); return NextResponse.json(value,{headers:{"Server-Timing":serverTiming(timings)}}); }
-  catch(e) { return NextResponse.json({error:String(e)},{status:400}); }
+  catch(e) { return jsonError(e); }
 }
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
@@ -18,5 +19,5 @@ export async function POST(req: Request) {
     const {method,...params}=await req.json();
     if(!WRITE.has(method)) return NextResponse.json({error:"Unknown method"},{status:400});
     return NextResponse.json(await workbench(method,params));
-  } catch(e) { return NextResponse.json({error:String(e)},{status:400}); }
+  } catch(e) { return jsonError(e); }
 }

@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { NextResponse } from "next/server";
 import { workbench } from "@/lib/workbench";
@@ -10,5 +11,5 @@ export async function POST(req:Request){
    ...("decision" in p ? {decision:p.decision} : {}),reviewer:body.reviewer,...("note" in p ? {note:p.note} : {}),extra:p.paper || Object.fromEntries(Object.entries(p).filter(([k])=>!["issue_id","run","decision","note","event_id"].includes(k))),event_id:p.event_id});
   const paper=await workbench("paper",{project:body.project,slug:body.slug,dir:body.dir,run:p.run || body.run});
   return NextResponse.json({ok:true,review:paper.issues.review,pending:result.pending});
- }catch(e){return NextResponse.json({error:String(e)},{status:400});}
+ }catch(e){return jsonError(e);}
 }

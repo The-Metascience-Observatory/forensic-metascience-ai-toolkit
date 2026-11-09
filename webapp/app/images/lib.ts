@@ -4,6 +4,7 @@
 // re-exported here so existing importers keep working.
 export type { Subfigure, Placement, Rendition, FigureSources, IdentitySidecar, Panel, PaneTarget, PaneLocator, PaneDocument, PaperHead, Decision, ContentSupportData, Item, SpotCheck, Feed, FigureSpan, Filter, QueueSort } from "@/lib/types/images";
 export { isPdfReference, nativePaneSentence, paneDocument } from "@/lib/paneDocument";
+import { mediaUrl as buildMediaUrl } from "@/lib/mediaUrl";
 import type { FigureSources, PaneTarget, PaneLocator, Decision, Item, FigureSpan, Filter, QueueSort } from "@/lib/types/images";
 
 
@@ -67,9 +68,9 @@ export const DECISIONS: [string, string, string][] = [
   ["false_positive_logo", "l", "False positive: logo"],
 ];
 
+/** Image-track media: `lib/mediaUrl` with this track as the default component. */
 export function mediaUrl(project: string, dir: string, rel: string, component = "image_forensics"): string {
-  return `/api/media?component=${encodeURIComponent(component)}&project=${encodeURIComponent(project)}`
-    + `&dir=${encodeURIComponent(dir)}&f=${encodeURIComponent(rel)}`;
+  return buildMediaUrl(project, dir, rel, component);
 }
 
 export function itemHref(project: string, id: string, run = "latest"): string {

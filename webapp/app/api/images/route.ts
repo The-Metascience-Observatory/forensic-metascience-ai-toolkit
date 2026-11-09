@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { NextResponse } from "next/server";
 import { workbench, workbenchTimed, serverTiming } from "@/lib/workbench";
@@ -5,7 +6,6 @@ export const dynamic="force-dynamic";
 export async function GET(req:Request){
  const params=Object.fromEntries(new URL(req.url).searchParams);
  try {
-  if(params.rebuild==="1") await workbench("sync", {component:params.component || "image_forensics"});
   if(params.format==="csv") {
    const quote=(v:unknown)=>`"${String(v ?? "").replace(/"/g,'""')}"`;
    const columns=["run_id","id","publication_status","detector_kind","sentence","decision","reviewer"];
@@ -29,10 +29,10 @@ export async function GET(req:Request){
   }
   const {value:feed,timings}=await workbenchTimed("feed",{component:"image_forensics",...params,undecided:params.undecided==="true"},{signal:req.signal});
   return NextResponse.json({project:params.project,feed},{headers:{"Server-Timing":serverTiming(timings)}});
- }catch(e){return NextResponse.json({error:String(e)},{status:400});}
+ }catch(e){return jsonError(e);}
 }
 export async function POST(req:Request){
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
  try {return NextResponse.json({ok:true,decision:await workbench("review",{component:"image_forensics",...await req.json()})});}
- catch(e){return NextResponse.json({error:String(e)},{status:400});}
+ catch(e){return jsonError(e);}
 }

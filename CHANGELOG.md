@@ -9,6 +9,29 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp boundary checks and shared helpers; paper-level verdicts push
+
+- **One builder per thing.** `lib/mediaUrl.ts` replaces four hand-built
+  `/api/media` strings; `lib/pdfjs.ts` replaces three copies of the pdf.js
+  import plus worker assignment; `useSplitPane` (now with a `storage`
+  option, `local` for standing preferences) replaces the hand-rolled
+  gutters in the paper review page and the exhibit pane, which kept their
+  localStorage keys and ranges. Severity colours stay as the theme-aware
+  CSS variables: the generated ladder carries fixed light/dark pairs, so
+  deriving one from the other would break dark mode.
+- **Boundary checks.** The TypeScript `resolveInProject` ("THE SECURITY
+  BOUNDARY") had no callers (media and reveal paths are contained by the
+  Python service) and is deleted with a comment saying where the boundary
+  is; the stats page checks `badProject` like its API route; pulling shared
+  records moved from `GET /api/images?rebuild=1` to `POST /api/images/sync`
+  behind the origin check; every API catch returns `jsonError(e)` (message
+  without the "Error:" prefix, 502 when the local workbench service itself
+  timed out or exited, else 400).
+- **`db_push`: a paper-level verdict (`__paper__`) is a known review key**,
+  pushed with no finding row and kept out of the orphan report. The RNG
+  detector's Europe PMC export writes one per paper from the HTML reviewer's
+  CSV (`rngdetect export-workbench --europepmc … --verdicts`).
+
 ## [Unreleased] — 2026-11-09 — webapp toolchain and layering
 
 No finding, review or record format changes; the webapp's checks and

@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/err";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import {NextResponse} from "next/server";
@@ -12,5 +13,5 @@ export async function GET(req:Request){
       "content-type":"image/png","content-length":String(body.byteLength),
       "content-disposition":`attachment; filename="${path.basename(result.png)}"`,
       "cache-control":"private, max-age=60"}});
-  }catch(e){return NextResponse.json({error:String(e)},{status:400});}
+  }catch(e){return jsonError(e);}
 }

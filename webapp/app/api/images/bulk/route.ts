@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { NextResponse } from "next/server";
 import { workbench } from "@/lib/workbench";
@@ -20,11 +21,11 @@ export async function POST(req:Request){
   if(!body?.project)return NextResponse.json({error:"project required"},{status:400});
   if(!body?.decision)return NextResponse.json({error:"decision required"},{status:400});
   return NextResponse.json({ok:true,job:await workbench("review_filter_start",{component:"image_forensics",...body})});
- }catch(e){return NextResponse.json({error:String(e)},{status:400});}
+ }catch(e){return jsonError(e);}
 }
 export async function GET(req:Request){
  const job=new URL(req.url).searchParams.get("job");
  if(!job)return NextResponse.json({error:"job required"},{status:400});
  try{return NextResponse.json({ok:true,job:await workbench("job_status",{component:"image_forensics",job})});}
- catch(e){return NextResponse.json({error:String(e),unknown:true},{status:404});}
+ catch(e){return jsonError(e, 404, {unknown:true});}
 }

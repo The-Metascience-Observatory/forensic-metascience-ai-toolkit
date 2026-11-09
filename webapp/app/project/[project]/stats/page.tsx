@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { displayName, sev9Color, sev9Label } from "@/lib/constants.gen";
+import { badProject } from "@/lib/paths";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +40,9 @@ export default async function StatsPage(
 ) {
   const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   const project = decodeURIComponent(params.project);
+  // The project names a folder under the papers root; the API route checks
+  // this and so must the page that reads corpus_stats.json directly.
+  if (badProject(project)) notFound();
   const technique = searchParams?.technique || "";
   const offset=Math.max(0,Number(searchParams?.offset)||0);
   const result = technique ? await loadFindings(project, technique,offset) : null;

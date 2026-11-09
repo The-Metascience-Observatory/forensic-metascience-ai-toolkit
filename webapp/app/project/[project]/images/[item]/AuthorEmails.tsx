@@ -1,5 +1,6 @@
 "use client";
 
+import { loadPdfjs } from "@/lib/pdfjs";
 import { useEffect, useState } from "react";
 import { isPdfReference, mediaUrl, type Item } from "@/app/images/lib";
 import { extractEmails, xmlEmails } from "@/lib/emails";
@@ -21,8 +22,7 @@ async function paperXmlEmails(project: string, run: string, dir: string): Promis
 }
 
 async function pdfEmails(url: string): Promise<string[]> {
-  const pdfjs = await import("pdfjs-dist");
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  const pdfjs = await loadPdfjs();
   const pdf = await pdfjs.getDocument({ url, withCredentials: false }).promise;
   try {
     const texts: string[] = [];

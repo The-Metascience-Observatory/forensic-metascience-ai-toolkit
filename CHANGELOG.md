@@ -9,6 +9,26 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-09 — webapp: SWR replaces the home-grown client cache and polling
+
+Same cadences (30 s refresh, 5 s while a decision is pending, refresh on
+focus, nothing while hidden), same invalidation events (`workbench-review`,
+`workbench-review-synced` are explicit `mutate` triggers), same
+revision-consistent paging (`lib/infiniteFeed.queuePages` is the fetcher of
+one SWR key over the page list; `useSWRInfinite`'s one-page-per-key model
+cannot host the snapshot rule). `lib/getJson.ts` is the one fetch wrapper.
+Gone: `lib/requestCache.ts`, the `useFeed` module maps, the hand-written
+`watchReviewSync` timer machine (its acknowledgement rules survive as
+`ReviewSyncTracker`/`reviewSyncInterval`, still tested), the paper page's
+hand-spliced refresh. New tests: offline recovery of the status bar, the
+infinite feed (failed batch keeps rows, revision change retakes every page,
+"Sync records" POSTs once), and the paper page hook (finding focus across a
+server-moved page, detail splice, serialised saves, synced refetch).
+Deliberate differences: no bounded eviction (SWR's session Map), obsolete
+requests are not aborted (their results are discarded), a cached page shows
+while revalidating instead of a loading state, error strings carry no
+"Error: " prefix.
+
 ## [Unreleased] — 2026-11-09 — webapp: the four large components are modules; review payloads typed
 
 No visible change; every split moved code by line range and kept URLs,

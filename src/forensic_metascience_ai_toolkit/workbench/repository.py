@@ -426,6 +426,9 @@ class Repository(SharedImageQueueMixin):
                 'n_findings':len(fs)+len(accepted) if selected else None,
                 'n_non_image_findings':sum(f.get('producer')!='image_track' for f in fs) if selected else None,
                 'n_image_findings':sum(component(self.by_uid[i['run_id']])=='image_forensics' for i in accepted)+sum(f.get('producer')=='image_track' for f in fs) if image_complete else None,
+                # Seeded-RNG detector rows (its own `rng_track` run beside the
+                # review); None, not 0, when no RNG screen covered the paper.
+                'n_rng_findings':sum(f.get('producer')=='rng_track' for f in fs) if any(component(r)=='rng_track' for r in selected) else None,
                 'worst_severity_9':max((f.get('severity') or 0 for f in fs),default=None),
                 'verdict':latest.get('verdict') if latest else None,'sources':local.get('sources',{'pdf':False,'xml':False,'state':'not_local'}),
                 'review':{**paper_state,'reviewed':complete or bool(paper_state.get('reviewed')),'n_decisions':len(decisions),'submitted_to_pubpeer':submitted or bool(paper_state.get('submitted_to_pubpeer'))}, 'evidence':[]}
@@ -443,9 +446,9 @@ class Repository(SharedImageQueueMixin):
         search=str(args.get('q') or '').lower()
         if search: rows=[r for r in rows if search in ' '.join(str(r.get(k) or '') for k in ('title','doi','dir','authors')).lower()
                         or matches_paper_folder({'paper': {'dir': r.get('dir')}}, search)]
-        key=args.get('sort') or 'findings'; field={'author':'first_author','folder':'dir','run':'analysed_at','version':'pipeline_version','findings':'n_non_image_findings','image':'n_image_findings','sev9':'worst_severity_9'}.get(key,key)
+        key=args.get('sort') or 'findings'; field={'author':'first_author','folder':'dir','run':'analysed_at','version':'pipeline_version','findings':'n_non_image_findings','image':'n_image_findings','rng':'n_rng_findings','sev9':'worst_severity_9'}.get(key,key)
         reverse=args.get('direction','desc')=='desc'
-        numeric=field in ('n_non_image_findings','n_findings','n_image_findings','worst_severity_9','year')
+        numeric=field in ('n_non_image_findings','n_findings','n_image_findings','n_rng_findings','worst_severity_9','year')
         missing=[r for r in rows if r.get(field) is None or r.get(field)=='']
         rows=[r for r in rows if r.get(field) is not None and r.get(field)!='']
         rows.sort(key=lambda r:((float(r.get(field) or 0) if str(r.get(field) or '').replace('.','',1).isdigit() else 0) if numeric else str(r.get(field) or '').lower(),r['dir']),reverse=reverse)

@@ -109,3 +109,13 @@ def test_source_for_an_explicitly_selected_detector_run_is_not_refused(catalog, 
     assert 'article' in got and 'not recorded' not in json.dumps(got)
     with pytest.raises(ValueError, match='not recorded'):
         s.handle('source', {'project': 'project', 'slug': 'paper', 'dir': 'paper', 'run': 'r_missing'})
+
+
+def test_paper_row_counts_rng_findings_and_sorts_by_them(catalog):
+    """The project table's "RNG findings" column: the rng_track run's rows,
+    and None (a dash) for a paper no RNG screen covered, never 0."""
+    r = Repository(catalog); r.refresh()
+    page = r.papers_page({'project': 'project', 'sort': 'rng'})
+    assert [p['n_rng_findings'] for p in page['papers']] == [3]
+    r.runs_by_paper[1] = []  # a paper without an RNG run
+    assert r.paper_row(r.papers[1])['n_rng_findings'] is None

@@ -78,6 +78,9 @@ export interface Paper {
   image_status?: string;
   n_image_findings?: number | null;
   n_image_undecided?: number | null;
+  /** Findings of the seeded-RNG detector's own run (`rng_track`); absent or
+   *  null when no RNG screen covered the paper (shown as a dash, not 0). */
+  n_rng_findings?: number | null;
   /** Release that produced the latest run (run_meta.json `version`). */
   pipeline_version?: string | null;
   /** Has anyone OPENED this paper's review page? Absent on an index written

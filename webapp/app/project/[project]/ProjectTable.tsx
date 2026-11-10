@@ -73,6 +73,8 @@ export function ProjectTable({
   const [sort, setSort] = useState<SortState | null>(() =>
     onSortChange ? { key: "findings", dir: "desc" } : defaultSort(papers),
   );
+  // Only a project an RNG screen covered gets the column.
+  const showRng = papers.some((p) => p.n_rng_findings != null);
   const rows = useMemo(
     () => (onSortChange ? papers : sortPapers(papers, sort)),
     [papers, sort, onSortChange],
@@ -204,6 +206,20 @@ export function ProjectTable({
               findings{sortMark(sort, "image")}
             </button>
           </th>
+          {showRng && (
+            <th className="stack" aria-sort={ariaSort(sort, "rng")}>
+              <button
+                type="button"
+                className="sort-th"
+                onClick={() => onSort("rng")}
+                title="Sort by the count of seeded-RNG detector findings"
+              >
+                RNG
+                <br />
+                findings{sortMark(sort, "rng")}
+              </button>
+            </th>
+          )}
           <th>PubPeer</th>
           <th className="stack" aria-sort={ariaSort(sort, "viewed")}>
             <button
@@ -352,6 +368,18 @@ export function ProjectTable({
                   </span>
                 )}
               </td>
+              {showRng && (
+                <td
+                  style={p.n_rng_findings ? { fontWeight: 700 } : undefined}
+                  title={
+                    p.n_rng_findings == null
+                      ? "no seeded-RNG screen covered this paper"
+                      : `${p.n_rng_findings} seeded-RNG detector finding(s)`
+                  }
+                >
+                  {p.n_rng_findings == null ? "—" : p.n_rng_findings}
+                </td>
+              )}
               <td>
                 <PubPeerCell paper={p} />
               </td>

@@ -15,6 +15,7 @@ export type SortKey =
   | "sev9"
   | "findings"
   | "image"
+  | "rng"
   | "viewed";
 
 export type SortDir = "asc" | "desc";
@@ -287,6 +288,8 @@ export function sortPapers(papers: Paper[], sort: SortState | null): Paper[] {
         return cmpNum(findingsNum(a), findingsNum(b), sort.dir);
       case "viewed":
         return cmpNum(viewedNum(a), viewedNum(b), sort.dir);
+      case "rng":
+        return cmpNum(a.n_rng_findings ?? Number.NaN, b.n_rng_findings ?? Number.NaN, sort.dir);
       case "image": {
         const miss = cmpMissing(a.n_image_findings == null, b.n_image_findings == null);
         if (miss !== null) return miss;

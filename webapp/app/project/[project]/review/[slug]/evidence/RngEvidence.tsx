@@ -24,6 +24,20 @@ function fmt(v: unknown): string {
   return v == null ? "" : String(v);
 }
 
+function FactList({ facts }: { facts: [string, string][] }) {
+  return (
+    <dl style={{ display: "grid", gridTemplateColumns: "max-content 1fr",
+                 gap: "2px 10px", margin: 0 }}>
+      {facts.map(([k, v]) => (
+        <div key={k} style={{ display: "contents" }}>
+          <dt className="muted">{k}</dt>
+          <dd className="mono" style={{ margin: 0 }}>{v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 function TableGridView({ grid }: { grid: TableGrid }) {
   const idx = hitCellIndex(grid);
   if (!grid.cells) {
@@ -72,6 +86,10 @@ export function RngEvidence({ issue }: { issue: Issue }) {
   const reported = issue.reported ?? {};
   const computed = issue.computed ?? {};
   const facts = inputFacts(inputs);
+  // The generator stays in view; the match statistics (seed, position,
+  // counts, tier, bits, table/column) fold under "Details", closed.
+  const headline = facts.filter(([k]) => k === "generator");
+  const detail = facts.filter(([k]) => k !== "generator");
   const units = typeof reported.units === "string" ? reported.units : undefined;
   const printed = valuesArePrinted(inputs, units);
   const pairs = valuePairs(reported.observed_first_values as unknown[] | undefined,
@@ -88,16 +106,12 @@ export function RngEvidence({ issue }: { issue: Issue }) {
   return (
     <section data-evidence="rng_track" onClick={(e) => e.stopPropagation()}
              style={{ marginTop: 8, fontSize: 12 }}>
-      {facts.length > 0 && (
-        <dl style={{ display: "grid", gridTemplateColumns: "max-content 1fr",
-                     gap: "2px 10px", margin: 0 }}>
-          {facts.map(([k, v]) => (
-            <div key={k} style={{ display: "contents" }}>
-              <dt className="muted">{k}</dt>
-              <dd className="mono" style={{ margin: 0 }}>{v}</dd>
-            </div>
-          ))}
-        </dl>
+      {headline.length > 0 && <FactList facts={headline} />}
+      {detail.length > 0 && (
+        <details data-rng-details>
+          <summary>Details</summary>
+          <FactList facts={detail} />
+        </details>
       )}
       {pairs.length > 0 && (
         <details open>

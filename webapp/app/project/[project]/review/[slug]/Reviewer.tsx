@@ -243,12 +243,6 @@ export function Reviewer({ project, slug, dir }: {
       )}
       <div className={`split${split.dragging ? " dragging" : ""}`} ref={split.containerRef}>
         <section className="split-left" style={{ width: `${split.pct}%` }}>
-          {data.issues?.source?.kind === "database" && (
-            <p className="muted" style={{fontSize:12}}>
-              Shared findings from this computer’s synchronized cache.
-              Source availability is checked separately against local files.
-            </p>
-          )}
           {data.issues?.headline?.statement && (
             <p style={{
               fontSize: 13, margin: "0 0 10px", padding: "8px 10px",

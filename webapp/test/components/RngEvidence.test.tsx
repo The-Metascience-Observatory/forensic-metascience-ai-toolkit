@@ -60,3 +60,18 @@ test("the renderer map answers by stored producer and nothing for others", () =>
   const { container } = render(<RngEvidence issue={asIssue({ producer: "rng_track" })} />);
   expect(container.innerHTML).toBe("");
 });
+
+test("the match statistics sit under a closed Details dropdown; the generator stays in view", () => {
+  const { container } = render(<RngEvidence issue={tableIssue} />);
+  const details = container.querySelector("details[data-rng-details]") as HTMLDetailsElement;
+  expect(details).not.toBeNull();
+  expect(details.open).toBe(false);
+  expect(details.querySelector("summary")!.textContent).toBe("Details");
+  const inside = details.textContent || "";
+  for (const k of ["seed", "tier", "excess bits", "log10 chance matches", "table", "column"]) {
+    expect(inside).toContain(k);
+  }
+  expect(inside).not.toMatch(/NumPy legacy/);
+  const outside = [...container.querySelectorAll("section > dl > div > dt")].map((d) => d.textContent);
+  expect(outside).toEqual(["generator"]);
+});

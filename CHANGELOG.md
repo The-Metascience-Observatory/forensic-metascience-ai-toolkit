@@ -9,6 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-10 — quieter findings pane on review pages
+
+The RNG evidence panel shows the generator and folds the match statistics
+(seed, stream position, values matched, blocks, match, tier, excess bits,
+log10 chance matches, table, column, page) under a closed "Details" dropdown.
+The "Shared findings from this computer's synchronized cache…" note at the top
+of the findings pane is gone.
+
 ## [Unreleased] — 2026-11-10 — "RNG findings" column on the project page
 
 The project papers table gains an "RNG findings" column: the count of the

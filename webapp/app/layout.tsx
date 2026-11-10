@@ -7,7 +7,7 @@ import { ReviewerChip } from "./ReviewerChip";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Forensic metascience review",
+  title: "Metascience Observatory Review Platform",
 };
 
 export const dynamic = "force-dynamic";
@@ -23,8 +23,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="shell">
           <header className="topbar">
-            <Link href="/" style={{ fontWeight: 600, color: "var(--fg)" }}>
-              Rapid review
+            <Link href="/" style={{ fontWeight: 600, color: "var(--fg)", display: "flex",
+                                    alignItems: "center", gap: 8 }}>
+              {/* Metascience Observatory globe (website public/assets/globe.svg),
+                  inlined so the stroke follows the theme colour. */}
+              <svg viewBox="0 0 16 16" width="22" height="22" fill="none" stroke="currentColor"
+                   strokeWidth="0.9" strokeLinecap="round" aria-hidden="true">
+                <circle cx="8" cy="8" r="7.35" />
+                <ellipse cx="8" cy="8" rx="3" ry="7.35" />
+                <ellipse cx="8" cy="8" rx="7.35" ry="3" />
+              </svg>
+              Metascience Observatory Review Platform
             </Link>
             <div style={{ marginLeft: "auto", display: "flex",
                           alignItems: "center", gap: 8 }}>

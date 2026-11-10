@@ -323,12 +323,6 @@ export function Reviewer({ project, slug, dir }: {
                 {review.paper.pubpeer_note}
               </p>
             )}
-            <p className="muted" style={{ fontSize: 11, marginTop: 6 }}>
-              Completing is deliberate. Labelling one finding does not count
-              the paper as reviewed. A PubPeer post is usually one comment
-              for the paper, recorded here even when there is no finding
-              on disk to tick.
-            </p>
           </div>
         </section>
         <div {...split.separatorProps} />

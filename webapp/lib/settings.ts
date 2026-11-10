@@ -38,7 +38,15 @@ export type Role = "reviewer" | "admin";
  *  email, the display name the Python service records as `reviewer`, and
  *  the role `lib/routeGuard.ts` gates on. Local mode ignores it. */
 export interface Reviewer { email: string; name: string; role: Role }
-export const DEFAULT_DIRECTORY: Reviewer[] = [{ email: "delton17@gmail.com", name: "Dan Elton", role: "admin" }];
+/** The directory a settings file without one starts with: the operator
+ *  named by `METASCIENCE_ADMIN_EMAIL` (display name `METASCIENCE_ADMIN_NAME`)
+ *  as admin, else nobody, so a fresh hosted instance has no admin until its
+ *  operator names one. Never a person's address in this public source. */
+export function defaultDirectory(env: NodeJS.ProcessEnv = process.env): Reviewer[] {
+  const email = (env.METASCIENCE_ADMIN_EMAIL || "").trim().toLowerCase();
+  if (!email) return [];
+  return [{ email, name: (env.METASCIENCE_ADMIN_NAME || "").trim() || email, role: "admin" }];
+}
 
 export function asDirectory(v: unknown): Reviewer[] {
   if (!Array.isArray(v)) return [];
@@ -112,7 +120,7 @@ export function loadSettings(): Settings {
     : [];
   // Seeded, not written: a settings file without a directory behaves as if
   // it held the default one until the next save persists it.
-  const directory = "reviewers" in onDisk ? asDirectory(onDisk.reviewers) : DEFAULT_DIRECTORY;
+  const directory = "reviewers" in onDisk ? asDirectory(onDisk.reviewers) : defaultDirectory();
   return {
     python_bin: onDisk.python_bin,
     papers_root: hostPath(envRoot || onDisk.papers_root || DEFAULT_PAPERS_ROOT),
@@ -132,7 +140,7 @@ export function saveSettings(next: Omit<Settings, "reviewers"> & { reviewers?: R
   const current = readLocalSettings();
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const directory = Array.isArray(next.reviewers) ? asDirectory(next.reviewers)
-    : "reviewers" in current ? asDirectory(current.reviewers) : DEFAULT_DIRECTORY;
+    : "reviewers" in current ? asDirectory(current.reviewers) : defaultDirectory();
   const merged: Settings = {
     python_bin: next.python_bin ?? current.python_bin,
     papers_root: path.resolve(hostPath(next.papers_root)),

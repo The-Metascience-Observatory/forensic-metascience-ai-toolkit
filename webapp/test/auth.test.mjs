@@ -138,7 +138,7 @@ test("identity: reviewer directory and roles", async () => {
     fs.writeFileSync(file, JSON.stringify({ papers_root: scratch, known_reviewers: ["Typed Name"],
       reviewers: [{ email: "Dan@Example.org", name: "Dan Elton", role: "admin" }, { email: "rev@example.org", name: "Second Reviewer", role: "reviewer" }] }));
     const { identity, identityFor, requireAdmin, withReviewer } = await import("../lib/auth.ts");
-    const { loadSettings, saveSettings, DEFAULT_DIRECTORY } = await import("../lib/settings.ts");
+    const { loadSettings, saveSettings, defaultDirectory } = await import("../lib/settings.ts");
     const req = (email) => new Request("http://127.0.0.1:3101/api/review", { headers: email ? { [HEADER]: email } : {} });
 
     // Local mode: no identity, everyone proceeds, bodies pass through.
@@ -159,12 +159,22 @@ test("identity: reviewer directory and roles", async () => {
     assert.deepEqual(withReviewer(req("rev@example.org"), { reviewer: "Mallory", decision: "x" }), { reviewer: "Second Reviewer", decision: "x" });
     assert.deepEqual(withReviewer(req("rev@example.org"), { viewer: "Mallory" }, "viewer"), { viewer: "Second Reviewer" });
 
-    // Directory absent on disk: seeded with the default admin; a save persists it.
+    // Directory absent on disk: seeded from the environment's admin (never
+    // from a name in the source), and a save persists it; with no admin
+    // named, nobody is an admin.
     fs.writeFileSync(file, JSON.stringify({ papers_root: scratch }));
-    assert.deepEqual(loadSettings().reviewers, DEFAULT_DIRECTORY);
-    assert.deepEqual(identityFor("delton17@gmail.com", loadSettings().reviewers), { email: "delton17@gmail.com", name: "Dan Elton", role: "admin" });
+    process.env.METASCIENCE_ADMIN_EMAIL = "Admin@Example.org";
+    process.env.METASCIENCE_ADMIN_NAME = "Site Admin";
+    const seeded = [{ email: "admin@example.org", name: "Site Admin", role: "admin" }];
+    assert.deepEqual(defaultDirectory(), seeded);
+    assert.deepEqual(loadSettings().reviewers, seeded);
+    assert.deepEqual(identityFor("admin@example.org", loadSettings().reviewers), seeded[0]);
     saveSettings({ papers_root: scratch, known_reviewers: ["Typed Name"] });
-    assert.deepEqual(JSON.parse(fs.readFileSync(file, "utf8")).reviewers, DEFAULT_DIRECTORY);
+    assert.deepEqual(JSON.parse(fs.readFileSync(file, "utf8")).reviewers, seeded);
+    delete process.env.METASCIENCE_ADMIN_EMAIL; delete process.env.METASCIENCE_ADMIN_NAME;
+    fs.writeFileSync(file, JSON.stringify({ papers_root: scratch }));
+    assert.deepEqual(loadSettings().reviewers, []);
+    assert.deepEqual(identityFor("anyone@example.org", loadSettings().reviewers).role, "reviewer");
     // Malformed entries are dropped, roles other than admin are reviewer.
     saveSettings({ papers_root: scratch, known_reviewers: [], reviewers: [{ email: "x@example.org", role: "root" }, { name: "no email" }, "junk"] });
     assert.deepEqual(loadSettings().reviewers, [{ email: "x@example.org", name: "x@example.org", role: "reviewer" }]);

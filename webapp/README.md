@@ -269,12 +269,15 @@ from the **reviewer directory**, a `reviewers` array in the settings file
 
 ```json
 "reviewers": [
-  { "email": "delton17@gmail.com", "name": "Dan Elton", "role": "admin" },
+  { "email": "you@example.org", "name": "Your Name", "role": "admin" },
   { "email": "colleague@example.org", "name": "A. Colleague", "role": "reviewer" }
 ]
 ```
 
-It is seeded with the first entry when absent. The `name` is what the Python
+A settings file without the array starts from `METASCIENCE_ADMIN_EMAIL` (and
+`METASCIENCE_ADMIN_NAME`) as the one admin, else from nobody: no address is
+written into this public source, and a fresh instance has no admin until its
+operator names one. The `name` is what the Python
 service stores as `reviewer`, so rows recorded locally as "Dan Elton" stay
 joined to the same person. An invited email that is not in the directory is
 still a reviewer, shown by its address; add it to the directory to give it a
@@ -358,6 +361,7 @@ app is one more ingress rule on it.
    METASCIENCE_ACCESS_TEAM=<team> \
    METASCIENCE_ACCESS_AUD=<aud-tag> \
    METASCIENCE_PUBLIC_ORIGIN=https://review.metascienceobservatory.org \
+   METASCIENCE_ADMIN_EMAIL=you@example.org METASCIENCE_ADMIN_NAME="Your Name" \
    npm run start:hosted
    ```
 

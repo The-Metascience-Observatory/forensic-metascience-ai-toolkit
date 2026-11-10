@@ -15,7 +15,9 @@ The RNG evidence panel shows the generator and folds the match statistics
 (seed, stream position, values matched, blocks, match, tier, excess bits,
 log10 chance matches, table, column, page) under a closed "Details" dropdown.
 The "Shared findings from this computer's synchronized cache…" note at the top
-of the findings pane is gone.
+of the findings pane is gone, and so is the finding's `notes` paragraph under
+the RNG evidence (the exporter's provenance and preliminary-triage text; it
+stays in the findings file).
 
 ## [Unreleased] — 2026-11-10 — "RNG findings" column on the project page
 

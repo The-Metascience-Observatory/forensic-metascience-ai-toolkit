@@ -166,9 +166,8 @@ export function RngEvidence({ issue }: { issue: Issue }) {
           <CopyButton text={replay} label="Copy replay" title="Copy the reproduction snippet" />
         </details>
       )}
-      {issue.notes && (
-        <p className="muted" style={{ fontSize: 11, margin: "4px 0 0" }}>{issue.notes}</p>
-      )}
+      {/* `issue.notes` (the exporter's provenance and triage paragraph) is
+          not shown: it repeats the replay and the table above. */}
     </section>
   );
 }

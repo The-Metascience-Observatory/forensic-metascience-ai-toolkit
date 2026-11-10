@@ -41,7 +41,8 @@ test("a table hit renders facts, exact value pairs, the shaded grid cells and th
   expect(hit).toEqual(["0.244759", "0.694755"]);
   expect(text).toMatch(/Table 3: True values/);
   expect(container.querySelector("pre")!.textContent).toMatch(/np\.random\.seed\(123\)/);
-  expect(text).toMatch(/Reproduce with/);
+  // The exporter's notes paragraph is not shown (Dan, 2026-11-10).
+  expect(text).not.toMatch(/Reproduce with/);
 });
 
 test("a figure hit flags nothing against a printed step and reports max delta", () => {

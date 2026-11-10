@@ -528,8 +528,11 @@ class Service(ImageServiceMixin):
         from ..extraction.xml_html import article_view
         converted=self.cached_source(key, lambda: article_view(path))
         article=article_media(converted,args['project'],p.get('dir') or f"@{p['id']}")
-        warning=' '.join(filter(None,[article.get('warning'),'Current local source; no archived source hash is recorded for this legacy run.']))
-        return {'article':{**article,'warning':warning},'locators':{},'availability':'local_current'}
+        # A run that recorded no source hash (every rng_track run, older
+        # imports) is shown from the current local file without a banner: the
+        # case is ordinary, and `availability` still says the source is the
+        # local copy, unverified. Real warnings from the conversion stay.
+        return {'article':article,'locators':{},'availability':'local_current'}
 
     def issue_detail(self,args):
         # The finding's OWN run, when the page names it: a partial run is not

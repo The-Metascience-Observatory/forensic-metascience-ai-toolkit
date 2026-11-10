@@ -9,6 +9,15 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-10 — no banner for a run without a source hash
+
+The review page no longer prints "Current local source; no archived source
+hash is recorded for this legacy run." over the source pane. Every
+`rng_track` run (and older imports) records no source hash, so the banner
+sat on every RNG paper and said nothing a reviewer could act on. The service
+still returns `availability: "local_current"` for such a run, and any warning
+from converting the source is still shown.
+
 ## [Unreleased] — 2026-11-10 — users, per-project access and project sources in the webapp
 
 Hosted mode gets real accounts. The user directory (`reviewers` in the

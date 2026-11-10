@@ -1,5 +1,5 @@
 import { jsonError } from "@/lib/err";
-import { withReviewer } from "@/lib/auth";
+import { identity, withReviewer } from "@/lib/auth";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
@@ -16,20 +16,30 @@ export const dynamic="force-dynamic";
 // GET ?job= reports progress. A 5,000-item save used to outlast the bridge's
 // 60 s timer, and the queue then said "Nothing was saved" while the service
 // kept saving.
+// Who started each job (hosted mode): a reviewer may poll only their own;
+// a job id from another reviewer or project reads as unknown.
+const owners=new Map<string,string>();
 export async function POST(req:Request){
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req);
+  const refused = await guard(req);
   if (refused) return refused;
  try{
   const body = withReviewer(req, await req.json());
   if(!body?.project)return NextResponse.json({error:"project required"},{status:400});
   if(!body?.decision)return NextResponse.json({error:"decision required"},{status:400});
-  return NextResponse.json({ok:true,job:await workbench("review_filter_start",{component:"image_forensics",...body})});
+  const scoped = await guard(req, { project: body.project }); if (scoped) return scoped;
+  const job=await workbench("review_filter_start",{component:"image_forensics",...body});
+  const who=identity(req);
+  if(who&&job?.id){owners.set(job.id,who.email);if(owners.size>500)owners.delete(owners.keys().next().value!);}
+  return NextResponse.json({ok:true,job});
  }catch(e){return jsonError(e);}
 }
 export async function GET(req:Request){
  const job=new URL(req.url).searchParams.get("job");
  if(!job)return NextResponse.json({error:"job required"},{status:400});
+ const refused = await guard(req); if (refused) return refused;
+ const who=identity(req);
+ if(who&&who.role!=="admin"&&owners.get(job)!==who.email)return NextResponse.json({error:"Unknown job",unknown:true},{status:404});
  try{return NextResponse.json({ok:true,job:await workbench("job_status",{component:"image_forensics",job})});}
  catch(e){return jsonError(e, 404, {unknown:true});}
 }

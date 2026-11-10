@@ -8,11 +8,13 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req);
   if (rejected) return rejected;
-  const refused = guard(req);
+  const refused = await guard(req);
   if (refused) return refused;
   try {
     const body = withReviewer(req, await req.json()),
       p = body.patch || {};
+    const scoped = await guard(req, { project: body.project });
+    if (scoped) return scoped;
     const result = await workbench("review", {
       project: body.project,
       run: p.run || body.run,

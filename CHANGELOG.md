@@ -9,6 +9,25 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-10 — users, per-project access and project sources in the webapp
+
+Hosted mode gets real accounts. The user directory (`reviewers` in the
+settings file, edited on `/admin/users`) gives each email a display name, a
+role (`admin` or `reviewer`) and, for a reviewer, the projects they may open;
+an email Cloudflare Access admits but the directory does not list is refused
+("not set up yet") instead of becoming a reviewer of everything. Access is
+enforced in `proxy.ts` (pages and query parameters), in every API route
+(`await guard(req, {project})`, POST bodies included; a test fails if a
+handler skips it) and in server-rendered pages (`app/project/[project]/layout.tsx`).
+Previously no GET route checked anything beyond sign-in. Which names are
+projects is now the admin's call (`/admin/projects`, `project_sources`):
+watched folders (each subfolder a project, new ones appear by themselves),
+single folders and adopted database-only names; every other catalog name is
+hidden and unreachable, nothing deleted. `webapp_constants` emits
+`SCAFFOLDING_DIRS` from `discovery._NOT_A_PAPER`. Stats, drafts and metadata
+resolve folders through the catalog's registered roots, not
+`papers_root/<name>`; `GET /api/index` is retired.
+
 ## [Unreleased] — 2026-11-09 — summary figure dialog lists the authors' e-mails
 
 The figure editor (`Summary figure` on an image item) has a panel on its

@@ -22,10 +22,11 @@ type TechRow = {
 async function loadStats(project: string) {
   const { promises: fsp } = await import("node:fs");
   const path = await import("node:path");
-  const { loadSettings } = await import("@/lib/settings");
-  const p = path.join(loadSettings().papers_root, project, "corpus_stats.json");
+  const { projectRoot } = await import("@/lib/store");
   try {
-    return JSON.parse(await fsp.readFile(p, "utf8"));
+    const root = await projectRoot(project);
+    if (!root) return null;
+    return JSON.parse(await fsp.readFile(path.join(root, "corpus_stats.json"), "utf8"));
   } catch {
     return null;
   }
@@ -46,8 +47,8 @@ export default async function StatsPage(props: {
 }) {
   const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   const project = decodeURIComponent(params.project);
-  // The project names a folder under the papers root; the API route checks
-  // this and so must the page that reads corpus_stats.json directly.
+  // A project name never carries a path; the project layout has already
+  // checked access and that the project exists.
   if (badProject(project)) notFound();
   const technique = searchParams?.technique || "";
   const offset = Math.max(0, Number(searchParams?.offset) || 0);

@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 /** Hosted mode: a reviewer sees the names only. The rest (absolute paths,
  *  `python_bin`, the directory's emails) describes the server. */
 export async function GET(req: Request) {
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   const settings = loadSettings();
   const who = identity(req);
   if (who && who.role !== "admin") return NextResponse.json({ known_reviewers: settings.known_reviewers });
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let raw: unknown;
   try {
     raw = await req.json();

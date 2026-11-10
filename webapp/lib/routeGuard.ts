@@ -1,35 +1,50 @@
 import "server-only";
 
-import { hostedMode, identity } from "./auth.ts";
+import { NOT_SET_UP, hostedMode, identity, mayOpenProject, signedInEmail } from "./auth.ts";
+import { sourceView } from "./projectSources.ts";
 
-/** Role gating for hosted mode, in one place.
+/** Access control for every API route, in one place.
  *
- * Every API route calls `guard(req)` after `rejectCrossOrigin`. In local
- * mode it is a no-op (one person, their own machine). In hosted mode an
- * unidentified request is 401 (the proxy sets the identity header after
- * verifying the Access token), a route marked `forbidden` is 403 for
- * everyone, and a route marked `admin` is 403 unless the directory says
- * the signed-in reviewer is an admin. Everything not listed is open to any
- * signed-in reviewer.
+ * Every handler calls `await guard(req, {project})` (after
+ * `rejectCrossOrigin` for a write), naming the project it is about to touch:
+ * the query's for a read, the parsed body's for a write. A test fails if a
+ * route handler does not call it.
  *
- * `/api/workbench` POST dispatches on a `method` in its body, so the route
- * passes that method once it has parsed the body.
+ * Hosted mode (`proxy.ts` set the verified email):
+ *   - no verified email → 401; an email the directory does not list → 403;
+ *   - a route marked `forbidden` → 403 for everyone; `admin` → 403 unless the
+ *     directory says admin;
+ *   - a project the reviewer is not assigned → 403; a project-scoped route
+ *     with no project named → 400 for a reviewer (an admin may list across).
+ * Both modes: a project that is not one of the configured sources
+ * (`lib/projectSources.ts`) → 404, so `pytest-600` and friends are not
+ * reachable by URL either.
+ *
+ * `/api/workbench` dispatches on a `method`, so the route passes it.
  */
 export interface Rule {
   path: string;
   method: "GET" | "POST";
-  /** Only when every listed query parameter has this value. */
-  query?: Record<string, string>;
+  /** Every path under this prefix (`path` must end in `/`). */
+  prefix?: true;
   admin?: true;
   /** Refused for everyone in hosted mode. */
   forbidden?: true;
   why: string;
 }
 
+/** Workbench writes that change this machine's catalog. */
 export const ADMIN_WORKBENCH_METHODS: ReadonlySet<string> = new Set(["register_root", "map_paper", "register_file", "sync"]);
+/** Workbench reads across every project or about the server's folders.
+ *  (`status`, the sync line in the header, is open to everyone signed in; the
+ *  route removes its error details for a reviewer.) */
+export const ADMIN_WORKBENCH_READS: ReadonlySet<string> = new Set(["projects", "roots"]);
+/** Workbench reads that are about no single project. */
+export const UNSCOPED_WORKBENCH_READS: ReadonlySet<string> = new Set([...ADMIN_WORKBENCH_READS, "status"]);
 
 export const RULES: readonly Rule[] = [
   { path: "/api/projects", method: "POST", admin: true, why: "deletes project folders on the server" },
+  { path: "/api/projects", method: "GET", admin: true, why: "every project's deletion jobs" },
   { path: "/api/settings", method: "POST", admin: true, why: "changes the papers root and scans the server's disk" },
   { path: "/api/index", method: "POST", admin: true, why: "rescans the server's disk" },
   { path: "/api/metadata", method: "POST", admin: true, why: "writes metadata beside papers" },
@@ -38,6 +53,8 @@ export const RULES: readonly Rule[] = [
   { path: "/api/draft", method: "POST", admin: true, why: "paid model call" },
   { path: "/api/images/website", method: "POST", admin: true, why: "writes the website checkout" },
   { path: "/api/images/sync", method: "POST", admin: true, why: "pulls shared records" },
+  { path: "/api/admin/", method: "GET", prefix: true, admin: true, why: "users and project sources" },
+  { path: "/api/admin/", method: "POST", prefix: true, admin: true, why: "users and project sources" },
   { path: "/api/reveal", method: "POST", forbidden: true, why: "opens a file manager on the server" },
 ];
 
@@ -46,26 +63,50 @@ export interface Policy { admin: boolean; forbidden: boolean }
 export function policyFor(req: Request, extra: { workbenchMethod?: string } = {}): Policy {
   const url = new URL(req.url);
   const path = url.pathname.replace(/\/+$/, "") || "/";
-  const method = req.method.toUpperCase();
+  const method = req.method.toUpperCase() === "HEAD" ? "GET" : req.method.toUpperCase();
   const policy: Policy = { admin: false, forbidden: false };
   for (const rule of RULES) {
-    if (rule.path !== path || rule.method !== method) continue;
-    if (rule.query && Object.entries(rule.query).some(([k, v]) => url.searchParams.get(k) !== v)) continue;
+    if (rule.method !== method) continue;
+    if (rule.prefix ? !(path + "/").startsWith(rule.path) : rule.path !== path) continue;
     if (rule.admin) policy.admin = true;
     if (rule.forbidden) policy.forbidden = true;
   }
-  if (path === "/api/workbench" && method === "POST" && extra.workbenchMethod
-      && ADMIN_WORKBENCH_METHODS.has(extra.workbenchMethod)) policy.admin = true;
+  if (path === "/api/workbench" && extra.workbenchMethod) {
+    const admin = method === "POST" ? ADMIN_WORKBENCH_METHODS : ADMIN_WORKBENCH_READS;
+    if (admin.has(extra.workbenchMethod)) policy.admin = true;
+  }
   return policy;
 }
 
+export interface Need {
+  /** The workbench method, for `/api/workbench`. */
+  workbenchMethod?: string;
+  /** The project this request touches. Present (even empty) means the route
+   *  is project-scoped: a reviewer must name one they are assigned. */
+  project?: unknown;
+}
+
+const json = (status: number, error: string) => Response.json({ error }, { status, headers: { "cache-control": "no-store" } });
+
 /** `null` to proceed, else the refusal to return. */
-export function guard(req: Request, extra: { workbenchMethod?: string } = {}): Response | null {
-  if (!hostedMode()) return null;
-  const who = identity(req);
-  if (!who) return Response.json({ error: "Sign in through Cloudflare Access" }, { status: 401 });
-  const policy = policyFor(req, extra);
-  if (policy.forbidden) return Response.json({ error: "Not available in hosted mode" }, { status: 403 });
-  if (policy.admin && who.role !== "admin") return Response.json({ error: "Admin only" }, { status: 403 });
+export async function guard(req: Request, need: Need = {}): Promise<Response | null> {
+  const policy = policyFor(req, need);
+  const scoped = "project" in need;
+  const project = typeof need.project === "string" ? need.project : "";
+  if (hostedMode()) {
+    if (!signedInEmail(req)) return json(401, "Sign in through Cloudflare Access");
+    const who = identity(req);
+    if (!who) return json(403, NOT_SET_UP);
+    if (policy.forbidden) return json(403, "Not available in hosted mode");
+    if (policy.admin && who.role !== "admin") return json(403, "Admin only");
+    if (scoped && !project && who.role !== "admin") return json(400, "project required");
+    if (project && !mayOpenProject(who, project)) return json(403, "You do not have access to this project");
+  }
+  if (project) {
+    let view;
+    try { view = await sourceView(); }
+    catch { return json(503, "The project list could not be read; try again shortly"); }
+    if (view && !view.projects.has(project)) return json(404, "Unknown project");
+  }
   return null;
 }

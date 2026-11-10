@@ -16,13 +16,14 @@ export const dynamic = "force-dynamic";
  *  that cache file. One failed paper is named, never fatal to the others. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let body: { project?: unknown; dirs?: unknown };
   try { body = await req.json(); } catch { return NextResponse.json({ error: "bad JSON" }, { status: 400 }); }
   const project = typeof body?.project === "string" ? body.project : "";
   const dirs = Array.isArray(body?.dirs)
     ? [...new Set(body.dirs.filter((d): d is string => typeof d === "string" && !!d))].slice(0, 4) : [];
   if (!project || !dirs.length) return NextResponse.json({ error: "project and dirs required" }, { status: 400 });
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   const entries = await Promise.all(dirs.map(async (dir) => {
     try {
       const target = await workbench("reveal_target", { project, dir, component: "image_forensics" });

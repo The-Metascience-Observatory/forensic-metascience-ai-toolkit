@@ -37,18 +37,21 @@ for(const origin of ['http://127.0.0.1:3101','https://127.0.0.1:3100','http://re
  assert.equal(rejectCrossOrigin(new Request('http://localhost:3100/api/settings',{headers:{origin,host:'rebind.invalid:3100'}}))?.status,403,origin);
 // Hosted mode (lib/accessToken.ts): routes trust only the identity header
 // the proxy sets after verifying the Cloudflare Access token. The real
-// routeGuard runs against a fixed directory; the workbench is a recorder.
+// routeGuard runs against a fixed directory (an email it does not list has
+// no identity); the workbench is a recorder; no project sources are set.
 {
  const saved={...process.env};
  process.env.METASCIENCE_ACCESS_TEAM='audit-team';process.env.METASCIENCE_ACCESS_AUD='a'.repeat(64);
  process.env.METASCIENCE_PUBLIC_ORIGIN='https://review.example.org';
  const {hostedMode}=await import('../lib/accessToken.ts');
- const DIRECTORY=[{email:'dan@example.org',name:'Dan Elton',role:'admin'},{email:'rev@example.org',name:'Second Reviewer',role:'reviewer'}];
- const identity=req=>{const e=req.headers.get('x-ms-reviewer-email');if(!hostedMode()||!e)return null;const d=DIRECTORY.find(r=>r.email===e);return {email:e,name:d?.name||e,role:d?.role||'reviewer'};};
- const auth={hostedMode,identity,withReviewer:(req,body,field='reviewer')=>{const who=identity(req);return who?{...body,[field]:who.name}:body;}};
- const {guard}=endpoint('lib/routeGuard.ts',{'./auth.ts':auth,'server-only':{}});
+ const DIRECTORY=[{email:'dan@example.org',name:'Dan Elton',role:'admin',projects:[]},{email:'rev@example.org',name:'Second Reviewer',role:'reviewer',projects:['p']}];
+ const signedInEmail=req=>{const e=req.headers.get('x-ms-reviewer-email');return hostedMode()&&e?e:null;};
+ const identity=req=>{const e=signedInEmail(req);return e?DIRECTORY.find(r=>r.email===e)||null:null;};
+ const mayOpenProject=(who,p)=>who.role==='admin'||who.projects.includes(p);
+ const auth={hostedMode,identity,signedInEmail,mayOpenProject,NOT_SET_UP:'not set up',withReviewer:(req,body,field='reviewer')=>{const who=identity(req);return who?{...body,[field]:who.name}:body;}};
+ const routeGuard=endpoint('lib/routeGuard.ts',{'./auth.ts':auth,'./projectSources.ts':{sourceView:async()=>null},'server-only':{}});
  const calls=[];
- const mods={'@/lib/routeGuard':{guard},'@/lib/auth':auth,'node:path':{default:path},'node:fs':{default:fs},
+ const mods={'@/lib/routeGuard':routeGuard,'@/lib/auth':auth,'node:path':{default:path},'node:fs':{default:fs},
   '@/lib/workbench':{workbench:async(method,params)=>{calls.push({method,params});return {ok:true,issues:{review:{}},pending:0};},workbenchTimed:async()=>({value:{},timings:{}}),serverTiming:()=>''},
   '@/lib/settings':{hostPath:p=>p,saveSettings:()=>{throw Error('settings saved');},loadSettings:()=>({python_bin:'/opt/python',papers_root:'/srv/papers',known_reviewers:['Dan Elton','Second Reviewer'],reviewers:DIRECTORY})}};
  const as=(email,route,{headers={},body='{}',method='POST'}={})=>new Request(`http://review.example.org/api/${route}`,{method,body:method==='GET'?undefined:body,
@@ -67,20 +70,24 @@ for(const origin of ['http://127.0.0.1:3101','https://127.0.0.1:3100','http://re
  }
  for(const who of ['rev@example.org','dan@example.org'])assert.equal((await api.reveal.POST(as(who,'reveal',{body:JSON.stringify({project:'p',dir:'d'})}))).status,403,`reveal ${who}`);
  for(const [m,expected] of [['register_root',403],['map_paper',403],['register_file',403],['sync',403],['review',200]]){
-  assert.equal((await api.workbench.POST(as('rev@example.org','workbench',{body:JSON.stringify({method:m,reviewer:'Mallory'})}))).status,expected,`workbench ${m} reviewer`);
+  assert.equal((await api.workbench.POST(as('rev@example.org','workbench',{body:JSON.stringify({method:m,project:'p',reviewer:'Mallory'})}))).status,expected,`workbench ${m} reviewer`);
   assert.equal((await api.workbench.POST(as('dan@example.org','workbench',{body:JSON.stringify({method:m})}))).status,200,`workbench ${m} admin`);
  }
  // The body's reviewer is ignored: the recorded name is the directory's display name, or the address for an unlisted email.
  calls.length=0;
  assert.equal((await api.review.POST(as('rev@example.org','review',{body:JSON.stringify({project:'p',slug:'s',reviewer:'Mallory',patch:{issue_id:'i',decision:'true_issue'}})}))).status,200);
  assert.equal(calls[0].params.reviewer,'Second Reviewer','review');
- assert.equal((await api.images.POST(as('stranger@example.org','images',{body:JSON.stringify({project:'p',run:'r',item:'i',decision:'false_positive',reviewer:'Mallory'})}))).status,200);
- assert.equal(calls.at(-1).params.reviewer,'stranger@example.org','images: unlisted email keeps its address');
+ // An email the directory does not list may do nothing, and another project is refused.
+ const before=calls.length;
+ assert.equal((await api.images.POST(as('stranger@example.org','images',{body:JSON.stringify({project:'p',run:'r',item:'i',decision:'false_positive',reviewer:'Mallory'})}))).status,403);
+ assert.equal((await api.images.POST(as('rev@example.org','images',{body:JSON.stringify({project:'other',run:'r',item:'i',decision:'false_positive'})}))).status,403);
+ assert.equal((await api.review.POST(as('rev@example.org','review',{body:JSON.stringify({project:'other',slug:'s',patch:{issue_id:'i',decision:'true_issue'}})}))).status,403);
+ assert.equal(calls.length,before,'nothing reached the service');
  for(const [route,field] of [['images/bulk','reviewer'],['images/missed','reviewer'],['images/viewed','viewer'],['viewed','viewer']]){
   assert.equal((await api[route].POST(as('rev@example.org',route,{body:JSON.stringify({project:'p',decision:'false_positive',reviewer:'Mallory',viewer:'Mallory'})}))).status,200,route);
   assert.equal(calls.at(-1).params[field],'Second Reviewer',route);
  }
- assert.equal((await api.workbench.POST(as('rev@example.org','workbench',{body:JSON.stringify({method:'review',reviewer:'Mallory'})}))).status,200);
+ assert.equal((await api.workbench.POST(as('rev@example.org','workbench',{body:JSON.stringify({method:'review',project:'p',reviewer:'Mallory'})}))).status,200);
  assert.equal(calls.at(-1).params.reviewer,'Second Reviewer','workbench review');
  // GET /api/settings: names only for a reviewer, the whole file for the admin, 401 without identity.
  const names=await(await api.settings.GET(as('rev@example.org','settings',{method:'GET'}))).json();
@@ -99,7 +106,7 @@ try {
  writeFileSync(file,`<body>Evidence<script>window.ran=true;fetch('/api/settings').then(()=>window.read=true).catch(()=>window.blocked=true);try{window.storage=localStorage.length}catch{window.isolated=true}</script>`);
  const api=endpoint('app/api/media/route.ts',{
   'node:fs':{default:fs},'node:fs/promises':{default:fsp},'node:stream':{Readable},
-  '@/lib/err':{errMsg:e=>e.message},'@/lib/media':{mediaType,mediaDisposition,cacheControl},'@/lib/byteRange':{byteRange},
+  '@/lib/err':{errMsg:e=>e.message},'@/lib/media':{mediaType,mediaDisposition,cacheControl},'@/lib/byteRange':{byteRange},'@/lib/routeGuard':{guard:async()=>null},
   '@/lib/workbench':{workbenchTimed:async()=>({value:{path:file,record:{name:'evidence.html'}},timings:{}}),serverTiming:()=>''},
  });
  const url='http://localhost:3100/api/media?project=fixture&dir=paper&f=evidence.html';

@@ -7,6 +7,8 @@ import { workbench, workbenchTimed, serverTiming } from "@/lib/workbench";
 export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   const params = Object.fromEntries(new URL(req.url).searchParams);
+  const scoped = await guard(req, { project: params.project });
+  if (scoped) return scoped;
   try {
     if (params.format === "csv") {
       const quote = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
@@ -102,12 +104,15 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req);
   if (rejected) return rejected;
-  const refused = guard(req);
+  const refused = await guard(req);
   if (refused) return refused;
   try {
+    const body = withReviewer(req, await req.json());
+    const scoped = await guard(req, { project: body?.project });
+    if (scoped) return scoped;
     return NextResponse.json({
       ok: true,
-      decision: await workbench("review", { component: "image_forensics", ...withReviewer(req, await req.json()) }),
+      decision: await workbench("review", { component: "image_forensics", ...body }),
     });
   } catch (e) {
     return jsonError(e);

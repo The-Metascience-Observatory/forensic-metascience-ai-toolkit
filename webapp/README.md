@@ -259,40 +259,82 @@ is a minimal "Sign in through Cloudflare Access" page, so a misconfigured
 Access application fails closed. The server still binds 127.0.0.1; only the
 tunnel reaches it.
 
-**Identity.** `GET /api/me` returns `{mode, email, name, role}`. The header
-chip shows "Reviewing as <name>" and cannot be edited. Every write
-(`/api/review`, `/api/images` POST, `/api/images/bulk`, `/api/images/missed`,
-`/api/images/viewed`, `/api/viewed`, `/api/workbench` POST) records the
-signed-in reviewer and ignores any `reviewer` in the body. The name comes
-from the **reviewer directory**, a `reviewers` array in the settings file
-(`lib/settings.ts` names its location per platform):
+**Users and roles.** The **user directory** is a `reviewers` array in the
+settings file (`lib/settings.ts` names its location per platform), edited on
+the admin **Users** page (`/admin/users`):
 
 ```json
 "reviewers": [
   { "email": "you@example.org", "name": "Your Name", "role": "admin" },
-  { "email": "colleague@example.org", "name": "A. Colleague", "role": "reviewer" }
+  { "email": "colleague@example.org", "name": "A. Colleague", "role": "reviewer",
+    "projects": ["rng_detector_cases"] }
 ]
 ```
 
-A settings file without the array starts from `METASCIENCE_ADMIN_EMAIL` (and
-`METASCIENCE_ADMIN_NAME`) as the one admin, else from nobody: no address is
-written into this public source, and a fresh instance has no admin until its
-operator names one. The `name` is what the Python
-service stores as `reviewer`, so rows recorded locally as "Dan Elton" stay
-joined to the same person. An invited email that is not in the directory is
-still a reviewer, shown by its address; add it to the directory to give it a
-display name. `known_reviewers` is the union of the directory's names and the
-free-text ones.
+- **admin**: every project, the admin pages, and every admin-only route.
+- **reviewer**: only the listed `projects`: see papers and findings, record
+  decisions, mark papers complete, record PubPeer posts. No deleting,
+  rescanning, paid drafts or website publishing.
+- **anyone else** Cloudflare Access admits is refused with "your account is
+  not set up yet" (deny by default). Two gates, by design: Access decides who
+  may reach the app, the directory decides what they may do there.
 
-**Roles** (`lib/routeGuard.ts`, one table). Admin-only in hosted mode:
-`/api/projects` POST (delete), `/api/settings` POST, `/api/workbench` POST
-with `register_root`, `map_paper`, `register_file` or `sync`, `/api/index`
-POST, `/api/metadata` POST, `/api/images/reference` POST, `/api/images/sync`
-POST, `/api/stats` POST, `/api/draft` POST (a paid model call),
-`/api/images/website` POST. Refused for everyone in hosted mode:
-`/api/reveal` (it opens a file manager on the server). `GET /api/settings`
-returns only `{known_reviewers}` to non-admins: no absolute paths, no
-`python_bin`. Everything else is open to any signed-in reviewer.
+`GET /api/me` returns `{mode, email, name, role, projects}`; the header chip
+shows "Reviewing as <name>". Every write records the signed-in user's
+display `name` and ignores any `reviewer` in the body. That name is what the
+Python service stores as `reviewer` (Postgres `users.legacy_name`), so
+renaming someone who has already reviewed splits their history; the Users
+page warns. A settings file without the array starts from
+`METASCIENCE_ADMIN_EMAIL` (and `METASCIENCE_ADMIN_NAME`) as the one admin,
+else from nobody: no address is written into this public source.
+
+**Adding a reviewer:** add them on Users (email, display name, role, tick
+their projects), then admit the same email in Cloudflare Access (Zero Trust →
+Access → Applications → this app → its policy → Include). Either step alone
+does not let them in.
+
+**Enforcement** happens in three places, sharing one rule set:
+
+- `proxy.ts` refuses unknown users, any `/project/<p>` page or `?project=<p>`
+  request for a project the reviewer is not assigned, and the admin pages
+  (`/admin/*`, `/files`).
+- Every API route calls `await guard(req, {project})` (`lib/routeGuard.ts`)
+  with the project it is about to touch, including projects read from a POST
+  body. A test fails if a route handler does not call it.
+- Server-rendered pages check through `app/project/[project]/layout.tsx` and
+  the home page filters its list (`lib/pageAccess.ts`).
+
+Admin-only routes (`lib/routeGuard.ts`, one table): `/api/projects`
+(deletion and its job list), `/api/settings` POST, `/api/workbench` POST with
+`register_root`, `map_paper`, `register_file` or `sync`, workbench reads
+`projects` and `roots`, `/api/index` POST, `/api/metadata` POST,
+`/api/images/reference` POST, `/api/images/sync` POST, `/api/stats` POST,
+`/api/draft` POST (a paid model call), `/api/images/website` POST, and
+`/api/admin/*`. Refused for everyone in hosted mode: `/api/reveal` (it opens
+a file manager on the server). A reviewer's sync status has its error details
+removed, `image_status` loses its all-projects list, and a bulk-decision job
+can be polled only by whoever started it.
+
+**Projects.** A project is a name: the catalog's corpus name, which keys
+records, reviews and image tables. The admin **Projects** page
+(`/admin/projects`) decides which names exist for the app
+(`project_sources` in the settings file, `lib/projectSources.ts`):
+
+- a **watched folder** makes each subfolder a project named after it, and a
+  new subfolder appears by itself. Scaffolding folders (`_x`, `.x`, `done`,
+  `logs`, ...: `SCAFFOLDING_DIRS`, generated from `discovery._NOT_A_PAPER`)
+  are skipped. A catalog project registered at a folder deeper inside (the
+  `<author>__pubpeer_checked_*` session corpora) counts too, and a folder that
+  only holds such projects is not one itself;
+- a **single folder** can be added as a project under a name;
+- a name with findings in the **database** but no folder here can be adopted.
+
+Every other catalog name (test corpora such as `pytest-600`, scratch copies,
+folders that moved) is listed under "Not in any source" for the admin and is
+404 for everyone, admins included. Nothing is deleted. Without
+`project_sources` every catalog name is listed, as before. Stats, drafts and
+metadata find a project's folders through the catalog's registered roots,
+not through `papers_root/<name>`.
 
 **Origin.** Behind the tunnel the browser sends `Origin: https://<public
 host>` while Node sees `http://<host>`, so `METASCIENCE_PUBLIC_ORIGIN` names

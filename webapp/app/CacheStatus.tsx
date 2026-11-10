@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR, { type SWRConfiguration, type State, unstable_serialize, useSWRConfig } from "swr";
 import { getJson, postJson } from "@/lib/getJson";
+import { useMe } from "@/lib/useMe";
 import { ReviewSyncTracker, reviewSyncInterval, type ReviewSyncReading, type ReviewSyncState } from "@/lib/reviewSync";
 export type SyncState = ReviewSyncState & {import_error?: unknown};
 
@@ -23,7 +24,7 @@ const retryLater: NonNullable<SWRConfiguration<ReviewSyncReading, Error>["onErro
  *  views to refetch their judgments. Focus refreshes immediately; on shared
  *  pages it first asks the service to pull changed records. An image page
  *  reads only local image status and never writes to shared storage. */
-export function useReviewSync(imagePage: boolean, project: string): SyncState {
+export function useReviewSync(imagePage: boolean, project: string, canSync = true): SyncState {
   const [tracker] = useState(() => new ReviewSyncTracker());
   const url = `/api/workbench?method=${imagePage ? "image_status" : "status"}${imagePage ? `&project=${encodeURIComponent(project)}` : ""}`;
   const key = ["review-sync", url];
@@ -54,13 +55,14 @@ export function useReviewSync(imagePage: boolean, project: string): SyncState {
   useEffect(() => {
     const saved = () => { tracker.saved(); void mutate(); };
     const focus = () => {
-      if (imagePage) { void mutate(); return; }
+      // Pulling shared records is an admin action in hosted mode; a reviewer re-reads.
+      if (imagePage || !canSync) { void mutate(); return; }
       postJson("/api/workbench", { method: "sync" }).catch(() => undefined).then(() => void mutate());
     };
     window.addEventListener("focus", focus);
     window.addEventListener("workbench-review", saved);
     return () => { window.removeEventListener("focus", focus); window.removeEventListener("workbench-review", saved); };
-  }, [imagePage, mutate, tracker]);
+  }, [imagePage, canSync, mutate, tracker]);
   return error ? { error: UNAVAILABLE } : (data?.state ?? {});
 }
 
@@ -68,14 +70,15 @@ export function CacheStatus(){
  const pathname=usePathname();
  const imagePage=pathname.includes("/images");
  const project=imagePage ? decodeURIComponent(pathname.split("/")[2] || "") : "";
- const state=useReviewSync(imagePage,project);
+ const {isAdmin}=useMe();
+ const state=useReviewSync(imagePage,project,isAdmin);
  return <span role="status" style={{fontSize:11}} title={state.error || (state.import_error ? `Local import needs attention: ${JSON.stringify(state.import_error)}` : undefined) || state.pending_errors?.join('; ') || state.file_monitor_error || (state.warmup_error ? `Landing-page summary could not be prepared: ${state.warmup_error}` : undefined) || state.synced_at || (imagePage ? 'Local image review; no network synchronization' : 'Initial synchronization in progress')}>
  {imagePage ? (state.error ? 'Local review needs attention' : state.ready ? 'Saved on this computer' : 'Loading local image records…') : state.error || state.pending_errors?.length?'Offline / sync needs attention':state.ready?'Shared records cached':'Synchronizing shared records…'}
  {imagePage && !!state.import_error && ' · import needs attention'}
  {state.synced_at && ` · synced ${new Date(state.synced_at).toLocaleTimeString()}`}
  {state.file_monitor_error && ' · local files checked periodically'}
  {state.warmup_error && ' · project summary computed on demand'}
- {!!state.pending_writes && ` · ${state.pending_writes} decision(s) pending sync`}{' '}<a href="/files">Local files</a></span>;
+ {!!state.pending_writes && ` · ${state.pending_writes} decision(s) pending sync`}{isAdmin && <>{' '}<a href="/files">Local files</a></>}</span>;
 }
 export function ReviewJudgments({reviews}:{reviews?: Judgments}){
  if(!reviews?.reviewers?.length)return null;

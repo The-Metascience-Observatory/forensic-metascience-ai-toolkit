@@ -64,7 +64,9 @@ export type ImageReviewCount = {
   n_latest_items?: number; n_viewed?: number;
 };
 
-export function ProjectsTable({ projects }: { projects: ProjectSummary[] }) {
+/** `canManage` false (a reviewer in hosted mode): no Done / Delete buttons;
+ *  the server refuses both to non-admins anyway. */
+export function ProjectsTable({ projects, canManage = true }: { projects: ProjectSummary[]; canManage?: boolean }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [plan, setPlan] = useState<DeletePlan | null>(null);
@@ -94,7 +96,7 @@ export function ProjectsTable({ projects }: { projects: ProjectSummary[] }) {
       setErr(`${project}: ${e instanceof Error ? e.message : String(e)}`);
     } finally { setBusy(null); }
   }
-  const actions = (p: ProjectSummary) => (
+  const actions = (p: ProjectSummary) => !canManage ? null : (
     <span style={{ display: "inline-flex", gap: 6 }}>
       <button type="button"
               title={isDone(p) ? "Move back to the active projects" : "Mark this project done on this machine"}

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req);
   if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   try {
     const body = await req.json().catch(() => ({}));
     const component = typeof body?.component === "string" && body.component ? body.component : "image_forensics";

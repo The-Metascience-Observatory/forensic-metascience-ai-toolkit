@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  * posts anywhere; the human copies the text out themselves. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   const body = await req.json().catch(() => ({}));
   const { project, dir, kind, finding_ids } = body as {
     project?: string; dir?: string; kind?: string; finding_ids?: string[];
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "project, dir, kind required" },
                              { status: 400 });
   }
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   try {
     const abs = await paperAbsDir(project, dir);
     const verb = kind === "letter" ? "draft-letter" : "draft-pubpeer";
@@ -52,6 +53,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "project and dir required" },
                              { status: 400 });
   }
+  const refused = await guard(req, { project }); if (refused) return refused;
   try {
     const abs = await paperAbsDir(project, dir);
     if (file) {

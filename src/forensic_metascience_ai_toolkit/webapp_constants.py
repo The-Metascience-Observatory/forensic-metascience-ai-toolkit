@@ -30,7 +30,8 @@ from pathlib import Path
 HEADER = """// GENERATED FILE -- do not edit.
 // Regenerate with: metascience gen-webapp-constants
 // Sources of truth: severity9.py (ladder, legacy map), review_io.py
-// (decision vocabulary), webapp_index.py (channel states), names.py
+// (decision vocabulary), webapp_index.py (channel states), discovery.py
+// (scaffolding folder names), names.py
 // (display names of stored producer/stage/channel identifiers).
 // tests/test_webapp_constants.py regenerates and byte-compares.
 """
@@ -63,6 +64,12 @@ def render() -> str:
                               indent=2, sort_keys=True) + ";\n")
     lines.append("export const CHANNEL_STATES = "
                  + json.dumps(list(CHANNEL_STATES)) + " as const;\n")
+    from .discovery import _NOT_A_PAPER
+    # A watched papers root's subfolders become projects; these names (and
+    # dot/underscore folders, `discovery._is_scaffolding_name`) are corpus
+    # administration, never a project (webapp/lib/projectSources.ts).
+    lines.append("export const SCAFFOLDING_DIRS = "
+                 + json.dumps(sorted(_NOT_A_PAPER)) + " as const;\n")
     from .names import display_names
     lines.append("export const DISPLAY_NAMES: Record<string, string> = "
                  + json.dumps(display_names(), indent=2, sort_keys=True) + ";\n")

@@ -11,17 +11,19 @@ export const dynamic="force-dynamic";
 // and exported as ground truth (`image-reviews-export --missed-out`).
 export async function POST(req:Request){
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req);
+  const refused = await guard(req);
   if (refused) return refused;
  try{
   const body = withReviewer(req, await req.json());
   if(!body?.project)return NextResponse.json({error:"project required"},{status:400});
+  const scoped = await guard(req, { project: body.project }); if (scoped) return scoped;
   return NextResponse.json({ok:true,missed:await workbench("image_missed_record",{...body,component:"image_forensics"})});
  }catch(e){return jsonError(e);}
 }
 export async function GET(req:Request){
  const params=Object.fromEntries(new URL(req.url).searchParams);
  if(!params.project)return NextResponse.json({error:"project required"},{status:400});
+ const refused = await guard(req, { project: params.project }); if (refused) return refused;
  try{return NextResponse.json(await workbench("image_missed",{...params,component:"image_forensics"}));}
  catch(e){return jsonError(e);}
 }

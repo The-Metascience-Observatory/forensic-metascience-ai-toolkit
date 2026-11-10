@@ -46,6 +46,11 @@ test("proxy: Cloudflare Access token verification", async () => {
   try {
     process.env.METASCIENCE_ACCESS_TEAM = TEAM;
     process.env.METASCIENCE_ACCESS_AUD = AUD;
+    const scratch = fs.mkdtempSync(path.join(os.tmpdir(), "workbench-proxy-"));
+    process.env.METASCIENCE_SETTINGS_FILE = path.join(scratch, "settings.json");
+    fs.writeFileSync(process.env.METASCIENCE_SETTINGS_FILE, JSON.stringify({ papers_root: scratch, reviewers: [
+      { email: "reviewer@example.org", name: "Second Reviewer", role: "reviewer", projects: ["x"] },
+      { email: "admin@example.org", name: "Admin", role: "admin" }] }));
     const { jwk, mint } = await keyring();
     const fetched = [];
     globalThis.fetch = async (url) => {
@@ -79,6 +84,24 @@ test("proxy: Cloudflare Access token verification", async () => {
     assert.equal(viaCookie.status, 200);
     assert.equal(forwarded(viaCookie)[HEADER], "reviewer@example.org");
     assert.equal(fetched.length, 1);
+
+    // The directory: an email it does not list is refused (Access admitted
+    // them, nobody set them up); a reviewer reaches only assigned projects
+    // and no admin page; an admin reaches everything.
+    const stranger = await mint({ email: "stranger@example.org" });
+    const notSetUp = await proxy(req("/api/paper?project=x", { "cf-access-jwt-assertion": stranger }));
+    assert.equal(notSetUp.status, 403);
+    assert.match((await notSetUp.json()).error, /not set up/);
+    assert.match(await (await proxy(req("/", { "cf-access-jwt-assertion": stranger }))).text(), /not set up yet/);
+    for (const [url, status] of [["/project/x/review/p", 200], ["/api/paper?project=x", 200], ["/project/y", 403],
+      ["/project/y/images/1", 403], ["/api/paper?project=y", 403], ["/api/media?project=y&dir=d&f=a.pdf", 403],
+      ["/admin/users", 403], ["/files", 403], ["/project/x%2F..%2Fy", 403], ["/", 200]]) {
+      assert.equal((await proxy(req(url, { "cf-access-jwt-assertion": good }))).status, status, `reviewer ${url}`);
+    }
+    const admin = await mint({ email: "admin@example.org" });
+    for (const url of ["/project/y", "/api/paper?project=y", "/admin/users", "/files"]) {
+      assert.equal((await proxy(req(url, { "cf-access-jwt-assertion": admin }))).status, 200, `admin ${url}`);
+    }
 
     // Expired, wrong audience, wrong issuer, unknown key, no email: all 401.
     const bad = {
@@ -136,7 +159,7 @@ test("identity: reviewer directory and roles", async () => {
     const file = path.join(scratch, "settings.json");
     process.env.METASCIENCE_SETTINGS_FILE = file;
     fs.writeFileSync(file, JSON.stringify({ papers_root: scratch, known_reviewers: ["Typed Name"],
-      reviewers: [{ email: "Dan@Example.org", name: "Dan Elton", role: "admin" }, { email: "rev@example.org", name: "Second Reviewer", role: "reviewer" }] }));
+      reviewers: [{ email: "Dan@Example.org", name: "Dan Elton", role: "admin", projects: ["ignored"] }, { email: "rev@example.org", name: "Second Reviewer", role: "reviewer", projects: ["b", "a", "a", 7] }] }));
     const { identity, identityFor, requireAdmin, withReviewer } = await import("../lib/auth.ts");
     const { loadSettings, saveSettings, defaultDirectory } = await import("../lib/settings.ts");
     const req = (email) => new Request("http://127.0.0.1:3101/api/review", { headers: email ? { [HEADER]: email } : {} });
@@ -149,9 +172,10 @@ test("identity: reviewer directory and roles", async () => {
 
     process.env.METASCIENCE_ACCESS_TEAM = TEAM;
     process.env.METASCIENCE_ACCESS_AUD = AUD;
-    assert.deepEqual(identity(req("DAN@example.org")), { email: "dan@example.org", name: "Dan Elton", role: "admin" });
-    assert.deepEqual(identity(req("rev@example.org")), { email: "rev@example.org", name: "Second Reviewer", role: "reviewer" });
-    assert.deepEqual(identity(req("new@example.org")), { email: "new@example.org", name: "new@example.org", role: "reviewer" }, "unknown email is a reviewer shown by address");
+    assert.deepEqual(identity(req("DAN@example.org")), { email: "dan@example.org", name: "Dan Elton", role: "admin", projects: [] });
+    assert.deepEqual(identity(req("rev@example.org")), { email: "rev@example.org", name: "Second Reviewer", role: "reviewer", projects: ["a", "b"] });
+    assert.equal(identity(req("new@example.org")), null, "an email the directory does not list has no identity (deny by default)");
+    assert.equal(requireAdmin(req("new@example.org"))?.status, 403);
     assert.equal(identity(req(null)), null, "no header: no identity, even in hosted mode");
     assert.equal(requireAdmin(req("dan@example.org")), null);
     assert.equal(requireAdmin(req("rev@example.org"))?.status, 403);
@@ -165,7 +189,7 @@ test("identity: reviewer directory and roles", async () => {
     fs.writeFileSync(file, JSON.stringify({ papers_root: scratch }));
     process.env.METASCIENCE_ADMIN_EMAIL = "Admin@Example.org";
     process.env.METASCIENCE_ADMIN_NAME = "Site Admin";
-    const seeded = [{ email: "admin@example.org", name: "Site Admin", role: "admin" }];
+    const seeded = [{ email: "admin@example.org", name: "Site Admin", role: "admin", projects: [] }];
     assert.deepEqual(defaultDirectory(), seeded);
     assert.deepEqual(loadSettings().reviewers, seeded);
     assert.deepEqual(identityFor("admin@example.org", loadSettings().reviewers), seeded[0]);
@@ -174,10 +198,10 @@ test("identity: reviewer directory and roles", async () => {
     delete process.env.METASCIENCE_ADMIN_EMAIL; delete process.env.METASCIENCE_ADMIN_NAME;
     fs.writeFileSync(file, JSON.stringify({ papers_root: scratch }));
     assert.deepEqual(loadSettings().reviewers, []);
-    assert.deepEqual(identityFor("anyone@example.org", loadSettings().reviewers).role, "reviewer");
+    assert.equal(identityFor("anyone@example.org", loadSettings().reviewers), null);
     // Malformed entries are dropped, roles other than admin are reviewer.
     saveSettings({ papers_root: scratch, known_reviewers: [], reviewers: [{ email: "x@example.org", role: "root" }, { name: "no email" }, "junk"] });
-    assert.deepEqual(loadSettings().reviewers, [{ email: "x@example.org", name: "x@example.org", role: "reviewer" }]);
+    assert.deepEqual(loadSettings().reviewers, [{ email: "x@example.org", name: "x@example.org", role: "reviewer", projects: [] }]);
   } finally {
     restore();
     fs.rmSync(scratch, { recursive: true, force: true });

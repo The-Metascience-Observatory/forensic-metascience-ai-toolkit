@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  *  through /api/media's registered-root and archived-hash validation. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let body: { component?: string; project?: string; dir?: string; f?: string };
   try {
     body = await req.json();
@@ -28,6 +28,7 @@ export async function POST(req: Request) {
   if (!project || !dir) {
     return NextResponse.json({ error: "project and dir required" }, { status: 400 });
   }
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   try {
     const target = await workbench("reveal_target", {project, dir, f, component:body.component});
     const launch = await revealLocation(process.platform, target.directory, target.file);

@@ -3,6 +3,7 @@ import { CacheStatus } from "./CacheStatus";
 import { DeleteProgress } from "./DeleteProgress";
 import type { Metadata } from "next";
 import "./globals.css";
+import { AdminLinks } from "./AdminLinks";
 import { ReviewerChip } from "./ReviewerChip";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <div style={{ marginLeft: "auto", display: "flex",
                           alignItems: "center", gap: 8 }}>
-              <CacheStatus /><ThemeToggle />
+              <CacheStatus /><AdminLinks /><ThemeToggle />
               <ReviewerChip />
             </div>
           </header>

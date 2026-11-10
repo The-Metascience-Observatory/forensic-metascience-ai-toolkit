@@ -9,7 +9,8 @@ import { workbench } from "@/lib/workbench";
 export const dynamic = "force-dynamic";
 
 /** Background deletion jobs, polled by the progress bar on every page. */
-export async function GET() {
+export async function GET(req: Request) {
+  const refused = await guard(req); if (refused) return refused;
   try { return NextResponse.json(await workbench("project_delete_jobs")); }
   catch (e) { return NextResponse.json({ error: errMsg(e) }, { status: 400 }); }
 }
@@ -20,13 +21,14 @@ export async function GET() {
  * collection folder itself must never take every other project with it. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let body: Record<string, unknown> | null = null;
   try { body = asRecord(await req.json()); } catch { /* handled below */ }
   if (!body || typeof body.project !== "string" || !body.project) {
     return NextResponse.json({ error: "project is required" }, { status: 400 });
   }
   const project = body.project;
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   const protectedPaths = [loadSettings().papers_root];
   try {
     switch (body.action) {

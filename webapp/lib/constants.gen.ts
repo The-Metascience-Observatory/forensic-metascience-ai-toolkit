@@ -1,7 +1,8 @@
 // GENERATED FILE -- do not edit.
 // Regenerate with: metascience gen-webapp-constants
 // Sources of truth: severity9.py (ladder, legacy map), review_io.py
-// (decision vocabulary), webapp_index.py (channel states), names.py
+// (decision vocabulary), webapp_index.py (channel states), discovery.py
+// (scaffolding folder names), names.py
 // (display names of stored producer/stage/channel identifiers).
 // tests/test_webapp_constants.py regenerates and byte-compares.
 
@@ -194,6 +195,8 @@ export const DECISIONS_BY_PRODUCER: Record<string, readonly string[]> = {
 };
 
 export const CHANNEL_STATES = ["ran", "ran_result_discarded", "refused", "did_not_run", "unknown"] as const;
+
+export const SCAFFOLDING_DIRS = ["already_retracted", "blinded", "done", "failed", "logs", "prioritized_cerebrolysin_papers", "priority", "retracted", "reviews", "search_scripts_and_data"] as const;
 
 export const DISPLAY_NAMES: Record<string, string> = {
   "adjudication": "Adjudicator",

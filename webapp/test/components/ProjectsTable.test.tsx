@@ -13,7 +13,9 @@ import { ProjectsTable } from "@/app/ProjectsTable";
 test("the home page joins image-review counts onto every listed project", () => {
   const home = readFileSync("app/page.tsx", "utf8");
   expect(home).toMatch(/<ProjectsTable\s+projects=\{withImageReviews\(listed,\s*counts\)\}/);
-  expect(home).toMatch(/const listed\s*=\s*\[\.\.\.index\.projects,\s*\.\.\.imageOnlyProjects\(index\.projects,\s*counts\)\]/);
+  expect(home).toMatch(/const catalog\s*=\s*\[\.\.\.index\.projects,\s*\.\.\.imageOnlyProjects\(index\.projects,\s*counts\)\]/);
+  // Then only the configured sources and, for a reviewer, their projects.
+  expect(home).toMatch(/const listed\s*=\s*\[\.\.\.catalog,[^\n]*\]\s*\n\s*\.filter\(p => visible\(p\.name\)\)/);
 });
 
 const fields = ["n_papers", "n_pdf", "n_xml", "n_image_run", "n_text_run", "n_human_reviewed"] as const;

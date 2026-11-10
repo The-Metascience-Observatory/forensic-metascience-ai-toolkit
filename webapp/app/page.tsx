@@ -1,6 +1,8 @@
 import { ProjectsTable, type ImageReviewCount } from "./ProjectsTable";
 import { workbench } from "@/lib/workbench";
 import { loadSettings } from "@/lib/settings";
+import { isAdminViewer, visibleProjectFilter } from "@/lib/pageAccess";
+import { sourceView } from "@/lib/projectSources";
 import { RefreshCountsButton } from "./RefreshCountsButton";
 import { RootForm } from "./RootForm";
 
@@ -40,8 +42,22 @@ function imageOnlyProjects(listed: { name: string }[], counts: Record<string, Im
     }));
 }
 
+/** Sourced projects the catalog has no row for yet (a new folder under a
+ * watched root, before its papers are scanned): listed with zero counts so a
+ * new project shows up at once. */
+function sourcedButUnlisted(listed: { name: string }[], names: string[]) {
+  const have = new Set(listed.map(p => p.name));
+  return names.filter(n => !have.has(n)).map(name => ({
+    name, n_papers: 0, n_pdf: 0, n_xml: 0, n_image_run: 0,
+    n_text_run: 0, n_human_reviewed: 0, n_not_fetched: 0, n_in_progress: 0,
+  }));
+}
+
 export default async function Home() {
   const settings = loadSettings();
+  const admin = await isAdminViewer();
+  const visible = await visibleProjectFilter();
+  const view = await sourceView();
   // Image decisions live in the local image-review database, a separate
   // worker; fetch both at once. A failed count renders as unavailable, not 0.
   const imageCounts = workbench<{ projects: Record<string, ImageReviewCount> }>("image_review_counts")
@@ -61,28 +77,33 @@ export default async function Home() {
           no cache yet. Scanning does not re-run the agent.
         </p>
         <p style={{ color: "var(--sev-impossible)", maxWidth: 720 }}>{detail}</p>
-        <RootForm initial={settings.papers_root} />
+        {admin && <RootForm initial={settings.papers_root} />}
       </div>
     );
   }
+
+  const counts = await imageCounts;
+  const catalog = [...index.projects, ...imageOnlyProjects(index.projects, counts)];
+  const listed = [...catalog, ...sourcedButUnlisted(catalog, view ? [...view.projects.keys()] : [])]
+    .filter(p => visible(p.name));
+  const nPapers = listed.reduce((n, p) => n + (p.n_papers || 0), 0);
 
   return (
     <div className="page">
       <h1 style={{ fontSize: 20, margin: "0 0 6px" }}>Projects</h1>
       <p className="muted" style={{ marginBottom: 14 }}>
-        {index.n_projects} project{index.n_projects === 1 ? "" : "s"} ·{" "}
-        {index.n_papers} papers in the synchronized catalog
+        {listed.length} project{listed.length === 1 ? "" : "s"} · {nPapers} papers
+        {!admin && listed.length === 0 && " · no projects have been assigned to you yet; ask the admin"}
       </p>
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <RootForm initial={settings.papers_root} />
-        <RefreshCountsButton />
-      </div>
+      {admin && (
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          {!view && <RootForm initial={settings.papers_root} />}
+          <RefreshCountsButton />
+          {!view && <a href="/admin/projects" style={{ fontSize: 13 }}>Choose which folders are projects…</a>}
+        </div>
+      )}
 
-      {await (async () => {
-        const counts = await imageCounts;
-        const listed = [...index.projects, ...imageOnlyProjects(index.projects, counts)];
-        return <ProjectsTable projects={withImageReviews(listed, counts)} />;
-      })()}
+      <ProjectsTable projects={withImageReviews(listed, counts)} canManage={admin} />
       {index.errors && index.errors.length > 0 && (
         <p style={{ color: "var(--sev-impossible)", marginTop: 12 }}>
           {index.errors.length} project(s) could not be read.

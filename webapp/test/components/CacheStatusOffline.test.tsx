@@ -12,7 +12,9 @@ afterEach(() => vi.unstubAllGlobals());
 
 test("an unreachable service is reported and retried five seconds later", async () => {
   const w = { down: true, reads: 0 };
-  vi.stubGlobal("fetch", async () => {
+  vi.stubGlobal("fetch", async (url: string) => {
+    // The header also asks who is signed in (/api/me); count status reads only.
+    if (String(url).startsWith("/api/me")) return { ok: true, json: async () => ({ mode: "local", role: "admin", projects: [] }) };
     w.reads++;
     if (w.down) throw new TypeError("Failed to fetch");
     return { ok: true, json: async () => ({ ready: true, pending_writes: 0 }) };

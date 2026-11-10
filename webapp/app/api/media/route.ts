@@ -1,3 +1,4 @@
+import { guard } from "@/lib/routeGuard";
 import { NextResponse } from "next/server";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
@@ -25,6 +26,8 @@ async function serve(req: Request, head: boolean) {
   const file = url.searchParams.get("f") || "";
   if (!project || !dir || !file)
     return NextResponse.json({ error: "project, dir, f required" }, { status: 400 });
+  const refused = await guard(req, { project });
+  if (refused) return refused;
   try {
     const variant = url.searchParams.get("variant");
     if (variant && variant !== "thumbnail")

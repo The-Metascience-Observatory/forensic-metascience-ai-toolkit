@@ -2,8 +2,8 @@ import "server-only";
 
 import fs from "node:fs";
 import path from "node:path";
-import os from "node:os";
 
+import { asDirectory, defaultDirectory, settingsPath, type Reviewer } from "./directory.ts";
 import { windowsAbsToWsl, wslAbsToWindows } from "./rel.ts";
 
 /**
@@ -33,47 +33,41 @@ export const DEFAULT_PAPERS_ROOT =
 
 export const DEFAULT_REVIEWERS = ["Dan Elton"];
 
-export type Role = "reviewer" | "admin";
-/** One entry of the hosted-mode reviewer directory: the Cloudflare Access
- *  email, the display name the Python service records as `reviewer`, and
- *  the role `lib/routeGuard.ts` gates on. Local mode ignores it. */
-export interface Reviewer { email: string; name: string; role: Role }
-/** The directory a settings file without one starts with: the operator
- *  named by `METASCIENCE_ADMIN_EMAIL` (display name `METASCIENCE_ADMIN_NAME`)
- *  as admin, else nobody, so a fresh hosted instance has no admin until its
- *  operator names one. Never a person's address in this public source. */
-export function defaultDirectory(env: NodeJS.ProcessEnv = process.env): Reviewer[] {
-  const email = (env.METASCIENCE_ADMIN_EMAIL || "").trim().toLowerCase();
-  if (!email) return [];
-  return [{ email, name: (env.METASCIENCE_ADMIN_NAME || "").trim() || email, role: "admin" }];
+export type { Reviewer, Role } from "./directory.ts";
+export { asDirectory, defaultDirectory, settingsPath } from "./directory.ts";
+
+/** Where projects come from (Dan, 2026-11-10). Every immediate subfolder of a
+ *  watched `root` is a project named after it (and any catalog project
+ *  registered at a folder inside that root); each `folders` entry is one
+ *  folder added as a project by name; each `database` name is a project with
+ *  findings in the database and no folder on this machine. Anything else the
+ *  catalog knows (`pytest-600`, a scratch `corpus`) is not a project for the
+ *  app. Absent: every catalog project is listed, as before. */
+export interface ProjectSources {
+  roots: string[];
+  folders: { name: string; path: string }[];
+  database: string[];
 }
 
-export function asDirectory(v: unknown): Reviewer[] {
-  if (!Array.isArray(v)) return [];
-  const out: Reviewer[] = [];
-  for (const x of v) {
-    if (!x || typeof x !== "object") continue;
-    const r = x as Record<string, unknown>;
-    const email = typeof r.email === "string" ? r.email.trim().toLowerCase() : "";
-    if (!email || out.some((o) => o.email === email)) continue;
-    const name = typeof r.name === "string" && r.name.trim() ? r.name.trim() : email;
-    out.push({ email, name, role: r.role === "admin" ? "admin" : "reviewer" });
+export function asProjectSources(v: unknown): ProjectSources | undefined {
+  if (!v || typeof v !== "object") return undefined;
+  const r = v as Record<string, unknown>;
+  const strings = (x: unknown) => Array.isArray(x)
+    ? [...new Set(x.filter((y): y is string => typeof y === "string").map((y) => y.trim()).filter(Boolean))] : [];
+  const folders: { name: string; path: string }[] = [];
+  if (Array.isArray(r.folders)) {
+    for (const f of r.folders) {
+      if (!f || typeof f !== "object") continue;
+      const { name, path: p } = f as Record<string, unknown>;
+      if (typeof name !== "string" || !name.trim() || typeof p !== "string" || !p.trim()) continue;
+      if (folders.some((o) => o.name === name.trim() && o.path === p.trim())) continue;
+      folders.push({ name: name.trim(), path: p.trim() });
+    }
   }
-  return out;
+  return { roots: strings(r.roots), folders, database: strings(r.database) };
 }
 
 const DATA_DIR = path.join(process.cwd(), "data");
-/** Machine configuration must never live in the Dropbox checkout. */
-export function settingsPath(): string {
-  if (process.env.METASCIENCE_SETTINGS_FILE) return path.resolve(process.env.METASCIENCE_SETTINGS_FILE);
-  const base = process.platform === "darwin"
-    ? path.join(os.homedir(), "Library", "Application Support")
-    : process.platform === "win32"
-      ? process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local")
-      : process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config");
-  return path.join(base, "metascience", "webapp", "settings.json");
-}
-
 function readLocalSettings(): Partial<Settings> {
   const file = settingsPath();
   try {
@@ -104,6 +98,7 @@ export interface Settings {
   /** Every display name: the directory's names plus the free-text ones. */
   known_reviewers: string[];
   reviewers: Reviewer[];
+  project_sources?: ProjectSources;
 }
 
 export function indexPath(): string {
@@ -126,6 +121,7 @@ export function loadSettings(): Settings {
     papers_root: hostPath(envRoot || onDisk.papers_root || DEFAULT_PAPERS_ROOT),
     known_reviewers: [...new Set([...DEFAULT_REVIEWERS, ...directory.map((r) => r.name), ...reviewers])],
     reviewers: directory,
+    project_sources: asProjectSources(onDisk.project_sources),
   };
 }
 
@@ -134,11 +130,10 @@ function asStringList(v: unknown): string[] {
   return v.filter((x): x is string => typeof x === "string");
 }
 
-/** `reviewers` omitted keeps the directory on disk (or the default). */
-export function saveSettings(next: Omit<Settings, "reviewers"> & { reviewers?: Reviewer[] }): Settings {
-  const file = settingsPath();
+/** `reviewers` omitted keeps the directory on disk (or the default); keys
+ *  this function does not manage (`project_sources`, legacy ones) are kept. */
+export function saveSettings(next: Omit<Settings, "reviewers" | "project_sources"> & { reviewers?: Reviewer[] }): Settings {
   const current = readLocalSettings();
-  fs.mkdirSync(path.dirname(file), { recursive: true });
   const directory = Array.isArray(next.reviewers) ? asDirectory(next.reviewers)
     : "reviewers" in current ? asDirectory(current.reviewers) : defaultDirectory();
   const merged: Settings = {
@@ -151,6 +146,34 @@ export function saveSettings(next: Omit<Settings, "reviewers"> & { reviewers?: R
     ])],
     reviewers: directory,
   };
-  fs.writeFileSync(file, JSON.stringify(merged, null, 2) + "\n", { mode: 0o600 });
-  return merged;
+  writeSettingsFile({ ...current, ...merged });
+  return { ...merged, project_sources: asProjectSources(current.project_sources) };
+}
+
+function writeSettingsFile(obj: object) {
+  const file = settingsPath();
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  // Written whole to a sibling and renamed: the proxy reads this file on every
+  // request and must never see half of it.
+  const tmp = `${file}.${process.pid}.tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(obj, null, 2) + "\n", { mode: 0o600 });
+  fs.renameSync(tmp, file);
+}
+
+/** Replace the user directory (the Users page). */
+export function saveDirectory(reviewers: Reviewer[]): Reviewer[] {
+  const current = readLocalSettings();
+  const directory = asDirectory(reviewers);
+  const names = asStringList(current.known_reviewers);
+  writeSettingsFile({ ...current, reviewers: directory,
+    known_reviewers: [...new Set([...names, ...directory.map((r) => r.name)])] });
+  return directory;
+}
+
+/** Replace the project sources (the Projects page). */
+export function saveProjectSources(sources: ProjectSources): ProjectSources {
+  const current = readLocalSettings();
+  const clean = asProjectSources(sources) ?? { roots: [], folders: [], database: [] };
+  writeSettingsFile({ ...current, project_sources: clean });
+  return clean;
 }

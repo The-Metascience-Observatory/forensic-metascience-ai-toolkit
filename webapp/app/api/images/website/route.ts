@@ -51,7 +51,7 @@ const fail = (error: string, status = 400) => NextResponse.json({ error }, { sta
  *  deploying stay with the person, so nothing here reaches the public site. */
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let form: FormData;
   try { form = await req.formData(); } catch { return fail("expected multipart form data"); }
   const field = (k: string) => { const v = form.get(k); return typeof v === "string" ? v.trim() : ""; };
@@ -62,6 +62,7 @@ export async function POST(req: Request) {
   const pubpeerUrl = normalisePubpeerUrl(field("pubpeerUrl"));
   const image = form.get("image");
   if (!project || !dir) return fail("project and dir required");
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   if (!pubpeerUrl) return fail("That is not a PubPeer publication link (https://pubpeer.com/publications/…).");
   if (!summary) return fail("The comment text is empty.");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(submitted)) return fail("The submission date must be YYYY-MM-DD.");

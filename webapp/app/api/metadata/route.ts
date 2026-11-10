@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 
 import { asRecord, errMsg } from "@/lib/err";
 import { pyJson, pyModuleJson } from "@/lib/python";
-import { findPaper, findProject, paperAbsDir, scanNow } from "@/lib/store";
+import { findPaper, paperAbsDir, projectRoot, scanNow } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const rejected = rejectCrossOrigin(req); if (rejected) return rejected;
-  const refused = guard(req); if (refused) return refused;
+  const refused = await guard(req); if (refused) return refused;
   let raw: unknown;
   try {
     raw = await req.json();
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
   if (!project) {
     return NextResponse.json({ error: "project required" }, { status: 400 });
   }
+  const scoped = await guard(req, { project }); if (scoped) return scoped;
   const core = (m: unknown) => {
     if (!m || typeof m !== "object") return false;
     const rec = m as Record<string, unknown>;
@@ -44,9 +45,11 @@ export async function POST(req: Request) {
       let updated = 0;
       let last: unknown = null;
       for (const one of wanted) {
-        const paper = findPaper(project, one, dir || null);
-        if (!paper) continue;
-        const abs = await paperAbsDir(project, paper.dir);
+        // An explicit folder wins; the legacy index is only a fallback for a
+        // slug sent without one.
+        const paperDir = dir || findPaper(project, one, null)?.dir;
+        if (!paperDir) continue;
+        const abs = await paperAbsDir(project, paperDir);
         const args = ["fetch-metadata", abs];
         if (force) args.push("--force");
         last = await pyJson(args);
@@ -58,11 +61,11 @@ export async function POST(req: Request) {
 
       return NextResponse.json({ ok: true, metadata: last, updated });
     }
-    const row = findProject(project);
-    if (!row) {
-      return NextResponse.json({ error: "unknown project" }, { status: 404 });
+    const root = await projectRoot(project);
+    if (!root) {
+      return NextResponse.json({ error: "this project has no folder on this machine" }, { status: 404 });
     }
-    const args = ["fetch-metadata", "--project-dir", row.root];
+    const args = ["fetch-metadata", "--project-dir", root];
     if (force) args.push("--force");
     if (body.limit) args.push("--limit", String(body.limit));
     const summary = await pyJson(args);

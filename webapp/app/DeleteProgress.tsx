@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { DELETE_STARTED, tqdmLine, type DeleteJob } from "@/lib/projectDelete";
+import { useMe } from "@/lib/useMe";
 
 const DISMISSED = "metascience.deleteJobs.dismissed";
 const readDismissed = (): string[] => {
@@ -13,6 +14,12 @@ const readDismissed = (): string[] => {
 /** Project deletions run in the workbench service; this bar follows them on
  * every page, so the reviewer can keep working while a corpus is removed. */
 export function DeleteProgress() {
+  // Deleting projects is an admin action; nobody else polls for it.
+  const { isAdmin } = useMe();
+  return isAdmin ? <DeleteProgressBar /> : null;
+}
+
+function DeleteProgressBar() {
   const [jobs, setJobs] = useState<DeleteJob[]>([]);
   const [dismissed, setDismissed] = useState<string[]>([]);
   const [now, setNow] = useState(() => Date.now() / 1000);

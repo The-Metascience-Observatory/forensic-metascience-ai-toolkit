@@ -6,7 +6,7 @@ import path from "node:path";
 
 import { pyJson } from "./python";
 import { workbench } from "./workbench";
-import { badProject, badRel, contained, posixRel, sameRel } from "./paths";
+import { badProject, badRel, posixRel, sameRel } from "./paths";
 import { indexPath, loadSettings } from "./settings";
 import type { Corpus, Index, Paper, ProjectRow } from "./types/catalog";
 
@@ -82,20 +82,15 @@ export function scanNow(): Promise<Index> {
   return scanning;
 }
 
-function realOrSelf(p: string): string {
-  try { return fs.realpathSync(p); } catch { return path.resolve(p); }
-}
 
 // Media and reveal paths are resolved and contained by the Python service
 // (`artifact` / `reveal_target` in workbench/service.py): realpath, inside
 // the registered root, hash-checked. The TypeScript `resolveInProject` that
 // once did this had no callers left and was deleted (2026-11-09), so nothing
-// here reads as a boundary that is not one. `paperAbsDir` below is the
-// remaining path check, for the few routes that read a paper folder directly.
+// here reads as a boundary that is not one. `paperAbsDir` below asks the
+// service for a paper folder, for the few routes that read one directly.
 
 export async function paperAbsDir(project: string, dir: string): Promise<string> {
-  const settings = loadSettings();
-  const papersRoot = realOrSelf(settings.papers_root);
   if (badProject(project)) {
     throw new Error("bad project");
   }
@@ -103,14 +98,25 @@ export async function paperAbsDir(project: string, dir: string): Promise<string>
   if (badRel(paperDir)) {
     throw new Error("bad paper directory");
   }
-  const projectRoot = await fsp.realpath(path.join(papersRoot, project));
-  if (projectRoot !== papersRoot && !contained(papersRoot, projectRoot)) {
-    throw new Error("project escapes the papers root");
-  }
-  const abs = path.resolve(projectRoot, paperDir);
-  const real = await fsp.realpath(abs);
-  if (!contained(projectRoot, real)) {
-    throw new Error("paper escapes the project");
-  }
-  return real;
+  // The catalog resolves the folder from the project's registered roots
+  // (`catalog.paper_path`: explicit mapping, else <root>/<dir>, contained,
+  // no symlinks) -- the same answer the review pages get -- rather than
+  // assuming the project is a folder under the papers root.
+  const target = await workbench<{ directory: string }>("reveal_target", { project, dir: paperDir });
+  return fsp.realpath(target.directory);
+}
+
+/** The project's folders on this machine (its registered catalog roots). */
+export async function projectFolders(project: string): Promise<string[]> {
+  if (badProject(project)) throw new Error("bad project");
+  const { roots } = await workbench<{ roots: { project: string; path: string; available?: boolean }[] }>("roots");
+  return (roots || []).filter((r) => r.project === project && r.available !== false).map((r) => r.path);
+}
+
+/** The folder holding the project's corpus-level files (`corpus_stats.json`):
+ *  the first registered folder that has one, else the first folder. */
+export async function projectRoot(project: string): Promise<string | null> {
+  const folders = await projectFolders(project);
+  for (const f of folders) if (fs.existsSync(path.join(f, "corpus_stats.json"))) return f;
+  return folders[0] ?? null;
 }

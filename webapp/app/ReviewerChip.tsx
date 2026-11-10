@@ -15,6 +15,7 @@ export function ReviewerChip() {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const [hosted, setHosted] = useState(false);
+  const [role, setRole] = useState("");
   const [known, setKnown] = useState<string[]>(["Dan Elton"]);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export function ReviewerChip() {
           // the body's value in this mode anyway.
           setHosted(true);
           setName(me.name);
+          setRole(me.role);
           setOpen(false);
           try { window.localStorage.setItem(KEY, me.name); } catch { /* private window */ }
           return;
@@ -64,7 +66,7 @@ export function ReviewerChip() {
   if (hosted) {
     return (
       <span title="Signed in through Cloudflare Access" style={{ fontSize: 12 }}>
-        {name ? `Reviewing as ${name}` : "Signing in…"}
+        {name ? `Reviewing as ${name}${role === "admin" ? " · admin" : ""}` : "Signing in…"}
       </span>
     );
   }

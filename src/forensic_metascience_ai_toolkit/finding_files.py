@@ -302,11 +302,46 @@ def _highlight_index(highlights: list | None, sheet: str | None) -> set[tuple[in
     return out
 
 
+# A supplementary file is the author's, and the pane that shows it runs in the
+# one service every reviewer shares. These bound what opening a hostile file
+# can cost: a CSV with one multi-gigabyte line, and an .xlsx whose few
+# kilobytes inflate to gigabytes (openpyxl loads the shared-strings table
+# whole, and a zip member has no ratio limit of its own).
+_MAX_CSV_LINE = 1_000_000
+_MAX_XLSX_STRINGS = 200 * 1024 * 1024
+_MAX_XLSX_MEMBER = 2 * 1024 * 1024 * 1024
+_MAX_XLSX_RATIO = 200          # deflate on real sheet XML measures 10-40
+
+
+def _bounded_lines(fh):
+    """Lines of `fh`, each read with a size limit: a longer line is delivered
+    in pieces instead of being held in memory whole."""
+    while True:
+        line = fh.readline(_MAX_CSV_LINE)
+        if not line:
+            return
+        yield line
+
+
+def _check_xlsx_archive(path: Path) -> None:
+    import zipfile
+    with zipfile.ZipFile(path) as z:
+        for info in z.infolist():
+            size, packed = info.file_size, max(info.compress_size, 1)
+            name = info.filename.lower()
+            if (size > _MAX_XLSX_MEMBER
+                    or (name.endswith("sharedstrings.xml") and size > _MAX_XLSX_STRINGS)
+                    or (size > 20 * 1024 * 1024 and size / packed > _MAX_XLSX_RATIO)):
+                raise ValueError(
+                    f"workbook is too large to preview safely ({info.filename}: "
+                    f"{size // (1024 * 1024)} MB uncompressed); open the file itself")
+
+
 def _read_csv(path: Path, highlights: list | None, max_rows: int,
               delimiter: str) -> dict:
     rows: list[list[str]] = []
     with path.open(encoding="utf-8", errors="replace", newline="") as fh:
-        for i, row in enumerate(csv.reader(fh, delimiter=delimiter)):
+        for i, row in enumerate(csv.reader(_bounded_lines(fh), delimiter=delimiter)):
             if i >= max_rows:
                 break
             rows.append([str(c) for c in row[:_MAX_SHEET_COLS]])
@@ -328,6 +363,7 @@ def _read_csv(path: Path, highlights: list | None, max_rows: int,
 def _read_xlsx(path: Path, sheet: str | None, highlights: list | None,
                max_rows: int) -> dict:
     import openpyxl
+    _check_xlsx_archive(path)
     book = openpyxl.load_workbook(str(path), read_only=True, data_only=True)
     names = list(book.sheetnames)
     active = sheet if sheet in names else (names[0] if names else None)

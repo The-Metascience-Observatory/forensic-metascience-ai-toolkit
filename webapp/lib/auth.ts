@@ -45,5 +45,23 @@ export const NOT_SET_UP = "Your account is not set up yet. Ask the admin to add 
 export function withReviewer<T extends Record<string, unknown>>(req: Request, body: T, field = "reviewer"): T {
   const who = identity(req);
   if (!who) return body;
-  return { ...body, [field]: who.name };
+  // The server dates the event. A client-supplied `at` let a reviewer file a
+  // decision in the future, where it sorts after everyone's later ones for
+  // good. No client of this app sends it.
+  const { at: _at, ...rest } = body as Record<string, unknown>;
+  const bounded = { ...rest, [field]: who.name };
+  for (const key of ["note", "figure", "panel_uid", "decision"]) {
+    const v = bounded[key];
+    if (typeof v === "string" && v.length > MAX_NOTE) throw new Error(`${key} is too long (limit ${MAX_NOTE} characters)`);
+  }
+  if ("event_id" in bounded && bounded.event_id != null && !(typeof bounded.event_id === "string" && EVENT_ID.test(bounded.event_id)))
+    throw new Error("Invalid event_id");
+  if (JSON.stringify(bounded).length > MAX_WRITE_BODY) throw new Error("Request is too large");
+  return bounded as T;
 }
+
+/** Limits on a reviewer's write in hosted mode. Every stored event is copied
+ *  into each queue and paper response that lists it. */
+export const MAX_NOTE = 8000;
+export const MAX_WRITE_BODY = 64_000;
+const EVENT_ID = /^[A-Za-z0-9_.:-]{1,96}$/;

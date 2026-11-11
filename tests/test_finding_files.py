@@ -148,3 +148,35 @@ def _is_inside(root: Path, target: Path) -> bool:
 
 def _is_outside(root: Path, target: Path) -> bool:
     return not _is_inside(root, target)
+
+
+def test_sheet_preview_refuses_a_zip_bomb_and_bounds_a_giant_csv_line(tmp_path):
+    """The sheet pane parses an author's supplementary file inside the service
+    every reviewer shares (security review, 2026-11-10). A workbook whose
+    shared strings inflate far beyond their packed size is refused before
+    openpyxl loads them; a CSV line of any length is read in bounded pieces."""
+    import zipfile
+    import openpyxl
+    from forensic_metascience_ai_toolkit import finding_files as ff
+    good = tmp_path / "good.xlsx"
+    wb = openpyxl.Workbook(); wb.active.append(["a", 1]); wb.save(good)
+    assert ff.read_sheet(good)["rows"] == [["a", "1"]]
+    bomb = tmp_path / "bomb.xlsx"
+    with zipfile.ZipFile(good) as src, zipfile.ZipFile(bomb, "w", zipfile.ZIP_DEFLATED) as out:
+        for item in src.infolist():
+            out.writestr(item, src.read(item.filename))
+        out.writestr("xl/sharedStrings.xml", b"<sst>" + b"A" * (30 * 1024 * 1024) + b"</sst>")
+    assert bomb.stat().st_size < 1024 * 1024
+    got = ff.read_sheet(bomb)
+    assert got["rows"] == [] and "too large to preview" in got["error"]
+    long = tmp_path / "long.csv"
+    long.write_text("x,y\n" + "9" * (ff._MAX_CSV_LINE * 2 + 10) + ",1\nlast,2\n")
+    seen = []
+    real = ff._bounded_lines
+    def spy(fh):
+        for line in real(fh):
+            seen.append(len(line)); yield line
+    ff._bounded_lines = spy
+    try: ff.read_sheet(long)
+    finally: ff._bounded_lines = real
+    assert seen and max(seen) <= ff._MAX_CSV_LINE

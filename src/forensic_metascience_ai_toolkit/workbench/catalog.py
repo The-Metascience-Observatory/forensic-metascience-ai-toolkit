@@ -246,6 +246,16 @@ create table if not exists project_flags(project text primary key,body text not 
             self.generation += 1
         return {'path':str(target)}
 
+    def known_paper(self, project, directory):
+        """Whether `directory` is recorded as a paper of `project`: a locally
+        indexed folder, or a shared paper record of the corpus of that name."""
+        if self.reader.execute('select 1 from papers_local where project=? and dir=?',[project,directory]).fetchone():
+            return True
+        for (corpus,) in self.reader.execute("select json_extract(body,'$.id') from records where entity='corpora' and json_extract(body,'$.name')=?",[project]).fetchall():
+            if self.reader.execute("select 1 from records where entity='papers' and json_extract(body,'$.corpus_id')=? and json_extract(body,'$.dir')=? limit 1",[corpus,directory]).fetchone():
+                return True
+        return False
+
     def paper_path(self, project, directory):
         row = self.reader.execute('select path from papers_local where project=? and dir=?',[project,directory]).fetchone()
         if row and Path(row[0]).is_dir():
@@ -253,7 +263,14 @@ create table if not exists project_flags(project text primary key,body text not 
                 raise ValueError('Mapped paper folder was replaced by a symlink')
             return Path(row[0])
         # Exact explicit corpus-relative mapping only; never search by DOI or basename.
-        if Path(directory).is_absolute() or '..' in directory.replace('\\','/').split('/'):
+        if not directory or Path(directory).is_absolute() or any(part in ('', '.', '..') for part in directory.replace('\\','/').split('/')):
+            raise ValueError('Invalid paper directory')
+        # A paper folder, not any folder: `dir=.` used to resolve to the root
+        # itself, and a file reference under it then reached every other
+        # project nested inside that root, archived run objects, and (for a
+        # root registered too broadly) the rest of the disk. Only a directory
+        # the catalog records as one of THIS project's papers is served.
+        if not self.known_paper(project, directory):
             raise ValueError('Invalid paper directory')
         roots = self.roots(project)
         if not any(r['available'] for r in roots) and self.discover_root(project):
@@ -261,7 +278,7 @@ create table if not exists project_flags(project text primary key,body text not 
         for root in roots:
             base = Path(root['path']).resolve()
             path = (base / directory).resolve()
-            if path.is_relative_to(base) and path.is_dir():
+            if path != base and path.is_relative_to(base) and path.is_dir():
                 return path
         # Name the project and the remedy: this is a missing ROOT, not a
         # missing file, and the reviewer used to read it beside "no DOI on

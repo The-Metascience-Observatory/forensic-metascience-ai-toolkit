@@ -423,3 +423,11 @@ and `npm run test:security` exercises the hosted rules through the real route
 handlers (no token → 401, body `reviewer` ignored, `/api/reveal` → 403,
 admin routes → 403 for a reviewer, the public origin accepted with
 `x-forwarded-proto: https`).
+
+**Guard rails.** `npm run start` (local mode: every caller is the admin) refuses to
+listen on a port that a `~/.cloudflared/*.yml` on this machine forwards to; use
+`npm run start:hosted`, another `PORT`, or `METASCIENCE_LOCAL_MODE=1` when the tunnel is
+down. Setting only one of the two Access variables is an error. A new API route is
+admin-only until it is added to `REVIEWER_ROUTES` in `lib/routeGuard.ts`. Responses carry
+a Content-Security-Policy that limits pages to this origin; if a page needs an outside
+resource, add it in `next.config.mjs`.

@@ -58,13 +58,29 @@ export const RULES: readonly Rule[] = [
   { path: "/api/reveal", method: "POST", forbidden: true, why: "opens a file manager on the server" },
 ];
 
+/** Every route a signed-in reviewer may call (each is still scoped to the
+ *  projects they are assigned, by `guard`). A handler that is in neither this
+ *  list nor `RULES` is admin-only: a route added later is closed to reviewers
+ *  until someone decides it here, and a test fails until it is listed. */
+export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
+  "GET /api/me", "GET /api/settings",
+  "GET /api/workbench", "POST /api/workbench",
+  "GET /api/findings", "GET /api/paper", "GET /api/runs", "GET /api/stats", "GET /api/draft",
+  "GET /api/media", "GET /api/sheet",
+  "POST /api/review", "POST /api/viewed",
+  "GET /api/images", "POST /api/images",
+  "GET /api/images/bulk", "POST /api/images/bulk",
+  "GET /api/images/missed", "POST /api/images/missed",
+  "GET /api/images/summary", "GET /api/images/text-regions", "POST /api/images/viewed",
+]);
+
 export interface Policy { admin: boolean; forbidden: boolean }
 
 export function policyFor(req: Request, extra: { workbenchMethod?: string } = {}): Policy {
   const url = new URL(req.url);
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = req.method.toUpperCase() === "HEAD" ? "GET" : req.method.toUpperCase();
-  const policy: Policy = { admin: false, forbidden: false };
+  const policy: Policy = { admin: !REVIEWER_ROUTES.has(`${method} ${path}`), forbidden: false };
   for (const rule of RULES) {
     if (rule.method !== method) continue;
     if (rule.prefix ? !(path + "/").startsWith(rule.path) : rule.path !== path) continue;

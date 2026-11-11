@@ -25,6 +25,9 @@ export interface HostedConfig {
 export function hostedConfig(env: NodeJS.ProcessEnv = process.env): HostedConfig | null {
   const team = (env.METASCIENCE_ACCESS_TEAM || "").trim();
   const aud = (env.METASCIENCE_ACCESS_AUD || "").trim();
+  // One of the two set is a mistyped hosted deployment, not local mode:
+  // answering as local mode would make every caller an admin behind the tunnel.
+  if (Boolean(team) !== Boolean(aud)) throw new Error("Hosted mode needs both METASCIENCE_ACCESS_TEAM and METASCIENCE_ACCESS_AUD; only one is set");
   if (!team || !aud) return null;
   if (!/^[a-z0-9-]+$/i.test(team)) throw new Error(`METASCIENCE_ACCESS_TEAM is not a team name: ${team}`);
   const issuer = `https://${team}.cloudflareaccess.com`;

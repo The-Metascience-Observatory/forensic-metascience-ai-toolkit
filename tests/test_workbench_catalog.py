@@ -146,13 +146,24 @@ def test_a_root_is_discovered_from_the_shared_records_papers_root_when_it_exists
         c.apply_changes([('corpora',json.dumps([i]),r) for i,r in enumerate([
             {'id':1,'name':'project','papers_root':str(here)},
             {'id':2,'name':'elsewhere','papers_root':'/no/such/machine/corpus'},
-            {'id':3,'name':'other','papers_root':None}],1)],1)
+            {'id':3,'name':'other','papers_root':None}],1)]+
+            [('papers',json.dumps([i]),{'id':i,'corpus_id':i-9,'dir':'nested/paper'}) for i in (10,11)],1)
         assert c.roots('project')==[]
         assert c.paper_path('project','nested/paper')==here/'nested'/'paper'
         assert [r['path'] for r in c.roots('project')]==[str(here)]
         with pytest.raises(FileNotFoundError, match="no local folder is registered for project 'elsewhere'"):
             c.paper_path('elsewhere','nested/paper')
         assert c.discover_root('other') is None
+        # Only a recorded paper folder of THIS project is served. `.` used to
+        # resolve to the root itself, and a file reference under it reached
+        # sibling projects nested in that root and every archived run object
+        # (security review, 2026-11-10).
+        (here/'.analysis_runs').mkdir(); (here/'nested'/'unrecorded').mkdir()
+        for bad in ('.', '', './nested/paper', 'nested/./paper', 'nested', '.analysis_runs', 'nested/unrecorded', 'nested/paper/..', str(here/'nested'/'paper')):
+            with pytest.raises(ValueError, match='Invalid paper directory'):
+                c.paper_path('project', bad)
+        with pytest.raises(ValueError, match='Invalid paper directory'):
+            c.paper_path('other', 'nested/paper')
         link=tmp_path/'link'; link.symlink_to(here)
         c.apply_changes([('corpora',json.dumps([4]),{'id':4,'name':'linked','papers_root':str(link)})],2)
         assert c.discover_root('linked') is None

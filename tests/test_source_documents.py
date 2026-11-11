@@ -405,3 +405,18 @@ class TestTheSyncContractIsStatedPerDocument:
         assert "__srcSelectDoc" in html
         i = html.find("function applyJump")
         assert "__srcSelectDoc" in html[i:i + 900]
+
+
+def test_safe_html_escapes_text_that_parses_to_markup():
+    """`&lt;img onerror=…&gt;` in a publisher page is TEXT, and the parsed text
+    before the first element was emitted raw: the viewer then mounted it as an
+    element and ran its handler in the reviewer's session (security review,
+    2026-11-10). Leading text is escaped like every other text node, including
+    text an unwrapped unknown tag pours into that position; `body` attributes go."""
+    for source in ('<html><body>&lt;img src=x onerror=alert(1)&gt;<p>hi</p></body></html>',
+                   '<x>&lt;img src=x onerror=alert(1)&gt;</x><p>hi</p>',
+                   '<header>&lt;script&gt;a()&lt;/script&gt;</header><p>hi</p>',
+                   '<body onload="x()">&lt;svg onload=x()&gt;<p>hi</p></body>'):
+        got = _safe_html(source)
+        assert '<img' not in got and '<script' not in got and '<svg' not in got and 'onload' not in got.replace('&lt;svg onload', ''), got
+        assert '&lt;' in got and '<p>hi</p>' in got

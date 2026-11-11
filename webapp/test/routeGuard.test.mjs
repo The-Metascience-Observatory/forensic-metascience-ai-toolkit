@@ -55,7 +55,7 @@ test("routeGuard matrix: roles and route rules", async () => {
     { path: "/api/images/viewed", method: "POST" }, { path: "/api/viewed", method: "POST" },
     { path: "/api/paper", method: "GET" }, { path: "/api/media", method: "GET" },
     { path: "/api/settings", method: "GET" }, { path: "/api/images", method: "GET" },
-    { path: "/api/workbench", method: "GET" }, { path: "/api/reveal", method: "GET" },
+    { path: "/api/workbench", method: "GET" }, { path: "/api/sheet", method: "GET" },
   ];
   const rules = RULES.map((r) => (r.prefix ? { ...r, path: `${r.path}users` } : r));
   const admin = rules.filter((r) => r.admin), forbidden = rules.filter((r) => r.forbidden);
@@ -107,11 +107,11 @@ test("routeGuard matrix: roles and route rules", async () => {
     { error: "You do not have access to this project" });
 
   // Exact path and method; HEAD reads as GET; refusal bodies are JSON.
-  assert.deepEqual(policyFor(new Request("http://x/api/reveal/", { method: "POST" })), { admin: false, forbidden: true });
-  assert.deepEqual(policyFor(new Request("http://x/api/reveal", { method: "GET" })), { admin: false, forbidden: false });
+  assert.deepEqual(policyFor(new Request("http://x/api/reveal/", { method: "POST" })), { admin: true, forbidden: true });
+  assert.deepEqual(policyFor(new Request("http://x/api/reveal", { method: "GET" })), { admin: true, forbidden: false });
   assert.deepEqual(policyFor(new Request("http://x/api/settings?x=1", { method: "POST" })), { admin: true, forbidden: false });
   assert.deepEqual(policyFor(new Request("http://x/api/projects", { method: "HEAD" })), { admin: true, forbidden: false });
-  assert.deepEqual(policyFor(new Request("http://x/api/administrator", { method: "GET" })), { admin: false, forbidden: false }, "prefix is a path segment");
+  assert.deepEqual(policyFor(new Request("http://x/api/administrator", { method: "GET" })), { admin: true, forbidden: false }, "prefix is a path segment");
   assert.deepEqual(await (await guard(request(WHO.reviewer, { path: "/api/settings", method: "POST" }))).json(), { error: "Admin only" });
   assert.deepEqual(await (await guard(request(null, paper))).json(), { error: "Sign in through Cloudflare Access" });
   assert.match((await (await guard(request(WHO.unknown, paper))).json()).error, /not set up/);
@@ -184,4 +184,74 @@ test("every API route handler calls the guard", () => {
       assert.ok(/await guard\(/.test(body) || delegated, `${file} ${h} calls guard`);
     }
   }
+});
+
+test("every route handler is classified; an unlisted one is admin-only", async () => {
+  const { RULES, REVIEWER_ROUTES, policyFor } = await import("../lib/routeGuard.ts");
+  const ruled = (method, path) => RULES.some((r) => r.method === method &&
+    (r.prefix ? (path + "/").startsWith(r.path) : r.path === path) && (r.admin || r.forbidden));
+  const seen = new Set();
+  for (const file of fs.globSync("app/api/**/route.ts")) {
+    const path = "/" + file.replace(/^app\//, "").replace(/\/route\.ts$/, "");
+    const src = fs.readFileSync(file, "utf8");
+    for (const [, h] of src.matchAll(/export async function (GET|POST|PUT|DELETE|PATCH)\b/g)) {
+      const key = `${h} ${path}`; seen.add(key);
+      assert.ok(REVIEWER_ROUTES.has(key) || ruled(h, path), `${key} is in REVIEWER_ROUTES or an admin/forbidden rule`);
+    }
+  }
+  for (const key of REVIEWER_ROUTES) assert.ok(seen.has(key), `${key} in REVIEWER_ROUTES has a handler`);
+  const policy = (method, path) => policyFor(new Request(`http://127.0.0.1:3101${path}`, { method }));
+  assert.equal(policy("POST", "/api/upload").admin, true, "a route nobody listed is admin-only");
+  assert.equal(policy("POST", "/api/sheet").admin, true, "so is a new method on a listed path");
+  assert.equal(policy("GET", "/api/sheet").admin, false);
+  assert.equal(policy("HEAD", "/api/media").admin, false);
+  assert.equal(policy("GET", "/api/draft").admin, false);
+  assert.equal(policy("POST", "/api/draft").admin, true);
+});
+
+test("a hosted reviewer's write is dated by the server and bounded", async () => {
+  writeSettings(); hosted(true);
+  const { withReviewer, MAX_NOTE } = await import("../lib/auth.ts");
+  const req = new Request("http://127.0.0.1:3101/api/images", { method: "POST", headers: { [HEADER]: WHO.reviewer } });
+  const out = withReviewer(req, { decision: "false_positive", resolve: true, at: "9999-12-31T00:00:00Z",
+    reviewer: "Someone Else", event_id: "rv_0123abcd", extra: { k: 1 } });
+  assert.equal("at" in out, false, "the client cannot date an event");
+  assert.notEqual(out.reviewer, "Someone Else");
+  assert.deepEqual([out.resolve, out.event_id, out.extra], [true, "rv_0123abcd", { k: 1 }]);
+  assert.throws(() => withReviewer(req, { note: "x".repeat(MAX_NOTE + 1) }), /too long/);
+  assert.throws(() => withReviewer(req, { event_id: "a b" }), /event_id/);
+  assert.throws(() => withReviewer(req, { event_id: { $ne: 1 } }), /event_id/);
+  assert.throws(() => withReviewer(req, { extra: { blob: "x".repeat(70_000) } }), /too large/);
+  hosted(false);
+  const local = { at: "2026-01-01T00:00:00Z", reviewer: "Typed Name", note: "x".repeat(MAX_NOTE + 1) };
+  assert.equal(withReviewer(new Request("http://127.0.0.1:3100/api/images", { method: "POST" }), local), local, "local mode is untouched");
+});
+
+test("hosted error text keeps the file name and drops the server's folders", async () => {
+  const { publicMessage } = await import("../lib/err.ts");
+  const on = { METASCIENCE_ACCESS_TEAM: "t", METASCIENCE_ACCESS_AUD: "a" };
+  const msg = "ENOENT: no such file or directory, open '/home/someone/Dropbox/papers/p1/drafts/nope.md'";
+  assert.equal(publicMessage(msg, on), "ENOENT: no such file or directory, open '…/nope.md'");
+  assert.equal(publicMessage(msg, {}), msg, "local mode keeps the path");
+  assert.equal(publicMessage("Unknown method", on), "Unknown method");
+  assert.ok(!publicMessage(`Traceback File "/usr/lib/python3/x.py", line 3 ` + "y".repeat(2000), on).includes("/usr/lib"));
+});
+
+test("partial hosted configuration is an error, not local mode", async () => {
+  const { hostedConfig } = await import("../lib/accessToken.ts");
+  assert.equal(hostedConfig({}), null);
+  assert.throws(() => hostedConfig({ METASCIENCE_ACCESS_TEAM: "team" }), /both/);
+  assert.throws(() => hostedConfig({ METASCIENCE_ACCESS_AUD: "a".repeat(64) }), /both/);
+  const { refuseOpenTunnelPort, tunnelPorts } = await import("../scripts/serve.mjs");
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), "ms-tunnel-"));
+  fs.mkdirSync(path.join(home, ".cloudflared"));
+  fs.writeFileSync(path.join(home, ".cloudflared", "a.yml"),
+    "ingress:\n  - hostname: x.example.org\n    service: http://127.0.0.1:3101\n  - service: http_status:404\n");
+  const ports = tunnelPorts(home);
+  assert.deepEqual([...ports], [3101]);
+  assert.throws(() => refuseOpenTunnelPort(3101, { env: {}, ports }), /local mode/);
+  refuseOpenTunnelPort(3100, { env: {}, ports });
+  refuseOpenTunnelPort(3101, { env: { METASCIENCE_LOCAL_MODE: "1" }, ports });
+  refuseOpenTunnelPort(3101, { env: { METASCIENCE_ACCESS_TEAM: "t", METASCIENCE_ACCESS_AUD: "a" }, ports });
+  assert.throws(() => refuseOpenTunnelPort(3100, { env: { METASCIENCE_ACCESS_TEAM: "t" }, ports }), /both/);
 });

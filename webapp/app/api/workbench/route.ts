@@ -50,8 +50,10 @@ export async function GET(req: Request) {
     const who = identity(req);
     if (who && who.role !== "admin" && value && typeof value === "object") {
       const v = value as Record<string, unknown>;
-      if (method === "image_status") delete v.projects;
+      // `status` with `component=image_forensics` is answered by the image
+      // service and carries the same every-project list as `image_status`.
       if (method === "status" || method === "image_status") {
+        delete v.projects;
         for (const k of ["error", "file_monitor_error", "warmup_error", "import_error"]) if (v[k]) v[k] = "Sync needs attention (details for admins)";
         if (Array.isArray(v.pending_errors) && v.pending_errors.length) v.pending_errors = ["Some decisions are waiting to sync"];
       }

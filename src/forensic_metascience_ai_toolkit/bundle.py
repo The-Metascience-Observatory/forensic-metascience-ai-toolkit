@@ -2655,11 +2655,11 @@ def _safe_html(raw: bytes | str) -> str:
             el.drop_tree()
             continue
         tag = el.tag.split("}")[-1].lower()
-        if tag in ("html", "body"):
-            continue
         for name in list(el.attrib):
             if name.lower() not in _HTML_ALLOW_ATTRS:
                 del el.attrib[name]
+        if tag in ("html", "body"):
+            continue
         if tag not in _HTML_ALLOW_TAGS:
             # Keep the words, drop the element. An unknown tag is usually a
             # publisher's own wrapper and its text is part of the article.
@@ -2673,7 +2673,11 @@ def _safe_html(raw: bytes | str) -> str:
         root = tree.find("body")
         if root is None:
             root = tree
-        parts = [root.text or ""]
+        # `root.text` is PARSED text: `&lt;img onerror=...&gt;` in the source is
+        # a literal `<img onerror=...>` here. Emitting it raw would hand the
+        # viewer markup this function never saw as an element, so it is
+        # escaped like every other text node `tostring` serialises below.
+        parts = [html.escape(root.text or "", quote=False)]
         for child in root:
             parts.append(lxml.html.tostring(child, encoding="unicode"))
         return "".join(parts)

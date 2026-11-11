@@ -9,6 +9,38 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-10 — security review of the hosted workbench
+
+Findings from a read-only audit of the site behind Cloudflare Access, fixed.
+
+- **Script injection from publisher HTML.** `bundle._safe_html` emitted the
+  parsed text before the first element unescaped, so `&lt;img onerror=…&gt;`
+  written as text in a paper's HTML full text became an element in the review
+  page. That text is escaped now, and `html`/`body` lose their attributes.
+- **A reviewer could read outside paper folders.** `Catalog.paper_path`
+  accepted `dir=.`, which resolved to the project's root: every sibling
+  project nested in it and `.analysis_runs` were then one `f=` away. Only a
+  directory recorded as a paper of that project (local index or shared
+  record) is served; empty, `.` and dot segments are refused.
+- **Hosted reviewers' writes are bounded.** The server dates every event
+  (a client `at` let a decision be filed in the future, where it outranked
+  later ones for good); `note` is capped at 8,000 characters, the body at
+  64 kB, and `event_id` has a fixed shape. Local mode is unchanged.
+- **`status` no longer lists every project to a reviewer** when the image
+  service answers it.
+- **Unlisted API routes are admin-only.** `REVIEWER_ROUTES` names what a
+  reviewer may call; a test fails for a handler that is in neither list.
+- **A local-mode server refuses a tunnel's port.** `npm run start` on a port
+  a `~/.cloudflared/*.yml` forwards to stops with the remedy, and one of the
+  two Access variables without the other is an error rather than local mode.
+- **Sheet preview limits.** An `.xlsx` whose members inflate beyond sane
+  ratios is refused before openpyxl loads it; CSV lines are read in bounded
+  pieces.
+- **Headers.** Content-Security-Policy (this origin only; production build),
+  `nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options`, no
+  `X-Powered-By`. Hosted error messages keep a file's name and drop the
+  server folders above it.
+
 ## [Unreleased] — 2026-11-10 — quieter findings pane on review pages
 
 The RNG evidence panel shows the generator and folds the match statistics

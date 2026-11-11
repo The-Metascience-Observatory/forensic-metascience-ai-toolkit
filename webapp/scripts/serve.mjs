@@ -130,6 +130,28 @@ export function hostedMode(env = process.env) {
   return Boolean((env.METASCIENCE_ACCESS_TEAM || '').trim() && (env.METASCIENCE_ACCESS_AUD || '').trim());
 }
 
+// Ports a cloudflared config on this machine forwards to. A server in local
+// mode treats every caller as the admin, so it must never be what a tunnel
+// reaches: `npm run start` in place of `start:hosted` would be exactly that.
+export function tunnelPorts(home = os.homedir()) {
+  const ports = new Set();
+  let files = [];
+  try { files = fs.readdirSync(path.join(home, '.cloudflared')).filter((f) => /\.ya?ml$/.test(f)); } catch { return ports; }
+  for (const f of files) {
+    let text = '';
+    try { text = fs.readFileSync(path.join(home, '.cloudflared', f), 'utf8'); } catch { continue; }
+    for (const m of text.matchAll(/^\s*(?:-\s*)?service:\s*https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::(\d+))?/gm)) ports.add(Number(m[1] || 80));
+  }
+  return ports;
+}
+
+export function refuseOpenTunnelPort(port, { env = process.env, ports = tunnelPorts() } = {}) {
+  const team = (env.METASCIENCE_ACCESS_TEAM || '').trim(), aud = (env.METASCIENCE_ACCESS_AUD || '').trim();
+  if (Boolean(team) !== Boolean(aud)) throw new Error('Hosted mode needs both METASCIENCE_ACCESS_TEAM and METASCIENCE_ACCESS_AUD; only one is set.');
+  if (hostedMode(env) || env.METASCIENCE_LOCAL_MODE === '1' || !ports.has(port)) return;
+  throw new Error(`Port ${port} is the target of a Cloudflare tunnel on this machine (~/.cloudflared), and this would start the app in local mode, where every caller is the admin. Use npm run start:hosted, pick another port with PORT=<n>, or set METASCIENCE_LOCAL_MODE=1 if the tunnel is not running.`);
+}
+
 export function requireHostedEnv(env = process.env) {
   const missing = HOSTED_VARS.filter((k) => !(env[k] || '').trim());
   if (missing.length) {
@@ -206,6 +228,7 @@ if (isMain) {
     if (port !== preferred) {
       console.log(`Port ${preferred} is in use; using http://localhost:${port} instead.`);
     }
+    refuseOpenTunnelPort(port);
   }
   const next = createRequire(import.meta.url).resolve('next/dist/bin/next');
   console.log(`Build folder: ${build.absDist}`);

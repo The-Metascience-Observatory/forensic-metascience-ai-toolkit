@@ -271,14 +271,16 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
             <div style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
               <span className="muted" style={{ fontSize: 11 }}>{iss.priority}.</span>
               <strong style={{ flex: 1, fontSize: 13 }}>{iss.title}</strong>
-              <ToolBadge tool={iss.tool} source={iss.tool_source} />
+              {/* Every seeded-RNG row has the same detector and is quarantined:
+                  on that page both pills say nothing, so they are not shown. */}
+              {iss.producer !== "rng_track" && <ToolBadge tool={iss.tool} source={iss.tool_source} />}
               {iss.adjudication_action === "discarded" && (
                 <span className="pill" title={iss.adjudication_rationale || undefined}
                       style={{ color: "var(--muted)" }}>discarded</span>
               )}
               {/* A quarantined detector's row is a lead, not a finding of
                   record (findings_v2.md 9.3); the reason is the detector's. */}
-              {iss.quarantined && (
+              {iss.quarantined && iss.producer !== "rng_track" && (
                 <span className="pill" data-quarantined
                       title={iss.quarantine_reason || "quarantined detector signal"}
                       style={{ color: "var(--muted)", borderStyle: "dashed" }}>quarantined</span>

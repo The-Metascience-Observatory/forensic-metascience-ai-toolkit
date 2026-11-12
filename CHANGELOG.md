@@ -11,6 +11,10 @@ that tree had uncommitted edits.
 
 ## [Unreleased] — 2026-11-11 — archive projects
 
+- **RNG findings drop two repeated pills.** On a seeded-RNG paper every
+  finding showed "Seeded-RNG detector (rngdetect)" and "quarantined"; both
+  are the same on every row, so `IssueList` omits them for `rng_track`.
+  Other detectors keep both.
 - **Projects can be archived on the home page** (admins: an Archive button
   per row, or tick several and "Archive selected"). An archived project is
   listed under a closed "Archived" section and its folders are no longer

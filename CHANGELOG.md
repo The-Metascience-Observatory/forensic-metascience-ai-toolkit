@@ -9,6 +9,24 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-11 — archive projects
+
+- **Projects can be archived on the home page** (admins: an Archive button
+  per row, or tick several and "Archive selected"). An archived project is
+  listed under a closed "Archived" section and its folders are no longer
+  watched or rescanned on this machine; its papers and findings still open
+  normally. Unarchive reverses it. Local, like Done: shared records are not
+  touched (`project_admin.mark_archived`, workbench method `project_archive`,
+  `/api/projects` actions `archive` / `unarchive`).
+- **Why:** each workbench service watched every paper folder ever
+  registered, ~21,000 folders. With Dropbox holding 478,000 of the 524,288
+  inotify watches allowed, the watch failed and `FileMonitor` retried every
+  few seconds for 12 hours: a core and ~200 MB/s of cache reads per service.
+  `FileMonitor.paths()` now leaves archived projects' folders out (a
+  project nested inside an archived one stays watched), reads only project
+  and path from `papers_local` instead of decoding 71 MB of bodies, and the
+  five-minute `reconcile_files` pass skips archived projects.
+
 ## [Unreleased] — 2026-11-10 — security review of the hosted workbench
 
 Findings from a read-only audit of the site behind Cloudflare Access, fixed.

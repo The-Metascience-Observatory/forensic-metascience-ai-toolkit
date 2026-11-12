@@ -35,6 +35,10 @@ export async function POST(req: Request) {
       case "done":
       case "undone":
         return NextResponse.json(await workbench("project_done", { project, done: body.action === "done" }));
+      case "archive":
+      case "unarchive":
+        // Stops watching and rescanning the project's folders on this machine.
+        return NextResponse.json(await workbench("project_archive", { project, archived: body.action === "archive" }));
       case "delete_plan":
         return NextResponse.json(await workbench("project_delete_plan", { project, protected: protectedPaths }));
       case "delete":

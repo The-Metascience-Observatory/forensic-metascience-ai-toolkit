@@ -176,3 +176,48 @@ def test_image_gate_corpora_are_never_deletable(setup, tmp_path, monkeypatch):
     with pytest.raises(ValueError, match='Refused'):
         s.handle('project_delete', {'project': 'other', 'confirm': True})
     assert (data / 'other_corpus' / '10.1--b' / 'paper.pdf').is_file()
+
+
+def _with_papers(c, data):
+    c.apply_changes([('papers', json.dumps([k]), {'id': k, 'corpus_id': cid, 'dir': d}) for k, cid, d in
+                     [(10, 1, '10.1--a'), (11, 2, '10.1--a'), (12, 3, '10.1--b')]], 2)
+
+
+def test_archive_is_a_local_flag_and_reversible(setup):
+    s, c, _ = setup
+    assert names(s)['other']['archived'] is False
+    s.handle('project_archive', {'project': 'other', 'archived': True})
+    row = names(s)['other']
+    assert row['archived'] is True and row['archived_at']
+    assert s.local_wake.is_set()  # the file watch re-arms without the folder
+    s.handle('project_archive', {'project': 'other', 'archived': False})
+    assert names(s)['other']['archived'] is False
+
+
+def test_archived_folders_are_not_watched_but_nested_active_ones_are(setup):
+    from forensic_metascience_ai_toolkit.workbench.monitor import FileMonitor
+    s, c, data = setup
+    _with_papers(c, data)
+    author = data / 'author_corpus'
+    session = author / 'analysis_sessions' / 's1' / 'corpus'
+    c.register_file(author / '10.1--a' / 'paper.pdf')
+    c.register_file(session / '10.1--a' / 'paper.pdf')
+    before = set(FileMonitor(s).paths())
+    assert str(author / '10.1--a') in before and str(data / 'other_corpus' / '10.1--b') in before
+    s.handle('project_archive', {'project': 'author', 'archived': True})
+    s.handle('project_archive', {'project': 'other', 'archived': True})
+    after = set(FileMonitor(s).paths())
+    assert str(author / '10.1--a') not in after
+    assert str(data / 'other_corpus' / '10.1--b') not in after
+    # The session corpus lives inside the archived author corpus and stays watched.
+    assert str(session / '10.1--a') in after and str(session) in after
+
+
+def test_rescan_skips_archived_projects(setup):
+    s, c, data = setup
+    _with_papers(c, data)
+    s.handle('project_archive', {'project': 'other', 'archived': True})
+    s.reconcile_files()
+    local = {(p, d) for p, d, _, _ in c.local_papers()}
+    assert ('author', '10.1--a') in local and ('author__s1', '10.1--a') in local
+    assert ('other', '10.1--b') not in local

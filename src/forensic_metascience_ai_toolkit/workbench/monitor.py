@@ -67,18 +67,40 @@ class FileMonitor:
         return (tuple(revisions), tuple(files), tuple((r['project'], r['path']) for r in c.roots()))
 
     def paths(self):
+        """The folders to watch: those of ACTIVE projects only.
+
+        An archived project's folders are not watched (`project_admin.
+        mark_archived`). Watching everything ever registered needed ~21,000
+        inotify watches per service on 2026-11-11; with Dropbox holding
+        478,000 of the 524,288 allowed, `watch()` failed and was retried
+        every few seconds for 12 hours, a core per service."""
+        from .project_admin import archived_projects
         c = self.catalog
-        roots = c.roots()
+        archived = archived_projects(c)
+        all_roots = c.roots()
+        roots = [r for r in all_roots if r['project'] not in archived]
         corpora = {p['id']: p['name'] for p in c.records('corpora')}
         wanted = {Path(r['path']) for r in roots}
-        wanted.update(Path(path) for _, _, _, path in c.local_papers())
+        # Project and path only: decoding every mapped paper's body was 71 MB.
+        wanted.update(Path(path) for project, path in c.reader.execute('select project,path from papers_local')
+                      if project not in archived)
+        by_project = {}
+        for root in roots: by_project.setdefault(root['project'], []).append(Path(root['path']))
         for paper in c.records('papers'):
-            for root in roots:
-                if root['project'] == corpora.get(paper['corpus_id']) and paper.get('dir'):
-                    base = Path(root['path'])
-                    path = (base / paper['dir']).resolve()
-                    if path.is_relative_to(base): wanted.add(path)
-        wanted.update(Path(row[0]).parent for row in c.reader.execute('select path from files'))
+            if not paper.get('dir'): continue
+            for base in by_project.get(corpora.get(paper['corpus_id']), ()):
+                path = (base / paper['dir']).resolve()
+                if path.is_relative_to(base): wanted.add(path)
+        # A registered evidence file inside an archived project's folder goes
+        # unwatched with it, unless an active project's folder also holds it
+        # (projects nest: an author corpus holds its session corpora).
+        shelved = {Path(r['path']) for r in all_roots if r['project'] in archived}
+        active = {Path(r['path']) for r in roots}
+        def inside(path, folders): return path in folders or any(p in folders for p in path.parents)
+        for (file,) in c.reader.execute('select path from files'):
+            parent = Path(file).parent
+            if shelved and inside(parent, shelved) and not inside(parent, active): continue
+            wanted.add(parent)
         paths = set()
         for path in wanted:
             # Watch parents too, so removing/recreating a mapped folder is seen.

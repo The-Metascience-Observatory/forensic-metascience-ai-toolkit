@@ -1,4 +1,4 @@
-"""Landing-page project housekeeping on THIS machine: mark done, and delete.
+"""Landing-page project housekeeping on THIS machine: mark done, archive, and delete.
 
 Both are local. The project list comes from the shared database, and neither
 action touches it: "done" is a reviewer's bookkeeping, and "delete" removes the
@@ -56,6 +56,21 @@ def mark_done(catalog, project, done=True):
     return {'project': project, **_set(catalog, project, done=bool(done), done_at=now() if done else None)}
 
 
+def mark_archived(catalog, project, archived=True):
+    """Archive a project on THIS machine: its folders are no longer watched or
+    rescanned in the background, and the landing page lists it under
+    Archived. Its papers and findings stay readable; opening one checks the
+    files on demand. The shared records are not touched."""
+    if not project:
+        raise ValueError('A project name is required')
+    return {'project': project,
+            **_set(catalog, project, archived=bool(archived), archived_at=now() if archived else None)}
+
+
+def archived_projects(catalog):
+    return {p for p, mark in flags(catalog).items() if mark.get('archived')}
+
+
 def apply_flags(catalog, result):
     """Drop deleted projects from the landing-page summary and mark done ones.
 
@@ -69,7 +84,8 @@ def apply_flags(catalog, result):
         mark = marks.get(row['name'], {})
         if mark.get('deleted_at') and row['name'] not in rooted:
             continue
-        rows.append({**row, 'done': bool(mark.get('done')), 'done_at': mark.get('done_at')})
+        rows.append({**row, 'done': bool(mark.get('done')), 'done_at': mark.get('done_at'),
+                     'archived': bool(mark.get('archived')), 'archived_at': mark.get('archived_at')})
     return {**result, 'projects': rows, 'n_projects': len(rows),
             'n_papers': sum(r['n_papers'] for r in rows)}
 

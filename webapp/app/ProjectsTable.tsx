@@ -27,6 +27,9 @@ type ProjectSummary = Record<SortKey, number> & {
   n_image_viewed?: number;
   done?: boolean;
   done_at?: string | null;
+  /** Not watched or rescanned on this machine; listed under Archived. */
+  archived?: boolean;
+  archived_at?: string | null;
   /** Has image results but is not in the shared catalog yet. */
   image_only?: boolean;
 };
@@ -73,7 +76,28 @@ export function ProjectsTable({ projects, canManage = true }: { projects: Projec
   // Done moves the row at once; the save runs behind it and is undone if it fails.
   const [doneOverride, setDoneOverride] = useState<Record<string, boolean>>({});
   const isDone = (p: ProjectSummary) => doneOverride[p.name] ?? Boolean(p.done);
-  const active = projects.filter(p => !isDone(p)), done = projects.filter(isDone);
+  // Archive moves the row the same way: at once, undone if the save fails.
+  const [archiveOverride, setArchiveOverride] = useState<Record<string, boolean>>({});
+  const isArchived = (p: ProjectSummary) => archiveOverride[p.name] ?? Boolean(p.archived);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [showArchived, setShowArchived] = useState(false);
+  const live = projects.filter(p => !isArchived(p)), archived = projects.filter(isArchived);
+  const active = live.filter(p => !isDone(p)), done = live.filter(isDone);
+
+  async function setArchived(names: string[], next: boolean) {
+    setErr(null);
+    setArchiveOverride(o => ({ ...o, ...Object.fromEntries(names.map(n => [n, next])) }));
+    const failed: string[] = [];
+    for (const name of names) {
+      try { await projectAction({ project: name, action: next ? "archive" : "unarchive" }); }
+      catch (e) {
+        failed.push(`${name} (${e instanceof Error ? e.message : String(e)})`);
+        setArchiveOverride(o => ({ ...o, [name]: !next }));
+      }
+    }
+    setSelected(new Set());
+    if (failed.length) setErr(`Could not ${next ? "archive" : "unarchive"}: ${failed.join("; ")}`);
+  }
 
   async function toggleDone(p: ProjectSummary) {
     const next = !isDone(p);
@@ -102,6 +126,13 @@ export function ProjectsTable({ projects, canManage = true }: { projects: Projec
               title={isDone(p) ? "Move back to the active projects" : "Mark this project done on this machine"}
               onClick={() => toggleDone(p)}>
         {isDone(p) ? "Reopen" : "Done"}
+      </button>
+      <button type="button"
+              title={isArchived(p)
+                ? "Watch and rescan this project's folders again"
+                : "Stop watching and rescanning this project's folders on this machine. It stays readable."}
+              onClick={() => setArchived([p.name], !isArchived(p))}>
+        {isArchived(p) ? "Unarchive" : "Archive"}
       </button>
       <button type="button" disabled={busy !== null} className="danger"
               title="Delete this project's folder(s) on this machine"
@@ -174,20 +205,60 @@ export function ProjectsTable({ projects, canManage = true }: { projects: Projec
           </span>
         </div>
       )}
-      <Table projects={active} actions={actions} />
+      {canManage && selected.size > 0 && (
+        <p style={{ marginTop: 12, display: "flex", gap: 8, alignItems: "center" }}>
+          <span>{selected.size} selected</span>
+          <button type="button" onClick={() => setArchived([...selected], true)}>Archive selected</button>
+          <button type="button" onClick={() => setSelected(new Set())}>Clear</button>
+        </p>
+      )}
+      <Table projects={active} actions={actions} select={canManage ? { selected, setSelected } : undefined} />
       {done.length > 0 && (
         <section style={{ marginTop: 24 }}>
           <h2 style={{ fontSize: 16, margin: 0 }}>Done <span className="muted">({done.length})</span></h2>
-          <Table projects={done} actions={actions} />
+          <Table projects={done} actions={actions} select={canManage ? { selected, setSelected } : undefined} />
+        </section>
+      )}
+      {archived.length > 0 && (
+        <section style={{ marginTop: 24 }} data-archived-projects>
+          <h2 style={{ fontSize: 16, margin: 0 }}>
+            <button type="button" className="sort-th" aria-expanded={showArchived}
+                    onClick={() => setShowArchived(s => !s)}>
+              {showArchived ? "▾" : "▸"} Archived <span className="muted">({archived.length})</span>
+            </button>
+          </h2>
+          {showArchived && (
+            <>
+              <p className="muted" style={{ margin: "4px 0 0", fontSize: 12 }}>
+                Not watched or rescanned on this machine; papers and findings still open normally.
+              </p>
+              <Table projects={archived} actions={actions} />
+            </>
+          )}
         </section>
       )}
     </>
   );
 }
 
-function Table({ projects, actions }: {
-  projects: ProjectSummary[]; actions: (p: ProjectSummary) => React.ReactNode;
+type Selection = { selected: Set<string>; setSelected: (s: Set<string>) => void };
+
+function Table({ projects, actions, select }: {
+  projects: ProjectSummary[]; actions: (p: ProjectSummary) => React.ReactNode; select?: Selection;
 }) {
+  const toggle = (name: string) => {
+    if (!select) return;
+    const next = new Set(select.selected);
+    if (next.has(name)) next.delete(name); else next.add(name);
+    select.setSelected(next);
+  };
+  const allChecked = !!select && projects.length > 0 && projects.every(p => select.selected.has(p.name));
+  const toggleAll = () => {
+    if (!select) return;
+    const next = new Set(select.selected);
+    for (const p of projects) { if (allChecked) next.delete(p.name); else next.add(p.name); }
+    select.setSelected(next);
+  };
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" } | null>(null);
   const rows = useMemo(() => {
     if (!sort) return projects;
@@ -204,6 +275,12 @@ function Table({ projects, actions }: {
       <table className="grid" style={{ marginTop: 18 }}>
         <thead>
           <tr>
+            {select && (
+              <th style={{ width: 1 }}>
+                <input type="checkbox" aria-label="Select all projects in this table"
+                       checked={allChecked} onChange={toggleAll} />
+              </th>
+            )}
             <th>Project</th>
             {columns.map(({ key, label }) => (
               <th key={key} style={{ textAlign: "right" }}
@@ -223,6 +300,12 @@ function Table({ projects, actions }: {
         <tbody>
           {rows.map((p) => (
             <tr key={p.name}>
+              {select && (
+                <td>
+                  <input type="checkbox" aria-label={`Select ${p.name}`}
+                         checked={select.selected.has(p.name)} onChange={() => toggle(p.name)} />
+                </td>
+              )}
               <td>
                 <a href={`/project/${encodeURIComponent(p.name)}`}
                    className="mono">{p.name}</a>

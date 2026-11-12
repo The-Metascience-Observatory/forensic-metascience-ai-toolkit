@@ -29,7 +29,7 @@ const rows = [2, 10, 0, null].map((value, i) => ({
 test("all six numeric columns sort both ways; missing counts stay last", async () => {
   const user = userEvent.setup();
   render(<ProjectsTable projects={rows} />);
-  const names = () => [...document.querySelectorAll("tbody tr td:first-child a")].map((a) => a.textContent);
+  const names = () => [...document.querySelectorAll("tbody tr td a[href^=\"/project/\"]")].map((a) => a.textContent);
   for (const label of labels) {
     const button = screen.getByRole("button", { name: new RegExp("^" + label + " ") });
     await user.click(button);
@@ -40,4 +40,23 @@ test("all six numeric columns sort both ways; missing counts stay last", async (
     expect(document.querySelectorAll('th[aria-sort="ascending"]').length).toBe(1);
   }
   expect(screen.getByRole("link", { name: "two" }).getAttribute("href")).toBe("/project/two");
+});
+
+test("archived projects sit in a closed Archived section, out of the active table", async () => {
+  const user = userEvent.setup();
+  const list = rows.map((r, i) => ({ ...r, archived: i === 1 }));
+  render(<ProjectsTable projects={list} />);
+  const linked = () => [...document.querySelectorAll("tbody tr td a[href^=\"/project/\"]")].map((a) => a.textContent);
+  expect(linked()).not.toContain("ten");
+  const toggle = screen.getByRole("button", { name: /Archived \(1\)/ });
+  expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  await user.click(toggle);
+  expect(linked()).toContain("ten");
+  expect(screen.getByRole("button", { name: "Unarchive" })).toBeTruthy();
+});
+
+test("a reviewer gets no selection boxes or archive buttons", () => {
+  render(<ProjectsTable projects={rows} canManage={false} />);
+  expect(document.querySelectorAll('input[type="checkbox"]').length).toBe(0);
+  expect(screen.queryByRole("button", { name: "Archive" })).toBeNull();
 });

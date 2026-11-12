@@ -193,6 +193,10 @@ class Service(ImageServiceMixin):
         """Poll known paper mappings only. Watcher losses cannot strand availability."""
         papers=self.catalog.records('papers')
         corpora={p['id']:p['name'] for p in self.catalog.records('corpora')}
+        # Archived projects are not rescanned: a full pass stat'ed ~28,000
+        # paper folders every five minutes. Opening one still checks on demand.
+        from .project_admin import archived_projects
+        archived=archived_projects(self.catalog)
         changed=False
         if changed_paths is not None:
             # A folder is affected when it IS a changed path, CONTAINS one, or
@@ -214,7 +218,7 @@ class Service(ImageServiceMixin):
             # `npm run dev` left this service orphaned, mid-pass, for good.
             if self.stop.is_set(): break
             project=corpora.get(paper['corpus_id']); directory=paper.get('dir')
-            if not project or not directory: continue
+            if not project or not directory or project in archived: continue
             if changed_paths is not None and not affected(project,directory): continue
             try:
                 folder=self.catalog.paper_path(project,directory)
@@ -648,9 +652,13 @@ class Service(ImageServiceMixin):
                 finally: temp.unlink(missing_ok=True)
             return read_sheet(dest,args.get('sheet') or None,args.get('highlights') or [])
         if method=='projects': return self.projects()
-        if method in ('project_done','project_delete_plan','project_delete','project_delete_jobs'):
+        if method in ('project_done','project_archive','project_delete_plan','project_delete','project_delete_jobs'):
             from . import project_admin
             if method=='project_done': return project_admin.mark_done(self.catalog,args.get('project'),args.get('done',True))
+            if method=='project_archive':
+                result=project_admin.mark_archived(self.catalog,args.get('project'),args.get('archived',True))
+                self.local_wake.set()  # re-arm the file watch without the archived folders
+                return result
             if method=='project_delete_plan': return project_admin.delete_plan(self.catalog,args.get('project'),args.get('protected') or [])
             if method=='project_delete_jobs': return project_admin.jobs()
             return project_admin.start_delete(self.catalog,args.get('project'),args.get('confirm'),args.get('protected') or [])

@@ -96,7 +96,8 @@ class TestStatus:
                             lambda *a, **k: FakeConn({"schema", "003_analysis_history"}))
         st = S.status()
         assert st["state"] == "schema_missing"
-        assert st["missing"] == ["004_workbench", "005_image_retirement", "006_image_reset"]
+        assert st["missing"] == ["004_workbench", "005_image_retirement", "006_image_reset",
+                                 "007_publication"]
 
     def test_ready(self, env_file, monkeypatch):
         env_file.write_text(f"{db_push.DB_URL_ENV}=postgresql:///metascience\n")
@@ -112,11 +113,12 @@ class TestMigrationOrder:
         never after it."""
         conn = FakeConn({"schema", "003_analysis_history", "004_workbench",
                          "006_image_reset"})
-        assert S.missing_steps(conn) == ["005_image_retirement", "006_image_reset"]
+        assert S.missing_steps(conn) == ["005_image_retirement", "006_image_reset",
+                                         "007_publication"]
 
     def test_the_sql_files_exist(self):
         assert (S.DB_DIR / "schema.sql").exists()
-        for name in ("005_image_retirement.sql", "006_image_reset.sql"):
+        for name in ("005_image_retirement.sql", "006_image_reset.sql", "007_publication.sql"):
             assert (S.DB_DIR / "migrations" / name).exists()
 
 

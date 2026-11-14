@@ -87,6 +87,8 @@ STEPS = (
      lambda conn: _apply_file(conn, DB_DIR / "migrations" / "005_image_retirement.sql")),
     ("006_image_reset", _has_column("runs", "retirement_reason"),
      lambda conn: _apply_file(conn, DB_DIR / "migrations" / "006_image_reset.sql")),
+    ("007_publication", _has_table("outreach_events"),
+     lambda conn: _apply_file(conn, DB_DIR / "migrations" / "007_publication.sql")),
 )
 
 

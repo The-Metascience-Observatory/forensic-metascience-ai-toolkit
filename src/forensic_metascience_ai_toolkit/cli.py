@@ -2609,6 +2609,9 @@ pipeline_app = typer.Typer(
     help="Pipelines: which modules a run uses and the tools agent's toolset.",
     no_args_is_help=True)
 app.add_typer(pipeline_app, name="pipeline")
+from .publication_cli import outreach_app, publish_app  # noqa: E402
+app.add_typer(publish_app, name="publish")
+app.add_typer(outreach_app, name="outreach")
 
 
 @app.command("run", context_settings={"allow_extra_args": True,

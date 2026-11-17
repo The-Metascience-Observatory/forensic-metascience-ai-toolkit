@@ -143,7 +143,7 @@ export function PapersPage({ project }: { project: string }) {
   return (
     <div className="page" ref={pageEl}>
       <Link href="/">← projects</Link>
-      <h1>{project}</h1>
+      {/* The project name is in the top bar; no title repeats it here. */}
       <ProjectTabs project={project} active="findings" />
       <label>
         Search{" "}

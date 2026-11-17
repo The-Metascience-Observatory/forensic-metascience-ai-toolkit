@@ -34,6 +34,8 @@ test("loads 50, then appends 50 more, and stops at the total", async () => {
   const offsets = serve(120);
   render(<PapersPage project="rng_europepmc_screen" />);
   await waitFor(() => expect(count()).toBe("50 of 120"));
+  // The project name is in the top bar only; the page repeats no title.
+  expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
   await user.click(screen.getByRole("button", { name: "Load 50 more" }));
   await waitFor(() => expect(count()).toBe("100 of 120"));
   await user.click(screen.getByRole("button", { name: "Load 20 more" }));

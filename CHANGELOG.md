@@ -9,6 +9,11 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — no project title on the project page
+
+- The project page no longer repeats the project name as a page title; it is
+  shown once, in the top bar.
+
 ## [Unreleased] — 2026-11-17 — paper review: one scrolling findings list
 
 - The paper review page's findings list loads the first 100 findings and

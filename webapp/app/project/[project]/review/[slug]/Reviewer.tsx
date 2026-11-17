@@ -181,7 +181,9 @@ export function Reviewer({ project, slug, dir }: {
         borderBottom: "1px solid var(--line)", background: "var(--panel)",
         flexShrink: 0,
       }}>
-        <a href={`/project/${encodeURIComponent(project)}`} style={{ fontSize: 12 }}>←</a>
+        {/* Back to the project's paper queue (its Non-image findings tab). */}
+        <a href={`/project/${encodeURIComponent(project)}?view=findings`}
+           style={{ fontSize: 12, flexShrink: 0, whiteSpace: "nowrap" }}>← queue</a>
         <button disabled={!data.nav?.prev} onClick={() => goPaper(data.nav.prev)}
                 title="Previous paper with findings (←)">‹ paper</button>
         <div style={{ minWidth: 0, flex: 1 }}>

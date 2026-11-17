@@ -153,8 +153,9 @@ export function ItemLayout({
       <header style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 12px",
                        borderBottom: "1px solid var(--line)", background: "var(--panel)", flexShrink: 0 }}>
 
-      <RunSelector project={project} component="image_forensics" value={selection} options={[]} onChange={s=>router.push(itemHref(project, itemId, s))} />
-        <Link href={queueHref(project, selection)} style={{ fontSize: 12 }}>← queue</Link>
+        {/* First in the bar, at the far left: back to the queue. */}
+        <Link href={queueHref(project, selection)} style={{ fontSize: 12, flexShrink: 0, whiteSpace: "nowrap" }}>← queue</Link>
+        <RunSelector project={project} component="image_forensics" value={selection} options={[]} onChange={s=>router.push(itemHref(project, itemId, s))} />
         <div className="mono" style={{ fontSize: 12, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>
           {item.id}
         </div>

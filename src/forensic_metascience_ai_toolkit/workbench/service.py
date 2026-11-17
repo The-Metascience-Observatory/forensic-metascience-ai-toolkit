@@ -22,6 +22,10 @@ from .common import run_pipeline
 from .image_mixins import SHARED_QUEUE_METHODS, ImageServiceMixin
 
 
+#: Most findings one review-page read returns (the list grows to it in 100s).
+PAPER_PAGE_CAP = 2000
+
+
 class Service(ImageServiceMixin):
     """The workbench JSON-lines service. Image media, items, videos and the
     shared-storage image queue come from the image package's `ImageServiceMixin`."""
@@ -298,27 +302,31 @@ class Service(ImageServiceMixin):
         # A queue links here by finding id (`?finding=f_...`): the page that
         # holds it is served, whatever offset the client sent, and its index
         # on that page comes back as `focus_index`. Absent or unknown: None.
+        # The review page grows one list from offset 0 (infinite scroll), so
+        # a page may hold up to PAPER_PAGE_CAP entries; a focused finding past
+        # the requested limit widens it (in 100s) rather than moving the offset.
         focus=args.get('finding')
         def names(i): return focus and (i.get('id')==focus or str(i.get('detail_key'))==str(focus))
-        def focus_offset(units,grouped):
-            if not focus: return None
+        def focus_args(units,grouped):
+            if not focus: return args
+            offset=max(0,int(args.get('offset') or 0))
+            limit=max(1,min(PAPER_PAGE_CAP,int(args.get('limit') or 50)))
             for n,u in enumerate(units):
                 if any(names(i) for i in (u if grouped else [u])):
-                    limit=max(1,min(100,int(args.get('limit') or 50)))
-                    return (n//limit)*limit
-            return None
+                    if n<offset: return {**args,'offset':(n//limit)*limit}
+                    if n>=offset+limit: return {**args,'limit':min(PAPER_PAGE_CAP,((n-offset)//100+1)*100)}
+                    return args
+            return args
         if str(args.get('group','1')).lower() not in ('0','false','off'):
             from ..finding_groups import group_issues
             entries=group_issues(issues)
-            fo=focus_offset(entries,True)
-            if fo is not None: args={**args,'offset':fo}
-            shown,pagination=page(entries,args)
+            args=focus_args(entries,True)
+            shown,pagination=page(entries,args,cap=PAPER_PAGE_CAP)
             visible=[i for e in shown for i in e]
             pagination.update(grouped=True,findings_total=len(issues))
         else:
-            fo=focus_offset(issues,False)
-            if fo is not None: args={**args,'offset':fo}
-            visible,pagination=page(issues,args)
+            args=focus_args(issues,False)
+            visible,pagination=page(issues,args,cap=PAPER_PAGE_CAP)
             pagination.update(grouped=False,findings_total=len(issues))
         focus_index=next((k for k,i in enumerate(visible) if names(i)),None)
         for n,i in enumerate(visible,start=pagination['offset']+1):

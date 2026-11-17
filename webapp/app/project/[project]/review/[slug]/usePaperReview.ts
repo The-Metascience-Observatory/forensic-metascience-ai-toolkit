@@ -36,8 +36,11 @@ type DetailKey = ["issue_detail", string, string, string | null];
 const REFRESH_MS = 30000;
 const NO_ISSUES: Issue[] = [];
 
-function paperUrl([, project, slug, dir, run, offset, grouped, finding]: PaperKey) {
-  return `/api/paper?offset=${offset}&group=${grouped ? 1 : 0}&project=${encodeURIComponent(project)}&slug=${encodeURIComponent(slug)}${dir ? `&dir=${encodeURIComponent(dir)}` : ""}${run ? `&run=${encodeURIComponent(run)}` : ""}${finding ? `&finding=${encodeURIComponent(finding)}` : ""}`;
+/** Findings the list loads first, and how many more each scroll to its end adds. */
+export const FINDINGS_PAGE = 100;
+
+function paperUrl([, project, slug, dir, run, limit, grouped, finding]: PaperKey) {
+  return `/api/paper?offset=0&limit=${limit}&group=${grouped ? 1 : 0}&project=${encodeURIComponent(project)}&slug=${encodeURIComponent(slug)}${dir ? `&dir=${encodeURIComponent(dir)}` : ""}${run ? `&run=${encodeURIComponent(run)}` : ""}${finding ? `&finding=${encodeURIComponent(finding)}` : ""}`;
 }
 const fetchPaper = (key: PaperKey) => getJson<PaperRead>(paperUrl(key));
 const fetchSource = ([, project, slug, dir, run]: SourceKey) =>
@@ -60,13 +63,15 @@ export function usePaperReview({ project, slug, dir, run, focusFinding }: {
   run: string | null; focusFinding: string | null;
 }) {
   const { cache } = useSWRConfig();
-  const [offset,setOffset]=useState(0);
+  // One list from the top that grows by FINDINGS_PAGE as the reader scrolls
+  // (infinite scroll); the service widens it to reach a linked `?finding=`.
+  const [limit,setLimit]=useState(FINDINGS_PAGE);
   // Group Findings: on by default, per reader (localStorage), applied by the
   // service before pagination. Read once on mount; null until then, so the
   // first fetch waits rather than fetching ungrouped and refetching.
   const [grouped,setGrouped]=useState<boolean|null>(null);
   useEffect(()=>{let v=true;try{v=readGrouped(window.localStorage.getItem(GROUP_KEY));}catch{/* storage unavailable */}setGrouped(v);},[]);
-  const onGrouped=useCallback((on:boolean)=>{setGrouped(on);setOffset(0);try{window.localStorage.setItem(GROUP_KEY,on?"1":"0");}catch{/* ok */}},[]);
+  const onGrouped=useCallback((on:boolean)=>{setGrouped(on);setLimit(FINDINGS_PAGE);try{window.localStorage.setItem(GROUP_KEY,on?"1":"0");}catch{/* ok */}},[]);
   // The review as last returned by the service: the paper read, or a save.
   const [reviewState, setReviewState] = useState<Review | null>(null);
   // The `?finding=` focus is consumed once the page holding it is on screen,
@@ -99,9 +104,10 @@ export function usePaperReview({ project, slug, dir, run, focusFinding }: {
     }).catch(() => { /* nothing here is worth interrupting a review for */ });
   }, [project, slug, dir]);
 
-  // The focused row belongs to a page read: a new page (or paper, run,
-  // grouping) starts at its first row, until the read names a focus index.
-  const pageStamp = JSON.stringify([project, slug, dir ?? null, run ?? null, offset, grouped]);
+  // The focused row belongs to a list read: a new paper, run or grouping
+  // starts at its first row, until the read names a focus index. Growing the
+  // list keeps the row (it is the same list, longer).
+  const pageStamp = JSON.stringify([project, slug, dir ?? null, run ?? null, grouped]);
   const [atState, setAtState] = useState<{ stamp: string; index: number }>({ stamp: pageStamp, index: 0 });
   const at = atState.stamp === pageStamp ? atState.index : 0;
   const setAt: Dispatch<SetStateAction<number>> = useCallback((value) => setAtState((prev) => {
@@ -110,24 +116,26 @@ export function usePaperReview({ project, slug, dir, run, focusFinding }: {
   }), [pageStamp]);
 
   const paperKey: PaperKey | null =
-    grouped === null ? null : ["paper", project, slug, dir ?? null, run ?? null, offset, grouped, finding];
+    grouped === null ? null : ["paper", project, slug, dir ?? null, run ?? null, limit, grouped, finding];
   const paper = useSWR<PaperRead, Error>(paperKey, fetchPaper, {
     refreshInterval: REFRESH_MS,
     revalidateOnFocus: true,
     refreshWhenHidden: false,
+    // Loading more keeps the rows on screen until the longer list lands.
+    keepPreviousData: true,
     onSuccess: (body) => {
       setReviewState(body.issues?.review || { issues: {}, paper: {} });
       const fi = body.issues?.focus_index;
       if (typeof fi !== "number") return;
-      // The service served the page holding the finding. If that is not the
-      // page asked for, adopt its offset and ask again WITH the finding, so
-      // the two agree; once they do, the focus is consumed.
-      const po = body.issues?.pagination?.offset;
-      if (typeof po === "number" && po !== offset) setOffset(po);
+      // The service widened the list to hold the finding. If that is longer
+      // than asked for, adopt its limit and ask again WITH the finding, so the
+      // two agree; once they do, the focus is consumed.
+      const pl = body.issues?.pagination?.limit;
+      if (typeof pl === "number" && pl > limit) setLimit(pl);
       else if (finding) {
         // The same body answers the finding-less key, so dropping `finding`
         // from the key does not blank the page while it revalidates.
-        void mutateGlobal(["paper", project, slug, dir ?? null, run ?? null, offset, grouped === true, null] satisfies PaperKey, body, { revalidate: false });
+        void mutateGlobal(["paper", project, slug, dir ?? null, run ?? null, limit, grouped === true, null] satisfies PaperKey, body, { revalidate: false });
         setConsumedFinding(finding);
       }
       setAt(fi);
@@ -219,5 +227,13 @@ export function usePaperReview({ project, slug, dir, run, focusFinding }: {
     saveChain.current = saveChain.current.then(run, run);
   }, [project, slug, dir, paperDir, latestRun, issues, at]);
 
-  return { data: data as PageData, err, issues: issues as PageIssue[], review, at, setAt, offset, setOffset, grouped, onGrouped, detailError, save };
+  // More to load when the service says the list continues past it.
+  const hasMore = body?.issues?.pagination?.next_offset != null;
+  const loadingMore = paper.isValidating && !!body && (body.issues?.pagination?.limit ?? limit) < limit;
+  const loadMore = useCallback(() => {
+    if (!hasMore || loadingMore) return;
+    setLimit((l) => Math.max(l, (body?.issues?.pagination?.limit ?? l)) + FINDINGS_PAGE);
+  }, [hasMore, loadingMore, body?.issues?.pagination?.limit]);
+
+  return { data: data as PageData, err, issues: issues as PageIssue[], review, at, setAt, hasMore, loadMore, loadingMore, grouped, onGrouped, detailError, save };
 }

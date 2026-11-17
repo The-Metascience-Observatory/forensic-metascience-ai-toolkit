@@ -9,6 +9,18 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — paper review: one scrolling findings list
+
+- The paper review page's findings list loads the first 100 findings and
+  then 100 more each time it is scrolled near its end (a "Load more findings"
+  button is the fallback). The "Previous 50 · N findings · Next 50" row and the
+  header's ‹ finding / N of M / finding › controls are gone (↑/↓ still move).
+- No finding or group is expanded when the page opens; clicking one expands
+  it. A link to a finding (`?finding=`) still opens that finding.
+- Service: the paper read takes a `limit` up to 2,000 (`PAPER_PAGE_CAP`), and
+  a linked finding past the limit widens the list in 100s instead of moving
+  the offset. `common.page` takes a `cap` (default 100, unchanged elsewhere).
+
 ## [Unreleased] — 2026-11-17 — paper titles from metadata.json
 
 - A paper whose shared record and local cache carry no title (every paper of

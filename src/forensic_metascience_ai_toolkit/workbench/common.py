@@ -64,9 +64,9 @@ def db_primary_key(database_record):
     return database_record['id']
 
 
-def page(rows, args):
+def page(rows, args, cap=100):
     offset = max(0,int(args.get('offset') or 0))
-    limit = max(1,min(100,int(args.get('limit') or 50)))
+    limit = max(1,min(cap,int(args.get('limit') or 50)))
     return rows[offset:offset+limit],dict(offset=offset,limit=limit,total=len(rows),
                                        next_offset=offset+limit if offset+limit<len(rows) else None)
 

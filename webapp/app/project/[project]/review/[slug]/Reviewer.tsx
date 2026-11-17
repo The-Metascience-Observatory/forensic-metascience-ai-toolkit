@@ -17,6 +17,7 @@ import {
 } from "@/lib/sourceView";
 import { DraftsModal } from "./DraftsModal";
 import { IssueList } from "./IssueList";
+import { LoadMore } from "./LoadMore";
 import { SourcePane } from "./SourcePane";
 import { usePaperReview } from "./usePaperReview";
 import { useReviewKeys } from "./useReviewKeys";
@@ -42,14 +43,14 @@ export function Reviewer({ project, slug, dir }: {
   const [draftsOpen, setDraftsOpen] = useState(false);
   const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
                                label: "Resize findings and source panes", storage: "local" });
-  const { data, err, issues, review, at, setAt, offset, setOffset, grouped, onGrouped,
+  const { data, err, issues, review, at, setAt, hasMore, loadMore, loadingMore, grouped, onGrouped,
           detailError, save } = usePaperReview({ project, slug, dir, run, focusFinding });
 
   // A fresh page read (same keys as the paper fetch in `usePaperReview`)
   // starts with no jump and on the reviewer's own surface.
   useEffect(() => {
     setFocusTargetId(null); setForceSurface(null);
-  }, [project, slug, dir, run, offset, grouped]);
+  }, [project, slug, dir, run, grouped]);
 
   const locators = data?.locators?.locators;
   const locById = useMemo(() => {
@@ -63,11 +64,6 @@ export function Reviewer({ project, slug, dir }: {
   useEffect(() => {
     setViewPref(parseStoredView(window.localStorage.getItem(VIEW_KEY)));
   }, []);
-
-  /** One finding at a time, groups or not: the header's ‹ finding › buttons. */
-  const moveFinding = useCallback((delta: number) => {
-    setAt((i) => Math.min(issues.length - 1, Math.max(0, i + delta)));
-  }, [issues.length, setAt]);
 
   const jump = useCallback((t: Target) => {
     setFocusTargetId(t.id);
@@ -201,7 +197,6 @@ export function Reviewer({ project, slug, dir }: {
             ))}
           </div>
         </div>
-        <div><button disabled={!offset} onClick={()=>setOffset(Math.max(0,offset-50))}>Previous 50</button> {data.issues?.pagination?.findings_total ?? data.issues?.pagination?.total ?? issues.length} findings{data.issues?.pagination?.grouped ? ` in ${data.issues.pagination.total} rows` : ""} <button disabled={data.issues?.pagination?.next_offset==null} onClick={()=>setOffset(data.issues.pagination.next_offset)}>Next 50</button></div>
         {detailError && <p role="alert">{detailError}</p>}
         <ReviewJudgments reviews={current?.reviews}/>
         {current?.component_item && <a href={current.producer==="copy_paste" ? `/project/${encodeURIComponent(project)}/copypaste?run=${encodeURIComponent(current.run)}&item=${encodeURIComponent(current.id)}&owner=${encodeURIComponent(current.run)}` : `/project/${encodeURIComponent(project)}/images/${encodeURIComponent(current.id)}?run=${encodeURIComponent(current.run)}`}>Open preserved evidence and adjudication</a>}
@@ -220,13 +215,6 @@ export function Reviewer({ project, slug, dir }: {
           <RunSelector value={run === "latest" || !run ? "latest" : data.issues.latest_run || run} options={data.issues.run_options || data.issues.available_runs.map((name:string)=>({id:name,label:name}))} onChange={setRun}/>
 
         )}
-        <button onClick={() => moveFinding(-1)} disabled={at === 0}>‹ finding</button>
-        <span className="muted" style={{ fontSize: 12 }}>
-          {issues.length ? `${at + 1} / ${issues.length}` : "0"}
-        </span>
-        <button onClick={() => moveFinding(1)} disabled={at >= issues.length - 1}>
-          finding ›
-        </button>
         <button onClick={() => goPaper(data.nav?.next ?? "caught-up")}
                 title={data.nav?.next
                   ? "Next paper with findings (→)"
@@ -269,6 +257,7 @@ export function Reviewer({ project, slug, dir }: {
             grouped={!!grouped}
             onGrouped={onGrouped}
           />
+          <LoadMore hasMore={hasMore} loading={loadingMore} onMore={loadMore} />
           <div style={{ marginTop: 16, paddingTop: 12,
                         borderTop: "1px solid var(--line)" }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8,

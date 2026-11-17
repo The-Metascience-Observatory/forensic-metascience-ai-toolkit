@@ -91,9 +91,12 @@ def test_paper_page_serves_the_page_holding_the_named_finding(catalog):
     plain = s.handle('paper', base)['issues']
     assert plain['focus_index'] is None and plain['pagination']['offset'] == 0
     assert [i['id'] for i in plain['issues']] == ['f_1']
+    # The review page grows one list from the top (infinite scroll): a named
+    # finding past the limit widens the list (in 100s) to reach it.
     focused = s.handle('paper', {**base, 'finding': 'f_2'})['issues']
-    assert focused['pagination']['offset'] == 1 and focused['focus_index'] == 0
-    assert [i['id'] for i in focused['issues']] == ['f_2']
+    assert focused['pagination']['offset'] == 0 and focused['pagination']['limit'] == 100
+    assert focused['issues'][focused['focus_index']]['id'] == 'f_2'
+    assert [i['id'] for i in focused['issues']][:2] == ['f_1', 'f_2']
     # Grouped (the default) finds it too; an unknown id changes nothing.
     grouped = s.handle('paper', {**base, 'group': '1', 'finding': 'f_3'})['issues']
     assert grouped['issues'][grouped['focus_index']]['id'] == 'f_3'

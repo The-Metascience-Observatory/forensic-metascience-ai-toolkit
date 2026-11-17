@@ -1,7 +1,7 @@
 "use client";
 
 import type { Issue, IssueGroup, IssueReview, ReviewState } from "@/lib/types/review";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { displayName, legacyToNine, sev9Color, sev9Label } from "@/lib/constants.gen";
 import { SEV_COLOR } from "@/lib/severity";
@@ -151,6 +151,12 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
 }) {
   const [hideBelow, setHideBelow] = useState(0);
   const [opened, setOpened] = useState<Set<string>>(new Set());
+  // Nothing is expanded until the reader picks a finding: a click, or the
+  // focus moving off the first row (keys, a linked `?finding=`).
+  const [engaged, setEngaged] = useState(false);
+  const firstAt = useRef(at);
+  useEffect(() => { if (at !== firstAt.current) setEngaged(true); }, [at]);
+  const focus = (i: number) => { setEngaged(true); onFocus(i); };
   useEffect(() => {
     try {
       const n = Number(window.localStorage.getItem(HIDE_KEY));
@@ -179,14 +185,14 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
     return typeof n === "number" && n < hideBelow;
   };
   // A group is open when the reader opened it or is on one of its findings.
-  const atGroup = issues[at]?.group?.id as string | undefined;
+  const atGroup = engaged ? issues[at]?.group?.id as string | undefined : undefined;
   const isOpen = (gid: string) => gid === atGroup || opened.has(gid);
   const toggleGroup = (gid: string, firstIndex: number) => {
     if (isOpen(gid) && gid !== atGroup) {
       setOpened((s) => { const n = new Set(s); n.delete(gid); return n; });
     } else {
       setOpened((s) => new Set(s).add(gid));
-      onFocus(firstIndex);
+      focus(firstIndex);
     }
   };
   const visible = entries.filter(({ iss, i }) => !isHidden(iss, i));
@@ -236,7 +242,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
         ) : null;
         if (gid && !isOpen(gid)) return header;
         const saved: IssueReview = review?.issues?.[iss.id] || {};
-        const focused = i === at;
+        const focused = engaged && i === at;
         // Columns by the row's producer first (a detector track declares its
         // own vocabulary), else image or numeric by kind.
         const decisionCols = decisionColumnsFor(iss);
@@ -255,7 +261,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
           <div key={iss.id} style={gid ? { marginLeft: 12 } : undefined}>
           {header}
           <article
-            onClick={() => onFocus(i)}
+            onClick={() => focus(i)}
             style={{
               border: `1px solid ${focused ? "var(--accent)" : "var(--line)"}`,
               borderLeft: `3px solid ${

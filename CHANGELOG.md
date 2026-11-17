@@ -41,6 +41,11 @@ that tree had uncommitted edits.
   "Load 50 more" button stays as the fallback. The 30-second refresh re-reads
   every loaded row together, so the list never mixes two revisions, and a new
   search or sort starts from the top (`PapersPage.tsx`).
+- Search waits 300 ms after the last keystroke (one request, not one per
+  character), and a new search or sort keeps the current rows on screen,
+  dimmed, until its first page arrives instead of blanking the table. The
+  refresh re-reads loaded rows 100 per request (the service maximum), so
+  1,000 loaded rows cost 10 requests every 30 s, not 20.
 
 ## [Unreleased] — 2026-11-11 — archive projects
 

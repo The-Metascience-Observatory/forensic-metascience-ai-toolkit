@@ -9,19 +9,26 @@ import type { SortState } from "@/lib/projectTableSort";
 export const PAGE = 50;
 /** Infinite scroll stops here; past it, search or sort to narrow. */
 export const MAX_ROWS = 1000;
+/** Rows per request when the refresh re-reads what is loaded (the service maximum). */
+export const REFRESH_CHUNK = 100;
+/** Search waits this long after the last keystroke. */
+export const SEARCH_DEBOUNCE_MS = 300;
 
 type PapersReply = { papers: Paper[]; pagination: { total: number } };
 
 /** The project's papers: the first 50 load at once and more load in 50s as
  *  the reader nears the bottom, up to 1,000. The 30-second refresh (and
  *  focus) re-reads every loaded row in one go, so rows never mix two
- *  revisions of the list. A new search or sort starts again from the top. */
+ *  revisions of the list. A new search or sort starts again from the top,
+ *  keeping the current rows on screen until its first page arrives. */
 export function PapersPage({ project }: { project: string }) {
   const [papers, setPapers] = useState<Paper[]>([]),
     [total, setTotal] = useState(0),
+    [input, setInput] = useState(""),
     [q, setQ] = useState(""),
     [error, setError] = useState(""),
-    [loading, setLoading] = useState(false);
+    [loading, setLoading] = useState(false),
+    [reloading, setReloading] = useState(false);
   const [sort, setSort] = useState<SortState | null>({ key: "findings", dir: "desc" });
   const rows = useRef<Paper[]>([]);
   rows.current = papers;
@@ -29,12 +36,21 @@ export function PapersPage({ project }: { project: string }) {
   // dropped, and only a request of the CURRENT generation blocks another.
   const generation = useRef(0);
   const busy = useRef(0);
+  // True from a new (search, sort) until its first page lands: the rows on
+  // screen belong to the previous list, so nothing may be appended to them.
+  const fresh = useRef(true);
   const sentinel = useRef<HTMLDivElement>(null);
+  const pageEl = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setQ(input), SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(t);
+  }, [input]);
 
   const fetchPage = useCallback(
-    async (offset: number, signal?: AbortSignal) => {
+    async (offset: number, signal?: AbortSignal, size: number = PAGE) => {
       const params = new URLSearchParams({
-        method: "papers", project, offset: String(offset), limit: String(PAGE), q,
+        method: "papers", project, offset: String(offset), limit: String(size), q,
         sort: sort?.key || "findings", direction: sort?.dir || "desc",
       });
       const r = await fetch(`/api/workbench?${params}`, { signal });
@@ -48,20 +64,30 @@ export function PapersPage({ project }: { project: string }) {
   useEffect(() => {
     const controller = new AbortController();
     const mine = ++generation.current;
-    setPapers([]); setTotal(0); setError("");
+    fresh.current = true;
+    setReloading(true);
     const refresh = async () => {
       if (document.hidden || busy.current === mine) return;
       busy.current = mine;
       try {
-        const n = Math.max(PAGE, rows.current.length);
-        const offsets = Array.from({ length: Math.ceil(n / PAGE) }, (_, i) => i * PAGE);
-        const pages = await Promise.all(offsets.map((o) => fetchPage(o, controller.signal)));
+        // A fresh list reads one page; a refresh re-reads every loaded row,
+        // 100 per request, trimmed back to what was loaded.
+        const n = fresh.current ? PAGE : Math.min(MAX_ROWS, Math.ceil(Math.max(PAGE, rows.current.length) / PAGE) * PAGE);
+        const size = fresh.current ? PAGE : REFRESH_CHUNK;
+        const offsets = Array.from({ length: Math.ceil(n / size) }, (_, i) => i * size);
+        const pages = await Promise.all(offsets.map((o) => fetchPage(o, controller.signal, size)));
         if (generation.current !== mine) return;
-        setPapers(pages.flatMap((p) => p.papers).slice(0, MAX_ROWS));
+        if (fresh.current && pageEl.current) pageEl.current.scrollTop = 0;
+        fresh.current = false;
+        setPapers(pages.flatMap((p) => p.papers).slice(0, n));
         setTotal(pages[pages.length - 1].pagination.total);
+        setReloading(false);
         setError("");
       } catch (e) {
-        if ((e as Error).name !== "AbortError") setError(String(e));
+        if ((e as Error).name !== "AbortError" && generation.current === mine) {
+          setError(String(e));
+          setReloading(false);
+        }
       } finally {
         if (busy.current === mine) busy.current = 0;
       }
@@ -82,7 +108,7 @@ export function PapersPage({ project }: { project: string }) {
   const loadMore = useCallback(async () => {
     const mine = generation.current;
     const offset = rows.current.length;
-    if (busy.current === mine || offset === 0 || offset >= limit) return;
+    if (fresh.current || busy.current === mine || offset === 0 || offset >= limit) return;
     busy.current = mine;
     setLoading(true);
     try {
@@ -105,16 +131,16 @@ export function PapersPage({ project }: { project: string }) {
   // out of view must still trigger the next one.
   useEffect(() => {
     const el = sentinel.current;
-    if (!el || !hasMore || typeof IntersectionObserver === "undefined") return;
+    if (!el || !hasMore || reloading || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) loadMore();
     }, { rootMargin: "800px 0px" });
     io.observe(el);
     return () => io.disconnect();
-  }, [hasMore, loadMore, papers.length]);
+  }, [hasMore, reloading, loadMore, papers.length]);
 
   return (
-    <div className="page">
+    <div className="page" ref={pageEl}>
       <Link href="/">← projects</Link>
       <h1>{project}</h1>
       <p>
@@ -129,8 +155,8 @@ export function PapersPage({ project }: { project: string }) {
       <label>
         Search{" "}
         <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="title, DOI, or folder (10.1007--s004010050748)"
           aria-label="Search papers by title, DOI, or folder name"
           style={{ minWidth: 280 }}
@@ -138,10 +164,12 @@ export function PapersPage({ project }: { project: string }) {
       </label>{" "}
       <span data-papers-count>{papers.length} of {total}</span>
       {error && <p role="alert">{error}</p>}
-      <ProjectTable project={project} papers={papers} onSortChange={setSort} />
+      <div aria-busy={reloading} style={reloading && papers.length ? { opacity: 0.6 } : undefined}>
+        <ProjectTable project={project} papers={papers} onSortChange={setSort} />
+      </div>
       <div ref={sentinel} style={{ padding: "12px 0" }} className="muted">
         {hasMore && (
-          <button type="button" disabled={loading} onClick={loadMore}>
+          <button type="button" disabled={loading || reloading} onClick={loadMore}>
             {loading ? "Loading…" : `Load ${Math.min(PAGE, limit - papers.length)} more`}
           </button>
         )}

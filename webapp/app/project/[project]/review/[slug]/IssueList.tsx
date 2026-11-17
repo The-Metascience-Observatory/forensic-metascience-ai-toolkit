@@ -261,7 +261,10 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
           <div key={iss.id} style={gid ? { marginLeft: 12 } : undefined}>
           {header}
           <article
-            onClick={() => focus(i)}
+            // A click toggles the card: open it, or close the open one. Its
+            // quote, feedback checkboxes and jump buttons stop the click.
+            onClick={() => (focused ? setEngaged(false) : focus(i))}
+            aria-expanded={focused}
             style={{
               border: `1px solid ${focused ? "var(--accent)" : "var(--line)"}`,
               borderLeft: `3px solid ${

@@ -34,3 +34,15 @@ test("moving the focus (keys, a linked finding) expands that finding", () => {
   rerender(<IssueList issues={[row("a"), row("b")]} at={1} review={null} onFocus={() => {}} onSave={() => {}} />);
   expect(decisions()).toBe(1);
 });
+
+test("clicking an open card closes it; clicking its feedback does not", () => {
+  render(<IssueList issues={[row("a"), row("b")]} at={0} review={null} onFocus={() => {}} onSave={() => {}} />);
+  fireEvent.click(screen.getByText("finding a"));
+  expect(decisions()).toBe(1);
+  fireEvent.click(document.querySelector(".finding-flags input") as HTMLElement);
+  expect(decisions()).toBe(1);
+  fireEvent.click(screen.getByText("finding a"));
+  expect(decisions()).toBe(0);
+  fireEvent.click(screen.getByText("finding a"));
+  expect(decisions()).toBe(1);
+});

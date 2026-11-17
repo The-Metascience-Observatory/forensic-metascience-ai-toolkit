@@ -168,6 +168,9 @@ def test_child_checkpoint_uses_configured_cache(monkeypatch, tmp_path):
     root = tmp_path / 'data_drive' / 'cache'
     environment, _ = launcher.analysis_environment(root)
     monkeypatch.setenv('XDG_CACHE_HOME', environment['XDG_CACHE_HOME'])
+    # Search checkpoints are opt-in since 2026-11-06; this asks WHERE an
+    # enabled one is kept, so enable it.
+    monkeypatch.setenv('METASCIENCE_SEARCH_CHECKPOINTS', '1')
     checkpoint = SearchCheckpoint('launch_test')
     try:
         database = checkpoint.db.execute('PRAGMA database_list').fetchone()[2]

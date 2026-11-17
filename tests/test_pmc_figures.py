@@ -231,8 +231,17 @@ class TestTheChannel:
         src = (IMAGE_SRC / "image_forensics" / "pmc_figures.py").read_text()
         for bad in ("llm_backend", "resolve_backend", "subprocess"):
             assert bad not in src
+        # Since image package 0.28.0 the `sweep` VERB fetches PMC figures for
+        # XML-only papers (network, never a model). The library entry point
+        # keeps it off, so the gate, `complete` and tests never fetch, and the
+        # import is reached only behind that flag.
         sweep = (IMAGE_SRC / "image_forensics" / "sweep.py").read_text()
-        assert "pmc_figures" not in sweep.replace("pmc_figures/manifest", "")
+        assert "fetch_pmc_figures: bool = False" in sweep
+        uses = [line.strip() for line in sweep.splitlines()
+                if "pmc_figures" in line and "pmc_figures/manifest" not in line]
+        assert uses == ["fetch_pmc_figures: bool = False) -> dict[str, Any]:",
+                        "if fetch_pmc_figures:",
+                        "from .pmc_figures import auto_fetch_missing"], uses
 
 
 # ---------------------------------------------------------------------------

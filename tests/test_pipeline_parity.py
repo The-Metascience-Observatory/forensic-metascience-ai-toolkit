@@ -51,6 +51,7 @@ P193 = ROOT / "tests" / "data" / "parity_1_93.json"
 P1961 = ROOT / "tests" / "data" / "parity_1_96_1.json"
 P197 = ROOT / "tests" / "data" / "parity_1_97.json"
 P199 = ROOT / "tests" / "data" / "parity_1_99.json"
+P1102 = ROOT / "tests" / "data" / "parity_1_102.json"
 
 #: The pre-1.86 title bound, restored in the capture process for the scope
 #: tests: every producer subset's `title` is the stored schema's again, and
@@ -138,7 +139,7 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
 
 def test_default_run_matches_the_newest_oracle(tmp_path):
     got = _capture(tmp_path)
-    want = json.loads(P199.read_text())
+    want = json.loads(P1102.read_text())
     assert set(got) == set(want) == {"claude", "codex", "grok"}
     for backend in want:
         for i, (g, w) in enumerate(zip(got[backend]["invocations"],
@@ -577,8 +578,11 @@ def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
     for backend in got:
         assert got[backend]["registry_sha256"] == p197[backend]["registry_sha256"]
         got[backend]["registry_sha256"] = old[backend]["registry_sha256"]
-    # 1.99.0 has since changed the adjudicator's system prompt
-    # (`test_1_99_...`); with 1.97's restored, the same holds.
+    # 1.102.0 has since changed every system prompt (ladder version 4,
+    # `test_1_102_...`; its schemas are restored by `ladder_max_9`), and 1.99.0
+    # the adjudicator's (`test_1_99_...`); with 1.99's prompts and then 1.97's
+    # adjudicator prompt restored, the same holds.
+    _restore_system_prompts(got, json.loads(P199.read_text()))
     _restore_adjudicator_prompt(got, p197)
     assert got == old
     assert "forensic_metascience_ai_toolkit.mcp_server" in json.dumps(new)
@@ -625,6 +629,22 @@ def _restore_adjudicator_prompt(capture: dict, source: dict) -> None:
             inv["files"]["AGENTS.md"] = src["files"]["AGENTS.md"]
 
 
+def _restore_system_prompts(capture: dict, source: dict) -> None:
+    """Put `source`'s system prompt for EVERY stage, and `prompt_sha256`, back
+    into `capture`, in place. Output schemas and everything else stay as
+    captured."""
+    for backend, rec in capture.items():
+        rec["prompt_sha256"] = source[backend]["prompt_sha256"]
+        for inv, src in zip(rec["invocations"], source[backend]["invocations"]):
+            assert inv["stage"] == src["stage"], backend
+            argv, sargv = inv["argv"], src["argv"]
+            if "--append-system-prompt" in argv:
+                k = argv.index("--append-system-prompt") + 1
+                argv[k] = sargv[sargv.index("--append-system-prompt") + 1]
+            if "AGENTS.md" in inv["files"]:
+                inv["files"]["AGENTS.md"] = src["files"]["AGENTS.md"]
+
+
 def test_1_99_changed_only_the_adjudicator_system_prompt():
     """1.99.0 (2026-10-19): the adjudicator's mission names all five producer
     streams (it said "four" and left out the raw-data copy-paste screen,
@@ -649,3 +669,25 @@ def test_1_99_changed_only_the_adjudicator_system_prompt():
     text = adjudication_system_prompt()
     assert "up to five independent producer streams" in text
     assert "raw-data copy-paste screen" in text
+
+
+def test_1_102_changed_only_system_prompts_and_the_severity_maximum(tmp_path):
+    """1.102.0 (2026-11-17): severity ladder version 4 removed rungs 8 and 9
+    (the ladder is 1-7). Every stage's system prompt carries the ladder, and
+    both output schemas lower each severity `maximum` from 9 to 7. Against the
+    1.99 oracle nothing else moves: registry, user prompts, argv flags and
+    environment are identical. Proved by construction: the current tree with
+    the 1-9 schemas restored (`ladder_max_9`) captures the 1.99 oracle's
+    schema hashes, and with 1.99's system prompts restored too, the whole
+    oracle byte for byte."""
+    old = json.loads(P199.read_text())
+    new = json.loads(P1102.read_text())
+    for backend in old:
+        assert old[backend]["prompt_sha256"] != new[backend]["prompt_sha256"], backend
+        assert old[backend]["registry_sha256"] == new[backend]["registry_sha256"], backend
+    assert _without_prompts(old) == _without_prompts(new)
+    got = _capture(tmp_path, ladder_max_9=True)
+    _restore_system_prompts(got, old)
+    assert got == old
+    from forensic_metascience_ai_toolkit import severity9
+    assert max(severity9.LEVELS) == 7

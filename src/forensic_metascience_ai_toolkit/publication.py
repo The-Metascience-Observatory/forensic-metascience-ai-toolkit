@@ -18,6 +18,7 @@ import datetime as dt
 import json
 import re
 from pathlib import Path
+from .paper_ids import doi_dirname
 
 POLICIES = ("ai_triaged", "human_approved")
 STATES = ("draft", "published", "withdrawn")
@@ -49,7 +50,7 @@ def norm_doi(doi: str) -> str:
 
 def paper_id(doi: str) -> str:
     """The DOI as a file and URL name: 10.1002/ece3.10748 -> 10.1002--ece3.10748."""
-    return re.sub(r"[^a-z0-9._()-]", "_", norm_doi(doi).replace("/", "--"))
+    return re.sub(r"[^a-z0-9._()-]", "_", doi_dirname(norm_doi(doi)))
 
 
 def is_public(policy: str, state: str, ai_eligible: bool) -> bool:

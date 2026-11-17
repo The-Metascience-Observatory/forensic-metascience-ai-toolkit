@@ -9,6 +9,28 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [1.102.0] — 2026-11-17 — severity ladder 1-7 (ladder version 4)
+
+MINOR: a severity-ladder change, so reviews across this boundary are not
+comparable.
+- **Rungs 8 (serious misconduct) and 9 (malicious or extreme misconduct) are
+  removed; the ladder is 1-7** (`severity9.LADDER_VERSION` 3 -> 4). Rung 7,
+  "Fatal error invalidating main findings", now resolves to "retraction"
+  (it said "retraction (honest error)") and no longer points up to 8. Every
+  stage's system prompt carries the ladder, and both output schemas lower each
+  severity `maximum` from 9 to 7; docs, `docs/severity_ladder.json` and the
+  webapp's generated constants ("S1-7") follow (44e10389).
+- New pipeline oracle `tests/data/parity_1_102.json`, with
+  `test_1_102_changed_only_system_prompts_and_the_severity_maximum`: against
+  1.99, only the system prompts and the schemas' severity maximum moved.
+  The older scope tests restore the 1-9 schemas and 1.99's prompts.
+- Pre-existing test failures fixed: the inertness ratchet (34: `projects.json`
+  is a published file name), `publication.paper_id` builds on `doi_dirname`,
+  an f-string in `publication_cli` that Python 3.10 cannot parse, and three
+  image tests pinned to behaviour the image package changed on purpose (the
+  sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
+  unidentified figure in a video).
+
 ## [Unreleased] — 2026-11-17 — RNG "Observed vs generated" closed by default
 
 - On a seeded-RNG finding, the "Observed vs generated" values table starts

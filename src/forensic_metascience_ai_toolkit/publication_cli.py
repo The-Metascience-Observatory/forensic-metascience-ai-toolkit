@@ -118,7 +118,8 @@ def outreach_list_cmd(doi: str):
             "select id, occurred_on, kind, coalesce(url,''), coalesce(note,''), voided_at is not null "
             "from outreach_events where doi=%s order by occurred_on, id", (P.norm_doi(doi),)).fetchall()
     for i, day, kind, url, note, void in _run(go):
-        typer.echo(f"{i}\t{day}\t{kind}\t{url}\t{note}{'\t(void)' if void else ''}")
+        voided = "\t(void)" if void else ""
+        typer.echo(f"{i}\t{day}\t{kind}\t{url}\t{note}{voided}")
 
 
 @outreach_app.command("void")

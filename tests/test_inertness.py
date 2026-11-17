@@ -600,7 +600,10 @@ class TestTheWriteOnlyRatchet:
     #: from tests/fixtures, and `permission_denials` (a run_meta field copied
     #: from the CLI's result event, read by people) had only ever counted as
     #: "consumed" because its name appeared inside those transcripts.
-    MAX_WRITE_ONLY = 33
+    #: RE-PINNED 2026-11-17: 33 -> 34. The new one is `projects.json`
+    #: (publication.py, 2026-11-14): a FILE NAME in the public-site snapshot,
+    #: read by the website, which lives outside this repository.
+    MAX_WRITE_ONLY = 34
 
     def test_write_only_keys_have_not_multiplied(self):
         from forensic_metascience_ai_toolkit.inertness import scan

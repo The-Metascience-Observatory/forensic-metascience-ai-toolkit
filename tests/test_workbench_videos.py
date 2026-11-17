@@ -405,7 +405,9 @@ def test_video_labels_omit_subpanels_and_rotation_parentheses():
     from metascience_observatory_image_analysis.image_forensics import review_media as rm
     assert rm.video_figure_label('Figure 3 · sub-panel 7') == 'From Figure 3'
     assert rm.video_figure_label('Figure S2G') == 'From Figure S2'
-    assert rm.video_figure_label('xref7-seg3') == 'Figure not identified'
+    # No figure number: no caption at all (image package 0.27.0), rather than
+    # a "Figure not identified" banner across the tile.
+    assert rm.video_figure_label('xref7-seg3') == ''
     animator = rm._load_animator()
     assert animator.rotation_label(179.2) == '179 deg'
     assert animator.rotation_label(-179.8) == '180 deg'

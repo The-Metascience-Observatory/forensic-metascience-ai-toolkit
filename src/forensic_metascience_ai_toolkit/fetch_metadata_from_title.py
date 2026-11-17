@@ -1,4 +1,4 @@
-"""Copied from metascience_observatory_website/data_ingestor/fetch_metadata_from_title.py.
+"""Copied from metascience-observatory-website/data_ingestor/fetch_metadata_from_title.py.
 
 The title-search cascade is the product, vendored 2026-08-21 for the
 abbreviated-author refetch in `paper_metadata` (a paper with no DOI cannot

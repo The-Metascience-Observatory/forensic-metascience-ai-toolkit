@@ -1,4 +1,4 @@
-"""Copied from metascience_observatory_website/data_ingestor/fetch_metadata_from_doi.py.
+"""Copied from metascience-observatory-website/data_ingestor/fetch_metadata_from_doi.py.
 
 The enrichment cascade is the product. Env-file search is the only local
 adaptation: this package is not a sibling of `.env.local` the way the

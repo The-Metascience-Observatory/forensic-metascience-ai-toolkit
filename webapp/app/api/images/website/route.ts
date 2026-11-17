@@ -17,17 +17,20 @@ const MAX_PNG_BYTES = 25 * 1024 * 1024;
 const EMBARGO_MARKER = "EMBARGO.json";
 
 /** The website checkout: METASCIENCE_WEBSITE_DIR, else the nearest
- * `metascience_observatory_website` holding findings.json beside this repo or
- * beside any folder above it (the toolkit sits one level deeper than the
- * website, in AA_forensic_metascience/). Falls back to the sibling path so the
+ * `website/metascience-observatory-website` (or `metascience-observatory-website`)
+ * holding findings.json beside this repo or beside any folder above it (the
+ * toolkit is in AA_forensic_metascience/, the website in website/). Falls back to the sibling path so the
  * error names a concrete location. */
+const WEBSITE_REPO = "metascience-observatory-website";
+
 function websiteDir(): string {
   const env = (process.env.METASCIENCE_WEBSITE_DIR || "").trim();
   if (env) return path.resolve(env);
-  const sibling = path.resolve(repoRoot(), "..", "metascience_observatory_website");
+  const sibling = path.resolve(repoRoot(), "..", "..", "website", WEBSITE_REPO);
   for (let d = path.resolve(repoRoot(), ".."); ; d = path.dirname(d)) {
-    const candidate = path.join(d, "metascience_observatory_website");
-    if (fs.existsSync(path.join(candidate, FINDINGS_JSON))) return candidate;
+    for (const candidate of [path.join(d, "website", WEBSITE_REPO), path.join(d, WEBSITE_REPO)]) {
+      if (fs.existsSync(path.join(candidate, FINDINGS_JSON))) return candidate;
+    }
     if (path.dirname(d) === d) return sibling;
   }
 }

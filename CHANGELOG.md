@@ -9,6 +9,16 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — paper titles from metadata.json
+
+- A paper whose shared record and local cache carry no title (every paper of
+  `rng_europepmc_screen`, and most corpora: the database stores few titles) now
+  takes its title, authors, journal and year from its folder's `metadata.json`,
+  so the project table's Title column shows the title, not the folder name
+  (`workbench.repository.local_metadata`, cached by file mtime). A field the
+  record has is never overridden. A paper with no folder on this machine still
+  shows its folder name: 65 of 454 on `rng_europepmc_screen`.
+
 ## [Unreleased] — 2026-11-17 — delete selected projects; tidier delete notices
 
 - Projects page: with projects ticked, "Delete selected…" sits beside "Archive

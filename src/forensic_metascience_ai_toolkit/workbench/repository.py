@@ -18,6 +18,37 @@ from forensic_metascience_ai_toolkit.workbench.queue_fields import (  # noqa: F4
 from .image_mixins import SharedImageQueueMixin
 
 
+#: Citation fields a local-only paper takes from its folder's metadata.json.
+LOCAL_METADATA_FIELDS = ('title', 'authors', 'first_author', 'journal', 'year', 'doi', 'volume', 'issue')
+_local_metadata_cache: dict = {}
+
+
+def local_metadata(path) -> dict:
+    """Title, authors, journal, ... from `<paper folder>/metadata.json`, for a
+    paper with no shared catalog record (its folder name was shown as its
+    title). Cached by file mtime; {} when absent or unreadable."""
+    if not path:
+        return {}
+    file = Path(path) / 'metadata.json'
+    try:
+        mtime = file.stat().st_mtime
+    except OSError:
+        return {}
+    hit = _local_metadata_cache.get(file)
+    if hit and hit[0] == mtime:
+        return hit[1]
+    try:
+        raw = json.loads(file.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        raw = {}
+    out = {k: raw[k] for k in LOCAL_METADATA_FIELDS
+           if isinstance(raw, dict) and raw.get(k) not in (None, '', [])}
+    if isinstance(out.get('authors'), list):
+        out.pop('authors')
+    _local_metadata_cache[file] = (mtime, out)
+    return out
+
+
 class Repository(SharedImageQueueMixin):
     """The shared projection. Image items and the shared-storage image queue
     (`item_view`, `feed`, `local_video_items`) come from the image package's
@@ -382,7 +413,12 @@ class Repository(SharedImageQueueMixin):
     def paper_row(self, p):
         project=self.project_name(p) or p.get('local_project')
         directory=p.get('dir') or f"@{p['id']}"
-        local=self.local.get((project,directory),({},None))[0]
+        local,local_path=self.local.get((project,directory),({},None))
+        if not (p.get('title') or local.get('title')):
+            # No title in the shared record or the local cache (most corpora
+            # store none): take the citation from the folder's metadata.json,
+            # without overriding a field the record does have.
+            p={**local_metadata(local_path),**{k:v for k,v in p.items() if v not in (None,'')}}
         selected=self.selected_runs(project,paper=p['id'])
         comprehensive=[r for r in selected if component(r)=='comprehensive']
         latest=comprehensive[-1] if comprehensive else None

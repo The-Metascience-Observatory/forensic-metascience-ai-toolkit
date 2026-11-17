@@ -21,7 +21,10 @@ test("the image tab is a link when the project has image findings", async () => 
   render(<ProjectTabs project="p 1" active="findings" />);
   const link = await screen.findByRole("link", { name: "Image findings" });
   expect(link.getAttribute("href")).toBe("/project/p%201/images");
-  expect(screen.getByRole("link", { name: "Findings" }).getAttribute("aria-current")).toBe("page");
+  const findings = screen.getByRole("link", { name: "Non-image findings" });
+  expect(findings.getAttribute("aria-current")).toBe("page");
+  // An explicit choice: the project page never redirects it to the image tab.
+  expect(findings.getAttribute("href")).toBe("/project/p%201?view=findings");
   expect(calls[0]).toContain("verdict=all");
 });
 

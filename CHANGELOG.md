@@ -9,6 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — "Non-image findings" tab; image-only projects open on images
+
+- The project page's tabs read "Non-image findings" and "Image findings".
+- A project with image findings and no other findings opens on the Image
+  findings tab (a server redirect from `/project/<name>`); any other project
+  opens on Non-image findings. The Non-image tab links with `?view=findings`,
+  so choosing it is never redirected.
+
 ## [Unreleased] — 2026-11-17 — no project title on the project page
 
 - The project page no longer repeats the project name as a page title; it is

@@ -2,9 +2,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-/** Findings (the papers table, non-image findings) | Image findings. The image
- *  tab is greyed out and not a link when the project has no image results:
- *  the feed's total over every verdict is 0, or the service has none for it. */
+/** Non-image findings (the papers table) | Image findings. The image tab is
+ *  greyed out and not a link when the project has no image results: the
+ *  feed's total over every verdict is 0, or the service has none for it.
+ *  The project page opens on Image findings when those are all it has; the
+ *  Non-image tab links with `?view=findings` so choosing it always sticks. */
 export function ProjectTabs({ project, active }: { project: string; active: "findings" | "images" }) {
   const [hasImages, setHasImages] = useState<boolean | null>(active === "images" ? true : null);
   useEffect(() => {
@@ -29,8 +31,8 @@ export function ProjectTabs({ project, active }: { project: string; active: "fin
   return (
     <nav aria-label="Project views" data-project-tabs
          style={{ display: "flex", alignItems: "flex-end", borderBottom: "1px solid var(--line)", margin: "8px 0 12px" }}>
-      <Link href={base} aria-current={active === "findings" ? "page" : undefined} style={tab(active === "findings")}>
-        Findings
+      <Link href={`${base}?view=findings`} aria-current={active === "findings" ? "page" : undefined} style={tab(active === "findings")}>
+        Non-image findings
       </Link>
       {imagesOff ? (
         <span aria-disabled="true" data-tab-disabled

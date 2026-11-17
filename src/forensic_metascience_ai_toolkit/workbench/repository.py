@@ -341,6 +341,9 @@ class Repository(SharedImageQueueMixin):
                              # What a cross-paper queue lists and links by: the
                              # paper's folder and title, and the row's review state.
                              'dir':p.get('dir'),'paper_title':p.get('title'),
+                             # When the run that filed the row analysed the paper
+                             # (the queue's date/time column).
+                             'analysed_at':run_time(r) or None,
                              'reviews':self.judgments(r['run_uid'],f['finding_id'])})
         for rid in ids:
             r=self.runs[rid]
@@ -358,7 +361,7 @@ class Repository(SharedImageQueueMixin):
                                  run_id=r['run_uid'],title=candidate.get('sentence') or candidate['id'],
                                  producer=component(r),technique=candidate.get('detector_kind'),severity=None,
                                  impossible=False,journal=p.get('journal'),year=p.get('year'),component_item=raw['id'],
-                                 reviews=candidate['reviews']))
+                                 analysed_at=run_time(r) or None,reviews=candidate['reviews']))
         decided=str(args.get('decided') or '')
         if decided in ('0','1'):
             rows=[f for f in rows if bool(((f.get('reviews') or {}).get('decision')))==(decided=='1')]
@@ -373,6 +376,10 @@ class Repository(SharedImageQueueMixin):
             def num(v,default):
                 return v if isinstance(v,(int,float)) and not isinstance(v,bool) else default
             rows.sort(key=lambda f:(num(basis(f).get('tier'),99),-num(basis(f).get('excess_bits'),0.0),f['finding_id']))
+        elif args.get('sort')=='recent':
+            # Newest analysis first (rows a running screen just added), then by id.
+            rows.sort(key=lambda f:f['finding_id'])
+            rows.sort(key=lambda f:str(f.get('analysed_at') or ''),reverse=True)
         else:
             rows.sort(key=lambda f:(-(f.get('severity') or 0),f['finding_id']))
         result,pagination=page(rows,args)

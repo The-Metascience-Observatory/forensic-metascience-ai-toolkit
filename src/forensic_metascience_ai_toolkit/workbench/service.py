@@ -572,10 +572,13 @@ class Service(ImageServiceMixin):
                 # A sealed run's files may have changed since: its persisted
                 # anchors still describe what it read, so they are used; the
                 # file is not re-searched.
+                path=self.catalog.paper_path(args['project'],p.get('dir') or f"@{p['id']}")
+                # A detector's spreadsheet anchors (rng_track `table_cell` with a
+                # sheet file) become the artefact the sheet pane opens.
+                from ..finding_files import stamp_sheet_artefacts
+                stamp_sheet_artefacts([issue],path)
                 if r.get('sealed_digest'): locators=persisted_locators([issue])
-                else:
-                    path=self.catalog.paper_path(args['project'],p.get('dir') or f"@{p['id']}")
-                    locators=locators_for_paper(path,[issue])
+                else: locators=locators_for_paper(path,[issue])
             except FileNotFoundError:
                 locators=persisted_locators([issue])
         with self.projection:

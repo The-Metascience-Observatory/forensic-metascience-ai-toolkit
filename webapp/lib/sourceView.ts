@@ -71,6 +71,30 @@ export function defaultView(
   return "none";
 }
 
+/** localStorage key for the reviewer's "PDF beside the cells" choice. */
+export const BESIDE_PDF_KEY = "metascience.besidePdf";
+
+/** A third pane: the PDF beside the cell view.
+ *
+ * A finding anchored to CELLS (a supplementary spreadsheet, or an XML table
+ * cell) is read on that cell view, which a lone source pane then never leaves;
+ * the paper's own PDF beside it lets the reviewer see the same table or figure
+ * as published. Offered only when both exist, shown unless the reviewer hid it.
+ * `main` is the surface the middle pane draws: the spreadsheet if the finding
+ * names one, else the XML.
+ */
+export function besidePdf(
+  available: Surface[],
+  hasXmlCellTarget: boolean,
+  hidden: boolean,
+): { eligible: boolean; shown: boolean; main: Surface | null } {
+  const main: Surface | null = available.includes("sheet")
+    ? "sheet"
+    : hasXmlCellTarget && available.includes("xml") ? "xml" : null;
+  const eligible = main !== null && available.includes("pdf");
+  return { eligible, shown: eligible && !hidden, main: eligible ? main : null };
+}
+
 /** Show the toggle only when there is a real choice to make. */
 export function canToggle(available: Surface[]): boolean {
   return available.includes("pdf") && available.includes("xml");

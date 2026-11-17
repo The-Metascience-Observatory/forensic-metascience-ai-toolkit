@@ -122,3 +122,22 @@ def test_paper_row_counts_rng_findings_and_sorts_by_them(catalog):
     assert [p['n_rng_findings'] for p in page['papers']] == [3]
     r.runs_by_paper[1] = []  # a paper without an RNG run
     assert r.paper_row(r.papers[1])['n_rng_findings'] is None
+
+
+def test_rows_carry_the_analysis_time_and_sort_newest_first(catalog):
+    later = [('papers', json.dumps([2]), {'id': 2, 'corpus_id': 1, 'dir': 'paper2', 'paper_slug': 'paper2',
+                                           'title': 'A later paper'}),
+             ('runs', json.dumps([2]), {'id': 2, 'run_uid': 'r_rng2', 'paper_id': 2, 'kind': 'rng_track',
+                                        'component': 'rng_track', 'name': 'forensic_review_rng',
+                                        'status': 'complete', 'execution_status': 'completed',
+                                        'analysed_at': '2026-11-10T21:54:15+00:00'}),
+             ('findings', json.dumps([9]), {**_finding(9, 2, 50.0), 'run_id': 2, 'paper_id': 2})]
+    catalog.apply_changes(later, 2)
+    r = Repository(catalog); r.refresh()
+    got = r.findings_page({'project': 'project', 'producer': 'rng_track', 'sort': 'recent'})
+    assert [f['finding_id'] for f in got['rows']] == ['f_9', 'f_1', 'f_2', 'f_3']
+    assert got['rows'][0]['analysed_at'] == '2026-11-10T21:54:15+00:00'
+    assert got['rows'][1]['analysed_at'] == '2026-03-01'
+    # the track order is unchanged by the new field
+    track = r.findings_page({'project': 'project', 'producer': 'rng_track', 'sort': 'track'})
+    assert [f['finding_id'] for f in track['rows']] == ['f_3', 'f_2', 'f_1', 'f_9']

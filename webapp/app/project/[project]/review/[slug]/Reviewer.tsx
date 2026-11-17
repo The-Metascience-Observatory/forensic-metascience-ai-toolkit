@@ -12,8 +12,8 @@ import { citationParts, displayFirstAuthor, doiLink, pubpeerSearchLink }
 import { caughtUpHref, reviewHref, type NavRef } from "@/lib/nav";
 import { primaryJumpTarget, surfaceOf, type Target } from "@/lib/targets";
 import {
-  availableViews, canToggle, defaultView, extraPdfArtefact, parseStoredView,
-  sheetArtefact, VIEW_KEY, type Surface,
+  availableViews, BESIDE_PDF_KEY, besidePdf, canToggle, defaultView,
+  extraPdfArtefact, parseStoredView, sheetArtefact, VIEW_KEY, type Surface,
 } from "@/lib/sourceView";
 import { DraftsModal } from "./DraftsModal";
 import { IssueList } from "./IssueList";
@@ -25,6 +25,8 @@ import { useReviewKeys } from "./useReviewKeys";
 // The findings/source split is a standing preference (localStorage), unlike
 // the image item's session-scoped panes; see `useSplitPane`.
 const SPLIT_KEY = "metascience.split";
+/** The cell view / PDF split when the PDF sits beside a cell finding. */
+const PDF_SPLIT_KEY = "metascience.split.besidePdf";
 
 export function Reviewer({ project, slug, dir }: {
   project: string; slug: string; dir?: string | null;
@@ -43,6 +45,19 @@ export function Reviewer({ project, slug, dir }: {
   const [draftsOpen, setDraftsOpen] = useState(false);
   const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
                                label: "Resize findings and source panes", storage: "local" });
+  const pdfSplit = useSplitPane({ storageKey: PDF_SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
+                                  label: "Resize cell view and PDF panes", storage: "local" });
+  /** The reviewer hid the PDF beside cell findings (a standing preference). */
+  const [pdfHidden, setPdfHidden] = useState(false);
+  useEffect(() => {
+    try { setPdfHidden(window.localStorage.getItem(BESIDE_PDF_KEY) === "hidden"); } catch { /* fine */ }
+  }, []);
+  const togglePdfBeside = () => {
+    setPdfHidden((h) => {
+      try { window.localStorage.setItem(BESIDE_PDF_KEY, h ? "shown" : "hidden"); } catch { /* fine */ }
+      return !h;
+    });
+  };
   const { data, err, issues, review, at, setAt, hasMore, loadMore, loadingMore, grouped, onGrouped,
           detailError, save } = usePaperReview({ project, slug, dir, run, focusFinding });
 
@@ -107,7 +122,9 @@ export function Reviewer({ project, slug, dir }: {
     }
     if (!next) return;
     const destination = new URL(reviewHref(project, next.slug, next.dir), window.location.origin);
-    destination.searchParams.set("run", run === "latest" || !run ? "latest" : data?.issues?.source?.execution_id || run);
+    // A run ID belongs to one paper; only an execution (a batch spanning
+    // papers) means anything on the next one. Otherwise review its latest.
+    destination.searchParams.set("run", run === "latest" || !run ? "latest" : data?.issues?.source?.execution_id || "latest");
     window.location.href = destination.toString();
   }, [project, run, data?.issues?.source?.execution_id]);
 
@@ -129,7 +146,16 @@ export function Reviewer({ project, slug, dir }: {
     !!sheetArtefact(current)?.found,
     !!extraPdfArtefact(current, data.article)?.found,
   );
-  const surface: Surface = forceSurface ?? defaultView(available, viewPref);
+  const beside = besidePdf(
+    available,
+    (loc?.targets || []).some((t: any) => t.kind === "xml_cell"),
+    pdfHidden,
+  );
+  // With the PDF beside, the middle pane keeps the cell view; a jump to a PDF
+  // target lands in the PDF pane instead.
+  const surface: Surface = beside.shown && beside.main
+    ? (forceSurface && forceSurface !== "pdf" ? forceSurface : beside.main)
+    : forceSurface ?? defaultView(available, viewPref);
   const onSurface = (s: Surface) => {
     setViewPref(s);
     window.localStorage.setItem(VIEW_KEY, s);
@@ -184,8 +210,6 @@ export function Reviewer({ project, slug, dir }: {
         {/* Back to the project's paper queue (its Non-image findings tab). */}
         <a href={`/project/${encodeURIComponent(project)}?view=findings`}
            style={{ fontSize: 12, flexShrink: 0, whiteSpace: "nowrap" }}>← queue</a>
-        <button disabled={!data.nav?.prev} onClick={() => goPaper(data.nav.prev)}
-                title="Previous paper with findings (←)">‹ paper</button>
         <div style={{ minWidth: 0, flex: 1 }}>
           <div style={{ fontWeight: 600, fontSize: 13, overflow: "hidden",
                         textOverflow: "ellipsis", whiteSpace: "nowrap" }}
@@ -217,13 +241,21 @@ export function Reviewer({ project, slug, dir }: {
           <RunSelector value={run === "latest" || !run ? "latest" : data.issues.latest_run || run} options={data.issues.run_options || data.issues.available_runs.map((name:string)=>({id:name,label:name}))} onChange={setRun}/>
 
         )}
+        {beside.eligible && (
+          <button onClick={togglePdfBeside} aria-pressed={beside.shown}
+                  title={beside.shown ? "Hide the PDF pane beside the cells" : "Show the paper's PDF beside the cells"}>
+            {beside.shown ? "Hide PDF" : "Show PDF"}
+          </button>
+        )}
         <button onClick={() => goPaper(data.nav?.next ?? "caught-up")}
                 title={data.nav?.next
                   ? "Next paper with findings (→)"
                   : "No more papers with findings (→)"}
                 className="primary">
-          paper ›
+          Next paper ›
         </button>
+        <button disabled={!data.nav?.prev} onClick={() => goPaper(data.nav.prev)}
+                title="Previous paper with findings (←)">‹ Previous paper</button>
       </header>
 
       {draftsOpen && (
@@ -312,19 +344,55 @@ export function Reviewer({ project, slug, dir }: {
         </section>
         <div {...split.separatorProps} />
         <section className="split-right">
-          <SourcePane
-            project={project}
-            slug={slug}
-            dir={paper.dir}
-            article={data.article}
-            issue={current}
-            locator={loc}
-            extras={current?.extras}
-            surface={surface}
-            canSwitch={canToggle(available) && surface !== "sheet"}
-            onSurface={onSurface}
-            focusTargetId={focusTargetId}
-          />
+          {beside.shown ? (
+            <div className={`split${pdfSplit.dragging ? " dragging" : ""}`} ref={pdfSplit.containerRef}>
+              <section className="split-pane" style={{ width: `${pdfSplit.pct}%` }}>
+                <SourcePane
+                  project={project}
+                  slug={slug}
+                  dir={paper.dir}
+                  article={data.article}
+                  issue={current}
+                  locator={loc}
+                  extras={current?.extras}
+                  surface={surface}
+                  canSwitch={false}
+                  onSurface={onSurface}
+                  focusTargetId={focusTargetId}
+                />
+              </section>
+              <div {...pdfSplit.separatorProps} />
+              <section className="split-right">
+                <SourcePane
+                  project={project}
+                  slug={slug}
+                  dir={paper.dir}
+                  article={data.article}
+                  issue={current}
+                  locator={loc}
+                  extras={current?.extras}
+                  surface="pdf"
+                  canSwitch={false}
+                  onSurface={onSurface}
+                  focusTargetId={focusTargetId}
+                />
+              </section>
+            </div>
+          ) : (
+            <SourcePane
+              project={project}
+              slug={slug}
+              dir={paper.dir}
+              article={data.article}
+              issue={current}
+              locator={loc}
+              extras={current?.extras}
+              surface={surface}
+              canSwitch={canToggle(available) && surface !== "sheet"}
+              onSurface={onSurface}
+              focusTargetId={focusTargetId}
+            />
+          )}
         </section>
       </div>
     </div>

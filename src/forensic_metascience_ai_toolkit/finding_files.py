@@ -21,6 +21,7 @@ on disk a finding was *computed from*.
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 from typing import Any, Optional
 
@@ -251,6 +252,107 @@ def artefacts_from_sweep_finding(finding: dict, paper_dir: Path) -> list[dict]:
     return [_enrich(spec, paper_dir)]
 
 
+_A1 = __import__("re").compile(r"^\$?([A-Za-z]{1,3})\$?(\d{1,7})$")
+# Highlights travel URL-encoded in the /api/sheet query string, and Node refuses
+# request headers over 16 KiB (HTTP 431). Anchored ranges are therefore sent as
+# one `{row, col, row_end, col_end}` record per A1 range, expanded server-side.
+_HIGHLIGHT_URL_BUDGET = 6000
+_MAX_EXPANDED_HIGHLIGHTS = 200_000
+
+
+def _a1_cell(ref: str) -> tuple[int, int] | None:
+    """'B12' -> (12, 1): 1-based row, 0-based col (the `_highlight_index` convention)."""
+    m = _A1.match(str(ref or "").strip())
+    if not m:
+        return None
+    col = 0
+    for ch in m.group(1).upper():
+        col = col * 26 + (ord(ch) - 64)
+    return int(m.group(2)), col - 1
+
+
+def _a1_ranges(refs: list) -> list[tuple[int, int, int, int]]:
+    """A1 refs and ranges ('B2', 'B2:B40', 'A1:C3') as (row, col, row_end, col_end):
+    1-based rows, 0-based cols, inclusive."""
+    out = []
+    for ref in refs or []:
+        if not isinstance(ref, str):
+            continue
+        a, _, b = ref.partition(":")
+        lo, hi = _a1_cell(a), _a1_cell(b or a)
+        if lo is None or hi is None:
+            continue
+        out.append((min(lo[0], hi[0]), min(lo[1], hi[1]), max(lo[0], hi[0]), max(lo[1], hi[1])))
+    return out
+
+
+def _encoded_len(rec: dict) -> int:
+    from urllib.parse import quote_plus
+    return len(quote_plus(json.dumps(rec, separators=(",", ":")))) + 3
+
+
+def artefacts_from_sheet_anchors(anchors: Any, paper_dir: Path) -> list[dict]:
+    """A detector's spreadsheet records as artefacts the sheet pane opens.
+
+    A separately run detector (rngdetect's `rng_track`) names the cells of a
+    supplementary spreadsheet with the findings-v2 `table_cell` anchor
+    `{file: <paper-relative path>, sheet?, cells: ["B2:B41", ...], label?,
+    approximate?}`: no `table_num`, a `file` whose suffix is a sheet kind,
+    A1 references. One artefact per (file, sheet); each A1 range becomes one
+    `{row (1-based), col (0-based), row_end, col_end, sheet}` record that
+    `read_sheet` expands, and `n_cells` counts the cells they cover.
+    XML table anchors (`table_num`/`row`/`col`) are left to the locator."""
+    if not isinstance(anchors, list):
+        return []
+    recs = [a for a in anchors if isinstance(a, dict) and a.get("kind") == "table_cell"
+            and a.get("table_num") is None and isinstance(a.get("file"), str)
+            and kind_of(a["file"]) in ("xlsx", "xls", "csv", "tsv")
+            and isinstance(a.get("cells"), list)]
+    if not recs:
+        return []
+    groups: dict[tuple, list[dict]] = {}
+    for a in recs:
+        groups.setdefault((a["file"], a.get("sheet") or None), []).append(a)
+    out = []
+    for (file, sheet), group in groups.items():
+        cells: list[dict] = []
+        used = n_cells = 0
+        for a in group:
+            for r, c, r2, c2 in _a1_ranges(a["cells"]):
+                rec = {"row": r, "col": c}
+                if (r2, c2) != (r, c):
+                    rec.update(row_end=r2, col_end=c2)
+                if sheet:
+                    rec["sheet"] = sheet
+                size = _encoded_len(rec)
+                if used + size > _HIGHLIGHT_URL_BUDGET:
+                    break
+                used += size
+                n_cells += (r2 - r + 1) * (c2 - c + 1)
+                cells.append(rec)
+        spec = relativize(file, paper_dir)
+        spec.update({"role": "supplement", "method": "producer_table_cell",
+                     "labels": [str(a.get("label")) for a in group if a.get("label")],
+                     "approximate": any(bool(a.get("approximate")) for a in group)})
+        if sheet:
+            spec["sheet"] = sheet
+        if cells:
+            spec["cells"] = cells
+            spec["n_cells"] = n_cells
+        out.append(_enrich(spec, paper_dir))
+    return out
+
+
+def stamp_sheet_artefacts(issues: list, paper_dir: Path) -> list:
+    """Give each issue without artefacts the spreadsheet its anchors name. In place."""
+    for issue in issues or []:
+        if isinstance(issue, dict) and not issue.get("artefacts") and issue.get("anchors"):
+            arts = artefacts_from_sheet_anchors(issue["anchors"], paper_dir)
+            if arts:
+                issue["artefacts"] = arts
+    return issues
+
+
 def annotate_sweep_findings(findings_obj: Any, paper_dir: Path) -> Any:
     """Stamp `artefacts` onto sweep findings that name a file. In place."""
     if isinstance(findings_obj, dict):
@@ -294,6 +396,16 @@ def _highlight_index(highlights: list | None, sheet: str | None) -> set[tuple[in
         if h.get("sheet") and sheet and str(h["sheet"]) != str(sheet):
             continue
         r, c = h.get("row"), h.get("col")
+        r2, c2 = h.get("row_end"), h.get("col_end")
+        if (isinstance(r, int) and isinstance(c, int) and isinstance(r2, int)
+                and isinstance(c2, int)):
+            # an inclusive range, same conventions as a single cell
+            for rr in range(r, max(r, r2) + 1):
+                for cc in range(c, max(c, c2) + 1):
+                    if len(out) >= _MAX_EXPANDED_HIGHLIGHTS:
+                        return out
+                    out.add((rr - 1 if rr >= 1 else rr, cc))
+            continue
         if isinstance(r, int) and isinstance(c, int):
             # tool cells are 1-based rows (Excel); col may be 0- or 1-based.
             # raw_duplication `_cell_ref` uses 1-based row and 0-based col

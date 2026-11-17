@@ -23,7 +23,7 @@ import {
 } from "../lib/affine.ts";
 import {
   availableViews, canToggle, canZoomIn, canZoomOut, defaultView,
-  parseStoredView, parseStoredZoom, unanchoredReason, zoomIn, zoomLabel,
+  besidePdf, parseStoredView, parseStoredZoom, unanchoredReason, zoomIn, zoomLabel,
   zoomOut, ZOOM_FIT, ZOOM_STEPS,
 } from "../lib/sourceView.ts";
 import { doiLink, normalizeDoi, pubpeerSearchLink } from "../lib/citation.ts";
@@ -347,7 +347,7 @@ test("smoke", async () => {
 
   const bySev9 = [
     paper({ paper_id: "low", dir: "low", worst_severity_9: 1 }),
-    paper({ paper_id: "top", dir: "top", worst_severity_9: 9 }),
+    paper({ paper_id: "top", dir: "top", worst_severity_9: 7 }),
     paper({ paper_id: "mid", dir: "mid", worst_severity_9: 4 }),
     paper({ paper_id: "none", dir: "none", worst_severity_9: null }),
   ];
@@ -870,3 +870,20 @@ test("smoke", async () => {
   assert.equal(byteRange("bytes=-", 1000), false);
   assert.equal(byteRange("bytes=2-1", 1000), false);
 });
+
+test("besidePdf: a third PDF pane beside cell findings only", () => {
+  // spreadsheet finding with a PDF: sheet in the middle, PDF beside it
+  assert.deepEqual(besidePdf(["pdf", "xml", "sheet"], false, false),
+                   { eligible: true, shown: true, main: "sheet" });
+  // XML table-cell finding with a PDF
+  assert.deepEqual(besidePdf(["pdf", "xml"], true, false),
+                   { eligible: true, shown: true, main: "xml" });
+  // hidden by the reviewer: still eligible, so the "show" button is offered
+  assert.deepEqual(besidePdf(["pdf", "xml"], true, true),
+                   { eligible: true, shown: false, main: "xml" });
+  // a text finding keeps the two-pane layout
+  assert.equal(besidePdf(["pdf", "xml"], false, false).eligible, false);
+  // no PDF, nothing to put beside
+  assert.equal(besidePdf(["xml", "sheet"], false, false).eligible, false);
+});
+

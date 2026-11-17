@@ -18,18 +18,28 @@ type Row = {
   track_basis?: { tier?: number; excess_bits?: number; log10_chance?: number; generator?: string;
                   seed?: number; n_values?: number; table?: string; column?: string; page?: number } | null;
   reviews?: { decision?: { decision?: string; reviewer?: string } | null; conflict?: boolean } | null;
+  analysed_at?: string | null;
 };
 
-async function load(project: string, producer: string, offset: number, decided: string) {
+async function load(project: string, producer: string, offset: number, decided: string, order: string) {
   const { workbench } = await import("@/lib/workbench");
   try {
     return await workbench("findings", {
-      project, producer, sort: "track", offset, limit: 50,
+      project, producer, sort: order === "recent" ? "recent" : "track", offset, limit: 50,
       ...(decided === "0" || decided === "1" ? { decided } : {}),
     }) as { rows: Row[]; pagination: { total: number; next_offset: number | null; offset: number } };
   } catch (e) {
     return { error: String(e) };
   }
+}
+
+/** The analysing run's date and time, in the server's local zone (ISO text when unparseable). */
+function when(iso?: string | null): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 
 function where(b: Row["track_basis"]): string {
@@ -43,25 +53,28 @@ function where(b: Row["track_basis"]): string {
 
 export default async function DetectorQueuePage(props: {
   params: Promise<{ project: string; producer: string }>;
-  searchParams: Promise<{ offset?: string; decided?: string }>;
+  searchParams: Promise<{ offset?: string; decided?: string; order?: string }>;
 }) {
   const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
   const project = decodeURIComponent(params.project);
   const producer = decodeURIComponent(params.producer);
   const offset = Math.max(0, Number(searchParams?.offset) || 0);
   const decided = searchParams?.decided || "";
-  const result = await load(project, producer, offset, decided);
-  const q = (o: number, d = decided) => `?offset=${o}${d ? `&decided=${d}` : ""}`;
+  const order = searchParams?.order === "recent" ? "recent" : "";
+  const result = await load(project, producer, offset, decided, order);
+  const q = (o: number, d = decided, r = order) => `?offset=${o}${d ? `&decided=${d}` : ""}${r ? `&order=${r}` : ""}`;
   return (
     <main style={{ padding: 24, maxWidth: 1200 }}>
       <p><Link href={`/project/${encodeURIComponent(project)}`}>{project}</Link></p>
       <h1 style={{ fontSize: 20 }}>{displayName(producer)} — findings queue</h1>
       <p className="muted" style={{ fontSize: 12 }}>
         Every kept problem row filed by this detector in the latest runs, strongest first
-        (tier, then evidence beyond the search size). A quarantined row is a lead to check, not a
-        finding of record. Filter:{" "}
+        (tier, then evidence beyond the search size) or newest first. A quarantined row is a lead
+        to check, not a finding of record. Filter:{" "}
         <Link href={q(0, "")}>all</Link> · <Link href={q(0, "0")}>undecided</Link> ·{" "}
-        <Link href={q(0, "1")}>decided</Link>
+        <Link href={q(0, "1")}>decided</Link>. Order:{" "}
+        {order ? <Link href={q(0, decided, "")}>strongest first</Link> : <b>strongest first</b>} ·{" "}
+        {order ? <b>newest first</b> : <Link href={q(0, decided, "recent")}>newest first</Link>}
       </p>
       {"error" in result ? (
         <p style={{ color: "var(--sev-impossible)" }}>{result.error}</p>
@@ -75,7 +88,7 @@ export default async function DetectorQueuePage(props: {
             <thead>
               <tr>
                 <th>tier</th><th>bits</th><th>generator · seed</th><th>where</th>
-                <th>finding</th><th>paper</th><th>decision</th>
+                <th>finding</th><th>paper</th><th title="When the run that filed this row analysed the paper">found</th><th>decision</th>
               </tr>
             </thead>
             <tbody>
@@ -104,6 +117,7 @@ export default async function DetectorQueuePage(props: {
                         {f.journal ? ` · ${f.journal}` : ""}{f.year ? ` ${f.year}` : ""}
                       </span>
                     </td>
+                    <td className="mono" style={{ whiteSpace: "nowrap" }} title={f.analysed_at || undefined}>{when(f.analysed_at)}</td>
                     <td>
                       {f.reviews?.conflict ? <span className="pill">reviewers disagree</span>
                         : d ? <span className="pill">{d.replace(/_/g, " ")}</span>

@@ -47,6 +47,8 @@ export type Artefact = {
   relpath?: string;
   sheet?: string | null;
   cells?: unknown[];
+  /** Cells covered when `cells` holds ranges (`row_end`/`col_end`). */
+  n_cells?: number;
   found?: boolean;
   confidence?: string;
   [key: string]: unknown;

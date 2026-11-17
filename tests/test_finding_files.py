@@ -1,3 +1,4 @@
+import json
 """Portable finding-file paths: never absolute, never outside the paper dir."""
 from pathlib import Path
 
@@ -148,6 +149,84 @@ def _is_inside(root: Path, target: Path) -> bool:
 
 def _is_outside(root: Path, target: Path) -> bool:
     return not _is_inside(root, target)
+
+
+# --- detector spreadsheet anchors (rng_track `table_cell` with a sheet file) ---------
+
+def _rng_sheet_paper(tmp_path):
+    import openpyxl
+    paper = tmp_path / "10.1--rng"
+    (paper / "supplementary").mkdir(parents=True)
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Figure 3e"
+    ws.append(["X", "Y"])
+    for i in range(40):
+        ws.append([i * 0.1, i * 0.2])
+    wb.save(paper / "supplementary" / "S4.xlsx")
+    return paper
+
+
+def test_sheet_anchors_become_an_openable_artefact(tmp_path):
+    from forensic_metascience_ai_toolkit.finding_files import artefacts_from_sheet_anchors
+    paper = _rng_sheet_paper(tmp_path)
+    anchors = [
+        {"kind": "table_cell", "file": "supplementary/S4.xlsx", "sheet": "Figure 3e",
+         "cells": ["A2:A31"], "label": "X", "approximate": False},
+        {"kind": "table_cell", "file": "supplementary/S4.xlsx", "sheet": "Figure 3e",
+         "cells": ["B2:B31"], "label": "Y", "approximate": False},
+        {"kind": "table_cell", "table_num": 2, "row": 3, "col": 1},      # an XML cell: not ours
+    ]
+    (art,) = artefacts_from_sheet_anchors(anchors, paper)
+    assert art["found"] and art["relpath"] == "supplementary/S4.xlsx" and art["kind"] == "xlsx"
+    assert art["sheet"] == "Figure 3e" and art["confidence"] == "cells"
+    assert art["n_cells"] == 60
+    assert art["cells"] == [
+        {"row": 2, "col": 0, "row_end": 31, "col_end": 0, "sheet": "Figure 3e"},
+        {"row": 2, "col": 1, "row_end": 31, "col_end": 1, "sheet": "Figure 3e"}]
+    grid = read_sheet(paper / art["relpath"], art["sheet"], art["cells"])
+    marks = {(h["r"], h["c"]) for h in grid["highlights"]}
+    assert (1, 0) in marks and (30, 1) in marks and (0, 0) not in marks      # header unmarked
+    assert grid["rows"][1][0] == "0" or grid["rows"][1][0].startswith("0")
+
+
+def test_sheet_anchor_ranges_highlight_every_cell_in_a_short_url(tmp_path):
+    from urllib.parse import urlencode
+    from forensic_metascience_ai_toolkit.finding_files import artefacts_from_sheet_anchors
+    paper = _rng_sheet_paper(tmp_path)
+    anchors = [{"kind": "table_cell", "file": "supplementary/S4.xlsx", "sheet": "Figure 3e",
+                "cells": [f"{c}2:{c}41"]} for c in "ABC"]
+    (art,) = artefacts_from_sheet_anchors(anchors, paper)
+    assert art["n_cells"] == 120 and len(art["cells"]) == 3
+    # the pane sends them URL-encoded; Node rejects headers over 16 KiB (HTTP 431)
+    assert len(urlencode({"highlights": json.dumps(art["cells"], separators=(",", ":"))})) < 8000
+    grid = read_sheet(paper / art["relpath"], art["sheet"], art["cells"])
+    marks = {(h["r"], h["c"]) for h in grid["highlights"]}
+    assert {(r, c) for r in range(1, 41) for c in range(3)} <= marks and (0, 0) not in marks
+
+
+def test_many_disjoint_ranges_stay_within_the_url_budget(tmp_path):
+    from urllib.parse import urlencode
+    from forensic_metascience_ai_toolkit.finding_files import artefacts_from_sheet_anchors
+    paper = _rng_sheet_paper(tmp_path)
+    anchors = [{"kind": "table_cell", "file": "supplementary/S4.xlsx", "sheet": "Figure 3e",
+                "cells": [f"A{r}" for r in range(2, 2000, 2)]}]
+    (art,) = artefacts_from_sheet_anchors(anchors, paper)
+    assert 20 < len(art["cells"]) < 999 and art["n_cells"] == len(art["cells"])
+    assert len(urlencode({"highlights": json.dumps(art["cells"], separators=(",", ":"))})) < 8000
+
+def test_sheet_anchor_for_a_missing_file_is_not_found(tmp_path):
+    from forensic_metascience_ai_toolkit.finding_files import (
+        artefacts_from_sheet_anchors, stamp_sheet_artefacts)
+    paper = tmp_path / "p"
+    paper.mkdir()
+    (art,) = artefacts_from_sheet_anchors(
+        [{"kind": "table_cell", "file": "supplementary/gone.csv", "cells": ["B2:B9"]}], paper)
+    assert art["found"] is False and art["kind"] == "csv"
+    issues = [{"anchors": [{"kind": "page_bbox", "page": 1}], "artefacts": []},
+              {"anchors": [{"kind": "table_cell", "file": "x.csv", "cells": ["A1"]}], "artefacts": []}]
+    stamp_sheet_artefacts(issues, paper)
+    assert issues[0]["artefacts"] == [] and issues[1]["artefacts"][0]["basename"] == "x.csv"
 
 
 def test_sheet_preview_refuses_a_zip_bomb_and_bounds_a_giant_csv_line(tmp_path):

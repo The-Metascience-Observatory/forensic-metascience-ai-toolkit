@@ -527,7 +527,7 @@ def issue_sort_key(issue: dict) -> tuple:
     sev_rank = SEVERITY_RANK.get(sev, 99)
     nine = issue.get("severity_9")
     if isinstance(nine, int):
-        # Map the 1-9 ladder onto the 5-enum rank scale so v2 analyst rows
+        # Map the 1-7 ladder onto the 5-enum rank scale so v2 analyst rows
         # interleave honestly with the legacy-ranked image/text tracks
         # (the inverse of severity9.FIVE_TO_NINE's anchor points).
         sev_rank = 0 if nine >= 5 else {4: 1, 3: 2, 2: 3, 1: 4}[nine]
@@ -606,6 +606,8 @@ def collect_issues(paper_dir: Path, run: str | None = None) -> dict:
             numeric, headline, run = db["issues"], db["headline"], db["run"]
             available = db["available_runs"]
             source["kind"] = "database"
+    from .finding_files import stamp_sheet_artefacts
+    stamp_sheet_artefacts(numeric, paper_dir)
     image = _image_issues(paper_dir)
     text = _text_issues(paper_dir, rdirs)
     issues = sort_issues(list(numeric) + image + text)

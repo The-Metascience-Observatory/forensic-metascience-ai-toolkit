@@ -160,7 +160,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
   useEffect(() => {
     try {
       const n = Number(window.localStorage.getItem(HIDE_KEY));
-      if (Number.isFinite(n) && n >= 0 && n <= 9) setHideBelow(n);
+      if (Number.isFinite(n) && n >= 0 && n <= 7) setHideBelow(n);
     } catch { /* storage may be unavailable */ }
   }, []);
   const setHide = (n: number) => {
@@ -302,7 +302,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
                 </span>
               ) : legacyToNine(iss.severity) !== null ? (
                 <span className="pill"
-                      title="mapped from a legacy 5-level run — not an assigned 1–9"
+                      title="mapped from a legacy 5-level run — not an assigned 1–7"
                       style={{ color: SEV_COLOR[iss.severity ?? ""] || "var(--muted)" }}>
                   {sev9Label(legacyToNine(iss.severity) as number)} (legacy)
                 </span>
@@ -364,7 +364,7 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
                   : ""}
                 {iss.artefacts[0].confidence === "cells"
                   && Array.isArray(iss.artefacts[0].cells)
-                  ? ` · ${iss.artefacts[0].cells.length} cell(s)`
+                  ? ` · ${iss.artefacts[0].n_cells ?? iss.artefacts[0].cells.length} cell(s)`
                   : ""}
               </p>
             )}

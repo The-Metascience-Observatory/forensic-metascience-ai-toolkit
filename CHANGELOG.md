@@ -9,6 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — "EXPORTED" badge on image findings
+
+- An image finding whose paper is already on the website's image-findings page
+  shows a green EXPORTED badge in the top bar, next to the finding id (hover
+  names the website entry). It matches the paper's DOI, or its folder name read
+  as a DOI, against the local website checkout's `findings.json`, read through a
+  new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
+
 ## [Unreleased] — 2026-11-17 — infinite scroll on a project's papers
 
 - **The project papers table scrolls instead of paging.** The first 50

@@ -36,6 +36,7 @@ function SummaryFigureLauncher({ project, item, boxes, sizes }: { project: strin
   </>);
 }
 import { AuthorEmails } from "./AuthorEmails";
+import { ExportedBadge } from "./ExportedBadge";
 import { MissedDuplicationPanel, missedBoxes, regionFor, type MissedDraft } from "./MissedDuplication";
 import { PaperReference, PaperReferences } from "./PaperReferences";
 import type { ImagePdfBox } from "@/lib/imagePdfBoxes";
@@ -157,6 +158,7 @@ export function ItemLayout({
         <div className="mono" style={{ fontSize: 12, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>
           {item.id}
         </div>
+        <ExportedBadge item={item} />
         {pubpeer && (
           <a href={pubpeer.href} target="_blank" rel="noreferrer"
              title={pubpeer.label === "PubPeer page" ? "Open this paper's PubPeer discussion" : "Search PubPeer for this paper (by DOI, or by title when it has none)"}

@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 import { errMsg } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import { guard } from "@/lib/routeGuard";
-import { pyJson, pyModuleJson, repoRoot } from "@/lib/python";
+import { pyJson, pyModuleJson } from "@/lib/python";
+import { websiteDir } from "@/lib/websiteDir";
 import { workbench } from "@/lib/workbench";
 import { OVERRIDE_LOG, overrideConfirmed, overrideLine } from "@/lib/embargoOverride";
 import { FINDINGS_JSON, IMAGE_DIR, IMAGE_URL, citationFrom, findingId, normalisePubpeerUrl, pngSize,
@@ -15,25 +16,6 @@ export const dynamic = "force-dynamic";
 
 const MAX_PNG_BYTES = 25 * 1024 * 1024;
 const EMBARGO_MARKER = "EMBARGO.json";
-
-/** The website checkout: METASCIENCE_WEBSITE_DIR, else the nearest
- * `website/metascience-observatory-website` (or `metascience-observatory-website`)
- * holding findings.json beside this repo or beside any folder above it (the
- * toolkit is in AA_forensic_metascience/, the website in website/). Falls back to the sibling path so the
- * error names a concrete location. */
-const WEBSITE_REPO = "metascience-observatory-website";
-
-function websiteDir(): string {
-  const env = (process.env.METASCIENCE_WEBSITE_DIR || "").trim();
-  if (env) return path.resolve(env);
-  const sibling = path.resolve(repoRoot(), "..", "..", "website", WEBSITE_REPO);
-  for (let d = path.resolve(repoRoot(), ".."); ; d = path.dirname(d)) {
-    for (const candidate of [path.join(d, "website", WEBSITE_REPO), path.join(d, WEBSITE_REPO)]) {
-      if (fs.existsSync(path.join(candidate, FINDINGS_JSON))) return candidate;
-    }
-    if (path.dirname(d) === d) return sibling;
-  }
-}
 
 /** The first EMBARGO.json at or above the paper folder. A corpus under a
  * selection embargo carries one at its root, and nothing from it may be
@@ -47,6 +29,22 @@ function embargoMarker(dir: string): string | null {
 }
 
 const fail = (error: string, status = 400) => NextResponse.json({ error }, { status });
+
+/** The DOIs already on the website's image-findings page, lowercased, with
+ *  each entry's id: the image finding page marks a paper EXPORTED from this.
+ *  A missing checkout is an empty list plus the reason, never an error page. */
+export async function GET(req: Request) {
+  const refused = await guard(req); if (refused) return refused;
+  const findingsPath = path.join(websiteDir(), FINDINGS_JSON);
+  try {
+    const findings = JSON.parse(fs.readFileSync(findingsPath, "utf8"));
+    if (!Array.isArray(findings)) throw new Error("not a list");
+    const exported = findings.filter(f => f && f.doi).map(f => ({ doi: String(f.doi).toLowerCase(), id: String(f.id || "") }));
+    return NextResponse.json({ exported });
+  } catch (e) {
+    return NextResponse.json({ exported: [], error: `Could not read ${findingsPath}: ${errMsg(e)}` });
+  }
+}
 
 /** Add a PubPeer-reported image finding to the website's image-findings page:
  *  the summary figure PNG into public/assets, one entry appended to

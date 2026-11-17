@@ -466,10 +466,15 @@ table.grid tr:hover td.review-go { background: var(--hover); }
 
 /* Landing-page project deletion: destructive, so visibly different. */
 button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible); }
+/* Right-aligned, under the Delete… buttons (last column), with the
+   Yes/No buttons at its bottom-right, so confirming needs no trip across
+   the screen. */
 .delete-plan {
-  margin-top: 14px; padding: 12px 14px; max-width: 900px;
+  margin: 14px 0 0 auto; padding: 12px 14px; max-width: 900px;
   border: 1px solid var(--sev-impossible); border-radius: 6px;
+  display: flex; flex-direction: column;
 }
+.delete-plan > :last-child { align-self: flex-end; }
 .delete-progress {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000;
   background: var(--bg); border-top: 1px solid var(--border, #8884);

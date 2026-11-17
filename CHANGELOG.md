@@ -9,6 +9,19 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — delete selected projects; tidier delete notices
+
+- Projects page: with projects ticked, "Delete selected…" sits beside "Archive
+  selected". One confirmation lists every selected project's folders with
+  file counts and sizes (and a total); "Yes, delete N" then starts one
+  background delete per project. A refused project is listed and skipped; a
+  project inside another selected one is left to its parent's delete
+  (`webapp/app/BulkDelete.tsx`).
+- The delete confirmation box sits at the right edge, under the Delete…
+  buttons, with Yes/No at its bottom-right.
+- The delete progress lines at the bottom clear themselves 2 seconds after a
+  deletion finishes; a failed deletion stays until closed.
+
 ## [Unreleased] — 2026-11-17 — website and PubPeer badges on image findings
 
 - An image finding whose paper is already on the website's image-findings page

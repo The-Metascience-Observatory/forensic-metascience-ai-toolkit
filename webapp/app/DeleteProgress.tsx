@@ -7,6 +7,8 @@ import { DELETE_STARTED, tqdmLine, type DeleteJob } from "@/lib/projectDelete";
 import { useMe } from "@/lib/useMe";
 
 const DISMISSED = "metascience.deleteJobs.dismissed";
+/** How long a finished deletion's line stays before it clears itself. */
+export const AUTO_DISMISS_MS = 2000;
 const readDismissed = (): string[] => {
   try { return JSON.parse(localStorage.getItem(DISMISSED) || "[]"); } catch { return []; }
 };
@@ -61,12 +63,23 @@ function DeleteProgressBar() {
     return () => { window.removeEventListener(DELETE_STARTED, start); if (timer.current) clearTimeout(timer.current); };
   }, [poll]);
 
-  const dismiss = (id: string) => {
-    const next = [...dismissed, id].slice(-50);
-    setDismissed(next);
-    try { localStorage.setItem(DISMISSED, JSON.stringify(next)); } catch { /* per-viewer only */ }
-  };
+  const dismiss = useCallback((id: string) => {
+    setDismissed(cur => {
+      if (cur.includes(id)) return cur;
+      const next = [...cur, id].slice(-50);
+      try { localStorage.setItem(DISMISSED, JSON.stringify(next)); } catch { /* per-viewer only */ }
+      return next;
+    });
+  }, []);
   const shown = jobs.filter(j => !dismissed.includes(j.id));
+  // A finished deletion clears itself after AUTO_DISMISS_MS; a failed one
+  // stays until closed, so its error is read.
+  const doneIds = shown.filter(j => j.state === "done").map(j => j.id).join(" ");
+  useEffect(() => {
+    if (!doneIds) return;
+    const t = setTimeout(() => doneIds.split(" ").forEach(dismiss), AUTO_DISMISS_MS);
+    return () => clearTimeout(t);
+  }, [doneIds, dismiss]);
   if (!shown.length) return null;
   return (
     <div className="delete-progress" role="status" aria-live="polite">

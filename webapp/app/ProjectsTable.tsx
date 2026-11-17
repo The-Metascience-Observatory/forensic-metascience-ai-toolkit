@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { DELETE_STARTED } from "@/lib/projectDelete";
+import { BulkDelete } from "./BulkDelete";
 
 const columns = [
   { key: "n_papers", label: "Papers" },
@@ -80,6 +81,8 @@ export function ProjectsTable({ projects, canManage = true }: { projects: Projec
   const [archiveOverride, setArchiveOverride] = useState<Record<string, boolean>>({});
   const isArchived = (p: ProjectSummary) => archiveOverride[p.name] ?? Boolean(p.archived);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  // "Delete selected": the names whose combined delete plan is shown.
+  const [bulkDelete, setBulkDelete] = useState<string[] | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const live = projects.filter(p => !isArchived(p)), archived = projects.filter(isArchived);
   const active = live.filter(p => !isDone(p)), done = live.filter(isDone);
@@ -209,8 +212,17 @@ export function ProjectsTable({ projects, canManage = true }: { projects: Projec
         <p style={{ marginTop: 12, display: "flex", gap: 8, alignItems: "center" }}>
           <span>{selected.size} selected</span>
           <button type="button" onClick={() => setArchived([...selected], true)}>Archive selected</button>
+          <button type="button" className="danger" onClick={() => setBulkDelete([...selected])}>
+            Delete selected…
+          </button>
           <button type="button" onClick={() => setSelected(new Set())}>Clear</button>
         </p>
+      )}
+      {bulkDelete && (
+        <BulkDelete names={bulkDelete} onClose={(started) => {
+          setBulkDelete(null);
+          if (started) setSelected(new Set());
+        }} />
       )}
       <Table projects={active} actions={actions} select={canManage ? { selected, setSelected } : undefined} />
       {done.length > 0 && (

@@ -9,6 +9,15 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — infinite scroll on a project's papers
+
+- **The project papers table scrolls instead of paging.** The first 50
+  papers load at once and the next 50 load as the reader nears the bottom,
+  up to 1,000; past that the page says so and points to search or sort. A
+  "Load 50 more" button stays as the fallback. The 30-second refresh re-reads
+  every loaded row together, so the list never mixes two revisions, and a new
+  search or sort starts from the top (`PapersPage.tsx`).
+
 ## [Unreleased] — 2026-11-11 — archive projects
 
 - **RNG findings drop two repeated pills.** On a seeded-RNG paper every

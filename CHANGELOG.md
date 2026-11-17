@@ -9,6 +9,11 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
+## [Unreleased] — 2026-11-17 — RNG "Observed vs generated" closed by default
+
+- On a seeded-RNG finding, the "Observed vs generated" values table starts
+  closed; its summary line (count, coordinates, max |Δ|) stays in view.
+
 ## [Unreleased] — 2026-11-17 — "← queue" first in the top bar
 
 - Image finding pages: "← queue" is the first thing in the top bar, at the

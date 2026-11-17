@@ -113,8 +113,9 @@ export function RngEvidence({ issue }: { issue: Issue }) {
           <FactList facts={detail} />
         </details>
       )}
+      {/* Closed by default: the summary line carries the agreement; open it for the values. */}
       {pairs.length > 0 && (
-        <details open>
+        <details data-rng-values>
           <summary>
             Observed vs generated: {pairs.length} shown
             {inputs?.n_values ? ` of ${inputs.n_values}` : ""}

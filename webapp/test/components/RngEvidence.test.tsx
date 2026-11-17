@@ -76,3 +76,11 @@ test("the match statistics sit under a closed Details dropdown; the generator st
   const outside = [...container.querySelectorAll("section > dl > div > dt")].map((d) => d.textContent);
   expect(outside).toEqual(["generator"]);
 });
+
+test("observed vs generated starts closed; its summary still gives the count and agreement", () => {
+  const { container } = render(<RngEvidence issue={tableIssue} />);
+  const values = container.querySelector("details[data-rng-values]") as HTMLDetailsElement;
+  expect(values).not.toBeNull();
+  expect(values.open).toBe(false);
+  expect(values.querySelector("summary")!.textContent).toMatch(/^Observed vs generated: \d+ shown/);
+});

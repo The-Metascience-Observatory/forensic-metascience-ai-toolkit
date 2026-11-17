@@ -6,7 +6,9 @@ import { DELETE_STARTED } from "@/lib/projectDelete";
 /** What `project_delete_plan` returns for one project (only the fields read here). */
 type Plan = {
   project: string;
-  folders: { path: string; files: number; bytes: number; measured: boolean }[];
+  folders: { path: string; files: number; bytes: number; measured: boolean; registered_as?: string | null }[];
+  /** Registered folders that are symlinks: each is removed after its target. */
+  links?: string[];
   refused: { path: string; reason: string }[];
   also_removes: string[];
   can_delete: boolean;
@@ -101,6 +103,16 @@ export function BulkDelete({ names, onClose }: { names: string[]; onClose: (star
                     <li key={f.path}>
                       <span className="mono">{f.path}</span>{" "}
                       <span className="muted">— {f.measured ? "" : "at least "}{f.files.toLocaleString()} files, {bytes(f.bytes)}</span>
+                      {f.registered_as && (p.links || []).includes(f.registered_as) && (
+                        <div className="muted" data-symlink>
+                          registered through the symlink <span className="mono">{f.registered_as}</span>, which is removed too
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                  {(p.links || []).filter((l) => !p.folders.some((f) => f.registered_as === l)).map((l) => (
+                    <li key={l} className="muted" data-symlink>
+                      symlink <span className="mono">{l}</span>, removed too
                     </li>
                   ))}
                 </ul>

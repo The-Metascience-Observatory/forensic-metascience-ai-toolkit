@@ -171,17 +171,25 @@ def delete_plan(catalog, project, protected=()):
                 'refused': gate + [{'path': f'{len(roots)} registered folders',
                              'reason': f'this name is registered at {len(roots)} separate folders, '
                                        'which is a name collision, not one project; delete them by hand'}]}
-    others = [r for r in catalog.roots() if r['project'] != project]
-    folders, refused, missing = [], [], []
+    # Other projects' folders by their REAL location: one registered through a
+    # symlink still counts as inside the folder it points into.
+    others = [{**r, 'path': str(Path(r['path']).resolve())} for r in catalog.roots() if r['project'] != project]
+    folders, refused, missing, links = [], [], [], []
     deadline = time.monotonic() + SIZE_BUDGET_SECONDS
     for root in roots:
         raw = Path(root['path'])
+        if raw.is_symlink():
+            # The link goes, and so does the folder it points at, which must pass
+            # every check below on its real path. A dangling link just goes.
+            links.append(str(raw))
         if not raw.exists():
-            missing.append(str(raw))
+            if not raw.is_symlink():
+                missing.append(str(raw))
             continue
         path = raw.resolve()
-        if raw.is_symlink() or str(path) != str(raw):
-            refused.append({'path': str(raw), 'reason': 'the registered folder is a symlink'})
+        seen = next((f for f in folders if f['path'] == str(path)), None)
+        if seen is not None:  # the same folder registered again, through a link
+            seen['registered_as'] = seen['registered_as'] or str(raw)
             continue
         if not path.is_dir():
             refused.append({'path': str(raw), 'reason': 'not a directory'})
@@ -197,7 +205,8 @@ def delete_plan(catalog, project, protected=()):
         within = sorted({o['project'] for o in others if _inside(path, Path(o['path'])) and Path(o['path']) != path})
         files, size, complete = _measure(path, deadline)
         folders.append({'path': str(path), 'files': files, 'bytes': size, 'measured': complete,
-                        'also_removes': contained, 'inside_project': within})
+                        'also_removes': contained, 'inside_project': within,
+                        'registered_as': str(raw) if str(raw) != str(path) else None})
     gone = [Path(f['path']) for f in folders]
     by_project = {}
     for o in others:
@@ -213,8 +222,8 @@ def delete_plan(catalog, project, protected=()):
     mapped = [path for _p, _d, _b, path in catalog.local_papers(project)
               if path and not any(_inside(Path(path), g) for g in gone)]
     return {'project': project, 'folders': folders, 'refused': refused, 'missing': missing,
-            'kept_mapped_papers': len(mapped), 'also_removes': also, 'partly_affects': partly,
-            'can_delete': not refused}
+            'links': links, 'kept_mapped_papers': len(mapped), 'also_removes': also,
+            'partly_affects': partly, 'can_delete': not refused}
 
 
 def _count(folders):
@@ -266,7 +275,7 @@ def _finalize(catalog, project, plan, removed):
             catalog.db.execute('delete from papers_local where project=?', [name])
         # A partly affected project keeps its other folders, not the removed ones.
         for name, root in catalog.db.execute('select project,path from roots').fetchall():
-            if any(_inside(Path(root), g) for g in gone):
+            if any(_inside(Path(root).resolve(), g) for g in gone):
                 catalog.db.execute('delete from roots where project=? and path=?', [name, root])
     return stamp
 
@@ -287,6 +296,16 @@ def _run(catalog, job, plan):
         job['state'] = 'deleting'
         job['deleting_since'] = time.time()
         removed, failed = _remove(folders, job)
+        if not failed:
+            # Only once the targets are gone: a link to a half-deleted folder
+            # is how the reviewer finds what is left.
+            for link in plan.get('links', []):
+                try:
+                    os.unlink(link)
+                except FileNotFoundError:
+                    pass
+                except OSError as exc:
+                    failed.append({'path': link, 'reason': f'{type(exc).__name__}: {exc}'})
         job.update(removed=removed, failed=failed)
         if failed:
             # Nothing is hidden: a project whose files are half gone must stay visible.

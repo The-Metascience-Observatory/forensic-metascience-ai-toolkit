@@ -101,13 +101,53 @@ def test_protected_and_collection_folders_are_refused(setup, monkeypatch):
     assert data.is_dir() and (data / 'other_corpus' / '10.1--b').is_dir()
 
 
-def test_symlinked_root_is_refused(setup, tmp_path):
+def test_symlinked_root_deletes_the_link_and_its_target(setup, tmp_path):
+    s, c, data = setup
+    target = tmp_path / 'elsewhere' / 'linked_corpus'
+    (target / '10.1--c').mkdir(parents=True)
+    (target / '10.1--c' / 'paper.pdf').write_bytes(b'%PDF')
+    link = tmp_path / 'links' / 'linked'
+    link.parent.mkdir()
+    link.symlink_to(target)
+    # Registered twice, as the dialog showed: through the link and directly.
+    c.db.execute('insert into roots values(?,?)', ['linked', str(link)])
+    c.db.execute('insert into roots values(?,?)', ['linked', str(target)]); c.db.commit()
+    plan = s.handle('project_delete_plan', {'project': 'linked'})
+    assert plan['can_delete'] and not plan['refused']
+    assert [f['path'] for f in plan['folders']] == [str(target)]  # once, by its real path
+    assert plan['folders'][0]['registered_as'] == str(link)
+    assert plan['links'] == [str(link)]
+    job = wait(s.handle('project_delete', {'project': 'linked', 'confirm': True}))
+    assert job['state'] == 'done', job
+    assert not target.exists() and not link.is_symlink() and not link.exists()
+    assert (data / 'other_corpus' / '10.1--b').is_dir()
+
+
+def test_a_symlink_into_another_project_names_it_and_guards_still_apply(setup, tmp_path):
     s, c, data = setup
     link = tmp_path / 'link'
     link.symlink_to(data / 'other_corpus')
     c.db.execute('insert into roots values(?,?)', ['linked', str(link)]); c.db.commit()
     plan = s.handle('project_delete_plan', {'project': 'linked'})
-    assert plan['refused'][0]['reason'] == 'the registered folder is a symlink'
+    assert plan['folders'][0]['path'] == str(data / 'other_corpus')
+    assert plan['also_removes'] == ['other']
+    home = tmp_path / 'home_link'
+    home.symlink_to(data)  # a link to a guarded folder is refused on its real path
+    c.db.execute('insert into roots values(?,?)', ['guarded', str(home)]); c.db.commit()
+    plan = s.handle('project_delete_plan', {'project': 'guarded', 'protected': [str(data)]})
+    assert not plan['can_delete'] and 'protected folder' in plan['refused'][0]['reason']
+    assert data.is_dir() and home.is_symlink()
+
+
+def test_a_dangling_link_is_removed_without_complaint(setup, tmp_path):
+    s, c, _ = setup
+    link = tmp_path / 'dangling'
+    link.symlink_to(tmp_path / 'gone')
+    c.db.execute('insert into roots values(?,?)', ['dangling', str(link)]); c.db.commit()
+    plan = s.handle('project_delete_plan', {'project': 'dangling'})
+    assert plan['can_delete'] and plan['links'] == [str(link)] and plan['missing'] == []
+    assert wait(s.handle('project_delete', {'project': 'dangling', 'confirm': True}))['state'] == 'done'
+    assert not link.is_symlink()
 
 
 def test_a_project_without_a_local_folder_is_only_hidden(setup):

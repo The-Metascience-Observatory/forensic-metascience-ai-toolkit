@@ -55,6 +55,19 @@ that tree had uncommitted edits.
   as a DOI, against the local website checkout's `findings.json`, read through a
   new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
 
+## [Unreleased] — 2026-11-17 — deleting a project registered through a symlink
+
+- **A project whose registered folder is a symlink can now be deleted.** The
+  plan follows the link and deletes the folder it points at (every guard --
+  protected folders, the image gate's corpora, collection folders, nested
+  projects -- is checked on that real path), then removes the link once the
+  folder is gone. A folder registered both directly and through a link is
+  listed once, by its real path; a dangling link is simply removed. Other
+  projects are matched by their real location too, so one registered through
+  a link inside the folder is named in "also removes". The delete dialog says
+  which link goes with each folder (`project_admin.delete_plan`,
+  `BulkDelete.tsx`).
+
 ## [Unreleased] — 2026-11-17 — project tabs; project name in the top bar
 
 - **A project opens on two tabs: Findings (the papers table, non-image

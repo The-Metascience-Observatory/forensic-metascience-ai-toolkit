@@ -72,6 +72,7 @@ export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
   "GET /api/images/bulk", "POST /api/images/bulk",
   "GET /api/images/missed", "POST /api/images/missed",
   "GET /api/images/summary", "GET /api/images/text-regions", "POST /api/images/viewed",
+  "GET /api/images/website",
 ]);
 
 export interface Policy { admin: boolean; forbidden: boolean }

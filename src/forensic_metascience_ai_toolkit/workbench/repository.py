@@ -9,7 +9,7 @@ import weakref
 from collections import Counter
 import uuid
 from pathlib import Path
-from .catalog import now  # noqa: F401 -- re-exported
+from .catalog import grouped_paper_folders, now  # noqa: F401 -- now is re-exported
 from forensic_metascience_ai_toolkit.workbench.common import (  # noqa: F401 -- re-exported
     component, db_primary_key, page)
 from forensic_metascience_ai_toolkit.workbench.queue_fields import (  # noqa: F401 -- re-exported
@@ -117,6 +117,7 @@ class Repository(SharedImageQueueMixin):
         # Per-worker caches are NOT shared: they are mutated on every read.
         self.paper_pages={}
         self.feed_pages={}
+        self._grouped={}
         self.version=version
         self.scope=scope
 
@@ -417,6 +418,24 @@ class Repository(SharedImageQueueMixin):
                    for r in selected if r['run_uid']==parent
                    for f in self.findings_by_run.get(db_primary_key(r),[]))
 
+    def paper_folder(self, project, directory, stored=None):
+        """The paper's folder on disk: the recorded one while it exists, else
+        the same-named folder filed one level down in a grouping folder of a
+        project root (`catalog.grouped_paper_folder`). None when neither."""
+        if stored and Path(stored).is_dir():
+            return stored
+        groups=getattr(self,'_grouped',None)
+        if groups is None: groups=self._grouped={}
+        if project not in groups:
+            known={d for (pj,d),(b,path) in self.local.items() if pj==project and path and Path(path).is_dir()}
+            found={}
+            for root in self.catalog.roots(project):
+                if root['available']:
+                    for name,path in grouped_paper_folders(Path(root['path']).resolve(),known).items():
+                        found.setdefault(name,path)
+            groups[project]=found
+        return groups[project].get(directory)
+
     def paper_row(self, p):
         project=self.project_name(p) or p.get('local_project')
         directory=p.get('dir') or f"@{p['id']}"
@@ -425,7 +444,7 @@ class Repository(SharedImageQueueMixin):
             # No title in the shared record or the local cache (most corpora
             # store none): take the citation from the folder's metadata.json,
             # without overriding a field the record does have.
-            p={**local_metadata(local_path),**{k:v for k,v in p.items() if v not in (None,'')}}
+            p={**local_metadata(self.paper_folder(project,directory,local_path)),**{k:v for k,v in p.items() if v not in (None,'')}}
         selected=self.selected_runs(project,paper=p['id'])
         comprehensive=[r for r in selected if component(r)=='comprehensive']
         latest=comprehensive[-1] if comprehensive else None

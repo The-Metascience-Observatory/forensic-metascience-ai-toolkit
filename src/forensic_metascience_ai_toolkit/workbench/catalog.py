@@ -7,6 +7,7 @@ from .catalog_reads import CatalogReads, migrate_reads
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import sqlite3
 import threading
@@ -15,6 +16,53 @@ import uuid
 
 from forensic_metascience_ai_toolkit.workbench.common import (  # noqa: F401 -- re-exported
     WAL_LIMIT, cache_path, encode, is_run_workspace, now, project_for_root)
+
+
+def _real_dir(path: Path, base: Path) -> bool:
+    """A real directory inside `base`, not reached through a symlink."""
+    try:
+        return path.is_dir() and str(path.resolve()) == str(path) and path.is_relative_to(base)
+    except OSError:
+        return False
+
+
+def grouped_paper_folder(base: Path, directory: str):
+    """`base/<group>/<directory>`: a paper folder filed one level down into a
+    grouping folder (a triage sort such as `screen_artefacts/`), found when it
+    is no longer at `base/<directory>`. Exact folder name, one level only, and
+    only when exactly one group holds it; None otherwise. Callers check first
+    that the project records this paper, as `paper_path` does."""
+    if not directory or '/' in directory or '\\' in directory or directory in ('.', '..'):
+        return None
+    try:
+        groups = [Path(e.path) for e in os.scandir(base) if e.is_dir(follow_symlinks=False)]
+    except OSError:
+        return None
+    hits = [g / directory for g in groups if _real_dir(g / directory, base)]
+    return hits[0] if len(hits) == 1 else None
+
+
+def grouped_paper_folders(base: Path, skip=()) -> dict:
+    """{folder name: path} for every paper folder filed one level down in a
+    grouping folder of `base`. Children named in `skip` (known paper folders)
+    and children holding a metadata.json (themselves papers) are not entered,
+    so a large flat corpus costs one listing. Names found in two groups are
+    ambiguous and left out."""
+    found = {}
+    try:
+        children = [e for e in os.scandir(base) if e.is_dir(follow_symlinks=False)]
+    except OSError:
+        return {}
+    for child in children:
+        if child.name in skip or os.path.exists(os.path.join(child.path, 'metadata.json')):
+            continue
+        try:
+            inner = [e for e in os.scandir(child.path) if e.is_dir(follow_symlinks=False)]
+        except OSError:
+            continue
+        for e in inner:
+            found.setdefault(e.name, []).append(Path(e.path))
+    return {name: paths[0] for name, paths in found.items() if len(paths) == 1}
 
 
 class Catalog(CatalogReads):
@@ -279,6 +327,10 @@ create table if not exists project_flags(project text primary key,body text not 
             base = Path(root['path']).resolve()
             path = (base / directory).resolve()
             if path != base and path.is_relative_to(base) and path.is_dir():
+                return path
+        for root in roots:
+            path = grouped_paper_folder(Path(root['path']).resolve(), directory)
+            if path:
                 return path
         # Name the project and the remedy: this is a missing ROOT, not a
         # missing file, and the reviewer used to read it beside "no DOI on

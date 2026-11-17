@@ -31,6 +31,16 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — paper folders sorted into grouping folders
+
+- A paper folder moved one level down into a grouping folder of its project
+  root (the RNG triage's `screen_artefacts/` and `likely_innocent/`) is found
+  again: by exact folder name, only when one grouping folder holds it, and
+  only for a paper the project already records; symlinks are not followed.
+  The papers table shows these papers' titles from their `metadata.json`
+  (rng_europepmc_screen_pdfs: 18 of 54 had titles, now 54), and the review
+  page reaches their PDF and XML (`catalog.paper_path`).
+
 ## [Unreleased] — 2026-11-17 — bulk actions on archived projects
 
 - Landing page: the Archived table has its own checkboxes (and select all).

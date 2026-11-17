@@ -3,7 +3,6 @@ import { workbench } from "@/lib/workbench";
 import { loadSettings } from "@/lib/settings";
 import { isAdminViewer, visibleProjectFilter } from "@/lib/pageAccess";
 import { sourceView } from "@/lib/projectSources";
-import { RefreshCountsButton } from "./RefreshCountsButton";
 import { RootForm } from "./RootForm";
 
 export const dynamic = "force-dynamic";
@@ -95,11 +94,10 @@ export default async function Home() {
         {listed.length} project{listed.length === 1 ? "" : "s"} · {nPapers} papers
         {!admin && listed.length === 0 && " · no projects have been assigned to you yet; ask the admin"}
       </p>
-      {admin && (
+      {admin && !view && (
         <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          {!view && <RootForm initial={settings.papers_root} />}
-          <RefreshCountsButton />
-          {!view && <a href="/admin/projects" style={{ fontSize: 13 }}>Choose which folders are projects…</a>}
+          <RootForm initial={settings.papers_root} />
+          <a href="/admin/projects" style={{ fontSize: 13 }}>Choose which folders are projects…</a>
         </div>
       )}
 

@@ -45,8 +45,10 @@ npm run build
 npm start
 ```
 
-Home and project counts come from the synchronized catalog. **Sync records**
-pulls changed shared findings, reviews and runs; it does not re-run analysis.
+Home and project counts come from the synchronized catalog. The local service
+pulls changed shared findings, reviews and runs in the background (every 30 s
+while you are active, 5 min when idle, and when an admin's tab regains focus);
+syncing never re-runs analysis.
 Image feeds validate published evidence on each read and refresh discovery in
 the background. Changed evidence is withheld during refresh, with a visible
 explanation. PDFs render the target and nearby pages; text search indexes the
@@ -115,8 +117,8 @@ the webapp reviews it with the same page and the same storage as any finding:
   `rngdetect export-workbench RUN_DIR PROJECT --push` (per-paper PDF/figure
   screens) or `rngdetect export-workbench --europepmc RUN_DIR PROJECT_ROOT
   --pmcids FILE [--verdicts CSV] --push` (Europe PMC table hits, one XML-only
-  paper folder per article), with the toolkit's `src` on `PYTHONPATH`; then
-  **Sync records** here. Register the project folder under **Local files** so
+  paper folder per article), with the toolkit's `src` on `PYTHONPATH`; the run
+  appears here at the next background sync. Register the project folder under **Local files** so
   the PDF or XML can be shown.
 
 ## Image findings

@@ -83,6 +83,65 @@ table.grid td.title-col a {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+table.grid th.project-col,
+table.grid td.project-col {
+  box-sizing: border-box;
+}
+table.grid th.project-col {
+  position: relative;
+  overflow: visible;
+}
+.col-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  bottom: 0;
+  width: 8px;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  z-index: 2;
+}
+.col-resize-handle::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 3px;
+  width: 2px;
+  background: var(--line);
+  border-radius: 1px;
+  transition: background 0.15s, width 0.15s, left 0.15s;
+}
+.col-resize-handle:hover::after,
+.col-resize-handle:focus-visible::after,
+.col-resize-handle.dragging::after {
+  background: var(--accent);
+  width: 3px;
+  left: 2.5px;
+}
+.col-resize-handle:focus-visible {
+  outline: none;
+}
+table.grid.col-resizing,
+table.grid.col-resizing * {
+  user-select: none !important;
+  cursor: col-resize !important;
+}
+.project-cell-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+.project-name-link {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+}
 table.grid th { color: var(--muted); font-weight: 600; font-size: 11px;
   text-transform: uppercase; letter-spacing: 0.03em; }
 table.grid th.stack {

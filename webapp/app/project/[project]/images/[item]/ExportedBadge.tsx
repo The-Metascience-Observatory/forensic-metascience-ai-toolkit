@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { Item } from "@/app/images/lib";
 import { PUBLISHED_PAGE } from "@/lib/websiteFinding";
 
-type Exported = { doi: string; id: string };
+type Exported = { doi: string; id: string; pubpeerUrl?: string | null };
 
 // One read per page load: the list changes only when someone adds a finding.
 let cached: Promise<Exported[]> | null = null;
@@ -31,23 +31,38 @@ export function itemDois(item: Item): string[] {
   });
 }
 
-/** "FINDINGS ALREADY EXPORTED" in the item's top bar when a paper of this
- *  finding is already on the website's image-findings page (matched by DOI,
- *  the key the website's findings.json is unique on). It links to that entry
- *  on the published page; an entry added locally but not yet deployed lands
- *  on the page without its anchor. */
+const pill = { fontWeight: 700, fontSize: 11, letterSpacing: 0.5, padding: "2px 8px", borderRadius: 10,
+  flexShrink: 0, textDecoration: "none", whiteSpace: "nowrap" as const, color: "#fff" };
+
+/** Badges in the item's top bar for a paper of this finding that is already
+ *  on the website's image-findings page (matched by DOI, the key the
+ *  website's findings.json is unique on):
+ *  - "EXISTING FINDINGS ON WEBSITE" links to that entry on the published page
+ *    (an entry added locally but not yet deployed lands on the page without
+ *    its anchor);
+ *  - "EXISTING PUBPEER SUBMISSION" links to the PubPeer URL entered with it
+ *    in "Add to website". */
 export function ExportedBadge({ item }: { item: Item }) {
   const [exported, setExported] = useState<Exported[]>([]);
   useEffect(() => { let live = true; loadExported().then(e => { if (live) setExported(e); }); return () => { live = false; }; }, []);
   const dois = itemDois(item);
   const hits = exported.filter(e => dois.includes(e.doi));
   if (!hits.length) return null;
+  const pubpeer = hits.find(h => h.pubpeerUrl);
   return (
-    <a data-exported-badge href={`${PUBLISHED_PAGE}#${encodeURIComponent(hits[0].id)}`} target="_blank" rel="noreferrer"
-       title={`Open ${hits.map(h => h.id).join(", ")} on the published image-findings page`}
-       style={{ background: "#1a7f37", color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 0.5,
-                padding: "2px 8px", borderRadius: 10, flexShrink: 0, textDecoration: "none", whiteSpace: "nowrap" }}>
-      FINDINGS ALREADY EXPORTED ↗
-    </a>
+    <>
+      <a data-exported-badge href={`${PUBLISHED_PAGE}#${encodeURIComponent(hits[0].id)}`} target="_blank" rel="noreferrer"
+         title={`Open ${hits.map(h => h.id).join(", ")} on the published image-findings page`}
+         style={{ ...pill, background: "#1a7f37" }}>
+        EXISTING FINDINGS ON WEBSITE ↗
+      </a>
+      {pubpeer?.pubpeerUrl && (
+        <a data-pubpeer-badge href={pubpeer.pubpeerUrl} target="_blank" rel="noreferrer"
+           title="Open the PubPeer comment entered when this was added to the website"
+           style={{ ...pill, background: "#0969da" }}>
+          EXISTING PUBPEER SUBMISSION ↗
+        </a>
+      )}
+    </>
   );
 }

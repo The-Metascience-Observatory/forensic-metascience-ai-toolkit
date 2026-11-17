@@ -31,7 +31,8 @@ function embargoMarker(dir: string): string | null {
 const fail = (error: string, status = 400) => NextResponse.json({ error }, { status });
 
 /** The DOIs already on the website's image-findings page, lowercased, with
- *  each entry's id: the image finding page marks a paper EXPORTED from this.
+ *  each entry's id and the PubPeer link entered with it: the image finding
+ *  page badges a paper from this.
  *  A missing checkout is an empty list plus the reason, never an error page. */
 export async function GET(req: Request) {
   const refused = await guard(req); if (refused) return refused;
@@ -39,7 +40,8 @@ export async function GET(req: Request) {
   try {
     const findings = JSON.parse(fs.readFileSync(findingsPath, "utf8"));
     if (!Array.isArray(findings)) throw new Error("not a list");
-    const exported = findings.filter(f => f && f.doi).map(f => ({ doi: String(f.doi).toLowerCase(), id: String(f.id || "") }));
+    const exported = findings.filter(f => f && f.doi).map(f => ({ doi: String(f.doi).toLowerCase(), id: String(f.id || ""),
+      pubpeerUrl: normalisePubpeerUrl(String(f.pubpeerUrl || "")) }));
     return NextResponse.json({ exported });
   } catch (e) {
     return NextResponse.json({ exported: [], error: `Could not read ${findingsPath}: ${errMsg(e)}` });

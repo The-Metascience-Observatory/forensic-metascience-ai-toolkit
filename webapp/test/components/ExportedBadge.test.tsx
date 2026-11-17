@@ -10,16 +10,25 @@ const item = (dir: string, doi?: string) => ({
 }) as unknown as Item;
 
 afterEach(() => { cleanup(); resetExportedCache(); vi.unstubAllGlobals(); });
-const serve = (exported: { doi: string; id: string }[]) =>
+const serve = (exported: { doi: string; id: string; pubpeerUrl?: string | null }[]) =>
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ exported }))));
 
 test("a paper on the website links to its published entry, matched by folder-name DOI", async () => {
   serve([{ doi: "10.3892/or.2013.2897", id: "yu-2014" }]);
   render(<ExportedBadge item={item("10.3892--or.2013.2897")} />);
-  const link = await screen.findByRole("link", { name: /FINDINGS ALREADY EXPORTED/ });
+  const link = await screen.findByRole("link", { name: /EXISTING FINDINGS ON WEBSITE/ });
   expect(link.getAttribute("href")).toBe(
     "https://metascienceobservatory.org/forensic-metascience-ai-toolkit/findings/image-findings#yu-2014");
   expect(link.getAttribute("target")).toBe("_blank");
+  expect(screen.queryByText(/EXISTING PUBPEER SUBMISSION/)).toBeNull();
+});
+
+test("a PubPeer URL entered with the website entry adds a second badge linking to it", async () => {
+  const url = "https://pubpeer.com/publications/ABCDEF1234567890";
+  serve([{ doi: "10.3892/or.2013.2897", id: "yu-2014", pubpeerUrl: url }]);
+  render(<ExportedBadge item={item("10.3892--or.2013.2897")} />);
+  const link = await screen.findByRole("link", { name: /EXISTING PUBPEER SUBMISSION/ });
+  expect(link.getAttribute("href")).toBe(url);
 });
 
 test("a paper not on the website shows no badge", async () => {

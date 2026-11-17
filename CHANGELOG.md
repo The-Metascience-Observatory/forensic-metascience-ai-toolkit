@@ -9,12 +9,14 @@ Every report stamps `pipeline_version()` on page 1 and in its **Provenance**
 section: the release number below, the git sha that actually ran, and whether
 that tree had uncommitted edits.
 
-## [Unreleased] — 2026-11-17 — "EXPORTED" badge on image findings
+## [Unreleased] — 2026-11-17 — website and PubPeer badges on image findings
 
 - An image finding whose paper is already on the website's image-findings page
-  shows a green "FINDINGS ALREADY EXPORTED" badge in the top bar, next to the
-  finding id. It links (new tab) to that entry on the published page,
-  `https://metascienceobservatory.org/forensic-metascience-ai-toolkit/findings/image-findings#<id>`. It matches the paper's DOI, or its folder name read
+  shows a green "EXISTING FINDINGS ON WEBSITE" badge in the top bar, next to
+  the finding id. It links (new tab) to that entry on the published page,
+  `https://metascienceobservatory.org/forensic-metascience-ai-toolkit/findings/image-findings#<id>`.
+  When that entry has a PubPeer URL (the one typed into "Add to website"), a blue
+  "EXISTING PUBPEER SUBMISSION" badge beside it links to that PubPeer comment. It matches the paper's DOI, or its folder name read
   as a DOI, against the local website checkout's `findings.json`, read through a
   new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
 

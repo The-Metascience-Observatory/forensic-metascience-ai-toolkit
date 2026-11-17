@@ -198,7 +198,7 @@ def score_judgement(fixture: dict, parsed: dict, findings: Any) -> dict:
                                      f.get("id")) if k)
         sev = f.get("severity")
         if isinstance(sev, int):
-            # findings-v2: an integer on the 1-9 ladder, matchable by slug
+            # findings-v2: an integer on the 1-7 ladder, matchable by slug
             # OR finding_id; a provisional final severity still scores (the
             # fixture's interval is about the finding, not the adjudicator).
             value: object = sev
@@ -251,7 +251,7 @@ def score_judgement(fixture: dict, parsed: dict, findings: Any) -> dict:
                 entry["matched_severity"] = matched_sev
                 if all(isinstance(x, int) for x in interval) \
                         and isinstance(matched_sev, int):
-                    # Fixture format v2: 1-9 integer interval against a
+                    # Fixture format v2: 1-7 integer interval against a
                     # findings-v2 integer severity -- the same direction
                     # arithmetic, on the real ladder (bias becomes linear).
                     lo, hi = min(interval), max(interval)

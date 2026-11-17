@@ -177,9 +177,9 @@ export function ProjectTable({
               type="button"
               className="sort-th"
               onClick={() => onSort("sev9")}
-              title="Sort by the 1-9 severity ladder the adjudicator assigned"
+              title="Sort by the 1-7 severity ladder the adjudicator assigned"
             >
-              S1–9{sortMark(sort, "sev9")}
+              S1–7{sortMark(sort, "sev9")}
             </button>
           </th>
           <th className="stack stack-wide" aria-sort={ariaSort(sort, "findings")}>

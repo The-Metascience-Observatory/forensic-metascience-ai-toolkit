@@ -155,7 +155,7 @@ Discipline, non-negotiable:
   `"basis": "model_knowledge"` and stays at provisional severity 3 or
   below. Looked-up facts carry `"basis": "web_lookup"`.
 
-## Severity (provisional 1–9)
+## Severity (provisional 1–7)
 
 Use the error-levels ladder in this prompt. The question per finding: if
 this were the only problem in the paper and the authors confirmed it, what

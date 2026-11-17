@@ -74,7 +74,7 @@ class TestSeverityRankUnderstandsBothLadders:
         assert severity_rank(s) == expected
 
     @pytest.mark.parametrize("n, expected", [
-        (9, 0), (8, 0), (7, 1), (5, 1), (4, 2), (3, 2), (2, 3), (1, 4),
+        (7, 0), (6, 1), (5, 1), (4, 2), (3, 2), (2, 3), (1, 4),
     ])
     def test_the_numeric_ladder_maps_onto_it(self, n, expected):
         assert severity_rank(n) == expected

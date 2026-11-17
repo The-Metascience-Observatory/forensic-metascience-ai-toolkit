@@ -316,7 +316,7 @@ def severity_rank(value) -> Optional[int]:
     `moderate`) are still honoured: those are real verdicts in an older
     vocabulary, not typos.
     """
-    # THE NUMERIC LADDER FIRST. v2 severities are INTEGERS 1-9, and this table
+    # THE NUMERIC LADDER FIRST. v2 severities are INTEGERS 1-7, and this table
     # holds v1 strings, so every current-pipeline finding fell through to
     # `normalize_severity`, came back `indeterminate`, and ranked None.
     #
@@ -325,15 +325,16 @@ def severity_rank(value) -> Optional[int]:
     # that most needs a human" -- ranked them 99 and put papers whose only runs
     # are RETIRED at the top of the human triage queue.
     #
-    # Mapped rather than compared, so the two vocabularies order together: 9/8
-    # are the impossible/misconduct band, 7-5 highly suspicious, 4-3 suspicious,
+    # Mapped rather than compared, so the two vocabularies order together: 7
+    # (fatal error, the top rung) is the impossible band, 6-5 highly suspicious,
+    # 4-3 suspicious,
     # 2 indeterminate, 1 consistent. `severity9.ACCUSATORY_MIN` is 3, which is
     # where `suspicious` begins, and this preserves that boundary.
     if isinstance(value, bool):
         return None
     if isinstance(value, (int, float)):
         n = int(value)
-        if n >= 8:
+        if n >= 7:
             return SEVERITY_RANK["impossible"]
         if n >= 5:
             return SEVERITY_RANK["highly_suspicious"]

@@ -1,7 +1,7 @@
 """The findings adjudicator: docket in, verdicts out, every bound in code.
 
 Contract: docs/specs/adjudicator.md (approved 2026-08-21). One LLM pass over
-the merged findings of all four producers assigns final 1-9 severities; this
+the merged findings of all four producers assigns final 1-7 severities; this
 module is everything AROUND that pass -- `build_docket` (what the model
 sees), `apply` (what its output is allowed to do), and `apply_skip` (the
 paths where it never ran). The referee pattern is the fourth instance of the
@@ -17,7 +17,7 @@ from typing import Any
 
 from .quotes import fold_rendering, normalise
 from .findings_v2 import PRODUCER_TITLE_MAX, TITLE_MAX, fit_row_title
-from .severity9 import LEVELS, QUARANTINE_CAP
+from .severity9 import MAX_LEVEL, QUARANTINE_CAP
 
 DOCKET_ROW_CAP = 120
 PAPER_TEXT_BUDGET_CHARS = 40_000
@@ -325,10 +325,10 @@ def _clamp(model_sev: int, f: dict, category: str) -> int:
     """The severity clamps of spec section 5.4, in order. Records nothing
     itself -- the caller compares against the model's number.
 
-    There is NO ceiling (v1.14.0): the adjudicator may write any rung 1-9.
+    There is NO ceiling (v1.14.0): the adjudicator may write any rung 1-7.
     What remains bounds MOVEMENT and CHANNEL, not level: an upgrade may lift
     a finding at most `_UPGRADE_LIMIT` above its provisional unless it is a
-    merged pattern (pervasiveness may express 6-9 that no single row could),
+    merged pattern (pervasiveness may express 6-7 that no single row could),
     an upgrade typed with an ineligible category reverts to the provisional,
     and a quarantined detector's row never rises above `QUARANTINE_CAP`.
     """
@@ -344,7 +344,7 @@ def _clamp(model_sev: int, f: dict, category: str) -> int:
     cap = _tool_verdict_cap(f)
     if cap is not None:
         sev = min(sev, cap)
-    sev = min(sev, max(LEVELS))
+    sev = min(sev, MAX_LEVEL)
     return max(sev, 1)
 
 
@@ -512,7 +512,7 @@ def apply(merged_findings: list[dict], adjudicator_output: dict,
             continue
         sev = v.get("severity")
         if not isinstance(sev, int) or isinstance(sev, bool) \
-                or not 1 <= sev <= 9:
+                or not 1 <= sev <= MAX_LEVEL:
             _keep_provisional(f)
             counts["n_kept"] += 1
             continue
@@ -561,7 +561,7 @@ def apply(merged_findings: list[dict], adjudicator_output: dict,
     paper = raw.get("paper") if isinstance(raw.get("paper"), dict) else {}
     p_sev = paper.get("paper_severity")
     if isinstance(p_sev, int) and not isinstance(p_sev, bool):
-        p_sev = max(1, min(p_sev, max(LEVELS)))
+        p_sev = max(1, min(p_sev, MAX_LEVEL))
     else:
         p_sev = None
     headline = str(paper.get("headline_finding_id") or "")

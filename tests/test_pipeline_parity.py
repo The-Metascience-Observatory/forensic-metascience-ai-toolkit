@@ -79,9 +79,26 @@ _OLD_TITLE_BOUND = (
     "P.adjudication_schema = _old_adj\n")
 
 
+#: Ladder version 4 (rungs 8-9 removed) lowered every severity `maximum` in the
+#: two output schemas from 9 to 7 and renamed the ladder "1-7" in their
+#: descriptions. Restoring the old files byte for byte is what lets the older
+#: scope tests keep proving their own change and nothing else. The lookarounds
+#: spare the two Likert-scale "1-7"s, which were always there.
+_OLD_LADDER_MAX_9 = (
+    "import forensic_metascience_ai_toolkit.core.prompts as P, re, shutil, tempfile, pathlib\n"
+    "_d = pathlib.Path(tempfile.mkdtemp()) / 'schema'\n"
+    "shutil.copytree(P.SCHEMA_DIR, _d)\n"
+    "for _n in ('findings.v2.schema.json', 'adjudication.schema.json'):\n"
+    "    _f = _d / _n\n"
+    "    _t = _f.read_text().replace('\"maximum\": 7', '\"maximum\": 9')\n"
+    "    _f.write_text(re.sub(r'(?<!establish )1-7(?! Likert)', '1-9', _t))\n"
+    "P.SCHEMA_DIR = _d\n")
+
+
 def _capture(tmp_path, src_only_pythonpath: bool = False,
              title_bound_90: bool = False,
-             old_package_name: bool = False) -> dict:
+             old_package_name: bool = False,
+             ladder_max_9: bool = False) -> dict:
     # The image package comes from its own installed checkout.
     from forensic_metascience_ai_toolkit.copypaste_plugin import sibling_source_root
     roots = [ROOT / "src", *filter(None, [sibling_source_root(ROOT / "src")])]
@@ -90,8 +107,10 @@ def _capture(tmp_path, src_only_pythonpath: bool = False,
                                          + [os.environ.get("PYTHONPATH", "")])}
     out = tmp_path / "capture.json"
     script = [str(ROOT / "tests" / "parity_capture.py"), str(out)]
-    if src_only_pythonpath or title_bound_90 or old_package_name:
+    if src_only_pythonpath or title_bound_90 or old_package_name or ladder_max_9:
         patch = ""
+        if ladder_max_9:
+            patch += _OLD_LADDER_MAX_9
         if old_package_name:
             # Before 1.96.1 the MCP server was launched under the package's
             # old import name. Only the recorded string matters here; the
@@ -335,7 +354,8 @@ def test_1_85_1_changed_only_the_childrens_pythonpath(tmp_path):
     # old value captures the 1.84 oracle.
     assert (_mask_system_prompts(_capture(tmp_path, src_only_pythonpath=True,
                                           title_bound_90=True,
-                                          old_package_name=True))
+                                          old_package_name=True,
+                                          ladder_max_9=True))
             == _mask_system_prompts(old))
     for backend in old:
         for k in old[backend]:
@@ -358,7 +378,8 @@ def test_1_86_changed_only_the_title_bound_in_the_output_schemas(tmp_path):
     # Since 1.87.0/1.88.0 system prompts and the registry differ too (masked;
     # the output schemas this test is about are not).
     assert (_mask_system_prompts(_capture(tmp_path, title_bound_90=True,
-                                          old_package_name=True))
+                                          old_package_name=True,
+                                          ladder_max_9=True))
             == _mask_system_prompts(old))
     for backend in old:
         for o, n in zip(old[backend]["invocations"], new[backend]["invocations"]):
@@ -549,7 +570,7 @@ def test_1_96_1_changed_only_the_mcp_server_module_name(tmp_path):
     old = json.loads(P193.read_text())
     new = json.loads(P1961.read_text())
     assert old != new
-    got = _capture(tmp_path, old_package_name=True)
+    got = _capture(tmp_path, old_package_name=True, ladder_max_9=True)
     # 1.97.0 has since moved the registry (`test_1_97_...`); with that hash
     # restored, the old module name captures the 1.93 oracle byte for byte.
     p197 = json.loads(P197.read_text())

@@ -9,7 +9,7 @@ gen-webapp-constants` so they cannot drift apart:
     paper appendix or an external consumer should not have to parse
     TypeScript to read the rungs.
 
-R1: `severity9.py` owns the 1-9 ladder; `review_io` owns the decision
+R1: `severity9.py` owns the 1-7 ladder; `review_io` owns the decision
 vocabulary; `webapp_index` owns the channel states. The webapp gets a
 CHECKED-IN generated file rather than build-time codegen -- it must keep
 working on a Windows checkout with no Python -- and a Python test
@@ -78,13 +78,13 @@ export type Sev9Level = (typeof SEVERITY9)["levels"][number];
 
 const byN = new Map<number, Sev9Level>(SEVERITY9.levels.map((l) => [l.n, l]));
 
-/** Ladder label for a 1-9 level; "" when the value is not on the ladder. */
+/** Ladder label for a 1-7 level; "" when the value is not on the ladder. */
 export function sev9Label(n: number | null | undefined): string {
   const l = typeof n === "number" ? byN.get(n) : undefined;
   return l ? `S${l.n} \u00b7 ${l.label}` : "";
 }
 
-/** Color for a 1-9 level in the given theme. */
+/** Color for a 1-7 level in the given theme. */
 export function sev9Color(n: number | null | undefined,
                           theme: "light" | "dark" = "light"): string {
   const l = typeof n === "number" ? byN.get(n) : undefined;

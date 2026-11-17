@@ -1,5 +1,5 @@
 """
-Pins for severity9.py, the one 1-9 severity source of truth (findings_v2 R1).
+Pins for severity9.py, the one 1-7 severity source of truth (findings_v2 R1).
 
 These are deliberately literal: the ladder, the maps and every cap are pinned
 by VALUE, so any change here is a conscious act (and, per CHANGELOG.md, a
@@ -23,6 +23,7 @@ from forensic_metascience_ai_toolkit.severity9 import (
     FAST_SCREEN_CAP,
     FIVE_TO_NINE,
     LEVELS,
+    MAX_LEVEL,
     MODEL_KNOWLEDGE_CAP,
     MODEL_READING_CAP,
     OUTCOME_FROM_FIVE,
@@ -53,8 +54,6 @@ EXPECTED_SLUGS = {
     5: "conclusions_affected",
     6: "unreliable",
     7: "fatal_error",
-    8: "misconduct",
-    9: "extreme_misconduct",
 }
 
 
@@ -63,8 +62,11 @@ EXPECTED_SLUGS = {
 # ---------------------------------------------------------------------------
 
 
-def test_ladder_has_exactly_nine_rungs_keyed_1_to_9():
-    assert sorted(LEVELS) == list(range(1, 10))
+def test_ladder_has_exactly_seven_rungs_keyed_1_to_7():
+    # Rungs 8 (misconduct) and 9 (extreme misconduct) were removed in ladder
+    # version 4; MAX_LEVEL is what every range check reads.
+    assert sorted(LEVELS) == list(range(1, 8))
+    assert MAX_LEVEL == 7
 
 
 def test_slugs_are_pinned():
@@ -80,9 +82,7 @@ def test_correction_outcomes_are_pinned():
         4: "public correction (corrigendum)",
         5: "corrigendum or partial retraction",
         6: "expression of concern; retraction candidate",
-        7: "retraction (honest error)",
-        8: "retraction (misconduct)",
-        9: "retraction, sanctions",
+        7: "retraction",
     }
 
 
@@ -124,12 +124,13 @@ def test_boundary_tests_point_at_the_adjacent_rungs():
             )
         else:
             assert "Down" not in directions, "level 1 has nothing below it"
-        if n < 9:
+        if n < MAX_LEVEL:
             assert directions.get("Up") == n + 1, (
                 f"level {n} must escalate to {n + 1}, got {directions}"
             )
         else:
-            assert "Up" not in directions, "level 9 has nothing above it"
+            assert "Up" not in directions, (
+                f"level {n} is the top rung and has nothing above it")
 
 
 # ---------------------------------------------------------------------------
@@ -176,7 +177,7 @@ def test_scalar_caps_are_pinned():
 
 def test_no_ceiling_constants_exist():
     """v1.14.0: the ladder has no absolute ceiling. Every role may write any
-    rung 1-9; only evidence-CHANNEL caps remain. A reintroduced ceiling
+    rung 1-7; only evidence-CHANNEL caps remain. A reintroduced ceiling
     constant is a regression, not a safety feature, until Dan says otherwise."""
     from forensic_metascience_ai_toolkit import severity9
     for name in ("PIPELINE_MAX", "ADJUDICATOR_MAX_DEFAULT",
@@ -184,9 +185,9 @@ def test_no_ceiling_constants_exist():
         assert not hasattr(severity9, name), name
 
 
-def test_ladder_version_is_three():
+def test_ladder_version_is_four():
     from forensic_metascience_ai_toolkit.severity9 import LADDER_VERSION
-    assert LADDER_VERSION == "3"
+    assert LADDER_VERSION == "4"
 
 
 # ---------------------------------------------------------------------------
@@ -195,13 +196,13 @@ def test_ladder_version_is_three():
 # ---------------------------------------------------------------------------
 
 
-def test_uncapped_channel_keeps_nine():
-    assert clamp_provisional(9) == 9
-    assert clamp_provisional(9, computed_by="registry_tool",
+def test_uncapped_channel_keeps_the_top_rung():
+    assert clamp_provisional(7) == 7
+    assert clamp_provisional(7, computed_by="registry_tool",
                              producer="tool_expert",
-                             technique_is_tool=True) == 9
-    assert clamp_provisional(9, computed_by="model_reading",
-                             producer="science_error") == 9
+                             technique_is_tool=True) == 7
+    assert clamp_provisional(7, computed_by="model_reading",
+                             producer="science_error") == 7
 
 
 @pytest.mark.parametrize("kwargs,cap", [
@@ -212,8 +213,8 @@ def test_uncapped_channel_keeps_nine():
     ({"producer": "fast_screen"}, FAST_SCREEN_CAP),
     ({"quarantined": True}, QUARANTINE_CAP),
 ])
-def test_channel_caps_still_fire_from_nine(kwargs, cap):
-    assert clamp_provisional(9, **kwargs) == cap
+def test_channel_caps_still_fire_from_the_top_rung(kwargs, cap):
+    assert clamp_provisional(7, **kwargs) == cap
 
 
 def test_below_cap_severity_passes_through_unchanged():
@@ -250,13 +251,13 @@ def test_quarantine_cap_fires():
 def test_caps_compose_by_min():
     # The spec's composition example: quarantined agent_code is
     # min(4, 3) == 3.
-    assert clamp_provisional(9, quarantined=True, computed_by="agent_code") == 3
+    assert clamp_provisional(7, quarantined=True, computed_by="agent_code") == 3
     # fast_screen + model_knowledge: min(4, 3) == 3.
     assert clamp_provisional(
-        9, producer="fast_screen", computed_by="model_knowledge") == 3
+        7, producer="fast_screen", computed_by="model_knowledge") == 3
 
 
-@pytest.mark.parametrize("bad", [0, 10, -3, "5", 4.0, True, None])
+@pytest.mark.parametrize("bad", [0, 8, 9, 10, -3, "5", 4.0, True, None])
 def test_out_of_range_or_non_int_severity_raises(bad):
     with pytest.raises(ValueError):
         clamp_provisional(bad)
@@ -275,7 +276,7 @@ def test_rubric_contains_the_question_verbatim():
     assert RUBRIC_QUESTION in rubric_markdown()
 
 
-def test_rubric_contains_all_nine_slugs_and_rungs():
+def test_rubric_contains_every_slug_and_rung():
     md = rubric_markdown()
     for n, level in LEVELS.items():
         assert f"`{level.slug}`" in md, f"slug for level {n} missing"
@@ -318,7 +319,7 @@ def test_as_json_round_trips():
 
 def test_as_json_levels_carry_slug_label_and_both_color_variants():
     payload = as_json()
-    assert [lv["n"] for lv in payload["levels"]] == list(range(1, 10))
+    assert [lv["n"] for lv in payload["levels"]] == list(range(1, 8))
     hex_color = re.compile(r"^#[0-9a-f]{6}$")
     for lv in payload["levels"]:
         assert lv["slug"] == LEVELS[lv["n"]].slug
@@ -362,10 +363,8 @@ def test_as_json_does_not_share_mutable_state_with_the_module():
     assert QUARANTINE_CAP == 3
 
 
-def test_hue_break_at_8_is_real():
-    # Misconduct is a kind change, not a shade: 8 must not reuse 7's hue.
-    assert SEVERITY9_COLORS[7]["light"] != SEVERITY9_COLORS[8]["light"]
-    assert SEVERITY9_COLORS[7]["dark"] != SEVERITY9_COLORS[8]["dark"]
+def test_every_rung_has_a_color_and_no_removed_rung_does():
+    assert sorted(SEVERITY9_COLORS) == sorted(LEVELS)
 
 
 # ---------------------------------------------------------------------------

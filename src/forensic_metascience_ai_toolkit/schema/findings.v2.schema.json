@@ -178,8 +178,8 @@
               "null"
             ],
             "minimum": 1,
-            "maximum": 9,
-            "description": "The producer's estimate on the 1-9 correction-outcome ladder (severity9.py): 'if this one finding were confirmed, and it were the only problem in the paper, what would the journal have to do about it?'. Null unless `outcome=problem`. The pipeline clamps it under the evidence-CHANNEL caps only (agent_code 4, fast_screen 4, model_knowledge 3, model_reading on a tool technique 3, quarantined 3); there is no ceiling keyed on the technique and no pipeline maximum."
+            "maximum": 7,
+            "description": "The producer's estimate on the 1-7 correction-outcome ladder (severity9.py): 'if this one finding were confirmed, and it were the only problem in the paper, what would the journal have to do about it?'. Null unless `outcome=problem`. The pipeline clamps it under the evidence-CHANNEL caps only (agent_code 4, fast_screen 4, model_knowledge 3, model_reading on a tool technique 3, quarantined 3); there is no ceiling keyed on the technique and no pipeline maximum."
           },
           "severity": {
             "type": [
@@ -187,8 +187,8 @@
               "null"
             ],
             "minimum": 1,
-            "maximum": 9,
-            "description": "ADJUDICATOR-WRITTEN final 1-9 severity. Null unless `outcome=problem` and `adjudication.action` is not `discarded`. When the adjudicator did not run, the annotator copies the provisional here and sets `severity_is_provisional`."
+            "maximum": 7,
+            "description": "ADJUDICATOR-WRITTEN final 1-7 severity. Null unless `outcome=problem` and `adjudication.action` is not `discarded`. When the adjudicator did not run, the annotator copies the provisional here and sets `severity_is_provisional`."
           },
           "severity_is_provisional": {
             "type": "boolean",
@@ -220,7 +220,7 @@
                   "indeterminate",
                   "consistent"
                 ],
-                "description": "The tool-layer 5-enum, verbatim from the validated call. This axis is an epistemic verdict about a number; it is not derivable from the 1-9 severity and neither replaces the other."
+                "description": "The tool-layer 5-enum, verbatim from the validated call. This axis is an epistemic verdict about a number; it is not derivable from the 1-7 severity and neither replaces the other."
               },
               "tool": {
                 "type": "string",
@@ -252,7 +252,7 @@
               "object",
               "null"
             ],
-            "description": "ANNOTATOR-WRITTEN by `severity_reconcile.annotate_v2`. Present only when a finding's published rung DEPARTS from the verdict its backing tool returned. Absent means agreement, no comparable tool verdict, or a tool verdict (`indeterminate`/`consistent`) that has no rung on the 1-9 ladder -- those are different facts and are counted separately in `run_meta.severity_reconciliation`. Pipeline-written, never from prose: a producer able to write this could assert its own agreement with a tool.",
+            "description": "ANNOTATOR-WRITTEN by `severity_reconcile.annotate_v2`. Present only when a finding's published rung DEPARTS from the verdict its backing tool returned. Absent means agreement, no comparable tool verdict, or a tool verdict (`indeterminate`/`consistent`) that has no rung on the 1-7 ladder -- those are different facts and are counted separately in `run_meta.severity_reconciliation`. Pipeline-written, never from prose: a producer able to write this could assert its own agreement with a tool.",
             "additionalProperties": false,
             "required": [
               "model",
@@ -279,7 +279,7 @@
               },
               "tool_rung": {
                 "type": "integer",
-                "description": "`tool` mapped onto the 1-9 ladder via `severity9.FIVE_TO_NINE`."
+                "description": "`tool` mapped onto the 1-7 ladder via `severity9.FIVE_TO_NINE`."
               },
               "direction": {
                 "type": "string",
@@ -735,7 +735,7 @@
             "null"
           ],
           "minimum": 1,
-          "maximum": 9
+          "maximum": 7
         },
         "headline_finding_id": {
           "type": [

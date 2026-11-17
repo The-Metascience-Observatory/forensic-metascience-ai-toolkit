@@ -49,6 +49,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from . import severity9
 from . import verdicts as _verdicts
 
 #: Bumped when a consumer parsing this file would break.
@@ -220,13 +221,13 @@ def scan_run(review_dir: Path) -> dict:
 
 def _v2_run_fields(doc: dict) -> dict:
     """The findings-v2 additions to a run record (index schema addition,
-    docs/specs/webapp_db.md section 9): the 1-9 axis, per-technique counts,
+    docs/specs/webapp_db.md section 9): the 1-7 axis, per-technique counts,
     and the run_id. Empty when the run wrote no v2 document -- absence means
     'no v2 document', never zero."""
     if not doc:
         return {}
     findings = [f for f in doc.get("findings") or [] if isinstance(f, dict)]
-    sev9 = {str(n): 0 for n in range(1, 10)}
+    sev9 = {str(n): 0 for n in range(1, severity9.MAX_LEVEL + 1)}
     techniques: dict[str, dict] = {}
     worst = None
     n_non_image = 0
@@ -240,7 +241,9 @@ def _v2_run_fields(doc: dict) -> dict:
             if not is_image_finding(f):
                 n_non_image += 1
             sev = f.get("severity")
-            if isinstance(sev, int):
+            # A rung off the current ladder (an 8 or 9 stored before ladder
+            # version 4 removed them) is unranked, not a crash.
+            if isinstance(sev, int) and str(sev) in sev9:
                 sev9[str(sev)] += 1
                 if worst is None or sev > worst:
                     worst = sev
@@ -1535,7 +1538,7 @@ def sort_papers(papers: list[dict]) -> list[dict]:
         # image papers).
         pp = p.get("pubpeer") if isinstance(p.get("pubpeer"), dict) else {}
         pubpeer_image = 0 if pp.get("is_image_integrity") else 1
-        # The 1-9 ladder, worst (9) first; unranked papers last.
+        # The 1-7 ladder, worst (7) first; unranked papers last.
         sev9 = p.get("worst_severity_9")
         rank = -sev9 if isinstance(sev9, int) else 99
         unreviewed = 0 if not (p.get("review") or {}).get("reviewed") else 1

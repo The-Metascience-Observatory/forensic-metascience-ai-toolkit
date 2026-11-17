@@ -18,7 +18,7 @@
 
 The tool-layer 5-enum (`impossible|highly_suspicious|suspicious|indeterminate|
 consistent`, `tools/severity.py`) is an **epistemic verdict about a number** and
-survives untouched in every ToolSpec, guard, and test. The 1–9 severity
+survives untouched in every ToolSpec, guard, and test. The 1–7 severity
 (`severity9.py`) is a **correction-outcome ranking**: what a journal
 would have to do if the finding were confirmed. A finding carries both — the enum
 inside `tool_verdict`, the ranking in `provisional_severity`/`severity` — and the
@@ -45,8 +45,8 @@ producer-facing subset schema (§4) — enforced by omission, never by prose.
 | `description` | string 20–700 | model/code | yes | §8. Plain English. Rewrites preserved in `description_was`. |
 | `location` | string | model/code | yes | Reader's terms: "Table 2, BDI row". |
 | `outcome` | `problem\|pass\|undecided` | model/code | yes | Replaces v1 `consistent` bool. `pass` = ran and found nothing; `undecided` = refusal/indeterminate. |
-| `provisional_severity` | int 1–9, null | model/code, clamped by annotator | on `problem` | Producer's estimate; pipeline clamps under the evidence-channel caps (§7); no ceiling. Null unless `outcome=problem`. |
-| `severity` | int 1–9, null | adjudicator | — | Final. Null unless `outcome=problem` and `adjudication.action≠discarded`. When the adjudicator did not run, annotator copies provisional here and sets `severity_is_provisional`. |
+| `provisional_severity` | int 1–7, null | model/code, clamped by annotator | on `problem` | Producer's estimate; pipeline clamps under the evidence-channel caps (§7); no ceiling. Null unless `outcome=problem`. |
+| `severity` | int 1–7, null | adjudicator | — | Final. Null unless `outcome=problem` and `adjudication.action≠discarded`. When the adjudicator did not run, annotator copies provisional here and sets `severity_is_provisional`. |
 | `severity_is_provisional` | bool | annotator | yes | True whenever `severity` was not adjudicator-assigned. Always true for `fast_screen` and converted legacy rows. |
 | `impossible` | bool | annotator | yes | Derivation rule §1.5. Neither model nor adjudicator can set it. Default false. |
 | `tool_verdict` | object, null | annotator | — | §1.4. Joined from the validated toolcall ledger, never trusted from prose. |
@@ -394,9 +394,11 @@ canonical rendering — e.g. `S7 · fatal error`, "Level 6 — results unreliabl
 | 4 | `local_flaw` | Localized methodological flaw or omission | public correction (corrigendum) |
 | 5 | `conclusions_affected` | Major error affecting conclusions | corrigendum or partial retraction |
 | 6 | `unreliable` | Severe error — results unreliable | expression of concern; retraction candidate |
-| 7 | `fatal_error` | Fatal error invalidating main findings | retraction (honest error) |
-| 8 | `misconduct` | Serious misconduct | retraction (misconduct) |
-| 9 | `extreme_misconduct` | Malicious or extreme misconduct | retraction, sanctions |
+| 7 | `fatal_error` | Fatal error invalidating main findings | retraction |
+
+Rungs 8 (`misconduct`) and 9 (`extreme_misconduct`) were removed in ladder
+version 4: the scale stops at a fatal error, and `severity9.MAX_LEVEL` (7) is
+the top of every range check.
 
 **Maps.** `FIVE_TO_NINE = {"suspicious": 3, "highly_suspicious": 4,
 "impossible": 5}` (one value, stated once — the legacy webapp badge derives
@@ -408,7 +410,7 @@ these; no literal severities elsewhere):
 
 - **No ceiling and no evidence-class cap (v1.14.0).** `PROVISIONAL_CAP`,
   `ADJUDICATOR_MAX_DEFAULT`, `ADJUDICATOR_MAX_MANIPULATION` and
-  `PIPELINE_MAX` are removed; any role may write any rung 1–9. The caps
+  `PIPELINE_MAX` are removed; any role may write any rung 1–7. The caps
   below key on the evidence CHANNEL a number arrived through, never on the
   technique's class or on the level itself.
 - `AGENT_CODE_CAP = 4` (R4: agent-code evidence is probabilistic-class).
@@ -432,7 +434,7 @@ these; no literal severities elsewhere):
 **Rubric** (`rubric_markdown()`, embedded into agent + adjudicator prompts):
 the per-finding question is *"If this one finding were confirmed, and it were
 the only problem in the paper, what would the journal have to do about it?"*
-The rubric carries no composition rules (removed v1.14.0): the nine rungs,
+The rubric carries no composition rules (removed v1.14.0): the seven rungs,
 their boundary tests and that one question are the whole instruction.
 
 ## 8. Title and description rules
@@ -553,7 +555,7 @@ distinction the whole repo is built on, applied to its own reviewing stage.
 (Historical plan; implemented. Where it names a function that was built
 differently, the code is described as it stands.)
 
-- Fixture format: `severity_expected` becomes an INTEGER INTERVAL on the 1–9
+- Fixture format: `severity_expected` becomes an INTEGER INTERVAL on the 1–7
   ladder (e.g. `[3, 5]`); optional `allow_undecided: true` (an
   `outcome: undecided` row also scores in-interval). `verdict_expected`
   unchanged.

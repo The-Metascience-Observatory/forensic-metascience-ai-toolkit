@@ -135,7 +135,7 @@ class TestTheThreeFindingCountsAreLabelled:
         this pins the wiring the way TestTitleEscaping pinned fTitle."""
         html = render_viewer(collect(review))
         assert "countTitle" in html
-        assert "adjudicated findings (1-9 ladder)" in html
+        assert "adjudicated findings (1-7 ladder)" in html
         # "tool verdicts" was the wrong universe here too -- `D.findings` is the
         # findings document, not one row per check that returned.
         assert "tool verdicts; see Overview" not in html

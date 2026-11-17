@@ -12,6 +12,7 @@ import shlex
 from typing import Any
 
 from ..core import prompts
+from .. import severity9
 from .. import verdicts as _verdicts
 
 # Meta-narration that indicates the model's working notes leaked into the
@@ -80,7 +81,7 @@ def check_findings_v2(doc: dict) -> dict:
             problems.append(f"finding[{i}] ({tag}) adjudicated problem row "
                             "with no severity")
         if outcome == "problem" and sev is not None and not (
-                isinstance(sev, int) and 1 <= sev <= 9):
+                isinstance(sev, int) and 1 <= sev <= severity9.MAX_LEVEL):
             problems.append(f"finding[{i}] ({tag}) severity {sev!r} off the "
                             "ladder")
         if f.get("impossible"):

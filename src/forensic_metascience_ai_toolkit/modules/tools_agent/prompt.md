@@ -568,7 +568,7 @@ Each finding separates TWO axes that the old pipeline fused:
 - **`outcome`** — `problem` | `pass` | `undecided`. A tool's `consistent` is a
   `pass` row (a positive result, record it); a refusal or an uncheckable item
   is `undecided`, never silently dropped.
-- **`provisional_severity`** (1–9, `problem` rows only) — what this finding
+- **`provisional_severity`** (1–7, `problem` rows only) — what this finding
   would mean for the paper IF CONFIRMED, on the error-levels ladder in this
   prompt. Ask the ladder's question: if this were the only problem in the
   paper and the authors confirmed it, what would the journal have to do?

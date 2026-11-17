@@ -47,7 +47,7 @@ expert", stored producer `tool_expert`) and the *scientific proofreading
 agent* (methodology/contradictions/CONSORT flow, internet on, sandboxed
 `run_python_script`; formerly the "science-error analyst", stored producer
 `science_error`) — then an **adjudicator** merges, verifies and assigns
-each finding's final 1–9 severity into a findings-v2 document.
+each finding's final 1–7 severity into a findings-v2 document.
 `mode="two_stage"` is a deprecated ALIAS for the same pipeline, and the only
 other accepted value. **The serial sweep→editorial pipeline was DELETED in
 v1.27.0** (~11,800 lines, after the measurement under §Testing & eval showed
@@ -140,7 +140,7 @@ Readers of a converted document's `legacy` block (`db_push`, `discovery`,
   0.25·B, adjudicator the rest with a $0.20 floor), their findings merge
   with the image/text track rows, pre-adjudication annotators run (quote
   verification, tool-verdict ledger join, provisional clamps — evidence-
-  CHANNEL caps only; since v1.14.0 there is NO ceiling on the 1–9 ladder,
+  CHANNEL caps only; since v1.14.0 there is NO ceiling on the 1–7 ladder,
   every role may write any rung), then
   `adjudicate.build_docket`/`apply()` assign final severities with
   code-enforced clamps, and `write_parallel_outputs` writes the

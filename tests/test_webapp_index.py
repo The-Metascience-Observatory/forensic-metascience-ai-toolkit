@@ -34,7 +34,7 @@ def _paper(tmp_path, name="10.1234--demo", files=None, dirs=()):
 
 
 def _v2(verdict="unresolved", severities=(), **top):
-    """A minimal findings-v2 document: one `problem` row per 1-9 severity."""
+    """A minimal findings-v2 document: one `problem` row per 1-7 severity."""
     return {"schema_version": "2.0",
             "adjudication": {"ran": True, "verdict": verdict},
             "findings": [{"finding_id": f"f{i}", "technique": "grim",
@@ -327,7 +327,7 @@ class TestAPaperIsNotARun:
             "forensic_review/findings.v2.json": _v2("unresolved", [3]),
             "forensic_review/run_meta.json": {"total_cost_usd": 3.0},
             "forensic_review_current/findings.v2.json": _v2(
-                "does_not_reconcile", [9]),
+                "does_not_reconcile", [7]),
             "forensic_review_current/run_meta.json": {"total_cost_usd": 5.0},
         })
 
@@ -356,7 +356,7 @@ class TestAPaperIsNotARun:
         rec = W.scan_paper(d)
         assert rec["latest_run"] == "forensic_review_current"
         assert rec["verdict"] == "does_not_reconcile"
-        assert rec["worst_severity_9"] == 9
+        assert rec["worst_severity_9"] == 7
 
 
 class TestVerdictsAreComparableAcrossTheRename:

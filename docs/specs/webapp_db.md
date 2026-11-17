@@ -23,7 +23,7 @@
   `provisional_severity`, `tool_verdict`, `outcome`, `computed_by`).
 - **Implemented by master phases:** **5N** (Neon core: DDL, db-push, `[db]` extra,
   `corpus-stats --from-db` parity; the storage seam was not built), **6** (webapp: severity
-  1–9 UI, part of index v2, findings-query + stats dashboard, drafts). **8** (hosting:
+  1–7 UI, part of index v2, findings-query + stats dashboard, drafts). **8** (hosting:
   Auth.js, DB-first reviews, `db-pull`, triage UI, object-storage media) was not built. Phase 2's webapp items
   (persisted-anchor `paper-view`, `passage_key` fix, `HtmlArticlePane` haystack) are
   specced in `docs/specs/anchors.md`, not here. Phase 9's screen *runner* is future work;
@@ -534,20 +534,19 @@ The webapp reads through the workbench service (docs/workbench_storage.md).
   the file-scan mode on the migrated corpora (two implementations of the same stats must
   not diverge silently).
 
-## 8. Severity 1–9 in the webapp
+## 8. Severity 1–7 in the webapp
 
 - **One generated constants module**: CLI verb `metascience gen-webapp-constants` emits
   checked-in `webapp/lib/constants.gen.ts` from `severity9.as_json()` — levels, labels,
-  9-step colors, the canonical `FIVE_TO_NINE` legacy map
+  7-step colors, the canonical `FIVE_TO_NINE` legacy map
   ({suspicious: 3, highly_suspicious: 4, impossible: 5}), and the review decision vocab.
   A Python test (`tests/test_webapp_constants.py`) regenerates and **byte-compares**,
   with a mutated-ladder known-positive so the drift guard is proven live (LESSONS #4).
   `severity.ts` and `projectTableSort.ts` re-export from it. Python `tools/severity.py`
   and `report_render.SEVERITY_RANK` stay the tool-level 5-enum world — tools keep
   speaking the evidence enum.
-- **Colors**: sequential concern ramp — slate (1–2) → amber/orange (3–5) → red (6–7) →
-  deep-red/aubergine (8–9), with a deliberate hue break at 8 (misconduct is a kind
-  change, not a shade). CSS vars `--sev1…--sev9`, light + dark, emitted by the codegen.
+- **Colors**: sequential concern ramp — slate (1–2) → amber/orange (3–5) → red (6–7).
+  CSS vars `--sev1…--sev7`, light + dark, emitted by the codegen.
 - **IssueList**: badges like `S7 · fatal error`. Legacy-mapped runs show
   `S5 · impossible (legacy)` — S5 per the canonical FIVE_TO_NINE map, one value, stated
   once; **a mapped value is never presented as an assigned one**. Hide-below-N control

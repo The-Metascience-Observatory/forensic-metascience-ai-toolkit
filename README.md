@@ -16,10 +16,7 @@ Without a database, every result is still saved as files in the paper's `forensi
 metascience db-setup  
 ```
 
-If for some reason you don't want a database, running `metascience db-setup --no-database` records that and preflight will stop asking for it. 
-
-**The image analysis module is not included here**. 
-The image analysis code is in a private repository called `metascience-observatory-image-analysis` and we are only sharing it with trusted parties. For access, email dan@metascienceobservatory.org with a note describing what you would like to do with it.
+If for some reason you don't want a database, running `metascience db-setup --no-database` records decision. 
 
 **Modules that use AI need an AI agent CLI installed, or OpenRouter API key**
 
@@ -29,9 +26,8 @@ codex`), Grok Build (`--backend grok`), or Google Antigravity (`--backend antigr
 
 ## Quick start
 
-
 **Review a paper with the full pipeline** (both analysts,
-tracks, adjudicator; image pipeline if installed):
+tracks, adjudicator; and other plugins if installed):
 
 ```bash
 metascience analyze paper.pdf --backend claude --model sonnet --max-budget-usd 100 # or a paper directory
@@ -135,29 +131,38 @@ when the 5-hour window reaches 90%. The guard stops runs using Claude, Codex, or
 The codebase has a modular design. Users can add/remove modules and define their own custom pipelines. The "full" pipeline looks like this: 
 
 ```mermaid
+%%{init: {"flowchart":{"subGraphTitleMargin":{"top":-30,"bottom":0}}}}%%
 flowchart TD
-    doi(["A DOI"]) --> fetch["<b>fetchpdf</b> (separate repo)<br/>XML, HTML, PDF, supplements and data; lists missing PDFs for a human to obtain"]
-    fetch --> parse["<b>PDF parsing</b><br/>docling, PyMuPDF, publisher XML/HTML, Mistral OCR for corrupt text layers"]
+    doi(["A DOI"]) --> fetch["<b>fetchpdf</b> (separate repo)<br/>Pulls XML, HTML, PDF, Supplementary info, and external datasets when possible"]
+    fetch --> parse["<b>XML/HTML/PDF parsing</b><br/>docling, PyMuPDF, publisher XML/HTML, Mistral OCR for corrupt text layers"]
 
-    parse --> img["<b>Image detection</b><br/>deterministic"]
+    parse --> img["<b>Optional plugins</b><br/>image analysis, copypaste detection, and others (not included in this repo)"]
     parse --> txt["<b>Text forensics</b><br/>tortured phrases"]
     parse --> tools["<b>Forensic metascience tools agent</b> <br/>points the forensic tools at the paper's numbers; no web access"]
     parse --> sci["<b>Scientific proofreading agent</b> <br/>contradictions, scientific mistakes, methodological flaws"]
-    img --> imgrev["<b>Image AI review</b> <br/>screens out false positives and innocuous duplications"]
 
-    imgrev --> join["<b>Join and verify findings</b>"]
+    img --> join["<b>Join and verify findings</b>"]
     txt --> join
     tools --> join
     sci --> join
 
     join --> adj["<b>Adjudicator agent (optional)</b> <br/>dedupes, triages false positives, sets final severity, writes the paper-level verdict"]
-    adj --> db[("Save findings to database")]
-    db -.-> human["<b>Human review</b> <br/>workbench; humans decide what goes to PubPeer, authors or editors"]
+    adj --> out
+    subgraph out[" "]
+        direction LR
+        pad["<b>Review in webapp</b><br/>or HTML report"] ~~~ db[("Save findings to database")] --> human["<b>Review in webapp</b><br/>or HTML report"]
+    end
+    style out fill:none,stroke:none
 
     classDef agent fill:#e0f2f1,stroke:#00695c,color:#000
     classDef ink fill:#263238,stroke:#263238,color:#fff
-    class tools,sci,imgrev,adj agent
+    class tools,sci,adj agent
     class doi,human ink
+    %% The database and review boxes sit in an LR subgraph so they share a row with a real arrow.
+    %% pad is an invisible copy of the review box; it centres the database box under the adjudicator.
+    %% The init line's negative top margin removes the subgraph title gap so the adjudicator's arrow reaches the database box.
+    classDef ghost fill:none,stroke:none,color:transparent
+    class pad ghost
     click fetch href "https://github.com/The-Metascience-Observatory/fetchpdf" _blank
 ```
 
@@ -214,7 +219,7 @@ Outputs go to `forensic_review/` inside a paper directory, or to
 `<paper>_forensic_review_<model>_v<version>/` beside a PDF (`-o` overrides).
 
 - `report.md` (and `report.pdf`): rendered from the findings document, headline first, with what could NOT be checked and a provenance stamp.
-- `findings.v2.json`: every finding with its id, producer, technique, final 1-9 severity, tool verdict, quotes and a reproduction command. Discarded findings are kept with their disposition.
+- `findings.v2.json`: every finding with its id, producer, technique, final 1-7 severity, tool verdict, quotes and a reproduction command. Discarded findings are kept with their disposition.
 - `adjudication.json`: the adjudicator's raw output.
 - `run_meta.json`: cost, tokens, timing, versions and prompt hashes.
 - `analysis_code/`: every script the proofreading agent ran. 
@@ -232,7 +237,7 @@ numbers cannot all be true, which says nothing about which is wrong or why.
 Before reading anything into one, see
 [docs/GRIM_CONTEXT_DEPENDENCY.md](docs/GRIM_CONTEXT_DEPENDENCY.md) (nineteen
 innocent mechanisms). The adjudicator then gives each finding a final severity
-on a 1-9 ladder. The severity ladder levels are documented in [docs/errorlevels.md](docs/errorlevels.md)
+on a 1-7 ladder. The severity ladder levels are documented in [docs/errorlevels.md](docs/errorlevels.md)
 
 ## Reviewing results: the workbench
 

@@ -61,7 +61,7 @@ a file's own header is not evidence. Use `extract_xml` / `extract_pdf`, or
 
 Every finding carries two different judgments. The EVIDENCE verdict
 (`impossible` … `consistent`) is what the tool established about a number —
-it is already recorded and is not yours to change. The 1–9 SEVERITY is what
+it is already recorded and is not yours to change. The 1–7 SEVERITY is what
 the finding means for the paper, on the error-levels ladder below. Ask, for
 each finding: **if this one finding were confirmed by the authors, and it
 were the only problem in the paper, what would the journal have to do about

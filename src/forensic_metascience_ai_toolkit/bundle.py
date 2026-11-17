@@ -79,7 +79,7 @@ _FILE_BLURBS = {
     "report.md": "The review itself -- what you would read.",
     "run_meta.json": "Cost, tokens, wall time and the model each stage actually used.",
     "sandbox_audit.json": "Whether every statistic came from a validated tool.",
-    "findings.v2.json": "Every finding with its final 1-9 severity and the "
+    "findings.v2.json": "Every finding with its final 1-7 severity and the "
                         "adjudicator's ruling -- the review's document of record.",
     "adjudication.json": "The adjudicator's raw output: per-finding verdicts "
                          "and the paper-level call.",
@@ -411,7 +411,7 @@ def _sankey(calls: list[dict], findings: list[dict]) -> dict:
     lefts = sorted({s for s, _ in flows}, key=lambda s: -sum(
         v for (a, _), v in flows.items() if a == s))
     rights = [s for s in SEVERITY_LEVELS if any(t == s for _, t in flows)]
-    # THE ADAPTER'S OWN VOCABULARY. `_v2_container` renders a 1-9 rung as the
+    # THE ADAPTER'S OWN VOCABULARY. `_v2_container` renders a 1-7 rung as the
     # string "S<n>", which is not in SEVERITY_LEVELS, so on a v2 bundle every
     # accusation's flow pointed at a target with no node and the JS dropped
     # the ribbon (`if(!a||!b) return ''`). MEASURED on litvak05 (v1.22.0):
@@ -2956,7 +2956,7 @@ def _v2_container(doc: dict) -> dict:
     Severity display: `severity` becomes the STRING "S<n>" plus the rung's
     label and colors from `severity9.as_json()` -- the ladder's single
     source, same as the workbench constants. The legacy 5-enum words are
-    NEVER synthesized from a 1-9 level: "impossible" in particular is
+    NEVER synthesized from a 1-7 level: "impossible" in particular is
     reachable only through the pipeline's own derivation, and a display
     mapping that mints it would put the strongest word this system can say
     on findings that never earned it.
@@ -3126,7 +3126,7 @@ def collect(review_dir: Path, paper_dir: Path | None = None) -> dict:
         "value_register_error": _read_text(review_dir / "value_register.error.txt"),
         "findings": anchor_findings(findings.get("findings") or [],
                                     pdfs[0] if pdfs else None, body_text),
-        # The adjudicator's paper-level block (verdict, paper_severity 1-9,
+        # The adjudicator's paper-level block (verdict, paper_severity 1-7,
         # headline_finding_id, summary).
         "adjudication": adjudication_summary,
         "coverage": findings.get("coverage") or {},
@@ -4888,7 +4888,7 @@ S.push({id:'overview', label:'Overview', build(){
             the same as the severity above</summary>
             <span class="muted">A verdict grades WHAT THE CHECKS FOUND across
             the whole paper and has three values; a severity grades ONE FINDING
-            and is a rung of the 1-9 ladder. So a single ${sev(hl.severity)} finding need not stop
+            and is a rung of the 1-7 ladder. So a single ${sev(hl.severity)} finding need not stop
             the numbers reconciling -- a middle rung is a question, not a
             determination.</span></details>`:'')],
       ['confidence', ed.confidence?esc(ed.confidence)+' <span class="muted">-- grades the strength of the review evidence, not the paper</span>':'-'],
@@ -6034,7 +6034,7 @@ function defineJargon(html){
 }
 
 /* THE FINDINGS-V2 PAGE. A parallel-era run (v1.0.0+) has one finding
-   universe, already adjudicated: each row carries its FINAL 1-9 severity,
+   universe, already adjudicated: each row carries its FINAL 1-7 severity,
    the adjudicator's action and rationale, and the paper-level verdict sits
    in D.adjudication. It renders natively rather than wearing the serial
    pipeline's 5-word vocabulary -- an S5 is not "impossible", and pretending
@@ -6048,7 +6048,7 @@ function v2FindingsPage(){
   const chip=f=>{
     if(!f.severity_9) return '';
     const c=(f.severity_colors||{}).light||'#556';
-    const t=esc((f.severity_label||'')+' -- final 1-9 severity, assigned by the adjudicator');
+    const t=esc((f.severity_label||'')+' -- final 1-7 severity, assigned by the adjudicator');
     return '<span class="def" title="'+t+'" style="background:'+c+';color:#fff;border-radius:3px;padding:0 6px;font-weight:600">S'+f.severity_9+'</span>';
   };
   const hid=adj.headline_finding_id;
@@ -6090,7 +6090,7 @@ function v2FindingsPage(){
 S.push({id:'findings', label:'Findings', count(){
   return (D.findings||[]).length;
 }, countTitle(){
-  return (D.findings||[]).length+' adjudicated findings (1-9 ladder)';
+  return (D.findings||[]).length+' adjudicated findings (1-7 ladder)';
 }, build(){
   return v2FindingsPage();
 }});

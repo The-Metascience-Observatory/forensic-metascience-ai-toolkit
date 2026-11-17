@@ -51,7 +51,7 @@ class TestBothVocabularies:
             assert not S.is_accusatory({"severity": s})
 
     def test_the_v2_ladder_accuses_at_and_above_the_shared_constant(self):
-        for lvl in range(ACCUSATORY_MIN, 9):
+        for lvl in range(ACCUSATORY_MIN, 8):  # 1-7 ladder (version 4)
             assert S.is_accusatory({"severity": lvl, "outcome": "problem"}), lvl
         for lvl in range(0, ACCUSATORY_MIN):
             assert not S.is_accusatory({"severity": lvl, "outcome": "problem"}), lvl

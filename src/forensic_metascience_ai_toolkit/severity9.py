@@ -1,5 +1,5 @@
 """
-The ONE source of truth for the 1-9 severity ladder
+The ONE source of truth for the 1-7 severity ladder
 (`docs/specs/findings_v2.md` section 7). Two axes: the tool-layer 5-enum in
 `tools/severity.py` is an EPISTEMIC verdict about a number and stays in every
 ToolSpec, guard and test; this ladder is a CORRECTION-OUTCOME ranking
@@ -15,7 +15,7 @@ importing the enum would invite "convenience" conversions in tool code.
 Consumers: prompt assembly (`rubric_markdown()`); the pipeline annotator and
 `adjudicate.apply()` (evidence-channel cap constants + `clamp_provisional()`;
 no literal severities anywhere else, and NO absolute ceiling -- every role may
-write any rung 1-9); the Part C codegen (`as_json()` ->
+write any rung 1-7); the Part C codegen (`as_json()` ->
 `webapp/lib/constants.gen.ts` and `docs/severity_ladder.json`, both written by
 `metascience gen-webapp-constants`).
 
@@ -34,7 +34,7 @@ from typing import NamedTuple
 # reviews across such a boundary are not comparable, same as the MINOR rule
 # in CHANGELOG.md. This is the ladder's own version, not the finding-id
 # hasher's (that constant lives with the hasher).
-LADDER_VERSION = "3"
+LADDER_VERSION = "4"
 
 
 class Level(NamedTuple):
@@ -183,61 +183,27 @@ LEVELS: dict[int, Level] = {
     7: Level(
         slug="fatal_error",
         label="Fatal error invalidating main findings",
-        correction_outcome="retraction (honest error)",
+        correction_outcome="retraction",
         finding_rubric=(
-            "An honest mistake that is determinedly fatal: the wrong cell "
-            "line or strain, a coding or calculation error that erases the "
-            "key result, data misread so the primary conclusion is wrong. "
-            "Nothing can be isolated or repaired. Confirmed and alone, the "
-            "journal would retract the paper as an honest error."
+            "A mistake that is determinedly fatal: the wrong cell line or "
+            "strain, a coding or calculation error that erases the key "
+            "result, data misread so the primary conclusion is wrong. Nothing "
+            "can be isolated or repaired. Confirmed and alone, a good journal "
+            "would retract the paper."
         ),
         boundaries=(
             "Down to 6 if: the outcome is still open -- some part may be "
             "salvageable.",
-            "Up to 8 if: there is positive evidence of intent.",
         ),
-        web_summary="An honest mistake that destroys the central finding.",
-    ),
-    8: Level(
-        slug="misconduct",
-        label="Serious misconduct",
-        correction_outcome="retraction (misconduct)",
-        finding_rubric=(
-            "A breach of research integrity rather than a mistake, possibly "
-            "confined in scope: plagiarism, deliberate data manipulation or "
-            "falsification in part of the work, research conducted without "
-            "ethical approval. This rung requires POSITIVE evidence of "
-            "manipulation, never mere improbability. Confirmed and alone, the "
-            "journal would retract, and the notice would name the misconduct "
-            "category."
-        ),
-        boundaries=(
-            "Down to 7 if: the result is merely implausible, with no "
-            "affirmative evidence of intent.",
-            "Up to 9 if: the fraud spans multiple papers, or caused direct "
-            "harm to patients, policy or the public.",
-        ),
-        web_summary="Deliberate manipulation, evidenced, possibly confined.",
-    ),
-    9: Level(
-        slug="extreme_misconduct",
-        label="Malicious or extreme misconduct",
-        correction_outcome="retraction, sanctions",
-        finding_rubric=(
-            "Willful, systematic fraud broad in scope or with direct "
-            "consequences for public welfare or policy: fabricated datasets "
-            "or images across figures or papers, a manipulated clinical "
-            "trial, deception that misled a field. Confirmed, the journal "
-            "would retract with condemnation and institutions would pursue "
-            "sanctions."
-        ),
-        boundaries=(
-            "Down to 8 if: the breach is confined to a single paper -- "
-            "however many of its figures -- and caused no external harm.",
-        ),
-        web_summary="Systematic fraud, or fraud that harmed the public.",
+        web_summary="A mistake that destroys the central finding.",
     ),
 }
+
+#: The top rung. Every range check (`1 <= sev <= MAX_LEVEL`) reads this, so
+#: the ladder's length is stated once. Rungs 8 (misconduct) and 9 (extreme
+#: misconduct) were removed in ladder version 4: intent is not something this
+#: pipeline can establish from a paper, so the scale stops at a fatal error.
+MAX_LEVEL = max(LEVELS)
 
 # ---------------------------------------------------------------------------
 # Maps between the tool-layer 5-enum (as STRINGS -- never import the enum)
@@ -266,7 +232,7 @@ OUTCOME_FROM_FIVE: dict[str, str] = {
 # imports these; a literal severity anywhere else is a defect (spec section
 # 7). There is deliberately NO absolute ceiling and no cap keyed on a
 # technique's evidence class (v1.14.0): the analysts and the adjudicator may
-# rank any rung 1-9. What remains caps the CHANNEL a number arrived through --
+# rank any rung 1-7. What remains caps the CHANNEL a number arrived through --
 # code the agent wrote, a screen, model memory, model arithmetic, a
 # quarantined detector -- because that is where the measured false
 # accusations came from.
@@ -381,7 +347,7 @@ def clamp_provisional(
 
     ALL caps compose by MIN, so application order is irrelevant. There is no
     ceiling keyed on the technique's evidence class and no pipeline maximum: a
-    finding whose channel carries no cap keeps whatever rung 1-9 it claimed.
+    finding whose channel carries no cap keeps whatever rung 1-7 it claimed.
     `computed_by` may also be the finding's `basis` ("model_knowledge"): a
     memory-based claim's evidence channel IS model memory, and the
     `computed_by` enum has no member for it.
@@ -396,11 +362,11 @@ def clamp_provisional(
     """
     if isinstance(sev, bool) or not isinstance(sev, int):
         raise ValueError(
-            f"provisional severity must be an int 1-9, got {sev!r}"
+            f"provisional severity must be an int 1-{MAX_LEVEL}, got {sev!r}"
         )
-    if not 1 <= sev <= 9:
+    if not 1 <= sev <= MAX_LEVEL:
         raise ValueError(
-            f"provisional severity must be in 1..9, got {sev}"
+            f"provisional severity must be in 1..{MAX_LEVEL}, got {sev}"
         )
 
     caps: list[int] = []
@@ -430,7 +396,7 @@ def rubric_markdown() -> str:
     """The ladder digest embedded into agent and adjudicator prompts,
     rendered from `LEVELS` so prompt text cannot drift from the data."""
     lines = [
-        "## Severity ladder (1-9)",
+        f"## Severity ladder (1-{MAX_LEVEL})",
         "",
         "Rank each `problem` finding by one question:",
         "",
@@ -451,13 +417,10 @@ def rubric_markdown() -> str:
 
 
 # ---------------------------------------------------------------------------
-# Colors: the 9-step concern ramp (docs/specs/webapp_db.md section 8).
+# Colors: the 7-step concern ramp (docs/specs/webapp_db.md section 8).
 # Sequential: slate (1-2, record-keeping) -> amber/orange (3-5, correction
-# territory) -> red (6-7, retraction territory) -> deep magenta-red /
-# aubergine (8-9). The hue break at 8 is deliberate: misconduct is a KIND
-# change, not a shade of worse -- a reader must not be able to mistake an 8
-# for a slightly darker 7. `light` is the variant for light backgrounds,
-# `dark` for dark backgrounds.
+# territory) -> red (6-7, retraction territory). `light` is the variant for
+# light backgrounds, `dark` for dark backgrounds.
 # ---------------------------------------------------------------------------
 
 SEVERITY9_COLORS: dict[int, dict[str, str]] = {
@@ -468,8 +431,6 @@ SEVERITY9_COLORS: dict[int, dict[str, str]] = {
     5: {"light": "#c2410c", "dark": "#f97316"},  # deep orange
     6: {"light": "#dc2626", "dark": "#f87171"},  # red
     7: {"light": "#b91c1c", "dark": "#ef4444"},  # deep red
-    8: {"light": "#9d174d", "dark": "#f472b6"},  # hue break: magenta-red
-    9: {"light": "#581c87", "dark": "#c084fc"},  # aubergine
 }
 
 

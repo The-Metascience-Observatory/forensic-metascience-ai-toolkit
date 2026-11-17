@@ -656,7 +656,7 @@ def find_constant_outcome_checks(archive: Path | None = None,
         for it in (items or []):
             if not isinstance(it, dict):
                 continue
-            # What the TOOL returned, not the adjudicated 1-9 rung: a v2 row
+            # What the TOOL returned, not the adjudicated 1-7 rung: a v2 row
             # carries the tool's own word in `tool_verdict`, and a row with no
             # tool verdict is counted by its outcome.
             tool = str(it.get("technique") or it.get("tool") or "")

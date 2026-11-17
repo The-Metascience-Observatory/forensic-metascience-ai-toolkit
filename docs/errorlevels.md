@@ -1,8 +1,8 @@
-# Error levels (1-9)
+# Error levels (1-7)
 
-> Written 2026-08-21, last revised 2026-09-01. The ladder itself is `severity9.py`; `docs/severity_ladder.json` is generated from it and checked by tests -- this file is the prose.
+> Written 2026-08-21, last revised 2026-11-17 (ladder version 4: rungs 8 and 9 removed). The ladder itself is `severity9.py`; `docs/severity_ladder.json` is generated from it and checked by tests -- this file is the prose.
 
-The severity ladder used by this toolkit: nine rungs answering one question
+The severity ladder used by this toolkit: seven rungs answering one question
 about a single finding.
 
 > If this one finding were confirmed, and it were the only problem in the
@@ -19,7 +19,7 @@ against it.
 
 ## Two axes, not one
 
-The 1-9 ladder is a **correction-outcome ranking**. It is not the same thing
+The 1-7 ladder is a **correction-outcome ranking**. It is not the same thing
 as the tool-layer verdict (`impossible | highly_suspicious | suspicious |
 indeterminate | consistent`), which is an **epistemic** statement about a
 number. A finding carries both, and neither is derivable from the other.
@@ -47,8 +47,6 @@ you can look up:
 | 4 → 5 | Does a claim **in the abstract** change? |
 | 5 → 6 | Can you still **bound** which results survive? |
 | 6 → 7 | Is the outcome **settled**? |
-| 7 → 8 | Is there **positive evidence of intent**? |
-| 8 → 9 | Does it span **multiple papers**, or cause **external harm**? |
 
 The 3/4 seam is the one that does the most work: a transcription error and a
 methods error look alike on the page and are not remotely alike in what they
@@ -64,15 +62,13 @@ mean.
 | 4 | `local_flaw` | Localized methodological flaw or omission | public correction (corrigendum) |
 | 5 | `conclusions_affected` | Major error affecting conclusions | corrigendum or partial retraction |
 | 6 | `unreliable` | Severe error -- results unreliable | expression of concern; retraction candidate |
-| 7 | `fatal_error` | Fatal error invalidating main findings | retraction (honest error) |
-| 8 | `misconduct` | Serious misconduct | retraction (misconduct) |
-| 9 | `extreme_misconduct` | Malicious or extreme misconduct | retraction, sanctions |
+| 7 | `fatal_error` | Fatal error invalidating main findings | retraction |
 
 Per-rung criteria and boundary tests are in `severity9.py`; they are rendered
 into every agent prompt at assembly time so the text cannot drift from this
 table.
 
-## Four things about the shape of the ladder
+## Three things about the shape of the ladder
 
 **Levels 1 and 2 are one band.** Both leave the findings unchanged; the only
 difference is whether the journal bothers to publish a notice. The code
@@ -81,13 +77,14 @@ record-keeping, not accusations). Use 2 when unsure. They stay separate rungs
 because collapsing them would renumber everything below, invalidating stored
 findings for no analytic gain.
 
-**The axis switches at 7.** Levels 1-7 rank by consequence. But 7, 8 and 9 all
-resolve to "retract", so the outcome axis saturates there and the
-discriminator above 7 becomes **culpability and scale**, not harm. This means
-the ordering is not monotone in damage: the arsenic-life paper (7, honest)
-misled a field for fifteen years, while a plagiarized paragraph plus a few
-invented data points (8) may mislead nobody. Level 8 is not "worse than 7";
-it is a different kind of thing that also ends in retraction.
+**The ladder stops at 7.** Level 7 is a fatal mistake: the main finding is
+destroyed and a good journal would retract. Earlier versions (ladder version
+3 and before) continued to 8 (serious misconduct) and 9 (malicious or extreme
+misconduct). Those rungs were removed in ladder version 4: above 7 the outcome
+axis saturates at "retract" and the only remaining discriminator is intent,
+which is not something a review of the paper's own record can establish.
+Stored findings ranked 8 or 9 under the old ladder fall outside the 1-7 range
+and are treated as unranked.
 
 **Level 6 records unbounded scope, not a journal's procedural state.** It is
 tempting to define 6 as "under investigation" -- but whether an institution
@@ -95,12 +92,6 @@ has opened a review is not a property of the paper, and this pipeline cannot
 know it. Define 6 by what you can and cannot say: at 5 you can name which
 claim falls and which stand; at 6 you cannot. Cases sit at 6 temporarily and
 leave it in both directions once the scope is established.
-
-**Level 9 merges two rungs deliberately.** Broad systematic fraud and fraud
-with public consequences were originally separate; they are merged because
-9 is reached rarely enough that splitting them would buy resolution nobody
-uses. (Until v1.14.0 the pipeline could not assign 9 at all; it now can,
-through the same rubric as every other rung.)
 
 ## Worked cases
 
@@ -150,11 +141,11 @@ journal filed the notice.
 - Vaitiekėnas *et al.*, Science 2018 (EoC 2021). `10.1126/science.abl5286`
 
 These sit at 6 because at the time of the notice nobody could say which
-results survived. Note that two of them cite image integrity: if intent is
-later established they move to 8, and if the concerns are resolved they move
-down. The rung records the state of knowledge, and it is expected to change.
+results survived. Note that two of them cite image integrity: if the problems
+are shown to destroy the main finding they move to 7, and if the concerns are
+resolved they move down. The rung records the state of knowledge, and it is expected to change.
 
-**Level 7 -- honest, and fatal**
+**Level 7 -- fatal**
 - Wolfe-Simon *et al.*, Science 2010 ("arsenic life"). Retracted 2025 after
   follow-up work found no arsenate in GFAJ-1 DNA and explained the growth by
   trace phosphate. No misconduct was alleged; the conclusions simply did not
@@ -164,37 +155,7 @@ down. The rung records the state of knowledge, and it is expected to change.
   recombinant arising during cell-line passage, i.e. laboratory
   contamination. `10.1126/science.334.6063.1636-a`
 - Lee *et al.*, Science 2009 (XA21). Strain mislabeling and assay problems
-  invalidated the main claim; intent was not established, which is what keeps
-  it at 7. `10.1126/science.342.6155.191-a`
-
-**Level 8 -- evidenced misconduct, confined to one paper**
-- LaCour & Green, Science 2014 ("When contact changes minds"). Irregularities
-  and no verifiable raw data. `10.1126/science.aac6638`
-- Shu *et al.*, PNAS 2012 (signing at the beginning). Data-integrity
-  problems. `10.1073/pnas.2115397118`
-- Chen, Journal of Vibration and Control 2009. A fabricated peer-review ring.
-  `10.1177/1077546309349849`
-- Dunoyer *et al.*, The Plant Cell 2004. Image manipulation and duplication
-  across several figures -- **several figures of one paper is still 8**;
-  multiple papers would make it 9. `10.1105/tpc.15.00407`
-- Neurology 2017 partial retraction. An author removed and a figure replaced
-  after misconduct findings. The *outcome* was partial, the *cause* was
-  misconduct: classify on the cause. `10.1212/WNL.0000000000003650`
-
-**Level 9 -- systematic, or harmful outside the literature**
-- Schön *et al.*, Nature 2001. Fabricated and duplicated data across a body
-  of work. `10.1038/nature01464`
-- Hwang *et al.*, Science 2005. Fabricated patient-specific stem-cell data;
-  national investigation. `10.1126/science.1124926`
-- Wakefield *et al.*, The Lancet 1998. Ethics breaches and data
-  misrepresentation; sustained public-health harm.
-  `10.1016/S0140-6736(10)60175-4`
-- Macchiarini *et al.*, The Lancet 2011. Ethics violations and
-  misrepresented outcomes in patients who died.
-  `10.1016/S0140-6736(18)31558-7`
-- Mehra *et al.*, The Lancet 2020 (Surgisphere). Unverifiable third-party
-  data; the paper halted WHO trial arms before retraction.
-  `10.1016/S0140-6736(20)31324-6`
+  invalidated the main claim. `10.1126/science.342.6155.191-a`
 
 ## A calibration warning
 

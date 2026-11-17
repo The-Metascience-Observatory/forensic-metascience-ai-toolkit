@@ -84,7 +84,7 @@ Any other mode string raises.
 > more legacy-writer behaviours reached the parallel path: the sandbox audit's
 > `guards` block (v1.23.1 — v1.22.0's port had dropped it, leaving the
 > viewer's guard pane empty on every parallel run), severity reconciliation
-> onto the 1-9 ladder (v1.24.0), and the dispatcher's machine-generated
+> onto the 1-7 ladder (v1.24.0), and the dispatcher's machine-generated
 > refusal list plus the supplement record (v1.25.0).
 >
 > **DELIBERATELY NOT PORTED: the highlight workbook.**
@@ -165,11 +165,11 @@ adjudicator), the code is current.
 | exhaustive checks | PRE | |
 | consequence | PRE | feeds the adjudicator's severity question |
 | severity reconciliation (tool-verdict join) | PRE | the docket needs `tool_verdict` populated |
-| uncomputed / supplied-norm / unanchored-norm clamps | PRE (on provisional) **and** POST (re-applied to final 1–9 via severity9 caps) | clamps may never be weaker after adjudication than before |
+| uncomputed / supplied-norm / unanchored-norm clamps | PRE (on provisional) **and** POST (re-applied to final 1–7 via severity9 caps) | clamps may never be weaker after adjudication than before |
 | sourcing | PRE | copies quote verdicts onto findings |
 | second_look worklist | PRE | handed to the adjudicator as input |
 | titles | POST | operates on final records; adjudicator title rewrites preserved |
-| 1–9 clamps (`severity9` channel caps, quarantine, +2 upgrade limit) | POST | code-enforced, per adjudicator.md — no ceiling (v1.14.0); merged pattern findings are EXEMPT from the +2 upgrade limit |
+| 1–7 clamps (`severity9` channel caps, quarantine, +2 upgrade limit) | POST | code-enforced, per adjudicator.md — no ceiling (v1.14.0); merged pattern findings are EXEMPT from the +2 upgrade limit |
 | anchors (`anchors.annotate_findings`, Part C) | POST (finalizer) | never fails the run |
 | web_unbacked / code_unbacked (NEW, §9) | PRE | fabrication guards must be visible to the adjudicator |
 
@@ -288,7 +288,7 @@ with the per-tool verbs it named.
 - Drops: the "textual and semantic flags" item (moves to the science agent).
 - Adds: the two-analyst mission paragraph + handoff rule; output section =
   the findings-v2 **producer subset** schema with an embedded example JSON;
-  severity framed as two axes (evidence verdict enum + provisional 1–9 from
+  severity framed as two axes (evidence verdict enum + provisional 1–7 from
   the severity9 rubric).
 
 **`science_error.md`** (NEW) — section outline, in order:
@@ -641,7 +641,7 @@ Measured against agy 1.4.2, 2026-10-18 (`--backend antigravity`, alias `agy`;
 - `render_report` keeps every structural guarantee: headline-first,
   severity-ordered findings, "what we could NOT check", figure-blindness
   limitation.
-- Sort key becomes severity 1–9 descending, with a legacy string fallback for
+- Sort key becomes severity 1–7 descending, with a legacy string fallback for
   archived v1 runs. Level labels render as
   `Level 6 — results unreliable (retraction candidate)` (text from
   `severity9`).
@@ -753,7 +753,7 @@ New or changed suites (beyond per-tool tests already listed):
   one-release aliases, file-naming contract (§13).
 - `webapp/test/smoke.mjs` / `tests/test_webapp_index.py` — the `v2_pending`
   fallback never crashes and never reads as a clean paper.
-- Eval changes (fixture relabeling to 1–9 intervals, judge on severity9, the
+- Eval changes (fixture relabeling to 1–7 intervals, judge on severity9, the
   CONSORT-rich fixture) are Phase 7 and owned by the master plan's A8 —
   findings_v2.md §9 owns only the `deterministic.py` v2 validation slice.
 

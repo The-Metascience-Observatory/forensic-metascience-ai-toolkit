@@ -642,12 +642,12 @@ def clamp_provisionals(rows: list[dict]) -> dict:
         if sev is None:
             continue
         slug = str(row.get("slug") or f"row {i}")
-        if isinstance(sev, bool) or not isinstance(sev, int) or not 1 <= sev <= 9:
+        if isinstance(sev, bool) or not isinstance(sev, int) or not 1 <= sev <= severity9.MAX_LEVEL:
             summary["n_skipped"] += 1
             summary["problems"].append({
                 "index": i, "slug": row.get("slug"),
                 "constraint": "provisional_severity_type",
-                "problem": (f"provisional_severity must be an int 1-9, "
+                "problem": (f"provisional_severity must be an int 1-{severity9.MAX_LEVEL}, "
                             f"got {sev!r}; left unclamped"),
             })
             continue

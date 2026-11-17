@@ -120,7 +120,7 @@ def _strip_figure_section(text: str) -> str:
 
 
 def _severity_ladder() -> str:
-    """The 1-9 rubric, emitted by severity9 at assembly time (R1: one severity
+    """The 1-7 rubric, emitted by severity9 at assembly time (R1: one severity
     source; a ladder FILE would be a second copy that drifts)."""
     from ...severity9 import rubric_markdown
 

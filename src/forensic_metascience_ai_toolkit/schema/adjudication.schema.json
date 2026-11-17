@@ -25,8 +25,8 @@
           "severity": {
             "type": ["integer", "null"],
             "minimum": 1,
-            "maximum": 9,
-            "description": "Final 1-9; null only when discarded. apply() clamps: quarantined rows to 3; an upgrade to at most provisional+2 unless the category is merged_pattern; an upgrade with an ineligible category reverts to the provisional. No ceiling: any rung 1-9 may be written."
+            "maximum": 7,
+            "description": "Final 1-7; null only when discarded. apply() clamps: quarantined rows to 3; an upgrade to at most provisional+2 unless the category is merged_pattern; an upgrade with an ineligible category reverts to the provisional. No ceiling: any rung 1-7 may be written."
           },
           "category": {
             "type": "string",
@@ -77,8 +77,8 @@
         "paper_severity": {
           "type": ["integer", "null"],
           "minimum": 1,
-          "maximum": 9,
-          "description": "The paper-level rung, 1-9; apply() only guards a malformed number. No ceiling (v1.14.0)."
+          "maximum": 7,
+          "description": "The paper-level rung, 1-7; apply() only guards a malformed number. No ceiling (v1.14.0)."
         },
         "headline_finding_id": {
           "type": "string",

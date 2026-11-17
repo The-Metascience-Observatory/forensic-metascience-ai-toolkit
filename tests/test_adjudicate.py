@@ -175,53 +175,61 @@ class TestClampBattery:
     def test_manipulation_is_plus_two_bound(self):
         """v1.14.0: the manipulation 8-gate is gone. `manipulation` is an
         ordinary upgrade category, bound by +2 like `consequence_reassessed`,
-        so a provisional 5 asking for 8 lands on 7 -- and the clamp is
+        so a provisional 3 asking for 6 lands on 5 -- and the clamp is
         recorded, because a clamp is visible, never silent."""
-        f = finding("f_a", prov=5, producer="image_track",
+        f = finding("f_a", prov=3, producer="image_track",
                     quote_verified="verbatim")
-        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=8,
+        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=6,
+                                  category="manipulation")])
+        assert f["severity"] == 5
+        assert f["adjudication"]["severity_from"] == 6
+
+    def test_the_top_rung_needs_no_gate(self):
+        """No located quote, no tool, no current-run producer required: the
+        only bound on the top rung is the +2 movement rule."""
+        f = finding("f_a", prov=5, producer="legacy_sweep",
+                    computed_by="model_reading", quote_verified="absent")
+        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=7,
                                   category="manipulation")])
         assert f["severity"] == 7
-        assert f["adjudication"]["severity_from"] == 8
-
-    def test_eight_needs_no_gate(self):
-        """No located quote, no tool, no current-run producer required: the
-        only bound on 8 is the +2 movement rule."""
-        f = finding("f_a", prov=6, producer="legacy_sweep",
-                    computed_by="model_reading", quote_verified="absent")
-        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=8,
-                                  category="manipulation")])
-        assert f["severity"] == 8
         assert "severity_from" not in f["adjudication"]
 
-    def test_adjudicator_may_write_nine_from_provisional_seven(self):
-        f = finding("f_a", prov=7)
-        fs, s = run([f], [verdict("f_a", action="upgraded", severity=9,
+    def test_adjudicator_may_write_the_top_rung_from_provisional_five(self):
+        f = finding("f_a", prov=5)
+        fs, s = run([f], [verdict("f_a", action="upgraded", severity=7,
                                   category="consequence_reassessed")])
-        assert f["severity"] == 9
+        assert f["severity"] == 7
         assert "severity_from" not in f["adjudication"]
 
-    def test_a_kept_nine_survives(self):
-        """An analyst may now write 9 directly; a kept verdict at 9 is 9."""
-        f = finding("f_a", prov=9)
-        fs, _ = run([f], [verdict("f_a", severity=9)])
-        assert f["severity"] == 9
+    def test_a_kept_seven_survives(self):
+        """An analyst may write 7 directly; a kept verdict at 7 is 7."""
+        f = finding("f_a", prov=7)
+        fs, _ = run([f], [verdict("f_a", severity=7)])
+        assert f["severity"] == 7
 
-    def test_merged_pattern_may_reach_nine_from_anywhere(self):
-        f = finding("f_a", prov=3)
-        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=9,
+    def test_a_removed_rung_is_off_the_ladder(self):
+        """Ladder version 4 removed rungs 8 and 9: a verdict asking for 8 is
+        malformed and the provisional stands."""
+        f = finding("f_a", prov=5)
+        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=8,
                                   category="merged_pattern")])
-        assert f["severity"] == 9
+        assert f["severity"] == 5
+
+    def test_merged_pattern_may_reach_the_top_rung_from_anywhere(self):
+        f = finding("f_a", prov=3)
+        fs, _ = run([f], [verdict("f_a", action="upgraded", severity=7,
+                                  category="merged_pattern")])
+        assert f["severity"] == 7
 
     def test_ineligible_category_upgrade_reverts_to_provisional(self):
         f = finding("f_a", prov=4)
-        fs, _ = run([f], [verdict("f_a", severity=9, category="none")])
+        fs, _ = run([f], [verdict("f_a", severity=7, category="none")])
         assert f["severity"] == 4
-        assert f["adjudication"]["severity_from"] == 9
+        assert f["adjudication"]["severity_from"] == 7
 
     def test_no_nine_counter_in_summary(self):
-        f = finding("f_a", prov=7)
-        fs, s = run([f], [verdict("f_a", action="upgraded", severity=9,
+        f = finding("f_a", prov=5)
+        fs, s = run([f], [verdict("f_a", action="upgraded", severity=7,
                                   category="consequence_reassessed")])
         assert "n_nine_clamped" not in s
 
@@ -312,12 +320,12 @@ class TestPaperBlock:
         fs, s = run([a, b], [verdict("f_a", severity=3),
                              verdict("f_b", severity=6,
                                      category="consequence_reassessed")],
-                    paper={"verdict": "unresolved", "paper_severity": 9,
+                    paper={"verdict": "unresolved", "paper_severity": 7,
                            "confidence": "low", "summary": "s" * 200,
                            "headline_finding_id": "f_ghost"})
         assert s["headline_finding_id"] == "f_b"
         assert s["n_headline_fallback"] == 1
-        assert s["paper_severity"] == 9   # no ceiling (v1.14.0)
+        assert s["paper_severity"] == 7   # no ceiling (v1.14.0)
 
     def test_paper_severity_out_of_range_clamps_to_the_ladder(self):
         a = finding("f_a", prov=3)
@@ -325,7 +333,7 @@ class TestPaperBlock:
                     paper={"verdict": "unresolved", "paper_severity": 12,
                            "confidence": "low", "summary": "s" * 200,
                            "headline_finding_id": "f_a"})
-        assert s["paper_severity"] == 9
+        assert s["paper_severity"] == 7
 
     def test_a_discarded_row_cannot_headline(self):
         a, b = finding("f_a", prov=3), finding("f_b", prov=6)

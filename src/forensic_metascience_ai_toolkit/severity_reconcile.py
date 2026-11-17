@@ -414,7 +414,7 @@ def annotate(result: dict, ledger: list[dict] | None = None) -> dict:
 #: may be entirely right -- the archive's best catches are in this band -- but
 #: nothing in the pipeline reproduced it, so it may not reach the two rungs that
 #: read as established fact.
-#: The v1 five-value enum a TOOL returns, onto the 1-9 ladder a v2 finding
+#: The v1 five-value enum a TOOL returns, onto the 1-7 ladder a v2 finding
 #: carries. `severity9.FIVE_TO_NINE` covers only the three ACCUSATORY values
 #: (suspicious 3, highly_suspicious 4, impossible 5); `indeterminate` and
 #: `consistent` map to non-problem outcomes with a NULL severity and have no
@@ -451,7 +451,7 @@ def _adjudication_reason(finding: dict) -> bool:
 
     In v1 the editorial stage had no mandate to re-grade, so any departure
     from the tool's verdict was suspicious on its face. In v2 an adjudicator
-    exists whose ENTIRE JOB is assigning the final 1-9 severity: a departure
+    exists whose ENTIRE JOB is assigning the final 1-7 severity: a departure
     is the design working. Flagging every departure would fire on nearly every
     finding, and a guard that fires on everything is one nobody reads.
 

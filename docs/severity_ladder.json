@@ -12,7 +12,7 @@
     "impossible": 5,
     "suspicious": 3
   },
-  "ladder_version": "3",
+  "ladder_version": "4",
   "levels": [
     {
       "boundaries": [
@@ -111,50 +111,18 @@
     },
     {
       "boundaries": [
-        "Down to 6 if: the outcome is still open -- some part may be salvageable.",
-        "Up to 8 if: there is positive evidence of intent."
+        "Down to 6 if: the outcome is still open -- some part may be salvageable."
       ],
       "colors": {
         "dark": "#ef4444",
         "light": "#b91c1c"
       },
-      "correction_outcome": "retraction (honest error)",
-      "finding_rubric": "An honest mistake that is determinedly fatal: the wrong cell line or strain, a coding or calculation error that erases the key result, data misread so the primary conclusion is wrong. Nothing can be isolated or repaired. Confirmed and alone, the journal would retract the paper as an honest error.",
+      "correction_outcome": "retraction",
+      "finding_rubric": "A mistake that is determinedly fatal: the wrong cell line or strain, a coding or calculation error that erases the key result, data misread so the primary conclusion is wrong. Nothing can be isolated or repaired. Confirmed and alone, a good journal would retract the paper.",
       "label": "Fatal error invalidating main findings",
       "n": 7,
       "slug": "fatal_error",
-      "web_summary": "An honest mistake that destroys the central finding."
-    },
-    {
-      "boundaries": [
-        "Down to 7 if: the result is merely implausible, with no affirmative evidence of intent.",
-        "Up to 9 if: the fraud spans multiple papers, or caused direct harm to patients, policy or the public."
-      ],
-      "colors": {
-        "dark": "#f472b6",
-        "light": "#9d174d"
-      },
-      "correction_outcome": "retraction (misconduct)",
-      "finding_rubric": "A breach of research integrity rather than a mistake, possibly confined in scope: plagiarism, deliberate data manipulation or falsification in part of the work, research conducted without ethical approval. This rung requires POSITIVE evidence of manipulation, never mere improbability. Confirmed and alone, the journal would retract, and the notice would name the misconduct category.",
-      "label": "Serious misconduct",
-      "n": 8,
-      "slug": "misconduct",
-      "web_summary": "Deliberate manipulation, evidenced, possibly confined."
-    },
-    {
-      "boundaries": [
-        "Down to 8 if: the breach is confined to a single paper -- however many of its figures -- and caused no external harm."
-      ],
-      "colors": {
-        "dark": "#c084fc",
-        "light": "#581c87"
-      },
-      "correction_outcome": "retraction, sanctions",
-      "finding_rubric": "Willful, systematic fraud broad in scope or with direct consequences for public welfare or policy: fabricated datasets or images across figures or papers, a manipulated clinical trial, deception that misled a field. Confirmed, the journal would retract with condemnation and institutions would pursue sanctions.",
-      "label": "Malicious or extreme misconduct",
-      "n": 9,
-      "slug": "extreme_misconduct",
-      "web_summary": "Systematic fraud, or fraud that harmed the public."
+      "web_summary": "A mistake that destroys the central finding."
     }
   ],
   "outcome_from_five": {

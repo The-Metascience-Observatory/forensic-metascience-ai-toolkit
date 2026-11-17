@@ -8,7 +8,7 @@ subscription) with our forensic tools exposed via a stdio MCP server
 The live pipeline is `mode="parallel"` (v1.0.0, 2026-08-21; see
 docs/specs/pipeline.md and parallel.py): two analysts -- a tool expert and a
 science-error analyst -- run concurrently with the independent image pipeline,
-then an adjudicator merges their findings into a findings-v2 document with a 1-9 severity. This module keeps
+then an adjudicator merges their findings into a findings-v2 document with a 1-7 severity. This module keeps
 the stage driver (`_run_stage`), the annotators, input resolution and the
 output writers that `parallel.py` calls.
 
@@ -823,7 +823,7 @@ def checks_tally(messages: list[dict] | None, findings: dict | None) -> dict:
     # v1 findings carry a lowercase `severity` string on the
     # `consistent|indeterminate|suspicious|highly_suspicious|impossible` ladder.
     # findings-v2 carries `outcome` (`pass|problem|undecided`) and an INTEGER
-    # `severity` 1-9, and the tally is computed BEFORE adjudication, when even
+    # `severity` 1-7, and the tally is computed BEFORE adjudication, when even
     # that integer is still `provisional_severity`. So `str(f["severity"])` fell
     # through to "unknown" for every v2 finding and `checks_total` came out 0.
     #

@@ -111,7 +111,7 @@ def _print_analyze_summary(result: dict) -> None:
                    if f.get("outcome") == "problem"
                    and isinstance(f.get("severity"), int))
     adj = (result.get("findings_v2") or {}).get("adjudication") or {}
-    console.print("Findings (1-9 ladder):")
+    console.print("Findings (1-7 ladder):")
     for sev in sorted(sev9, reverse=True):
         console.print(f"  S{sev}: {sev9[sev]}")
     console.print(f"  merged: {adj.get('n_merged', 0)}, "
@@ -984,6 +984,7 @@ _image_command("image-reviews-export", "image_reviews_export_cmd")
 _image_command("image-benchmark-compare", "image_benchmark_compare_cmd")
 _image_command("image-gate", "image_gate_cmd")
 _image_command("image-cache-prune", "cache_prune_cmd", "image_cache_prune_cmd")
+_image_command("image-panels-reclaim", "panels_reclaim_cmd", "image_panels_reclaim_cmd")
 _image_command("image-dataset-compose", "image_dataset_compose_cmd")
 _image_command("image-panel-benchmark", "image_panel_benchmark_cmd")
 _image_command("image-overlap-bench", "image_overlap_bench_cmd")

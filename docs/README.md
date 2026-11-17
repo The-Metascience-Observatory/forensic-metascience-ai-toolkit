@@ -31,7 +31,7 @@ lives in that repository, not here.
 
 | Document | Why read it |
 |---|---|
-| [errorlevels.md](errorlevels.md) | The 1-9 severity ladder explained for humans, with worked cases. [severity_ladder.json](severity_ladder.json) is the generated machine copy (do not edit by hand) |
+| [errorlevels.md](errorlevels.md) | The 1-7 severity ladder explained for humans, with worked cases. [severity_ladder.json](severity_ladder.json) is the generated machine copy (do not edit by hand) |
 | [GRIM_CONTEXT_DEPENDENCY.md](GRIM_CONTEXT_DEPENDENCY.md) | Nineteen innocent reasons a GRIM "impossible" can appear. Read before acting on one |
 | [VALIDATION.md](VALIDATION.md) | How the tools are checked against R reference implementations and how the full review is scored on papers with known problems, in plain terms |
 | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md) | Open and decided design questions, dated |

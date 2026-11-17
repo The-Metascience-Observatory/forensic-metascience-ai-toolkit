@@ -14,7 +14,7 @@ science-error agent, image track, text track, and the opt-in raw-data track
 `raw_data_track`, quarantined and never headline -- `adjudicate._unscreened`)
 and after the pre-adjudication
 annotators, that: dedupes/merges findings across producers, triages
-misapplications and innocent explanations, assigns the FINAL 1–9 severity per
+misapplications and innocent explanations, assigns the FINAL 1–7 severity per
 finding, and emits the paper-level block (verdict, `paper_severity`, headline,
 confidence, bounded `summary`). It **absorbs today's stage-2 editorial role**;
 `report_markdown` dies — the adjudicator's `summary` is the report's narrative
@@ -114,7 +114,7 @@ The adjudicator imports, never redeclares: `FIVE_TO_NINE`
 
 **There is no ceiling (v1.14.0).** `PIPELINE_MAX`, `ADJUDICATOR_MAX_*`, the
 manipulation 8-gate and the analysts' evidence-class `PROVISIONAL_CAP` were
-removed; the adjudicator may write any rung 1–9, and the prompt carries no
+removed; the adjudicator may write any rung 1–7, and the prompt carries no
 composition rules. What still binds is movement (the +2 rule below) and the
 producer-side evidence-CHANNEL caps in `findings_v2.md` §7.
 
@@ -144,7 +144,7 @@ each with the exact numbers, each individually tested (§9):
    list on the target; a merged row keeps its own record with
    `adjudication.action = "merged"`.
 4. **Clamps**, applied in order after the action:
-   - `severity` must be an integer 1–9 from the model; anything else → the
+   - `severity` must be an integer 1–7 from the model; anything else → the
      silence rule for that row.
    - Quarantined rows clamp to `QUARANTINE_CAP = 3`.
    - **Upgrade limit: `severity ≤ provisional_severity + 2`**, and upgrades
@@ -154,7 +154,7 @@ each with the exact numbers, each individually tested (§9):
      (a pervasiveness merge may express a level no single row could).
    - No ceiling: 8 and 9 are ordinary rungs, reached by the same +2 rule
      (9 from a provisional ≥ 7, or from anywhere via `merged_pattern`).
-     The final `min(sev, 9)` only guards a malformed number.
+     The final `min(sev, 7)` only guards a malformed number.
    - Every clamp records `severity_from` (the model's number) in the
      finding's `adjudication` object — a clamp is visible, never silent.
 5. **Evidence-quote verification.** A clear (`discarded`, or a downgrade with
@@ -207,7 +207,7 @@ Raw output is written verbatim to `<review_dir>/adjudication.json` (R6);
   ],
   "paper": {                          // required
     "verdict": "reconciles|unresolved|does_not_reconcile",  // existing enum
-    "paper_severity": 5,              // 1–9 (no ceiling since v1.14.0); clamped in apply()
+    "paper_severity": 5,              // 1–7 (no ceiling since v1.14.0); clamped in apply()
     "headline_finding_id": "f_…",     // must be a kept/upgraded/downgraded
                                       // problem row, never discarded/merged;
                                       // else apply() falls back to
@@ -240,7 +240,7 @@ validated against the live schema by a test so it cannot rot):
 2. **Inputs** — docket format, pass-count semantics, the named remainder,
    paper-text budget, `Read` discipline, `second_look`, `checks_tally`.
 3. **Severity rubric** — `rubric_markdown()` embedded at assembly time; the
-   two axes (evidence verdict vs 1–9 consequence); the governing question:
+   two axes (evidence verdict vs 1–7 consequence); the governing question:
    *"If this one finding were confirmed, and it were the only problem in the
    paper, what would the journal have to do about it?"*
 4. **Actions and categories** — the five actions, category meanings, the

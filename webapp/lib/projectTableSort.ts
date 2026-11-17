@@ -104,7 +104,7 @@ function yearNum(p: Paper): number {
   return Number.isFinite(n) ? n : NaN;
 }
 
-/** The paper's worst assigned 1-9 rung, or null. */
+/** The paper's worst assigned 1-7 rung, or null. */
 export function sev9Of(p: { worst_severity_9?: number | null }): number | null {
   return typeof p.worst_severity_9 === "number" ? p.worst_severity_9 : null;
 }

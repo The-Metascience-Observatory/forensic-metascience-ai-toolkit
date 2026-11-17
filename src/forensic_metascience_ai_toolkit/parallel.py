@@ -8,7 +8,7 @@ helpers, not a second pipeline:
     tool expert (no web, no code)  ||  science analyst (web on, MCP code)
                        ||  image track  ||  text track
         -> merge to findings-v2 -> pre-adjudication annotation
-        -> adjudicator (final 1-9) -> anchors -> write
+        -> adjudicator (final 1-7) -> anchors -> write
 
 Failure matrix (spec section "failure/partial"): one agent fails -> proceed
 with the survivor, loudly; both fail -> StageError; adjudicator fails ->

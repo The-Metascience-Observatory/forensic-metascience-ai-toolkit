@@ -1,5 +1,6 @@
 "use client";
 
+import { ProjectTabs } from "../ProjectTabs";
 import Link from "next/link";
 import { RunSelector } from "@/app/RunSelector";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -85,6 +86,7 @@ export function ImageQueue({ project, projectName }: {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+      <div style={{ padding: "0 12px", flexShrink: 0 }}><ProjectTabs project={project} active="images" /></div>
       <header style={{ display: "flex", alignItems: "center", gap: 12, padding: "6px 12px",
                        borderBottom: "1px solid var(--line)", background: "var(--panel)", flexShrink: 0 }}>
         <Link prefetch={false} href={`/project/${encodeURIComponent(project)}`} style={{ fontSize: 12 }}>← {projectName}</Link>

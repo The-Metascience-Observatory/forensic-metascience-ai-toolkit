@@ -43,6 +43,22 @@ that tree had uncommitted edits.
   as a DOI, against the local website checkout's `findings.json`, read through a
   new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
 
+## [Unreleased] — 2026-11-17 — project tabs; project name in the top bar
+
+- **A project opens on two tabs: Findings (the papers table, non-image
+  findings) and Image findings.** The image tab is greyed out and not a link
+  when the project has no image results (the image feed's total over every
+  verdict is 0, or the service has no image folder for it). Statistics stays
+  as a link at the right. The same tabs head the image queue
+  (`ProjectTabs.tsx`).
+- **The top bar names the project** on every page under `/project/<name>`
+  ("| <name> project", bold, dark blue, linking to the project), including
+  paper review pages (`ProjectCrumb.tsx`).
+- **The Copy/paste findings page is removed** (`/project/<name>/copypaste`);
+  the cache holds no copy-paste items. The RNG findings link is gone from the
+  project page; its route file stays for now because another session has
+  uncommitted work in it.
+
 ## [Unreleased] — 2026-11-17 — infinite scroll on a project's papers
 
 - **The project papers table scrolls instead of paging.** The first 50

@@ -11,6 +11,7 @@ type Seen = { offset: number; limit: number; q: string; sort: string };
 function serve(total: number, seen: Seen[] = [], hold?: (p: URLSearchParams) => Promise<void> | undefined) {
   const offsets: number[] = [];
   vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+    if (url.startsWith("/api/images")) return new Response(JSON.stringify({ feed: { pagination: { total: 0 } } }), { status: 200 });
     const p = new URL(url, "http://x").searchParams;
     const offset = Number(p.get("offset")), limit = Number(p.get("limit"));
     offsets.push(offset);

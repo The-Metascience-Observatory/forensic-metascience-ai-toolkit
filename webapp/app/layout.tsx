@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CacheStatus } from "./CacheStatus";
+import { ProjectCrumb } from "./ProjectCrumb";
 import { DeleteProgress } from "./DeleteProgress";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </svg>
               Metascience Observatory Review Platform
             </Link>
+            <ProjectCrumb />
             <div style={{ marginLeft: "auto", display: "flex",
                           alignItems: "center", gap: 8 }}>
               <CacheStatus /><AdminLinks /><ThemeToggle />

@@ -32,6 +32,5 @@ try {
  await page.getByText('← queue',{exact:true}).click();await page.waitForURL(u=>u.searchParams.get('run')===selection&&u.pathname.endsWith('/images'));
  await page.reload();await page.waitForFunction(n=>document.querySelectorAll('tbody tr').length===n,selected.items.length);
  await picker.selectOption(older);await page.waitForURL(u=>u.searchParams.get('run')===older);await page.goBack();await page.waitForURL(u=>u.searchParams.get('run')===selection);assert.equal(await picker.inputValue(),selection);
- await page.goto(`${base}/project/${project}/copypaste?run=latest`);await page.getByRole('heading',{name:'Copy/paste review'}).waitFor();
  assert.deepEqual(errors,[]);console.log(JSON.stringify({mixed_items:mixed.items.length,selected_items:selected.items.length,selection,owning_run:item.run_id,media_range:true,csv_provenance:true,pdf_rendered:true,summary_export:true,selection_navigation:true,page_errors:errors}));
 }finally{await browser.close();}

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ProjectTable } from "./ProjectTable";
+import { ProjectTabs } from "./ProjectTabs";
 import type { Paper } from "@/lib/types/catalog";
 import type { SortState } from "@/lib/projectTableSort";
 
@@ -143,15 +144,7 @@ export function PapersPage({ project }: { project: string }) {
     <div className="page" ref={pageEl}>
       <Link href="/">← projects</Link>
       <h1>{project}</h1>
-      <p>
-        <a href={`/project/${encodeURIComponent(project)}/images`}>Image findings</a>
-        {" · "}
-        <a href={`/project/${encodeURIComponent(project)}/copypaste`}>Copy/paste findings</a>
-        {" · "}
-        <a href={`/project/${encodeURIComponent(project)}/detector/rng_track`}>RNG findings</a>
-        {" · "}
-        <a href={`/project/${encodeURIComponent(project)}/stats`}>Statistics</a>
-      </p>
+      <ProjectTabs project={project} active="findings" />
       <label>
         Search{" "}
         <input

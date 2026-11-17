@@ -273,11 +273,16 @@ function Table({ projects, actions, select }: {
     for (const p of projects) { if (allChecked) next.delete(p.name); else next.add(p.name); }
     select.setSelected(next);
   };
-  const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" } | null>(null);
+  // "name" sorts the Project column A to Z first; the counts sort largest first.
+  const [sort, setSort] = useState<{ key: SortKey | "name"; dir: "asc" | "desc" } | null>(null);
   const rows = useMemo(() => {
     if (!sort) return projects;
     return [...projects].sort((a, b) => {
-      const left = a[sort.key], right = b[sort.key];
+      if (sort.key === "name") {
+        const byName = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
+        return sort.dir === "asc" ? byName : -byName;
+      }
+      const left = a[sort.key as SortKey], right = b[sort.key as SortKey];
       // Unavailable counts stay last in either direction; they are not zero.
       if (!Number.isFinite(left)) return Number.isFinite(right) ? 1 : 0;
       if (!Number.isFinite(right)) return -1;
@@ -295,7 +300,15 @@ function Table({ projects, actions, select }: {
                        checked={allChecked} onChange={toggleAll} />
               </th>
             )}
-            <th>Project</th>
+            <th aria-sort={sort?.key === "name" ? (sort.dir === "asc" ? "ascending" : "descending") : "none"}>
+              <button type="button" className="sort-th" title="Sort by project name"
+                    onClick={() => setSort((current) => ({
+                      key: "name",
+                      dir: current?.key === "name" && current.dir === "asc" ? "desc" : "asc",
+                    }))}>
+              Project{sort?.key === "name" ? (sort.dir === "asc" ? " ▴" : " ▾") : " ↕"}
+            </button>
+            </th>
             {columns.map(({ key, label }) => (
               <th key={key} style={{ textAlign: "right" }}
                   aria-sort={sort?.key === key ? (sort.dir === "desc" ? "descending" : "ascending") : "none"}>

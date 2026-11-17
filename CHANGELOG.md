@@ -31,6 +31,12 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — finding cards open and close on click
+
+- On a paper review page, clicking a finding card opens it and clicking it
+  again closes it. Clicks on its quote (Copy quote), feedback checkboxes,
+  page/jump buttons and detector evidence do not toggle it.
+
 ## [Unreleased] — 2026-11-17 — RNG "Observed vs generated" closed by default
 
 - On a seeded-RNG finding, the "Observed vs generated" values table starts

@@ -37,7 +37,7 @@ function imageOnlyProjects(listed: { name: string }[], counts: Record<string, Im
   return Object.entries(counts)
     .filter(([name, c]) => !names.has(name) && (c.n_latest_items ?? 0) > 0)
     .map(([name]) => ({
-      name, image_only: true, n_papers: 0, n_pdf: 0, n_xml: 0, n_image_run: 0,
+      name, image_only: true, n_papers: 0, n_pdf: 0, n_xml: 0, n_pdf_or_xml: 0, n_rng_papers: 0, n_image_run: 0,
       n_text_run: 0, n_human_reviewed: 0, n_not_fetched: 0, n_in_progress: 0,
     }));
 }
@@ -48,7 +48,7 @@ function imageOnlyProjects(listed: { name: string }[], counts: Record<string, Im
 function sourcedButUnlisted(listed: { name: string }[], names: string[]) {
   const have = new Set(listed.map(p => p.name));
   return names.filter(n => !have.has(n)).map(name => ({
-    name, n_papers: 0, n_pdf: 0, n_xml: 0, n_image_run: 0,
+    name, n_papers: 0, n_pdf: 0, n_xml: 0, n_pdf_or_xml: 0, n_rng_papers: 0, n_image_run: 0,
     n_text_run: 0, n_human_reviewed: 0, n_not_fetched: 0, n_in_progress: 0,
   }));
 }

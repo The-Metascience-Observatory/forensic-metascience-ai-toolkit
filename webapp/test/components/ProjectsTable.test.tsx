@@ -18,8 +18,8 @@ test("the home page joins image-review counts onto every listed project", () => 
   expect(home).toMatch(/const listed\s*=\s*\[\.\.\.catalog,[^\n]*\]\s*\n\s*\.filter\(p => visible\(p\.name\)\)/);
 });
 
-const fields = ["n_papers", "n_pdf", "n_xml", "n_image_run", "n_text_run", "n_human_reviewed"] as const;
-const labels = ["Papers", "With PDF", "With XML", "Image track", "Text track", "Human reviewed"];
+const fields = ["n_papers", "n_pdf_or_xml", "n_image_run", "n_text_run", "n_rng_papers", "n_human_reviewed"] as const;
+const labels = ["Papers", "With PDF/XML", "Image track", "Text track", "RNG track", "Human reviewed"];
 const rows = [2, 10, 0, null].map((value, i) => ({
   name: ["two", "ten", "zero", "unknown"][i],
   ...Object.fromEntries(fields.map((f) => [f, value])),

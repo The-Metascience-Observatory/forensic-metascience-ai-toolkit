@@ -492,6 +492,31 @@ class Repository(SharedImageQueueMixin):
         result,pagination=page(rows,args)
         return dict(papers=result,pagination=pagination,sync=self.catalog.status())
 
+    def rng_paper_counts(self):
+        """Per project, papers whose newest eligible seeded-RNG run kept a
+        problem row: the rows the papers table counts in its RNG column.
+
+        Chosen per paper, because the project-wide selection groups runs by
+        scope and keeps one RNG run for a whole batch; and read by run id from
+        the catalog, because the landing page's projection loads no findings.
+        """
+        newest={}
+        for x in self.runs.values():
+            if (component(x)!='rng_track' or x.get('retired_at') or x.get('paper_id') is None
+                    or (x.get('history_record') or {}).get('latest_eligible') is False):
+                continue
+            key=(self.project_for_run(x),x['paper_id'])
+            old=newest.get(key)
+            if old is None or (run_time(x),db_primary_key(x))>(run_time(old),db_primary_key(old)):
+                newest[key]=x
+        kept={f.get('run_id') for f in self.catalog.rows_for('findings','run_id',[db_primary_key(x) for x in newest.values()])
+              if f.get('producer')=='rng_track' and f.get('outcome')=='problem'
+              and f.get('adjudication_action') not in ('merged','discarded')}
+        counts=Counter()
+        for (project,_paper),x in newest.items():
+            counts[project]+=db_primary_key(x) in kept
+        return counts
+
     def projects(self):
         # One pass per collection, grouped by project. The per-project rescans
         # this replaces were quadratic: 5.7 s for 106 projects (2026-09-26).
@@ -500,10 +525,11 @@ class Repository(SharedImageQueueMixin):
         for p in self.papers.values():
             name=self.project_name(p);n_shared[name]+=1
             shared_dirs.setdefault(name,set()).add(p.get('dir'))
-        n_local=Counter();n_pdf=Counter();n_xml=Counter();local_image=Counter()
+        n_local=Counter();n_pdf=Counter();n_xml=Counter();n_pdf_or_xml=Counter();local_image=Counter()
         for (name,d),(b,path) in self.local.items():
             sources=b.get('sources',{})
             n_pdf[name]+=bool(sources.get('pdf'));n_xml[name]+=bool(sources.get('xml'))
+            n_pdf_or_xml[name]+=bool(sources.get('pdf') or sources.get('xml'))
             if d in shared_dirs.get(name,()): continue
             n_local[name]+=1
             local_image[name]+=b.get('channels',{}).get('image_forensics',{}).get('state')=='ran'
@@ -512,12 +538,13 @@ class Repository(SharedImageQueueMixin):
             run=self.runs.get(x['run_id']) if x['status']=='complete' else None
             if run and run.get('paper_id') is not None:
                 completed.setdefault(self.project_for_run(run),set()).add(run['paper_id'])
+        rng_papers=self.rng_paper_counts()
         rows=[]
         for name in names:
             selected=self.selected_runs(name)
             image_papers={x.get('paper_id') for x in selected if component(x)=='image_forensics' and x.get('status')=='complete'}-{None}
             text_papers={x.get('paper_id') for x in selected if component(x)=='text_track' and x.get('status')=='complete'}-{None}
-            rows.append(dict(name=name,n_papers=n_shared[name]+n_local[name],n_pdf=n_pdf[name],n_xml=n_xml[name],n_image_run=len(image_papers)+local_image[name],n_text_run=len(text_papers),n_human_reviewed=len(completed.get(name,())),n_not_fetched=0,n_in_progress=0))
+            rows.append(dict(name=name,n_papers=n_shared[name]+n_local[name],n_pdf=n_pdf[name],n_xml=n_xml[name],n_pdf_or_xml=n_pdf_or_xml[name],n_rng_papers=rng_papers[name],n_image_run=len(image_papers)+local_image[name],n_text_run=len(text_papers),n_human_reviewed=len(completed.get(name,())),n_not_fetched=0,n_in_progress=0))
         return dict(projects=rows,n_projects=len(rows),n_papers=sum(r['n_papers'] for r in rows),papers_root='registered local roots',sync=self.catalog.status())
 
     def find_item(self,args):

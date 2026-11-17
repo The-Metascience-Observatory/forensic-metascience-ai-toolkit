@@ -8,6 +8,10 @@ export interface ProjectRow {
   n_papers: number;
   n_pdf: number;
   n_xml: number;
+  /** Papers with a PDF or an XML (each paper once). */
+  n_pdf_or_xml?: number;
+  /** Papers whose seeded-RNG run kept at least one finding. */
+  n_rng_papers?: number;
   n_agent_run: number;
   n_image_run: number;
   n_image_discarded?: number;

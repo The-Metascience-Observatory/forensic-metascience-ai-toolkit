@@ -6,10 +6,10 @@ import { BulkDelete } from "./BulkDelete";
 
 const columns = [
   { key: "n_papers", label: "Papers" },
-  { key: "n_pdf", label: "With PDF" },
-  { key: "n_xml", label: "With XML" },
+  { key: "n_pdf_or_xml", label: "With PDF/XML" },
   { key: "n_image_run", label: "Image track" },
   { key: "n_text_run", label: "Text track" },
+  { key: "n_rng_papers", label: "RNG track" },
   { key: "n_human_reviewed", label: "Human reviewed" },
   { key: "n_image_reviewed", label: "Image reviews" },
   { key: "n_image_unviewed", label: "Image viewed / unviewed" },
@@ -18,6 +18,8 @@ const columns = [
 type SortKey = typeof columns[number]["key"];
 type ProjectSummary = Record<SortKey, number> & {
   name: string;
+  n_pdf?: number;
+  n_xml?: number;
   n_not_fetched: number;
   n_image_discarded?: number;
   n_image_refused?: number;
@@ -335,8 +337,7 @@ function Table({ projects, actions, select }: {
                 )}
               </td>
               <td style={{ textAlign: "right" }}>{p.n_papers}</td>
-              <td style={{ textAlign: "right" }}>{p.n_pdf}</td>
-              <td style={{ textAlign: "right" }}>{p.n_xml}</td>
+              <td style={{ textAlign: "right" }} title={`${p.n_pdf ?? 0} with a PDF · ${p.n_xml ?? 0} with an XML`}>{p.n_pdf_or_xml}</td>
               <td style={{ textAlign: "right" }}
                   title={(p.n_image_discarded || p.n_image_refused)
                     ? `${p.n_image_run} retained`
@@ -351,6 +352,7 @@ function Table({ projects, actions, select }: {
                 )}
               </td>
               <td style={{ textAlign: "right" }}>{p.n_text_run}</td>
+              <td style={{ textAlign: "right" }} title="Papers with at least one seeded-RNG finding">{p.n_rng_papers}</td>
               <td style={{ textAlign: "right" }}
                   title={p.n_in_progress
                     ? `${p.n_in_progress} in progress (not counted as reviewed)`

@@ -55,6 +55,19 @@ that tree had uncommitted edits.
   as a DOI, against the local website checkout's `findings.json`, read through a
   new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
 
+## [Unreleased] — 2026-11-17 — landing page: RNG track, With PDF/XML
+
+- **The projects table has an "RNG track" column**: papers whose newest
+  eligible seeded-RNG run kept at least one finding (the rows the papers
+  table counts in its RNG column). It is chosen per paper and read by run id
+  from the catalog, because the landing page's projection loads no findings
+  and the project-wide run selection keeps one RNG run per batch; the first
+  version read 0 everywhere for exactly those reasons
+  (`Repository.rng_paper_counts`). `rng_europepmc_screen`: 445 of 454.
+- **"With PDF" and "With XML" are one column, "With PDF/XML"**: papers with
+  either, each counted once (`n_pdf_or_xml`); the cell's tooltip keeps the two
+  separate counts.
+
 ## [Unreleased] — 2026-11-17 — deleting a project registered through a symlink
 
 - **A project whose registered folder is a symlink can now be deleted.** The

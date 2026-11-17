@@ -12,8 +12,9 @@ that tree had uncommitted edits.
 ## [Unreleased] — 2026-11-17 — "EXPORTED" badge on image findings
 
 - An image finding whose paper is already on the website's image-findings page
-  shows a green EXPORTED badge in the top bar, next to the finding id (hover
-  names the website entry). It matches the paper's DOI, or its folder name read
+  shows a green "FINDINGS ALREADY EXPORTED" badge in the top bar, next to the
+  finding id. It links (new tab) to that entry on the published page,
+  `https://metascienceobservatory.org/forensic-metascience-ai-toolkit/findings/image-findings#<id>`. It matches the paper's DOI, or its folder name read
   as a DOI, against the local website checkout's `findings.json`, read through a
   new `GET /api/images/website`. `websiteDir()` moved to `webapp/lib/websiteDir.ts`.
 

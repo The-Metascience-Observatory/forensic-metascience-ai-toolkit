@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Item } from "@/app/images/lib";
+import { PUBLISHED_PAGE } from "@/lib/websiteFinding";
 
 type Exported = { doi: string; id: string };
 
@@ -30,9 +31,11 @@ export function itemDois(item: Item): string[] {
   });
 }
 
-/** "EXPORTED" in the item's top bar when a paper of this finding is already
- *  on the website's image-findings page (matched by DOI, the key the
- *  website's findings.json is unique on). */
+/** "FINDINGS ALREADY EXPORTED" in the item's top bar when a paper of this
+ *  finding is already on the website's image-findings page (matched by DOI,
+ *  the key the website's findings.json is unique on). It links to that entry
+ *  on the published page; an entry added locally but not yet deployed lands
+ *  on the page without its anchor. */
 export function ExportedBadge({ item }: { item: Item }) {
   const [exported, setExported] = useState<Exported[]>([]);
   useEffect(() => { let live = true; loadExported().then(e => { if (live) setExported(e); }); return () => { live = false; }; }, []);
@@ -40,10 +43,11 @@ export function ExportedBadge({ item }: { item: Item }) {
   const hits = exported.filter(e => dois.includes(e.doi));
   if (!hits.length) return null;
   return (
-    <span data-exported-badge title={`On the website's image-findings page as ${hits.map(h => h.id).join(", ")}`}
-          style={{ background: "#1a7f37", color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 0.5,
-                   padding: "2px 8px", borderRadius: 10, flexShrink: 0 }}>
-      EXPORTED
-    </span>
+    <a data-exported-badge href={`${PUBLISHED_PAGE}#${encodeURIComponent(hits[0].id)}`} target="_blank" rel="noreferrer"
+       title={`Open ${hits.map(h => h.id).join(", ")} on the published image-findings page`}
+       style={{ background: "#1a7f37", color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 0.5,
+                padding: "2px 8px", borderRadius: 10, flexShrink: 0, textDecoration: "none", whiteSpace: "nowrap" }}>
+      FINDINGS ALREADY EXPORTED ↗
+    </a>
   );
 }

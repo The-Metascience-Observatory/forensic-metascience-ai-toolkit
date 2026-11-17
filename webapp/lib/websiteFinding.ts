@@ -15,6 +15,10 @@ export type WebsiteFinding = {
 export const FINDINGS_JSON = "app/forensic-metascience-ai-toolkit/findings/image-findings/findings.json";
 export const IMAGE_DIR = "public/assets/forensic-metascience-ai-toolkit/image-findings";
 export const IMAGE_URL = "/assets/forensic-metascience-ai-toolkit/image-findings";
+/** The image-findings page's path on the site, and its published address;
+ *  each entry is anchored by its id (`#yu-2014`). */
+export const PAGE_PATH = "/forensic-metascience-ai-toolkit/findings/image-findings";
+export const PUBLISHED_PAGE = `https://metascienceobservatory.org${PAGE_PATH}`;
 
 /** A PubPeer publication link, optionally to one comment (`#12`). Word's
  * meaningless `#null` fragment is dropped, as the page's README records.

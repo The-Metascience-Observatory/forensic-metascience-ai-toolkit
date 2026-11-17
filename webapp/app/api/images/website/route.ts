@@ -9,7 +9,7 @@ import { pyJson, pyModuleJson } from "@/lib/python";
 import { websiteDir } from "@/lib/websiteDir";
 import { workbench } from "@/lib/workbench";
 import { OVERRIDE_LOG, overrideConfirmed, overrideLine } from "@/lib/embargoOverride";
-import { FINDINGS_JSON, IMAGE_DIR, IMAGE_URL, citationFrom, findingId, normalisePubpeerUrl, pngSize,
+import { FINDINGS_JSON, IMAGE_DIR, IMAGE_URL, PAGE_PATH, citationFrom, findingId, normalisePubpeerUrl, pngSize,
   type WebsiteFinding } from "@/lib/websiteFinding";
 
 export const dynamic = "force-dynamic";
@@ -136,7 +136,7 @@ export async function POST(req: Request) {
   return NextResponse.json({
     id, doi, website: site, ...(marker ? { embargoOverridden: marker } : {}),
     files: [path.relative(site, findingsPath), path.relative(site, pngPath)],
-    page: `/forensic-metascience-ai-toolkit/findings/image-findings#${id}`,
+    page: `${PAGE_PATH}#${id}`,
     entry,
   });
 }

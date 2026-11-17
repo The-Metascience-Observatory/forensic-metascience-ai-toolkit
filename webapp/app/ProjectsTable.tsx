@@ -105,8 +105,16 @@ export function ProjectsTable({
   const [archiveOverride, setArchiveOverride] = useState<Record<string, boolean>>({});
   const isArchived = (p: ProjectSummary) => archiveOverride[p.name] ?? Boolean(p.archived);
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  // "Delete selected": the names whose combined delete plan is shown.
-  const [bulkDelete, setBulkDelete] = useState<string[] | null>(null);
+  // The Archived table's own selection (Unarchive / Delete selected there).
+  const [archivedSelected, setArchivedSelected] = useState<Set<string>>(new Set());
+  // "Delete selected": the names whose combined delete plan is shown, and
+  // which table asked (the dialog opens beside that table's buttons).
+  const [bulkDelete, setBulkDelete] = useState<{ names: string[]; from: "active" | "archived" } | null>(null);
+  const closeBulkDelete = (started: boolean) => {
+    const from = bulkDelete?.from;
+    setBulkDelete(null);
+    if (started) (from === "archived" ? setArchivedSelected : setSelected)(new Set());
+  };
   const [showArchived, setShowArchived] = useState(false);
   const {
     width: projectColWidth,
@@ -136,7 +144,10 @@ export function ProjectsTable({
         setArchiveOverride((o) => ({ ...o, [name]: !next }));
       }
     }
-    setSelected(new Set());
+    // The moved rows leave whichever selection held them.
+    const drop = (cur: Set<string>) => new Set([...cur].filter((n) => !names.includes(n)));
+    setSelected(drop);
+    setArchivedSelected(drop);
     if (failed.length) setErr(`Could not ${next ? "archive" : "unarchive"}: ${failed.join("; ")}`);
   }
 
@@ -295,7 +306,7 @@ export function ProjectsTable({
           <button type="button" onClick={() => setArchived([...selected], true)}>
             Archive selected
           </button>
-          <button type="button" className="danger" onClick={() => setBulkDelete([...selected])}>
+          <button type="button" className="danger" onClick={() => setBulkDelete({ names: [...selected], from: "active" })}>
             Delete selected…
           </button>
           <button type="button" onClick={() => setSelected(new Set())}>
@@ -303,12 +314,7 @@ export function ProjectsTable({
           </button>
         </p>
       )}
-      {bulkDelete && (
-        <BulkDelete names={bulkDelete} onClose={(started) => {
-          setBulkDelete(null);
-          if (started) setSelected(new Set());
-        }} />
-      )}
+      {bulkDelete?.from === "active" && <BulkDelete names={bulkDelete.names} onClose={closeBulkDelete} />}
       <Table
         projects={active}
         actions={actions}
@@ -349,9 +355,26 @@ export function ProjectsTable({
               <p className="muted" style={{ margin: "4px 0 0", fontSize: 12 }}>
                 Not watched or rescanned on this machine; papers and findings still open normally.
               </p>
+              {canManage && archivedSelected.size > 0 && (
+                <p style={{ marginTop: 12, display: "flex", gap: 8, alignItems: "center" }} data-archived-bar>
+                  <span>{archivedSelected.size} selected</span>
+                  <button type="button" onClick={() => setArchived([...archivedSelected], false)}>
+                    Unarchive selected
+                  </button>
+                  <button type="button" className="danger"
+                          onClick={() => setBulkDelete({ names: [...archivedSelected], from: "archived" })}>
+                    Delete selected…
+                  </button>
+                  <button type="button" onClick={() => setArchivedSelected(new Set())}>
+                    Clear
+                  </button>
+                </p>
+              )}
+              {bulkDelete?.from === "archived" && <BulkDelete names={bulkDelete.names} onClose={closeBulkDelete} />}
               <Table
                 projects={archived}
                 actions={actions}
+                select={canManage ? { selected: archivedSelected, setSelected: setArchivedSelected } : undefined}
                 projectColWidth={projectColWidth}
                 isColDragging={isColDragging}
                 getResizeHandleProps={getHandleProps}

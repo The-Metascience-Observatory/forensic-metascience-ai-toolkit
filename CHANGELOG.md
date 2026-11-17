@@ -31,6 +31,13 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — bulk actions on archived projects
+
+- Landing page: the Archived table has its own checkboxes (and select all).
+  With projects ticked there, "Unarchive selected", "Delete selected…" and
+  "Clear" appear in that section; the delete confirmation opens there too.
+  Its selection is separate from the active tables'.
+
 ## [Unreleased] — 2026-11-17 — finding cards open and close on click
 
 - On a paper review page, clicking a finding card opens it and clicking it

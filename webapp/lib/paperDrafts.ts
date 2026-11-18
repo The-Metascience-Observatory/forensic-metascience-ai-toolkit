@@ -53,6 +53,8 @@ export interface Draft {
   repo_url: string;
   repo_visibility: string;
   contacts_note: string;
+  /** The email's fixed opening sentence, plain and formatted (email only). */
+  citation?: { plain?: string; html?: string };
   /** Marked by the reviewer once they sent the email or posted the comment. */
   sent: { at: string; by: string } | null;
   edited?: { at: string; by: string };

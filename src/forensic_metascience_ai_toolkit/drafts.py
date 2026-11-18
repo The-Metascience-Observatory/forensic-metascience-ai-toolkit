@@ -171,6 +171,7 @@ def paper_facts(paper_dir: Path) -> dict:
         "authors": meta.get("authors") or "",
         "year": meta.get("year"),
         "issns": [], "publisher": "", "handling_editor": "",
+        "volume": "", "pages": "",
         "xml_emails": [], "corresponding": [],
     }
     xml_file = _xml_path(paper_dir)
@@ -186,6 +187,18 @@ def paper_facts(paper_dir: Path) -> dict:
     if not facts["doi"]:
         m = re.search(r'<article-id pub-id-type="doi">(.*?)</article-id>', xml)
         facts["doi"] = _strip(m.group(1)) if m else ""
+    # Volume, pages and year of THIS article: its <article-meta>, not the
+    # reference list (whose <volume> tags come later in the file).
+    meta_block = re.search(r"<article-meta\b.*?</article-meta>", xml, re.S)
+    am = meta_block.group(0) if meta_block else ""
+    tag = lambda name: (lambda m: _strip(m.group(1)) if m else "")(  # noqa: E731
+        re.search(rf"<{name}\b[^>]*>(.*?)</{name}>", am, re.S))
+    facts["volume"] = tag("volume")
+    first, last, eloc = tag("fpage"), tag("lpage"), tag("elocation-id")
+    facts["pages"] = eloc or (f"{first}\u2013{last}" if first and last and last != first else first)
+    if not facts["year"]:
+        years = re.findall(r"<pub-date\b[^>]*>.*?<year>(\d{4})</year>", am, re.S)
+        facts["year"] = years[0] if years else None
     facts["issns"] = list(dict.fromkeys(_strip(i) for i in re.findall(r"<issn\b[^>]*>(.*?)</issn>", xml, re.S)))
     m = re.search(r"<publisher-name>(.*?)</publisher-name>", xml, re.S)
     facts["publisher"] = _strip(m.group(1)) if m else ""
@@ -206,6 +219,44 @@ def paper_facts(paper_dir: Path) -> dict:
         corr += re.findall(r"<email\b[^>]*>(.*?)</email>", c, re.S)
     facts["corresponding"] = list(dict.fromkeys(_strip(e).lower() for e in corr))
     return facts
+
+
+def citation(facts: dict) -> dict:
+    """The email's fixed opening sentence, as plain text and as HTML:
+    'I am writing about "Title", Journal 13, 3853 (2022), doi:10.x/y.'
+    In the HTML the title links to the DOI, the journal is in italics and the
+    volume in bold. `{}` when the paper has no title."""
+    title, journal, doi = facts.get("title") or "", facts.get("journal") or "", facts.get("doi") or ""
+    if not title:
+        return {}
+    vol, pages, year = facts.get("volume") or "", facts.get("pages") or "", facts.get("year") or ""
+    tail = ", ".join(x for x in [" ".join(x for x in [journal, vol] if x), pages] if x)
+    tail += f" ({year})" if year else ""
+    plain = f'I am writing about "{title}"' + (f", {tail}" if tail else "") + (f", doi:{doi}" if doi else "") + "."
+    e = html.escape
+    url = f"https://doi.org/{doi}" if doi else ""
+    t_html = f'<a href="{e(url)}">{e(title)}</a>' if url else e(title)
+    j_html = " ".join(x for x in [f"<i>{e(journal)}</i>" if journal else "", f"<b>{e(str(vol))}</b>" if vol else ""] if x)
+    tail_html = ", ".join(x for x in [j_html, e(str(pages))] if x) + (f" ({e(str(year))})" if year else "")
+    rich = f'I am writing about "{t_html}"' \
+        + (f", {tail_html}" if tail_html else "") \
+        + (f', doi:<a href="{e(url)}">{e(doi)}</a>' if doi else "") + "."
+    return {"plain": plain, "html": rich}
+
+
+def place_citation(body: str, sentence: str) -> str:
+    """Make sure the body says `sentence` as its own paragraph, right after
+    the greeting: the model is asked to, and this puts it there when it did
+    not (or reworded it)."""
+    if not sentence or sentence in body:
+        return body
+    paras = body.split("\n\n")
+    # Drop a paragraph the model wrote in its place ("I am writing about ...").
+    paras = [p for p in paras if not p.strip().startswith("I am writing about")]
+    at = 0
+    while at < len(paras) and re.match(r"\s*(dear|hello|hi)\b", paras[at], re.I):
+        at += 1
+    return "\n\n".join(paras[:at] + [sentence] + paras[at:])
 
 
 # ---------------------------------------------------------- the model calls
@@ -450,8 +501,14 @@ _RULES = """- Describe inconsistencies, never intent. Banned words: fabricated,
 - State what was found with its numbers (which figure or table, how many
   values, what they match). Quote the paper only where a few words settle a
   point.
-- When a reproduction repository URL is given, point to it in one line. When
+- When a reproduction repository URL is given, link it in one line. When
   none is given, say the reproduction code is available on request.
+- When the numbers can be generated in a few lines of code (at most about 6;
+  e.g. a seed, one generator call and the scaling), include those lines so a
+  reader can run them, taken from the reproduction scripts or README given
+  (never invented beyond what they show), each code line indented by four
+  spaces, with a blank line before and after the block. When
+  it takes more than that, point to the repository instead.
 The reviewer's notes (triage note, repository README) are the reviewed
 account: where they and the raw findings differ, follow the notes."""
 
@@ -461,7 +518,8 @@ reviewer to a journal's editors, with the article's authors in copy.
 Rules, non-negotiable:
 - Very concise and to the point: 120-200 words in the body. No filler, no
   flattery, no background on what the reviewer's project is.
-- Name the article by title, journal and DOI in the first sentence.
+- After the greeting, the first paragraph is the OPENING SENTENCE given,
+  word for word and on its own. Do not name the article again after it.
 - Ask the editors to assess the matter and the authors to clarify (for
   instance, to share the raw data).
 - Greet the editors (by name when given) and the authors (the corresponding
@@ -495,7 +553,8 @@ def _clip(text: str, n: int) -> str:
 
 
 def draft_prompt(kind: str, facts: dict, to: list[dict], cc: list[str], who: str,
-                 findings: dict | None, triage: str, readme: str, repo_url: str) -> str:
+                 findings: dict | None, triage: str, readme: str, repo_url: str,
+                 scripts: dict[str, str] | None = None) -> str:
     parts = [
         "Draft the email." if kind == "email" else "Draft the PubPeer comment.",
         "",
@@ -509,27 +568,55 @@ def draft_prompt(kind: str, facts: dict, to: list[dict], cc: list[str], who: str
             "TO (editors): " + ("; ".join(f"{c.get('name') or '?'} ({c.get('role')})" for c in to) or "the editors"),
             "CC (authors): " + (", ".join(cc) or "none found")
             + (f"; corresponding: {', '.join(facts.get('corresponding') or [])}" if facts.get("corresponding") else ""),
+            f"OPENING SENTENCE (verbatim, its own paragraph after the greeting): {citation(facts).get('plain', '')}",
             f"REVIEWER (sign as): {who}" if who
             else "REVIEWER (sign as): unknown -- end with the placeholder [Your name]",
         ]
     parts.append(f"REPRODUCTION REPOSITORY: {repo_url}" if repo_url
-                 else "REPRODUCTION REPOSITORY: none public -- say the code is available on request")
+                 else "REPRODUCTION REPOSITORY: none -- say the code is available on request")
     if triage.strip():
         parts += ["", "TRIAGE NOTE", _clip(triage.strip(), 8000)]
     if readme.strip():
         parts += ["", "REPOSITORY README", _clip(readme.strip(), _README_CHARS)]
+    for name, text in (scripts or {}).items():
+        parts += ["", f"REPRODUCTION SCRIPT {name}", text]
     if findings and findings.get("findings"):
         parts += ["", "FINDINGS (structured)", _clip(json.dumps(findings, indent=1, default=str), _FINDINGS_CHARS)]
     return "\n".join(parts)
 
 
-def _repo_readme(paper_dir: Path) -> str:
+def _repo_dir(paper_dir: Path) -> Path | None:
     for sub in sorted(paper_dir.iterdir()):
         if sub.is_dir() and not sub.is_symlink() and (sub / ".git").exists():
-            f = sub / "README.md"
-            if f.is_file() and not f.is_symlink():
-                return f.read_text(encoding="utf-8", errors="replace")
+            return sub
+    return None
+
+
+def _repo_readme(paper_dir: Path) -> str:
+    repo = _repo_dir(paper_dir)
+    f = repo / "README.md" if repo else None
+    if f and f.is_file() and not f.is_symlink():
+        return f.read_text(encoding="utf-8", errors="replace")
     return ""
+
+
+_SCRIPT_CHARS = 6000
+
+
+def _repo_scripts(paper_dir: Path) -> dict[str, str]:
+    """The repository's top-level replay / reproduce scripts, for the short
+    snippet that generates the numbers. A long script is left out: the
+    snippet must come from code short enough to read."""
+    repo = _repo_dir(paper_dir)
+    if not repo:
+        return {}
+    out = {}
+    for f in sorted(repo.iterdir()):
+        if (f.is_file() and not f.is_symlink() and f.suffix.lower() in (".r", ".py", ".jl", ".m")
+                and re.match(r"(replay|reproduce|generate)", f.name, re.I)
+                and f.stat().st_size <= _SCRIPT_CHARS):
+            out[f.name] = f.read_text(encoding="utf-8", errors="replace")
+    return out
 
 
 # ----------------------------------------------------------------- the job
@@ -623,9 +710,10 @@ def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = 
                      f"{len(to)} contact(s), {verified} verified on their source page" + (f" -- {note}" if note else ""))
 
         job.step("draft", "running", f"drafting with {draft_model}")
-        public_url = repo_url if repo_url and repo_visibility.upper() == "PUBLIC" else ""
+        # The repository is linked whatever its visibility: the pane warns
+        # while it is private, since recipients cannot open it until then.
         prompt = draft_prompt(kind, facts, [c for c in to if c["verified"]] or to, cc, who,
-                              findings, triage, readme, public_url)
+                              findings, triage, readme, repo_url, _repo_scripts(paper_dir))
         out, err = _run_claude(prompt, _SYSTEM[kind], draft_model, "", _DRAFT_SCHEMA,
                                _DRAFT_TIMEOUT_S, 3.0, run_cli)
         if err:
@@ -633,13 +721,16 @@ def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = 
             job.finish("error", error=err)
             return {"ok": False, "error": err}
         stamp = _now().strftime("%Y%m%d-%H%M%S")
+        cite = citation(facts)
         draft = {
             "kind": kind, "created_at": _iso(_now()), "who": who, "model": draft_model,
             "paper": {k: facts.get(k) for k in ("title", "doi", "journal", "handling_editor")},
             "to": [{**c, "selected": c["verified"]} for c in to],
             "cc": [{"email": a, "selected": True, "corresponding": a in (facts.get("corresponding") or [])} for a in cc],
             "subject": str(out.get("subject") or "").strip() if kind == "email" else "",
-            "body": str(out.get("body") or "").strip(),
+            "body": place_citation(str(out.get("body") or "").strip(), cite.get("plain", "")) if kind == "email"
+            else str(out.get("body") or "").strip(),
+            "citation": cite if kind == "email" else {},
             "repo_url": repo_url, "repo_visibility": repo_visibility,
             "contacts_note": note, "sent": None,
         }

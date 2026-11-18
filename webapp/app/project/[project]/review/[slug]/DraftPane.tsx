@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { readReviewer } from "@/app/ReviewerChip";
-import { MAILTO_SAFE_LENGTH, gmailUrl, mailtoUrl, pubpeerSearchUrl, ticked, type Recipient } from "@/lib/draftLinks";
+import { MAILTO_SAFE_LENGTH, emailHtml, gmailUrl, mailtoUrl, pubpeerSearchUrl, ticked, type Recipient } from "@/lib/draftLinks";
 import { errorMessage, postJson } from "@/lib/getJson";
 import { jobBusy, type Draft, type DraftJob, type DraftKind, type DraftsView } from "@/lib/useDrafts";
 import { CopyButton } from "./CopyButton";
@@ -143,8 +143,8 @@ function DraftEditor({ project, dir, draft, onSaved }: {
     <div className="draft-editor">
       {draft.repo_url && draft.repo_visibility !== "PUBLIC" && (
         <p className="draft-note">
-          The reproduction repository is {draft.repo_visibility === "PRIVATE" ? "private" : "not public"}, so the draft
-          offers the code on request instead of linking it. Make it public from the README pane, then draft again, to link it.
+          The draft links the reproduction repository, which is {draft.repo_visibility === "PRIVATE" ? "still private" : "not public"}:
+          recipients cannot open the link until it is. Make it public from the README pane (Make repo public…) before you send.
         </p>
       )}
       {email && (
@@ -163,6 +163,10 @@ function DraftEditor({ project, dir, draft, onSaved }: {
             </label>
           ))}
           {draft.to.length > 0 && draft.contacts_note && <p className="muted draft-small">{draft.contacts_note}</p>}
+          {toList.length > 0 && (
+            <CopyButton text={toList.join(", ")} label={`Copy editor emails (${toList.length})`} done="Copied"
+                        title="Copy the ticked journal addresses, comma-separated" />
+          )}
         </fieldset>
       )}
       <fieldset className="draft-recipients">
@@ -209,7 +213,7 @@ function DraftEditor({ project, dir, draft, onSaved }: {
                title={mailto.length > MAILTO_SAFE_LENGTH ? "This email is long: some mail programs cut it. Copy the body if it arrives short." : "Open your mail program with this email filled in. You send it."}>
               Open in mail app
             </a>
-            <CopyButton text={toList.join(", ")} label="Copy To" />
+            <CopyFormatted html={emailHtml(body, draft.citation)} text={body} />
             <CopyButton text={subject} label="Copy subject" />
             <CopyButton text={body} label="Copy body" />
           </>
@@ -230,5 +234,41 @@ function DraftEditor({ project, dir, draft, onSaved }: {
         </label>
       </div>
     </div>
+  );
+}
+
+/** Copies the body as formatted HTML (with a plain-text twin), so a paste
+ *  into Gmail keeps the linked title, italic journal, bold volume and code
+ *  block. A "mailto:" or Gmail link can only carry plain text. */
+function CopyFormatted({ html, text }: { html: string; text: string }) {
+  const [ok, setOk] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        "text/html": new Blob([html], { type: "text/html" }),
+        "text/plain": new Blob([text], { type: "text/plain" }),
+      })]);
+    } catch {
+      // No async clipboard (plain http, an older browser): select a rendered
+      // copy and copy that, which keeps its formatting.
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      Object.assign(div.style, { position: "fixed", left: "-9999px" });
+      document.body.appendChild(div);
+      const range = document.createRange();
+      range.selectNodeContents(div);
+      const sel = window.getSelection();
+      sel?.removeAllRanges(); sel?.addRange(range);
+      document.execCommand("copy");
+      sel?.removeAllRanges(); div.remove();
+    }
+    setOk(true);
+    window.setTimeout(() => setOk(false), 1200);
+  };
+  return (
+    <button type="button" onClick={copy} className="primary"
+            title="Copy the body with its formatting (linked title, italic journal, bold volume) to paste into Gmail or your mail program">
+      {ok ? "Copied" : "Copy formatted email"}
+    </button>
   );
 }

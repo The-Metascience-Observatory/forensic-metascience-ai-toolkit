@@ -18,13 +18,15 @@ from forensic_metascience_ai_toolkit import drafts as D
 XML = """<article><front><journal-meta><journal-title>Journal of Tests</journal-title>
 <issn pub-type="epub">1234-5678</issn><publisher><publisher-name>Testpub</publisher-name></publisher>
 </journal-meta><article-meta><article-id pub-id-type="doi">10.1234/x</article-id>
+<pub-date pub-type="epub"><day>4</day><month>7</month><year>2022</year></pub-date>
+<volume>13</volume><elocation-id>3853</elocation-id>
 <contrib-group><contrib contrib-type="author" corresp="yes"><name><surname>Yan</surname>
 <given-names>Li</given-names></name><email>yan@uni.edu</email></contrib>
 <contrib contrib-type="author"><name><surname>Zhu</surname></name></contrib></contrib-group>
 <contrib-group><contrib contrib-type="editor"><name><surname>Rivera</surname>
 <given-names>Ana</given-names></name><role>Editor</role></contrib></contrib-group>
 <author-notes><fn><p>Contact: <email>zhu@uni.edu</email></p></fn></author-notes>
-</article-meta></front></article>"""
+</article-meta></front><back><ref-list><ref><volume>99</volume><fpage>1</fpage></ref></ref-list></back></article>"""
 
 
 def _paper(tmp_path, readme="# Repo\n\n**Summary**\n\n- Figure 5 matches set.seed(1).\n", triage=""):
@@ -102,6 +104,30 @@ class TestPaperFacts:
         assert f["corresponding"] == ["yan@uni.edu"]
 
 
+class TestCitation:
+    def test_opening_sentence_plain_and_html(self, tmp_path):
+        f = D.paper_facts(_paper(tmp_path))
+        assert (f["volume"], f["pages"], f["year"]) == ("13", "3853", "2022"), "the article's, not a reference's"
+        c = D.citation(f)
+        assert c["plain"] == 'I am writing about "A trial", Journal of Tests 13, 3853 (2022), doi:10.1234/x.'
+        assert c["html"] == ('I am writing about "<a href="https://doi.org/10.1234/x">A trial</a>", '
+                             '<i>Journal of Tests</i> <b>13</b>, 3853 (2022), '
+                             'doi:<a href="https://doi.org/10.1234/x">10.1234/x</a>.')
+
+    def test_page_ranges_and_missing_parts(self):
+        f = {"title": "T <b>", "journal": "J", "doi": "", "volume": "10", "pages": "1186\u20131199", "year": "2023"}
+        assert D.citation(f)["plain"] == 'I am writing about "T <b>", J 10, 1186\u20131199 (2023).'
+        assert "T &lt;b&gt;" in D.citation(f)["html"], "escaped"
+        assert D.citation({"title": "T"})["plain"] == 'I am writing about "T".'
+        assert D.citation({}) == {}
+
+    def test_the_sentence_is_put_after_the_greeting_when_missing(self):
+        s = 'I am writing about "T", J 1, 2 (2020), doi:10.1/x.'
+        body = "Dear Editors,\n\nDear authors,\n\nI am writing about T in J.\n\nIn Figure 5 ..."
+        assert D.place_citation(body, s) == f"Dear Editors,\n\nDear authors,\n\n{s}\n\nIn Figure 5 ..."
+        assert D.place_citation(f"Dear Editors,\n\n{s}\n\nRest", s) == f"Dear Editors,\n\n{s}\n\nRest"
+
+
 class TestAddressCheck:
     def test_spellings_entities_and_cloudflare_are_read(self):
         key = 0x42
@@ -154,7 +180,10 @@ class TestEmail:
         assert "REVIEWER (sign as): Dan" in draft["prompt"]
         job = json.loads(D.job_file(paper, "email").read_text())
         assert job["state"] == "done" and [s["status"] for s in job["steps"]] == ["done"] * 3
-        assert json.loads(Path(rec["path"]).read_text())["body"] == "Dear Editors, ..."
+        saved = json.loads(Path(rec["path"]).read_text())
+        assert saved["body"].startswith('Dear Editors, ...\n\nI am writing about "A trial", Journal of Tests 13, 3853 (2022)')
+        assert saved["citation"]["html"].startswith('I am writing about "<a href="https://doi.org/10.1234/x">')
+        assert "OPENING SENTENCE (verbatim" in draft["prompt"]
 
     def test_journal_contacts_are_cached_per_journal(self, tmp_path):
         paper = _paper(tmp_path)
@@ -176,17 +205,28 @@ class TestEmail:
         f.write_text(json.dumps({"issn:1": {"looked_up_at": old, "contacts": []}}))
         assert D.cached_contacts(f, "issn:1") is None
 
-    def test_a_private_repo_is_not_linked(self, tmp_path):
+    def test_the_repo_is_linked_even_while_private(self, tmp_path):
         cli = FakeCli()
         D.run(_paper(tmp_path), "email", repo_url="https://github.com/o/r",
               repo_visibility="PRIVATE", run_cli=cli, fetch=fetch)
-        assert "github.com/o/r" not in cli.calls[-1]["prompt"]
-        assert "available on request" in cli.calls[-1]["prompt"]
-        assert "[Your name]" in cli.calls[-1]["prompt"], "no reviewer name: a placeholder, not a made-up one"
+        assert "REPRODUCTION REPOSITORY: https://github.com/o/r" in cli.calls[-1]["prompt"]
         cli = FakeCli()
-        D.run(_paper(tmp_path / "b"), "email", repo_url="https://github.com/o/r",
-              repo_visibility="PUBLIC", run_cli=cli, fetch=fetch)
-        assert "https://github.com/o/r" in cli.calls[-1]["prompt"]
+        D.run(_paper(tmp_path / "b"), "email", run_cli=cli, fetch=fetch)
+        assert "available on request" in cli.calls[-1]["prompt"], "no repository: code on request"
+        assert "[Your name]" in cli.calls[-1]["prompt"], "no reviewer name: a placeholder, not a made-up one"
+
+    def test_short_replay_scripts_are_in_the_context_long_ones_are_not(self, tmp_path):
+        paper = _paper(tmp_path)
+        repo = paper / "Journal-2023-repo"
+        (repo / "replay.R").write_text("set.seed(1); z <- rnorm(270)\nround(23.26 + 5.38 * z[121:150], 2)\n")
+        (repo / "replay.py").write_text("x = 1\n" * 3000)
+        (repo / "analysis.R").write_text("not a replay script")
+        cli = FakeCli()
+        D.run(paper, "pubpeer", run_cli=cli)
+        prompt = cli.calls[-1]["prompt"]
+        assert "REPRODUCTION SCRIPT replay.R" in prompt and "rnorm(270)" in prompt
+        assert "replay.py" not in prompt and "analysis.R" not in prompt
+        assert "at most about 6" in cli.calls[-1]["argv"][cli.calls[-1]["argv"].index("--append-system-prompt") + 1]
 
     def test_a_failed_lookup_still_drafts(self, tmp_path):
         def cli(argv, text):

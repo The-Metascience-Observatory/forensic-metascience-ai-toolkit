@@ -31,6 +31,21 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — email drafts: citation opening, repo link, code snippet
+
+- The email now opens, after the greeting, with a fixed sentence built from
+  the paper's XML (not by the model): `I am writing about "Title", Journal
+  13, 3853 (2022), doi:10.x/y.` (`drafts.citation`; `place_citation` puts it
+  back if the model rewords it). **Copy formatted email** copies the body as
+  HTML: the title links to the DOI, the journal is in italics, the volume in
+  bold, an indented code block stays a code block.
+- The draft always links the GitHub repository; while it is private the pane
+  warns that recipients cannot open the link until it is made public.
+- When the numbers can be generated in a few lines, the draft includes them,
+  taken from the repository's short `replay*` / `reproduce*` scripts, which
+  are now part of the drafting context.
+- **Copy editor emails** button under the journal addresses (the ticked ones).
+
 ## [Unreleased] — 2026-11-17 — side panes between the findings and the paper
 
 - The email draft, the PubPeer draft and the README each open as their own

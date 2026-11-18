@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, test } from "vitest";
 
-import { gmailUrl, mailtoUrl, pubpeerSearchUrl, ticked } from "../lib/draftLinks.ts";
+import { emailHtml, gmailUrl, mailtoUrl, pubpeerSearchUrl, ticked } from "../lib/draftLinks.ts";
 import {
   jobArgv, jobFile, listDrafts, paperXmlAddresses, readJob, saveDraft, startJob,
 } from "../lib/paperDrafts.ts";
@@ -128,4 +128,17 @@ test("mail links carry the ticked recipients, subject and body", () => {
   assert.equal(g.searchParams.get("cc"), "a@uni.edu");
   assert.equal(g.searchParams.get("su"), "S");
   assert.equal(pubpeerSearchUrl("10.1002/acn3.51800"), "https://pubpeer.com/search?q=10.1002%2Facn3.51800");
+});
+
+test("the formatted email: citation, code block, links, and escaping", () => {
+  const citation = { plain: 'I am writing about "T", J 13, 1 (2022), doi:10.1/x.',
+                     html: 'I am writing about "<a href="https://doi.org/10.1/x">T</a>", <i>J</i> <b>13</b>, 1 (2022), doi:10.1/x.' };
+  const body = `Dear Editors,\n\n${citation.plain}\n\nThe values match:\n\n    set.seed(1); z <- rnorm(270)\n    23.26 + 5.38 * z[121:150]\n\nCode: https://github.com/O/R.\nA <b> & c\n\nBest,\nDan`;
+  const html = emailHtml(body, citation);
+  assert.match(html, /<p><a|<p>I am writing about "<a href="https:\/\/doi.org\/10.1\/x">T<\/a>", <i>J<\/i> <b>13<\/b>/);
+  assert.match(html, /<pre[^>]*>set.seed\(1\); z &lt;- rnorm\(270\)\n23.26 \+ 5.38 \* z\[121:150\]<\/pre>/);
+  assert.match(html, /<a href="https:\/\/github.com\/O\/R">https:\/\/github.com\/O\/R<\/a>\.<br>A &lt;b&gt; &amp; c/);
+  assert.match(html, /<p>Best,<br>Dan<\/p>$/);
+  // An edited opening sentence stays as typed (plain).
+  assert.doesNotMatch(emailHtml(body.replace("13, 1", "13, 2"), citation), /<i>J<\/i>/);
 });

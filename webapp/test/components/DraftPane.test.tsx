@@ -69,7 +69,9 @@ test("unverified addresses start unticked; the mail links follow the ticks", () 
   fireEvent.click(boxes[1]);
   expect(gmail().searchParams.get("to")).toBe("ed@uni.es,guess@j.org");
   expect((screen.getByText("Open in mail app") as HTMLAnchorElement).href).toMatch(/^mailto:ed%40uni\.es,guess%40j\.org\?cc=yan%40uni\.edu&subject=Figure%205/);
-  expect(screen.getByText(/repository is private/)).toBeTruthy();
+  expect(screen.getByText(/still private/)).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Copy editor emails (2)" })).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Copy formatted email" })).toBeTruthy();
 });
 
 test("edits are saved and the draft can be marked sent", async () => {

@@ -31,6 +31,24 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — README editor: rich text and markdown
+
+- The README button is now "View and edit README.md", above the Summary.
+- The README pane has three modes: **View**, **Edit rich text** and **Edit
+  markdown**. Rich text edits the formatted README directly (bold, italic,
+  code, links, headings, lists, quotes, code blocks, pipe tables).
+- **A rich-text edit rewrites only the blocks it touches.** An editor's own
+  spelling of a markdown file differs from the file everywhere (0 of the 317
+  repo READMEs come back identical), so the edited document is merged back
+  block by block (`lib/richMerge.ts`): a block the edit did not change is
+  written from the original text, byte for byte. Opened and left alone, all
+  317 READMEs are unchanged; one typed phrase changes one line.
+- Raw HTML blocks (the HTML tables with merged cells, the
+  `<!-- rngdetect-kit -->` markers) are shown in rich text but edited only in
+  markdown mode, and are always written back verbatim. `<sub>`/`<sup>` are
+  kept. A paragraph that is edited is written on one line (its source line
+  wraps are not kept).
+- New dependencies: `@tiptap/*`, `dompurify`, `unified`, `remark-parse`.
 ## [Unreleased] — 2026-11-17 — "Copy path" on the paper review page
 
 - A **Copy path** button above the summary copies the path of the paper's

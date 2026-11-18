@@ -112,9 +112,11 @@ the webapp reviews it with the same page and the same storage as any finding:
   that is a git repository), the page shows the Summary of its README above
   the findings, with the repo's name, whether it is private or public on
   GitHub, and anything uncommitted or unpushed. A paper without a repo (or a
-  README without a Summary) shows its `rng_triage.md` note there. **README**
-  opens the README over the source pane, rendered; **Edit** and **Save**
-  change the file in the repo folder only; **Commit and push** commits
+  README without a Summary) shows its `rng_triage.md` note there. **View and
+  edit README.md** opens the README over the source pane, with three modes:
+  View, Edit rich text, Edit markdown. A rich-text edit rewrites only the
+  blocks it touches (`lib/richMerge.ts`); raw HTML blocks are shown there but
+  edited in markdown mode. **Save** changes the file in the repo folder only; **Commit and push** commits
   `README.md` alone and pushes it; **Make repo public** (admins) asks for the
   repository's name and needs a clean, fully pushed tree. The server runs
   `git` and `gh` as the account it runs under, so that account must be signed

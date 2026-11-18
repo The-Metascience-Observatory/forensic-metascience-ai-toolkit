@@ -59,7 +59,7 @@ test("edit, save, then commit and push: each step enables the next", async () =>
   expect(button(/^Save$/).disabled).toBe(true);
   expect(button(/Commit and push/).disabled).toBe(true);
 
-  fireEvent.click(button(/^Edit$/));
+  fireEvent.click(button(/^Edit markdown$/));
   fireEvent.change(screen.getByLabelText("README.md source"), { target: { value: edited } });
   expect(button(/^Save$/).disabled).toBe(false);
   expect(button(/Commit and push/).disabled).toBe(true); // not while the edit is unsaved
@@ -78,7 +78,7 @@ test("edit, save, then commit and push: each step enables the next", async () =>
 test("a save over a README that changed on disk says so and offers a reload", async () => {
   stubFetch("reviewer", () => ({ error: "The README changed on disk since you opened it. Reload it, then make your edit again.", status: 409 }));
   render(<Harness start={view()} />);
-  fireEvent.click(button(/^Edit$/));
+  fireEvent.click(button(/^Edit markdown$/));
   fireEvent.change(screen.getByLabelText("README.md source"), { target: { value: "mine" } });
   fireEvent.click(button(/^Save$/));
   await waitFor(() => expect(screen.getByRole("alert").textContent).toMatch(/changed on disk/));
@@ -126,7 +126,7 @@ test("the summary block: README bullets, else the triage note, else nothing", ()
   expect(document.querySelector("[data-repo-summary]")?.getAttribute("data-repo-summary")).toBe("readme");
   expect(document.querySelector(".repo-summary li")?.textContent).toBe("one");
   expect(document.querySelector(".repo-summary")?.textContent).toMatch(/Private.*README saved, not committed/);
-  fireEvent.click(button(/^README$/));
+  fireEvent.click(button(/^View and edit README.md$/));
   expect(open).toHaveBeenCalledOnce();
   a.unmount();
 

@@ -46,6 +46,12 @@ export function RepoSummary({ info, readmeOpen, onReadme }: {
   const notes = repo ? repoNotes(repo) : [];
   return (
     <section className="repo-summary" data-repo-summary={fromReadme ? "readme" : text ? "triage" : "none"}>
+      {repo && (
+        <button className="repo-readme-button" onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
+                title={info.readme === null ? "This repository has no README.md" : "Read or edit the repository's README beside the findings"}>
+          {readmeOpen ? "Hide README.md" : "View and edit README.md"}
+        </button>
+      )}
       <details open={open} onToggle={(e) => {
         const now = (e.currentTarget as HTMLDetailsElement).open;
         setOpen(now);
@@ -65,10 +71,6 @@ export function RepoSummary({ info, readmeOpen, onReadme }: {
             ? <a href={repo.url} target="_blank" rel="noreferrer" className="repo-name" title={repo.name}>{repo.name}</a>
             : <span className="repo-name" title={repo.name}>{repo.name}</span>}
           {notes.length > 0 && <span className="repo-notes">{notes.join(" · ")}</span>}
-          <button onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
-                  title={info.readme === null ? "This repository has no README.md" : "Read or edit the repository's README beside the findings"}>
-            {readmeOpen ? "Hide README" : "README"}
-          </button>
         </div>
       )}
     </section>

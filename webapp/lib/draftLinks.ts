@@ -39,7 +39,10 @@ const escapeHtml = (s: string) =>
  *  four spaces as code; bare URLs as links; and the opening sentence in its
  *  formatted form (title linked to the DOI, journal in italics, volume in
  *  bold) wherever the body still says it word for word. */
-export function emailHtml(body: string, citation?: { plain?: string; html?: string } | null): string {
+export function emailHtml(body: string, citation?: { plain?: string; html?: string } | null,
+                          footer?: { plain?: string[]; html?: string[] } | null): string {
+  // The footer's lines, plain -> formatted (its links), wherever they stand.
+  const foot = new Map((footer?.plain || []).map((l, i) => [l, footer?.html?.[i] ?? ""] as const).filter(([l, h]) => l && h));
   const paras = body.replace(/\r\n?/g, "\n").split(/\n{2,}/).filter((p) => p.trim());
   const linkify = (s: string) => s.replace(/https?:\/\/[^\s<>"]+[^\s<>".,;:)]/g, (u) => `<a href="${u}">${u}</a>`);
   return paras.map((p) => {
@@ -49,6 +52,6 @@ export function emailHtml(body: string, citation?: { plain?: string; html?: stri
       return `<pre style="font-family:monospace;background:#f5f5f5;padding:6px 8px">${escapeHtml(code)}</pre>`;
     }
     if (citation?.plain && citation.html && p.trim() === citation.plain) return `<p>${citation.html}</p>`;
-    return `<p>${lines.map((l) => linkify(escapeHtml(l))).join("<br>")}</p>`;
+    return `<p>${lines.map((l) => foot.get(l) ?? linkify(escapeHtml(l))).join("<br>")}</p>`;
   }).join("\n");
 }

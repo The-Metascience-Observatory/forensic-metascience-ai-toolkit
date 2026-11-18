@@ -213,7 +213,7 @@ function DraftEditor({ project, dir, draft, onSaved }: {
                title={mailto.length > MAILTO_SAFE_LENGTH ? "This email is long: some mail programs cut it. Copy the body if it arrives short." : "Open your mail program with this email filled in. You send it."}>
               Open in mail app
             </a>
-            <CopyFormatted html={emailHtml(body, draft.citation)} text={body} />
+            <CopyFormatted html={emailHtml(body, draft.citation, draft.footer)} text={body} />
             <CopyButton text={subject} label="Copy subject" />
             <CopyButton text={body} label="Copy body" />
           </>

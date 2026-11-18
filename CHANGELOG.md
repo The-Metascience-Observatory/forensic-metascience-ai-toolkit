@@ -31,6 +31,23 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — email subject, fixed closing, per-user footer, Settings page
+
+- Email subjects start "Question about"; the default form is "Question about
+  source data for Fig. 3e in <article title>" (`drafts.subject_line`
+  enforces the prefix).
+- Every email ends with fixed text after the model's part
+  (`drafts.email_closing`): "The code to reproduce these findings is
+  available at <repo URL>.", the plan to post on PubPeer and our website in
+  a week or two after giving the authors a chance to respond, "Best
+  regards, / -- <first name>", then the sender's footer. A closing the model
+  writes anyway is dropped (`strip_closing`).
+- New **Settings** page (header, after Users / Projects; every signed-in
+  user): the email footer under your name. `[text](https://…)` makes a link,
+  kept as a link by "Copy formatted email". Stored per user in
+  `profiles.json` beside `settings.json` (`/api/profile`, own profile only:
+  keyed by the sign-in when hosted, by the header name locally).
+
 ## [Unreleased] — 2026-11-17 — email drafts: citation opening, repo link, code snippet
 
 - The email now opens, after the greeting, with a fixed sentence built from

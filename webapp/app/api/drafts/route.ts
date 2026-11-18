@@ -1,14 +1,17 @@
 import path from "node:path";
 
 import { identity } from "@/lib/auth";
+import { footerParts } from "@/lib/emailFooter";
 import { jsonError } from "@/lib/err";
 import { rejectCrossOrigin } from "@/lib/mutation";
 import {
   KINDS, detachedPython, isKind, listDrafts, paperXmlAddresses, readJob, startJob,
 } from "@/lib/paperDrafts";
 import { pythonBin, pythonEnv, repoRoot } from "@/lib/python";
+import { currentUser, readProfile } from "@/lib/profiles";
 import { paperRepo, repoInfo } from "@/lib/repoInfo";
 import { guard } from "@/lib/routeGuard";
+import { loadSettings } from "@/lib/settings";
 import { paperAbsDir, projectFolders } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
@@ -51,10 +54,13 @@ export async function POST(req: Request) {
     // The journal-contact cache is shared by the project's papers.
     const roots = await projectFolders(body.project).catch(() => [] as string[]);
     const contactsDir = roots.find((r) => !path.relative(r, paperAbs).startsWith("..")) ?? path.dirname(paperAbs);
+    // The sender: their name signs the email, their footer goes under it.
+    const who = currentUser(identity(req), String(body.reviewer || ""), loadSettings().reviewers);
     await startJob(paperAbs, {
       kind: body.kind,
       authors,
-      who: identity(req)?.name || String(body.reviewer || ""),
+      who: who.name,
+      footer: footerParts(readProfile(who.key).email_footer),
       repoUrl: info?.repo?.url || "",
       repoVisibility: info?.repo?.visibility || "",
       contactsDir,

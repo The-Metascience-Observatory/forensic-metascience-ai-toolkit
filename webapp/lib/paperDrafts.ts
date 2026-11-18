@@ -55,6 +55,8 @@ export interface Draft {
   contacts_note: string;
   /** The email's fixed opening sentence, plain and formatted (email only). */
   citation?: { plain?: string; html?: string };
+  /** The sender's footer under their name, plain and formatted line for line. */
+  footer?: { plain?: string[]; html?: string[] };
   /** Marked by the reviewer once they sent the email or posted the comment. */
   sent: { at: string; by: string } | null;
   edited?: { at: string; by: string };
@@ -122,6 +124,8 @@ export interface JobOptions {
   repoVisibility: string;
   contactsDir: string;
   exclude: string[];
+  /** The user's footer, line for line (`lib/emailFooter.ts`). */
+  footer?: { plain: string[]; html: string[] };
 }
 
 const ADDRESS = /^[^\s@,]+@[^\s@,]+\.[A-Za-z]{2,}$/;
@@ -139,6 +143,8 @@ export function jobArgv(paperAbs: string, o: JobOptions): string[] {
     "--repo-visibility", /^[A-Z]+$/.test(o.repoVisibility) ? o.repoVisibility : "",
     "--contacts-dir", o.contactsDir,
     "--exclude", o.exclude.filter((x) => ID.test(x)).join(","),
+    "--footer", JSON.stringify(o.footer && o.footer.plain.length === o.footer.html.length
+      ? { plain: o.footer.plain.slice(0, 12), html: o.footer.html.slice(0, 12) } : { plain: [], html: [] }),
   ];
 }
 

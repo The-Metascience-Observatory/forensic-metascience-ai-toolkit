@@ -244,6 +244,45 @@ def citation(facts: dict) -> dict:
     return {"plain": plain, "html": rich}
 
 
+def subject_line(subject: str, facts: dict) -> str:
+    """The subject always starts "Question about"; a model subject that
+    does not is replaced by the default form without a figure."""
+    s = re.sub(r"\s+", " ", subject or "").strip()
+    if s.lower().startswith("question about"):
+        return "Question about" + s[len("question about"):]
+    return f"Question about source data in {facts.get('title') or 'the article'}"
+
+
+CLOSING_PLAN = ("I plan to post about this finding on PubPeer and on our website in the next week or two "
+                "but I wanted to give the authors a chance to respond first.")
+
+
+def email_closing(repo_url: str, who: str, footer_lines: list[str]) -> str:
+    """The fixed end of every email, after the model's text: where the code
+    is, the plan to post, the sign-off with the sender's first name and their
+    footer. The repository URL becomes a link in the formatted copy."""
+    first = (who or "").split()[0] if (who or "").split() else "[Your name]"
+    parts = []
+    if repo_url:
+        parts.append(f"The code to reproduce these findings is available at {repo_url}.")
+    else:
+        parts.append("The code to reproduce these findings is available on request.")
+    parts.append(CLOSING_PLAN)
+    parts.append("\n".join(["Best regards,", f"-- {first}", *footer_lines]))
+    return "\n\n".join(parts)
+
+
+def strip_closing(body: str) -> str:
+    """Drop a closing or signature the model wrote anyway (from a line like
+    "Best regards," on), so the fixed one is not doubled."""
+    lines = body.rstrip().split("\n")
+    for i, line in enumerate(lines):
+        if re.match(r"\s*(best|kind|warm)?\s*(regards|wishes)|\s*(sincerely|thank you|thanks)[,.!]?\s*$", line, re.I) \
+                and i >= len(lines) - 4:
+            return "\n".join(lines[:i]).rstrip()
+    return body.rstrip()
+
+
 def place_citation(body: str, sentence: str) -> str:
     """Make sure the body says `sentence` as its own paragraph, right after
     the greeting: the model is asked to, and this puts it there when it did
@@ -501,8 +540,6 @@ _RULES = """- Describe inconsistencies, never intent. Banned words: fabricated,
 - State what was found with its numbers (which figure or table, how many
   values, what they match). Quote the paper only where a few words settle a
   point.
-- When a reproduction repository URL is given, link it in one line. When
-  none is given, say the reproduction code is available on request.
 - When the numbers can be generated in a few lines of code (at most about 6;
   e.g. a seed, one generator call and the scaling), include those lines so a
   reader can run them, taken from the reproduction scripts or README given
@@ -523,9 +560,14 @@ Rules, non-negotiable:
 - Ask the editors to assess the matter and the authors to clarify (for
   instance, to share the raw data).
 - Greet the editors (by name when given) and the authors (the corresponding
-  author by name when known). Sign with the reviewer's name only.
-- Plain text, no markdown. The subject line is short and factual, without
-  accusations.
+  author by name when known).
+- END with the paragraph asking the editors and authors. Write NO sentence
+  about where the code is, no plan to post, no closing ("Best regards") and
+  no signature: a fixed closing with all of these is added after your text.
+- Plain text, no markdown.
+- The subject starts with "Question about". Default form: "Question about
+  source data for Fig. 3e in <full article title>", naming the figure(s) or
+  table(s) concerned (e.g. "Figs. 5-7"). No accusations.
 """ + _RULES,
     "pubpeer": """You draft one short PubPeer comment for a
 research-integrity reviewer. PubPeer readers know the article (the comment
@@ -538,6 +580,8 @@ Rules, non-negotiable:
   raw data).
 - PubPeer markdown is fine: short paragraphs or a short bullet list. The
   subject field is unused: return an empty string for it.
+- When a reproduction repository URL is given, link it in one line. When
+  none is given, say the reproduction code is available on request.
 """ + _RULES,
 }
 
@@ -569,11 +613,10 @@ def draft_prompt(kind: str, facts: dict, to: list[dict], cc: list[str], who: str
             "CC (authors): " + (", ".join(cc) or "none found")
             + (f"; corresponding: {', '.join(facts.get('corresponding') or [])}" if facts.get("corresponding") else ""),
             f"OPENING SENTENCE (verbatim, its own paragraph after the greeting): {citation(facts).get('plain', '')}",
-            f"REVIEWER (sign as): {who}" if who
-            else "REVIEWER (sign as): unknown -- end with the placeholder [Your name]",
         ]
-    parts.append(f"REPRODUCTION REPOSITORY: {repo_url}" if repo_url
-                 else "REPRODUCTION REPOSITORY: none -- say the code is available on request")
+    else:
+        parts.append(f"REPRODUCTION REPOSITORY: {repo_url}" if repo_url
+                     else "REPRODUCTION REPOSITORY: none -- say the code is available on request")
     if triage.strip():
         parts += ["", "TRIAGE NOTE", _clip(triage.strip(), 8000)]
     if readme.strip():
@@ -662,7 +705,7 @@ def _excluding(payload: dict | None, exclude: list[str]) -> dict | None:
 
 def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = None, who: str = "",
         repo_url: str = "", repo_visibility: str = "", contacts_dir: str | Path | None = None,
-        exclude: list[str] | None = None, draft_model: str = DRAFT_MODEL,
+        exclude: list[str] | None = None, footer: dict | None = None, draft_model: str = DRAFT_MODEL,
         lookup_model: str = LOOKUP_MODEL, run_cli=None, fetch=None) -> dict:
     """The whole workflow. Returns `{ok, path, draft}` or `{ok: False, error}`;
     never raises, never sends or posts."""
@@ -722,15 +765,22 @@ def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = 
             return {"ok": False, "error": err}
         stamp = _now().strftime("%Y%m%d-%H%M%S")
         cite = citation(facts)
+        foot = footer if isinstance(footer, dict) and kind == "email" else {}
+        foot_plain = [str(x) for x in foot.get("plain") or []]
+        body = str(out.get("body") or "").strip()
+        if kind == "email":
+            body = place_citation(strip_closing(body), cite.get("plain", "")) + "\n\n" \
+                + email_closing(repo_url, who, foot_plain)
         draft = {
             "kind": kind, "created_at": _iso(_now()), "who": who, "model": draft_model,
             "paper": {k: facts.get(k) for k in ("title", "doi", "journal", "handling_editor")},
             "to": [{**c, "selected": c["verified"]} for c in to],
             "cc": [{"email": a, "selected": True, "corresponding": a in (facts.get("corresponding") or [])} for a in cc],
-            "subject": str(out.get("subject") or "").strip() if kind == "email" else "",
-            "body": place_citation(str(out.get("body") or "").strip(), cite.get("plain", "")) if kind == "email"
-            else str(out.get("body") or "").strip(),
+            "subject": subject_line(str(out.get("subject") or ""), facts) if kind == "email" else "",
+            "body": body,
             "citation": cite if kind == "email" else {},
+            "footer": {"plain": foot_plain, "html": [str(x) for x in foot.get("html") or []][:len(foot_plain)]}
+            if foot_plain else {},
             "repo_url": repo_url, "repo_visibility": repo_visibility,
             "contacts_note": note, "sent": None,
         }
@@ -758,12 +808,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--repo-visibility", default="")
     ap.add_argument("--contacts-dir", default=None, help=f"folder of {CONTACTS_FILE} (default: the paper's parent)")
     ap.add_argument("--exclude", default="", help="comma-separated finding ids or slugs to leave out")
+    ap.add_argument("--footer", default="", help='JSON {"plain": [...], "html": [...]}: lines under the signature')
     ap.add_argument("--model", default=DRAFT_MODEL, help="drafting model")
     ap.add_argument("--lookup-model", default=LOOKUP_MODEL)
     a = ap.parse_args(argv)
     split = lambda s: [x.strip() for x in s.split(",") if x.strip()]  # noqa: E731
+    try:
+        footer = json.loads(a.footer) if a.footer else None
+    except ValueError:
+        footer = None
     rec = run(a.paper_dir, a.kind, split(a.authors) or None, a.who, a.repo_url, a.repo_visibility,
-              a.contacts_dir, split(a.exclude), a.model, a.lookup_model)
+              a.contacts_dir, split(a.exclude), footer, a.model, a.lookup_model)
     print(json.dumps({k: v for k, v in rec.items() if k != "draft"}, default=str))
     return 0 if rec.get("ok") else 2
 

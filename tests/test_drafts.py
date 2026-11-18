@@ -69,7 +69,8 @@ class FakeCli:
             {"name": "Made up", "role": "editor-in-chief", "email": "guess@testpub.org",
              "source_url": "https://testpub.org/contact"},
         ]
-        self.draft = draft or {"subject": "Figure 5 in 'A trial'", "body": "Dear Editors, ..."}
+        self.draft = draft or {"subject": "Question about source data for Fig. 5 in A trial",
+                               "body": "Dear Editors, ...\n\nBest regards,\nDan"}
         self.fail = fail
 
     def __call__(self, argv, text):
@@ -128,6 +129,25 @@ class TestCitation:
         assert D.place_citation(f"Dear Editors,\n\n{s}\n\nRest", s) == f"Dear Editors,\n\n{s}\n\nRest"
 
 
+class TestSubjectAndFooter:
+    def test_subject_always_starts_question_about(self):
+        f = {"title": "A trial"}
+        assert D.subject_line("question about source data for Figs. 5-7 in A trial", f) == \
+            "Question about source data for Figs. 5-7 in A trial"
+        assert D.subject_line("Figure 5 concerns", f) == "Question about source data in A trial"
+
+    def test_the_fixed_closing(self):
+        c = D.email_closing("https://github.com/o/r", "Dan Elton", ["Founder and Director, The Metascience Observatory"])
+        assert c == ("The code to reproduce these findings is available at https://github.com/o/r.\n\n"
+                     + D.CLOSING_PLAN + "\n\nBest regards,\n-- Dan\nFounder and Director, The Metascience Observatory")
+        assert "available on request" in D.email_closing("", "", [])
+        assert D.email_closing("", "", []).endswith("Best regards,\n-- [Your name]")
+
+    def test_a_closing_the_model_wrote_is_dropped(self):
+        assert D.strip_closing("Dear Editors,\n\nText.\n\nBest regards,\nDan") == "Dear Editors,\n\nText."
+        assert D.strip_closing("Dear Editors,\n\nThanks for the data.\n\nText.") == "Dear Editors,\n\nThanks for the data.\n\nText."
+
+
 class TestAddressCheck:
     def test_spellings_entities_and_cloudflare_are_read(self):
         key = 0x42
@@ -162,7 +182,8 @@ class TestEmail:
     def test_the_whole_workflow(self, tmp_path):
         paper = _paper(tmp_path)
         cli = FakeCli()
-        rec = D.run(paper, "email", who="Dan", run_cli=cli, fetch=fetch, exclude=["f_fp"])
+        rec = D.run(paper, "email", who="Dan", run_cli=cli, fetch=fetch, exclude=["f_fp"],
+                    footer={"plain": ["Founder, The Observatory"], "html": ['Founder, <a href="https://o.org">The Observatory</a>']})
         assert rec["ok"], rec
         d = rec["draft"]
         assert [c["email"] for c in d["to"]][0] == "a.rivera@uni.es", "the handling editor comes first"
@@ -177,12 +198,16 @@ class TestEmail:
         assert "a false positive" not in draft["prompt"], "excluded findings stay out"
         assert "discarded" not in draft["prompt"]
         assert "set.seed(1)" in draft["prompt"], "the README is in the context"
-        assert "REVIEWER (sign as): Dan" in draft["prompt"]
+        assert "REVIEWER" not in draft["prompt"], "the sign-off is fixed text, not the model's"
         job = json.loads(D.job_file(paper, "email").read_text())
         assert job["state"] == "done" and [s["status"] for s in job["steps"]] == ["done"] * 3
         saved = json.loads(Path(rec["path"]).read_text())
         assert saved["body"].startswith('Dear Editors, ...\n\nI am writing about "A trial", Journal of Tests 13, 3853 (2022)')
         assert saved["citation"]["html"].startswith('I am writing about "<a href="https://doi.org/10.1234/x">')
+        assert saved["body"].endswith(D.CLOSING_PLAN + "\n\nBest regards,\n-- Dan\nFounder, The Observatory")
+        assert saved["body"].count("Best regards") == 1, "the model's own closing is replaced"
+        assert saved["footer"]["html"] == ['Founder, <a href="https://o.org">The Observatory</a>']
+        assert saved["subject"] == "Question about source data for Fig. 5 in A trial"
         assert "OPENING SENTENCE (verbatim" in draft["prompt"]
 
     def test_journal_contacts_are_cached_per_journal(self, tmp_path):
@@ -209,11 +234,13 @@ class TestEmail:
         cli = FakeCli()
         D.run(_paper(tmp_path), "email", repo_url="https://github.com/o/r",
               repo_visibility="PRIVATE", run_cli=cli, fetch=fetch)
-        assert "REPRODUCTION REPOSITORY: https://github.com/o/r" in cli.calls[-1]["prompt"]
+        assert "available at https://github.com/o/r." in json.loads(
+            Path(sorted((tmp_path / "proj" / "10.1234--x" / "drafts").glob("email-*.json"))[-1]).read_text())["body"]
         cli = FakeCli()
         D.run(_paper(tmp_path / "b"), "email", run_cli=cli, fetch=fetch)
-        assert "available on request" in cli.calls[-1]["prompt"], "no repository: code on request"
-        assert "[Your name]" in cli.calls[-1]["prompt"], "no reviewer name: a placeholder, not a made-up one"
+        body = json.loads(Path(sorted((tmp_path / "b" / "proj" / "10.1234--x" / "drafts").glob("email-*.json"))[-1]).read_text())["body"]
+        assert "available on request" in body, "no repository: code on request"
+        assert body.endswith("-- [Your name]"), "no reviewer name: a placeholder, not a made-up one"
 
     def test_short_replay_scripts_are_in_the_context_long_ones_are_not(self, tmp_path):
         paper = _paper(tmp_path)

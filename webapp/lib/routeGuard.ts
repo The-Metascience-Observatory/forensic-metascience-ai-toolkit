@@ -79,6 +79,8 @@ export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
   // Email and PubPeer-comment drafts: a paid model call, open to reviewers by
   // decision (2026-11-17); nothing is sent or posted from the server.
   "GET /api/drafts", "POST /api/drafts", "POST /api/drafts/save",
+  // Each user's own preferences (the email footer); keyed by their sign-in.
+  "GET /api/profile", "POST /api/profile",
 ]);
 
 export interface Policy { admin: boolean; forbidden: boolean }

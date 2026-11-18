@@ -31,6 +31,16 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — drafts name the supplementary file
+
+- An email or PubPeer draft that cites a supplementary or source-data file
+  now gives its exact file name in parentheses, e.g. "In the Source Data
+  workbook (41467_2022_31599_MOESM4_ESM.xlsx), ...". The draft prompt lists
+  the files in the paper's `supplementary/` folder and tells the model never
+  to invent a name. Existing drafts are unchanged until regenerated.
+- `drafts.run` and the CLI take a sign-off name (`sign` / `--sign`); nothing
+  in the webapp passes it yet, so emails are signed as before.
+
 ## [Unreleased] — 2026-11-17 — email subject, fixed closing, per-user footer, Settings page
 
 - Email subjects start "Question about"; the default form is "Question about

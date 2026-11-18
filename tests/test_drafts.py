@@ -143,6 +143,21 @@ class TestSubjectAndFooter:
         assert "available on request" in D.email_closing("", "", [])
         assert D.email_closing("", "", []).endswith("Best regards,\n-- [Your name]")
 
+    def test_the_name_in_emails_setting_signs_in_full(self):
+        assert D.email_closing("", "Dan Elton", [], sign=" Dan  Elton ").endswith("Best regards,\n-- Dan Elton")
+        assert D.email_closing("", "Dan Elton", [], sign="").endswith("Best regards,\n-- Dan")
+
+    def test_supplementary_file_names_reach_the_prompt(self, tmp_path):
+        (tmp_path / "supplementary").mkdir()
+        for n in ("41467_2022_31772_MOESM4_ESM.xlsx", ".hidden"):
+            (tmp_path / "supplementary" / n).write_text("x")
+        names = D._supplementary_files(tmp_path)
+        assert names == ["41467_2022_31772_MOESM4_ESM.xlsx"]
+        prompt = D.draft_prompt("email", {"title": "T"}, [], [], "Dan", None, "", "", "", None, names)
+        assert "SUPPLEMENTARY FILES (exact file names): 41467_2022_31772_MOESM4_ESM.xlsx" in prompt
+        assert "file name in parentheses" in " ".join(D._SYSTEM["email"].split())
+        assert D._supplementary_files(tmp_path / "none") == []
+
     def test_a_closing_the_model_wrote_is_dropped(self):
         assert D.strip_closing("Dear Editors,\n\nText.\n\nBest regards,\nDan") == "Dear Editors,\n\nText."
         assert D.strip_closing("Dear Editors,\n\nThanks for the data.\n\nText.") == "Dear Editors,\n\nThanks for the data.\n\nText."

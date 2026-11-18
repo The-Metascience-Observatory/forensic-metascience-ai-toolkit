@@ -257,11 +257,12 @@ CLOSING_PLAN = ("I plan to post about this finding on PubPeer and on our website
                 "but I wanted to give the authors a chance to respond first.")
 
 
-def email_closing(repo_url: str, who: str, footer_lines: list[str]) -> str:
+def email_closing(repo_url: str, who: str, footer_lines: list[str], sign: str = "") -> str:
     """The fixed end of every email, after the model's text: where the code
-    is, the plan to post, the sign-off with the sender's first name and their
-    footer. The repository URL becomes a link in the formatted copy."""
-    first = (who or "").split()[0] if (who or "").split() else "[Your name]"
+    is, the plan to post, the sign-off and the sender's footer. The sign-off
+    is `sign` (the "Name in emails" setting) when set, else the sender's
+    first name. The repository URL becomes a link in the formatted copy."""
+    first = " ".join(sign.split()) or ((who or "").split() or ["[Your name]"])[0]
     parts = []
     if repo_url:
         parts.append(f"The code to reproduce these findings is available at {repo_url}.")
@@ -540,6 +541,11 @@ _RULES = """- Describe inconsistencies, never intent. Banned words: fabricated,
 - State what was found with its numbers (which figure or table, how many
   values, what they match). Quote the paper only where a few words settle a
   point.
+- When you name a supplementary or source-data file, put its exact file
+  name in parentheses right after it, e.g. "In the Source Data workbook
+  (41467_2022_31772_MOESM4_ESM.xlsx), ...". Take the name from
+  SUPPLEMENTARY FILES or the notes; never invent one, and leave the
+  parentheses out when no file name is given for it.
 - When the numbers can be generated in a few lines of code (at most about 6;
   e.g. a seed, one generator call and the scaling), include those lines so a
   reader can run them, taken from the reproduction scripts or README given
@@ -598,7 +604,7 @@ def _clip(text: str, n: int) -> str:
 
 def draft_prompt(kind: str, facts: dict, to: list[dict], cc: list[str], who: str,
                  findings: dict | None, triage: str, readme: str, repo_url: str,
-                 scripts: dict[str, str] | None = None) -> str:
+                 scripts: dict[str, str] | None = None, supplementary: list[str] | None = None) -> str:
     parts = [
         "Draft the email." if kind == "email" else "Draft the PubPeer comment.",
         "",
@@ -617,6 +623,8 @@ def draft_prompt(kind: str, facts: dict, to: list[dict], cc: list[str], who: str
     else:
         parts.append(f"REPRODUCTION REPOSITORY: {repo_url}" if repo_url
                      else "REPRODUCTION REPOSITORY: none -- say the code is available on request")
+    if supplementary:
+        parts += ["", "SUPPLEMENTARY FILES (exact file names): " + ", ".join(supplementary)]
     if triage.strip():
         parts += ["", "TRIAGE NOTE", _clip(triage.strip(), 8000)]
     if readme.strip():
@@ -633,6 +641,15 @@ def _repo_dir(paper_dir: Path) -> Path | None:
         if sub.is_dir() and not sub.is_symlink() and (sub / ".git").exists():
             return sub
     return None
+
+
+def _supplementary_files(paper_dir: Path) -> list[str]:
+    """The names of the paper's downloaded supplementary files, which the
+    draft names in parentheses when it cites one."""
+    d = paper_dir / "supplementary"
+    if not d.is_dir():
+        return []
+    return sorted(f.name for f in d.iterdir() if f.is_file() and not f.name.startswith("."))[:60]
 
 
 def _repo_readme(paper_dir: Path) -> str:
@@ -705,7 +722,8 @@ def _excluding(payload: dict | None, exclude: list[str]) -> dict | None:
 
 def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = None, who: str = "",
         repo_url: str = "", repo_visibility: str = "", contacts_dir: str | Path | None = None,
-        exclude: list[str] | None = None, footer: dict | None = None, draft_model: str = DRAFT_MODEL,
+        exclude: list[str] | None = None, footer: dict | None = None, sign: str = "",
+        draft_model: str = DRAFT_MODEL,
         lookup_model: str = LOOKUP_MODEL, run_cli=None, fetch=None) -> dict:
     """The whole workflow. Returns `{ok, path, draft}` or `{ok: False, error}`;
     never raises, never sends or posts."""
@@ -756,7 +774,8 @@ def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = 
         # The repository is linked whatever its visibility: the pane warns
         # while it is private, since recipients cannot open it until then.
         prompt = draft_prompt(kind, facts, [c for c in to if c["verified"]] or to, cc, who,
-                              findings, triage, readme, repo_url, _repo_scripts(paper_dir))
+                              findings, triage, readme, repo_url, _repo_scripts(paper_dir),
+                              _supplementary_files(paper_dir))
         out, err = _run_claude(prompt, _SYSTEM[kind], draft_model, "", _DRAFT_SCHEMA,
                                _DRAFT_TIMEOUT_S, 3.0, run_cli)
         if err:
@@ -770,7 +789,7 @@ def run(paper_dir: str | Path, kind: str = "email", authors: list[str] | None = 
         body = str(out.get("body") or "").strip()
         if kind == "email":
             body = place_citation(strip_closing(body), cite.get("plain", "")) + "\n\n" \
-                + email_closing(repo_url, who, foot_plain)
+                + email_closing(repo_url, who, foot_plain, sign)
         draft = {
             "kind": kind, "created_at": _iso(_now()), "who": who, "model": draft_model,
             "paper": {k: facts.get(k) for k in ("title", "doi", "journal", "handling_editor")},
@@ -804,6 +823,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--kind", choices=KINDS, default="email")
     ap.add_argument("--authors", default="", help="comma-separated author addresses (default: the paper XML's)")
     ap.add_argument("--who", default="")
+    ap.add_argument("--sign", default="", help="the name the email is signed with (default: the first name in --who)")
     ap.add_argument("--repo-url", default="")
     ap.add_argument("--repo-visibility", default="")
     ap.add_argument("--contacts-dir", default=None, help=f"folder of {CONTACTS_FILE} (default: the paper's parent)")
@@ -818,7 +838,8 @@ def main(argv: list[str] | None = None) -> int:
     except ValueError:
         footer = None
     rec = run(a.paper_dir, a.kind, split(a.authors) or None, a.who, a.repo_url, a.repo_visibility,
-              a.contacts_dir, split(a.exclude), footer, a.model, a.lookup_model)
+              a.contacts_dir, split(a.exclude), footer, sign=a.sign, draft_model=a.model,
+              lookup_model=a.lookup_model)
     print(json.dumps({k: v for k, v in rec.items() if k != "draft"}, default=str))
     return 0 if rec.get("ok") else 2
 

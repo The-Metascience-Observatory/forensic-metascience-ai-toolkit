@@ -418,15 +418,6 @@ export function IssueList({ issues, at, review, onFocus, onSave, locById, onJump
                   </div>
                 ))}
                 <div className="finding-flags-col">
-                  <label>
-                    <input type="checkbox"
-                      checked={!!saved.submitted_to_pubpeer}
-                      onChange={(e) => onSave({
-                        issue_id: iss.id,
-                        submitted_to_pubpeer: e.target.checked,
-                      })} />
-                    submitted to PubPeer
-                  </label>
                   {saved.pubpeer_url && (
                     <a href={saved.pubpeer_url} target="_blank" rel="noreferrer"
                        style={{ fontSize: 11 }}>

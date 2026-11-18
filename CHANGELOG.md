@@ -40,9 +40,10 @@ comparable.
   GitHub button. The repo card has a full blue border, and the findings list
   sits in a card with an orange border.
 - The line under the site header is black (the text colour in dark mode).
-- The paper-level "submitted to PubPeer" checkbox is removed. The flag is
-  still read where it was recorded (the project table's badge); the
-  per-finding checkbox stays.
+- The "submitted to PubPeer" checkboxes are removed, the paper-level one and
+  the one on each finding card. Flags already recorded are still read (the
+  project table's badge, a finding's "View on PubPeer" link); "submitted to
+  editor" stays.
 
 ## [Unreleased] — 2026-11-17 — README editor: rich text and markdown
 

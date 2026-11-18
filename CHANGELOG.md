@@ -31,6 +31,15 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — paper actions at the top of the findings pane
+
+- "Mark paper reviewed", "Next paper →" and "Drafts…" moved from the bottom
+  of the findings pane to its top (with the PubPeer link and note, when a
+  paper has them).
+- The paper-level "submitted to PubPeer" checkbox is removed. The flag is
+  still read where it was recorded (the project table's badge); the
+  per-finding checkbox stays.
+
 ## [Unreleased] — 2026-11-17 — README editor: rich text and markdown
 
 - The README button is now "View and edit README.md", above the Summary.

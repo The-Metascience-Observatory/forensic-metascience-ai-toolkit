@@ -278,6 +278,44 @@ export function Reviewer({ project, slug, dir }: {
       )}
       <div className={`split${split.dragging ? " dragging" : ""}`} ref={split.containerRef}>
         <section className="split-left" style={{ width: `${split.pct}%` }}>
+          {/* Paper actions first: they are what a reviewer does with the page. */}
+          <div className="paper-actions" data-paper-actions>
+            <div className="paper-actions-row">
+              <button
+                className="primary"
+                disabled={paperStatus === "complete"}
+                onClick={() => save({
+                  paper: { status: "complete" },
+                })}
+              >
+                Mark paper reviewed
+              </button>
+              <button
+                onClick={() => goPaper(data.nav?.next ?? "caught-up")}
+                title={data.nav?.next
+                  ? "Next paper with findings (→)"
+                  : "No more papers with findings (→)"}
+              >
+                Next paper →
+              </button>
+              <button onClick={() => setDraftsOpen(true)}
+                      title="Draft a PubPeer comment or editor letter from the stored findings — never posted anywhere">
+                Drafts…
+              </button>
+            </div>
+            {review?.paper?.pubpeer_url && (
+              <p style={{ fontSize: 12, margin: "6px 0 0" }}>
+                <a href={review.paper.pubpeer_url} target="_blank" rel="noreferrer">
+                  View on PubPeer
+                </a>
+              </p>
+            )}
+            {review?.paper?.pubpeer_note && (
+              <p className="muted" style={{ fontSize: 12, margin: "4px 0 0" }}>
+                {review.paper.pubpeer_note}
+              </p>
+            )}
+          </div>
           {data.issues?.headline?.statement && (
             <p style={{
               fontSize: 13, margin: "0 0 10px", padding: "8px 10px",
@@ -313,55 +351,6 @@ export function Reviewer({ project, slug, dir }: {
             onGrouped={onGrouped}
           />
           <LoadMore hasMore={hasMore} loading={loadingMore} onMore={loadMore} />
-          <div style={{ marginTop: 16, paddingTop: 12,
-                        borderTop: "1px solid var(--line)" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8,
-                          alignItems: "center" }}>
-              <button
-                className="primary"
-                disabled={paperStatus === "complete"}
-                onClick={() => save({
-                  paper: { status: "complete" },
-                })}
-              >
-                Mark paper reviewed
-              </button>
-              <button
-                onClick={() => goPaper(data.nav?.next ?? "caught-up")}
-                title={data.nav?.next
-                  ? "Next paper with findings (→)"
-                  : "No more papers with findings (→)"}
-              >
-                Next paper →
-              </button>
-              <button onClick={() => setDraftsOpen(true)}
-                      title="Draft a PubPeer comment or editor letter from the stored findings — never posted anywhere">
-                Drafts…
-              </button>
-            </div>
-            <label style={{ display: "block", marginTop: 10, fontSize: 13 }}>
-              <input
-                type="checkbox"
-                checked={!!review?.paper?.submitted_to_pubpeer}
-                onChange={(e) => save({
-                  paper: { submitted_to_pubpeer: e.target.checked },
-                })}
-              />
-              {" "}submitted to PubPeer
-            </label>
-            {review?.paper?.pubpeer_url && (
-              <p style={{ fontSize: 12, margin: "6px 0 0" }}>
-                <a href={review.paper.pubpeer_url} target="_blank" rel="noreferrer">
-                  View on PubPeer
-                </a>
-              </p>
-            )}
-            {review?.paper?.pubpeer_note && (
-              <p className="muted" style={{ fontSize: 12, margin: "4px 0 0" }}>
-                {review.paper.pubpeer_note}
-              </p>
-            )}
-          </div>
         </section>
         <div {...split.separatorProps} />
         <section className="split-right" style={{ position: "relative" }}>

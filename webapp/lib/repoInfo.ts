@@ -22,6 +22,9 @@ export interface RepoInfo {
   triage_md: string;
   /** An EMBARGO.json covers this paper folder. */
   embargoed: boolean;
+  /** The paper folder on the server. The route sends it to admins only (and
+   *  in local mode): a hosted reviewer is not shown the server's folders. */
+  paper_path?: string;
 }
 
 export async function paperRepo(project: string, dir: string): Promise<{ paperAbs: string; repoAbs: string | null }> {

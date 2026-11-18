@@ -16,6 +16,8 @@ export type RepoView = {
   summary_md: string;
   triage_md: string;
   embargoed: boolean;
+  /** The paper folder on the server; sent to admins only. */
+  paper_path?: string;
 };
 
 /** The paper's reproduction repository. `set` replaces the cached view with

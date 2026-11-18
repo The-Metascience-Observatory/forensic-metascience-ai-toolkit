@@ -31,6 +31,12 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — "Copy path" on the paper review page
+
+- A **Copy path** button above the summary copies the path of the paper's
+  folder on the server (hover shows it). `GET /api/repo` sends the path to
+  admins and in local mode only; a hosted reviewer gets no button.
+
 ## [Unreleased] — 2026-11-17 — reproduction repo on the paper review page
 
 - **Summary above the findings.** A paper whose folder holds a reproduction

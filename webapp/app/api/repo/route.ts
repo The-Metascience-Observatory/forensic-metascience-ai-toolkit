@@ -1,3 +1,4 @@
+import { requireAdmin } from "@/lib/auth";
 import { jsonError } from "@/lib/err";
 import { paperRepo, repoInfo } from "@/lib/repoInfo";
 import { guard } from "@/lib/routeGuard";
@@ -14,6 +15,9 @@ export async function GET(req: Request) {
   if (!project || !dir) return Response.json({ error: "project and dir required" }, { status: 400 });
   try {
     const { paperAbs, repoAbs } = await paperRepo(project, dir);
-    return Response.json(await repoInfo(paperAbs, repoAbs), { headers: { "cache-control": "no-store" } });
+    const info = await repoInfo(paperAbs, repoAbs);
+    // The folder's path on this machine: for the operator, not a hosted reviewer.
+    if (!requireAdmin(req)) info.paper_path = paperAbs;
+    return Response.json(info, { headers: { "cache-control": "no-store" } });
   } catch (e) { return jsonError(e); }
 }

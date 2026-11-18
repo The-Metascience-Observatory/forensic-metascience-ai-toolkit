@@ -108,6 +108,18 @@ the webapp reviews it with the same page and the same storage as any finding:
   (Europe PMC hits), and the replay snippet with a copy button. The PDF pane
   highlights the detector's `page_bbox` anchors; an XML-only paper highlights
   the `table_cell` anchors in the rendered article.
+- **Reproduction repo:** when the paper folder holds one (the one subfolder
+  that is a git repository), the page shows the Summary of its README above
+  the findings, with the repo's name, whether it is private or public on
+  GitHub, and anything uncommitted or unpushed. A paper without a repo (or a
+  README without a Summary) shows its `rng_triage.md` note there. **README**
+  opens the README over the source pane, rendered; **Edit** and **Save**
+  change the file in the repo folder only; **Commit and push** commits
+  `README.md` alone and pushes it; **Make repo public** (admins) asks for the
+  repository's name and needs a clean, fully pushed tree. The server runs
+  `git` and `gh` as the account it runs under, so that account must be signed
+  in to `gh` with rights on the reproductions organisation. Visibility
+  changes are logged in `REPO_VISIBILITY.tsv` at the project's root.
 - **Decisions:** the vocabulary is the producer's own
   (`review_io.DECISIONS_BY_PRODUCER`, generated into `lib/constants.gen.ts`):
   true issue, disclosed / legitimate simulation, legitimate random algorithm,
@@ -311,8 +323,9 @@ Admin-only routes (`lib/routeGuard.ts`, one table): `/api/projects`
 `register_root`, `map_paper`, `register_file` or `sync`, workbench reads
 `projects` and `roots`, `/api/index` POST, `/api/metadata` POST,
 `/api/images/reference` POST, `/api/images/sync` POST, `/api/stats` POST,
-`/api/draft` POST (a paid model call), `/api/images/website` POST, and
-`/api/admin/*`. Refused for everyone in hosted mode: `/api/reveal` (it opens
+`/api/draft` POST (a paid model call), `/api/images/website` POST,
+`/api/repo/publish` POST (makes a GitHub repository public; `/api/repo/push`
+also asks for an admin once the repository is public), and `/api/admin/*`. Refused for everyone in hosted mode: `/api/reveal` (it opens
 a file manager on the server). A reviewer's sync status has its error details
 removed, `image_status` loses its all-projects list, and a bulk-decision job
 can be polled only by whoever started it.

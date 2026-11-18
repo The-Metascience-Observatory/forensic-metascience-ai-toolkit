@@ -18,9 +18,12 @@ import {
 import { DraftsModal } from "./DraftsModal";
 import { IssueList } from "./IssueList";
 import { LoadMore } from "./LoadMore";
+import { ReadmePane } from "./ReadmePane";
+import { RepoSummary } from "./RepoSummary";
 import { SourcePane } from "./SourcePane";
 import { usePaperReview } from "./usePaperReview";
 import { useReviewKeys } from "./useReviewKeys";
+import { useRepo } from "@/lib/useRepo";
 
 // The findings/source split is a standing preference (localStorage), unlike
 // the image item's session-scoped panes; see `useSplitPane`.
@@ -43,6 +46,8 @@ export function Reviewer({ project, slug, dir }: {
   const focusFinding = searchParams.get("finding");
   const setRun = (value:string) => { const q=new URLSearchParams(searchParams.toString()); q.set("run",value); router.push(`?${q}`); };
   const [draftsOpen, setDraftsOpen] = useState(false);
+  /** The repo's README covers the source pane while open. */
+  const [readmeOpen, setReadmeOpen] = useState(false);
   const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
                                label: "Resize findings and source panes", storage: "local" });
   const pdfSplit = useSplitPane({ storageKey: PDF_SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
@@ -66,6 +71,10 @@ export function Reviewer({ project, slug, dir }: {
   useEffect(() => {
     setFocusTargetId(null); setForceSurface(null);
   }, [project, slug, dir, run, grouped]);
+  // The paper's reproduction repository (summary, README, GitHub state). An
+  // archive-only paper (`@<id>`) has no folder on this machine to hold one.
+  const repoDir = data ? (data.paper?.dir || dir || slug) : null;
+  const repoView = useRepo(project, repoDir && !String(repoDir).startsWith("@") ? repoDir : null);
 
   const locators = data?.locators?.locators;
   const locById = useMemo(() => {
@@ -81,6 +90,9 @@ export function Reviewer({ project, slug, dir }: {
   }, []);
 
   const jump = useCallback((t: Target) => {
+    // A jump is a request to see the source: the README steps aside (it
+    // stays mounted, so an unsaved edit survives).
+    setReadmeOpen(false);
     setFocusTargetId(t.id);
     setForceSurface(surfaceOf(t));
   }, []);
@@ -274,6 +286,8 @@ export function Reviewer({ project, slug, dir }: {
               {data.issues.headline.statement}
             </p>
           )}
+          <RepoSummary info={repoView.info} readmeOpen={readmeOpen}
+                       onReadme={() => setReadmeOpen((o) => !o)} />
           <IssueList
             issues={issues}
             source={data.issues?.source ?? null}
@@ -343,7 +357,14 @@ export function Reviewer({ project, slug, dir }: {
           </div>
         </section>
         <div {...split.separatorProps} />
-        <section className="split-right">
+        <section className="split-right" style={{ position: "relative" }}>
+          {repoView.info?.repo && repoView.info.readme !== null && (
+            <div className="readme-cover" hidden={!readmeOpen}>
+              <ReadmePane project={project} dir={String(repoDir)} info={repoView.info}
+                          onInfo={repoView.set} onReload={repoView.reload}
+                          onClose={() => setReadmeOpen(false)} />
+            </div>
+          )}
           {beside.shown ? (
             <div className={`split${pdfSplit.dragging ? " dragging" : ""}`} ref={pdfSplit.containerRef}>
               <section className="split-pane" style={{ width: `${pdfSplit.pct}%` }}>

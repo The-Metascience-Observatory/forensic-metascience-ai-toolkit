@@ -31,6 +31,32 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — reproduction repo on the paper review page
+
+- **Summary above the findings.** A paper whose folder holds a reproduction
+  repo (the one subfolder that is a git repository) shows the Summary bullets
+  of the repo's README above the findings list, with the repo's name, a
+  Private/Public badge and what is uncommitted or unpushed. Both README
+  layouts are read (`**Summary**` and `## Summary`). A paper with no repo, or
+  a README with no Summary, shows its `rng_triage.md` note instead.
+- **README pane.** "README" opens the README over the source pane, rendered
+  as GitHub would (tables and the HTML tables included; the HTML is
+  sanitized). "Edit" turns it into a text box; "Save" writes `README.md` in
+  the repo folder and nothing else. A save over a README that changed on disk
+  since it was opened is refused.
+- **Commit and push** commits `README.md` alone and pushes it. It is refused
+  when another file is uncommitted or the remote is not the paper's repo in
+  the reproductions organisation. Reviewers may edit, save and push while the
+  repo is private; once it is public, pushing is admin-only.
+- **Make repo public** (admins): asks for the repository's name to be typed,
+  and is refused unless the tree is clean and every commit is on GitHub. Each
+  change is appended to `REPO_VISIBILITY.tsv` at the project's root. An
+  `EMBARGO.json` over the folder is named in the dialog; it does not block.
+- New routes `GET /api/repo`, `POST /api/repo/readme`, `POST /api/repo/push`
+  (reviewer) and `POST /api/repo/publish` (admin), in `lib/routeGuard.ts` and
+  the security audit. New dependencies: `react-markdown`, `remark-gfm`,
+  `rehype-raw`, `rehype-sanitize` (run `npm install` in `webapp/`).
+
 ## [Unreleased] — 2026-11-17 — paper folders sorted into grouping folders
 
 - A paper folder moved one level down into a grouping folder of its project

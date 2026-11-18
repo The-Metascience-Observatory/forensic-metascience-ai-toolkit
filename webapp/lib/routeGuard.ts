@@ -55,6 +55,7 @@ export const RULES: readonly Rule[] = [
   { path: "/api/images/sync", method: "POST", admin: true, why: "pulls shared records" },
   { path: "/api/admin/", method: "GET", prefix: true, admin: true, why: "users and project sources" },
   { path: "/api/admin/", method: "POST", prefix: true, admin: true, why: "users and project sources" },
+  { path: "/api/repo/publish", method: "POST", admin: true, why: "makes a GitHub repository public" },
   { path: "/api/reveal", method: "POST", forbidden: true, why: "opens a file manager on the server" },
 ];
 
@@ -73,6 +74,9 @@ export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
   "GET /api/images/missed", "POST /api/images/missed",
   "GET /api/images/summary", "GET /api/images/text-regions", "POST /api/images/viewed",
   "GET /api/images/website",
+  // The reproduction repository: read and edit the README, commit and push it
+  // (the push route itself asks for an admin once the repository is public).
+  "GET /api/repo", "POST /api/repo/readme", "POST /api/repo/push",
 ]);
 
 export interface Policy { admin: boolean; forbidden: boolean }

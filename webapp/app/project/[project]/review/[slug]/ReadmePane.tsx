@@ -73,7 +73,8 @@ export function ReadmePane({ project, dir, info, onInfo, onReload, onClose }: {
   const save = () => call("save", "/api/repo/readme", { content: draft, base_sha256: base.sha256 }, "Saved to the repository folder. Not committed yet.");
   const push = () => call("push", "/api/repo/push", {}, "Committed and pushed to GitHub.");
   // One click, no dialog (Dan, 2026-11-17); the server still checks the name.
-  const publish = () => call("publish", "/api/repo/publish", { confirm: repo?.name }, "The repository is now public.");
+  // No message afterwards: the badge turns to "Public".
+  const publish = () => call("publish", "/api/repo/publish", { confirm: repo?.name }, "");
   const reload = () => { setDraft(base.text); setRichKey((k) => k + 1); setErr(null); onReload(); };
   const close = () => {
     if (dirty && !window.confirm("Close the README and lose your unsaved edit?")) return;

@@ -41,8 +41,6 @@ export function ReadmePane({ project, dir, info, onInfo, onReload, onClose }: {
   const [busy, setBusy] = useState<Busy>(null);
   const [err, setErr] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
-  const [confirming, setConfirming] = useState(false);
-  const [typed, setTyped] = useState("");
   const dirty = draft !== base.text;
 
   // The file changed under us (a save, a reload, another paper): take the
@@ -74,11 +72,8 @@ export function ReadmePane({ project, dir, info, onInfo, onReload, onClose }: {
   };
   const save = () => call("save", "/api/repo/readme", { content: draft, base_sha256: base.sha256 }, "Saved to the repository folder. Not committed yet.");
   const push = () => call("push", "/api/repo/push", {}, "Committed and pushed to GitHub.");
-  const publish = async () => {
-    if (await call("publish", "/api/repo/publish", { confirm: typed }, "The repository is now public.")) {
-      setConfirming(false); setTyped("");
-    }
-  };
+  // One click, no dialog (Dan, 2026-11-17); the server still checks the name.
+  const publish = () => call("publish", "/api/repo/publish", { confirm: repo?.name }, "The repository is now public.");
   const reload = () => { setDraft(base.text); setRichKey((k) => k + 1); setErr(null); onReload(); };
   const close = () => {
     if (dirty && !window.confirm("Close the README and lose your unsaved edit?")) return;
@@ -117,9 +112,9 @@ export function ReadmePane({ project, dir, info, onInfo, onReload, onClose }: {
           {busy === "push" ? "Pushing…" : "Commit and push"}
         </button>
         {isAdmin && isPrivate && (
-          <button disabled={!clean || busy !== null} onClick={() => { setConfirming(true); setErr(null); setDone(null); }}
+          <button disabled={!clean || busy !== null} onClick={publish}
                   title={clean ? "Make the GitHub repository visible to everyone" : "Save, commit and push everything first"}>
-            Make repo public…
+            {busy === "publish" ? "Making public…" : "Make repo public"}
           </button>
         )}
         <span className="readme-state">
@@ -143,35 +138,6 @@ export function ReadmePane({ project, dir, info, onInfo, onReload, onClose }: {
       {mode === "rich" && <RichEditor key={richKey} value={draft} onChange={(md) => { setDraft(md); setDone(null); }} />}
       {mode === "view" && <div className="readme-body"><Markdown>{draft}</Markdown></div>}
 
-      {confirming && (
-        <div className="readme-confirm" role="dialog" aria-modal="true" aria-label="Make repository public"
-             onClick={(e) => { if (e.target === e.currentTarget && busy === null) setConfirming(false); }}>
-          <div className="readme-confirm-box">
-            <h3>Make this repository public?</h3>
-            <p>
-              <a href={repo.url} target="_blank" rel="noreferrer">{repo.name}</a> and its whole commit history will be
-              visible to everyone on GitHub. GitHub can make it private again, but copies made in the meantime stay out.
-            </p>
-            {info.embargoed && (
-              <p style={{ color: "var(--sev-highly)" }}>
-                An EMBARGO.json covers this paper&apos;s folder: the corpus is marked as not to be published from.
-              </p>
-            )}
-            <label>
-              Type the repository&apos;s name to confirm:
-              <input value={typed} onChange={(e) => setTyped(e.target.value)} autoFocus spellCheck={false}
-                     placeholder={repo.name} aria-label="Repository name" />
-            </label>
-            {err && <p role="alert" style={{ color: "var(--sev-impossible)" }}>{err}</p>}
-            <div className="readme-confirm-actions">
-              <button onClick={() => setConfirming(false)} disabled={busy !== null}>Cancel</button>
-              <button className="primary" disabled={typed.trim() !== repo.name || busy !== null} onClick={publish}>
-                {busy === "publish" ? "Making public…" : "Make public"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

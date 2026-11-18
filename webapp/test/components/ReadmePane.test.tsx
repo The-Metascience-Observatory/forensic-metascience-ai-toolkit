@@ -86,7 +86,7 @@ test("a save over a README that changed on disk says so and offers a reload", as
   expect((screen.getByLabelText("README.md source") as HTMLTextAreaElement).value).toBe("mine"); // the edit is kept
 });
 
-test("a reviewer has no 'Make repo public'; an admin must type the repository's name", async () => {
+test("a reviewer has no 'Make repo public'; for an admin it is one click, with no dialog", async () => {
   stubFetch("reviewer", () => view());
   const first = render(<Harness start={view()} />);
   await waitFor(() => expect(fetch).toHaveBeenCalled());
@@ -96,15 +96,9 @@ test("a reviewer has no 'Make repo public'; an admin must type the repository's 
   const calls = stubFetch("admin", () => view({ visibility: "PUBLIC" }));
   render(<Harness start={view()} />);
   fireEvent.click(await screen.findByRole("button", { name: /Make repo public/ }));
-  const confirm = () => screen.getByRole("button", { name: /^Make public$/ }) as HTMLButtonElement;
-  expect(confirm().disabled).toBe(true);
-  fireEvent.change(screen.getByLabelText("Repository name"), { target: { value: NAME.slice(0, -1) } });
-  expect(confirm().disabled).toBe(true);
-  fireEvent.change(screen.getByLabelText("Repository name"), { target: { value: NAME } });
-  fireEvent.click(confirm());
+  expect(screen.queryByRole("dialog")).toBeNull();
   await waitFor(() => expect(document.querySelector(".readme-bar [data-visibility]")?.textContent).toBe("Public"));
   expect(calls).toEqual([{ url: "/api/repo/publish", body: expect.objectContaining({ project: "p", dir: "10.1--x", confirm: NAME }) }]);
-  expect(screen.queryByRole("dialog")).toBeNull();
   expect(screen.queryByRole("button", { name: /Make repo public/ })).toBeNull(); // already public
 });
 

@@ -31,6 +31,30 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — "Make repo public" checks the repo first; webapp commits as delton137
+
+- **Make repo public is refused while the repository is not fit to publish**
+  (`publishProblems` in `webapp/lib/reproRepo.ts`, read-only, run before
+  anything else in `makePublic`): any commit whose author or committer email
+  is not a `@users.noreply.github.com` address; local paths (`/home/`,
+  `/media/`, `/Users/`, `Dropbox/`, `C:\Users`) in a file at HEAD or anywhere
+  in the history (`git log --all -G`); tracked run logs (`run_meta*.json`,
+  `*screen*log*`, `*stdout*.txt`, `*.log`). The refusal names the emails,
+  files and commits, and says to run `python scripts/fix_repo_identity.py
+  --apply --paths <repo>` in metascience-observatory-rng-detector. GitHub is
+  not asked to change anything. The README pane shows each problem on its
+  own line (`.readme-msg` is `white-space: pre-line`).
+- **The webapp's README commits are always by `delton137
+  <7319436+delton137@users.noreply.github.com>`** (`GIT_IDENTITY`):
+  `commitAndPush` passes it with `git -c` for `user.*`, `author.*` and
+  `committer.*`, and `runCommand` drops `GIT_AUTHOR_*` / `GIT_COMMITTER_*`
+  from git's environment, so the server's git config never decides.
+- Tests (`webapp/test/reproRepo.test.mjs`, real scratch repos with local bare
+  remotes): a Gmail and a placeholder-email commit, a path at HEAD (POSIX and
+  Windows), a path only in history, run logs and a clean repo; each refusal
+  names its reason and makes no `gh` call; a README commit is by delton137
+  despite a different `user.email`, `author.email` and `GIT_AUTHOR_EMAIL`.
+
 ## [Unreleased] — 2026-11-17 — drafts name the supplementary file
 
 - An email or PubPeer draft that cites a supplementary or source-data file

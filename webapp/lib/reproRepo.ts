@@ -20,17 +20,33 @@ export const TRIAGE_NOTE = "rng_triage.md";
 export const VISIBILITY_LOG = "REPO_VISIBILITY.tsv";
 const MAX_README_BYTES = 400_000;
 
-export type Run = (argv: string[], opts?: { cwd?: string; timeoutMs?: number }) => Promise<string>;
+/** The one identity every commit in a reproduction repository carries: the
+ *  owner's GitHub noreply address, never a personal or placeholder email. */
+export const GIT_IDENTITY = { name: "delton137", email: "7319436+delton137@users.noreply.github.com" } as const;
+
+/** `git -c` options that make git commit as `GIT_IDENTITY` whatever the
+ *  server's git config says (`author.*` and `committer.*` outrank `user.*`). */
+export const identityConfig = (): string[] => ["user", "author", "committer"].flatMap((k) => [
+  "-c", `${k}.name=${GIT_IDENTITY.name}`, "-c", `${k}.email=${GIT_IDENTITY.email}`,
+]);
+
+/** `allowNoMatch`: exit status 1 with nothing on stderr is "found nothing"
+ *  (`git grep`) and resolves to `""`; any other failure still rejects. */
+export type Run = (argv: string[], opts?: { cwd?: string; timeoutMs?: number; allowNoMatch?: boolean }) => Promise<string>;
 
 /** Runs one command and returns its stdout. A failure carries the command's
- *  own stderr, which is what says why a push or a visibility change failed. */
+ *  own stderr, which is what says why a push or a visibility change failed.
+ *  Git's identity variables are dropped from the environment, so only
+ *  `identityConfig()` decides who a commit is by. */
 export const runCommand: Run = (argv, opts = {}) =>
   new Promise((resolve, reject) => {
+    const env: NodeJS.ProcessEnv = { ...process.env, GIT_TERMINAL_PROMPT: "0", GH_PROMPT_DISABLED: "1" };
+    for (const k of ["GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL"]) delete env[k];
     execFile(argv[0], argv.slice(1), {
-      cwd: opts.cwd, timeout: opts.timeoutMs ?? 30_000, maxBuffer: 4 * 1024 * 1024, windowsHide: true,
-      env: { ...process.env, GIT_TERMINAL_PROMPT: "0", GH_PROMPT_DISABLED: "1" },
+      cwd: opts.cwd, timeout: opts.timeoutMs ?? 30_000, maxBuffer: 16 * 1024 * 1024, windowsHide: true, env,
     }, (error, stdout, stderr) => {
-      if (error) reject(new Error(`${argv.slice(0, 3).join(" ")}: ${String(stderr || error.message).trim().slice(0, 1500)}`));
+      if (error && opts.allowNoMatch && error.code === 1 && !String(stderr).trim()) resolve("");
+      else if (error) reject(new Error(`${argv.slice(0, 3).join(" ")}: ${String(stderr || error.message).trim().slice(0, 1500)}`));
       else resolve(String(stdout));
     });
   });
@@ -157,11 +173,75 @@ export async function commitAndPush(repoAbs: string, who: string, run: Run = run
   const git = (...args: string[]) => run(["git", "-C", repoAbs, ...args], { timeoutMs: 90_000 });
   if (state.readmeDirty) {
     await git("add", "--", README);
-    await git("commit", "-m", commitMessage(who), "--", README);
+    await git(...identityConfig(), "commit", "-m", commitMessage(who), "--", README);
   }
   await git("push", "origin", "HEAD");
   return { committed: state.readmeDirty, pushed: true };
 }
+
+/** An absolute path on someone's machine, as a POSIX extended regex for
+ *  `git grep -E` and `git log -G`. */
+export const LOCAL_PATH_RE = String.raw`/home/|/media/|/Users/|Dropbox/|[A-Z]:\\Users`;
+/** File names (not paths) of run logs that must not be published: they carry
+ *  local paths, hostnames and the agent's raw output. */
+const RUN_LOG_RE = /^run_meta.*\.json$|screen.*log|stdout.*\.txt$|\.log$/i;
+const NOREPLY = "@users.noreply.github.com";
+export const FIX_HINT = "python scripts/fix_repo_identity.py --apply --paths";
+
+/** "a, b, c and 4 more" */
+const some = (items: string[], max = 6) =>
+  items.slice(0, max).join(", ") + (items.length > max ? ` and ${items.length - max} more` : "");
+
+/** What would be wrong with this repository's history or files if it were
+ *  public, one human-readable line per kind of problem; `[]` when clean.
+ *  Reads only: commit emails that are not a GitHub noreply address, local
+ *  paths in files at HEAD and anywhere in history, and tracked run logs. */
+export async function publishProblems(repoAbs: string, run: Run = runCommand): Promise<string[]> {
+  const git = (args: string[], allowNoMatch = false) =>
+    run(["git", "-C", repoAbs, "-c", "core.quotePath=false", ...args], { timeoutMs: 120_000, allowNoMatch });
+  const lines = (s: string) => s.split("\n").filter(Boolean);
+  const problems: string[] = [];
+
+  const byEmail = new Map<string, Set<string>>();
+  for (const line of lines(await git(["log", "--all", "--format=%h%x09%ae%x09%ce"]))) {
+    const [hash, ...emails] = line.split("\t");
+    for (const email of emails) {
+      if (email.toLowerCase().endsWith(NOREPLY)) continue;
+      const key = email || "(no email)";
+      byEmail.set(key, (byEmail.get(key) ?? new Set()).add(hash));
+    }
+  }
+  if (byEmail.size) {
+    problems.push(`Commits by an email that is not a GitHub noreply address: ${
+      some([...byEmail].map(([email, hashes]) => `${email} (${some([...hashes], 3)})`), 4)}`);
+  }
+
+  const atHead = lines(await git(["grep", "-I", "-c", "-z", "-E", LOCAL_PATH_RE, "HEAD", "--"], true))
+    .map((line) => { const [file, n] = line.replace(/^HEAD:/, "").split("\0"); return `${file} (${n} line${n === "1" ? "" : "s"})`; });
+  if (atHead.length) problems.push(`Local paths in ${atHead.length} file(s) at HEAD: ${some(atHead)}`);
+
+  const commits = new Map<string, string[]>();
+  let current = "";
+  for (const line of lines(await git(["log", "--all", `-G${LOCAL_PATH_RE}`, "--format=commit %h", "--name-only"]))) {
+    if (line.startsWith("commit ")) { current = line.slice(7); commits.set(current, []); }
+    else if (current) commits.get(current)!.push(line);
+  }
+  if (commits.size) {
+    problems.push(`Local paths in the history of ${commits.size} commit(s): ${
+      some([...commits].map(([hash, files]) => `${hash} (${some(files, 2)})`), 4)}`);
+  }
+
+  const logs = lines(await git(["ls-tree", "-r", "--name-only", "HEAD"]))
+    .filter((file) => RUN_LOG_RE.test(path.posix.basename(file)));
+  if (logs.length) problems.push(`Run logs are tracked: ${some(logs)}`);
+  return problems;
+}
+
+/** The refusal `makePublic` gives for `publishProblems`, fix first so a
+ *  hosted reviewer's shortened message still says what to do. */
+export const publishRefusal = (repoAbs: string, problems: string[]): string =>
+  `Not made public: ${problems.length} problem(s) to fix first. In metascience-observatory-rng-detector run ` +
+  `\`${FIX_HINT} ${repoAbs}\` (it rewrites the history and pushes it again), then try again.\n` + problems.map((p) => `• ${p}`).join("\n");
 
 export const makePublicArgv = (name: string): string[] =>
   ["gh", "repo", "edit", `${ORG}/${name}`, "--visibility", "public", "--accept-visibility-change-consequences"];
@@ -169,12 +249,15 @@ export const makePublicArgv = (name: string): string[] =>
 export const visibilityLogLine = (r: { paper: string; url: string; who: string }, now: Date = new Date()): string =>
   [now.toISOString(), oneLine(r.paper, 200), r.url, "public", oneLine(r.who)].join("\t") + "\n";
 
-/** Make the GitHub repository public. Refused unless the caller typed the
- *  repository's name, the tree is clean and every commit is on GitHub: what
- *  becomes public must be what the reviewer has just been reading. */
+/** Make the GitHub repository public. Refused unless the history and files
+ *  are fit to publish (`publishProblems`), the caller typed the repository's
+ *  name, the tree is clean and every commit is on GitHub: what becomes public
+ *  must be what the reviewer has just been reading. */
 export async function makePublic(
   repoAbs: string, confirmName: string, who: string, logDir: string | null, run: Run = runCommand,
 ): Promise<{ visibility: Visibility; url: string }> {
+  const problems = await publishProblems(repoAbs, run);
+  if (problems.length) throw new Error(publishRefusal(repoAbs, problems));
   const state = await repoState(repoAbs, run);
   if (String(confirmName || "").trim() !== state.name) throw new Error("The name typed does not match the repository's name");
   if (!state.hasRemote || !state.inOrg) throw new Error(`The remote is not ${ORG}/${state.name}; nothing was changed`);

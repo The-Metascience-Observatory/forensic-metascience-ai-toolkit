@@ -6,13 +6,16 @@ import path from "node:path";
 import { afterAll, test } from "vitest";
 
 import {
-  ORG, commitAndPush, commitMessage, dirtyPaths, findRepo, githubSlug, makePublic, makePublicArgv,
-  readReadme, repoState, saveReadme, sha256, visibilityLogLine,
+  FIX_HINT, GIT_IDENTITY, ORG, commitAndPush, commitMessage, dirtyPaths, findRepo, githubSlug, makePublic, makePublicArgv,
+  publishProblems, readReadme, repoState, runCommand, saveReadme, sha256, visibilityLogLine,
 } from "../lib/reproRepo.ts";
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "repro-repo-"));
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
-const git = (cwd, ...args) => execFileSync("git", ["-C", cwd, "-c", "user.name=T", "-c", "user.email=t@example.org", ...args], { encoding: "utf8" });
+// Test commits are by the noreply identity, so a repo is fit to publish
+// unless a test makes it otherwise; `gitAs` commits as someone else.
+const gitAs = (email, cwd, ...args) => execFileSync("git", ["-C", cwd, "-c", "user.name=T", "-c", `user.email=${email}`, ...args], { encoding: "utf8" });
+const git = (cwd, ...args) => gitAs(GIT_IDENTITY.email, cwd, ...args);
 
 /** A paper folder with a repo that tracks a local bare "GitHub". */
 function paperWithRepo(name = "Journal-2024-PMC1-10.1--x-words") {
@@ -21,6 +24,7 @@ function paperWithRepo(name = "Journal-2024-PMC1-10.1--x-words") {
   fs.mkdirSync(repo);
   execFileSync("git", ["init", "-q", "--bare", "-b", "main", bare]);
   execFileSync("git", ["init", "-q", "-b", "main", repo]);
+  // The server's own git config names someone else; the webapp must not use it.
   git(repo, "config", "user.name", "T"); git(repo, "config", "user.email", "t@example.org");
   fs.writeFileSync(path.join(repo, "README.md"), "# Title\n\n**Summary**\n\n- one\n");
   fs.writeFileSync(path.join(repo, "replay.py"), "print(1)\n");
@@ -37,7 +41,7 @@ function runner(name, gh = () => "PRIVATE\n") {
     calls.push(argv);
     if (argv[0] === "gh") return gh(argv);
     if (argv.slice(3).join(" ") === "remote get-url origin") return `https://github.com/${ORG}/${name}.git\n`;
-    return execFileSync(argv[0], argv.slice(1), { cwd: opts.cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    return runCommand(argv, opts);
   };
   return { run, calls };
 }
@@ -138,4 +142,89 @@ test("makePublic reports a change GitHub did not make, and logs nothing", async 
   const { run } = runner(name, (argv) => (argv[2] === "edit" ? "" : "PRIVATE\n"));
   await assert.rejects(makePublic(repo, name, "Dan", paper, run), /reports the repository as PRIVATE after the change/);
   assert.equal(fs.existsSync(path.join(paper, "REPO_VISIBILITY.tsv")), false);
+});
+
+/** Commit `files` ({path: text, or null to delete}) and push. */
+function commitFiles(repo, files, message = "change", email = GIT_IDENTITY.email) {
+  for (const [file, text] of Object.entries(files)) {
+    const abs = path.join(repo, file);
+    if (text === null) fs.rmSync(abs);
+    else { fs.mkdirSync(path.dirname(abs), { recursive: true }); fs.writeFileSync(abs, text); }
+  }
+  gitAs(email, repo, "add", "-A"); gitAs(email, repo, "commit", "-q", "-m", message); git(repo, "push", "-q");
+  return git(repo, "rev-parse", "--short", "HEAD").trim();
+}
+
+/** makePublic's refusal for a repo that is otherwise ready, and proof that
+ *  GitHub was not asked to change anything. */
+async function refusal(paper, repo, name) {
+  const { run, calls } = runner(name, (argv) => (argv[2] === "edit" ? "" : "PRIVATE\n"));
+  const err = await makePublic(repo, name, "Dan", paper, run).then(() => null, (e) => e);
+  assert.ok(err, "makePublic refused");
+  assert.deepEqual(calls.filter((c) => c[0] === "gh"), [], "gh was never called");
+  assert.equal(fs.existsSync(path.join(paper, "REPO_VISIBILITY.tsv")), false);
+  assert.ok(err.message.startsWith("Not made public:"), err.message);
+  assert.ok(err.message.includes(`${FIX_HINT} ${repo}`), "names the fix script and this repo");
+  return err.message;
+}
+
+test("publishProblems: a clean repository has none", async () => {
+  const { repo, name } = paperWithRepo();
+  commitFiles(repo, { "data/results.csv": "x,y\n1,2\n", "notes.md": "relative/path/only.txt\n" });
+  assert.deepEqual(await publishProblems(repo, runner(name).run), []);
+});
+
+test("makePublic refuses a commit by a personal email, naming the email and the commit", async () => {
+  const { paper, repo, name } = paperWithRepo();
+  const hash = commitFiles(repo, { "analysis.py": "print(2)\n" }, "by gmail", "someone@gmail.com");
+  const message = await refusal(paper, repo, name);
+  assert.match(message, /1 problem\(s\)/);
+  assert.match(message, new RegExp(`not a GitHub noreply address: someone@gmail\\.com \\(${hash}\\)`));
+  // A placeholder address is refused the same way.
+  const other = paperWithRepo("Other-2024-PMC3-10.1--z-words");
+  commitFiles(other.repo, { "a.txt": "a\n" }, "placeholder", "noreply@example.com");
+  assert.match((await publishProblems(other.repo, runner(other.name).run))[0], /noreply@example\.com/);
+});
+
+test("makePublic refuses a local path in a file at HEAD, naming the file", async () => {
+  const { paper, repo, name } = paperWithRepo();
+  commitFiles(repo, { "config.json": '{"pdf": "/home/dan/Dropbox/papers/x.pdf"}\n', "win.txt": "C:\\Users\\dan\\x\nC:\\Users\\dan\\y\n" });
+  const message = await refusal(paper, repo, name);
+  assert.match(message, /Local paths in 2 file\(s\) at HEAD: config\.json \(1 line\), win\.txt \(2 lines\)/);
+});
+
+test("makePublic refuses a local path that is only in the history, naming the commits", async () => {
+  const { paper, repo, name } = paperWithRepo();
+  const added = commitFiles(repo, { "paths.txt": "/media/dan/data/x\n" }, "add");
+  const removed = commitFiles(repo, { "paths.txt": null }, "remove");
+  const problems = await publishProblems(repo, runner(name).run);
+  assert.equal(problems.length, 1, problems.join("\n"));
+  assert.ok(problems[0].includes(`Local paths in the history of 2 commit(s): ${removed} (paths.txt), ${added} (paths.txt)`), problems[0]);
+  assert.match(await refusal(paper, repo, name), /in the history of 2 commit/);
+});
+
+test("makePublic refuses tracked run logs, naming them", async () => {
+  const { paper, repo, name } = paperWithRepo();
+  commitFiles(repo, {
+    "run_meta.json": "{}\n", "logs/run_meta_2.json": "{}\n", "rng_screen_log.jsonl": "{}\n",
+    "agent_stdout.txt": "ok\n", "build.LOG": "ok\n", "stdout.md": "kept\n", "screen.json": "kept\n",
+  });
+  const message = await refusal(paper, repo, name);
+  assert.match(message, /Run logs are tracked: agent_stdout\.txt, build\.LOG, logs\/run_meta_2\.json, rng_screen_log\.jsonl, run_meta\.json$/m);
+});
+
+test("commitAndPush commits as delton137 whatever the server's git config and environment say", async () => {
+  const { repo, bare, name } = paperWithRepo();
+  git(repo, "config", "author.email", "author@example.org"); git(repo, "config", "committer.name", "Someone");
+  const saved = { ...process.env };
+  Object.assign(process.env, { GIT_AUTHOR_NAME: "Env", GIT_AUTHOR_EMAIL: "env@example.org", GIT_COMMITTER_EMAIL: "env@example.org" });
+  try {
+    fs.writeFileSync(path.join(repo, "README.md"), "# Title\n\nedited\n");
+    await commitAndPush(repo, "Dan", runner(name).run);
+  } finally {
+    for (const k of ["GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_COMMITTER_EMAIL"]) if (!(k in saved)) delete process.env[k]; else process.env[k] = saved[k];
+  }
+  const who = `${GIT_IDENTITY.name} <${GIT_IDENTITY.email}>`;
+  assert.equal(git(bare, "log", "-1", "--format=%an <%ae>%n%cn <%ce>").trim(), `${who}\n${who}`);
+  assert.deepEqual(await publishProblems(repo, runner(name).run), []);
 });

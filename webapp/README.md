@@ -108,8 +108,8 @@ the webapp reviews it with the same page and the same storage as any finding:
   (Europe PMC hits), and the replay snippet with a copy button. The PDF pane
   highlights the detector's `page_bbox` anchors; an XML-only paper highlights
   the `table_cell` anchors in the rendered article.
-- **Draft email / Draft PubPeer comment:** each opens a pane over the source
-  pane and runs a background job (`drafts.py`): the authors' addresses from
+- **Draft email / Draft PubPeer comment:** each opens its own resizable pane
+  right of the findings (as does the README) and runs a background job (`drafts.py`): the authors' addresses from
   the paper XML; for an email, the journal's editors found by `claude -p`
   (Sonnet, web search), each address checked on the page it was read from;
   then a short draft by `claude -p` (Opus) from the findings, the triage note
@@ -122,7 +122,7 @@ the webapp reviews it with the same page and the same storage as any finding:
   the findings, with the repo's name, whether it is private or public on
   GitHub, and anything uncommitted or unpushed. A paper without a repo (or a
   README without a Summary) shows its `rng_triage.md` note there. **View and
-  edit README.md** opens the README over the source pane, with three modes:
+  edit README.md** opens the README in its own pane beside the paper, with three modes:
   View, Edit rich text, Edit markdown. A rich-text edit rewrites only the
   blocks it touches (`lib/richMerge.ts`); raw HTML blocks are shown there but
   edited in markdown mode. **Save** changes the file in the repo folder only; **Commit and push** commits

@@ -31,6 +31,17 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — side panes between the findings and the paper
+
+- The email draft, the PubPeer draft and the README each open as their own
+  column to the right of the findings, pushing the paper right, instead of
+  covering the paper. Every column has a drag gutter (arrow keys work on a
+  focused gutter); each side pane's width is remembered in `localStorage`.
+  Open panes take room from the findings pane first, so the paper keeps at
+  least 240 px. Clicking a finding no longer closes them (`SidePane.tsx`).
+- The "Draft email" / "Draft PubPeer comment" buttons keep their names while
+  a draft is being made; the progress shows in the pane.
+
 ## [Unreleased] — 2026-11-17 — "Draft email" and "Draft PubPeer comment" replace "Drafts…"
 
 - The paper page's **Draft email** and **Draft PubPeer comment** buttons

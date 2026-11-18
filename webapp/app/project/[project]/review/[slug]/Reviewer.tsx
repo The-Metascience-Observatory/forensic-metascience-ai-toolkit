@@ -4,7 +4,7 @@ import { RunSelector } from "@/app/RunSelector";
 import {useSearchParams,useRouter} from "next/navigation";
 import { ReviewJudgments } from "@/app/CacheStatus";
 import { useSplitPane } from "@/app/useSplitPane";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 import { citationParts, displayFirstAuthor, doiLink, pubpeerSearchLink }
@@ -16,6 +16,7 @@ import {
   extraPdfArtefact, parseStoredView, sheetArtefact, VIEW_KEY, type Surface,
 } from "@/lib/sourceView";
 import { DraftPane } from "./DraftPane";
+import { SidePane } from "./SidePane";
 import { IssueList } from "./IssueList";
 import { LoadMore } from "./LoadMore";
 import { ReadmePane } from "./ReadmePane";
@@ -29,6 +30,8 @@ import { useDrafts, type DraftKind } from "@/lib/useDrafts";
 // The findings/source split is a standing preference (localStorage), unlike
 // the image item's session-scoped panes; see `useSplitPane`.
 const SPLIT_KEY = "metascience.split";
+/** Keep in step with `.side-pane` and `.pane-row > .split-right` in globals.css. */
+const SIDE_PANE_MIN = 180, PAPER_MIN = 240;
 /** The cell view / PDF split when the PDF sits beside a cell finding. */
 const PDF_SPLIT_KEY = "metascience.split.besidePdf";
 
@@ -46,10 +49,14 @@ export function Reviewer({ project, slug, dir }: {
   // and j/k afterwards are the reader's own.
   const focusFinding = searchParams.get("finding");
   const setRun = (value:string) => { const q=new URLSearchParams(searchParams.toString()); q.set("run",value); router.push(`?${q}`); };
-  /** The repo's README covers the source pane while open. */
+  /** Panes between the findings and the paper, each its own resizable
+   *  column: the email draft, the PubPeer draft, the README. A pane once
+   *  opened stays mounted while closed, so an unsaved edit survives. */
   const [readmeOpen, setReadmeOpen] = useState(false);
-  /** So does an email or PubPeer-comment draft (one cover at a time). */
-  const [draftOpen, setDraftOpen] = useState<DraftKind | null>(null);
+  const [draftOpen, setDraftOpen] = useState<Record<DraftKind, boolean>>({ email: false, pubpeer: false });
+  const [draftMounted, setDraftMounted] = useState<Record<DraftKind, boolean>>({ email: false, pubpeer: false });
+  const paneRowRef = useRef<HTMLDivElement>(null);
+  const sidePanesOpen = Number(draftOpen.email) + Number(draftOpen.pubpeer) + Number(readmeOpen);
   const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
                                label: "Resize findings and source panes", storage: "local" });
   const pdfSplit = useSplitPane({ storageKey: PDF_SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
@@ -82,7 +89,10 @@ export function Reviewer({ project, slug, dir }: {
   const ruledOut = useMemo(() => Object.entries(review?.issues || {})
     .filter(([, r]) => String((r as { decision?: string })?.decision || "").startsWith("false_positive"))
     .map(([id]) => id), [review]);
-  const openDraft = (kind: DraftKind) => { setReadmeOpen(false); setDraftOpen((k) => (k === kind ? null : kind)); };
+  const toggleDraft = (kind: DraftKind) => {
+    setDraftMounted((m) => ({ ...m, [kind]: true }));
+    setDraftOpen((o) => ({ ...o, [kind]: !o[kind] }));
+  };
 
   const locators = data?.locators?.locators;
   const locById = useMemo(() => {
@@ -98,10 +108,6 @@ export function Reviewer({ project, slug, dir }: {
   }, []);
 
   const jump = useCallback((t: Target) => {
-    // A jump is a request to see the source: the README steps aside (it
-    // stays mounted, so an unsaved edit survives).
-    setReadmeOpen(false);
-    setDraftOpen(null);
     setFocusTargetId(t.id);
     setForceSurface(surfaceOf(t));
   }, []);
@@ -301,12 +307,12 @@ export function Reviewer({ project, slug, dir }: {
               >
                 Next paper →
               </button>
-              <button onClick={() => openDraft("email")} aria-pressed={draftOpen === "email"}
+              <button onClick={() => toggleDraft("email")} aria-pressed={draftOpen.email}
                       disabled={!draftsView.view && !draftsView.error}
                       title="Draft one email to the journal's editors, with the authors in copy. You send it from your own mail program.">
                 Draft email
               </button>
-              <button onClick={() => openDraft("pubpeer")} aria-pressed={draftOpen === "pubpeer"}
+              <button onClick={() => toggleDraft("pubpeer")} aria-pressed={draftOpen.pubpeer}
                       disabled={!draftsView.view && !draftsView.error}
                       title="Draft a PubPeer comment. You paste and post it on PubPeer yourself.">
                 Draft PubPeer comment
@@ -335,7 +341,7 @@ export function Reviewer({ project, slug, dir }: {
             </p>
           )}
           <RepoSummary info={repoView.info} readmeOpen={readmeOpen}
-                       onReadme={() => { setDraftOpen(null); setReadmeOpen((o) => !o); }} />
+                       onReadme={() => setReadmeOpen((o) => !o)} />
           <div className="findings-card" data-findings-card>
           <IssueList
             issues={issues}
@@ -358,21 +364,26 @@ export function Reviewer({ project, slug, dir }: {
           </div>
         </section>
         <div {...split.separatorProps} />
-        <section className="split-right" style={{ position: "relative" }}>
+        {/* Each open side pane claims its minimum width, taken from the
+            findings pane, so the paper always keeps a readable column. */}
+        <div className="pane-row" ref={paneRowRef}
+             style={{ minWidth: sidePanesOpen ? sidePanesOpen * (SIDE_PANE_MIN + 8) + PAPER_MIN : undefined }}>
+          {repoDir && (["email", "pubpeer"] as const).map((kind) => draftMounted[kind] && (
+            <SidePane key={kind} id={kind} rowRef={paneRowRef} hidden={!draftOpen[kind]}
+                      label={kind === "email" ? "Resize the email draft pane" : "Resize the PubPeer comment pane"}>
+              <DraftPane project={project} dir={String(repoDir)} kind={kind}
+                         view={draftsView.view} exclude={ruledOut}
+                         onView={draftsView.set} onClose={() => setDraftOpen((o) => ({ ...o, [kind]: false }))} />
+            </SidePane>
+          ))}
           {repoView.info?.repo && repoView.info.readme !== null && (
-            <div className="readme-cover" hidden={!readmeOpen}>
+            <SidePane id="readme" rowRef={paneRowRef} hidden={!readmeOpen} label="Resize the README pane">
               <ReadmePane project={project} dir={String(repoDir)} info={repoView.info}
                           onInfo={repoView.set} onReload={repoView.reload}
                           onClose={() => setReadmeOpen(false)} />
-            </div>
+            </SidePane>
           )}
-          {draftOpen && repoDir && (
-            <div className="readme-cover">
-              <DraftPane key={draftOpen} project={project} dir={String(repoDir)} kind={draftOpen}
-                         view={draftsView.view} exclude={ruledOut}
-                         onView={draftsView.set} onClose={() => setDraftOpen(null)} />
-            </div>
-          )}
+        <section className="split-right">
           {beside.shown ? (
             <div className={`split${pdfSplit.dragging ? " dragging" : ""}`} ref={pdfSplit.containerRef}>
               <section className="split-pane" style={{ width: `${pdfSplit.pct}%` }}>
@@ -423,6 +434,7 @@ export function Reviewer({ project, slug, dir }: {
             />
           )}
         </section>
+        </div>
       </div>
     </div>
   );

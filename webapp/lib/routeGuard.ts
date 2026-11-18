@@ -50,7 +50,6 @@ export const RULES: readonly Rule[] = [
   { path: "/api/metadata", method: "POST", admin: true, why: "writes metadata beside papers" },
   { path: "/api/images/reference", method: "POST", admin: true, why: "writes metadata beside papers" },
   { path: "/api/stats", method: "POST", admin: true, why: "runs the CLI over a corpus" },
-  { path: "/api/draft", method: "POST", admin: true, why: "paid model call" },
   { path: "/api/images/website", method: "POST", admin: true, why: "writes the website checkout" },
   { path: "/api/images/sync", method: "POST", admin: true, why: "pulls shared records" },
   { path: "/api/admin/", method: "GET", prefix: true, admin: true, why: "users and project sources" },
@@ -66,7 +65,7 @@ export const RULES: readonly Rule[] = [
 export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
   "GET /api/me", "GET /api/settings",
   "GET /api/workbench", "POST /api/workbench",
-  "GET /api/findings", "GET /api/paper", "GET /api/runs", "GET /api/stats", "GET /api/draft",
+  "GET /api/findings", "GET /api/paper", "GET /api/runs", "GET /api/stats",
   "GET /api/media", "GET /api/sheet",
   "POST /api/review", "POST /api/viewed",
   "GET /api/images", "POST /api/images",
@@ -77,6 +76,9 @@ export const REVIEWER_ROUTES: ReadonlySet<string> = new Set([
   // The reproduction repository: read and edit the README, commit and push it
   // (the push route itself asks for an admin once the repository is public).
   "GET /api/repo", "POST /api/repo/readme", "POST /api/repo/push",
+  // Email and PubPeer-comment drafts: a paid model call, open to reviewers by
+  // decision (2026-11-17); nothing is sent or posted from the server.
+  "GET /api/drafts", "POST /api/drafts", "POST /api/drafts/save",
 ]);
 
 export interface Policy { admin: boolean; forbidden: boolean }

@@ -61,7 +61,7 @@ test("routeGuard matrix: roles and route rules", async () => {
   const admin = rules.filter((r) => r.admin), forbidden = rules.filter((r) => r.forbidden);
   assert.ok(forbidden.length === 1 && forbidden[0].path === "/api/reveal");
   for (const expected of ["/api/projects", "/api/settings", "/api/index", "/api/metadata", "/api/images/reference",
-                          "/api/stats", "/api/draft", "/api/images/website", "/api/images/sync"]) {
+                          "/api/stats", "/api/images/website", "/api/images/sync"]) {
     assert.ok(admin.some((r) => r.path === expected && r.method === "POST"), `${expected} POST is admin-only`);
   }
   for (const expected of ["/api/projects", "/api/admin/users"]) {
@@ -205,8 +205,8 @@ test("every route handler is classified; an unlisted one is admin-only", async (
   assert.equal(policy("POST", "/api/sheet").admin, true, "so is a new method on a listed path");
   assert.equal(policy("GET", "/api/sheet").admin, false);
   assert.equal(policy("HEAD", "/api/media").admin, false);
-  assert.equal(policy("GET", "/api/draft").admin, false);
-  assert.equal(policy("POST", "/api/draft").admin, true);
+  assert.equal(policy("GET", "/api/drafts").admin, false);
+  assert.equal(policy("POST", "/api/drafts").admin, false, "reviewers draft emails and PubPeer comments");
 });
 
 test("a hosted reviewer's write is dated by the server and bounded", async () => {

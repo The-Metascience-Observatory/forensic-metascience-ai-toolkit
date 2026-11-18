@@ -653,6 +653,31 @@ a.button-link:hover { text-decoration: none; background: var(--hover); }
 }
 .rich-editor .ProseMirror-selectednode { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* Mark reviewed / Next paper / Drafts, at the top of the findings pane. */
+/* Email and PubPeer-comment drafts, over the source pane like the README. */
+.draft-title { font-size: 13px; }
+.draft-job { padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); font-size: 12px; }
+.draft-job ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.draft-step-done > span:first-child { color: var(--sev-consistent); }
+.draft-step-running > span:first-child, .draft-step-warning > span:first-child { color: var(--sev-suspicious); }
+.draft-step-error > span:first-child { color: var(--sev-impossible); }
+.draft-editor { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.draft-recipients { border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px 8px; margin: 0; }
+.draft-recipients legend { font-weight: 600; padding: 0 4px; }
+.draft-recipient { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 2px 0; }
+.draft-recipient .mono { font-size: 12px; overflow-wrap: anywhere; }
+.pill-verified { border-color: var(--sev-consistent); color: var(--sev-consistent); }
+.pill-unverified { border-color: var(--sev-suspicious); color: var(--sev-suspicious); }
+.draft-add { display: inline-flex; gap: 6px; margin: 6px 8px 0 0; }
+.draft-add input { width: 220px; max-width: 100%; }
+.draft-field { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+.draft-field input { font-weight: 400; }
+.draft-body { min-height: 300px; border: 1px solid var(--line); border-radius: 4px; font: 13px/1.55 system-ui, sans-serif; resize: vertical; }
+.draft-small { font-size: 11px; margin: 0; }
+.draft-note { margin: 0; padding: 6px 10px; border-left: 3px solid var(--sev-suspicious); background: var(--bg); }
+.draft-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.draft-actions button, .draft-actions a.button-link { margin-top: 0 !important; font-size: 12px !important; }
+.draft-sent { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
+
+/* Mark reviewed / Next paper / drafts, at the top of the findings pane. */
 .paper-actions { margin: 0 0 10px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .paper-actions-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }

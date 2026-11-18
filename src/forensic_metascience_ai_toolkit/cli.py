@@ -1124,47 +1124,19 @@ def findings_query_cmd(
     print(json.dumps(rows, indent=2, default=str))
 
 
-@app.command("draft-pubpeer")
-def draft_pubpeer_cmd(
+@app.command("draft")
+def draft_cmd(
     paper_dir: Path = typer.Argument(...),
-    findings: Optional[str] = typer.Option(None, "--findings", help="Comma-separated finding_ids or slugs (default: every kept problem)"),
-    model: str = typer.Option("sonnet", "--model"),
-    json_out: bool = typer.Option(False, "--json", help="Emit the result record as JSON"),
+    kind: str = typer.Option("email", "--kind", help="email (to the journal, authors in copy) or pubpeer"),
+    who: str = typer.Option("", "--who", help="the reviewer's name, to sign an email"),
+    model: str = typer.Option("opus", "--model"),
 ):
-    """Draft a PubPeer comment from stored findings. NEVER posts anywhere."""
+    """Draft an email to the journal and authors, or a PubPeer comment, from
+    the paper's findings, triage note and repository README. NEVER sends or posts."""
     from forensic_metascience_ai_toolkit import drafts as _d
-    rec = _d.generate(paper_dir, "pubpeer",
-                      finding_ids=findings.split(",") if findings else None,
-                      model=model)
-    if json_out:
-        print(json.dumps(rec, default=str))
-        raise typer.Exit(0 if rec.get("ok") else 2)
-    if not rec.get("ok"):
-        console.print(f"[red]{rec['error']}[/red]")
-        raise typer.Exit(2)
-    console.print(f"[green]draft written:[/green] {rec['path']} "
-                  f"({rec['n_findings']} finding(s))")
-
-
-@app.command("draft-letter")
-def draft_letter_cmd(
-    paper_dir: Path = typer.Argument(...),
-    findings: Optional[str] = typer.Option(None, "--findings"),
-    model: str = typer.Option("sonnet", "--model"),
-    json_out: bool = typer.Option(False, "--json", help="Emit the result record as JSON"),
-):
-    """Draft a letter to the editor from stored findings. NEVER posts."""
-    from forensic_metascience_ai_toolkit import drafts as _d
-    rec = _d.generate(paper_dir, "letter",
-                      finding_ids=findings.split(",") if findings else None,
-                      model=model)
-    if json_out:
-        print(json.dumps(rec, default=str))
-        raise typer.Exit(0 if rec.get("ok") else 2)
-    if not rec.get("ok"):
-        console.print(f"[red]{rec['error']}[/red]")
-        raise typer.Exit(2)
-    console.print(f"[green]draft written:[/green] {rec['path']}")
+    rec = _d.run(paper_dir, kind, who=who, draft_model=model)
+    print(json.dumps({k: v for k, v in rec.items() if k != "draft"}, default=str))
+    raise typer.Exit(0 if rec.get("ok") else 2)
 
 
 @app.command("gen-webapp-constants")

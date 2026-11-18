@@ -108,6 +108,15 @@ the webapp reviews it with the same page and the same storage as any finding:
   (Europe PMC hits), and the replay snippet with a copy button. The PDF pane
   highlights the detector's `page_bbox` anchors; an XML-only paper highlights
   the `table_cell` anchors in the rendered article.
+- **Draft email / Draft PubPeer comment:** each opens a pane over the source
+  pane and runs a background job (`drafts.py`): the authors' addresses from
+  the paper XML; for an email, the journal's editors found by `claude -p`
+  (Sonnet, web search), each address checked on the page it was read from;
+  then a short draft by `claude -p` (Opus) from the findings, the triage note
+  and the repo README. The email puts the editors in To and the authors in
+  Cc; the pane opens Gmail or the mail program pre-filled and copies each
+  part. Nothing is sent or posted from the server. The server's account
+  needs the `claude` CLI signed in.
 - **Reproduction repo:** when the paper folder holds one (the one subfolder
   that is a git repository), the page shows the Summary of its README above
   the findings, with the repo's name, whether it is private or public on
@@ -289,8 +298,8 @@ the admin **Users** page (`/admin/users`):
 
 - **admin**: every project, the admin pages, and every admin-only route.
 - **reviewer**: only the listed `projects`: see papers and findings, record
-  decisions, mark papers complete, record PubPeer posts. No deleting,
-  rescanning, paid drafts or website publishing.
+  decisions, mark papers complete, record PubPeer posts, draft emails and
+  PubPeer comments. No deleting, rescanning or website publishing.
 - **anyone else** Cloudflare Access admits is refused with "your account is
   not set up yet" (deny by default). Two gates, by design: Access decides who
   may reach the app, the directory decides what they may do there.

@@ -15,7 +15,7 @@ import {
   availableViews, BESIDE_PDF_KEY, besidePdf, canToggle, defaultView,
   extraPdfArtefact, parseStoredView, sheetArtefact, VIEW_KEY, type Surface,
 } from "@/lib/sourceView";
-import { DraftsModal } from "./DraftsModal";
+import { DraftPane } from "./DraftPane";
 import { IssueList } from "./IssueList";
 import { LoadMore } from "./LoadMore";
 import { ReadmePane } from "./ReadmePane";
@@ -24,6 +24,7 @@ import { SourcePane } from "./SourcePane";
 import { usePaperReview } from "./usePaperReview";
 import { useReviewKeys } from "./useReviewKeys";
 import { useRepo } from "@/lib/useRepo";
+import { useDrafts, type DraftKind } from "@/lib/useDrafts";
 
 // The findings/source split is a standing preference (localStorage), unlike
 // the image item's session-scoped panes; see `useSplitPane`.
@@ -45,9 +46,10 @@ export function Reviewer({ project, slug, dir }: {
   // and j/k afterwards are the reader's own.
   const focusFinding = searchParams.get("finding");
   const setRun = (value:string) => { const q=new URLSearchParams(searchParams.toString()); q.set("run",value); router.push(`?${q}`); };
-  const [draftsOpen, setDraftsOpen] = useState(false);
   /** The repo's README covers the source pane while open. */
   const [readmeOpen, setReadmeOpen] = useState(false);
+  /** So does an email or PubPeer-comment draft (one cover at a time). */
+  const [draftOpen, setDraftOpen] = useState<DraftKind | null>(null);
   const split = useSplitPane({ storageKey: SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
                                label: "Resize findings and source panes", storage: "local" });
   const pdfSplit = useSplitPane({ storageKey: PDF_SPLIT_KEY, axis: "x", def: 50, min: 20, max: 80,
@@ -75,6 +77,12 @@ export function Reviewer({ project, slug, dir }: {
   // archive-only paper (`@<id>`) has no folder on this machine to hold one.
   const repoDir = data ? (data.paper?.dir || dir || slug) : null;
   const repoView = useRepo(project, repoDir && !String(repoDir).startsWith("@") ? repoDir : null);
+  const draftsView = useDrafts(project, repoDir && !String(repoDir).startsWith("@") ? repoDir : null);
+  // Findings a reviewer ruled out stay out of a draft.
+  const ruledOut = useMemo(() => Object.entries(review?.issues || {})
+    .filter(([, r]) => String((r as { decision?: string })?.decision || "").startsWith("false_positive"))
+    .map(([id]) => id), [review]);
+  const openDraft = (kind: DraftKind) => { setReadmeOpen(false); setDraftOpen((k) => (k === kind ? null : kind)); };
 
   const locators = data?.locators?.locators;
   const locById = useMemo(() => {
@@ -93,6 +101,7 @@ export function Reviewer({ project, slug, dir }: {
     // A jump is a request to see the source: the README steps aside (it
     // stays mounted, so an unsaved edit survives).
     setReadmeOpen(false);
+    setDraftOpen(null);
     setFocusTargetId(t.id);
     setForceSurface(surfaceOf(t));
   }, []);
@@ -270,11 +279,6 @@ export function Reviewer({ project, slug, dir }: {
                 title="Previous paper with findings (←)">‹ Previous paper</button>
       </header>
 
-      {draftsOpen && (
-        <DraftsModal project={project} dir={paper.dir || dir || slug}
-                     issues={issues} review={review}
-                     onClose={() => setDraftsOpen(false)} />
-      )}
       <div className={`split${split.dragging ? " dragging" : ""}`} ref={split.containerRef}>
         <section className="split-left" style={{ width: `${split.pct}%` }}>
           {/* Paper actions first: they are what a reviewer does with the page. */}
@@ -297,9 +301,15 @@ export function Reviewer({ project, slug, dir }: {
               >
                 Next paper →
               </button>
-              <button onClick={() => setDraftsOpen(true)}
-                      title="Draft a PubPeer comment or editor letter from the stored findings — never posted anywhere">
-                Drafts…
+              <button onClick={() => openDraft("email")} aria-pressed={draftOpen === "email"}
+                      disabled={!draftsView.view && !draftsView.error}
+                      title="Draft one email to the journal's editors, with the authors in copy. You send it from your own mail program.">
+                Draft email
+              </button>
+              <button onClick={() => openDraft("pubpeer")} aria-pressed={draftOpen === "pubpeer"}
+                      disabled={!draftsView.view && !draftsView.error}
+                      title="Draft a PubPeer comment. You paste and post it on PubPeer yourself.">
+                Draft PubPeer comment
               </button>
             </div>
             {review?.paper?.pubpeer_url && (
@@ -325,7 +335,7 @@ export function Reviewer({ project, slug, dir }: {
             </p>
           )}
           <RepoSummary info={repoView.info} readmeOpen={readmeOpen}
-                       onReadme={() => setReadmeOpen((o) => !o)} />
+                       onReadme={() => { setDraftOpen(null); setReadmeOpen((o) => !o); }} />
           <div className="findings-card" data-findings-card>
           <IssueList
             issues={issues}
@@ -354,6 +364,13 @@ export function Reviewer({ project, slug, dir }: {
               <ReadmePane project={project} dir={String(repoDir)} info={repoView.info}
                           onInfo={repoView.set} onReload={repoView.reload}
                           onClose={() => setReadmeOpen(false)} />
+            </div>
+          )}
+          {draftOpen && repoDir && (
+            <div className="readme-cover">
+              <DraftPane key={draftOpen} project={project} dir={String(repoDir)} kind={draftOpen}
+                         view={draftsView.view} exclude={ruledOut}
+                         onView={draftsView.set} onClose={() => setDraftOpen(null)} />
             </div>
           )}
           {beside.shown ? (

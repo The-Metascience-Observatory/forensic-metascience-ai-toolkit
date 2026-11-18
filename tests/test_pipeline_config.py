@@ -784,7 +784,7 @@ class TestAstraPhase1Findings:
         (tmp_path / "forensic_review_x" / "findings.v2.json").write_text(json.dumps({
             "paper_id": "p", "pipeline": pc.load("tools_grim").record(),
             "findings": [{"finding_id": "f1", "outcome": "problem"}]}))
-        out = drafts.generate(tmp_path, run_cli=lambda *a: None)
+        out = drafts.run(tmp_path, "pubpeer", run_cli=lambda *a: None)
         assert out["ok"] is False and "partial-pipeline" in out["error"]
 
     # 8 -- unreadable run_meta cannot promote a partial run

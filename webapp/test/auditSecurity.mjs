@@ -20,7 +20,7 @@ function endpoint(file,modules={}) {
  }[name] || new Proxy({}, {get:()=>()=>{throw Error(`Unexpected side effect: ${name}`);}}))});
  return exports;
 }
-for(const route of ['settings','draft','metadata','index','stats','viewed','reveal','images','images/bulk','images/missed','review','workbench','repo/readme','repo/push','repo/publish']) {
+for(const route of ['settings','drafts','drafts/save','metadata','index','stats','viewed','reveal','images','images/bulk','images/missed','review','workbench','repo/readme','repo/push','repo/publish']) {
  const api=endpoint(`app/api/${route}/route.ts`);
  for(const headers of [{origin:'https://unrelated.invalid'},{origin:'null'},{'sec-fetch-site':'cross-site'}]) {
   const req=new Request(`http://localhost:3100/api/${route}`,{method:'POST',headers,body:'invalid JSON'});
@@ -56,7 +56,7 @@ for(const origin of ['http://127.0.0.1:3101','https://127.0.0.1:3100','http://re
   '@/lib/settings':{hostPath:p=>p,saveSettings:()=>{throw Error('settings saved');},loadSettings:()=>({python_bin:'/opt/python',papers_root:'/srv/papers',known_reviewers:['Dan Elton','Second Reviewer'],reviewers:DIRECTORY})}};
  const as=(email,route,{headers={},body='{}',method='POST'}={})=>new Request(`http://review.example.org/api/${route}`,{method,body:method==='GET'?undefined:body,
   headers:{origin:'https://review.example.org','x-forwarded-proto':'https','content-type':'application/json',...(email?{'x-ms-reviewer-email':email}:{}),...headers}});
- const MUTATIONS=['settings','draft','metadata','index','stats','viewed','reveal','images','images/bulk','images/missed','images/viewed','images/sync','images/reference','projects','review','workbench','repo/readme','repo/push','repo/publish'];
+ const MUTATIONS=['settings','drafts','drafts/save','metadata','index','stats','viewed','reveal','images','images/bulk','images/missed','images/viewed','images/sync','images/reference','projects','review','workbench','repo/readme','repo/push','repo/publish'];
  const api=Object.fromEntries(MUTATIONS.map(r=>[r,endpoint(`app/api/${r}/route.ts`,mods)]));
  // No token (so no identity header from the proxy): 401 everywhere, body unread.
  for(const route of MUTATIONS){const req=as(null,route);req.json=()=>{throw Error('parsed before 401');};assert.equal((await api[route].POST(req)).status,401,`${route} anonymous`);}
@@ -64,7 +64,7 @@ for(const origin of ['http://127.0.0.1:3101','https://127.0.0.1:3100','http://re
  for(const route of MUTATIONS){const req=as('dan@example.org',route,{headers:{origin:'https://evil.example.org'}});req.json=()=>{throw Error('parsed before 403');};assert.equal((await api[route].POST(req)).status,403,`${route} foreign origin`);}
  assert.equal(rejectCrossOrigin(as('dan@example.org','review')),null,'public origin with x-forwarded-proto accepted');
  // Admin routes: 403 for a reviewer and for an email outside the directory; the admin gets past the guard.
- for(const route of ['settings','draft','metadata','index','stats','images/reference','images/sync','projects','repo/publish']){
+ for(const route of ['settings','metadata','index','stats','images/reference','images/sync','projects','repo/publish']){
   for(const who of ['rev@example.org','stranger@example.org'])assert.equal((await api[route].POST(as(who,route))).status,403,`${route} ${who}`);
   const r=await api[route].POST(as('dan@example.org',route));assert.ok(![401,403].includes(r.status),`${route} admin got ${r.status}`);
  }

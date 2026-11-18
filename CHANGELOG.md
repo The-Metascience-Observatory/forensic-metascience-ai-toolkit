@@ -31,6 +31,35 @@ comparable.
   sweep verb's PMC figure fetch, opt-in search checkpoints, no caption for an
   unidentified figure in a video).
 
+## [Unreleased] — 2026-11-17 — "Draft email" and "Draft PubPeer comment" replace "Drafts…"
+
+- The paper page's **Draft email** and **Draft PubPeer comment** buttons
+  replace "Drafts…". Each opens a pane over the source pane (like the README)
+  and runs a background job, `drafts.py` (`python -m
+  forensic_metascience_ai_toolkit.drafts`, or `metascience draft --kind`):
+  1. author addresses from the paper XML (`lib/emails.ts`);
+  2. email only: the journal's contacts (handling editor named in the XML,
+     editor-in-chief / editorial office, research-integrity desk), found by
+     `claude -p --model sonnet` with web search. Each address must cite the
+     page it was read from; the job fetches that page and marks the address
+     verified only if it is there. Unverified ones start unticked. Journal
+     contacts are cached for 180 days in `JOURNAL_CONTACTS.json` at the
+     project root, keyed by ISSN;
+  3. the draft, by `claude -p --model opus`, from `metadata.json`, the
+     problem findings (minus those a reviewer marked false positive), the
+     triage note and the repository README. Very short by instruction; a
+     private repository is not linked (the draft offers the code on request).
+- The email has the editors in To and the authors in Cc. The pane offers Open
+  in Gmail, Open in mail app, copy buttons and a "Sent" mark; the PubPeer
+  comment offers Copy comment, the author addresses for PubPeer's "notify
+  authors" field, Open on PubPeer and a "Posted" mark. Nothing is sent or
+  posted by the app.
+- Reviewers can draft, not only admins (`GET/POST /api/drafts`,
+  `POST /api/drafts/save`). Progress is in `<paper>/drafts/job-<kind>.json`,
+  drafts in `<paper>/drafts/<kind>-<stamp>.json`.
+- Removed: the Drafts… modal, `/api/draft`, the `draft-pubpeer` /
+  `draft-letter` CLI commands and the letter-to-editor draft.
+
 ## [Unreleased] — 2026-11-17 — paper actions at the top of the findings pane
 
 - "Mark paper reviewed", "Next paper →" and "Drafts…" moved from the bottom

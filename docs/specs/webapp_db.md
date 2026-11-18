@@ -595,24 +595,21 @@ behavior across the schema bump.
   `METASCIENCE_DB_URL` is set — the normal case**; the file-scan implementation is the
   offline/no-DB fallback, not the primary path.
 
-## 11. PubPeer + letter drafts (on demand — NOT part of the analysis agents)
+## 11. Email and PubPeer-comment drafts (on demand — NOT part of the analysis agents)
 
-- `src/forensic_metascience_ai_toolkit/drafts.py`: one `claude -p` subprocess with an injectable
-  runner; structured refusal on failure; **it NEVER posts anywhere**.
-- CLI: `metascience draft-pubpeer <paper_dir> --findings f_9c1e22ab,f_77aa01bc` and
-  `metascience draft-letter …`. Findings are addressed by hash `finding_id`; bare slugs
-  are accepted and resolved — ambiguity is refused, not guessed.
-- Input: findings-v2 records + metadata citation + the published disclaimer. PubPeer
-  register: courteous, numbers-first, verbatim quotes, reproduction commands,
-  inconsistency-never-intent, severity language capped by the errorlevels rung. Letter
-  variant adds journal/salutation + COPE framing.
-- Storage: `paper_dir/drafts/{kind}-{timestamp}.md` with front-matter. The planned
-  hosted-mode `drafts` table writes and the index's `n_drafts` were not built.
-- Webapp: `/api/draft` (POST generate — its own long route-local timeout; GET list/read;
-  PUT save edits) + a modal with finding checkboxes (pre-checked: severity ≥ 5 and not
-  reviewer-marked false positive), an editable textarea, and **Copy — there is no Post
-  button**.
-- Tests: `tests/test_drafts.py` — mocked transport, refusal shape.
+- `src/forensic_metascience_ai_toolkit/drafts.py` (since 2026-11-17; replaced the PubPeer/letter
+  drafts): a background job per paper and kind (`email`, `pubpeer`), started by the review page's
+  "Draft email" / "Draft PubPeer comment" buttons through `POST /api/drafts`.
+- Steps: author addresses (paper XML) → email only: journal contacts via `claude -p` (Sonnet) with
+  web search, each address checked on its cited page (verified / unverified), cached per journal
+  in `<project root>/JOURNAL_CONTACTS.json` → the draft via `claude -p` (Opus) from metadata,
+  findings (minus reviewer false positives), triage note and repository README.
+- Storage: `paper_dir/drafts/job-<kind>.json` (progress, polled by the page) and
+  `paper_dir/drafts/<kind>-<stamp>.json` (recipients, subject, body, sent mark).
+- **Nothing is sent or posted**: the pane opens Gmail / the mail program pre-filled, or copies
+  the comment for PubPeer.
+- Tests: `tests/test_drafts.py` (model and web faked), `webapp/test/paperDrafts.test.mjs`,
+  `webapp/test/components/DraftPane.test.tsx`.
 
 ## 12. Test obligations (webapp/DB slice of the master plan)
 

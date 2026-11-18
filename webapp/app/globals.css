@@ -553,14 +553,6 @@ button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible
 }
 .repo-summary summary { cursor: pointer; }
 .repo-summary .md { margin-top: 4px; }
-.repo-summary-row {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
-  margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 12px;
-}
-.repo-summary details:not([open]) + .repo-summary-row { border-top: 0; padding-top: 0; }
-.repo-name {
-  flex: 1 1 140px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
 .repo-notes { color: var(--sev-suspicious); font-size: 12px; white-space: nowrap; }
 .pill-public { border-color: var(--sev-consistent); color: var(--sev-consistent); }
 .readme-cover { position: absolute; inset: 0; z-index: 30; background: var(--bg); }
@@ -621,7 +613,16 @@ button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible
 /* The "Copy path" button above the summary on the paper review page. */
 .paper-path { margin: 0 0 8px; }
 .paper-path button { margin-top: 0 !important; font-size: 12px !important; }
-.repo-readme-button { display: block; margin: 0 0 8px; }
+/* "View and edit README.md", then "View Repo on GitHub" with the Private /
+   Public badge beside it, at the top of the summary box. */
+.repo-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 0 0 8px; }
+.repo-actions-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+/* A link that looks like the app's buttons. */
+a.button-link {
+  display: inline-block; color: inherit; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px;
+}
+a.button-link:hover { text-decoration: none; background: var(--hover); }
 
 /* README rich-text editor. */
 .rich-editor { flex: 1; min-height: 0; display: flex; flex-direction: column; }

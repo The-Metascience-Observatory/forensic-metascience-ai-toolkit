@@ -126,6 +126,10 @@ test("the summary block: README bullets, else the triage note, else nothing", ()
   expect(document.querySelector("[data-repo-summary]")?.getAttribute("data-repo-summary")).toBe("readme");
   expect(document.querySelector(".repo-summary li")?.textContent).toBe("one");
   expect(document.querySelector(".repo-summary")?.textContent).toMatch(/Private.*README saved, not committed/);
+  const github = screen.getByRole("link", { name: "View Repo on GitHub" }) as HTMLAnchorElement;
+  expect(github.href).toBe(`https://github.com/Metascience-Observatory-Reproductions/${NAME}`);
+  expect(github.nextElementSibling?.textContent).toBe("Private");
+  expect(screen.queryByRole("link", { name: NAME })).toBeNull();
   fireEvent.click(button(/^View and edit README.md$/));
   expect(open).toHaveBeenCalledOnce();
   a.unmount();

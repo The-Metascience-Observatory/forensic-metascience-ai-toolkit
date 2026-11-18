@@ -34,6 +34,10 @@ comparable.
 ## [Unreleased] — 2026-11-17 — README editor: rich text and markdown
 
 - The README button is now "View and edit README.md", above the Summary.
+- Below it, **View Repo on GitHub** (same button look) with the Private /
+  Public badge to its right; the repo's name is no longer a link under the
+  Summary. The Summary is expanded on every paper (it no longer remembers
+  being closed).
 - The README pane has three modes: **View**, **Edit rich text** and **Edit
   markdown**. Rich text edits the formatted README directly (bold, italic,
   code, links, headings, lists, quotes, code blocks, pipe tables).

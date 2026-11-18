@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 
 import type { RepoView } from "@/lib/useRepo";
 import { Markdown } from "./Markdown";
-
-const OPEN_KEY = "metascience.repoSummary";
 
 /** What the repository's state adds up to, in the reader's words. */
 export function repoNotes(repo: NonNullable<RepoView["repo"]>): string[] {
@@ -34,10 +31,6 @@ export function VisibilityPill({ repo }: { repo: NonNullable<RepoView["repo"]> }
 export function RepoSummary({ info, readmeOpen, onReadme }: {
   info: RepoView | undefined; readmeOpen: boolean; onReadme: () => void;
 }) {
-  const [open, setOpen] = useState(true);
-  useEffect(() => {
-    try { setOpen(window.localStorage.getItem(OPEN_KEY) !== "closed"); } catch { /* fine */ }
-  }, []);
   if (!info) return null;
   const { repo } = info;
   const fromReadme = !!info.summary_md;
@@ -47,16 +40,22 @@ export function RepoSummary({ info, readmeOpen, onReadme }: {
   return (
     <section className="repo-summary" data-repo-summary={fromReadme ? "readme" : text ? "triage" : "none"}>
       {repo && (
-        <button className="repo-readme-button" onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
-                title={info.readme === null ? "This repository has no README.md" : "Read or edit the repository's README beside the findings"}>
-          {readmeOpen ? "Hide README.md" : "View and edit README.md"}
-        </button>
+        <div className="repo-actions">
+          <button className="repo-readme-button" onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
+                  title={info.readme === null ? "This repository has no README.md" : "Read or edit the repository's README beside the findings"}>
+            {readmeOpen ? "Hide README.md" : "View and edit README.md"}
+          </button>
+          <div className="repo-actions-row">
+            {repo.url
+              ? <a className="button-link" href={repo.url} target="_blank" rel="noreferrer" title={repo.name}>View Repo on GitHub</a>
+              : <button disabled title="This repository has not been pushed to GitHub yet">View Repo on GitHub</button>}
+            <VisibilityPill repo={repo} />
+            {notes.length > 0 && <span className="repo-notes">{notes.join(" · ")}</span>}
+          </div>
+        </div>
       )}
-      <details open={open} onToggle={(e) => {
-        const now = (e.currentTarget as HTMLDetailsElement).open;
-        setOpen(now);
-        try { window.localStorage.setItem(OPEN_KEY, now ? "open" : "closed"); } catch { /* fine */ }
-      }}>
+      {/* Open on every paper; closing it lasts until the next paper. */}
+      <details open>
         <summary>
           <strong>{fromReadme ? "Summary" : text ? "Triage note" : "Reproduction repo"}</strong>
           {!fromReadme && text && repo && <span className="muted"> (the README has no Summary section)</span>}
@@ -64,15 +63,6 @@ export function RepoSummary({ info, readmeOpen, onReadme }: {
         </summary>
         {text && <Markdown>{text}</Markdown>}
       </details>
-      {repo && (
-        <div className="repo-summary-row">
-          <VisibilityPill repo={repo} />
-          {repo.url
-            ? <a href={repo.url} target="_blank" rel="noreferrer" className="repo-name" title={repo.name}>{repo.name}</a>
-            : <span className="repo-name" title={repo.name}>{repo.name}</span>}
-          {notes.length > 0 && <span className="repo-notes">{notes.join(" · ")}</span>}
-        </div>
-      )}
     </section>
   );
 }

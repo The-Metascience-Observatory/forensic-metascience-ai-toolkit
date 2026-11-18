@@ -5,6 +5,7 @@
   --fg: #1a1f26;
   --muted: #5c6770;
   --line: #d5dde5;
+  --header-rule: #000;
   --accent: #1f6fbf;
   --on-accent: #fff;
   --hover: #eef1f5;
@@ -23,6 +24,7 @@ html[data-theme="dark"] {
   --fg: #e8edf2;
   --muted: #8b98a5;
   --line: #2a323c;
+  --header-rule: var(--fg);
   --accent: #3d8fd1;
   --on-accent: #fff;
   --hover: #1d242c;
@@ -180,7 +182,7 @@ table.grid tr:hover td { background: var(--hover); }
 .shell { display: flex; flex-direction: column; height: 100%; }
 .topbar {
   display: flex; align-items: center; gap: 12px;
-  padding: 8px 14px; border-bottom: 1px solid var(--line);
+  padding: 8px 14px; border-bottom: 1px solid var(--header-rule);
   background: var(--panel); flex-shrink: 0;
 }
 .page { padding: 18px 22px; overflow: auto; }
@@ -546,11 +548,14 @@ button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible
 
 /* Review page: the reproduction repo's summary above the findings, and its
    README over the source pane. */
-.repo-summary {
-  margin: 0 0 10px; padding: 8px 10px; font-size: 13px;
-  background: var(--panel); border: 1px solid var(--line);
-  border-left: 3px solid var(--accent); border-radius: 4px;
+/* The repo card (blue) and the findings card (orange), inside the pane's
+   own padding. */
+.repo-summary, .findings-card {
+  margin: 0 0 10px; padding: 8px 10px; border-radius: 4px;
+  background: var(--panel); border: 2px solid var(--accent);
 }
+.repo-summary { font-size: 13px; }
+.findings-card { border-color: var(--sev-highly); }
 .repo-summary summary { cursor: pointer; }
 .repo-summary .md { margin-top: 4px; }
 .repo-notes { color: var(--sev-suspicious); font-size: 12px; white-space: nowrap; }
@@ -611,8 +616,7 @@ button.danger { color: var(--sev-impossible); border-color: var(--sev-impossible
 .repo-summary .md ul { padding-left: 1.2em; }
 
 /* The "Copy path" button above the summary on the paper review page. */
-.paper-path { margin: 0 0 8px; }
-.paper-path button { margin-top: 0 !important; font-size: 12px !important; }
+.paper-path button { margin-top: 0 !important; font-size: 13px !important; }
 /* "View and edit README.md", then "View Repo on GitHub" with the Private /
    Public badge beside it, at the top of the summary box. */
 .repo-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 0 0 8px; }

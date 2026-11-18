@@ -15,7 +15,6 @@ import {
   availableViews, BESIDE_PDF_KEY, besidePdf, canToggle, defaultView,
   extraPdfArtefact, parseStoredView, sheetArtefact, VIEW_KEY, type Surface,
 } from "@/lib/sourceView";
-import { CopyButton } from "./CopyButton";
 import { DraftsModal } from "./DraftsModal";
 import { IssueList } from "./IssueList";
 import { LoadMore } from "./LoadMore";
@@ -325,14 +324,9 @@ export function Reviewer({ project, slug, dir }: {
               {data.issues.headline.statement}
             </p>
           )}
-          {repoView.info?.paper_path && (
-            <div className="paper-path" data-paper-path>
-              <CopyButton text={repoView.info.paper_path} label="Copy path" done="Path copied"
-                          title={`Copy the path of this paper's folder: ${repoView.info.paper_path}`} />
-            </div>
-          )}
           <RepoSummary info={repoView.info} readmeOpen={readmeOpen}
                        onReadme={() => setReadmeOpen((o) => !o)} />
+          <div className="findings-card" data-findings-card>
           <IssueList
             issues={issues}
             source={data.issues?.source ?? null}
@@ -351,6 +345,7 @@ export function Reviewer({ project, slug, dir }: {
             onGrouped={onGrouped}
           />
           <LoadMore hasMore={hasMore} loading={loadingMore} onMore={loadMore} />
+          </div>
         </section>
         <div {...split.separatorProps} />
         <section className="split-right" style={{ position: "relative" }}>

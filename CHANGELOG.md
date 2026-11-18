@@ -36,6 +36,10 @@ comparable.
 - "Mark paper reviewed", "Next paper →" and "Drafts…" moved from the bottom
   of the findings pane to its top (with the PubPeer link and note, when a
   paper has them).
+- "Copy path" is now "Copy path to folder", in the repo card under the
+  GitHub button. The repo card has a full blue border, and the findings list
+  sits in a card with an orange border.
+- The line under the site header is black (the text colour in dark mode).
 - The paper-level "submitted to PubPeer" checkbox is removed. The flag is
   still read where it was recorded (the project table's badge); the
   per-finding checkbox stays.

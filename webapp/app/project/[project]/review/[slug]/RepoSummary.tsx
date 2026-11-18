@@ -2,6 +2,7 @@
 
 
 import type { RepoView } from "@/lib/useRepo";
+import { CopyButton } from "./CopyButton";
 import { Markdown } from "./Markdown";
 
 /** What the repository's state adds up to, in the reader's words. */
@@ -35,34 +36,42 @@ export function RepoSummary({ info, readmeOpen, onReadme }: {
   const { repo } = info;
   const fromReadme = !!info.summary_md;
   const text = info.summary_md || info.triage_md;
-  if (!repo && !text) return null;
+  const path = info.paper_path || "";
+  if (!repo && !text && !path) return null;
   const notes = repo ? repoNotes(repo) : [];
   return (
     <section className="repo-summary" data-repo-summary={fromReadme ? "readme" : text ? "triage" : "none"}>
-      {repo && (
+      {(repo || path) && (
         <div className="repo-actions">
-          <button className="repo-readme-button" onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
+          {repo && <button className="repo-readme-button" onClick={onReadme} aria-pressed={readmeOpen} disabled={info.readme === null}
                   title={info.readme === null ? "This repository has no README.md" : "Read or edit the repository's README beside the findings"}>
             {readmeOpen ? "Hide README.md" : "View and edit README.md"}
-          </button>
-          <div className="repo-actions-row">
+          </button>}
+          {repo && <div className="repo-actions-row">
             {repo.url
               ? <a className="button-link" href={repo.url} target="_blank" rel="noreferrer" title={repo.name}>View Repo on GitHub</a>
               : <button disabled title="This repository has not been pushed to GitHub yet">View Repo on GitHub</button>}
             <VisibilityPill repo={repo} />
             {notes.length > 0 && <span className="repo-notes">{notes.join(" · ")}</span>}
-          </div>
+          </div>}
+          {/* Sent to admins and in local mode only (`/api/repo`). */}
+          {path && (
+            <span className="paper-path" data-paper-path>
+              <CopyButton text={path} label="Copy path to folder" done="Path copied"
+                          title={`Copy the path of this paper's folder: ${path}`} />
+            </span>
+          )}
         </div>
       )}
       {/* Open on every paper; closing it lasts until the next paper. */}
-      <details open>
+      {text && <details open>
         <summary>
           <strong>{fromReadme ? "Summary" : text ? "Triage note" : "Reproduction repo"}</strong>
           {!fromReadme && text && repo && <span className="muted"> (the README has no Summary section)</span>}
           {!repo && <span className="muted"> (no reproduction repo)</span>}
         </summary>
         {text && <Markdown>{text}</Markdown>}
-      </details>
+      </details>}
     </section>
   );
 }
